@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "charliermarsh.ruff",
+    "detachhead.basedpyright",
+    "ms-python.mypy-type-checker",
+    "ms-python.python",
+    "tamasfe.even-better-toml"
+  ],
+  "unwantedRecommendations": ["ms-pyright.pyright", "ms-python.vscode-pylance"]
+}

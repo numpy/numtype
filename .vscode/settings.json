@@ -1,0 +1,14 @@
+{
+  "[python]": {
+    "editor.rulers": [130]
+  },
+  "evenBetterToml.formatter.alignComments": true,
+  "evenBetterToml.formatter.allowedBlankLines": 2,
+  "evenBetterToml.formatter.arrayTrailingComma": true,
+  "evenBetterToml.formatter.columnWidth": 100,
+  "evenBetterToml.formatter.compactArrays": true,
+  "evenBetterToml.formatter.compactInlineTables": true,
+  "evenBetterToml.formatter.indentString": "    ",
+  "evenBetterToml.formatter.indentTables": true,
+  "evenBetterToml.formatter.trailingNewline": true
+}

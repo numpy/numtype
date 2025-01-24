@@ -1,0 +1,173 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "numpy-stubs"
+version = "2.2.2.0.dev0"
+description = "Official typing stubs for NumPy"
+readme = "README.md"
+authors = [{name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com"}]
+maintainers = [{name = "NumPy Developers", email = "numpy-discussion@python.org"}]
+license = "BSD-3-Clause"
+keywords = ["numpy", "stubs", "typing", "types", "pep484"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Stubs Only",
+    "Typing :: Typed",
+]
+requires-python = ">=3.11"
+dependencies = []
+
+    [project.optional-dependencies]
+    numpy = ["numpy>=2.2.2,<2.3"]
+
+    [project.urls]
+    Homepage = "https://numpy.org/"
+    Repository = "https://github.com/jorenham/numpyi/"
+    Issues = "https://github.com/jorenham/numpyi/issues"
+    Changelog = "https://github.com/jorenham/numpyi/releases"
+
+[dependency-groups]
+numpy = ["numpy-stubs[numpy]"]
+dev = [
+    {include-group = "numpy"},
+    "ruff>=0.9.3",
+    "basedmypy[faster-cache]>=2.9.1",
+    "basedpyright>=1.24.0",
+]
+
+[tool.hatch.build]
+packages = ["numpy-stubs"]
+
+
+[tool.mypy]
+files = ["src/**/*.py", "src/**/*.pyi"]
+python_version = "3.11"
+strict = true
+disable_bytearray_promotion = true
+disable_memoryview_promotion = true
+enable_error_code = ["ignore-without-code", "truthy-bool"]
+
+# basedmypy only
+warn_unreachable = false
+warn_unused_ignores = false
+disallow_any_explicit = false
+
+
+[tool.pyright]
+include = ["src"]
+ignore = [".venv"]
+venv = ".venv"
+venvPath = "."
+stubPath = "."
+pythonVersion = "3.11"
+pythonPlatform = "All"
+typeCheckingMode = "strict"
+
+deprecateTypingAliases = true
+enableReachabilityAnalysis = false
+enableTypeIgnoreComments = false
+reportCallInDefaultInitializer = true
+reportImplicitOverride = true
+reportImportCycles = true
+reportMissingSuperCall = true
+reportPrivateUsage = false
+reportPropertyTypeMismatch = false
+reportShadowedImports = true
+reportUninitializedInstanceVariable = true
+reportUnnecessaryTypeIgnoreComment = true
+
+# basedpyright only
+failOnWarnings = true
+reportIgnoreCommentWithoutRule = true
+reportImplicitAbstractClass = true
+reportImplicitRelativeImport = true
+reportImplicitStringConcatenation = false
+reportInvalidCast = true
+reportPrivateLocalImportUsage = true
+reportUnannotatedClassAttribute = true
+strictGenericNarrowing = true
+
+
+[tool.ruff]
+src = ["src"]
+extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
+force-exclude = true
+# https://typing.readthedocs.io/en/latest/guides/writing_stubs.html#maximum-line-length
+line-length = 130
+preview = true
+
+    [tool.ruff.format]
+    docstring-code-format = true
+    line-ending = "lf"
+
+    [tool.ruff.lint]
+    select = ["ALL"]
+    ignore = [
+        "COM812", # flake8-commas: missing-trailing-comma
+        "CPY",    # flake8-copyright
+        "EM",     # flake8-errmsg
+        "FA100",  # flake8-future-annotations: future-rewritable-type-annotation
+        "T20",    # flake8-print
+        "TC001",  # flake8-type-checking: typing-only-first-party-import
+        "TC003",  # flake8-type-checking: typing-only-standard-library-import
+        "TD003",  # flake8-todo: Missing issue link for this TODO
+        "FIX",    # flake8-fixme
+    ]
+
+        [tool.ruff.lint.per-file-ignores]
+        "*.pyi" = [
+            "E741",    # pycodestyle/E: ambiguous-variable-name
+            "E742",    # pycodestyle/E: ambiguous-class-name
+            "E743",    # pycodestyle/E: ambiguous-function-name
+            "N",       # pep8-naming
+            "D",       # pydocstyle
+            "ANN401",  # flake8-annotations: any-type
+            "A",       # flake8-builtins
+            "DOC",     # flake8-docstrings
+            "PYI054",  # flake8-pyi: numeric-literal-too-long
+            "PYI064",  # flake8-pyi: redundant-final-literal
+            "PLC2701", # pylint/C: import-private-name
+            "PLR0904", # pylint/R: too-many-public-methods
+            "PLR0913", # pylint/R: too-many-arguments
+            "PLR0917", # pylint/R: too-many-positional-arguments
+            "PLR2044", # pylint/R: empty-comment
+            "PLR6301", # pylint/R: no-self-use
+            "PLW3201", # pylint/W: bad-dunder-method-name
+            "FURB",    # refurb
+        ]
+
+        [tool.ruff.lint.flake8-annotations]
+        suppress-dummy-args = true
+
+        [tool.ruff.lint.flake8-import-conventions]
+        banned-from = ["abc", "ctypes", "datetime", "os", "sys", "numpy", "numpy.typing"]
+            [tool.ruff.lint.flake8-import-conventions.extend-aliases]
+            "ctypes" = "ct"
+            "datetime" = "dt"
+            "numpy" = "np"
+            "numpy.typing" = "npt"
+
+        [tool.ruff.lint.isort]
+        case-sensitive = true
+        combine-as-imports = true
+        extra-standard-library = ["_typeshed", "typing_extensions"]
+        known-first-party = ["numpy"]
+        split-on-trailing-comma = true
+
+        [tool.ruff.lint.pydocstyle]
+        convention = "numpy"
+
+
+[tool.typos.files]
+extend-exclude = ["*.pyi", ".mypyignore"]
