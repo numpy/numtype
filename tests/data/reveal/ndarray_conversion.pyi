@@ -21,7 +21,7 @@ assert_type(b1_0d.item(()), bool)
 assert_type(u2_1d.item((0,)), int)
 assert_type(i4_2d.item(-1, 2), int)
 assert_type(f8_3d.item(2, 1, -1), float)
-assert_type(cG_4d.item(-0xEd_fed_Deb_a_dead_bee), complex)  # c'mon Ed, we talked about this...
+assert_type(cG_4d.item(-0xED_FED_DEB_A_DEAD_BEE), complex)  # c'mon Ed, we talked about this...
 
 # tolist
 assert_type(b1_0d.tolist(), bool)

@@ -1,4 +1,3 @@
-
 from typing import (
     Any,
     Generic,
@@ -90,7 +89,6 @@ class _UFunc_Nin1_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
     def nargs(self) -> Literal[2]: ...
     @property
     def signature(self) -> None: ...
-
     @overload
     def __call__(
         self,
@@ -157,7 +155,6 @@ class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
     def nargs(self) -> Literal[3]: ...
     @property
     def signature(self) -> None: ...
-
     @overload  # (scalar, scalar) -> scalar
     def __call__(
         self,
@@ -214,7 +211,6 @@ class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
         **kwds: Unpack[_UFunc3Kwargs],
     ) -> npt.NDArray[Any] | Any: ...
     def at(self, a: npt.NDArray[Any], indices: _ArrayLikeInt_co, b: ArrayLike, /) -> None: ...
-
     def reduce(
         self,
         array: ArrayLike,
@@ -225,7 +221,6 @@ class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
         initial: Any = ...,
         where: _ArrayLikeBool_co = ...,
     ) -> Any: ...
-
     def accumulate(
         self,
         array: ArrayLike,
@@ -233,7 +228,6 @@ class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
         dtype: DTypeLike = ...,
         out: npt.NDArray[Any] | None = ...,
     ) -> npt.NDArray[Any]: ...
-
     def reduceat(
         self,
         array: ArrayLike,
@@ -242,7 +236,6 @@ class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
         dtype: DTypeLike = ...,
         out: npt.NDArray[Any] | None = ...,
     ) -> npt.NDArray[Any]: ...
-
     @overload  # (scalar, scalar) -> scalar
     def outer(
         self,
@@ -317,7 +310,6 @@ class _UFunc_Nin1_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
     def nargs(self) -> Literal[3]: ...
     @property
     def signature(self) -> None: ...
-
     @overload
     def __call__(
         self,
@@ -389,7 +381,6 @@ class _UFunc_Nin2_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
     def nargs(self) -> Literal[4]: ...
     @property
     def signature(self) -> None: ...
-
     @overload
     def __call__(
         self,
@@ -535,7 +526,6 @@ class _PyFunc_Nin1_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
     def ntypes(self) -> Literal[1]: ...
     @property
     def signature(self) -> None: ...
-
     @overload
     def __call__(
         self,
@@ -568,7 +558,6 @@ class _PyFunc_Nin1_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs2],
     ) -> Any: ...
-
     def at(self, a: _SupportsArrayUFunc, ixs: _ArrayLikeInt_co, /) -> None: ...
     def reduce(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
     def accumulate(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
@@ -589,7 +578,6 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
     def ntypes(self) -> Literal[1]: ...
     @property
     def signature(self) -> None: ...
-
     @overload
     def __call__(
         self,
@@ -635,9 +623,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> Any: ...
-
     def at(self, a: _SupportsArrayUFunc, ixs: _ArrayLikeInt_co, b: ArrayLike, /) -> None: ...
-
     @overload
     def reduce(
         self,
@@ -688,7 +674,6 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         initial: _ScalarLike_co = ...,
         where: _ArrayLikeBool_co = ...,
     ) -> _OutT_co | npt.NDArray[np.object_]: ...
-
     @overload
     def reduceat(
         self,
@@ -730,7 +715,6 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         dtype: DTypeLike = ...,
         out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
     ) -> Any: ...
-
     @overload
     def accumulate(
         self,
@@ -758,7 +742,6 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         dtype: DTypeLike = ...,
         out: None = ...,
     ) -> npt.NDArray[np.object_]: ...
-
     @overload
     def outer(
         self,
@@ -794,7 +777,8 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         self,
         A: _SupportsArrayUFunc,
         B: _SupportsArrayUFunc | ArrayLike,
-        /, *,
+        /,
+        *,
         out: None = ...,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> Any: ...
@@ -803,7 +787,8 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         self,
         A: _ScalarLike_co,
         B: _SupportsArrayUFunc | ArrayLike,
-        /, *,
+        /,
+        *,
         out: None = ...,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> Any: ...
@@ -820,7 +805,6 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):
     def ntypes(self) -> Literal[1]: ...
     @property
     def signature(self) -> None: ...
-
     @overload
     def __call__(
         self,
@@ -865,7 +849,6 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):
         out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs4P],
     ) -> Any: ...
-
     def at(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
     def reduce(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
     def accumulate(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
@@ -884,7 +867,6 @@ class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co, 
     def ntypes(self) -> Literal[1]: ...
     @property
     def signature(self) -> None: ...
-
     @overload
     def __call__(
         self,
@@ -921,7 +903,6 @@ class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co, 
         out: _2PTuple[npt.NDArray[Any]] | None = ...,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
     ) -> Any: ...
-
     def at(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
     def reduce(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
     def accumulate(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...

@@ -1,4 +1,3 @@
-
 import ctypes as ct
 import operator
 from types import ModuleType

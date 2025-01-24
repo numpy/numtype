@@ -91,9 +91,17 @@ assert_type(np.linalg.det(AR_i8), Any)
 assert_type(np.linalg.det(AR_f8), Any)
 assert_type(np.linalg.det(AR_c16), Any)
 
-assert_type(np.linalg.lstsq(AR_i8, AR_i8), tuple[npt.NDArray[np.float64], npt.NDArray[np.float64], np.int32, npt.NDArray[np.float64]])
-assert_type(np.linalg.lstsq(AR_i8, AR_f8), tuple[npt.NDArray[np.floating[Any]], npt.NDArray[np.floating[Any]], np.int32, npt.NDArray[np.floating[Any]]])
-assert_type(np.linalg.lstsq(AR_f8, AR_c16), tuple[npt.NDArray[np.complexfloating[Any, Any]], npt.NDArray[np.floating[Any]], np.int32, npt.NDArray[np.floating[Any]]])
+assert_type(
+    np.linalg.lstsq(AR_i8, AR_i8), tuple[npt.NDArray[np.float64], npt.NDArray[np.float64], np.int32, npt.NDArray[np.float64]]
+)
+assert_type(
+    np.linalg.lstsq(AR_i8, AR_f8),
+    tuple[npt.NDArray[np.floating[Any]], npt.NDArray[np.floating[Any]], np.int32, npt.NDArray[np.floating[Any]]],
+)
+assert_type(
+    np.linalg.lstsq(AR_f8, AR_c16),
+    tuple[npt.NDArray[np.complexfloating[Any, Any]], npt.NDArray[np.floating[Any]], np.int32, npt.NDArray[np.floating[Any]]],
+)
 
 assert_type(np.linalg.norm(AR_i8), np.floating[Any])
 assert_type(np.linalg.norm(AR_f8), np.floating[Any])

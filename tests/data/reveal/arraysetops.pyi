@@ -52,14 +52,38 @@ assert_type(np.unique(AR_f8, return_inverse=True), tuple[npt.NDArray[np.float64]
 assert_type(np.unique(AR_LIKE_f8, return_inverse=True), tuple[npt.NDArray[Any], npt.NDArray[np.intp]])
 assert_type(np.unique(AR_f8, return_counts=True), tuple[npt.NDArray[np.float64], npt.NDArray[np.intp]])
 assert_type(np.unique(AR_LIKE_f8, return_counts=True), tuple[npt.NDArray[Any], npt.NDArray[np.intp]])
-assert_type(np.unique(AR_f8, return_index=True, return_inverse=True), tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp]])
-assert_type(np.unique(AR_LIKE_f8, return_index=True, return_inverse=True), tuple[npt.NDArray[Any], npt.NDArray[np.intp], npt.NDArray[np.intp]])
-assert_type(np.unique(AR_f8, return_index=True, return_counts=True), tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp]])
-assert_type(np.unique(AR_LIKE_f8, return_index=True, return_counts=True), tuple[npt.NDArray[Any], npt.NDArray[np.intp], npt.NDArray[np.intp]])
-assert_type(np.unique(AR_f8, return_inverse=True, return_counts=True), tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp]])
-assert_type(np.unique(AR_LIKE_f8, return_inverse=True, return_counts=True), tuple[npt.NDArray[Any], npt.NDArray[np.intp], npt.NDArray[np.intp]])
-assert_type(np.unique(AR_f8, return_index=True, return_inverse=True, return_counts=True), tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp], npt.NDArray[np.intp]])
-assert_type(np.unique(AR_LIKE_f8, return_index=True, return_inverse=True, return_counts=True), tuple[npt.NDArray[Any], npt.NDArray[np.intp], npt.NDArray[np.intp], npt.NDArray[np.intp]])
+assert_type(
+    np.unique(AR_f8, return_index=True, return_inverse=True),
+    tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+)
+assert_type(
+    np.unique(AR_LIKE_f8, return_index=True, return_inverse=True),
+    tuple[npt.NDArray[Any], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+)
+assert_type(
+    np.unique(AR_f8, return_index=True, return_counts=True),
+    tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+)
+assert_type(
+    np.unique(AR_LIKE_f8, return_index=True, return_counts=True),
+    tuple[npt.NDArray[Any], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+)
+assert_type(
+    np.unique(AR_f8, return_inverse=True, return_counts=True),
+    tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+)
+assert_type(
+    np.unique(AR_LIKE_f8, return_inverse=True, return_counts=True),
+    tuple[npt.NDArray[Any], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+)
+assert_type(
+    np.unique(AR_f8, return_index=True, return_inverse=True, return_counts=True),
+    tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+)
+assert_type(
+    np.unique(AR_LIKE_f8, return_index=True, return_inverse=True, return_counts=True),
+    tuple[npt.NDArray[Any], npt.NDArray[np.intp], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+)
 
 assert_type(np.unique_all(AR_f8), UniqueAllResult[np.float64])
 assert_type(np.unique_all(AR_LIKE_f8), UniqueAllResult[Any])

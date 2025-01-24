@@ -3,49 +3,51 @@ from typing import (
     Final,
     Generic,
     Literal as L,
+    LiteralString,
     NoReturn,
+    Self,
     TypeAlias,
     final,
     type_check_only,
 )
-from typing_extensions import LiteralString, Self, TypeVar
+from typing_extensions import TypeVar
 
 import numpy as np
 
 __all__ = [
-    'BoolDType',
-    'Int8DType',
-    'ByteDType',
-    'UInt8DType',
-    'UByteDType',
-    'Int16DType',
-    'ShortDType',
-    'UInt16DType',
-    'UShortDType',
-    'Int32DType',
-    'IntDType',
-    'UInt32DType',
-    'UIntDType',
-    'Int64DType',
-    'LongDType',
-    'UInt64DType',
-    'ULongDType',
-    'LongLongDType',
-    'ULongLongDType',
-    'Float16DType',
-    'Float32DType',
-    'Float64DType',
-    'LongDoubleDType',
-    'Complex64DType',
-    'Complex128DType',
-    'CLongDoubleDType',
-    'ObjectDType',
-    'BytesDType',
-    'StrDType',
-    'VoidDType',
-    'DateTime64DType',
-    'TimeDelta64DType',
-    'StringDType',
+    "BoolDType",
+    "ByteDType",
+    "BytesDType",
+    "CLongDoubleDType",
+    "Complex64DType",
+    "Complex128DType",
+    "DateTime64DType",
+    "Float16DType",
+    "Float32DType",
+    "Float64DType",
+    "Int8DType",
+    "Int16DType",
+    "Int32DType",
+    "Int64DType",
+    "IntDType",
+    "LongDType",
+    "LongDoubleDType",
+    "LongLongDType",
+    "ObjectDType",
+    "ShortDType",
+    "StrDType",
+    "StringDType",
+    "TimeDelta64DType",
+    "UByteDType",
+    "UInt8DType",
+    "UInt16DType",
+    "UInt32DType",
+    "UInt64DType",
+    "UIntDType",
+    "ULongDType",
+    "ULongLongDType",
+    "UShortDType",
+    "VoidDType",
 ]
 
 # Helper base classes (typing-only)
@@ -53,7 +55,7 @@ __all__ = [
 _SCT_co = TypeVar("_SCT_co", bound=np.generic, covariant=True)
 
 @type_check_only
-class _SimpleDType(Generic[_SCT_co], np.dtype[_SCT_co]):  # type: ignore[misc]
+class _SimpleDType(np.dtype[_SCT_co], Generic[_SCT_co]):  # type: ignore[misc]
     names: None  # pyright: ignore[reportIncompatibleVariableOverride]
     def __new__(cls, /) -> Self: ...
     def __getitem__(self, key: Any, /) -> NoReturn: ...
@@ -73,7 +75,7 @@ class _SimpleDType(Generic[_SCT_co], np.dtype[_SCT_co]):  # type: ignore[misc]
     def subdtype(self) -> None: ...
 
 @type_check_only
-class _LiteralDType(Generic[_SCT_co], _SimpleDType[_SCT_co]):  # type: ignore[misc]
+class _LiteralDType(_SimpleDType[_SCT_co], Generic[_SCT_co]):  # type: ignore[misc]
     @property
     def flags(self) -> L[0]: ...
     @property
@@ -419,11 +421,11 @@ class ObjectDType(  # type: ignore[misc]
 
 @final
 class BytesDType(  # type: ignore[misc]
-    Generic[_ItemSize_co],
     _TypeCodes[L["S"], L["S"], L[18]],
     _NoOrder,
     _NBit[L[1], _ItemSize_co],
     _SimpleDType[np.bytes_],
+    Generic[_ItemSize_co],
 ):
     def __new__(cls, size: _ItemSize_co, /) -> BytesDType[_ItemSize_co]: ...
     @property
@@ -435,11 +437,11 @@ class BytesDType(  # type: ignore[misc]
 
 @final
 class StrDType(  # type: ignore[misc]
-    Generic[_ItemSize_co],
     _TypeCodes[L["U"], L["U"], L[19]],
     _NativeOrder,
     _NBit[L[4], _ItemSize_co],
     _SimpleDType[np.str_],
+    Generic[_ItemSize_co],
 ):
     def __new__(cls, size: _ItemSize_co, /) -> StrDType[_ItemSize_co]: ...
     @property
@@ -451,11 +453,11 @@ class StrDType(  # type: ignore[misc]
 
 @final
 class VoidDType(  # type: ignore[misc]
-    Generic[_ItemSize_co],
     _TypeCodes[L["V"], L["V"], L[20]],
     _NoOrder,
     _NBit[L[1], _ItemSize_co],
     np.dtype[np.void],
+    Generic[_ItemSize_co],
 ):
     # NOTE: `VoidDType(...)` raises a `TypeError` at the moment
     def __new__(cls, length: _ItemSize_co, /) -> NoReturn: ...
@@ -493,7 +495,9 @@ class DateTime64DType(  # type: ignore[misc]
     # TODO: Once implemented, don't forget the`unit: L["μs"]` overload.
     def __new__(cls, unit: _DateTimeUnit, /) -> NoReturn: ...
     @property
-    def name(self) -> L[
+    def name(
+        self,
+    ) -> L[
         "datetime64",
         "datetime64[Y]",
         "datetime64[M]",
@@ -510,21 +514,37 @@ class DateTime64DType(  # type: ignore[misc]
         "datetime64[as]",
     ]: ...
     @property
-    def str(self) -> L[
-        "<M8", ">M8",
-        "<M8[Y]", ">M8[Y]",
-        "<M8[M]", ">M8[M]",
-        "<M8[W]", ">M8[W]",
-        "<M8[D]", ">M8[D]",
-        "<M8[h]", ">M8[h]",
-        "<M8[m]", ">M8[m]",
-        "<M8[s]", ">M8[s]",
-        "<M8[ms]", ">M8[ms]",
-        "<M8[us]", ">M8[us]",
-        "<M8[ns]", ">M8[ns]",
-        "<M8[ps]", ">M8[ps]",
-        "<M8[fs]", ">M8[fs]",
-        "<M8[as]", ">M8[as]",
+    def str(
+        self,
+    ) -> L[
+        "<M8",
+        ">M8",
+        "<M8[Y]",
+        ">M8[Y]",
+        "<M8[M]",
+        ">M8[M]",
+        "<M8[W]",
+        ">M8[W]",
+        "<M8[D]",
+        ">M8[D]",
+        "<M8[h]",
+        ">M8[h]",
+        "<M8[m]",
+        ">M8[m]",
+        "<M8[s]",
+        ">M8[s]",
+        "<M8[ms]",
+        ">M8[ms]",
+        "<M8[us]",
+        ">M8[us]",
+        "<M8[ns]",
+        ">M8[ns]",
+        "<M8[ps]",
+        ">M8[ps]",
+        "<M8[fs]",
+        ">M8[fs]",
+        "<M8[as]",
+        ">M8[as]",
     ]: ...
 
 @final
@@ -538,7 +558,9 @@ class TimeDelta64DType(  # type: ignore[misc]
     # TODO: Once implemented, don't forget to overload on `unit: L["μs"]`.
     def __new__(cls, unit: _DateTimeUnit, /) -> NoReturn: ...
     @property
-    def name(self) -> L[
+    def name(
+        self,
+    ) -> L[
         "timedelta64",
         "timedelta64[Y]",
         "timedelta64[M]",
@@ -555,21 +577,37 @@ class TimeDelta64DType(  # type: ignore[misc]
         "timedelta64[as]",
     ]: ...
     @property
-    def str(self) -> L[
-        "<m8", ">m8",
-        "<m8[Y]", ">m8[Y]",
-        "<m8[M]", ">m8[M]",
-        "<m8[W]", ">m8[W]",
-        "<m8[D]", ">m8[D]",
-        "<m8[h]", ">m8[h]",
-        "<m8[m]", ">m8[m]",
-        "<m8[s]", ">m8[s]",
-        "<m8[ms]", ">m8[ms]",
-        "<m8[us]", ">m8[us]",
-        "<m8[ns]", ">m8[ns]",
-        "<m8[ps]", ">m8[ps]",
-        "<m8[fs]", ">m8[fs]",
-        "<m8[as]", ">m8[as]",
+    def str(
+        self,
+    ) -> L[
+        "<m8",
+        ">m8",
+        "<m8[Y]",
+        ">m8[Y]",
+        "<m8[M]",
+        ">m8[M]",
+        "<m8[W]",
+        ">m8[W]",
+        "<m8[D]",
+        ">m8[D]",
+        "<m8[h]",
+        ">m8[h]",
+        "<m8[m]",
+        ">m8[m]",
+        "<m8[s]",
+        ">m8[s]",
+        "<m8[ms]",
+        ">m8[ms]",
+        "<m8[us]",
+        ">m8[us]",
+        "<m8[ns]",
+        ">m8[ns]",
+        "<m8[ps]",
+        ">m8[ps]",
+        "<m8[fs]",
+        ">m8[fs]",
+        "<m8[as]",
+        ">m8[as]",
     ]: ...
 
 @final

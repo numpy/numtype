@@ -12,40 +12,33 @@ from typing import (
 import numpy as np
 import numpy.typing as npt
 from numpy._typing import (
+    _ArrayLikeComplex_co,
+    _ArrayLikeFloat_co,
     _FloatLike_co,
     _NumberLike_co,
-
-    _ArrayLikeFloat_co,
-    _ArrayLikeComplex_co,
 )
 
 from ._polytypes import (
     _AnyInt,
-    _CoefLike_co,
-
     _Array2,
-    _Tuple2,
-
-    _FloatSeries,
-    _CoefSeries,
-    _ComplexSeries,
-    _ObjectSeries,
-
-    _ComplexArray,
-    _FloatArray,
-    _CoefArray,
-    _ObjectArray,
-
-    _SeriesLikeInt_co,
-    _SeriesLikeFloat_co,
-    _SeriesLikeComplex_co,
-    _SeriesLikeCoef_co,
-
     _ArrayLikeCoef_co,
-
+    _CoefArray,
+    _CoefLike_co,
+    _CoefSeries,
+    _ComplexArray,
+    _ComplexSeries,
+    _FloatArray,
+    _FloatSeries,
     _FuncBinOp,
     _FuncValND,
     _FuncVanderND,
+    _ObjectArray,
+    _ObjectSeries,
+    _SeriesLikeCoef_co,
+    _SeriesLikeComplex_co,
+    _SeriesLikeFloat_co,
+    _SeriesLikeInt_co,
+    _Tuple2,
 )
 
 __all__: Final[Sequence[str]] = [
@@ -118,8 +111,8 @@ def as_series(
 ) -> list[_ObjectSeries]: ...
 
 _T_seq = TypeVar("_T_seq", bound=_CoefArray | Sequence[_CoefLike_co])
-def trimseq(seq: _T_seq) -> _T_seq: ...
 
+def trimseq(seq: _T_seq) -> _T_seq: ...
 @overload
 def trimcoef(  # type: ignore[overload-overlap]
     c: npt.NDArray[np.integer[Any]] | _FloatArray,
@@ -150,7 +143,6 @@ def trimcoef(
     c: _SeriesLikeCoef_co | object,
     tol: _FloatLike_co = ...,
 ) -> _ObjectSeries: ...
-
 @overload
 def getdomain(  # type: ignore[overload-overlap]
     x: _FloatArray | npt.NDArray[np.integer[Any]],
@@ -175,7 +167,6 @@ def getdomain(
 def getdomain(
     x: _SeriesLikeCoef_co | object,
 ) -> _Array2[np.object_]: ...
-
 @overload
 def mapparms(  # type: ignore[overload-overlap]
     old: npt.NDArray[np.floating[Any] | np.integer[Any]],
@@ -216,7 +207,6 @@ def mapparms(
     old: _SeriesLikeCoef_co,
     new: _SeriesLikeCoef_co,
 ) -> _Tuple2[object]: ...
-
 @overload
 def mapdomain(  # type: ignore[overload-overlap]
     x: _FloatLike_co,
@@ -271,7 +261,6 @@ def mapdomain(
     old: _SeriesLikeCoef_co,
     new: _SeriesLikeCoef_co,
 ) -> object: ...
-
 def _nth_slice(
     i: SupportsIndex,
     ndim: SupportsIndex,
@@ -426,6 +415,5 @@ def _fit(
     full: Literal[True],
     w: None | _SeriesLikeCoef_co = ...,
 ) -> tuple[_CoefSeries, Sequence[np.inexact[Any] | np.int32]]: ...
-
 def _as_int(x: SupportsIndex, desc: str) -> int: ...
 def format_float(x: _FloatLike_co, parens: bool = ...) -> str: ...

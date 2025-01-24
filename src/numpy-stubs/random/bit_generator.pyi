@@ -1,14 +1,14 @@
 import abc
-from threading import Lock
 from collections.abc import Callable, Mapping, Sequence
+from threading import Lock
 from typing import (
     Any,
+    Literal,
     NamedTuple,
     TypeAlias,
-    TypedDict,
     TypeVar,
+    TypedDict,
     overload,
-    Literal,
     type_check_only,
 )
 
@@ -24,18 +24,8 @@ from numpy._typing import (
 
 _T = TypeVar("_T")
 
-_DTypeLikeUint32: TypeAlias = (
-    dtype[uint32]
-    | _SupportsDType[dtype[uint32]]
-    | type[uint32]
-    | _UInt32Codes
-)
-_DTypeLikeUint64: TypeAlias = (
-    dtype[uint64]
-    | _SupportsDType[dtype[uint64]]
-    | type[uint64]
-    | _UInt64Codes
-)
+_DTypeLikeUint32: TypeAlias = dtype[uint32] | _SupportsDType[dtype[uint32]] | type[uint32] | _UInt32Codes
+_DTypeLikeUint64: TypeAlias = dtype[uint64] | _SupportsDType[dtype[uint64]] | type[uint64] | _UInt64Codes
 
 @type_check_only
 class _SeedSeqState(TypedDict):
@@ -55,18 +45,14 @@ class _Interface(NamedTuple):
 
 class ISeedSequence(abc.ABC):
     @abc.abstractmethod
-    def generate_state(
-        self, n_words: int, dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...
-    ) -> NDArray[uint32 | uint64]: ...
+    def generate_state(self, n_words: int, dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...) -> NDArray[uint32 | uint64]: ...
 
 class ISpawnableSeedSequence(ISeedSequence):
     @abc.abstractmethod
     def spawn(self: _T, n_children: int) -> list[_T]: ...
 
 class SeedlessSeedSequence(ISpawnableSeedSequence):
-    def generate_state(
-        self, n_words: int, dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...
-    ) -> NDArray[uint32 | uint64]: ...
+    def generate_state(self, n_words: int, dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...) -> NDArray[uint32 | uint64]: ...
     def spawn(self: _T, n_children: int) -> list[_T]: ...
 
 class SeedSequence(ISpawnableSeedSequence):
@@ -83,30 +69,21 @@ class SeedSequence(ISpawnableSeedSequence):
         pool_size: int = ...,
         n_children_spawned: int = ...,
     ) -> None: ...
-    def __repr__(self) -> str: ...
     @property
     def state(
         self,
     ) -> _SeedSeqState: ...
-    def generate_state(
-        self, n_words: int, dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...
-    ) -> NDArray[uint32 | uint64]: ...
+    def generate_state(self, n_words: int, dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...) -> NDArray[uint32 | uint64]: ...
     def spawn(self, n_children: int) -> list[SeedSequence]: ...
 
 class BitGenerator(abc.ABC):
     lock: Lock
     def __init__(self, seed: None | _ArrayLikeInt_co | SeedSequence = ...) -> None: ...
     def __getstate__(self) -> tuple[dict[str, Any], ISeedSequence]: ...
-    def __setstate__(
-            self, state_seed_seq: dict[str, Any] | tuple[dict[str, Any], ISeedSequence]
-    ) -> None: ...
+    def __setstate__(self, state_seed_seq: dict[str, Any] | tuple[dict[str, Any], ISeedSequence]) -> None: ...
     def __reduce__(
         self,
-    ) -> tuple[
-        Callable[[str], BitGenerator],
-        tuple[str],
-        tuple[dict[str, Any], ISeedSequence]
-    ]: ...
+    ) -> tuple[Callable[[str], BitGenerator], tuple[str], tuple[dict[str, Any], ISeedSequence]]: ...
     @abc.abstractmethod
     @property
     def state(self) -> Mapping[str, Any]: ...
@@ -118,13 +95,9 @@ class BitGenerator(abc.ABC):
     @overload
     def random_raw(self, size: None = ..., output: Literal[True] = ...) -> int: ...  # type: ignore[misc]
     @overload
-    def random_raw(
-        self, size: _ShapeLike = ..., output: Literal[True] = ...
-    ) -> NDArray[uint64]: ...  # type: ignore[misc]
+    def random_raw(self, size: _ShapeLike = ..., output: Literal[True] = ...) -> NDArray[uint64]: ...  # type: ignore[misc]
     @overload
-    def random_raw(
-        self, size: None | _ShapeLike = ..., output: Literal[False] = ...
-    ) -> None: ...  # type: ignore[misc]
+    def random_raw(self, size: None | _ShapeLike = ..., output: Literal[False] = ...) -> None: ...  # type: ignore[misc]
     def _benchmark(self, cnt: int, method: str = ...) -> None: ...
     @property
     def ctypes(self) -> _Interface: ...

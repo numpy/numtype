@@ -1,29 +1,29 @@
-import zipfile
 import types
-from _typeshed import StrOrBytesPath, StrPath, SupportsRead, SupportsWrite, SupportsKeysAndGetItem
+import zipfile
+from _typeshed import StrOrBytesPath, StrPath, SupportsKeysAndGetItem, SupportsRead, SupportsWrite
+from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
 from re import Pattern
-from collections.abc import Collection, Mapping, Iterator, Sequence, Callable, Iterable
 from typing import (
-    Literal as L,
-    Any,
-    TypeVar,
-    Generic,
     IO,
-    overload,
+    Any,
+    Generic,
+    Literal as L,
     Protocol,
+    Self,
+    TypeVar,
+    overload,
     type_check_only,
 )
 from typing_extensions import deprecated
 
 from numpy import (
-    recarray,
     dtype,
-    generic,
     float64,
-    void,
+    generic,
+    recarray,
     record,
+    void,
 )
-from numpy.ma.mrecords import MaskedRecords
 from numpy._core.multiarray import packbits, unpackbits
 from numpy._typing import (
     ArrayLike,
@@ -32,18 +32,19 @@ from numpy._typing import (
     _DTypeLike,
     _SupportsArrayFunc,
 )
+from numpy.ma.mrecords import MaskedRecords
 
 __all__ = [
-    "savetxt",
-    "loadtxt",
+    "fromregex",
     "genfromtxt",
     "load",
+    "loadtxt",
+    "packbits",
     "save",
+    "savetxt",
     "savez",
     "savez_compressed",
-    "packbits",
     "unpackbits",
-    "fromregex",
 ]
 
 _T = TypeVar("_T")
@@ -79,7 +80,7 @@ class NpzFile(Mapping[str, NDArray[Any]]):
         allow_pickle: bool = ...,
         pickle_kwargs: None | Mapping[str, Any] = ...,
     ) -> None: ...
-    def __enter__(self: _T) -> _T: ...
+    def __enter__(self) -> Self: ...
     def __exit__(
         self,
         exc_type: None | type[BaseException],
@@ -93,7 +94,6 @@ class NpzFile(Mapping[str, NDArray[Any]]):
     def __len__(self) -> int: ...
     def __getitem__(self, key: str) -> NDArray[Any]: ...
     def __contains__(self, key: str) -> bool: ...
-    def __repr__(self) -> str: ...
 
 class DataSource:
     def __init__(self, destpath: StrPath | None = ...) -> None: ...
@@ -120,7 +120,6 @@ def load(
     fix_imports: bool = ...,
     encoding: L["ASCII", "latin1", "bytes"] = ...,
 ) -> Any: ...
-
 @overload
 def save(
     file: StrPath | SupportsWrite[bytes],
@@ -144,14 +143,12 @@ def save(
     allow_pickle: bool,
     fix_imports: bool,
 ) -> None: ...
-
 def savez(
     file: StrPath | SupportsWrite[bytes],
     *args: ArrayLike,
     allow_pickle: bool = ...,
     **kwds: ArrayLike,
 ) -> None: ...
-
 def savez_compressed(
     file: StrPath | SupportsWrite[bytes],
     *args: ArrayLike,
@@ -176,7 +173,7 @@ def loadtxt(
     max_rows: None | int = ...,
     *,
     quotechar: None | str = ...,
-    like: None | _SupportsArrayFunc = ...
+    like: None | _SupportsArrayFunc = ...,
 ) -> NDArray[float64]: ...
 @overload
 def loadtxt(
@@ -193,7 +190,7 @@ def loadtxt(
     max_rows: None | int = ...,
     *,
     quotechar: None | str = ...,
-    like: None | _SupportsArrayFunc = ...
+    like: None | _SupportsArrayFunc = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def loadtxt(
@@ -210,9 +207,8 @@ def loadtxt(
     max_rows: None | int = ...,
     *,
     quotechar: None | str = ...,
-    like: None | _SupportsArrayFunc = ...
+    like: None | _SupportsArrayFunc = ...,
 ) -> NDArray[Any]: ...
-
 def savetxt(
     fname: StrPath | SupportsWrite[str] | SupportsWrite[bytes],
     X: ArrayLike,
@@ -224,22 +220,20 @@ def savetxt(
     comments: str = ...,
     encoding: None | str = ...,
 ) -> None: ...
-
 @overload
 def fromregex(
     file: StrPath | SupportsRead[str] | SupportsRead[bytes],
     regexp: str | bytes | Pattern[Any],
     dtype: _DTypeLike[_SCT],
-    encoding: None | str = ...
+    encoding: None | str = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def fromregex(
     file: StrPath | SupportsRead[str] | SupportsRead[bytes],
     regexp: str | bytes | Pattern[Any],
     dtype: DTypeLike,
-    encoding: None | str = ...
+    encoding: None | str = ...,
 ) -> NDArray[Any]: ...
-
 @overload
 def genfromtxt(
     fname: StrPath | Iterable[str] | Iterable[bytes],
@@ -257,7 +251,7 @@ def genfromtxt(
     deletechars: str = ...,
     replace_space: str = ...,
     autostrip: bool = ...,
-    case_sensitive: bool | L['upper', 'lower'] = ...,
+    case_sensitive: bool | L["upper", "lower"] = ...,
     defaultfmt: str = ...,
     unpack: None | bool = ...,
     usemask: bool = ...,
@@ -286,7 +280,7 @@ def genfromtxt(
     deletechars: str = ...,
     replace_space: str = ...,
     autostrip: bool = ...,
-    case_sensitive: bool | L['upper', 'lower'] = ...,
+    case_sensitive: bool | L["upper", "lower"] = ...,
     defaultfmt: str = ...,
     unpack: None | bool = ...,
     usemask: bool = ...,
@@ -315,7 +309,7 @@ def genfromtxt(
     deletechars: str = ...,
     replace_space: str = ...,
     autostrip: bool = ...,
-    case_sensitive: bool | L['upper', 'lower'] = ...,
+    case_sensitive: bool | L["upper", "lower"] = ...,
     defaultfmt: str = ...,
     unpack: None | bool = ...,
     usemask: bool = ...,
@@ -327,7 +321,6 @@ def genfromtxt(
     ndmin: L[0, 1, 2] = ...,
     like: None | _SupportsArrayFunc = ...,
 ) -> NDArray[Any]: ...
-
 @overload
 def recfromtxt(
     fname: StrPath | Iterable[str] | Iterable[bytes],
@@ -342,7 +335,6 @@ def recfromtxt(
     usemask: L[True],
     **kwargs: Any,
 ) -> MaskedRecords[Any, dtype[void]]: ...
-
 @overload
 def recfromcsv(
     fname: StrPath | Iterable[str] | Iterable[bytes],

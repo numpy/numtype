@@ -140,5 +140,7 @@ assert_type(np.polydiv(AR_b, AR_b), tuple[npt.NDArray[np.floating[Any]], npt.NDA
 assert_type(np.polydiv(AR_u4, AR_b), tuple[npt.NDArray[np.floating[Any]], npt.NDArray[np.floating[Any]]])
 assert_type(np.polydiv(AR_i8, AR_i8), tuple[npt.NDArray[np.floating[Any]], npt.NDArray[np.floating[Any]]])
 assert_type(np.polydiv(AR_f8, AR_i8), tuple[npt.NDArray[np.floating[Any]], npt.NDArray[np.floating[Any]]])
-assert_type(np.polydiv(AR_i8, AR_c16), tuple[npt.NDArray[np.complexfloating[Any, Any]], npt.NDArray[np.complexfloating[Any, Any]]])
+assert_type(
+    np.polydiv(AR_i8, AR_c16), tuple[npt.NDArray[np.complexfloating[Any, Any]], npt.NDArray[np.complexfloating[Any, Any]]]
+)
 assert_type(np.polydiv(AR_O, AR_O), tuple[npt.NDArray[Any], npt.NDArray[Any]])

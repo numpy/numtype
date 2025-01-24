@@ -54,14 +54,7 @@ PS_herm: npp.Hermite
 PS_herme: npp.HermiteE
 PS_lag: npp.Laguerre
 PS_leg: npp.Legendre
-PS_all: (
-    npp.Polynomial
-    | npp.Chebyshev
-    | npp.Hermite
-    | npp.HermiteE
-    | npp.Laguerre
-    | npp.Legendre
-)
+PS_all: npp.Polynomial | npp.Chebyshev | npp.Hermite | npp.HermiteE | npp.Laguerre | npp.Legendre
 
 # static- and classmethods
 

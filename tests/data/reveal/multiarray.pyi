@@ -90,7 +90,7 @@ assert_type(np.vdot(1.5j, 1), np.complexfloating[Any, Any])
 
 assert_type(np.bincount(AR_i8), npt.NDArray[np.intp])
 
-assert_type(np.copyto(AR_f8, [1., 1.5, 1.6]), None)
+assert_type(np.copyto(AR_f8, [1.0, 1.5, 1.6]), None)
 
 assert_type(np.putmask(AR_f8, [True, True, False], 1.5), None)
 

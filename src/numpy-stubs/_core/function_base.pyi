@@ -1,21 +1,21 @@
 from typing import (
-    Literal as L,
-    overload,
     Any,
+    Literal as L,
     SupportsIndex,
     TypeVar,
+    overload,
 )
 
-from numpy import floating, complexfloating, generic
+from numpy import complexfloating, floating, generic
 from numpy._typing import (
-    NDArray,
     DTypeLike,
-    _DTypeLike,
-    _ArrayLikeFloat_co,
+    NDArray,
     _ArrayLikeComplex_co,
+    _ArrayLikeFloat_co,
+    _DTypeLike,
 )
 
-__all__ = ["logspace", "linspace", "geomspace"]
+__all__ = ["geomspace", "linspace", "logspace"]
 
 _SCT = TypeVar("_SCT", bound=generic)
 
@@ -115,7 +115,6 @@ def linspace(
     *,
     device: None | L["cpu"] = ...,
 ) -> tuple[NDArray[Any], Any]: ...
-
 @overload
 def logspace(
     start: _ArrayLikeFloat_co,
@@ -156,7 +155,6 @@ def logspace(
     dtype: DTypeLike = ...,
     axis: SupportsIndex = ...,
 ) -> NDArray[Any]: ...
-
 @overload
 def geomspace(
     start: _ArrayLikeFloat_co,
@@ -193,7 +191,6 @@ def geomspace(
     dtype: DTypeLike = ...,
     axis: SupportsIndex = ...,
 ) -> NDArray[Any]: ...
-
 def add_newdoc(
     place: str,
     obj: str,

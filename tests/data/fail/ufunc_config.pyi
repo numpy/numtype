@@ -1,4 +1,3 @@
-
 import numpy as np
 
 def func1(a: str, b: int, c: float) -> None: ...

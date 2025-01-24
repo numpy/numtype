@@ -1,6 +1,4 @@
-from typing import Literal, Final
-
-from numpy.lib._utils_impl import drop_metadata
+from typing import Final, Literal
 
 __all__: list[str] = []
 

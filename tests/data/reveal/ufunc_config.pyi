@@ -1,4 +1,3 @@
-
 from _typeshed import SupportsWrite
 from collections.abc import Callable
 from typing import Any, assert_type

@@ -1,4 +1,3 @@
-
 from typing import Any, assert_type
 
 import numpy as np

@@ -1,48 +1,38 @@
 from _typeshed import StrOrBytesPath
-from collections.abc import Sequence, Iterable
+from collections.abc import Iterable, Sequence
 from types import EllipsisType
-from typing import (
-    Any,
-    TypeAlias,
-    TypeVar,
-    overload,
-    Protocol,
-    SupportsIndex,
-    Literal,
-    type_check_only
-)
+from typing import Any, Literal, Protocol, SupportsIndex, TypeAlias, TypeVar, overload, type_check_only
 
 from numpy import (
-    ndarray,
+    _ByteOrder,
+    _OrderKACF,
+    _SupportsBuffer,
     dtype,
     generic,
+    ndarray,
     void,
-    _ByteOrder,
-    _SupportsBuffer,
-    _OrderKACF,
 )
-
 from numpy._typing import (
     ArrayLike,
     DTypeLike,
     NDArray,
-    _Shape,
-    _ShapeLike,
     _ArrayLikeInt_co,
     _ArrayLikeVoid_co,
     _NestedSequence,
+    _Shape,
+    _ShapeLike,
 )
 
 __all__ = [
-    "record",
-    "recarray",
-    "format_parser",
-    "fromarrays",
-    "fromrecords",
-    "fromstring",
-    "fromfile",
     "array",
     "find_duplicate",
+    "format_parser",
+    "fromarrays",
+    "fromfile",
+    "fromrecords",
+    "fromstring",
+    "recarray",
+    "record",
 ]
 
 _T = TypeVar("_T")
@@ -106,29 +96,31 @@ class recarray(ndarray[_ShapeT_co, _DType_co]):
     def __getattribute__(self, attr: str) -> Any: ...
     def __setattr__(self, attr: str, val: ArrayLike) -> None: ...
     @overload
-    def __getitem__(self, indx: (
-        SupportsIndex
-        | _ArrayLikeInt_co
-        | tuple[SupportsIndex | _ArrayLikeInt_co, ...]
-    )) -> Any: ...
+    def __getitem__(self, indx: (SupportsIndex | _ArrayLikeInt_co | tuple[SupportsIndex | _ArrayLikeInt_co, ...])) -> Any: ...
     @overload
-    def __getitem__(self: recarray[Any, dtype[void]], indx: (
-        None
-        | slice
-        | EllipsisType
-        | SupportsIndex
-        | _ArrayLikeInt_co
-        | tuple[None | slice | EllipsisType | _ArrayLikeInt_co | SupportsIndex, ...]
-    )) -> recarray[_Shape, _DType_co]: ...
+    def __getitem__(
+        self: recarray[Any, dtype[void]],
+        indx: (
+            None
+            | slice
+            | EllipsisType
+            | SupportsIndex
+            | _ArrayLikeInt_co
+            | tuple[None | slice | EllipsisType | _ArrayLikeInt_co | SupportsIndex, ...]
+        ),
+    ) -> recarray[_Shape, _DType_co]: ...
     @overload
-    def __getitem__(self, indx: (
-        None
-        | slice
-        | EllipsisType
-        | SupportsIndex
-        | _ArrayLikeInt_co
-        | tuple[None | slice | EllipsisType | _ArrayLikeInt_co | SupportsIndex, ...]
-    )) -> ndarray[_Shape, _DType_co]: ...
+    def __getitem__(
+        self,
+        indx: (
+            None
+            | slice
+            | EllipsisType
+            | SupportsIndex
+            | _ArrayLikeInt_co
+            | tuple[None | slice | EllipsisType | _ArrayLikeInt_co | SupportsIndex, ...]
+        ),
+    ) -> ndarray[_Shape, _DType_co]: ...
     @overload
     def __getitem__(self, indx: str) -> NDArray[Any]: ...
     @overload
@@ -172,7 +164,6 @@ def fromarrays(
     aligned: bool = ...,
     byteorder: None | _ByteOrder = ...,
 ) -> _RecArray[record]: ...
-
 @overload
 def fromrecords(
     recList: _ArrayLikeVoid_co | tuple[Any, ...] | _NestedSequence[tuple[Any, ...]],
@@ -196,7 +187,6 @@ def fromrecords(
     aligned: bool = ...,
     byteorder: None | _ByteOrder = ...,
 ) -> _RecArray[record]: ...
-
 @overload
 def fromstring(
     datastring: _SupportsBuffer,
@@ -222,7 +212,6 @@ def fromstring(
     aligned: bool = ...,
     byteorder: None | _ByteOrder = ...,
 ) -> _RecArray[record]: ...
-
 @overload
 def fromfile(
     fd: StrOrBytesPath | _SupportsReadInto,
@@ -248,7 +237,6 @@ def fromfile(
     aligned: bool = ...,
     byteorder: None | _ByteOrder = ...,
 ) -> _RecArray[record]: ...
-
 @overload
 def array(
     obj: _SCT | NDArray[_SCT],
@@ -343,5 +331,4 @@ def array(
     byteorder: None | _ByteOrder = ...,
     copy: bool = ...,
 ) -> _RecArray[record]: ...
-
 def find_duplicate(list: Iterable[_T]) -> list[_T]: ...

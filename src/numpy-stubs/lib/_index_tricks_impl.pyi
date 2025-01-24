@@ -1,59 +1,56 @@
 from collections.abc import Sequence
 from typing import (
     Any,
-    TypeVar,
     Generic,
-    overload,
     Literal,
     SupportsIndex,
+    TypeVar,
+    overload,
 )
 
 import numpy as np
 from numpy import (
+    bytes_,
+    complex128,
+    dtype,
+    float64,
+    int_,
     # Circumvent a naming conflict with `AxisConcatenator.matrix`
     matrix as _Matrix,
+    ndarray,
     ndenumerate,
     ndindex,
-    ndarray,
-    dtype,
     str_,
-    bytes_,
-    int_,
-    float64,
-    complex128,
 )
+from numpy._core.multiarray import ravel_multi_index, unravel_index
 from numpy._typing import (
     # Arrays
     ArrayLike,
-    _NestedSequence,
-    _FiniteNestedSequence,
-    NDArray,
-
     # DTypes
     DTypeLike,
-    _SupportsDType,
-
+    NDArray,
+    _FiniteNestedSequence,
+    _NestedSequence,
     # Shapes
     _Shape,
+    _SupportsDType,
 )
 
-from numpy._core.multiarray import unravel_index, ravel_multi_index
-
 __all__ = [
-    "ravel_multi_index",
-    "unravel_index",
-    "mgrid",
-    "ogrid",
-    "r_",
     "c_",
-    "s_",
-    "index_exp",
-    "ix_",
-    "ndenumerate",
-    "ndindex",
-    "fill_diagonal",
     "diag_indices",
     "diag_indices_from",
+    "fill_diagonal",
+    "index_exp",
+    "ix_",
+    "mgrid",
+    "ndenumerate",
+    "ndindex",
+    "ogrid",
+    "r_",
+    "ravel_multi_index",
+    "s_",
+    "unravel_index",
 ]
 
 _T = TypeVar("_T")
@@ -120,13 +117,9 @@ class AxisConcatenator:
     ) -> NDArray[Any]: ...
     @staticmethod
     @overload
-    def concatenate(
-        *a: ArrayLike, axis: SupportsIndex = ..., out: _ArrayType = ...
-    ) -> _ArrayType: ...
+    def concatenate(*a: ArrayLike, axis: SupportsIndex = ..., out: _ArrayType = ...) -> _ArrayType: ...
     @staticmethod
-    def makemat(
-        data: ArrayLike, dtype: DTypeLike = ..., copy: bool = ...
-    ) -> _Matrix[Any, Any]: ...
+    def makemat(data: ArrayLike, dtype: DTypeLike = ..., copy: bool = ...) -> _Matrix[Any, Any]: ...
 
     # TODO: Sort out this `__getitem__` method
     def __getitem__(self, key: Any) -> Any: ...

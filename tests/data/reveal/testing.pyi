@@ -19,7 +19,6 @@ suppress_obj: np.testing.suppress_warnings
 FT = TypeVar("FT", bound=Callable[..., Any])
 
 def func() -> int: ...
-
 def func2(
     x: npt.NDArray[np.number[Any]],
     y: npt.NDArray[np.number[Any]],
@@ -148,8 +147,7 @@ assert_type(np.testing.assert_raises_regex(RuntimeWarning, re.compile(b"test"), 
 
 class Test: ...
 
-def decorate(a: FT) -> FT:
-    ...
+def decorate(a: FT) -> FT: ...
 
 assert_type(np.testing.decorate_methods(Test, decorate), None)
 assert_type(np.testing.decorate_methods(Test, decorate, None), None)

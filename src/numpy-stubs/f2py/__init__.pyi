@@ -1,9 +1,9 @@
-from _typeshed import StrOrBytesPath
 import subprocess
+from _typeshed import StrOrBytesPath
 from collections.abc import Iterable
-from typing import Literal as L, overload, TypedDict, type_check_only
+from typing import Literal as L, TypedDict, overload, type_check_only
 
-__all__ = ["run_main", "get_include"]
+__all__ = ["get_include", "run_main"]
 
 @type_check_only
 class _F2PyDictBase(TypedDict):
@@ -16,7 +16,6 @@ class _F2PyDict(_F2PyDictBase, total=False):
     ltx: list[str]
 
 def run_main(comline_list: Iterable[str]) -> dict[str, _F2PyDict]: ...
-
 @overload
 def compile(
     source: str | bytes,
@@ -38,5 +37,4 @@ def compile(
     *,
     full_output: L[True],
 ) -> subprocess.CompletedProcess[bytes]: ...
-
 def get_include() -> str: ...

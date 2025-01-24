@@ -1,16 +1,16 @@
-from typing import Any, TypeVar, overload, Literal as L
+from typing import Any, Literal as L, TypeVar, overload
 
-from numpy import generic, integer, floating, complexfloating
+from numpy import complexfloating, floating, generic, integer
 from numpy._typing import (
-    NDArray,
     ArrayLike,
-    _ShapeLike,
+    NDArray,
     _ArrayLike,
-    _ArrayLikeFloat_co,
     _ArrayLikeComplex_co,
+    _ArrayLikeFloat_co,
+    _ShapeLike,
 )
 
-__all__ = ["fftshift", "ifftshift", "fftfreq", "rfftfreq"]
+__all__ = ["fftfreq", "fftshift", "ifftshift", "rfftfreq"]
 
 _SCT = TypeVar("_SCT", bound=generic)
 
@@ -18,12 +18,10 @@ _SCT = TypeVar("_SCT", bound=generic)
 def fftshift(x: _ArrayLike[_SCT], axes: None | _ShapeLike = ...) -> NDArray[_SCT]: ...
 @overload
 def fftshift(x: ArrayLike, axes: None | _ShapeLike = ...) -> NDArray[Any]: ...
-
 @overload
 def ifftshift(x: _ArrayLike[_SCT], axes: None | _ShapeLike = ...) -> NDArray[_SCT]: ...
 @overload
 def ifftshift(x: ArrayLike, axes: None | _ShapeLike = ...) -> NDArray[Any]: ...
-
 @overload
 def fftfreq(
     n: int | integer[Any],
@@ -36,7 +34,6 @@ def fftfreq(
     d: _ArrayLikeComplex_co = ...,
     device: None | L["cpu"] = ...,
 ) -> NDArray[complexfloating[Any, Any]]: ...
-
 @overload
 def rfftfreq(
     n: int | integer[Any],

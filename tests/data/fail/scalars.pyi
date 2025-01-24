@@ -33,8 +33,7 @@ np.complex64(1, 2)  # E: Too many arguments
 np.datetime64(0)  # E: No overload variant
 
 class A:
-    def __float__(self) -> float:
-        ...
+    def __float__(self) -> float: ...
 
 np.int8(A())  # E: incompatible type
 np.int16(A())  # E: incompatible type

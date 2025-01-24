@@ -901,7 +901,10 @@ assert_type(def_gen.choice(["pooh", "rabbit", "piglet", "Christopher"]), Any)
 assert_type(def_gen.choice(["pooh", "rabbit", "piglet", "Christopher"], 3), npt.NDArray[Any])
 assert_type(def_gen.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, p=[1 / 4] * 4), npt.NDArray[Any])
 assert_type(def_gen.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, replace=True), npt.NDArray[Any])
-assert_type(def_gen.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, replace=False, p=np.array([1 / 8, 1 / 8, 1 / 2, 1 / 4])), npt.NDArray[Any])
+assert_type(
+    def_gen.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, replace=False, p=np.array([1 / 8, 1 / 8, 1 / 2, 1 / 4])),
+    npt.NDArray[Any],
+)
 
 assert_type(def_gen.dirichlet([0.5, 0.5]), npt.NDArray[np.float64])
 assert_type(def_gen.dirichlet(np.array([0.5, 0.5])), npt.NDArray[np.float64])
@@ -1487,7 +1490,10 @@ assert_type(random_st.choice(["pooh", "rabbit", "piglet", "Christopher"]), Any)
 assert_type(random_st.choice(["pooh", "rabbit", "piglet", "Christopher"], 3), npt.NDArray[Any])
 assert_type(random_st.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, p=[1 / 4] * 4), npt.NDArray[Any])
 assert_type(random_st.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, replace=True), npt.NDArray[Any])
-assert_type(random_st.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, replace=False, p=np.array([1 / 8, 1 / 8, 1 / 2, 1 / 4])), npt.NDArray[Any])
+assert_type(
+    random_st.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, replace=False, p=np.array([1 / 8, 1 / 8, 1 / 2, 1 / 4])),
+    npt.NDArray[Any],
+)
 
 assert_type(random_st.dirichlet([0.5, 0.5]), npt.NDArray[np.float64])
 assert_type(random_st.dirichlet(np.array([0.5, 0.5])), npt.NDArray[np.float64])

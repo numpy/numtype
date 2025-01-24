@@ -1,4 +1,3 @@
-
 from typing import Any, Literal as L, NoReturn, assert_type
 
 import numpy as np

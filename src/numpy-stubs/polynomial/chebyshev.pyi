@@ -14,9 +14,7 @@ from numpy._typing import _IntLike_co
 
 from ._polybase import ABCPolyBase
 from ._polytypes import (
-    _SeriesLikeCoef_co,
     _Array1,
-    _Series,
     _Array2,
     _CoefSeries,
     _FuncBinOp,
@@ -40,47 +38,50 @@ from ._polytypes import (
     _FuncVander2D,
     _FuncVander3D,
     _FuncWeight,
+    _Series,
+    _SeriesLikeCoef_co,
 )
 from .polyutils import trimcoef as chebtrim
 
 __all__ = [
-    "chebzero",
-    "chebone",
-    "chebx",
-    "chebdomain",
-    "chebline",
-    "chebadd",
-    "chebsub",
-    "chebmulx",
-    "chebmul",
-    "chebdiv",
-    "chebpow",
-    "chebval",
-    "chebder",
-    "chebint",
-    "cheb2poly",
-    "poly2cheb",
-    "chebfromroots",
-    "chebvander",
-    "chebfit",
-    "chebtrim",
-    "chebroots",
-    "chebpts1",
-    "chebpts2",
     "Chebyshev",
-    "chebval2d",
-    "chebval3d",
+    "cheb2poly",
+    "chebadd",
+    "chebcompanion",
+    "chebder",
+    "chebdiv",
+    "chebdomain",
+    "chebfit",
+    "chebfromroots",
+    "chebgauss",
     "chebgrid2d",
     "chebgrid3d",
+    "chebint",
+    "chebinterpolate",
+    "chebline",
+    "chebmul",
+    "chebmulx",
+    "chebone",
+    "chebpow",
+    "chebpts1",
+    "chebpts2",
+    "chebroots",
+    "chebsub",
+    "chebtrim",
+    "chebval",
+    "chebval2d",
+    "chebval3d",
+    "chebvander",
     "chebvander2d",
     "chebvander3d",
-    "chebcompanion",
-    "chebgauss",
     "chebweight",
-    "chebinterpolate",
+    "chebx",
+    "chebzero",
+    "poly2cheb",
 ]
 
 _SCT = TypeVar("_SCT", bound=np.number[Any] | np.object_)
+
 def _cseries_to_zseries(c: npt.NDArray[_SCT]) -> _Series[_SCT]: ...
 def _zseries_to_cseries(zs: npt.NDArray[_SCT]) -> _Series[_SCT]: ...
 def _zseries_mul(
@@ -131,6 +132,7 @@ chebpts2: _FuncPts[L["chebpts2"]]
 
 # keep in sync with `Chebyshev.interpolate`
 _RT = TypeVar("_RT", bound=np.number[Any] | np.bool | np.object_)
+
 @overload
 def chebinterpolate(
     func: np.ufunc,

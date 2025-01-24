@@ -1,4 +1,3 @@
-
 import numpy as np
 import numpy.typing as npt
 
@@ -37,20 +36,29 @@ np.partition(  # E: No overload variant
     A, 0, kind="bob"
 )
 np.partition(
-    A, 0, order=range(5)  # E: Argument "order" to "partition" has incompatible type
+    A,
+    0,
+    order=range(5),  # E: Argument "order" to "partition" has incompatible type
 )
 
 np.argpartition(
-    a, None  # E: incompatible type
+    a,
+    None,  # E: incompatible type
 )
 np.argpartition(
-    a, 0, axis="bob"  # E: incompatible type
+    a,
+    0,
+    axis="bob",  # E: incompatible type
 )
 np.argpartition(
-    A, 0, kind="bob"  # E: incompatible type
+    A,
+    0,
+    kind="bob",  # E: incompatible type
 )
 np.argpartition(
-    A, 0, order=range(5)  # E: Argument "order" to "argpartition" has incompatible type
+    A,
+    0,
+    order=range(5),  # E: Argument "order" to "argpartition" has incompatible type
 )
 
 np.sort(A, axis="bob")  # E: No overload variant
