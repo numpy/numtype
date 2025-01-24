@@ -146,6 +146,7 @@ numpy = [
 dev = [
     { name = "basedmypy", extra = ["faster-cache"] },
     { name = "basedpyright" },
+    { name = "numpy-stubs", extra = ["numpy"] },
     { name = "ruff" },
 ]
 numpy = [
@@ -159,6 +160,7 @@ requires-dist = [{ name = "numpy", marker = "extra == 'numpy'", specifier = ">=2
 dev = [
     { name = "basedmypy", extras = ["faster-cache"], specifier = ">=2.9.1" },
     { name = "basedpyright", specifier = ">=1.24.0" },
+    { name = "numpy-stubs", extras = ["numpy"] },
     { name = "ruff", specifier = ">=0.9.3" },
 ]
 numpy = [{ name = "numpy-stubs", extras = ["numpy"] }]
