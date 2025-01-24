@@ -1,9 +1,7 @@
 # ruff: noqa: I001
 import builtins
 import sys
-import mmap
 import ctypes as ct
-import array as _array
 import datetime as dt
 import enum
 from abc import abstractmethod
@@ -37,17 +35,14 @@ from numpy._typing import (
     _ArrayLikeTD64_co,
     _ArrayLikeDT64_co,
     _ArrayLikeObject_co,
-
     # DTypes
     DTypeLike,
     _DTypeLike,
     _DTypeLikeVoid,
     _VoidDTypeLike,
-
     # Shapes
     _Shape,
     _ShapeLike,
-
     # Scalars
     _CharLike_co,
     _IntLike_co,
@@ -55,15 +50,10 @@ from numpy._typing import (
     _TD64Like_co,
     _NumberLike_co,
     _ScalarLike_co,
-
     # `number` precision
     NBitBase,
     # NOTE: Do not remove the extended precision bit-types even if seemingly unused;
     # they're used by the mypy plugin
-    _256Bit,
-    _128Bit,
-    _96Bit,
-    _80Bit,
     _64Bit,
     _32Bit,
     _16Bit,
@@ -78,7 +68,6 @@ from numpy._typing import (
     _NBitSingle,
     _NBitDouble,
     _NBitLongDouble,
-
     # Character codes
     _BoolCodes,
     _UInt8Codes,
@@ -120,7 +109,6 @@ from numpy._typing import (
     _VoidCodes,
     _ObjectCodes,
     _StringCodes,
-
     _UnsignedIntegerCodes,
     _SignedIntegerCodes,
     _IntegerCodes,
@@ -131,7 +119,6 @@ from numpy._typing import (
     _CharacterCodes,
     _FlexibleCodes,
     _GenericCodes,
-
     # Ufuncs
     _UFunc_Nin1_Nout1,
     _UFunc_Nin2_Nout1,
@@ -196,15 +183,7 @@ from collections.abc import (
 if sys.version_info >= (3, 12):
     from collections.abc import Buffer as _SupportsBuffer
 else:
-    _SupportsBuffer: TypeAlias = (
-        bytes
-        | bytearray
-        | memoryview
-        | _array.array[Any]
-        | mmap.mmap
-        | NDArray[Any]
-        | generic
-    )
+    _SupportsBuffer: TypeAlias = ...
 
 from typing import (
     Any,
@@ -228,7 +207,8 @@ from typing import (
 # library include `typing_extensions` stubs:
 # https://github.com/python/typeshed/blob/main/stdlib/typing_extensions.pyi
 from _typeshed import StrOrBytesPath, SupportsFlush, SupportsLenAndGetItem, SupportsWrite
-from typing_extensions import CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, Unpack, deprecated, overload
+from typing_extensions import CapsuleType, Protocol, TypeVar, deprecated
+from typing import LiteralString, Never, Self, overload
 
 from numpy import (
     char,
@@ -246,7 +226,7 @@ from numpy import (
     rec,
     strings,
     testing,
-    typing,
+    typing as npt,
 )
 
 # available through `__getattr__`, but not in `__all__` or `__dir__`
@@ -256,6 +236,7 @@ from numpy import (
     matrixlib as matrixlib,
     version as version,
 )
+
 if sys.version_info < (3, 12):
     from numpy import distutils as distutils
 
@@ -644,7 +625,7 @@ from numpy.matrixlib import (
 __all__ = [  # noqa: RUF022
     # __numpy_submodules__
     "char", "core", "ctypeslib", "dtypes", "exceptions", "f2py", "fft", "lib", "linalg",
-    "ma", "polynomial", "random", "rec", "strings", "test", "testing", "typing",
+    "ma", "polynomial", "random", "rec", "strings", "test", "testing", "npt",
 
     # _core.__all__
     "abs", "acos", "acosh", "asin", "asinh", "atan", "atanh", "atan2", "bitwise_invert",
@@ -760,7 +741,7 @@ __all__ = [  # noqa: RUF022
     "emath", "show_config", "__version__", "__array_namespace_info__",
 ]  # fmt: skip
 
-### Constrained types  (for internal use only)
+# Constrained types  (for internal use only)
 # Only use these for functions; never as generic type parameter.
 
 _AnyStr = TypeVar("_AnyStr", LiteralString, str, bytes)
@@ -784,7 +765,7 @@ _AnyDT64Item = TypeVar("_AnyDT64Item", dt.datetime, dt.date, int, None, dt.date,
 _AnyDate = TypeVar("_AnyDate", dt.date, dt.datetime)
 _AnyDateOrTime = TypeVar("_AnyDateOrTime", dt.date, dt.datetime, dt.timedelta)
 
-### Type parameters  (for internal use only)
+# Type parameters  (for internal use only)
 
 _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
@@ -808,7 +789,7 @@ _ShapeT = TypeVar("_ShapeT", bound=_Shape)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_Shape, covariant=True)
 _1DShapeT = TypeVar("_1DShapeT", bound=_1D)
 _2DShapeT_co = TypeVar("_2DShapeT_co", bound=_2D, covariant=True)
-_1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], Unpack[tuple[L[1], ...]]])  # (1,) | (1, 1) | (1, 1, 1) | ...
+_1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], *tuple[L[1], ...]])  # (1,) | (1, 1) | (1, 1, 1) | ...
 
 _SCT = TypeVar("_SCT", bound=generic)
 _SCT_co = TypeVar("_SCT_co", bound=generic, covariant=True)
@@ -838,7 +819,7 @@ _TD64ItemT_co = TypeVar("_TD64ItemT_co", bound=dt.timedelta | int | None, defaul
 _DT64ItemT_co = TypeVar("_DT64ItemT_co", bound=dt.date | int | None, default=dt.date | int | None, covariant=True)
 _TD64UnitT = TypeVar("_TD64UnitT", bound=_TD64Unit, default=_TD64Unit)
 
-### Type Aliases (for internal use only)
+# Type Aliases (for internal use only)
 
 _Falsy: TypeAlias = L[False, 0] | np.bool[L[False]]
 _Truthy: TypeAlias = L[True, 1] | np.bool[L[True]]
@@ -986,19 +967,24 @@ _PartitionKind: TypeAlias = L["introselect"]
 # in practice, only the first case-insensitive character is considered (so e.g.
 # "QuantumSort3000" will be interpreted as quicksort).
 _SortKind: TypeAlias = L[
-    "Q", "quick", "quicksort",
-    "M", "merge", "mergesort",
-    "H", "heap", "heapsort",
-    "S", "stable", "stablesort",
+    "Q",
+    "quick",
+    "quicksort",
+    "M",
+    "merge",
+    "mergesort",
+    "H",
+    "heap",
+    "heapsort",
+    "S",
+    "stable",
+    "stablesort",
 ]
 _SortSide: TypeAlias = L["left", "right"]
 
 _ConvertibleToInt: TypeAlias = SupportsInt | SupportsIndex | _CharLike_co
 _ConvertibleToFloat: TypeAlias = SupportsFloat | SupportsIndex | _CharLike_co
-if sys.version_info >= (3, 11):
-    _ConvertibleToComplex: TypeAlias = SupportsComplex | SupportsFloat | SupportsIndex | _CharLike_co
-else:
-    _ConvertibleToComplex: TypeAlias = complex | SupportsComplex | SupportsFloat | SupportsIndex | _CharLike_co
+_ConvertibleToComplex: TypeAlias = SupportsComplex | SupportsFloat | SupportsIndex | _CharLike_co
 _ConvertibleToTD64: TypeAlias = dt.timedelta | int | _CharLike_co | character | number | timedelta64 | np.bool | None
 _ConvertibleToDT64: TypeAlias = dt.date | int | _CharLike_co | character | number | datetime64 | np.bool | None
 
@@ -1010,7 +996,8 @@ _NDIterFlagsKind: TypeAlias = L[
     "delay_bufalloc",
     "external_loop",
     "f_index",
-    "grow_inner", "growinner",
+    "grow_inner",
+    "growinner",
     "multi_index",
     "ranged",
     "refs_ok",
@@ -1032,14 +1019,18 @@ _NDIterFlagsOp: TypeAlias = L[
     "updateifcopy",
     "virtual",
     "writeonly",
-    "writemasked"
+    "writemasked",
 ]
 
 _MemMapModeKind: TypeAlias = L[
-    "readonly", "r",
-    "copyonwrite", "c",
-    "readwrite", "r+",
-    "write", "w+",
+    "readonly",
+    "r",
+    "copyonwrite",
+    "c",
+    "readwrite",
+    "r+",
+    "write",
+    "w+",
 ]
 
 _DT64Date: TypeAlias = _HasDateAttributes | L["TODAY", "today", b"TODAY", b"today"]
@@ -1057,7 +1048,7 @@ _IntTD64Unit: TypeAlias = L[_MonthUnit, _IntTimeUnit]
 _TD64Unit: TypeAlias = L[_DateUnit, _TimeUnit]
 _TimeUnitSpec: TypeAlias = _TD64UnitT | tuple[_TD64UnitT, SupportsIndex]
 
-### TypedDict's (for internal use only)
+# TypedDict's (for internal use only)
 
 @type_check_only
 class _FormerAttrsDict(TypedDict):
@@ -1067,7 +1058,7 @@ class _FormerAttrsDict(TypedDict):
     str: LiteralString
     int: LiteralString
 
-### Protocols (for internal use only)
+# Protocols (for internal use only)
 
 @type_check_only
 class _SupportsFileMethods(SupportsFlush, Protocol):
@@ -1139,7 +1130,7 @@ class _HasDateAttributes(Protocol):
     @property
     def year(self) -> int: ...
 
-### Mixins (for internal use only)
+# Mixins (for internal use only)
 
 @type_check_only
 class _RealMixin:
@@ -1161,10 +1152,9 @@ class _IntegralMixin(_RealMixin):
     def numerator(self) -> Self: ...
     @property
     def denominator(self) -> L[1]: ...
-
     def is_integer(self, /) -> L[True]: ...
 
-### Public API
+# Public API
 
 __version__: Final[LiteralString] = ...
 
@@ -1199,7 +1189,7 @@ class dtype(Generic[_SCT_co]):
         dtype: None | type[float64],
         align: builtins.bool = ...,
         copy: builtins.bool = ...,
-        metadata: dict[builtins.str, Any] = ...
+        metadata: dict[builtins.str, Any] = ...,
     ) -> dtype[float64]: ...
 
     # Overload for `dtype` instances, scalar types, and instances that have a
@@ -1329,93 +1319,291 @@ class dtype(Generic[_SCT_co]):
 
     # `unsignedinteger` string-based representations and ctypes
     @overload
-    def __new__(cls, dtype: _UInt8Codes | type[ct.c_uint8], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[uint8]: ...
+    def __new__(
+        cls,
+        dtype: _UInt8Codes | type[ct.c_uint8],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[uint8]: ...
     @overload
-    def __new__(cls, dtype: _UInt16Codes | type[ct.c_uint16], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[uint16]: ...
+    def __new__(
+        cls,
+        dtype: _UInt16Codes | type[ct.c_uint16],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[uint16]: ...
     @overload
-    def __new__(cls, dtype: _UInt32Codes | type[ct.c_uint32], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[uint32]: ...
+    def __new__(
+        cls,
+        dtype: _UInt32Codes | type[ct.c_uint32],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[uint32]: ...
     @overload
-    def __new__(cls, dtype: _UInt64Codes | type[ct.c_uint64], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[uint64]: ...
+    def __new__(
+        cls,
+        dtype: _UInt64Codes | type[ct.c_uint64],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[uint64]: ...
     @overload
-    def __new__(cls, dtype: _UByteCodes | type[ct.c_ubyte], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[ubyte]: ...
+    def __new__(
+        cls,
+        dtype: _UByteCodes | type[ct.c_ubyte],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[ubyte]: ...
     @overload
-    def __new__(cls, dtype: _UShortCodes | type[ct.c_ushort], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[ushort]: ...
+    def __new__(
+        cls,
+        dtype: _UShortCodes | type[ct.c_ushort],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[ushort]: ...
     @overload
-    def __new__(cls, dtype: _UIntCCodes | type[ct.c_uint], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[uintc]: ...
+    def __new__(
+        cls,
+        dtype: _UIntCCodes | type[ct.c_uint],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[uintc]: ...
     # NOTE: We're assuming here that `uint_ptr_t == size_t`,
     # an assumption that does not hold in rare cases (same for `ssize_t`)
     @overload
-    def __new__(cls, dtype: _UIntPCodes | type[ct.c_void_p] | type[ct.c_size_t], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[uintp]: ...
+    def __new__(
+        cls,
+        dtype: type[ct.c_void_p | ct.c_size_t] | _UIntPCodes,
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[uintp]: ...
     @overload
-    def __new__(cls, dtype: _ULongCodes | type[ct.c_ulong], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[ulong]: ...
+    def __new__(
+        cls,
+        dtype: _ULongCodes | type[ct.c_ulong],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[ulong]: ...
     @overload
-    def __new__(cls, dtype: _ULongLongCodes | type[ct.c_ulonglong], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[ulonglong]: ...
+    def __new__(
+        cls,
+        dtype: _ULongLongCodes | type[ct.c_ulonglong],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[ulonglong]: ...
 
     # `signedinteger` string-based representations and ctypes
     @overload
-    def __new__(cls, dtype: _Int8Codes | type[ct.c_int8], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[int8]: ...
+    def __new__(
+        cls,
+        dtype: _Int8Codes | type[ct.c_int8],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[int8]: ...
     @overload
-    def __new__(cls, dtype: _Int16Codes | type[ct.c_int16], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[int16]: ...
+    def __new__(
+        cls,
+        dtype: _Int16Codes | type[ct.c_int16],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[int16]: ...
     @overload
-    def __new__(cls, dtype: _Int32Codes | type[ct.c_int32], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[int32]: ...
+    def __new__(
+        cls,
+        dtype: _Int32Codes | type[ct.c_int32],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[int32]: ...
     @overload
-    def __new__(cls, dtype: _Int64Codes | type[ct.c_int64], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[int64]: ...
+    def __new__(
+        cls,
+        dtype: _Int64Codes | type[ct.c_int64],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[int64]: ...
     @overload
-    def __new__(cls, dtype: _ByteCodes | type[ct.c_byte], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[byte]: ...
+    def __new__(
+        cls,
+        dtype: _ByteCodes | type[ct.c_byte],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[byte]: ...
     @overload
-    def __new__(cls, dtype: _ShortCodes | type[ct.c_short], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[short]: ...
+    def __new__(
+        cls,
+        dtype: _ShortCodes | type[ct.c_short],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[short]: ...
     @overload
-    def __new__(cls, dtype: _IntCCodes | type[ct.c_int], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[intc]: ...
+    def __new__(
+        cls,
+        dtype: _IntCCodes | type[ct.c_int],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[intc]: ...
     @overload
-    def __new__(cls, dtype: _IntPCodes | type[ct.c_ssize_t], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[intp]: ...
+    def __new__(
+        cls,
+        dtype: _IntPCodes | type[ct.c_ssize_t],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[intp]: ...
     @overload
-    def __new__(cls, dtype: _LongCodes | type[ct.c_long], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[long]: ...
+    def __new__(
+        cls,
+        dtype: _LongCodes | type[ct.c_long],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[long]: ...
     @overload
-    def __new__(cls, dtype: _LongLongCodes | type[ct.c_longlong], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[longlong]: ...
+    def __new__(
+        cls,
+        dtype: _LongLongCodes | type[ct.c_longlong],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[longlong]: ...
 
     # `floating` string-based representations and ctypes
     @overload
-    def __new__(cls, dtype: _Float16Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[float16]: ...
+    def __new__(
+        cls, dtype: _Float16Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[float16]: ...
     @overload
-    def __new__(cls, dtype: _Float32Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[float32]: ...
+    def __new__(
+        cls, dtype: _Float32Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[float32]: ...
     @overload
-    def __new__(cls, dtype: _Float64Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[float64]: ...
+    def __new__(
+        cls, dtype: _Float64Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[float64]: ...
     @overload
-    def __new__(cls, dtype: _HalfCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[half]: ...
+    def __new__(
+        cls, dtype: _HalfCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[half]: ...
     @overload
-    def __new__(cls, dtype: _SingleCodes | type[ct.c_float], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[single]: ...
+    def __new__(
+        cls,
+        dtype: _SingleCodes | type[ct.c_float],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[single]: ...
     @overload
-    def __new__(cls, dtype: _DoubleCodes | type[ct.c_double], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[double]: ...
+    def __new__(
+        cls,
+        dtype: _DoubleCodes | type[ct.c_double],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[double]: ...
     @overload
-    def __new__(cls, dtype: _LongDoubleCodes | type[ct.c_longdouble], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[longdouble]: ...
+    def __new__(
+        cls,
+        dtype: _LongDoubleCodes | type[ct.c_longdouble],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[longdouble]: ...
 
     # `complexfloating` string-based representations
     @overload
-    def __new__(cls, dtype: _Complex64Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[complex64]: ...
+    def __new__(
+        cls,
+        dtype: _Complex64Codes,
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[complex64]: ...
     @overload
-    def __new__(cls, dtype: _Complex128Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[complex128]: ...
+    def __new__(
+        cls,
+        dtype: _Complex128Codes,
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[complex128]: ...
     @overload
-    def __new__(cls, dtype: _CSingleCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[csingle]: ...
+    def __new__(
+        cls, dtype: _CSingleCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[csingle]: ...
     @overload
-    def __new__(cls, dtype: _CDoubleCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[cdouble]: ...
+    def __new__(
+        cls, dtype: _CDoubleCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[cdouble]: ...
     @overload
-    def __new__(cls, dtype: _CLongDoubleCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[clongdouble]: ...
+    def __new__(
+        cls,
+        dtype: _CLongDoubleCodes,
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[clongdouble]: ...
 
     # Miscellaneous string-based representations and ctypes
     @overload
-    def __new__(cls, dtype: _BoolCodes | type[ct.c_bool], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[np.bool]: ...
+    def __new__(
+        cls,
+        dtype: _BoolCodes | type[ct.c_bool],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[np.bool]: ...
     @overload
-    def __new__(cls, dtype: _TD64Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[timedelta64]: ...
+    def __new__(
+        cls, dtype: _TD64Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[timedelta64]: ...
     @overload
-    def __new__(cls, dtype: _DT64Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[datetime64]: ...
+    def __new__(
+        cls, dtype: _DT64Codes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[datetime64]: ...
     @overload
-    def __new__(cls, dtype: _StrCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[str_]: ...
+    def __new__(
+        cls, dtype: _StrCodes, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...
+    ) -> dtype[str_]: ...
     @overload
-    def __new__(cls, dtype: _BytesCodes | type[ct.c_char], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[bytes_]: ...
+    def __new__(
+        cls,
+        dtype: _BytesCodes | type[ct.c_char],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[bytes_]: ...
     @overload
-    def __new__(cls, dtype: _VoidCodes | _VoidDTypeLike, align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[void]: ...
+    def __new__(
+        cls,
+        dtype: _VoidCodes | _VoidDTypeLike,
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[void]: ...
     @overload
-    def __new__(cls, dtype: _ObjectCodes | type[ct.py_object[Any]], align: builtins.bool = ..., copy: builtins.bool = ..., metadata: dict[builtins.str, Any] = ...) -> dtype[object_]: ...
+    def __new__(
+        cls,
+        dtype: _ObjectCodes | type[ct.py_object[Any]],
+        align: builtins.bool = ...,
+        copy: builtins.bool = ...,
+        metadata: dict[builtins.str, Any] = ...,
+    ) -> dtype[object_]: ...
 
     # `StringDType` requires special treatment because it has no scalar type
     @overload
@@ -1424,7 +1612,7 @@ class dtype(Generic[_SCT_co]):
         dtype: dtypes.StringDType | _StringCodes,
         align: builtins.bool = ...,
         copy: builtins.bool = ...,
-        metadata: dict[builtins.str, Any] = ...
+        metadata: dict[builtins.str, Any] = ...,
     ) -> dtypes.StringDType: ...
 
     # Combined char-codes and ctypes, analogous to the scalar-type hierarchy
@@ -1532,9 +1720,7 @@ class dtype(Generic[_SCT_co]):
         copy: builtins.bool = ...,
         metadata: dict[builtins.str, Any] = ...,
     ) -> dtype[object_ | Any]: ...
-
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
-
     @overload
     def __getitem__(self: dtype[void], key: list[builtins.str], /) -> dtype[void]: ...
     @overload
@@ -1555,7 +1741,6 @@ class dtype(Generic[_SCT_co]):
     def __rmul__(self: _FlexDType, value: SupportsIndex, /) -> _FlexDType: ...
     @overload
     def __rmul__(self, value: SupportsIndex, /) -> dtype[Any]: ...
-
     def __gt__(self, other: DTypeLike, /) -> builtins.bool: ...
     def __ge__(self, other: DTypeLike, /) -> builtins.bool: ...
     def __lt__(self, other: DTypeLike, /) -> builtins.bool: ...
@@ -1566,7 +1751,6 @@ class dtype(Generic[_SCT_co]):
     # identical to their `object`-based counterpart
     def __eq__(self, other: Any, /) -> builtins.bool: ...
     def __ne__(self, other: Any, /) -> builtins.bool: ...
-
     @property
     def alignment(self) -> int: ...
     @property
@@ -1578,7 +1762,7 @@ class dtype(Generic[_SCT_co]):
     @property
     def descr(self) -> list[tuple[LiteralString, LiteralString] | tuple[LiteralString, LiteralString, _Shape]]: ...
     @property
-    def fields(self,) -> None | MappingProxyType[LiteralString, tuple[dtype[Any], int] | tuple[dtype[Any], int, Any]]: ...
+    def fields(self) -> None | MappingProxyType[LiteralString, tuple[dtype[Any], int] | tuple[dtype[Any], int, Any]]: ...
     @property
     def flags(self) -> int: ...
     @property
@@ -1672,7 +1856,6 @@ class _ArrayOrScalarCommon:
     def nbytes(self) -> int: ...
     @property
     def device(self) -> L["cpu"]: ...
-
     def __bool__(self, /) -> builtins.bool: ...
     def __int__(self, /) -> int: ...
     def __float__(self, /) -> float: ...
@@ -1683,7 +1866,6 @@ class _ArrayOrScalarCommon:
     # xref numpy/numpy#17368
     def __eq__(self, other: Any, /) -> Any: ...
     def __ne__(self, other: Any, /) -> Any: ...
-
     def copy(self, order: _OrderKACF = ...) -> Self: ...
     def dump(self, file: StrOrBytesPath | SupportsWrite[bytes]) -> None: ...
     def dumps(self) -> bytes: ...
@@ -1694,7 +1876,6 @@ class _ArrayOrScalarCommon:
     # generics and 0d arrays return builtin scalars
     def tolist(self) -> Any: ...
     def to_device(self, device: L["cpu"], /, *, stream: None | int | Any = ...) -> Self: ...
-
     @property
     def __array_interface__(self) -> dict[str, Any]: ...
     @property
@@ -1702,17 +1883,19 @@ class _ArrayOrScalarCommon:
     @property
     def __array_struct__(self) -> CapsuleType: ...  # builtins.PyCapsule
     def __array_namespace__(self, /, *, api_version: _ArrayAPIVersion | None = None) -> ModuleType: ...
-    def __setstate__(self, state: tuple[
-        SupportsIndex,  # version
-        _ShapeLike,  # Shape
-        _DType_co,  # DType
-        np.bool,  # F-continuous
-        bytes | list[Any],  # Data
-    ], /) -> None: ...
-
+    def __setstate__(
+        self,
+        state: tuple[
+            SupportsIndex,  # version
+            _ShapeLike,  # Shape
+            _DType_co,  # DType
+            np.bool,  # F-continuous
+            bytes | list[Any],  # Data
+        ],
+        /,
+    ) -> None: ...
     def conj(self) -> Self: ...
     def conjugate(self) -> Self: ...
-
     def argsort(
         self,
         axis: None | SupportsIndex = ...,
@@ -1721,7 +1904,6 @@ class _ArrayOrScalarCommon:
         *,
         stable: None | bool = ...,
     ) -> NDArray[Any]: ...
-
     @overload  # axis=None (default), out=None (default), keepdims=False (default)
     def argmax(self, /, axis: None = None, out: None = None, *, keepdims: L[False] = False) -> intp: ...
     @overload  # axis=index, out=None (default)
@@ -1730,7 +1912,6 @@ class _ArrayOrScalarCommon:
     def argmax(self, /, axis: SupportsIndex | None, out: _ArrayT, *, keepdims: builtins.bool = False) -> _ArrayT: ...
     @overload
     def argmax(self, /, axis: SupportsIndex | None = None, *, out: _ArrayT, keepdims: builtins.bool = False) -> _ArrayT: ...
-
     @overload  # axis=None (default), out=None (default), keepdims=False (default)
     def argmin(self, /, axis: None = None, out: None = None, *, keepdims: L[False] = False) -> intp: ...
     @overload  # axis=index, out=None (default)
@@ -1739,14 +1920,12 @@ class _ArrayOrScalarCommon:
     def argmin(self, /, axis: SupportsIndex | None, out: _ArrayT, *, keepdims: builtins.bool = False) -> _ArrayT: ...
     @overload
     def argmin(self, /, axis: SupportsIndex | None = None, *, out: _ArrayT, keepdims: builtins.bool = False) -> _ArrayT: ...
-
     @overload  # out=None (default)
     def round(self, /, decimals: SupportsIndex = 0, out: None = None) -> Self: ...
     @overload  # out=ndarray
     def round(self, /, decimals: SupportsIndex, out: _ArrayT) -> _ArrayT: ...
     @overload
     def round(self, /, decimals: SupportsIndex = 0, *, out: _ArrayT) -> _ArrayT: ...
-
     @overload  # out=None (default)
     def choose(self, /, choices: ArrayLike, out: None = None, mode: _ModeKind = "raise") -> NDArray[Any]: ...
     @overload  # out=ndarray
@@ -1767,28 +1946,24 @@ class _ArrayOrScalarCommon:
     def clip(self, /, min: None, max: ArrayLike, out: _ArrayT, **kwargs: Any) -> _ArrayT: ...
     @overload
     def clip(self, /, min: None = None, *, max: ArrayLike, out: _ArrayT, **kwargs: Any) -> _ArrayT: ...
-
     @overload
     def compress(self, /, condition: _ArrayLikeInt_co, axis: SupportsIndex | None = None, out: None = None) -> NDArray[Any]: ...
     @overload
     def compress(self, /, condition: _ArrayLikeInt_co, axis: SupportsIndex | None, out: _ArrayT) -> _ArrayT: ...
     @overload
     def compress(self, /, condition: _ArrayLikeInt_co, axis: SupportsIndex | None = None, *, out: _ArrayT) -> _ArrayT: ...
-
     @overload  # out: None (default)
     def cumprod(self, /, axis: SupportsIndex | None = None, dtype: DTypeLike | None = None, out: None = None) -> NDArray[Any]: ...
     @overload  # out: ndarray
     def cumprod(self, /, axis: SupportsIndex | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
     @overload
     def cumprod(self, /, axis: SupportsIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
-
     @overload  # out: None (default)
     def cumsum(self, /, axis: SupportsIndex | None = None, dtype: DTypeLike | None = None, out: None = None) -> NDArray[Any]: ...
     @overload  # out: ndarray
     def cumsum(self, /, axis: SupportsIndex | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
     @overload
     def cumsum(self, /, axis: SupportsIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
-
     @overload
     def max(
         self,
@@ -1820,7 +1995,6 @@ class _ArrayOrScalarCommon:
         initial: _NumberLike_co = ...,
         where: _ArrayLikeBool_co = True,
     ) -> _ArrayT: ...
-
     @overload
     def min(
         self,
@@ -1852,7 +2026,6 @@ class _ArrayOrScalarCommon:
         initial: _NumberLike_co = ...,
         where: _ArrayLikeBool_co = True,
     ) -> _ArrayT: ...
-
     @overload
     def sum(
         self,
@@ -1887,7 +2060,6 @@ class _ArrayOrScalarCommon:
         initial: _NumberLike_co = 0,
         where: _ArrayLikeBool_co = True,
     ) -> _ArrayT: ...
-
     @overload
     def prod(
         self,
@@ -1922,7 +2094,6 @@ class _ArrayOrScalarCommon:
         initial: _NumberLike_co = 1,
         where: _ArrayLikeBool_co = True,
     ) -> _ArrayT: ...
-
     @overload
     def mean(
         self,
@@ -1955,7 +2126,6 @@ class _ArrayOrScalarCommon:
         keepdims: builtins.bool = False,
         where: _ArrayLikeBool_co = True,
     ) -> _ArrayT: ...
-
     @overload
     def std(
         self,
@@ -1995,7 +2165,6 @@ class _ArrayOrScalarCommon:
         mean: _ArrayLikeNumber_co = ...,
         correction: float = ...,
     ) -> _ArrayT: ...
-
     @overload
     def var(
         self,
@@ -2052,7 +2221,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def imag(self: _HasDTypeWithRealAndImag[object, _SCT], /) -> ndarray[_ShapeT_co, dtype[_SCT]]: ...
     @imag.setter
     def imag(self, value: ArrayLike, /) -> None: ...
-
     def __new__(
         cls,
         shape: _ShapeLike,
@@ -2067,16 +2235,10 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         def __buffer__(self, flags: int, /) -> memoryview: ...
 
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
-
     @overload
-    def __array__(
-        self, dtype: None = ..., /, *, copy: None | bool = ...
-    ) -> ndarray[_ShapeT_co, _DType_co]: ...
+    def __array__(self, dtype: None = ..., /, *, copy: None | bool = ...) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
-    def __array__(
-        self, dtype: _DType, /, *, copy: None | bool = ...
-    ) -> ndarray[_ShapeT_co, _DType]: ...
-
+    def __array__(self, dtype: _DType, /, *, copy: None | bool = ...) -> ndarray[_ShapeT_co, _DType]: ...
     def __array_ufunc__(
         self,
         ufunc: ufunc,
@@ -2084,7 +2246,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         *inputs: Any,
         **kwargs: Any,
     ) -> Any: ...
-
     def __array_function__(
         self,
         func: Callable[..., Any],
@@ -2097,7 +2258,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     # is a pseudo-abstract method the type has been narrowed down in order to
     # grant subclasses a bit more flexibility
     def __array_finalize__(self, obj: None | NDArray[Any], /) -> None: ...
-
     def __array_wrap__(
         self,
         array: ndarray[_ShapeT, _DType],
@@ -2105,7 +2265,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         return_scalar: builtins.bool = ...,
         /,
     ) -> ndarray[_ShapeT, _DType]: ...
-
     @overload
     def __getitem__(self, key: _ArrayInt_co | tuple[_ArrayInt_co, ...], /) -> ndarray[_Shape, _DType_co]: ...
     @overload
@@ -2116,7 +2275,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __getitem__(self: NDArray[void], key: str, /) -> ndarray[_ShapeT_co, np.dtype[Any]]: ...
     @overload
     def __getitem__(self: NDArray[void], key: list[str], /) -> ndarray[_ShapeT_co, _dtype[void]]: ...
-
     @overload  # flexible | object_ | bool
     def __setitem__(
         self: ndarray[Any, dtype[flexible | object_ | np.bool] | dtypes.StringDType],
@@ -2163,7 +2321,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __setitem__(self: NDArray[void], key: str | list[str], value: object, /) -> None: ...
     @overload  # catch-all
     def __setitem__(self, key: _ToIndices, value: ArrayLike, /) -> None: ...
-
     @property
     def ctypes(self) -> _ctypes[int]: ...
     @property
@@ -2178,7 +2335,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def fill(self, value: Any) -> None: ...
     @property
     def flat(self) -> flatiter[Self]: ...
-
     @overload  # special casing for `StringDType`, which has no scalar type
     def item(self: ndarray[Any, dtypes.StringDType], /) -> str: ...
     @overload
@@ -2191,7 +2347,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def item(self: _HasShapeAndDTypeWithItem[Any, _T], arg0: SupportsIndex | tuple[SupportsIndex, ...] = ..., /) -> _T: ...
     @overload
     def item(self: _HasShapeAndDTypeWithItem[Any, _T], /, *args: SupportsIndex) -> _T: ...
-
     @overload
     def tolist(self: _HasShapeAndSupportsItem[tuple[()], _T], /) -> _T: ...
     @overload
@@ -2202,40 +2357,27 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def tolist(self: _HasShapeAndSupportsItem[tuple[int, int, int], _T], /) -> list[list[list[_T]]]: ...
     @overload
     def tolist(self: _HasShapeAndSupportsItem[Any, _T], /) -> _T | list[_T] | list[list[_T]] | list[list[list[Any]]]: ...
-
     @overload
     def resize(self, new_shape: _ShapeLike, /, *, refcheck: builtins.bool = ...) -> None: ...
     @overload
     def resize(self, *new_shape: SupportsIndex, refcheck: builtins.bool = ...) -> None: ...
-
-    def setflags(
-        self, write: builtins.bool = ..., align: builtins.bool = ..., uic: builtins.bool = ...
-    ) -> None: ...
-
+    def setflags(self, write: builtins.bool = ..., align: builtins.bool = ..., uic: builtins.bool = ...) -> None: ...
     def squeeze(
         self,
         axis: None | SupportsIndex | tuple[SupportsIndex, ...] = ...,
     ) -> ndarray[_Shape, _DType_co]: ...
-
     def swapaxes(
         self,
         axis1: SupportsIndex,
         axis2: SupportsIndex,
     ) -> ndarray[_Shape, _DType_co]: ...
-
     @overload
     def transpose(self, axes: None | _ShapeLike, /) -> Self: ...
     @overload
     def transpose(self, *axes: SupportsIndex) -> Self: ...
-
     @overload
     def all(
-        self,
-        axis: None = None,
-        out: None = None,
-        keepdims: L[False, 0] = False,
-        *,
-        where: _ArrayLikeBool_co = True
+        self, axis: None = None, out: None = None, keepdims: L[False, 0] = False, *, where: _ArrayLikeBool_co = True
     ) -> np.bool: ...
     @overload
     def all(
@@ -2264,15 +2406,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         keepdims: SupportsIndex = False,
         where: _ArrayLikeBool_co = True,
     ) -> _ArrayT: ...
-
     @overload
     def any(
-        self,
-        axis: None = None,
-        out: None = None,
-        keepdims: L[False, 0] = False,
-        *,
-        where: _ArrayLikeBool_co = True
+        self, axis: None = None, out: None = None, keepdims: L[False, 0] = False, *, where: _ArrayLikeBool_co = True
     ) -> np.bool: ...
     @overload
     def any(
@@ -2301,7 +2437,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         keepdims: SupportsIndex = False,
         where: _ArrayLikeBool_co = True,
     ) -> _ArrayT: ...
-
     def argpartition(
         self,
         kth: _ArrayLikeInt_co,
@@ -2309,7 +2444,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         kind: _PartitionKind = ...,
         order: None | str | Sequence[str] = ...,
     ) -> NDArray[intp]: ...
-
     def diagonal(
         self,
         offset: SupportsIndex = ...,
@@ -2328,7 +2462,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
 
     # `nonzero()` is deprecated for 0d arrays/generics
     def nonzero(self) -> tuple[NDArray[intp], ...]: ...
-
     def partition(
         self,
         kth: _ArrayLikeInt_co,
@@ -2345,7 +2478,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         v: ArrayLike,
         mode: _ModeKind = ...,
     ) -> None: ...
-
     @overload
     def searchsorted(  # type: ignore[misc]
         self,  # >= 1D array
@@ -2360,14 +2492,12 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         side: _SortSide = ...,
         sorter: None | _ArrayLikeInt_co = ...,
     ) -> NDArray[intp]: ...
-
     def setfield(
         self,
         val: ArrayLike,
         dtype: DTypeLike,
         offset: SupportsIndex = ...,
     ) -> None: ...
-
     def sort(
         self,
         axis: SupportsIndex = ...,
@@ -2376,7 +2506,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         *,
         stable: None | bool = ...,
     ) -> None: ...
-
     @overload
     def trace(
         self,  # >= 2D array
@@ -2395,7 +2524,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         dtype: DTypeLike = ...,
         out: _ArrayT = ...,
     ) -> _ArrayT: ...
-
     @overload
     def take(  # type: ignore[misc]
         self: NDArray[_SCT],
@@ -2420,13 +2548,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         out: _ArrayT = ...,
         mode: _ModeKind = ...,
     ) -> _ArrayT: ...
-
     def repeat(
         self,
         repeats: _ArrayLikeInt_co,
         axis: None | SupportsIndex = ...,
     ) -> ndarray[_Shape, _DType_co]: ...
-
     def flatten(self, /, order: _OrderKACF = "C") -> ndarray[tuple[int], _DType_co]: ...
     def ravel(self, /, order: _OrderKACF = "C") -> ndarray[tuple[int], _DType_co]: ...
 
@@ -2511,7 +2637,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         order: _OrderACF = "C",
         copy: builtins.bool | None = None,
     ) -> ndarray[_Shape, _DType_co]: ...
-
     @overload
     def astype(
         self,
@@ -2530,7 +2655,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         subok: builtins.bool = ...,
         copy: builtins.bool | _CopyMode = ...,
     ) -> ndarray[_ShapeT_co, dtype[Any]]: ...
-
     @overload
     def view(self) -> Self: ...
     @overload
@@ -2545,34 +2669,22 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         dtype: DTypeLike,
         type: type[_ArrayT],
     ) -> _ArrayT: ...
-
     @overload
-    def getfield(
-        self,
-        dtype: _DTypeLike[_SCT],
-        offset: SupportsIndex = ...
-    ) -> NDArray[_SCT]: ...
+    def getfield(self, dtype: _DTypeLike[_SCT], offset: SupportsIndex = ...) -> NDArray[_SCT]: ...
     @overload
-    def getfield(
-        self,
-        dtype: DTypeLike,
-        offset: SupportsIndex = ...
-    ) -> NDArray[Any]: ...
-
+    def getfield(self, dtype: DTypeLike, offset: SupportsIndex = ...) -> NDArray[Any]: ...
     def __index__(self: NDArray[np.integer[Any]], /) -> int: ...
     def __int__(self: NDArray[number[Any] | np.timedelta64 | np.bool | object_], /) -> int: ...
     def __float__(self: NDArray[number[Any] | np.timedelta64 | np.bool | object_], /) -> float: ...
     def __complex__(self: NDArray[number[Any] | np.bool | object_], /) -> complex: ...
-
     def __len__(self) -> int: ...
     def __contains__(self, value: object, /) -> builtins.bool: ...
-
     @overload  # == 1-d & object_
     def __iter__(self: ndarray[tuple[int], dtype[object_]], /) -> Iterator[Any]: ...
     @overload  # == 1-d
     def __iter__(self: ndarray[tuple[int], dtype[_SCT]], /) -> Iterator[_SCT]: ...
     @overload  # >= 2-d
-    def __iter__(self: ndarray[tuple[int, int, Unpack[tuple[int, ...]]], dtype[_SCT]], /) -> Iterator[NDArray[_SCT]]: ...
+    def __iter__(self: ndarray[tuple[int, int, *tuple[int, ...]], dtype[_SCT]], /) -> Iterator[NDArray[_SCT]]: ...
     @overload  # ?-d
     def __iter__(self, /) -> Iterator[Any]: ...
 
@@ -2592,7 +2704,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __lt__(self: NDArray[object_], other: Any, /) -> NDArray[np.bool]: ...
     @overload
     def __lt__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> NDArray[np.bool]: ...
-
     @overload
     def __le__(self: _ArrayNumber_co, other: _ArrayLikeNumber_co, /) -> NDArray[np.bool]: ...
     @overload
@@ -2603,7 +2714,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __le__(self: NDArray[object_], other: Any, /) -> NDArray[np.bool]: ...
     @overload
     def __le__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> NDArray[np.bool]: ...
-
     @overload
     def __gt__(self: _ArrayNumber_co, other: _ArrayLikeNumber_co, /) -> NDArray[np.bool]: ...
     @overload
@@ -2614,7 +2724,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __gt__(self: NDArray[object_], other: Any, /) -> NDArray[np.bool]: ...
     @overload
     def __gt__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> NDArray[np.bool]: ...
-
     @overload
     def __ge__(self: _ArrayNumber_co, other: _ArrayLikeNumber_co, /) -> NDArray[np.bool]: ...
     @overload
@@ -2643,7 +2752,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     ) -> ndarray[_ShapeT, dtype[floating[_AnyNBitInexact]]]: ...
     @overload
     def __abs__(self: _RealArrayT, /) -> _RealArrayT: ...
-
     def __invert__(self: _IntegralArrayT, /) -> _IntegralArrayT: ...  # noqa: PYI019
     def __neg__(self: _NumericArrayT, /) -> _NumericArrayT: ...  # noqa: PYI019
     def __pos__(self: _NumericArrayT, /) -> _NumericArrayT: ...  # noqa: PYI019
@@ -2679,7 +2787,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __matmul__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __matmul__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload  # signature equivalent to __matmul__
     def __rmatmul__(self: NDArray[_NumberT], other: _ArrayLikeBool_co, /) -> NDArray[_NumberT]: ...
     @overload
@@ -2708,7 +2815,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rmatmul__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rmatmul__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __mod__(self: NDArray[_RealNumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_RealNumberT]]: ...
     @overload
@@ -2733,7 +2839,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __mod__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __mod__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload  # signature equivalent to __mod__
     def __rmod__(self: NDArray[_RealNumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_RealNumberT]]: ...
     @overload
@@ -2758,7 +2863,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rmod__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rmod__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __divmod__(self: NDArray[_RealNumberT], rhs: int | np.bool, /) -> _2Tuple[ndarray[_ShapeT_co, dtype[_RealNumberT]]]: ...
     @overload
@@ -2778,8 +2882,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     @overload
     def __divmod__(self: _ArrayFloat_co, rhs: _ArrayLikeFloat_co, /) -> _2Tuple[NDArray[floating]]: ...
     @overload
-    def __divmod__(self: NDArray[timedelta64], rhs: _ArrayLike[timedelta64], /) -> tuple[NDArray[int64], NDArray[timedelta64]]: ...
-
+    def __divmod__(
+        self: NDArray[timedelta64], rhs: _ArrayLike[timedelta64], /
+    ) -> tuple[NDArray[int64], NDArray[timedelta64]]: ...
     @overload  # signature equivalent to __divmod__
     def __rdivmod__(self: NDArray[_RealNumberT], lhs: int | np.bool, /) -> _2Tuple[ndarray[_ShapeT_co, dtype[_RealNumberT]]]: ...
     @overload
@@ -2799,8 +2904,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     @overload
     def __rdivmod__(self: _ArrayFloat_co, lhs: _ArrayLikeFloat_co, /) -> _2Tuple[NDArray[floating]]: ...
     @overload
-    def __rdivmod__(self: NDArray[timedelta64], lhs: _ArrayLike[timedelta64], /) -> tuple[NDArray[int64], NDArray[timedelta64]]: ...
-
+    def __rdivmod__(
+        self: NDArray[timedelta64], lhs: _ArrayLike[timedelta64], /
+    ) -> tuple[NDArray[int64], NDArray[timedelta64]]: ...
     @overload
     def __add__(self: NDArray[_NumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
@@ -2837,7 +2943,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __add__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __add__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload  # signature equivalent to __add__
     def __radd__(self: NDArray[_NumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
@@ -2874,7 +2979,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __radd__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __radd__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __sub__(self: NDArray[_NumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
@@ -2911,7 +3015,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __sub__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __sub__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rsub__(self: NDArray[_NumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
@@ -2948,7 +3051,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rsub__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rsub__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __mul__(self: NDArray[_NumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
@@ -2983,7 +3085,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __mul__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __mul__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload  # signature equivalent to __mul__
     def __rmul__(self: NDArray[_NumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
@@ -3018,7 +3119,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rmul__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rmul__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __truediv__(self: _ArrayInt_co, other: _ArrayLikeFloat64_co, /) -> NDArray[float64]: ...
     @overload
@@ -3049,7 +3149,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __truediv__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __truediv__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rtruediv__(self: _ArrayInt_co, other: _ArrayLikeFloat64_co, /) -> NDArray[float64]: ...
     @overload
@@ -3078,7 +3177,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rtruediv__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rtruediv__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __floordiv__(self: NDArray[_RealNumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_RealNumberT]]: ...
     @overload
@@ -3107,7 +3205,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __floordiv__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __floordiv__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rfloordiv__(self: NDArray[_RealNumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_RealNumberT]]: ...
     @overload
@@ -3134,7 +3231,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rfloordiv__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rfloordiv__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __pow__(self: NDArray[_NumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
@@ -3165,7 +3261,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __pow__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __pow__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rpow__(self: NDArray[_NumberT], other: int | np.bool, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
@@ -3196,7 +3291,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rpow__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rpow__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __lshift__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[int8]: ...  # type: ignore[misc]
     @overload
@@ -3207,7 +3301,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __lshift__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __lshift__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rlshift__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[int8]: ...  # type: ignore[misc]
     @overload
@@ -3218,7 +3311,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rlshift__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rlshift__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rshift__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[int8]: ...  # type: ignore[misc]
     @overload
@@ -3229,7 +3321,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rshift__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rshift__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rrshift__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[int8]: ...  # type: ignore[misc]
     @overload
@@ -3240,7 +3331,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rrshift__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rrshift__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __and__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[np.bool]: ...  # type: ignore[misc]
     @overload
@@ -3251,7 +3341,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __and__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __and__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rand__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[np.bool]: ...  # type: ignore[misc]
     @overload
@@ -3262,7 +3351,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rand__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rand__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __xor__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[np.bool]: ...  # type: ignore[misc]
     @overload
@@ -3273,7 +3361,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __xor__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __xor__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __rxor__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[np.bool]: ...  # type: ignore[misc]
     @overload
@@ -3284,7 +3371,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __rxor__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __rxor__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __or__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[np.bool]: ...  # type: ignore[misc]
     @overload
@@ -3295,7 +3381,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __or__(self: NDArray[object_], other: Any, /) -> Any: ...
     @overload
     def __or__(self: NDArray[Any], other: _ArrayLikeObject_co, /) -> Any: ...
-
     @overload
     def __ror__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> NDArray[np.bool]: ...  # type: ignore[misc]
     @overload
@@ -3339,7 +3424,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __iadd__(self: NDArray[datetime64], other: _ArrayLikeTD64_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __iadd__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __isub__(
         self: NDArray[unsignedinteger[Any]],
@@ -3362,7 +3446,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __isub__(self: NDArray[datetime64], other: _ArrayLikeTD64_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __isub__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __imul__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
@@ -3385,7 +3468,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __imul__(self: NDArray[timedelta64], other: _ArrayLikeFloat_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __imul__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __itruediv__(self: NDArray[float64], other: _ArrayLikeFloat_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
@@ -3402,7 +3484,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __itruediv__(self: NDArray[timedelta64], other: _ArrayLikeInt, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __itruediv__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __ifloordiv__(
         self: NDArray[unsignedinteger[Any]],
@@ -3427,7 +3508,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __ifloordiv__(self: NDArray[timedelta64], other: _ArrayLikeInt, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __ifloordiv__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __ipow__(
         self: NDArray[unsignedinteger[Any]],
@@ -3446,7 +3526,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __ipow__(self: NDArray[complexfloating[Any]], other: _ArrayLikeComplex_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __ipow__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __imod__(
         self: NDArray[unsignedinteger[Any]],
@@ -3467,7 +3546,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     ) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __imod__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __ilshift__(
         self: NDArray[unsignedinteger[Any]],
@@ -3478,7 +3556,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __ilshift__(self: NDArray[signedinteger[Any]], other: _ArrayLikeInt_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __ilshift__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __irshift__(
         self: NDArray[unsignedinteger[Any]],
@@ -3489,7 +3566,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __irshift__(self: NDArray[signedinteger[Any]], other: _ArrayLikeInt_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __irshift__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __iand__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
@@ -3502,7 +3578,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __iand__(self: NDArray[signedinteger[Any]], other: _ArrayLikeInt_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __iand__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __ixor__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
@@ -3515,7 +3590,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __ixor__(self: NDArray[signedinteger[Any]], other: _ArrayLikeInt_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __ixor__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __ior__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
@@ -3528,7 +3602,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __ior__(self: NDArray[signedinteger[Any]], other: _ArrayLikeInt_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __ior__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     @overload
     def __imatmul__(self: NDArray[np.bool], other: _ArrayLikeBool_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
@@ -3545,7 +3618,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
     def __imatmul__(self: NDArray[complexfloating[Any]], other: _ArrayLikeComplex_co, /) -> ndarray[_ShapeT_co, _DType_co]: ...
     @overload
     def __imatmul__(self: NDArray[object_], other: Any, /) -> ndarray[_ShapeT_co, _DType_co]: ...
-
     def __dlpack__(
         self: NDArray[number[Any]],
         /,
@@ -3590,15 +3662,12 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def strides(self) -> tuple[()]: ...
     @property
     def flat(self) -> flatiter[ndarray[tuple[int], dtype[Self]]]: ...
-
     @overload
     def item(self, /) -> _ItemT_co: ...
     @overload
     def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()] = ..., /) -> _ItemT_co: ...
     def tolist(self, /) -> _ItemT_co: ...
-
     def byteswap(self, inplace: L[False] = ...) -> Self: ...
-
     @overload
     def astype(
         self,
@@ -3634,20 +3703,10 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         dtype: DTypeLike,
         type: type[NDArray[Any]] = ...,
     ) -> Any: ...
-
     @overload
-    def getfield(
-        self,
-        dtype: _DTypeLike[_SCT],
-        offset: SupportsIndex = ...
-    ) -> _SCT: ...
+    def getfield(self, dtype: _DTypeLike[_SCT], offset: SupportsIndex = ...) -> _SCT: ...
     @overload
-    def getfield(
-        self,
-        dtype: DTypeLike,
-        offset: SupportsIndex = ...
-    ) -> Any: ...
-
+    def getfield(self, dtype: DTypeLike, offset: SupportsIndex = ...) -> Any: ...
     @overload
     def take(  # type: ignore[misc]
         self,
@@ -3672,11 +3731,9 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         out: _ArrayT = ...,
         mode: _ModeKind = ...,
     ) -> _ArrayT: ...
-
     def repeat(self, repeats: _ArrayLikeInt_co, axis: None | SupportsIndex = ...) -> NDArray[Self]: ...
     def flatten(self, /, order: _OrderKACF = "C") -> ndarray[tuple[int], dtype[Self]]: ...
     def ravel(self, /, order: _OrderKACF = "C") -> ndarray[tuple[int], dtype[Self]]: ...
-
     @overload  # (() | [])
     def reshape(
         self,
@@ -3758,11 +3815,9 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         *sizes6_: SupportsIndex,
         order: _OrderACF = "C",
         copy: builtins.bool | None = None,
-    ) -> ndarray[tuple[L[1], L[1], L[1], L[1], L[1], Unpack[tuple[L[1], ...]]], dtype[Self]]: ...
-
+    ) -> ndarray[tuple[L[1], L[1], L[1], L[1], L[1], *tuple[L[1], ...]], dtype[Self]]: ...
     def squeeze(self, axis: None | L[0] | tuple[()] = ...) -> Self: ...
     def transpose(self, axes: None | tuple[()] = ..., /) -> Self: ...
-
     @overload
     def all(
         self,
@@ -3771,7 +3826,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         out: None = None,
         keepdims: SupportsIndex = False,
         *,
-        where: builtins.bool | np.bool | ndarray[tuple[()], dtype[np.bool]] = True
+        where: builtins.bool | np.bool | ndarray[tuple[()], dtype[np.bool]] = True,
     ) -> np.bool: ...
     @overload
     def all(
@@ -3793,7 +3848,6 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         keepdims: SupportsIndex = False,
         where: builtins.bool | np.bool | ndarray[tuple[()], dtype[np.bool]] = True,
     ) -> _SCT: ...
-
     @overload
     def any(
         self,
@@ -3802,7 +3856,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         out: None = None,
         keepdims: SupportsIndex = False,
         *,
-        where: builtins.bool | np.bool | ndarray[tuple[()], dtype[np.bool]] = True
+        where: builtins.bool | np.bool | ndarray[tuple[()], dtype[np.bool]] = True,
     ) -> np.bool: ...
     @overload
     def any(
@@ -3833,7 +3887,6 @@ class number(generic[_NumberItemT_co], Generic[_NBit, _NumberItemT_co]):
     @abstractmethod
     def __init__(self, value: _NumberItemT_co, /) -> None: ...
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
-
     def __neg__(self) -> Self: ...
     def __pos__(self) -> Self: ...
     def __abs__(self) -> Self: ...
@@ -3865,7 +3918,6 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def real(self) -> Self: ...
     @property
     def imag(self) -> np.bool[L[False]]: ...
-
     @overload
     def __init__(self: np.bool[L[False]], /) -> None: ...
     @overload
@@ -3874,7 +3926,6 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __init__(self: np.bool[L[True]], value: _Truthy, /) -> None: ...
     @overload
     def __init__(self, value: object, /) -> None: ...
-
     def __bool__(self, /) -> _BoolItemT_co: ...
     @overload
     def __int__(self: np.bool[L[False]], /) -> L[0]: ...
@@ -3885,7 +3936,6 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @deprecated("In future, it will be an error for 'np.bool' scalars to be interpreted as an index")
     def __index__(self, /) -> L[0, 1]: ...
     def __abs__(self) -> Self: ...
-
     @overload
     def __invert__(self: np.bool[L[False]], /) -> np.bool[L[True]]: ...
     @overload
@@ -4042,18 +4092,18 @@ class signedinteger(integer[_NBit1]):
     __divmod__: _SignedIntDivMod[_NBit1]
     __rdivmod__: _SignedIntDivMod[_NBit1]
 
-int8 = signedinteger[_8Bit]
-int16 = signedinteger[_16Bit]
-int32 = signedinteger[_32Bit]
-int64 = signedinteger[_64Bit]
+int8: TypeAlias = signedinteger[_8Bit]
+int16: TypeAlias = signedinteger[_16Bit]
+int32: TypeAlias = signedinteger[_32Bit]
+int64: TypeAlias = signedinteger[_64Bit]
 
-byte = signedinteger[_NBitByte]
-short = signedinteger[_NBitShort]
-intc = signedinteger[_NBitIntC]
-intp = signedinteger[_NBitIntP]
+byte: TypeAlias = signedinteger[_NBitByte]
+short: TypeAlias = signedinteger[_NBitShort]
+intc: TypeAlias = signedinteger[_NBitIntC]
+intp: TypeAlias = signedinteger[_NBitIntP]
 int_ = intp
-long = signedinteger[_NBitLong]
-longlong = signedinteger[_NBitLongLong]
+long: TypeAlias = signedinteger[_NBitLong]
+longlong: TypeAlias = signedinteger[_NBitLongLong]
 
 class unsignedinteger(integer[_NBit1]):
     # NOTE: `uint64 + signedinteger -> float64`
@@ -4161,7 +4211,6 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
     def __radd__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     @overload
     def __radd__(self, other: complex, /) -> float64 | complex128: ...
-
     @overload
     def __sub__(self, other: _Float64_co, /) -> float64: ...
     @overload
@@ -4178,7 +4227,6 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
     def __rsub__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     @overload
     def __rsub__(self, other: complex, /) -> float64 | complex128: ...
-
     @overload
     def __mul__(self, other: _Float64_co, /) -> float64: ...
     @overload
@@ -4195,7 +4243,6 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
     def __rmul__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     @overload
     def __rmul__(self, other: complex, /) -> float64 | complex128: ...
-
     @overload
     def __truediv__(self, other: _Float64_co, /) -> float64: ...
     @overload
@@ -4212,7 +4259,6 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
     def __rtruediv__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     @overload
     def __rtruediv__(self, other: complex, /) -> float64 | complex128: ...
-
     @overload
     def __floordiv__(self, other: _Float64_co, /) -> float64: ...
     @overload
@@ -4229,7 +4275,6 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
     def __rfloordiv__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     @overload
     def __rfloordiv__(self, other: complex, /) -> float64 | complex128: ...
-
     @overload
     def __pow__(self, other: _Float64_co, /) -> float64: ...
     @overload
@@ -4246,10 +4291,8 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
     def __rpow__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     @overload
     def __rpow__(self, other: complex, /) -> float64 | complex128: ...
-
     def __mod__(self, other: _Float64_co, /) -> float64: ...  # type: ignore[override]
     def __rmod__(self, other: _Float64_co, /) -> float64: ...  # type: ignore[override]
-
     def __divmod__(self, other: _Float64_co, /) -> _2Tuple[float64]: ...  # type: ignore[override]
     def __rdivmod__(self, other: _Float64_co, /) -> _2Tuple[float64]: ...  # type: ignore[override]
 
@@ -4264,7 +4307,6 @@ longdouble: TypeAlias = floating[_NBitLongDouble]
 
 class complexfloating(inexact[_NBit1, complex], Generic[_NBit1, _NBit2]):
     def __init__(self, value: _ConvertibleToComplex | None = ..., /) -> None: ...
-
     @property
     def real(self) -> floating[_NBit1]: ...  # type: ignore[override]
     @property
@@ -4278,7 +4320,6 @@ class complexfloating(inexact[_NBit1, complex], Generic[_NBit1, _NBit2]):
         "Use `np.round` or `scalar.round` instead."
     )
     def __round__(self, /, ndigits: SupportsIndex | None = None) -> Self: ...
-
     @overload
     def __add__(self, other: _Complex64_co, /) -> complexfloating[_NBit1, _NBit2]: ...
     @overload
@@ -4291,7 +4332,6 @@ class complexfloating(inexact[_NBit1, complex], Generic[_NBit1, _NBit2]):
     def __radd__(self, other: complex, /) -> complexfloating[_NBit1, _NBit2] | complex128: ...
     @overload
     def __radd__(self, other: number[_NBit], /) -> complexfloating[_NBit1, _NBit2] | complexfloating[_NBit, _NBit]: ...
-
     @overload
     def __sub__(self, other: _Complex64_co, /) -> complexfloating[_NBit1, _NBit2]: ...
     @overload
@@ -4304,7 +4344,6 @@ class complexfloating(inexact[_NBit1, complex], Generic[_NBit1, _NBit2]):
     def __rsub__(self, other: complex, /) -> complexfloating[_NBit1, _NBit2] | complex128: ...
     @overload
     def __rsub__(self, other: number[_NBit], /) -> complexfloating[_NBit1, _NBit2] | complexfloating[_NBit, _NBit]: ...
-
     @overload
     def __mul__(self, other: _Complex64_co, /) -> complexfloating[_NBit1, _NBit2]: ...
     @overload
@@ -4317,7 +4356,6 @@ class complexfloating(inexact[_NBit1, complex], Generic[_NBit1, _NBit2]):
     def __rmul__(self, other: complex, /) -> complexfloating[_NBit1, _NBit2] | complex128: ...
     @overload
     def __rmul__(self, other: number[_NBit], /) -> complexfloating[_NBit1, _NBit2] | complexfloating[_NBit, _NBit]: ...
-
     @overload
     def __truediv__(self, other: _Complex64_co, /) -> complexfloating[_NBit1, _NBit2]: ...
     @overload
@@ -4330,7 +4368,6 @@ class complexfloating(inexact[_NBit1, complex], Generic[_NBit1, _NBit2]):
     def __rtruediv__(self, other: complex, /) -> complexfloating[_NBit1, _NBit2] | complex128: ...
     @overload
     def __rtruediv__(self, other: number[_NBit], /) -> complexfloating[_NBit1, _NBit2] | complexfloating[_NBit, _NBit]: ...
-
     @overload
     def __pow__(self, other: _Complex64_co, /) -> complexfloating[_NBit1, _NBit2]: ...
     @overload
@@ -4367,25 +4404,21 @@ class complex128(complexfloating[_64Bit, _64Bit], complex):  # type: ignore[misc
     @overload
     def __add__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     def __radd__(self, other: _Complex128_co, /) -> complex128: ...
-
     @overload
     def __sub__(self, other: _Complex128_co, /) -> complex128: ...
     @overload
     def __sub__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     def __rsub__(self, other: _Complex128_co, /) -> complex128: ...
-
     @overload
     def __mul__(self, other: _Complex128_co, /) -> complex128: ...
     @overload
     def __mul__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     def __rmul__(self, other: _Complex128_co, /) -> complex128: ...
-
     @overload
     def __truediv__(self, other: _Complex128_co, /) -> complex128: ...
     @overload
     def __truediv__(self, other: complexfloating[_NBit1, _NBit2], /) -> complexfloating[_NBit1 | _64Bit, _NBit2 | _64Bit]: ...
     def __rtruediv__(self, other: _Complex128_co, /) -> complex128: ...
-
     @overload
     def __pow__(self, other: _Complex128_co, /) -> complex128: ...
     @overload
@@ -4401,7 +4434,6 @@ class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
     def itemsize(self) -> L[8]: ...
     @property
     def nbytes(self) -> L[8]: ...
-
     @overload
     def __init__(self, value: _TD64ItemT_co | timedelta64[_TD64ItemT_co], /) -> None: ...
     @overload
@@ -4426,11 +4458,9 @@ class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
     # to builtin scalar types: `Y`, `M`, `ns`, `ps`, `fs`, `as`
     def __int__(self: timedelta64[int], /) -> int: ...
     def __float__(self: timedelta64[int], /) -> float: ...
-
     def __neg__(self, /) -> Self: ...
     def __pos__(self, /) -> Self: ...
     def __abs__(self, /) -> Self: ...
-
     @overload
     def __add__(self: timedelta64[None], x: _TD64Like_co, /) -> timedelta64[None]: ...
     @overload
@@ -4489,7 +4519,6 @@ class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
     def __sub__(self: timedelta64[_AnyTD64Item], b: timedelta64[_AnyTD64Item] | _IntLike_co, /) -> timedelta64[_AnyTD64Item]: ...
     @overload
     def __sub__(self, b: timedelta64[None], /) -> timedelta64[None]: ...
-
     @overload
     def __rsub__(self: timedelta64[None], a: _TD64Like_co, /) -> timedelta64[None]: ...
     @overload
@@ -4502,7 +4531,6 @@ class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
     def __rsub__(self, a: timedelta64[None], /) -> timedelta64[None]: ...
     @overload
     def __rsub__(self, a: datetime64[None], /) -> datetime64[None]: ...
-
     @overload
     def __truediv__(self: timedelta64[dt.timedelta], b: dt.timedelta, /) -> float: ...
     @overload
@@ -4517,7 +4545,6 @@ class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
     def __rtruediv__(self: timedelta64[dt.timedelta], a: dt.timedelta, /) -> float: ...
     @overload
     def __rtruediv__(self, a: timedelta64, /) -> float64: ...
-
     @overload
     def __floordiv__(self: timedelta64[dt.timedelta], b: dt.timedelta, /) -> int: ...
     @overload
@@ -4541,7 +4568,6 @@ class datetime64(_RealMixin, generic[_DT64ItemT_co], Generic[_DT64ItemT_co]):
     def itemsize(self) -> L[8]: ...
     @property
     def nbytes(self) -> L[8]: ...
-
     @overload
     def __init__(self, value: datetime64[_DT64ItemT_co], /) -> None: ...
     @overload
@@ -4562,7 +4588,6 @@ class datetime64(_RealMixin, generic[_DT64ItemT_co], Generic[_DT64ItemT_co]):
     def __init__(self: datetime64[dt.date], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_DateUnit], /) -> None: ...
     @overload
     def __init__(self, value: bytes | str | dt.date | None, format: _TimeUnitSpec = ..., /) -> None: ...
-
     @overload
     def __add__(self: datetime64[_AnyDT64Item], x: int | integer[Any] | np.bool, /) -> datetime64[_AnyDT64Item]: ...
     @overload
@@ -4613,7 +4638,6 @@ class datetime64(_RealMixin, generic[_DT64ItemT_co], Generic[_DT64ItemT_co]):
     def __sub__(self, x: _TD64Like_co, /) -> datetime64: ...
     @overload
     def __sub__(self, x: datetime64, /) -> timedelta64: ...
-
     @overload
     def __rsub__(self: datetime64[_AnyDT64Item], x: int | integer[Any] | np.bool, /) -> datetime64[_AnyDT64Item]: ...
     @overload
@@ -4643,13 +4667,11 @@ class void(flexible[bytes | tuple[Any, ...]]):
     def __init__(self, value: _IntLike_co | bytes, /, dtype: None = None) -> None: ...
     @overload
     def __init__(self, value: Any, /, dtype: _DTypeLikeVoid) -> None: ...
-
     @overload
     def __getitem__(self, key: str | SupportsIndex, /) -> Any: ...
     @overload
     def __getitem__(self, key: list[str], /) -> void: ...
     def __setitem__(self, key: str | list[str] | SupportsIndex, value: ArrayLike, /) -> None: ...
-
     def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
 
 class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):
@@ -4705,7 +4727,6 @@ class ufunc:
     # This is None for ufuncs and a string for gufuncs.
     @property
     def signature(self) -> None | LiteralString: ...
-
     def __call__(self, *args: Any, **kwargs: Any) -> Any: ...
     # The next four methods will always exist, but they will just
     # raise a ValueError ufuncs with that don't accept two input
@@ -4720,100 +4741,100 @@ class ufunc:
     def at(self, /, *args: Any, **kwargs: Any) -> None: ...
 
 # Parameters: `__name__`, `ntypes` and `identity`
-absolute: _UFunc_Nin1_Nout1[L['absolute'], L[20], None]
-add: _UFunc_Nin2_Nout1[L['add'], L[22], L[0]]
-arccos: _UFunc_Nin1_Nout1[L['arccos'], L[8], None]
-arccosh: _UFunc_Nin1_Nout1[L['arccosh'], L[8], None]
-arcsin: _UFunc_Nin1_Nout1[L['arcsin'], L[8], None]
-arcsinh: _UFunc_Nin1_Nout1[L['arcsinh'], L[8], None]
-arctan2: _UFunc_Nin2_Nout1[L['arctan2'], L[5], None]
-arctan: _UFunc_Nin1_Nout1[L['arctan'], L[8], None]
-arctanh: _UFunc_Nin1_Nout1[L['arctanh'], L[8], None]
-bitwise_and: _UFunc_Nin2_Nout1[L['bitwise_and'], L[12], L[-1]]
-bitwise_count: _UFunc_Nin1_Nout1[L['bitwise_count'], L[11], None]
-bitwise_not: _UFunc_Nin1_Nout1[L['invert'], L[12], None]
-bitwise_or: _UFunc_Nin2_Nout1[L['bitwise_or'], L[12], L[0]]
-bitwise_xor: _UFunc_Nin2_Nout1[L['bitwise_xor'], L[12], L[0]]
-cbrt: _UFunc_Nin1_Nout1[L['cbrt'], L[5], None]
-ceil: _UFunc_Nin1_Nout1[L['ceil'], L[7], None]
-conj: _UFunc_Nin1_Nout1[L['conjugate'], L[18], None]
-conjugate: _UFunc_Nin1_Nout1[L['conjugate'], L[18], None]
-copysign: _UFunc_Nin2_Nout1[L['copysign'], L[4], None]
-cos: _UFunc_Nin1_Nout1[L['cos'], L[9], None]
-cosh: _UFunc_Nin1_Nout1[L['cosh'], L[8], None]
-deg2rad: _UFunc_Nin1_Nout1[L['deg2rad'], L[5], None]
-degrees: _UFunc_Nin1_Nout1[L['degrees'], L[5], None]
-divide: _UFunc_Nin2_Nout1[L['true_divide'], L[11], None]
-divmod: _UFunc_Nin2_Nout2[L['divmod'], L[15], None]
-equal: _UFunc_Nin2_Nout1[L['equal'], L[23], None]
-exp2: _UFunc_Nin1_Nout1[L['exp2'], L[8], None]
-exp: _UFunc_Nin1_Nout1[L['exp'], L[10], None]
-expm1: _UFunc_Nin1_Nout1[L['expm1'], L[8], None]
-fabs: _UFunc_Nin1_Nout1[L['fabs'], L[5], None]
-float_power: _UFunc_Nin2_Nout1[L['float_power'], L[4], None]
-floor: _UFunc_Nin1_Nout1[L['floor'], L[7], None]
-floor_divide: _UFunc_Nin2_Nout1[L['floor_divide'], L[21], None]
-fmax: _UFunc_Nin2_Nout1[L['fmax'], L[21], None]
-fmin: _UFunc_Nin2_Nout1[L['fmin'], L[21], None]
-fmod: _UFunc_Nin2_Nout1[L['fmod'], L[15], None]
-frexp: _UFunc_Nin1_Nout2[L['frexp'], L[4], None]
-gcd: _UFunc_Nin2_Nout1[L['gcd'], L[11], L[0]]
-greater: _UFunc_Nin2_Nout1[L['greater'], L[23], None]
-greater_equal: _UFunc_Nin2_Nout1[L['greater_equal'], L[23], None]
-heaviside: _UFunc_Nin2_Nout1[L['heaviside'], L[4], None]
-hypot: _UFunc_Nin2_Nout1[L['hypot'], L[5], L[0]]
-invert: _UFunc_Nin1_Nout1[L['invert'], L[12], None]
-isfinite: _UFunc_Nin1_Nout1[L['isfinite'], L[20], None]
-isinf: _UFunc_Nin1_Nout1[L['isinf'], L[20], None]
-isnan: _UFunc_Nin1_Nout1[L['isnan'], L[20], None]
-isnat: _UFunc_Nin1_Nout1[L['isnat'], L[2], None]
-lcm: _UFunc_Nin2_Nout1[L['lcm'], L[11], None]
-ldexp: _UFunc_Nin2_Nout1[L['ldexp'], L[8], None]
-left_shift: _UFunc_Nin2_Nout1[L['left_shift'], L[11], None]
-less: _UFunc_Nin2_Nout1[L['less'], L[23], None]
-less_equal: _UFunc_Nin2_Nout1[L['less_equal'], L[23], None]
-log10: _UFunc_Nin1_Nout1[L['log10'], L[8], None]
-log1p: _UFunc_Nin1_Nout1[L['log1p'], L[8], None]
-log2: _UFunc_Nin1_Nout1[L['log2'], L[8], None]
-log: _UFunc_Nin1_Nout1[L['log'], L[10], None]
-logaddexp2: _UFunc_Nin2_Nout1[L['logaddexp2'], L[4], float]
-logaddexp: _UFunc_Nin2_Nout1[L['logaddexp'], L[4], float]
-logical_and: _UFunc_Nin2_Nout1[L['logical_and'], L[20], L[True]]
-logical_not: _UFunc_Nin1_Nout1[L['logical_not'], L[20], None]
-logical_or: _UFunc_Nin2_Nout1[L['logical_or'], L[20], L[False]]
-logical_xor: _UFunc_Nin2_Nout1[L['logical_xor'], L[19], L[False]]
-matmul: _GUFunc_Nin2_Nout1[L['matmul'], L[19], None, L["(n?,k),(k,m?)->(n?,m?)"]]
-matvec: _GUFunc_Nin2_Nout1[L['matvec'], L[19], None, L["(m,n),(n)->(m)"]]
-maximum: _UFunc_Nin2_Nout1[L['maximum'], L[21], None]
-minimum: _UFunc_Nin2_Nout1[L['minimum'], L[21], None]
-mod: _UFunc_Nin2_Nout1[L['remainder'], L[16], None]
-modf: _UFunc_Nin1_Nout2[L['modf'], L[4], None]
-multiply: _UFunc_Nin2_Nout1[L['multiply'], L[23], L[1]]
-negative: _UFunc_Nin1_Nout1[L['negative'], L[19], None]
-nextafter: _UFunc_Nin2_Nout1[L['nextafter'], L[4], None]
-not_equal: _UFunc_Nin2_Nout1[L['not_equal'], L[23], None]
-positive: _UFunc_Nin1_Nout1[L['positive'], L[19], None]
-power: _UFunc_Nin2_Nout1[L['power'], L[18], None]
-rad2deg: _UFunc_Nin1_Nout1[L['rad2deg'], L[5], None]
-radians: _UFunc_Nin1_Nout1[L['radians'], L[5], None]
-reciprocal: _UFunc_Nin1_Nout1[L['reciprocal'], L[18], None]
-remainder: _UFunc_Nin2_Nout1[L['remainder'], L[16], None]
-right_shift: _UFunc_Nin2_Nout1[L['right_shift'], L[11], None]
-rint: _UFunc_Nin1_Nout1[L['rint'], L[10], None]
-sign: _UFunc_Nin1_Nout1[L['sign'], L[19], None]
-signbit: _UFunc_Nin1_Nout1[L['signbit'], L[4], None]
-sin: _UFunc_Nin1_Nout1[L['sin'], L[9], None]
-sinh: _UFunc_Nin1_Nout1[L['sinh'], L[8], None]
-spacing: _UFunc_Nin1_Nout1[L['spacing'], L[4], None]
-sqrt: _UFunc_Nin1_Nout1[L['sqrt'], L[10], None]
-square: _UFunc_Nin1_Nout1[L['square'], L[18], None]
-subtract: _UFunc_Nin2_Nout1[L['subtract'], L[21], None]
-tan: _UFunc_Nin1_Nout1[L['tan'], L[8], None]
-tanh: _UFunc_Nin1_Nout1[L['tanh'], L[8], None]
-true_divide: _UFunc_Nin2_Nout1[L['true_divide'], L[11], None]
-trunc: _UFunc_Nin1_Nout1[L['trunc'], L[7], None]
-vecdot: _GUFunc_Nin2_Nout1[L['vecdot'], L[19], None, L["(n),(n)->()"]]
-vecmat: _GUFunc_Nin2_Nout1[L['vecmat'], L[19], None, L["(n),(n,m)->(m)"]]
+absolute: _UFunc_Nin1_Nout1[L["absolute"], L[20], None]
+add: _UFunc_Nin2_Nout1[L["add"], L[22], L[0]]
+arccos: _UFunc_Nin1_Nout1[L["arccos"], L[8], None]
+arccosh: _UFunc_Nin1_Nout1[L["arccosh"], L[8], None]
+arcsin: _UFunc_Nin1_Nout1[L["arcsin"], L[8], None]
+arcsinh: _UFunc_Nin1_Nout1[L["arcsinh"], L[8], None]
+arctan2: _UFunc_Nin2_Nout1[L["arctan2"], L[5], None]
+arctan: _UFunc_Nin1_Nout1[L["arctan"], L[8], None]
+arctanh: _UFunc_Nin1_Nout1[L["arctanh"], L[8], None]
+bitwise_and: _UFunc_Nin2_Nout1[L["bitwise_and"], L[12], L[-1]]
+bitwise_count: _UFunc_Nin1_Nout1[L["bitwise_count"], L[11], None]
+bitwise_not: _UFunc_Nin1_Nout1[L["invert"], L[12], None]
+bitwise_or: _UFunc_Nin2_Nout1[L["bitwise_or"], L[12], L[0]]
+bitwise_xor: _UFunc_Nin2_Nout1[L["bitwise_xor"], L[12], L[0]]
+cbrt: _UFunc_Nin1_Nout1[L["cbrt"], L[5], None]
+ceil: _UFunc_Nin1_Nout1[L["ceil"], L[7], None]
+conj: _UFunc_Nin1_Nout1[L["conjugate"], L[18], None]
+conjugate: _UFunc_Nin1_Nout1[L["conjugate"], L[18], None]
+copysign: _UFunc_Nin2_Nout1[L["copysign"], L[4], None]
+cos: _UFunc_Nin1_Nout1[L["cos"], L[9], None]
+cosh: _UFunc_Nin1_Nout1[L["cosh"], L[8], None]
+deg2rad: _UFunc_Nin1_Nout1[L["deg2rad"], L[5], None]
+degrees: _UFunc_Nin1_Nout1[L["degrees"], L[5], None]
+divide: _UFunc_Nin2_Nout1[L["true_divide"], L[11], None]
+divmod: _UFunc_Nin2_Nout2[L["divmod"], L[15], None]
+equal: _UFunc_Nin2_Nout1[L["equal"], L[23], None]
+exp2: _UFunc_Nin1_Nout1[L["exp2"], L[8], None]
+exp: _UFunc_Nin1_Nout1[L["exp"], L[10], None]
+expm1: _UFunc_Nin1_Nout1[L["expm1"], L[8], None]
+fabs: _UFunc_Nin1_Nout1[L["fabs"], L[5], None]
+float_power: _UFunc_Nin2_Nout1[L["float_power"], L[4], None]
+floor: _UFunc_Nin1_Nout1[L["floor"], L[7], None]
+floor_divide: _UFunc_Nin2_Nout1[L["floor_divide"], L[21], None]
+fmax: _UFunc_Nin2_Nout1[L["fmax"], L[21], None]
+fmin: _UFunc_Nin2_Nout1[L["fmin"], L[21], None]
+fmod: _UFunc_Nin2_Nout1[L["fmod"], L[15], None]
+frexp: _UFunc_Nin1_Nout2[L["frexp"], L[4], None]
+gcd: _UFunc_Nin2_Nout1[L["gcd"], L[11], L[0]]
+greater: _UFunc_Nin2_Nout1[L["greater"], L[23], None]
+greater_equal: _UFunc_Nin2_Nout1[L["greater_equal"], L[23], None]
+heaviside: _UFunc_Nin2_Nout1[L["heaviside"], L[4], None]
+hypot: _UFunc_Nin2_Nout1[L["hypot"], L[5], L[0]]
+invert: _UFunc_Nin1_Nout1[L["invert"], L[12], None]
+isfinite: _UFunc_Nin1_Nout1[L["isfinite"], L[20], None]
+isinf: _UFunc_Nin1_Nout1[L["isinf"], L[20], None]
+isnan: _UFunc_Nin1_Nout1[L["isnan"], L[20], None]
+isnat: _UFunc_Nin1_Nout1[L["isnat"], L[2], None]
+lcm: _UFunc_Nin2_Nout1[L["lcm"], L[11], None]
+ldexp: _UFunc_Nin2_Nout1[L["ldexp"], L[8], None]
+left_shift: _UFunc_Nin2_Nout1[L["left_shift"], L[11], None]
+less: _UFunc_Nin2_Nout1[L["less"], L[23], None]
+less_equal: _UFunc_Nin2_Nout1[L["less_equal"], L[23], None]
+log10: _UFunc_Nin1_Nout1[L["log10"], L[8], None]
+log1p: _UFunc_Nin1_Nout1[L["log1p"], L[8], None]
+log2: _UFunc_Nin1_Nout1[L["log2"], L[8], None]
+log: _UFunc_Nin1_Nout1[L["log"], L[10], None]
+logaddexp2: _UFunc_Nin2_Nout1[L["logaddexp2"], L[4], float]
+logaddexp: _UFunc_Nin2_Nout1[L["logaddexp"], L[4], float]
+logical_and: _UFunc_Nin2_Nout1[L["logical_and"], L[20], L[True]]
+logical_not: _UFunc_Nin1_Nout1[L["logical_not"], L[20], None]
+logical_or: _UFunc_Nin2_Nout1[L["logical_or"], L[20], L[False]]
+logical_xor: _UFunc_Nin2_Nout1[L["logical_xor"], L[19], L[False]]
+matmul: _GUFunc_Nin2_Nout1[L["matmul"], L[19], None, L["(n?,k),(k,m?)->(n?,m?)"]]
+matvec: _GUFunc_Nin2_Nout1[L["matvec"], L[19], None, L["(m,n),(n)->(m)"]]
+maximum: _UFunc_Nin2_Nout1[L["maximum"], L[21], None]
+minimum: _UFunc_Nin2_Nout1[L["minimum"], L[21], None]
+mod: _UFunc_Nin2_Nout1[L["remainder"], L[16], None]
+modf: _UFunc_Nin1_Nout2[L["modf"], L[4], None]
+multiply: _UFunc_Nin2_Nout1[L["multiply"], L[23], L[1]]
+negative: _UFunc_Nin1_Nout1[L["negative"], L[19], None]
+nextafter: _UFunc_Nin2_Nout1[L["nextafter"], L[4], None]
+not_equal: _UFunc_Nin2_Nout1[L["not_equal"], L[23], None]
+positive: _UFunc_Nin1_Nout1[L["positive"], L[19], None]
+power: _UFunc_Nin2_Nout1[L["power"], L[18], None]
+rad2deg: _UFunc_Nin1_Nout1[L["rad2deg"], L[5], None]
+radians: _UFunc_Nin1_Nout1[L["radians"], L[5], None]
+reciprocal: _UFunc_Nin1_Nout1[L["reciprocal"], L[18], None]
+remainder: _UFunc_Nin2_Nout1[L["remainder"], L[16], None]
+right_shift: _UFunc_Nin2_Nout1[L["right_shift"], L[11], None]
+rint: _UFunc_Nin1_Nout1[L["rint"], L[10], None]
+sign: _UFunc_Nin1_Nout1[L["sign"], L[19], None]
+signbit: _UFunc_Nin1_Nout1[L["signbit"], L[4], None]
+sin: _UFunc_Nin1_Nout1[L["sin"], L[9], None]
+sinh: _UFunc_Nin1_Nout1[L["sinh"], L[8], None]
+spacing: _UFunc_Nin1_Nout1[L["spacing"], L[4], None]
+sqrt: _UFunc_Nin1_Nout1[L["sqrt"], L[10], None]
+square: _UFunc_Nin1_Nout1[L["square"], L[18], None]
+subtract: _UFunc_Nin2_Nout1[L["subtract"], L[21], None]
+tan: _UFunc_Nin1_Nout1[L["tan"], L[8], None]
+tanh: _UFunc_Nin1_Nout1[L["tanh"], L[8], None]
+true_divide: _UFunc_Nin2_Nout1[L["true_divide"], L[11], None]
+trunc: _UFunc_Nin1_Nout1[L["trunc"], L[7], None]
+vecdot: _GUFunc_Nin2_Nout1[L["vecdot"], L[19], None, L["(n),(n)->()"]]
+vecmat: _GUFunc_Nin2_Nout1[L["vecmat"], L[19], None, L["(n),(n,m)->(m)"]]
 
 abs = absolute
 acos = arccos
@@ -4859,10 +4880,10 @@ class errstate:
 class ndenumerate(Generic[_SCT_co]):
     @property
     def iter(self) -> flatiter[NDArray[_SCT_co]]: ...
-
     @overload
     def __new__(
-        cls, arr: _FiniteNestedSequence[_SupportsArray[dtype[_SCT]]],
+        cls,
+        arr: _FiniteNestedSequence[_SupportsArray[dtype[_SCT]]],
     ) -> ndenumerate[_SCT]: ...
     @overload
     def __new__(cls, arr: str | _NestedSequence[str]) -> ndenumerate[str_]: ...
@@ -4889,7 +4910,6 @@ class ndenumerate(Generic[_SCT_co]):
     def __next__(self: ndenumerate[object_], /) -> tuple[_Shape, Any]: ...
     @overload
     def __next__(self, /) -> tuple[_Shape, _SCT_co]: ...
-
     def __iter__(self) -> Self: ...
 
 class ndindex:
@@ -4958,17 +4978,11 @@ class finfo(Generic[_FloatingT_co]):
     @property
     def tiny(self) -> _FloatingT_co: ...
     @overload
-    def __new__(
-        cls, dtype: inexact[_NBit1] | _DTypeLike[inexact[_NBit1]]
-    ) -> finfo[floating[_NBit1]]: ...
+    def __new__(cls, dtype: inexact[_NBit1] | _DTypeLike[inexact[_NBit1]]) -> finfo[floating[_NBit1]]: ...
     @overload
-    def __new__(
-        cls, dtype: complex | float | type[complex] | type[float]
-    ) -> finfo[float64]: ...
+    def __new__(cls, dtype: type[complex | float] | complex) -> finfo[float64]: ...
     @overload
-    def __new__(
-        cls, dtype: str
-    ) -> finfo[floating[Any]]: ...
+    def __new__(cls, dtype: str) -> finfo[floating[Any]]: ...
 
 class iinfo(Generic[_IntegerT_co]):
     dtype: Final[dtype[_IntegerT_co]]
@@ -4979,11 +4993,8 @@ class iinfo(Generic[_IntegerT_co]):
     def min(self) -> int: ...
     @property
     def max(self) -> int: ...
-
     @overload
-    def __new__(
-        cls, dtype: _IntegerT_co | _DTypeLike[_IntegerT_co]
-    ) -> iinfo[_IntegerT_co]: ...
+    def __new__(cls, dtype: _IntegerT_co | _DTypeLike[_IntegerT_co]) -> iinfo[_IntegerT_co]: ...
     @overload
     def __new__(cls, dtype: int | type[int]) -> iinfo[int_]: ...
     @overload
@@ -5137,22 +5148,18 @@ class poly1d:
     def roots(self) -> NDArray[Any]: ...
     @property
     def r(self) -> NDArray[Any]: ...
-
     @property
     def coeffs(self) -> NDArray[Any]: ...
     @coeffs.setter
     def coeffs(self, value: NDArray[Any]) -> None: ...
-
     @property
     def c(self) -> NDArray[Any]: ...
     @c.setter
     def c(self, value: NDArray[Any]) -> None: ...
-
     @property
     def coef(self) -> NDArray[Any]: ...
     @coef.setter
     def coef(self, value: NDArray[Any]) -> None: ...
-
     @property
     def coefficients(self) -> NDArray[Any]: ...
     @coefficients.setter
@@ -5164,14 +5171,12 @@ class poly1d:
     def __array__(self, /, t: None = None, copy: builtins.bool | None = None) -> ndarray[tuple[int], dtype[Any]]: ...
     @overload
     def __array__(self, /, t: _DType, copy: builtins.bool | None = None) -> ndarray[tuple[int], _DType]: ...
-
     @overload
     def __call__(self, val: _ScalarLike_co) -> Any: ...
     @overload
     def __call__(self, val: poly1d) -> poly1d: ...
     @overload
     def __call__(self, val: ArrayLike) -> NDArray[Any]: ...
-
     def __init__(
         self,
         c_or_r: ArrayLike,
@@ -5211,15 +5216,10 @@ class matrix(ndarray[_2DShapeT_co, _DType_co]):
         copy: builtins.bool = ...,
     ) -> matrix[_2D, Any]: ...
     def __array_finalize__(self, obj: object) -> None: ...
-
     @overload
     def __getitem__(
         self,
-        key: (
-            SupportsIndex
-            | _ArrayLikeInt_co
-            | tuple[SupportsIndex | _ArrayLikeInt_co, ...]
-        ),
+        key: (SupportsIndex | _ArrayLikeInt_co | tuple[SupportsIndex | _ArrayLikeInt_co, ...]),
         /,
     ) -> Any: ...
     @overload
@@ -5239,106 +5239,91 @@ class matrix(ndarray[_2DShapeT_co, _DType_co]):
     def __getitem__(self: NDArray[void], key: str, /) -> matrix[_2D, dtype[Any]]: ...
     @overload
     def __getitem__(self: NDArray[void], key: list[str], /) -> matrix[_2DShapeT_co, dtype[void]]: ...
-
     def __mul__(self, other: ArrayLike, /) -> matrix[_2D, Any]: ...
     def __rmul__(self, other: ArrayLike, /) -> matrix[_2D, Any]: ...
     def __imul__(self, other: ArrayLike, /) -> matrix[_2DShapeT_co, _DType_co]: ...
     def __pow__(self, other: ArrayLike, /) -> matrix[_2D, Any]: ...
     def __ipow__(self, other: ArrayLike, /) -> matrix[_2DShapeT_co, _DType_co]: ...
-
     @overload
     def sum(self, axis: None = ..., dtype: DTypeLike = ..., out: None = ...) -> Any: ...
     @overload
     def sum(self, axis: _ShapeLike, dtype: DTypeLike = ..., out: None = ...) -> matrix[_2D, Any]: ...
     @overload
     def sum(self, axis: None | _ShapeLike = ..., dtype: DTypeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def mean(self, axis: None = ..., dtype: DTypeLike = ..., out: None = ...) -> Any: ...
     @overload
     def mean(self, axis: _ShapeLike, dtype: DTypeLike = ..., out: None = ...) -> matrix[_2D, Any]: ...
     @overload
     def mean(self, axis: None | _ShapeLike = ..., dtype: DTypeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def std(self, axis: None = ..., dtype: DTypeLike = ..., out: None = ..., ddof: float = ...) -> Any: ...
     @overload
     def std(self, axis: _ShapeLike, dtype: DTypeLike = ..., out: None = ..., ddof: float = ...) -> matrix[_2D, Any]: ...
     @overload
     def std(self, axis: None | _ShapeLike = ..., dtype: DTypeLike = ..., out: _ArrayT = ..., ddof: float = ...) -> _ArrayT: ...
-
     @overload
     def var(self, axis: None = ..., dtype: DTypeLike = ..., out: None = ..., ddof: float = ...) -> Any: ...
     @overload
     def var(self, axis: _ShapeLike, dtype: DTypeLike = ..., out: None = ..., ddof: float = ...) -> matrix[_2D, Any]: ...
     @overload
     def var(self, axis: None | _ShapeLike = ..., dtype: DTypeLike = ..., out: _ArrayT = ..., ddof: float = ...) -> _ArrayT: ...
-
     @overload
     def prod(self, axis: None = ..., dtype: DTypeLike = ..., out: None = ...) -> Any: ...
     @overload
     def prod(self, axis: _ShapeLike, dtype: DTypeLike = ..., out: None = ...) -> matrix[_2D, Any]: ...
     @overload
     def prod(self, axis: None | _ShapeLike = ..., dtype: DTypeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def any(self, axis: None = ..., out: None = ...) -> np.bool: ...
     @overload
     def any(self, axis: _ShapeLike, out: None = ...) -> matrix[_2D, dtype[np.bool]]: ...
     @overload
     def any(self, axis: None | _ShapeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def all(self, axis: None = ..., out: None = ...) -> np.bool: ...
     @overload
     def all(self, axis: _ShapeLike, out: None = ...) -> matrix[_2D, dtype[np.bool]]: ...
     @overload
     def all(self, axis: None | _ShapeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def max(self: NDArray[_SCT], axis: None = ..., out: None = ...) -> _SCT: ...
     @overload
     def max(self, axis: _ShapeLike, out: None = ...) -> matrix[_2D, _DType_co]: ...
     @overload
     def max(self, axis: None | _ShapeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def min(self: NDArray[_SCT], axis: None = ..., out: None = ...) -> _SCT: ...
     @overload
     def min(self, axis: _ShapeLike, out: None = ...) -> matrix[_2D, _DType_co]: ...
     @overload
     def min(self, axis: None | _ShapeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def argmax(self: NDArray[_SCT], axis: None = ..., out: None = ...) -> intp: ...
     @overload
     def argmax(self, axis: _ShapeLike, out: None = ...) -> matrix[_2D, dtype[intp]]: ...
     @overload
     def argmax(self, axis: None | _ShapeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def argmin(self: NDArray[_SCT], axis: None = ..., out: None = ...) -> intp: ...
     @overload
     def argmin(self, axis: _ShapeLike, out: None = ...) -> matrix[_2D, dtype[intp]]: ...
     @overload
     def argmin(self, axis: None | _ShapeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     @overload
     def ptp(self: NDArray[_SCT], axis: None = ..., out: None = ...) -> _SCT: ...
     @overload
     def ptp(self, axis: _ShapeLike, out: None = ...) -> matrix[_2D, _DType_co]: ...
     @overload
     def ptp(self, axis: None | _ShapeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
-
     def squeeze(self, axis: None | _ShapeLike = ...) -> matrix[_2D, _DType_co]: ...
     def tolist(self: _SupportsItem[_T]) -> list[list[_T]]: ...
     def ravel(self, /, order: _OrderKACF = "C") -> matrix[tuple[L[1], int], _DType_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def flatten(self, /, order: _OrderKACF = "C") -> matrix[tuple[L[1], int], _DType_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
     @property
     def T(self) -> matrix[_2D, _DType_co]: ...
     @property
-    def I(self) -> matrix[_2D, Any]: ...  # noqa: E743
+    def I(self) -> matrix[_2D, Any]: ...
     @property
     def A(self) -> ndarray[_2DShapeT_co, _DType_co]: ...
     @property

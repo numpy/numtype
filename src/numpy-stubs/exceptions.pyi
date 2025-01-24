@@ -1,12 +1,12 @@
 from typing import overload
 
 __all__ = [
+    "AxisError",
     "ComplexWarning",
-    "VisibleDeprecationWarning",
+    "DTypePromotionError",
     "ModuleDeprecationWarning",
     "TooHardError",
-    "AxisError",
-    "DTypePromotionError",
+    "VisibleDeprecationWarning",
 ]
 
 class ComplexWarning(RuntimeWarning): ...

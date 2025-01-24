@@ -1,17 +1,4 @@
-from numpy._core.fromnumeric import (
-    amin,
-    amax,
-    argmin,
-    argmax,
-    sum,
-    prod,
-    cumsum,
-    cumprod,
-    mean,
-    var,
-    std
-)
-
+from numpy._core.fromnumeric import amax, amin, argmax, argmin, cumprod, cumsum, mean, prod, std, sum, var
 from numpy.lib._function_base_impl import (
     median,
     percentile,
@@ -19,20 +6,20 @@ from numpy.lib._function_base_impl import (
 )
 
 __all__ = [
-    "nansum",
-    "nanmax",
-    "nanmin",
     "nanargmax",
     "nanargmin",
+    "nancumprod",
+    "nancumsum",
+    "nanmax",
     "nanmean",
     "nanmedian",
+    "nanmin",
     "nanpercentile",
-    "nanvar",
-    "nanstd",
     "nanprod",
-    "nancumsum",
-    "nancumprod",
     "nanquantile",
+    "nanstd",
+    "nansum",
+    "nanvar",
 ]
 
 # NOTE: In reality these functions are not aliases but distinct functions

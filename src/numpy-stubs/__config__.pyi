@@ -1,7 +1,6 @@
 from enum import Enum
 from types import ModuleType
-from typing import Final, Literal as L, TypedDict, overload, type_check_only
-from typing_extensions import NotRequired
+from typing import Final, Literal as L, NotRequired, TypedDict, overload, type_check_only
 
 _CompilerConfigDictValue = TypedDict(
     "_CompilerConfigDictValue",
@@ -90,12 +89,10 @@ class DisplayModes(Enum):
     dicts = "dicts"
 
 def _check_pyyaml() -> ModuleType: ...
-
 @overload
 def show(mode: L["stdout"] = "stdout") -> None: ...
 @overload
 def show(mode: L["dicts"]) -> _ConfigDict: ...
-
 @overload
 def show_config(mode: L["stdout"] = "stdout") -> None: ...
 @overload

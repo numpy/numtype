@@ -3,52 +3,51 @@ from typing import (
     Generic,
     Literal as L,
     NamedTuple,
-    overload,
     SupportsIndex,
     TypeVar,
+    overload,
 )
 from typing_extensions import deprecated
 
 import numpy as np
 from numpy import (
-    generic,
-    number,
-    ushort,
-    ubyte,
-    uintc,
-    uint,
-    ulonglong,
-    short,
-    int8,
     byte,
-    intc,
-    int_,
-    intp,
-    longlong,
-    half,
-    single,
-    double,
-    longdouble,
-    csingle,
+    bytes_,
     cdouble,
     clongdouble,
-    timedelta64,
+    csingle,
     datetime64,
+    double,
+    generic,
+    half,
+    int8,
+    int_,
+    intc,
+    intp,
+    longdouble,
+    longlong,
+    number,
     object_,
+    short,
+    single,
     str_,
-    bytes_,
+    timedelta64,
+    ubyte,
+    uint,
+    uintc,
+    ulonglong,
+    ushort,
     void,
 )
-
 from numpy._typing import (
     ArrayLike,
     NDArray,
     _ArrayLike,
     _ArrayLikeBool_co,
     _ArrayLikeDT64_co,
-    _ArrayLikeTD64_co,
-    _ArrayLikeObject_co,
     _ArrayLikeNumber_co,
+    _ArrayLikeObject_co,
+    _ArrayLikeTD64_co,
 )
 
 __all__ = [
@@ -147,7 +146,6 @@ def ediff1d(
     to_end: None | ArrayLike = ...,
     to_begin: None | ArrayLike = ...,
 ) -> NDArray[object_]: ...
-
 @overload
 def unique(
     ar: _ArrayLike[_SCT],
@@ -308,35 +306,22 @@ def unique(
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp], NDArray[intp]]: ...
-
 @overload
-def unique_all(
-    x: _ArrayLike[_SCT], /
-) -> UniqueAllResult[_SCT]: ...
+def unique_all(x: _ArrayLike[_SCT], /) -> UniqueAllResult[_SCT]: ...
 @overload
-def unique_all(
-    x: ArrayLike, /
-) -> UniqueAllResult[Any]: ...
-
+def unique_all(x: ArrayLike, /) -> UniqueAllResult[Any]: ...
 @overload
-def unique_counts(
-    x: _ArrayLike[_SCT], /
-) -> UniqueCountsResult[_SCT]: ...
+def unique_counts(x: _ArrayLike[_SCT], /) -> UniqueCountsResult[_SCT]: ...
 @overload
-def unique_counts(
-    x: ArrayLike, /
-) -> UniqueCountsResult[Any]: ...
-
+def unique_counts(x: ArrayLike, /) -> UniqueCountsResult[Any]: ...
 @overload
 def unique_inverse(x: _ArrayLike[_SCT], /) -> UniqueInverseResult[_SCT]: ...
 @overload
 def unique_inverse(x: ArrayLike, /) -> UniqueInverseResult[Any]: ...
-
 @overload
 def unique_values(x: _ArrayLike[_SCT], /) -> NDArray[_SCT]: ...
 @overload
 def unique_values(x: ArrayLike, /) -> NDArray[Any]: ...
-
 @overload
 def intersect1d(
     ar1: _ArrayLike[_SCTNoCast],
@@ -365,7 +350,6 @@ def intersect1d(
     assume_unique: bool = ...,
     return_indices: L[True] = ...,
 ) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp]]: ...
-
 @overload
 def setxor1d(
     ar1: _ArrayLike[_SCTNoCast],
@@ -378,7 +362,6 @@ def setxor1d(
     ar2: ArrayLike,
     assume_unique: bool = ...,
 ) -> NDArray[Any]: ...
-
 def isin(
     element: ArrayLike,
     test_elements: ArrayLike,
@@ -387,7 +370,6 @@ def isin(
     *,
     kind: None | str = ...,
 ) -> NDArray[np.bool]: ...
-
 @deprecated("Use 'isin' instead")
 def in1d(
     element: ArrayLike,
@@ -397,7 +379,6 @@ def in1d(
     *,
     kind: None | str = ...,
 ) -> NDArray[np.bool]: ...
-
 @overload
 def union1d(
     ar1: _ArrayLike[_SCTNoCast],
@@ -408,7 +389,6 @@ def union1d(
     ar1: ArrayLike,
     ar2: ArrayLike,
 ) -> NDArray[Any]: ...
-
 @overload
 def setdiff1d(
     ar1: _ArrayLike[_SCTNoCast],

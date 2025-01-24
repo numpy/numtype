@@ -1,20 +1,20 @@
 from collections.abc import Callable
-from typing import Any, Literal, TypeAlias, TypedDict, SupportsIndex, type_check_only
 
 # Using a private class is by no means ideal, but it is simply a consequence
 # of a `contextlib.context` returning an instance of aforementioned class
 from contextlib import _GeneratorContextManager
+from typing import Any, Literal, SupportsIndex, TypeAlias, TypedDict, type_check_only
 
 import numpy as np
 from numpy import (
-    integer,
-    timedelta64,
+    clongdouble,
+    complexfloating,
     datetime64,
     floating,
-    complexfloating,
-    void,
+    integer,
     longdouble,
-    clongdouble,
+    timedelta64,
+    void,
 )
 from numpy._typing import NDArray, _CharLike_co, _FloatLike_co
 
@@ -133,5 +133,5 @@ def printoptions(
     sign: Literal["-", "+", " "] | None = ...,
     floatmode: None | _FloatMode = ...,
     *,
-    legacy: Literal[False, "1.13", "1.21"] | None = ...
+    legacy: Literal[False, "1.13", "1.21"] | None = ...,
 ) -> _GeneratorContextManager[_FormatOptions]: ...

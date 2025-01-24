@@ -8,49 +8,40 @@ from typing import (
     Final,
     Generic,
     Literal,
+    LiteralString,
+    Self,
     SupportsIndex,
     TypeAlias,
     TypeGuard,
     overload,
 )
+from typing_extensions import TypeVar
 
 import numpy as np
 import numpy.typing as npt
 from numpy._typing import (
+    _ArrayLikeComplex_co,
+    _ArrayLikeFloat_co,
     _FloatLike_co,
     _NumberLike_co,
-
-    _ArrayLikeFloat_co,
-    _ArrayLikeComplex_co,
 )
 
 from ._polytypes import (
     _AnyInt,
-    _CoefLike_co,
-
     _Array2,
-    _Tuple2,
-
-    _Series,
-    _CoefSeries,
-
-    _SeriesLikeInt_co,
-    _SeriesLikeCoef_co,
-
     _ArrayLikeCoefObject_co,
     _ArrayLikeCoef_co,
+    _CoefLike_co,
+    _CoefSeries,
+    _Series,
+    _SeriesLikeCoef_co,
+    _SeriesLikeInt_co,
+    _Tuple2,
 )
-
-from typing_extensions import LiteralString, TypeVar
 
 __all__: Final[Sequence[str]] = ("ABCPolyBase",)
 
-_NameCo = TypeVar(
-    "_NameCo",
-    bound=LiteralString | None,
-    covariant=True,
-    default=LiteralString | None
-)
+_NameCo = TypeVar("_NameCo", bound=LiteralString | None, covariant=True, default=LiteralString | None)
 _Self = TypeVar("_Self")
 _Other = TypeVar("_Other", bound=ABCPolyBase)
 
@@ -74,7 +65,6 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
     _symbol: LiteralString
     @property
     def symbol(self, /) -> LiteralString: ...
-
     def __init__(
         self,
         /,
@@ -83,7 +73,6 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
         window: None | _SeriesLikeCoef_co = ...,
         symbol: str = ...,
     ) -> None: ...
-
     @overload
     def __call__(self, /, arg: _Other) -> _Other: ...
     # TODO: Once `_ShapeType@ndarray` is covariant and bounded (see #26081),
@@ -101,11 +90,9 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
         arg: _NumberLike_co | numbers.Complex,
     ) -> np.complex128: ...
     @overload
-    def __call__(self, /, arg: _ArrayLikeFloat_co) -> (
-        npt.NDArray[np.float64]
-        | npt.NDArray[np.complex128]
-        | npt.NDArray[np.object_]
-    ): ...
+    def __call__(
+        self, /, arg: _ArrayLikeFloat_co
+    ) -> npt.NDArray[np.float64] | npt.NDArray[np.complex128] | npt.NDArray[np.object_]: ...
     @overload
     def __call__(
         self,
@@ -118,12 +105,11 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
         /,
         arg: _ArrayLikeCoefObject_co,
     ) -> npt.NDArray[np.object_]: ...
-
     def __format__(self, fmt_str: str, /) -> str: ...
     def __eq__(self, x: object, /) -> bool: ...
     def __ne__(self, x: object, /) -> bool: ...
-    def __neg__(self: _Self, /) -> _Self: ...
-    def __pos__(self: _Self, /) -> _Self: ...
+    def __neg__(self, /) -> Self: ...
+    def __pos__(self, /) -> Self: ...
     def __add__(self: _Self, x: _AnyOther, /) -> _Self: ...
     def __sub__(self: _Self, x: _AnyOther, /) -> _Self: ...
     def __mul__(self: _Self, x: _AnyOther, /) -> _Self: ...
@@ -143,7 +129,6 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
     def __iter__(self, /) -> Iterator[np.inexact[Any] | object]: ...
     def __getstate__(self, /) -> dict[str, Any]: ...
     def __setstate__(self, dict: dict[str, Any], /) -> None: ...
-
     def has_samecoef(self, /, other: ABCPolyBase) -> bool: ...
     def has_samedomain(self, /, other: ABCPolyBase) -> bool: ...
     def has_samewindow(self, /, other: ABCPolyBase) -> bool: ...
@@ -151,13 +136,11 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
     def has_sametype(self: _Self, /, other: ABCPolyBase) -> TypeGuard[_Self]: ...
     @overload
     def has_sametype(self, /, other: object) -> Literal[False]: ...
-
-    def copy(self: _Self, /) -> _Self: ...
+    def copy(self, /) -> Self: ...
     def degree(self, /) -> int: ...
-    def cutdeg(self: _Self, /) -> _Self: ...
+    def cutdeg(self, /) -> Self: ...
     def trim(self: _Self, /, tol: _FloatLike_co = ...) -> _Self: ...
     def truncate(self: _Self, /, size: _AnyInt) -> _Self: ...
-
     @overload
     def convert(
         self,
@@ -183,30 +166,27 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
         kind: None | type[_Self] = ...,
         window: None | _SeriesLikeCoef_co = ...,
     ) -> _Self: ...
-
     def mapparms(self, /) -> _Tuple2[Any]: ...
-
     def integ(
-        self: _Self, /,
+        self: _Self,
+        /,
         m: SupportsIndex = ...,
         k: _CoefLike_co | _SeriesLikeCoef_co = ...,
         lbnd: None | _CoefLike_co = ...,
     ) -> _Self: ...
-
     def deriv(self: _Self, /, m: SupportsIndex = ...) -> _Self: ...
-
     def roots(self, /) -> _CoefSeries: ...
-
     def linspace(
-        self, /,
+        self,
+        /,
         n: SupportsIndex = ...,
         domain: None | _SeriesLikeCoef_co = ...,
     ) -> _Tuple2[_Series[np.float64 | np.complex128]]: ...
-
     @overload
     @classmethod
     def fit(
-        cls: type[_Self], /,
+        cls: type[_Self],
+        /,
         x: _SeriesLikeCoef_co,
         y: _SeriesLikeCoef_co,
         deg: int | _SeriesLikeInt_co,
@@ -220,7 +200,8 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
     @overload
     @classmethod
     def fit(
-        cls: type[_Self], /,
+        cls: type[_Self],
+        /,
         x: _SeriesLikeCoef_co,
         y: _SeriesLikeCoef_co,
         deg: int | _SeriesLikeInt_co,
@@ -241,46 +222,46 @@ class ABCPolyBase(Generic[_NameCo], metaclass=abc.ABCMeta):
         deg: int | _SeriesLikeInt_co,
         domain: None | _SeriesLikeCoef_co,
         rcond: _FloatLike_co,
-        full: Literal[True], /,
+        full: Literal[True],
+        /,
         w: None | _SeriesLikeCoef_co = ...,
         window: None | _SeriesLikeCoef_co = ...,
         symbol: str = ...,
     ) -> tuple[_Self, Sequence[np.inexact[Any] | np.int32]]: ...
-
     @classmethod
     def fromroots(
-        cls: type[_Self], /,
+        cls: type[_Self],
+        /,
         roots: _ArrayLikeCoef_co,
         domain: None | _SeriesLikeCoef_co = ...,
         window: None | _SeriesLikeCoef_co = ...,
         symbol: str = ...,
     ) -> _Self: ...
-
     @classmethod
     def identity(
-        cls: type[_Self], /,
+        cls: type[_Self],
+        /,
         domain: None | _SeriesLikeCoef_co = ...,
         window: None | _SeriesLikeCoef_co = ...,
         symbol: str = ...,
     ) -> _Self: ...
-
     @classmethod
     def basis(
-        cls: type[_Self], /,
+        cls: type[_Self],
+        /,
         deg: _AnyInt,
         domain: None | _SeriesLikeCoef_co = ...,
         window: None | _SeriesLikeCoef_co = ...,
         symbol: str = ...,
     ) -> _Self: ...
-
     @classmethod
     def cast(
-        cls: type[_Self], /,
+        cls: type[_Self],
+        /,
         series: ABCPolyBase,
         domain: None | _SeriesLikeCoef_co = ...,
         window: None | _SeriesLikeCoef_co = ...,
     ) -> _Self: ...
-
     @classmethod
     def _str_term_unicode(cls, /, i: str, arg_str: str) -> str: ...
     @staticmethod
