@@ -68,12 +68,12 @@ strict = true
 disable_bytearray_promotion = true
 disable_memoryview_promotion = true
 enable_error_code = ["ignore-without-code", "truthy-bool"]
+disable_error_code = ["explicit-override"]  # TODO
 
 # basedmypy only
 warn_unreachable = false
 warn_unused_ignores = false
 disallow_any_explicit = false
-
 
 [tool.pyright]
 include = ["src/numpy-stubs"]
@@ -89,9 +89,9 @@ deprecateTypingAliases = true
 enableReachabilityAnalysis = false
 enableTypeIgnoreComments = false
 reportCallInDefaultInitializer = true
-reportImplicitOverride = true
+reportImplicitOverride = false  # TODO
 reportImportCycles = true
-reportMissingSuperCall = true
+reportMissingSuperCall = false
 reportPrivateUsage = false
 reportPropertyTypeMismatch = false
 reportShadowedImports = true

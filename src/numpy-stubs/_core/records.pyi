@@ -1,4 +1,4 @@
-from _typeshed import StrOrBytesPath
+from _typeshed import Incomplete, StrOrBytesPath
 from collections.abc import Iterable, Sequence
 from types import EllipsisType
 from typing import Any, Literal, Protocol, SupportsIndex, TypeAlias, TypeVar, overload, type_check_only
@@ -63,7 +63,7 @@ class recarray(ndarray[_ShapeT_co, _DType_co]):
     # mutually exclusive
     @overload
     def __new__(
-        subtype,
+        cls,
         shape: _ShapeLike,
         dtype: None = ...,
         buf: _SupportsBuffer | None = ...,
@@ -79,7 +79,7 @@ class recarray(ndarray[_ShapeT_co, _DType_co]):
     ) -> recarray[Any, dtype[record]]: ...
     @overload
     def __new__(
-        subtype,
+        cls,
         shape: _ShapeLike,
         dtype: DTypeLike,
         buf: _SupportsBuffer | None = ...,
@@ -92,7 +92,7 @@ class recarray(ndarray[_ShapeT_co, _DType_co]):
         aligned: Literal[False] = ...,
         order: _OrderKACF = ...,
     ) -> recarray[Any, dtype[Any]]: ...
-    def __array_finalize__(self, obj: object) -> None: ...
+    def __array_finalize__(self, obj: Incomplete) -> None: ...
     def __getattribute__(self, attr: str) -> Any: ...
     def __setattr__(self, attr: str, val: ArrayLike) -> None: ...
     @overload

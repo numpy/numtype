@@ -91,7 +91,7 @@ _StringDTypeOrUnicodeArray: TypeAlias = np.ndarray[_Shape, np.dtype[np.str_]] | 
 class chararray(ndarray[_ShapeT_co, _CharDType_co]):
     @overload
     def __new__(
-        subtype,
+        cls,
         shape: _ShapeLike,
         itemsize: SupportsIndex | SupportsInt = ...,
         unicode: L[False] = ...,
@@ -102,7 +102,7 @@ class chararray(ndarray[_ShapeT_co, _CharDType_co]):
     ) -> chararray[_Shape, dtype[bytes_]]: ...
     @overload
     def __new__(
-        subtype,
+        cls,
         shape: _ShapeLike,
         itemsize: SupportsIndex | SupportsInt = ...,
         unicode: L[True] = ...,
@@ -514,7 +514,7 @@ def add(x1: S_co, x2: S_co) -> NDArray[np.bytes_]: ...
 @overload
 def add(x1: _StringDTypeSupportsArray, x2: _StringDTypeSupportsArray) -> _StringDTypeArray: ...
 @overload
-def add(x1: T_co, T_co) -> _StringDTypeOrUnicodeArray: ...
+def add(x1: T_co, x2: T_co) -> _StringDTypeOrUnicodeArray: ...
 @overload
 def multiply(a: U_co, i: i_co) -> NDArray[np.str_]: ...
 @overload

@@ -5080,7 +5080,7 @@ class memmap(ndarray[_ShapeT_co, _DType_co]):
     mode: str
     @overload
     def __new__(
-        subtype,
+        cls,
         filename: StrOrBytesPath | _SupportsFileMethodsRW,
         dtype: type[uint8] = ...,
         mode: _MemMapModeKind = ...,
@@ -5090,7 +5090,7 @@ class memmap(ndarray[_ShapeT_co, _DType_co]):
     ) -> memmap[Any, dtype[uint8]]: ...
     @overload
     def __new__(
-        subtype,
+        cls,
         filename: StrOrBytesPath | _SupportsFileMethodsRW,
         dtype: _DTypeLike[_SCT],
         mode: _MemMapModeKind = ...,
@@ -5100,7 +5100,7 @@ class memmap(ndarray[_ShapeT_co, _DType_co]):
     ) -> memmap[Any, dtype[_SCT]]: ...
     @overload
     def __new__(
-        subtype,
+        cls,
         filename: StrOrBytesPath | _SupportsFileMethodsRW,
         dtype: DTypeLike,
         mode: _MemMapModeKind = ...,
@@ -5117,8 +5117,6 @@ class memmap(ndarray[_ShapeT_co, _DType_co]):
     ) -> Any: ...
     def flush(self) -> None: ...
 
-# TODO: Add a mypy plugin for managing functions whose output type is dependent
-# on the literal value of some sort of signature (e.g. `einsum` and `vectorize`)
 class vectorize:
     pyfunc: Callable[..., Any]
     cache: builtins.bool
@@ -5210,7 +5208,7 @@ class poly1d:
 class matrix(ndarray[_2DShapeT_co, _DType_co]):
     __array_priority__: ClassVar[float]
     def __new__(
-        subtype,
+        cls,
         data: ArrayLike,
         dtype: DTypeLike = ...,
         copy: builtins.bool = ...,
