@@ -4,16 +4,170 @@ import ctypes as ct
 import datetime as dt
 import enum
 import sys
+from _typeshed import StrOrBytesPath, SupportsFlush, SupportsLenAndGetItem, SupportsWrite
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from decimal import Decimal
 from fractions import Fraction
 from types import EllipsisType, GenericAlias, MappingProxyType, ModuleType, TracebackType
+from typing import (
+    Any,
+    ClassVar,
+    Final,
+    Generic,
+    Literal as L,
+    NoReturn,
+    SupportsComplex,
+    SupportsFloat,
+    SupportsIndex,
+    SupportsInt,
+    TypeAlias,
+    TypedDict,
+    final,
+    overload,
+    runtime_checkable,
+    type_check_only,
+)
+from typing_extensions import CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, deprecated
 from uuid import UUID
 
 import numpy as np
 from numpy.__config__ import show as show_config
 from numpy._array_api_info import __array_namespace_info__
+from numpy._core._asarray import require
 from numpy._core._internal import _ctypes
+from numpy._core._type_aliases import sctypeDict
+from numpy._core._ufunc_config import _ErrCall, _ErrKind, getbufsize, geterr, geterrcall, setbufsize, seterr, seterrcall
+from numpy._core.arrayprint import (
+    array2string,
+    array_repr,
+    array_str,
+    format_float_positional,
+    format_float_scientific,
+    get_printoptions,
+    printoptions,
+    set_printoptions,
+)
+from numpy._core.einsumfunc import einsum, einsum_path
+from numpy._core.fromnumeric import (
+    all,
+    amax,
+    amin,
+    any,
+    argmax,
+    argmin,
+    argpartition,
+    argsort,
+    around,
+    choose,
+    clip,
+    compress,
+    cumprod,
+    cumsum,
+    cumulative_prod,
+    cumulative_sum,
+    diagonal,
+    matrix_transpose,
+    max,
+    mean,
+    min,
+    ndim,
+    nonzero,
+    partition,
+    prod,
+    ptp,
+    put,
+    ravel,
+    repeat,
+    reshape,
+    resize,
+    round,
+    searchsorted,
+    shape,
+    size,
+    sort,
+    squeeze,
+    std,
+    sum,
+    swapaxes,
+    take,
+    trace,
+    transpose,
+    var,
+)
+from numpy._core.function_base import geomspace, linspace, logspace
+from numpy._core.multiarray import (
+    arange,
+    array,
+    asanyarray,
+    asarray,
+    ascontiguousarray,
+    asfortranarray,
+    bincount,
+    busday_count,
+    busday_offset,
+    can_cast,
+    concatenate,
+    copyto,
+    datetime_as_string,
+    datetime_data,
+    dot,
+    empty,
+    empty_like,
+    flagsobj,
+    frombuffer,
+    fromfile,
+    fromiter,
+    frompyfunc,
+    fromstring,
+    inner,
+    is_busday,
+    lexsort,
+    may_share_memory,
+    min_scalar_type,
+    nested_iters,
+    packbits,
+    promote_types,
+    putmask,
+    result_type,
+    shares_memory,
+    unpackbits,
+    vdot,
+    where,
+    zeros,
+)
+from numpy._core.numeric import (
+    allclose,
+    argwhere,
+    array_equal,
+    array_equiv,
+    astype,
+    base_repr,
+    binary_repr,
+    convolve,
+    correlate,
+    count_nonzero,
+    cross,
+    flatnonzero,
+    fromfunction,
+    full,
+    full_like,
+    identity,
+    indices,
+    isclose,
+    isfortran,
+    isscalar,
+    moveaxis,
+    ones,
+    ones_like,
+    outer,
+    roll,
+    rollaxis,
+    tensordot,
+    zeros_like,
+)
+from numpy._core.numerictypes import ScalarType, isdtype, issubdtype, typecodes
+from numpy._core.records import recarray, record
+from numpy._core.shape_base import atleast_1d, atleast_2d, atleast_3d, block, hstack, stack, unstack, vstack
 from numpy._pytesttester import PytestTester
 from numpy._typing import (
     ArrayLike,
@@ -159,192 +313,6 @@ from numpy._typing._extended_precision import (
     uint128,
     uint256,
 )
-
-if sys.version_info >= (3, 12):
-    from collections.abc import Buffer as _SupportsBuffer
-else:
-    _SupportsBuffer: TypeAlias = ...
-
-from _typeshed import StrOrBytesPath, SupportsFlush, SupportsLenAndGetItem, SupportsWrite
-from typing import (
-    Any,
-    ClassVar,
-    Final,
-    Generic,
-    Literal as L,
-    NoReturn,
-    SupportsComplex,
-    SupportsFloat,
-    SupportsIndex,
-    SupportsInt,
-    TypeAlias,
-    TypedDict,
-    final,
-    overload,
-    type_check_only,
-)
-from typing_extensions import CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, deprecated
-
-from . import (
-    __config__ as __config__,
-    char,
-    core,
-    ctypeslib,
-    dtypes,
-    exceptions,
-    f2py,
-    fft,
-    lib,
-    linalg,
-    ma,
-    matlib as matlib,
-    matrixlib as matrixlib,
-    polynomial,
-    random,
-    rec,
-    strings,
-    testing,
-    typing as npt,
-    version as version,
-)
-
-if sys.version_info < (3, 12):
-    from . import distutils as distutils
-
-from numpy._core._asarray import require
-from numpy._core._type_aliases import sctypeDict
-from numpy._core._ufunc_config import _ErrCall, _ErrKind, getbufsize, geterr, geterrcall, setbufsize, seterr, seterrcall
-from numpy._core.arrayprint import (
-    array2string,
-    array_repr,
-    array_str,
-    format_float_positional,
-    format_float_scientific,
-    get_printoptions,
-    printoptions,
-    set_printoptions,
-)
-from numpy._core.einsumfunc import einsum, einsum_path
-from numpy._core.fromnumeric import (
-    all,
-    amax,
-    amin,
-    any,
-    argmax,
-    argmin,
-    argpartition,
-    argsort,
-    around,
-    choose,
-    clip,
-    compress,
-    cumprod,
-    cumsum,
-    cumulative_prod,
-    cumulative_sum,
-    diagonal,
-    matrix_transpose,
-    max,
-    mean,
-    min,
-    ndim,
-    nonzero,
-    partition,
-    prod,
-    ptp,
-    put,
-    ravel,
-    repeat,
-    reshape,
-    resize,
-    round,
-    searchsorted,
-    shape,
-    size,
-    sort,
-    squeeze,
-    std,
-    sum,
-    swapaxes,
-    take,
-    trace,
-    transpose,
-    var,
-)
-from numpy._core.function_base import geomspace, linspace, logspace
-from numpy._core.multiarray import (
-    arange,
-    array,
-    asanyarray,
-    asarray,
-    ascontiguousarray,
-    asfortranarray,
-    bincount,
-    busday_count,
-    busday_offset,
-    can_cast,
-    concatenate,
-    copyto,
-    datetime_as_string,
-    datetime_data,
-    dot,
-    empty,
-    empty_like,
-    flagsobj,
-    frombuffer,
-    fromfile,
-    fromiter,
-    frompyfunc,
-    fromstring,
-    inner,
-    is_busday,
-    lexsort,
-    may_share_memory,
-    min_scalar_type,
-    nested_iters,
-    packbits,
-    promote_types,
-    putmask,
-    result_type,
-    shares_memory,
-    unpackbits,
-    vdot,
-    where,
-    zeros,
-)
-from numpy._core.numeric import (
-    allclose,
-    argwhere,
-    array_equal,
-    array_equiv,
-    astype,
-    base_repr,
-    binary_repr,
-    convolve,
-    correlate,
-    count_nonzero,
-    cross,
-    flatnonzero,
-    fromfunction,
-    full,
-    full_like,
-    identity,
-    indices,
-    isclose,
-    isfortran,
-    isscalar,
-    moveaxis,
-    ones,
-    ones_like,
-    outer,
-    roll,
-    rollaxis,
-    tensordot,
-    zeros_like,
-)
-from numpy._core.numerictypes import ScalarType, isdtype, issubdtype, typecodes
-from numpy._core.records import recarray, record
-from numpy._core.shape_base import atleast_1d, atleast_2d, atleast_3d, block, hstack, stack, unstack, vstack
 from numpy.lib import scimath as emath
 from numpy.lib._arraypad_impl import pad
 from numpy.lib._arraysetops_impl import (
@@ -482,6 +450,45 @@ from numpy.lib._type_check_impl import (
 from numpy.lib._ufunclike_impl import fix, isneginf, isposinf
 from numpy.lib._utils_impl import get_include, info, show_runtime
 from numpy.matrixlib import asmatrix, bmat
+
+from . import (
+    __config__ as __config__,
+    char,
+    core,
+    ctypeslib,
+    dtypes,
+    exceptions,
+    f2py,
+    fft,
+    lib,
+    linalg,
+    ma,
+    matlib as matlib,
+    matrixlib as matrixlib,
+    polynomial,
+    random,
+    rec,
+    strings,
+    testing,
+    typing as npt,
+    version as version,
+)
+
+@runtime_checkable
+class _Buffer(Protocol):
+    def __buffer__(self, flags: int, /) -> memoryview: ...
+
+if sys.version_info >= (3, 12):
+    _SupportsBuffer: TypeAlias = _Buffer
+else:
+    import array as _array
+    import mmap as _mmap
+
+    from numpy import distutils as distutils  # type: ignore[attr-defined]  # noqa: ICN003
+
+    _SupportsBuffer: TypeAlias = (
+        _Buffer | bytes | bytearray | memoryview | _array.array[Any] | _mmap.mmap | NDArray[Any] | generic
+    )
 
 __all__ = [  # noqa: RUF022
     # __numpy_submodules__
@@ -4025,7 +4032,7 @@ ubyte: TypeAlias = unsignedinteger[_NBitByte]
 ushort: TypeAlias = unsignedinteger[_NBitShort]
 uintc: TypeAlias = unsignedinteger[_NBitIntC]
 uintp: TypeAlias = unsignedinteger[_NBitIntP]
-uint64: TypeAlias = uintp
+uint: TypeAlias = uintp
 ulong: TypeAlias = unsignedinteger[_NBitLong]
 ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
 

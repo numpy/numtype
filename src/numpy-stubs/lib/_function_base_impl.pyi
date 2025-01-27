@@ -299,7 +299,7 @@ def interp(
 def interp(
     x: _FloatLike_co,
     xp: _ArrayLikeFloat_co,
-    fp: Sequence[complex | np.ccomplexfloating],
+    fp: Sequence[complex | np.complexfloating],
     left: _NumberLike_co | None = None,
     right: _NumberLike_co | None = None,
     period: _FloatLike_co | None = None,

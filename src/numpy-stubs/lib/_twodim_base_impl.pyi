@@ -137,9 +137,9 @@ def vander(x: _ArrayLikeComplex_co, N: int | None = ..., increasing: bool = ...)
 @overload
 def vander(x: _ArrayLikeObject_co, N: int | None = ..., increasing: bool = ...) -> NDArray[np.object_]: ...
 
-_Int_co: TypeAlias = np.integer[Any] | np.bool
-_Float_co: TypeAlias = np.floating[Any] | _Int_co
-_Number_co: TypeAlias = np.np.number | np.bool
+_Int_co: TypeAlias = np.integer | np.bool
+_Float_co: TypeAlias = np.floating | _Int_co
+_Number_co: TypeAlias = np.number | np.bool
 
 _ArrayLike1D: TypeAlias = _SupportsArray[np.dtype[_SCT]] | Sequence[_SCT]
 _ArrayLike2D: TypeAlias = _SupportsArray[np.dtype[_SCT]] | Sequence[_ArrayLike1D[_SCT]]
