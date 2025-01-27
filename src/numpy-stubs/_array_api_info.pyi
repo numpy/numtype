@@ -1,14 +1,5 @@
-from typing import (
-    ClassVar,
-    Literal,
-    Never,
-    TypeAlias,
-    TypeVar,
-    TypedDict,
-    final,
-    overload,
-    type_check_only,
-)
+from typing import ClassVar, Literal, TypeAlias, TypeVar, TypedDict, final, overload, type_check_only
+from typing_extensions import Never
 
 import numpy as np
 

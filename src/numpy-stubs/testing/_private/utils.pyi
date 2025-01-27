@@ -3,7 +3,7 @@ import sys
 import types
 import unittest
 import warnings
-from _typeshed import GenericPath, StrOrBytesPath, StrPath
+from _typeshed import ConvertibleToFloat, GenericPath, StrOrBytesPath, StrPath
 from collections.abc import Callable, Iterable, Sequence
 from contextlib import _GeneratorContextManager
 from re import Pattern
@@ -15,17 +15,16 @@ from typing import (
     Literal as L,
     NoReturn,
     ParamSpec,
-    Self,
     SupportsIndex,
     TypeAlias,
     TypeVar,
     overload,
     type_check_only,
 )
+from typing_extensions import Self
 from unittest.case import SkipTest
 
 import numpy as np
-from numpy import _ConvertibleToFloat, number, object_
 from numpy._typing import (
     ArrayLike,
     DTypeLike,
@@ -91,7 +90,7 @@ _FT = TypeVar("_FT", bound=Callable[..., Any])
 # Must return a bool or an ndarray/generic type
 # that is supported by `np.logical_and.reduce`
 _ComparisonFunc: TypeAlias = Callable[
-    [NDArray[Any], NDArray[Any]], (bool | np.bool | number[Any] | NDArray[np.bool | number[Any] | object_])
+    [NDArray[Any], NDArray[Any]], (bool | np.bool | np.number | NDArray[np.bool | np.number | np.object_])
 ]
 
 class KnownFailureException(Exception): ...
@@ -121,9 +120,10 @@ class clear_and_catch_warnings(warnings.catch_warnings[list[warnings.WarningMess
     def __enter__(self) -> list[warnings.WarningMessage] | None: ...
     def __exit__(
         self,
-        __exc_type: type[BaseException] | None = ...,
-        __exc_val: BaseException | None = ...,
-        __exc_tb: types.TracebackType | None = ...,
+        exc_type: type[BaseException] | None = ...,
+        exc_val: BaseException | None = ...,
+        exc_tb: types.TracebackType | None = ...,
+        /,
     ) -> None: ...
 
 # Type-check only `clear_and_catch_warnings` subclasses for both values of the
@@ -158,9 +158,10 @@ class suppress_warnings:
     def __enter__(self) -> Self: ...
     def __exit__(
         self,
-        __exc_type: type[BaseException] | None = ...,
-        __exc_val: BaseException | None = ...,
-        __exc_tb: types.TracebackType | None = ...,
+        exc_type: type[BaseException] | None = ...,
+        exc_val: BaseException | None = ...,
+        exc_tb: types.TracebackType | None = ...,
+        /,
     ) -> None: ...
     def __call__(self, func: _FT) -> _FT: ...
 
@@ -220,8 +221,8 @@ def assert_almost_equal(
 
 # Anything that can be coerced into `builtins.float`
 def assert_approx_equal(
-    actual: _ConvertibleToFloat,
-    desired: _ConvertibleToFloat,
+    actual: ConvertibleToFloat,
+    desired: ConvertibleToFloat,
     significant: int = ...,
     err_msg: object = ...,
     verbose: bool = ...,
@@ -276,10 +277,10 @@ def rundocs(
     filename: StrPath | None = ...,
     raise_on_error: bool = ...,
 ) -> None: ...
-def check_support_sve(__cache: list[_T]) -> _T: ...
+def check_support_sve(cache: list[_T], /) -> _T: ...
 def raises(*args: type[BaseException]) -> Callable[[_FT], _FT]: ...
 @overload
-def assert_raises(  # type: ignore
+def assert_raises(
     expected_exception: type[BaseException] | tuple[type[BaseException], ...],
     callable: Callable[_P, Any],
     /,

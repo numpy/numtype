@@ -1,27 +1,7 @@
-from typing import (
-    Any,
-    Literal as L,
-    NoReturn,
-    SupportsIndex,
-    SupportsInt,
-    TypeAlias,
-    TypeVar,
-    overload,
-)
+from typing import Any, Literal as L, NoReturn, SupportsIndex, SupportsInt, TypeAlias, TypeVar, overload
 
 import numpy as np
-from numpy import (
-    complex128,
-    complexfloating,
-    float64,
-    floating,
-    int32,
-    int64,
-    object_,
-    poly1d,
-    signedinteger,
-    unsignedinteger,
-)
+from numpy import poly1d  # noqa: ICN003
 from numpy._typing import (
     ArrayLike,
     NDArray,
@@ -36,77 +16,47 @@ from numpy._typing import (
 _T = TypeVar("_T")
 
 _2Tup: TypeAlias = tuple[_T, _T]
-_5Tup: TypeAlias = tuple[
-    _T,
-    NDArray[float64],
-    NDArray[int32],
-    NDArray[float64],
-    NDArray[float64],
-]
+_5Tup: TypeAlias = tuple[_T, NDArray[np.np.float64], NDArray[np.int32], NDArray[np.float64], NDArray[np.float64]]
 
-__all__ = [
-    "poly",
-    "poly1d",
-    "polyadd",
-    "polyder",
-    "polydiv",
-    "polyfit",
-    "polyint",
-    "polymul",
-    "polysub",
-    "polyval",
-    "roots",
-]
+__all__ = ["poly", "poly1d", "polyadd", "polyder", "polydiv", "polyfit", "polyint", "polymul", "polysub", "polyval", "roots"]
 
-def poly(seq_of_zeros: ArrayLike) -> NDArray[floating[Any]]: ...
+def poly(seq_of_zeros: ArrayLike) -> NDArray[np.floating]: ...
 
 # Returns either a float or complex array depending on the input values.
 # See `np.linalg.eigvals`.
-def roots(p: ArrayLike) -> NDArray[complexfloating[Any, Any]] | NDArray[floating[Any]]: ...
+def roots(p: ArrayLike) -> NDArray[np.inexact]: ...
 @overload
 def polyint(
-    p: poly1d,
+    p: np.poly1d,
     m: SupportsInt | SupportsIndex = ...,
     k: _ArrayLikeComplex_co | _ArrayLikeObject_co | None = ...,
-) -> poly1d: ...
+) -> np.poly1d: ...
 @overload
 def polyint(
     p: _ArrayLikeFloat_co,
     m: SupportsInt | SupportsIndex = ...,
     k: _ArrayLikeFloat_co | None = ...,
-) -> NDArray[floating[Any]]: ...
+) -> NDArray[np.floating]: ...
 @overload
 def polyint(
     p: _ArrayLikeComplex_co,
     m: SupportsInt | SupportsIndex = ...,
     k: _ArrayLikeComplex_co | None = ...,
-) -> NDArray[complexfloating[Any, Any]]: ...
+) -> NDArray[np.complexfloating]: ...
 @overload
 def polyint(
     p: _ArrayLikeObject_co,
     m: SupportsInt | SupportsIndex = ...,
     k: _ArrayLikeObject_co | None = ...,
-) -> NDArray[object_]: ...
+) -> NDArray[np.object_]: ...
 @overload
-def polyder(
-    p: poly1d,
-    m: SupportsInt | SupportsIndex = ...,
-) -> poly1d: ...
+def polyder(p: np.poly1d, m: SupportsInt | SupportsIndex = ...) -> np.poly1d: ...
 @overload
-def polyder(
-    p: _ArrayLikeFloat_co,
-    m: SupportsInt | SupportsIndex = ...,
-) -> NDArray[floating[Any]]: ...
+def polyder(p: _ArrayLikeFloat_co, m: SupportsInt | SupportsIndex = ...) -> NDArray[np.floating]: ...
 @overload
-def polyder(
-    p: _ArrayLikeComplex_co,
-    m: SupportsInt | SupportsIndex = ...,
-) -> NDArray[complexfloating[Any, Any]]: ...
+def polyder(p: _ArrayLikeComplex_co, m: SupportsInt | SupportsIndex = ...) -> NDArray[np.complexfloating]: ...
 @overload
-def polyder(
-    p: _ArrayLikeObject_co,
-    m: SupportsInt | SupportsIndex = ...,
-) -> NDArray[object_]: ...
+def polyder(p: _ArrayLikeObject_co, m: SupportsInt | SupportsIndex = ...) -> NDArray[np.object_]: ...
 @overload
 def polyfit(
     x: _ArrayLikeFloat_co,
@@ -116,7 +66,7 @@ def polyfit(
     full: L[False] = ...,
     w: _ArrayLikeFloat_co | None = ...,
     cov: L[False] = ...,
-) -> NDArray[float64]: ...
+) -> NDArray[np.float64]: ...
 @overload
 def polyfit(
     x: _ArrayLikeComplex_co,
@@ -126,7 +76,7 @@ def polyfit(
     full: L[False] = ...,
     w: _ArrayLikeFloat_co | None = ...,
     cov: L[False] = ...,
-) -> NDArray[complex128]: ...
+) -> NDArray[np.complex128]: ...
 @overload
 def polyfit(
     x: _ArrayLikeFloat_co,
@@ -136,7 +86,7 @@ def polyfit(
     full: L[False] = ...,
     w: _ArrayLikeFloat_co | None = ...,
     cov: L[True, "unscaled"] = ...,
-) -> _2Tup[NDArray[float64]]: ...
+) -> _2Tup[NDArray[np.float64]]: ...
 @overload
 def polyfit(
     x: _ArrayLikeComplex_co,
@@ -146,7 +96,7 @@ def polyfit(
     full: L[False] = ...,
     w: _ArrayLikeFloat_co | None = ...,
     cov: L[True, "unscaled"] = ...,
-) -> _2Tup[NDArray[complex128]]: ...
+) -> _2Tup[NDArray[np.complex128]]: ...
 @overload
 def polyfit(
     x: _ArrayLikeFloat_co,
@@ -156,7 +106,7 @@ def polyfit(
     full: L[True] = ...,
     w: _ArrayLikeFloat_co | None = ...,
     cov: bool | L["unscaled"] = ...,
-) -> _5Tup[NDArray[float64]]: ...
+) -> _5Tup[NDArray[np.float64]]: ...
 @overload
 def polyfit(
     x: _ArrayLikeComplex_co,
@@ -166,143 +116,62 @@ def polyfit(
     full: L[True] = ...,
     w: _ArrayLikeFloat_co | None = ...,
     cov: bool | L["unscaled"] = ...,
-) -> _5Tup[NDArray[complex128]]: ...
+) -> _5Tup[NDArray[np.complex128]]: ...
 @overload
-def polyval(
-    p: _ArrayLikeBool_co,
-    x: _ArrayLikeBool_co,
-) -> NDArray[int64]: ...
+def polyval(p: _ArrayLikeBool_co, x: _ArrayLikeBool_co) -> NDArray[np.int64]: ...
 @overload
-def polyval(
-    p: _ArrayLikeUInt_co,
-    x: _ArrayLikeUInt_co,
-) -> NDArray[unsignedinteger[Any]]: ...
+def polyval(p: _ArrayLikeUInt_co, x: _ArrayLikeUInt_co) -> NDArray[np.unsignedinteger]: ...
 @overload
-def polyval(
-    p: _ArrayLikeInt_co,
-    x: _ArrayLikeInt_co,
-) -> NDArray[signedinteger[Any]]: ...
+def polyval(p: _ArrayLikeInt_co, x: _ArrayLikeInt_co) -> NDArray[np.signedinteger]: ...
 @overload
-def polyval(
-    p: _ArrayLikeFloat_co,
-    x: _ArrayLikeFloat_co,
-) -> NDArray[floating[Any]]: ...
+def polyval(p: _ArrayLikeFloat_co, x: _ArrayLikeFloat_co) -> NDArray[np.floating]: ...
 @overload
-def polyval(
-    p: _ArrayLikeComplex_co,
-    x: _ArrayLikeComplex_co,
-) -> NDArray[complexfloating[Any, Any]]: ...
+def polyval(p: _ArrayLikeComplex_co, x: _ArrayLikeComplex_co) -> NDArray[np.complexfloating]: ...
 @overload
-def polyval(
-    p: _ArrayLikeObject_co,
-    x: _ArrayLikeObject_co,
-) -> NDArray[object_]: ...
+def polyval(p: _ArrayLikeObject_co, x: _ArrayLikeObject_co) -> NDArray[np.object_]: ...
 @overload
-def polyadd(
-    a1: poly1d,
-    a2: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-) -> poly1d: ...
+def polyadd(a1: np.poly1d, a2: _ArrayLikeComplex_co | _ArrayLikeObject_co) -> np.poly1d: ...
 @overload
-def polyadd(
-    a1: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    a2: poly1d,
-) -> poly1d: ...
+def polyadd(a1: _ArrayLikeComplex_co | _ArrayLikeObject_co, a2: np.poly1d) -> np.poly1d: ...
 @overload
-def polyadd(
-    a1: _ArrayLikeBool_co,
-    a2: _ArrayLikeBool_co,
-) -> NDArray[np.bool]: ...
+def polyadd(a1: _ArrayLikeBool_co, a2: _ArrayLikeBool_co) -> NDArray[np.bool]: ...
 @overload
-def polyadd(
-    a1: _ArrayLikeUInt_co,
-    a2: _ArrayLikeUInt_co,
-) -> NDArray[unsignedinteger[Any]]: ...
+def polyadd(a1: _ArrayLikeUInt_co, a2: _ArrayLikeUInt_co) -> NDArray[np.unsignedinteger]: ...
 @overload
-def polyadd(
-    a1: _ArrayLikeInt_co,
-    a2: _ArrayLikeInt_co,
-) -> NDArray[signedinteger[Any]]: ...
+def polyadd(a1: _ArrayLikeInt_co, a2: _ArrayLikeInt_co) -> NDArray[np.signedinteger]: ...
 @overload
-def polyadd(
-    a1: _ArrayLikeFloat_co,
-    a2: _ArrayLikeFloat_co,
-) -> NDArray[floating[Any]]: ...
+def polyadd(a1: _ArrayLikeFloat_co, a2: _ArrayLikeFloat_co) -> NDArray[np.floating]: ...
 @overload
-def polyadd(
-    a1: _ArrayLikeComplex_co,
-    a2: _ArrayLikeComplex_co,
-) -> NDArray[complexfloating[Any, Any]]: ...
+def polyadd(a1: _ArrayLikeComplex_co, a2: _ArrayLikeComplex_co) -> NDArray[np.complexfloating]: ...
 @overload
-def polyadd(
-    a1: _ArrayLikeObject_co,
-    a2: _ArrayLikeObject_co,
-) -> NDArray[object_]: ...
+def polyadd(a1: _ArrayLikeObject_co, a2: _ArrayLikeObject_co) -> NDArray[np.object_]: ...
 @overload
-def polysub(
-    a1: poly1d,
-    a2: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-) -> poly1d: ...
+def polysub(a1: np.poly1d, a2: _ArrayLikeComplex_co | _ArrayLikeObject_co) -> np.poly1d: ...
 @overload
-def polysub(
-    a1: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    a2: poly1d,
-) -> poly1d: ...
+def polysub(a1: _ArrayLikeComplex_co | _ArrayLikeObject_co, a2: np.poly1d) -> np.poly1d: ...
 @overload
-def polysub(
-    a1: _ArrayLikeBool_co,
-    a2: _ArrayLikeBool_co,
-) -> NoReturn: ...
+def polysub(a1: _ArrayLikeBool_co, a2: _ArrayLikeBool_co) -> NoReturn: ...
 @overload
-def polysub(
-    a1: _ArrayLikeUInt_co,
-    a2: _ArrayLikeUInt_co,
-) -> NDArray[unsignedinteger[Any]]: ...
+def polysub(a1: _ArrayLikeUInt_co, a2: _ArrayLikeUInt_co) -> NDArray[np.unsignedinteger]: ...
 @overload
-def polysub(
-    a1: _ArrayLikeInt_co,
-    a2: _ArrayLikeInt_co,
-) -> NDArray[signedinteger[Any]]: ...
+def polysub(a1: _ArrayLikeInt_co, a2: _ArrayLikeInt_co) -> NDArray[np.signedinteger]: ...
 @overload
-def polysub(
-    a1: _ArrayLikeFloat_co,
-    a2: _ArrayLikeFloat_co,
-) -> NDArray[floating[Any]]: ...
+def polysub(a1: _ArrayLikeFloat_co, a2: _ArrayLikeFloat_co) -> NDArray[np.floating]: ...
 @overload
-def polysub(
-    a1: _ArrayLikeComplex_co,
-    a2: _ArrayLikeComplex_co,
-) -> NDArray[complexfloating[Any, Any]]: ...
+def polysub(a1: _ArrayLikeComplex_co, a2: _ArrayLikeComplex_co) -> NDArray[np.complexfloating]: ...
 @overload
-def polysub(
-    a1: _ArrayLikeObject_co,
-    a2: _ArrayLikeObject_co,
-) -> NDArray[object_]: ...
+def polysub(a1: _ArrayLikeObject_co, a2: _ArrayLikeObject_co) -> NDArray[np.object_]: ...
 
 # NOTE: Not an alias, but they do have the same signature (that we can reuse)
 polymul = polyadd
 
 @overload
-def polydiv(
-    u: poly1d,
-    v: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-) -> _2Tup[poly1d]: ...
+def polydiv(u: np.poly1d, v: _ArrayLikeComplex_co | _ArrayLikeObject_co) -> _2Tup[np.poly1d]: ...
 @overload
-def polydiv(
-    u: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    v: poly1d,
-) -> _2Tup[poly1d]: ...
+def polydiv(u: _ArrayLikeComplex_co | _ArrayLikeObject_co, v: np.poly1d) -> _2Tup[np.poly1d]: ...
 @overload
-def polydiv(
-    u: _ArrayLikeFloat_co,
-    v: _ArrayLikeFloat_co,
-) -> _2Tup[NDArray[floating[Any]]]: ...
+def polydiv(u: _ArrayLikeFloat_co, v: _ArrayLikeFloat_co) -> _2Tup[NDArray[np.floating]]: ...
 @overload
-def polydiv(
-    u: _ArrayLikeComplex_co,
-    v: _ArrayLikeComplex_co,
-) -> _2Tup[NDArray[complexfloating[Any, Any]]]: ...
+def polydiv(u: _ArrayLikeComplex_co, v: _ArrayLikeComplex_co) -> _2Tup[NDArray[np.complexfloating]]: ...
 @overload
-def polydiv(
-    u: _ArrayLikeObject_co,
-    v: _ArrayLikeObject_co,
-) -> _2Tup[NDArray[Any]]: ...
+def polydiv(u: _ArrayLikeObject_co, v: _ArrayLikeObject_co) -> _2Tup[NDArray[Any]]: ...

@@ -1,13 +1,8 @@
 import builtins
-from typing import (
-    Any,
-    Literal as L,
-    TypedDict,
-    type_check_only,
-)
+from typing import Any, Final, Literal as L, TypedDict, type_check_only
 
 import numpy as np
-from numpy import (
+from numpy import (  # noqa: ICN003
     bool,
     bool_,
     byte,
@@ -49,7 +44,6 @@ from numpy import (
     str_,
     timedelta64,
     ubyte,
-    uint,
     uint8,
     uint16,
     uint32,
@@ -78,15 +72,8 @@ from numpy._typing._extended_precision import (
     uint256,
 )
 
-from ._type_aliases import sctypeDict  # noqa: F401
-from .multiarray import (
-    busday_count,
-    busday_offset,
-    busdaycalendar,
-    datetime_as_string,
-    datetime_data,
-    is_busday,
-)
+from ._type_aliases import sctypeDict as sctypeDict
+from .multiarray import busday_count, busday_offset, busdaycalendar, datetime_as_string, datetime_data, is_busday
 
 __all__ = [
     "ScalarType",
@@ -149,10 +136,10 @@ __all__ = [
     "timedelta64",
     "typecodes",
     "ubyte",
-    "uint",
     "uint8",
     "uint16",
     "uint32",
+    "uint64",
     "uint64",
     "uint128",
     "uint256",
@@ -177,40 +164,42 @@ class _TypeCodes(TypedDict):
     Datetime: L["Mm"]
     All: L["?bhilqnpBHILQNPefdgFDGSUVOMm"]
 
-def isdtype(dtype: dtype[Any] | type[Any], kind: DTypeLike | tuple[DTypeLike, ...]) -> builtins.bool: ...
+def isdtype(dtype: dtype[Any] | type, kind: DTypeLike | tuple[DTypeLike, ...]) -> builtins.bool: ...
 def issubdtype(arg1: DTypeLike, arg2: DTypeLike) -> builtins.bool: ...
 
-typecodes: _TypeCodes
-ScalarType: tuple[
-    type[int],
-    type[float],
-    type[complex],
-    type[builtins.bool],
-    type[bytes],
-    type[str],
-    type[memoryview],
-    type[np.bool],
-    type[csingle],
-    type[cdouble],
-    type[clongdouble],
-    type[half],
-    type[single],
-    type[double],
-    type[longdouble],
-    type[byte],
-    type[short],
-    type[intc],
-    type[long],
-    type[longlong],
-    type[timedelta64],
-    type[datetime64],
-    type[object_],
-    type[bytes_],
-    type[str_],
-    type[ubyte],
-    type[ushort],
-    type[uintc],
-    type[ulong],
-    type[ulonglong],
-    type[void],
-]
+typecodes: Final[_TypeCodes] = ...
+ScalarType: Final[
+    tuple[
+        type[int],
+        type[float],
+        type[complex],
+        type[builtins.bool],
+        type[bytes],
+        type[str],
+        type[memoryview],
+        type[np.bool],
+        type[csingle],
+        type[cdouble],
+        type[clongdouble],
+        type[half],
+        type[single],
+        type[double],
+        type[longdouble],
+        type[byte],
+        type[short],
+        type[intc],
+        type[long],
+        type[longlong],
+        type[timedelta64],
+        type[datetime64],
+        type[object_],
+        type[bytes_],
+        type[str_],
+        type[ubyte],
+        type[ushort],
+        type[uintc],
+        type[ulong],
+        type[ulonglong],
+        type[void],
+    ]
+] = ...

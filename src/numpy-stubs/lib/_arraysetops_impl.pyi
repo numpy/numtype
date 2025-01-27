@@ -1,44 +1,7 @@
-from typing import (
-    Any,
-    Generic,
-    Literal as L,
-    NamedTuple,
-    SupportsIndex,
-    TypeVar,
-    overload,
-)
+from typing import Any, Generic, Literal as L, NamedTuple, SupportsIndex, TypeVar, overload
 from typing_extensions import deprecated
 
 import numpy as np
-from numpy import (
-    byte,
-    bytes_,
-    cdouble,
-    clongdouble,
-    csingle,
-    datetime64,
-    double,
-    generic,
-    half,
-    int8,
-    int_,
-    intc,
-    intp,
-    longdouble,
-    longlong,
-    number,
-    object_,
-    short,
-    single,
-    str_,
-    timedelta64,
-    ubyte,
-    uint,
-    uintc,
-    ulonglong,
-    ushort,
-    void,
-)
 from numpy._typing import (
     ArrayLike,
     NDArray,
@@ -65,8 +28,8 @@ __all__ = [
     "unique_values",
 ]
 
-_SCT = TypeVar("_SCT", bound=generic)
-_NumberType = TypeVar("_NumberType", bound=number[Any])
+_SCT = TypeVar("_SCT", bound=np.generic)
+_NumberT = TypeVar("_NumberT", bound=np.number)
 
 # Explicitly set all allowed values to prevent accidental castings to
 # abstract dtypes (their common super-type).
@@ -74,78 +37,66 @@ _NumberType = TypeVar("_NumberType", bound=number[Any])
 # Only relevant if two or more arguments are parametrized, (e.g. `setdiff1d`)
 # which could result in, for example, `int64` and `float64`producing a
 # `number[_64Bit]` array
-_SCTNoCast = TypeVar(
-    "_SCTNoCast",
+_AnyScalarT = TypeVar(
+    "_AnyScalarT",
     np.bool,
-    ushort,
-    ubyte,
-    uintc,
-    uint,
-    ulonglong,
-    short,
-    byte,
-    intc,
-    int_,
-    longlong,
-    half,
-    single,
-    double,
-    longdouble,
-    csingle,
-    cdouble,
-    clongdouble,
-    timedelta64,
-    datetime64,
-    object_,
-    str_,
-    bytes_,
-    void,
+    np.int8,
+    np.int16,
+    np.int32,
+    np.int64,
+    np.uint8,
+    np.uint16,
+    np.uint32,
+    np.uint64,
+    np.float16,
+    np.float32,
+    np.float64,
+    np.longdouble,
+    np.complex64,
+    np.complex128,
+    np.clongdouble,
+    np.timedelta64,
+    np.datetime64,
+    np.object_,
+    np.bytes_,
+    np.str_,
+    np.void,
 )
 
 class UniqueAllResult(NamedTuple, Generic[_SCT]):
     values: NDArray[_SCT]
-    indices: NDArray[intp]
-    inverse_indices: NDArray[intp]
-    counts: NDArray[intp]
+    indices: NDArray[np.int_]
+    inverse_indices: NDArray[np.int_]
+    counts: NDArray[np.int_]
 
 class UniqueCountsResult(NamedTuple, Generic[_SCT]):
     values: NDArray[_SCT]
-    counts: NDArray[intp]
+    counts: NDArray[np.int_]
 
 class UniqueInverseResult(NamedTuple, Generic[_SCT]):
     values: NDArray[_SCT]
-    inverse_indices: NDArray[intp]
+    inverse_indices: NDArray[np.int_]
 
 @overload
-def ediff1d(
-    ary: _ArrayLikeBool_co,
-    to_end: ArrayLike | None = ...,
-    to_begin: ArrayLike | None = ...,
-) -> NDArray[int8]: ...
+def ediff1d(ary: _ArrayLikeBool_co, to_end: ArrayLike | None = ..., to_begin: ArrayLike | None = ...) -> NDArray[np.int8]: ...
 @overload
-def ediff1d(
-    ary: _ArrayLike[_NumberType],
-    to_end: ArrayLike | None = ...,
-    to_begin: ArrayLike | None = ...,
-) -> NDArray[_NumberType]: ...
-@overload
-def ediff1d(
-    ary: _ArrayLikeNumber_co,
-    to_end: ArrayLike | None = ...,
-    to_begin: ArrayLike | None = ...,
-) -> NDArray[Any]: ...
+def ediff1d(ary: _ArrayLike[_NumberT], to_end: ArrayLike | None = ..., to_begin: ArrayLike | None = ...) -> NDArray[_NumberT]: ...
 @overload
 def ediff1d(
     ary: _ArrayLikeDT64_co | _ArrayLikeTD64_co,
     to_end: ArrayLike | None = ...,
     to_begin: ArrayLike | None = ...,
-) -> NDArray[timedelta64]: ...
+) -> NDArray[np.timedelta64]: ...
 @overload
 def ediff1d(
     ary: _ArrayLikeObject_co,
     to_end: ArrayLike | None = ...,
     to_begin: ArrayLike | None = ...,
-) -> NDArray[object_]: ...
+) -> NDArray[np.object_]: ...
+@overload
+def ediff1d(ary: _ArrayLikeNumber_co, to_end: ArrayLike | None = ..., to_begin: ArrayLike | None = ...) -> NDArray[Any]: ...
+
+#
 @overload
 def unique(
     ar: _ArrayLike[_SCT],
@@ -175,7 +126,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[_SCT], NDArray[intp]]: ...
+) -> tuple[NDArray[_SCT], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: ArrayLike,
@@ -185,7 +136,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[Any], NDArray[intp]]: ...
+) -> tuple[NDArray[Any], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: _ArrayLike[_SCT],
@@ -195,7 +146,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[_SCT], NDArray[intp]]: ...
+) -> tuple[NDArray[_SCT], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: ArrayLike,
@@ -205,7 +156,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[Any], NDArray[intp]]: ...
+) -> tuple[NDArray[Any], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: _ArrayLike[_SCT],
@@ -215,7 +166,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[_SCT], NDArray[intp]]: ...
+) -> tuple[NDArray[_SCT], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: ArrayLike,
@@ -225,7 +176,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[Any], NDArray[intp]]: ...
+) -> tuple[NDArray[Any], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: _ArrayLike[_SCT],
@@ -235,7 +186,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[_SCT], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[_SCT], NDArray[np.int_], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: ArrayLike,
@@ -245,7 +196,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[Any], NDArray[np.int_], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: _ArrayLike[_SCT],
@@ -255,7 +206,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[_SCT], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[_SCT], NDArray[np.int_], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: ArrayLike,
@@ -265,7 +216,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[Any], NDArray[np.int_], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: _ArrayLike[_SCT],
@@ -275,7 +226,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[_SCT], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[_SCT], NDArray[np.int_], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: ArrayLike,
@@ -285,7 +236,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[Any], NDArray[np.int_], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: _ArrayLike[_SCT],
@@ -295,7 +246,7 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[_SCT], NDArray[intp], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[_SCT], NDArray[np.int_], NDArray[np.int_], NDArray[np.int_]]: ...
 @overload
 def unique(
     ar: ArrayLike,
@@ -305,30 +256,40 @@ def unique(
     axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
-) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[Any], NDArray[np.int_], NDArray[np.int_], NDArray[np.int_]]: ...
+
+#
 @overload
 def unique_all(x: _ArrayLike[_SCT], /) -> UniqueAllResult[_SCT]: ...
 @overload
 def unique_all(x: ArrayLike, /) -> UniqueAllResult[Any]: ...
+
+#
 @overload
 def unique_counts(x: _ArrayLike[_SCT], /) -> UniqueCountsResult[_SCT]: ...
 @overload
 def unique_counts(x: ArrayLike, /) -> UniqueCountsResult[Any]: ...
+
+#
 @overload
 def unique_inverse(x: _ArrayLike[_SCT], /) -> UniqueInverseResult[_SCT]: ...
 @overload
 def unique_inverse(x: ArrayLike, /) -> UniqueInverseResult[Any]: ...
+
+#
 @overload
 def unique_values(x: _ArrayLike[_SCT], /) -> NDArray[_SCT]: ...
 @overload
 def unique_values(x: ArrayLike, /) -> NDArray[Any]: ...
+
+#
 @overload
 def intersect1d(
-    ar1: _ArrayLike[_SCTNoCast],
-    ar2: _ArrayLike[_SCTNoCast],
+    ar1: _ArrayLike[_AnyScalarT],
+    ar2: _ArrayLike[_AnyScalarT],
     assume_unique: bool = ...,
     return_indices: L[False] = ...,
-) -> NDArray[_SCTNoCast]: ...
+) -> NDArray[_AnyScalarT]: ...
 @overload
 def intersect1d(
     ar1: ArrayLike,
@@ -338,30 +299,26 @@ def intersect1d(
 ) -> NDArray[Any]: ...
 @overload
 def intersect1d(
-    ar1: _ArrayLike[_SCTNoCast],
-    ar2: _ArrayLike[_SCTNoCast],
+    ar1: _ArrayLike[_AnyScalarT],
+    ar2: _ArrayLike[_AnyScalarT],
     assume_unique: bool = ...,
     return_indices: L[True] = ...,
-) -> tuple[NDArray[_SCTNoCast], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[_AnyScalarT], NDArray[np.int_], NDArray[np.int_]]: ...
 @overload
 def intersect1d(
     ar1: ArrayLike,
     ar2: ArrayLike,
     assume_unique: bool = ...,
     return_indices: L[True] = ...,
-) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp]]: ...
+) -> tuple[NDArray[Any], NDArray[np.int_], NDArray[np.int_]]: ...
+
+#
 @overload
-def setxor1d(
-    ar1: _ArrayLike[_SCTNoCast],
-    ar2: _ArrayLike[_SCTNoCast],
-    assume_unique: bool = ...,
-) -> NDArray[_SCTNoCast]: ...
+def setxor1d(ar1: _ArrayLike[_AnyScalarT], ar2: _ArrayLike[_AnyScalarT], assume_unique: bool = ...) -> NDArray[_AnyScalarT]: ...
 @overload
-def setxor1d(
-    ar1: ArrayLike,
-    ar2: ArrayLike,
-    assume_unique: bool = ...,
-) -> NDArray[Any]: ...
+def setxor1d(ar1: ArrayLike, ar2: ArrayLike, assume_unique: bool = ...) -> NDArray[Any]: ...
+
+#
 def isin(
     element: ArrayLike,
     test_elements: ArrayLike,
@@ -370,6 +327,8 @@ def isin(
     *,
     kind: str | None = ...,
 ) -> NDArray[np.bool]: ...
+
+#
 @deprecated("Use 'isin' instead")
 def in1d(
     element: ArrayLike,
@@ -379,25 +338,13 @@ def in1d(
     *,
     kind: str | None = ...,
 ) -> NDArray[np.bool]: ...
+
+#
 @overload
-def union1d(
-    ar1: _ArrayLike[_SCTNoCast],
-    ar2: _ArrayLike[_SCTNoCast],
-) -> NDArray[_SCTNoCast]: ...
+def union1d(ar1: _ArrayLike[_AnyScalarT], ar2: _ArrayLike[_AnyScalarT]) -> NDArray[_AnyScalarT]: ...
 @overload
-def union1d(
-    ar1: ArrayLike,
-    ar2: ArrayLike,
-) -> NDArray[Any]: ...
+def union1d(ar1: ArrayLike, ar2: ArrayLike) -> NDArray[Any]: ...
 @overload
-def setdiff1d(
-    ar1: _ArrayLike[_SCTNoCast],
-    ar2: _ArrayLike[_SCTNoCast],
-    assume_unique: bool = ...,
-) -> NDArray[_SCTNoCast]: ...
+def setdiff1d(ar1: _ArrayLike[_AnyScalarT], ar2: _ArrayLike[_AnyScalarT], assume_unique: bool = ...) -> NDArray[_AnyScalarT]: ...
 @overload
-def setdiff1d(
-    ar1: ArrayLike,
-    ar2: ArrayLike,
-    assume_unique: bool = ...,
-) -> NDArray[Any]: ...
+def setdiff1d(ar1: ArrayLike, ar2: ArrayLike, assume_unique: bool = ...) -> NDArray[Any]: ...

@@ -1,35 +1,14 @@
-from typing import (
-    Any,
-    Literal as L,
-    Protocol,
-    TypeAlias,
-    TypeVar,
-    overload,
-    type_check_only,
-)
+from collections.abc import Mapping
+from typing import Any, Literal as L, Protocol, TypeAlias, TypeVar, overload, type_check_only
 
-from numpy import generic
-from numpy._typing import (
-    ArrayLike,
-    NDArray,
-    _ArrayLike,
-    _ArrayLikeInt,
-)
+import numpy as np
+from numpy._typing import ArrayLike, NDArray, _ArrayLike, _ArrayLikeInt
 
 __all__ = ["pad"]
 
-_SCT = TypeVar("_SCT", bound=generic)
+###
 
-@type_check_only
-class _ModeFunc(Protocol):
-    def __call__(
-        self,
-        vector: NDArray[Any],
-        iaxis_pad_width: tuple[int, int],
-        iaxis: int,
-        kwargs: dict[str, Any],
-        /,
-    ) -> None: ...
+_SCT = TypeVar("_SCT", bound=np.generic)
 
 _ModeKind: TypeAlias = L[
     "constant",
@@ -45,10 +24,14 @@ _ModeKind: TypeAlias = L[
     "empty",
 ]
 
+@type_check_only
+class _ModeFunc(Protocol):
+    def __call__(self, vector: NDArray[Any], pad: tuple[int, int], iaxis: int, kwargs: Mapping[str, object], /) -> None: ...
+
+###
+
 # TODO: In practice each keyword argument is exclusive to one or more
 # specific modes. Consider adding more overloads to express this in the future.
-
-# Expand `**kwargs` into explicit keyword-only arguments
 @overload
 def pad(
     array: _ArrayLike[_SCT],
@@ -72,16 +55,6 @@ def pad(
     reflect_type: L["odd", "even"] = ...,
 ) -> NDArray[Any]: ...
 @overload
-def pad(
-    array: _ArrayLike[_SCT],
-    pad_width: _ArrayLikeInt,
-    mode: _ModeFunc,
-    **kwargs: Any,
-) -> NDArray[_SCT]: ...
+def pad(array: _ArrayLike[_SCT], pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> NDArray[_SCT]: ...
 @overload
-def pad(
-    array: ArrayLike,
-    pad_width: _ArrayLikeInt,
-    mode: _ModeFunc,
-    **kwargs: Any,
-) -> NDArray[Any]: ...
+def pad(array: ArrayLike, pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> NDArray[Any]: ...

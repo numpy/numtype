@@ -1,8 +1,7 @@
 import types
-from typing import assert_type
+from typing_extensions import assert_type
 
 import numpy as np
-from numpy import f2py
 
 assert_type(np, types.ModuleType)
 
@@ -48,4 +47,4 @@ assert_type(np.ma.__all__, list[str])
 assert_type(np.random.__all__, list[str])
 assert_type(np.rec.__all__, list[str])
 assert_type(np.testing.__all__, list[str])
-assert_type(f2py.__all__, list[str])
+assert_type(np.f2py.__all__, list[str])

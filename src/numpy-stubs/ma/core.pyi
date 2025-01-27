@@ -3,19 +3,8 @@ from collections.abc import Callable
 from typing import Any, TypeVar
 from typing_extensions import Self
 
-from numpy import (
-    amax,
-    amin,
-    angle,
-    bool_,
-    clip,
-    dtype,
-    expand_dims,
-    float64,
-    indices,
-    ndarray,
-    squeeze,
-)
+import numpy as np
+from numpy import amax, amin, angle, bool_, clip, expand_dims, indices, squeeze  # noqa: ICN003
 
 __all__ = [
     "MAError",
@@ -199,7 +188,7 @@ __all__ = [
 ]
 
 _ShapeType_co = TypeVar("_ShapeType_co", bound=tuple[int, ...], covariant=True)
-_DType_co = TypeVar("_DType_co", bound=dtype[Any], covariant=True)
+_DType_co = TypeVar("_DType_co", bound=np.dtype[Any], covariant=True)
 
 MaskType = bool
 nomask: bool
@@ -353,7 +342,7 @@ class MaskedIterator:
     def __setitem__(self, index: Incomplete, value: Incomplete) -> None: ...
     def __next__(self) -> Incomplete: ...
 
-class MaskedArray(ndarray[_ShapeType_co, _DType_co]):
+class MaskedArray(np.ndarray[_ShapeType_co, _DType_co]):
     __array_priority__: Any
     def __new__(
         cls,
@@ -610,7 +599,7 @@ isarray = isMaskedArray
 isMA = isMaskedArray
 
 # 0D float64 array
-class MaskedConstant(MaskedArray[Any, dtype[float64]]):
+class MaskedConstant(MaskedArray[Any, np.dtype[np.float64]]):
     def __new__(cls) -> Incomplete: ...
     __class__: Any
     def __array_finalize__(self, obj: Incomplete) -> Incomplete: ...

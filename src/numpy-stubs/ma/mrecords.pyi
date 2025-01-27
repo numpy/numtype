@@ -1,21 +1,14 @@
 from _typeshed import Incomplete
 from typing import Any, TypeVar
 
-from numpy import dtype
+import numpy as np
 
 from . import MaskedArray
 
-__all__ = [
-    "MaskedRecords",
-    "addfield",
-    "fromarrays",
-    "fromrecords",
-    "fromtextfile",
-    "mrecarray",
-]
+__all__ = ["MaskedRecords", "addfield", "fromarrays", "fromrecords", "fromtextfile", "mrecarray"]
 
 _ShapeType_co = TypeVar("_ShapeType_co", covariant=True, bound=tuple[int, ...])
-_DType_co = TypeVar("_DType_co", bound=dtype[Any], covariant=True)
+_DType_co = TypeVar("_DType_co", bound=np.dtype[Any], covariant=True)
 
 class MaskedRecords(MaskedArray[_ShapeType_co, _DType_co]):
     def __new__(
