@@ -1,10 +1,10 @@
 import ctypes as ct
 import sys
-from typing import Any, assert_type
+from typing import Any
+from typing_extensions import assert_type
 
 import numpy as np
 import numpy.typing as npt
-from numpy import ctypeslib
 
 AR_bool: npt.NDArray[np.bool]
 AR_ubyte: npt.NDArray[np.ubyte]
@@ -24,13 +24,13 @@ AR_void: npt.NDArray[np.void]
 
 pointer: ct._Pointer[Any]
 
-assert_type(np.ctypeslib.c_intp(), ctypeslib.c_intp)
+assert_type(np.ctypeslib.c_intp(), np.ctypeslib.c_intp)
 
-assert_type(np.ctypeslib.ndpointer(), type[ctypeslib._ndptr[None]])
-assert_type(np.ctypeslib.ndpointer(dtype=np.float64), type[ctypeslib._ndptr[np.dtype[np.float64]]])
-assert_type(np.ctypeslib.ndpointer(dtype=float), type[ctypeslib._ndptr[np.dtype[Any]]])
-assert_type(np.ctypeslib.ndpointer(shape=(10, 3)), type[ctypeslib._ndptr[None]])
-assert_type(np.ctypeslib.ndpointer(np.int64, shape=(10, 3)), type[ctypeslib._concrete_ndptr[np.dtype[np.int64]]])
+assert_type(np.ctypeslib.ndpointer(), type[np.ctypeslib._ndptr[None]])
+assert_type(np.ctypeslib.ndpointer(dtype=np.float64), type[np.ctypeslib._ndptr[np.dtype[np.float64]]])
+assert_type(np.ctypeslib.ndpointer(dtype=float), type[np.ctypeslib._ndptr[np.dtype[Any]]])
+assert_type(np.ctypeslib.ndpointer(shape=(10, 3)), type[np.ctypeslib._ndptr[None]])
+assert_type(np.ctypeslib.ndpointer(np.int64, shape=(10, 3)), type[np.ctypeslib._concrete_ndptr[np.dtype[np.int64]]])
 assert_type(np.ctypeslib.ndpointer(int, shape=(1,)), type[np.ctypeslib._concrete_ndptr[np.dtype[Any]]])
 
 assert_type(np.ctypeslib.as_ctypes_type(np.bool), type[ct.c_bool])

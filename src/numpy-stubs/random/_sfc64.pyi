@@ -1,12 +1,12 @@
 from typing import TypedDict, type_check_only
 
-from numpy import uint64
+import numpy as np
 from numpy._typing import NDArray, _ArrayLikeInt_co
 from numpy.random.bit_generator import BitGenerator, SeedSequence
 
 @type_check_only
 class _SFC64Internal(TypedDict):
-    state: NDArray[uint64]
+    state: NDArray[np.uint64]
 
 @type_check_only
 class _SFC64State(TypedDict):
@@ -18,11 +18,6 @@ class _SFC64State(TypedDict):
 class SFC64(BitGenerator):
     def __init__(self, seed: _ArrayLikeInt_co | SeedSequence | None = ...) -> None: ...
     @property
-    def state(
-        self,
-    ) -> _SFC64State: ...
+    def state(self) -> _SFC64State: ...
     @state.setter
-    def state(
-        self,
-        value: _SFC64State,
-    ) -> None: ...
+    def state(self, state: _SFC64State, /) -> None: ...

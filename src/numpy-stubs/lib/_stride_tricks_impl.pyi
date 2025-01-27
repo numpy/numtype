@@ -1,21 +1,17 @@
 from collections.abc import Iterable
 from typing import Any, SupportsIndex, TypeVar, overload
 
-from numpy import generic
+import numpy as np
 from numpy._typing import ArrayLike, NDArray, _ArrayLike, _Shape, _ShapeLike
 
 __all__ = ["broadcast_arrays", "broadcast_shapes", "broadcast_to"]
 
-_SCT = TypeVar("_SCT", bound=generic)
+_SCT = TypeVar("_SCT", bound=np.generic)
 
 class DummyArray:
     __array_interface__: dict[str, Any]
     base: NDArray[Any] | None
-    def __init__(
-        self,
-        interface: dict[str, Any],
-        base: NDArray[Any] | None = ...,
-    ) -> None: ...
+    def __init__(self, interface: dict[str, Any], base: NDArray[Any] | None = ...) -> None: ...
 
 @overload
 def as_strided(
@@ -52,19 +48,8 @@ def sliding_window_view(
     writeable: bool = ...,
 ) -> NDArray[Any]: ...
 @overload
-def broadcast_to(
-    array: _ArrayLike[_SCT],
-    shape: int | Iterable[int],
-    subok: bool = ...,
-) -> NDArray[_SCT]: ...
+def broadcast_to(array: _ArrayLike[_SCT], shape: int | Iterable[int], subok: bool = ...) -> NDArray[_SCT]: ...
 @overload
-def broadcast_to(
-    array: ArrayLike,
-    shape: int | Iterable[int],
-    subok: bool = ...,
-) -> NDArray[Any]: ...
+def broadcast_to(array: ArrayLike, shape: int | Iterable[int], subok: bool = ...) -> NDArray[Any]: ...
 def broadcast_shapes(*args: _ShapeLike) -> _Shape: ...
-def broadcast_arrays(
-    *args: ArrayLike,
-    subok: bool = ...,
-) -> tuple[NDArray[Any], ...]: ...
+def broadcast_arrays(*args: ArrayLike, subok: bool = ...) -> tuple[NDArray[Any], ...]: ...

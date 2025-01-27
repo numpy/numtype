@@ -1,42 +1,32 @@
 from collections.abc import Callable
-
-# Using a private class is by no means ideal, but it is simply a consequence
-# of a `contextlib.context` returning an instance of aforementioned class
 from contextlib import _GeneratorContextManager
 from typing import Any, Literal, SupportsIndex, TypeAlias, TypedDict, type_check_only
 
 import numpy as np
-from numpy import (
-    clongdouble,
-    complexfloating,
-    datetime64,
-    floating,
-    integer,
-    longdouble,
-    timedelta64,
-    void,
-)
 from numpy._typing import NDArray, _CharLike_co, _FloatLike_co
 
 _FloatMode: TypeAlias = Literal["fixed", "unique", "maxprec", "maxprec_equal"]
+_Sign: TypeAlias = Literal["-", "+", " "]
+_Legacy: TypeAlias = Literal[False, "1.13", "1.21"]
+_Trim: TypeAlias = Literal["k", ".", "0", "-"]
 
 @type_check_only
 class _FormatDict(TypedDict, total=False):
     bool: Callable[[np.bool], str]
-    int: Callable[[integer[Any]], str]
-    timedelta: Callable[[timedelta64], str]
-    datetime: Callable[[datetime64], str]
-    float: Callable[[floating[Any]], str]
-    longfloat: Callable[[longdouble], str]
-    complexfloat: Callable[[complexfloating[Any, Any]], str]
-    longcomplexfloat: Callable[[clongdouble], str]
-    void: Callable[[void], str]
+    int: Callable[[np.integer], str]
+    timedelta: Callable[[np.timedelta64], str]
+    datetime: Callable[[np.datetime64], str]
+    float: Callable[[np.floating], str]
+    longfloat: Callable[[np.longdouble], str]
+    complexfloat: Callable[[np.complexfloating], str]
+    longcomplexfloat: Callable[[np.clongdouble], str]
+    void: Callable[[np.void], str]
     numpystr: Callable[[_CharLike_co], str]
     object: Callable[[object], str]
     all: Callable[[object], str]
-    int_kind: Callable[[integer[Any]], str]
-    float_kind: Callable[[floating[Any]], str]
-    complex_kind: Callable[[complexfloating[Any, Any]], str]
+    int_kind: Callable[[np.integer], str]
+    float_kind: Callable[[np.floating], str]
+    complex_kind: Callable[[np.complexfloating], str]
     str_kind: Callable[[_CharLike_co], str]
 
 @type_check_only
@@ -49,9 +39,9 @@ class _FormatOptions(TypedDict):
     nanstr: str
     infstr: str
     formatter: _FormatDict | None
-    sign: Literal["-", "+", " "]
+    sign: _Sign
     floatmode: _FloatMode
-    legacy: Literal[False, "1.13", "1.21"]
+    legacy: _Legacy
 
 def set_printoptions(
     precision: SupportsIndex | None = ...,
@@ -62,10 +52,10 @@ def set_printoptions(
     nanstr: str | None = ...,
     infstr: str | None = ...,
     formatter: _FormatDict | None = ...,
-    sign: Literal["-", "+", " "] | None = ...,
+    sign: _Sign | None = ...,
     floatmode: _FloatMode | None = ...,
     *,
-    legacy: Literal[False, "1.13", "1.21"] | None = ...,
+    legacy: _Legacy | None = ...,
     override_repr: Callable[[NDArray[Any]], str] | None = ...,
 ) -> None: ...
 def get_printoptions() -> _FormatOptions: ...
@@ -83,16 +73,16 @@ def array2string(
     formatter: _FormatDict | None = ...,
     threshold: int | None = ...,
     edgeitems: int | None = ...,
-    sign: Literal["-", "+", " "] | None = ...,
+    sign: _Sign | None = ...,
     floatmode: _FloatMode | None = ...,
     suffix: str = ...,
-    legacy: Literal[False, "1.13", "1.21"] | None = ...,
+    legacy: _Legacy | None = ...,
 ) -> str: ...
 def format_float_scientific(
     x: _FloatLike_co,
     precision: int | None = ...,
     unique: bool = ...,
-    trim: Literal["k", ".", "0", "-"] = ...,
+    trim: _Trim = ...,
     sign: bool = ...,
     pad_left: int | None = ...,
     exp_digits: int | None = ...,
@@ -103,7 +93,7 @@ def format_float_positional(
     precision: int | None = ...,
     unique: bool = ...,
     fractional: bool = ...,
-    trim: Literal["k", ".", "0", "-"] = ...,
+    trim: _Trim = ...,
     sign: bool = ...,
     pad_left: int | None = ...,
     pad_right: int | None = ...,
@@ -130,8 +120,8 @@ def printoptions(
     nanstr: str | None = ...,
     infstr: str | None = ...,
     formatter: _FormatDict | None = ...,
-    sign: Literal["-", "+", " "] | None = ...,
+    sign: _Sign | None = ...,
     floatmode: _FloatMode | None = ...,
     *,
-    legacy: Literal[False, "1.13", "1.21"] | None = ...,
+    legacy: _Legacy | None = ...,
 ) -> _GeneratorContextManager[_FormatOptions]: ...

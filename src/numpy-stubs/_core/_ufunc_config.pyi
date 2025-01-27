@@ -2,7 +2,9 @@ from _typeshed import SupportsWrite
 from collections.abc import Callable
 from typing import Any, Literal, TypeAlias, TypedDict, type_check_only
 
-from numpy import errstate as errstate
+from numpy import errstate as errstate  # noqa: ICN003
+
+__all__ = ["errstate", "getbufsize", "geterr", "geterrcall", "setbufsize", "seterr", "seterrcall"]
 
 _ErrKind: TypeAlias = Literal["ignore", "warn", "raise", "call", "print", "log"]
 _ErrFunc: TypeAlias = Callable[[str, int], Any]
@@ -27,5 +29,3 @@ def setbufsize(size: int) -> int: ...
 def getbufsize() -> int: ...
 def seterrcall(func: _ErrCall | None) -> _ErrCall | None: ...
 def geterrcall() -> _ErrCall | None: ...
-
-# See `numpy/__init__.pyi` for the `errstate` class and `no_nep5_warnings`

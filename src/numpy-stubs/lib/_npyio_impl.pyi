@@ -3,35 +3,12 @@ import zipfile
 from _typeshed import StrOrBytesPath, StrPath, SupportsKeysAndGetItem, SupportsRead, SupportsWrite
 from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
 from re import Pattern
-from typing import (
-    IO,
-    Any,
-    Generic,
-    Literal as L,
-    Protocol,
-    Self,
-    TypeVar,
-    overload,
-    type_check_only,
-)
-from typing_extensions import deprecated
+from typing import IO, Any, Generic, Literal as L, Protocol, TypeVar, overload, type_check_only
+from typing_extensions import Self, deprecated
 
-from numpy import (
-    dtype,
-    float64,
-    generic,
-    recarray,
-    record,
-    void,
-)
+import numpy as np
 from numpy._core.multiarray import packbits, unpackbits
-from numpy._typing import (
-    ArrayLike,
-    DTypeLike,
-    NDArray,
-    _DTypeLike,
-    _SupportsArrayFunc,
-)
+from numpy._typing import ArrayLike, DTypeLike, NDArray, _DTypeLike, _SupportsArrayFunc
 from numpy.ma.mrecords import MaskedRecords
 
 __all__ = [
@@ -48,9 +25,8 @@ __all__ = [
 ]
 
 _T = TypeVar("_T")
-_T_contra = TypeVar("_T_contra", contravariant=True)
 _T_co = TypeVar("_T_co", covariant=True)
-_SCT = TypeVar("_SCT", bound=generic)
+_SCT = TypeVar("_SCT", bound=np.generic)
 
 @type_check_only
 class _SupportsReadSeek(SupportsRead[_T_co], Protocol[_T_co]):
@@ -72,28 +48,22 @@ class NpzFile(Mapping[str, NDArray[Any]]):
     @property
     def f(self: _T) -> BagObj[_T]: ...
     @f.setter
-    def f(self: _T, value: BagObj[_T]) -> None: ...
+    def f(self: _T, value: BagObj[_T], /) -> None: ...
     def __init__(
         self,
         fid: IO[str],
         own_fid: bool = ...,
         allow_pickle: bool = ...,
-        pickle_kwargs: Mapping[str, Any] | None = ...,
+        pickle_kwargs: Mapping[str, object] | None = ...,
     ) -> None: ...
     def __enter__(self) -> Self: ...
-    def __exit__(
-        self,
-        exc_type: type[BaseException] | None,
-        exc_value: BaseException | None,
-        traceback: types.TracebackType | None,
-        /,
-    ) -> None: ...
+    def __exit__(self, cls: type[BaseException] | None, e: BaseException | None, tb: types.TracebackType | None, /) -> None: ...
     def close(self) -> None: ...
     def __del__(self) -> None: ...
     def __iter__(self) -> Iterator[str]: ...
     def __len__(self) -> int: ...
-    def __getitem__(self, key: str) -> NDArray[Any]: ...
-    def __contains__(self, key: str) -> bool: ...
+    def __getitem__(self, key: str, /) -> NDArray[Any]: ...
+    def __contains__(self, key: str, /) -> bool: ...
 
 class DataSource:
     def __init__(self, destpath: StrPath | None = ...) -> None: ...
@@ -103,13 +73,7 @@ class DataSource:
 
     # Whether the file-object is opened in string or bytes mode (by default)
     # depends on the file-extension of `path`
-    def open(
-        self,
-        path: str,
-        mode: str = ...,
-        encoding: str | None = ...,
-        newline: str | None = ...,
-    ) -> IO[Any]: ...
+    def open(self, path: str, mode: str = ..., encoding: str | None = ..., newline: str | None = ...) -> IO[Any]: ...
 
 # NOTE: Returns a `NpzFile` if file is a zip file;
 # returns an `ndarray`/`memmap` otherwise
@@ -121,34 +85,14 @@ def load(
     encoding: L["ASCII", "latin1", "bytes"] = ...,
 ) -> Any: ...
 @overload
-def save(
-    file: StrPath | SupportsWrite[bytes],
-    arr: ArrayLike,
-    allow_pickle: bool = ...,
-) -> None: ...
+def save(file: StrPath | SupportsWrite[bytes], arr: ArrayLike, allow_pickle: bool = ...) -> None: ...
 @overload
 @deprecated("The 'fix_imports' flag is deprecated in NumPy 2.1.")
-def save(
-    file: StrPath | SupportsWrite[bytes],
-    arr: ArrayLike,
-    allow_pickle: bool = ...,
-    *,
-    fix_imports: bool,
-) -> None: ...
+def save(file: StrPath | SupportsWrite[bytes], arr: ArrayLike, allow_pickle: bool = ..., *, fix_imports: bool) -> None: ...
 @overload
 @deprecated("The 'fix_imports' flag is deprecated in NumPy 2.1.")
-def save(
-    file: StrPath | SupportsWrite[bytes],
-    arr: ArrayLike,
-    allow_pickle: bool,
-    fix_imports: bool,
-) -> None: ...
-def savez(
-    file: StrPath | SupportsWrite[bytes],
-    *args: ArrayLike,
-    allow_pickle: bool = ...,
-    **kwds: ArrayLike,
-) -> None: ...
+def save(file: StrPath | SupportsWrite[bytes], arr: ArrayLike, allow_pickle: bool, fix_imports: bool) -> None: ...
+def savez(file: StrPath | SupportsWrite[bytes], *args: ArrayLike, allow_pickle: bool = ..., **kwds: ArrayLike) -> None: ...
 def savez_compressed(
     file: StrPath | SupportsWrite[bytes],
     *args: ArrayLike,
@@ -174,7 +118,7 @@ def loadtxt(
     *,
     quotechar: str | None = ...,
     like: _SupportsArrayFunc | None = ...,
-) -> NDArray[float64]: ...
+) -> NDArray[np.float64]: ...
 @overload
 def loadtxt(
     fname: StrPath | Iterable[str] | Iterable[bytes],
@@ -326,26 +270,26 @@ def recfromtxt(
     fname: StrPath | Iterable[str] | Iterable[bytes],
     *,
     usemask: L[False] = ...,
-    **kwargs: Any,
-) -> recarray[Any, dtype[record]]: ...
+    **kwargs: object,
+) -> np.recarray[Any, np.dtype[np.record]]: ...
 @overload
 def recfromtxt(
     fname: StrPath | Iterable[str] | Iterable[bytes],
     *,
     usemask: L[True],
-    **kwargs: Any,
-) -> MaskedRecords[Any, dtype[void]]: ...
+    **kwargs: object,
+) -> MaskedRecords[Any, np.dtype[np.void]]: ...
 @overload
 def recfromcsv(
     fname: StrPath | Iterable[str] | Iterable[bytes],
     *,
     usemask: L[False] = ...,
-    **kwargs: Any,
-) -> recarray[Any, dtype[record]]: ...
+    **kwargs: object,
+) -> np.recarray[Any, np.dtype[np.record]]: ...
 @overload
 def recfromcsv(
     fname: StrPath | Iterable[str] | Iterable[bytes],
     *,
     usemask: L[True],
-    **kwargs: Any,
-) -> MaskedRecords[Any, dtype[void]]: ...
+    **kwargs: object,
+) -> MaskedRecords[Any, np.dtype[np.void]]: ...
