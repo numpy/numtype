@@ -1,4 +1,4 @@
-# NumPy\'s Contributing guidelines
+# NumType\'s Contributing guidelines
 
 Welcome to the NumPy community! We\'re excited to have you here. Whether
 you\'re new to open source or experienced, your contributions help us
