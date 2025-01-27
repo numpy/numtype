@@ -1,5 +1,6 @@
 from collections.abc import Mapping
-from typing import Any, Literal as L, Protocol, TypeAlias, TypeVar, overload, type_check_only
+from typing import Any, Literal as L, Protocol, TypeAlias, overload, type_check_only
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import ArrayLike, NDArray, _ArrayLike, _ArrayLikeInt

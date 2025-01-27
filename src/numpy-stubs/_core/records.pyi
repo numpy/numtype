@@ -1,7 +1,8 @@
 from _typeshed import Incomplete, StrOrBytesPath
 from collections.abc import Iterable, Sequence
 from types import EllipsisType
-from typing import Any, Literal, Protocol, SupportsIndex, TypeAlias, TypeVar, overload, type_check_only
+from typing import Any, Literal, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import (

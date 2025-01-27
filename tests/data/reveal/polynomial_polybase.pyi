@@ -1,7 +1,8 @@
 from collections.abc import Sequence
 from decimal import Decimal
 from fractions import Fraction
-from typing import Any, Literal as L, LiteralString, TypeAlias, TypeVar, assert_type
+from typing import Any, Literal as L, TypeAlias
+from typing_extensions import LiteralString, TypeVar, assert_type
 
 import numpy as np
 import numpy.polynomial as npp

@@ -5,9 +5,9 @@ from typing import (
     Literal,
     SupportsIndex,
     TypeAlias,
-    TypeVar,
     overload,
 )
+from typing_extensions import TypeVar
 
 import numpy as np
 import numpy.typing as npt

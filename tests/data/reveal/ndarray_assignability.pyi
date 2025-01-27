@@ -1,4 +1,5 @@
-from typing import Protocol, TypeAlias, TypeVar, assert_type
+from typing import Protocol, TypeAlias
+from typing_extensions import TypeVar, assert_type
 
 import numpy as np
 from numpy._typing import _64Bit

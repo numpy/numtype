@@ -1,4 +1,4 @@
-from typing import TypeVar, assert_type
+from typing_extensions import TypeVar, assert_type
 
 import numpy as np
 import numpy.typing as npt

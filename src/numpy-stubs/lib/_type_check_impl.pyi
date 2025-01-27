@@ -1,5 +1,6 @@
 from collections.abc import Container, Iterable
-from typing import Any, Literal as L, TypeVar, overload
+from typing import Any, Literal as L, overload
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import ArrayLike, NBitBase, NDArray, _64Bit, _ArrayLike, _ScalarLike_co, _SupportsDType

@@ -6,11 +6,11 @@ from typing import (
     Literal,
     NamedTuple,
     TypeAlias,
-    TypeVar,
     TypedDict,
     overload,
     type_check_only,
 )
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import NDArray, _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes

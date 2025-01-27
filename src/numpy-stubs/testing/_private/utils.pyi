@@ -14,14 +14,12 @@ from typing import (
     Final,
     Literal as L,
     NoReturn,
-    ParamSpec,
     SupportsIndex,
     TypeAlias,
-    TypeVar,
     overload,
     type_check_only,
 )
-from typing_extensions import Self
+from typing_extensions import ParamSpec, Self, TypeVar
 from unittest.case import SkipTest
 
 import numpy as np

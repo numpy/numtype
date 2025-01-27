@@ -1,5 +1,6 @@
 from collections.abc import Callable, Sequence
-from typing import Any, Concatenate, ParamSpec, Protocol, SupportsIndex, TypeVar, overload, type_check_only
+from typing import Any, Concatenate, Protocol, SupportsIndex, overload, type_check_only
+from typing_extensions import ParamSpec, TypeVar
 
 import numpy as np
 from numpy._core.shape_base import vstack as row_stack

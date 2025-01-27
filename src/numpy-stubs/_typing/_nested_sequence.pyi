@@ -1,5 +1,6 @@
 from collections.abc import Iterator
-from typing import Any, Protocol, TypeVar
+from typing import Any, Protocol
+from typing_extensions import TypeVar
 
 __all__ = ["_NestedSequence"]
 

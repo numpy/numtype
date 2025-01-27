@@ -1,6 +1,7 @@
 import threading
 from collections.abc import Sequence
-from typing import Any, assert_type
+from typing import Any
+from typing_extensions import assert_type
 
 import numpy as np
 import numpy.typing as npt

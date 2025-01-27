@@ -1,5 +1,6 @@
 from collections.abc import Iterable
-from typing import Any, Literal, TypeAlias, TypeVar, overload
+from typing import Any, Literal, TypeAlias, overload
+from typing_extensions import TypeVar
 
 from numpy._typing import DTypeLike, NDArray, _SupportsArrayFunc
 

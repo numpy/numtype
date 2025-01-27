@@ -1,5 +1,5 @@
-from typing import Any, Generic, Literal as L, NamedTuple, SupportsIndex, TypeVar, overload
-from typing_extensions import deprecated
+from typing import Any, Generic, Literal as L, NamedTuple, SupportsIndex, overload
+from typing_extensions import TypeVar, deprecated
 
 import numpy as np
 from numpy._typing import (

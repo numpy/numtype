@@ -1,6 +1,9 @@
 """LibCST codemods."""
 
+# ruff: noqa: S101
+
 from collections.abc import Sequence
+from typing import ClassVar
 from typing_extensions import override
 
 import libcst as cst
@@ -115,3 +118,57 @@ class MoveNoneToEnd(VisitorBasedCodemodCommand):
             return cst.BinaryOperation(build_union(exprs[:-1]), cst.BitOr(), exprs[-1])
 
         return build_union(reordered_types)
+
+
+class FixTypingImports310(VisitorBasedCodemodCommand):
+    """Imports `typing` imports from `typing_extensions` instead, if they aren't available on Python 3.10."""
+
+    _UNAVAILABLE: ClassVar[set[str]] = {
+        "LiteralString",
+        "NotRequired",
+        "Required",
+        "Self",
+        "TypeVarTuple",
+        "Unpack",
+        "assert_never",
+        "assert_type",
+        "dataclass_transform",
+        # we often use the PEP 696 `default=...` kwarg
+        "TypeVar",
+        "ParamSpec",
+    }
+
+    @override
+    def leave_ImportFrom(
+        self,
+        original_node: cst.ImportFrom,
+        updated_node: cst.ImportFrom,
+    ) -> cst.ImportFrom | cst.RemovalSentinel:
+        if isinstance(module := updated_node.module, cst.Name) and module.value == "typing":
+            aliases = updated_node.names
+            assert isinstance(aliases, Sequence)
+
+            aliases_out = []
+            for alias in aliases:
+                name = alias.name
+                assert isinstance(name, cst.Name)
+
+                if name.value in self._UNAVAILABLE:
+                    if alias.asname:
+                        asname = alias.asname.name
+                        assert isinstance(asname, cst.Name)
+
+                        AddImportsVisitor.add_needed_import(self.context, "typing_extensions", name.value, asname.value)
+                    else:
+                        AddImportsVisitor.add_needed_import(self.context, "typing_extensions", name.value)
+                else:
+                    aliases_out.append(alias)
+
+            if not aliases_out:
+                return cst.RemovalSentinel.REMOVE
+            if len(aliases_out) != len(aliases):
+                # prevent trailing comma
+                aliases_out[-1] = aliases[-1].with_changes(name=aliases_out[-1].name, asname=aliases_out[-1].asname)
+                return updated_node.with_changes(names=aliases_out)
+
+        return updated_node

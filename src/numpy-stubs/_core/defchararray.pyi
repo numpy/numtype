@@ -1,4 +1,5 @@
-from typing import Any, Literal as L, SupportsIndex, SupportsInt, TypeAlias, TypeVar, overload
+from typing import Any, Literal as L, SupportsIndex, SupportsInt, TypeAlias, overload
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._core.multiarray import compare_chararrays

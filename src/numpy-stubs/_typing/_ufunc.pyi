@@ -2,17 +2,15 @@ from typing import (
     Any,
     Generic,
     Literal,
-    LiteralString,
     NoReturn,
     Protocol,
     SupportsIndex,
     TypeAlias,
-    TypeVar,
     TypedDict,
     overload,
     type_check_only,
 )
-from typing_extensions import Unpack
+from typing_extensions import LiteralString, TypeVar, Unpack
 
 import numpy as np
 import numpy.typing as npt

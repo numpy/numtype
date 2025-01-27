@@ -3,16 +3,14 @@ from typing import (
     Any,
     Concatenate,
     Literal as L,
-    ParamSpec,
     Protocol,
     SupportsIndex,
     SupportsInt,
     TypeAlias,
-    TypeVar,
     overload,
     type_check_only,
 )
-from typing_extensions import TypeIs, deprecated
+from typing_extensions import ParamSpec, TypeIs, TypeVar, deprecated
 
 import numpy as np
 from numpy import vectorize  # noqa: ICN003

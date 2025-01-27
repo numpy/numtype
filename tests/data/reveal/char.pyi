@@ -1,4 +1,5 @@
-from typing import TypeAlias, assert_type
+from typing import TypeAlias
+from typing_extensions import assert_type
 
 import numpy as np
 import numpy._typing as np_t

@@ -6,9 +6,9 @@ from typing import (
     SupportsIndex,
     SupportsInt,
     TypeAlias,
-    TypeVar,
     overload,
 )
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy import vecdot  # noqa: ICN003

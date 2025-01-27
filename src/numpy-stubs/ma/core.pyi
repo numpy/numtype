@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable
-from typing import Any, TypeVar
-from typing_extensions import Self
+from typing import Any
+from typing_extensions import Self, TypeVar
 
 import numpy as np
 from numpy import amax, amin, angle, bool_, clip, expand_dims, indices, squeeze  # noqa: ICN003

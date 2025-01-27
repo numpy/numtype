@@ -3,14 +3,12 @@ from typing import (
     Final,
     Generic,
     Literal as L,
-    LiteralString,
     NoReturn,
-    Self,
     TypeAlias,
     final,
     type_check_only,
 )
-from typing_extensions import TypeVar
+from typing_extensions import LiteralString, Self, TypeVar
 
 import numpy as np
 

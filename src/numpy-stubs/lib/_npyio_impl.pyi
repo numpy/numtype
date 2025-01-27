@@ -3,8 +3,8 @@ import zipfile
 from _typeshed import StrOrBytesPath, StrPath, SupportsKeysAndGetItem, SupportsRead, SupportsWrite
 from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
 from re import Pattern
-from typing import IO, Any, Generic, Literal as L, Protocol, TypeVar, overload, type_check_only
-from typing_extensions import Self, deprecated
+from typing import IO, Any, Generic, Literal as L, Protocol, overload, type_check_only
+from typing_extensions import Self, TypeVar, deprecated
 
 import numpy as np
 from numpy._core.multiarray import packbits, unpackbits

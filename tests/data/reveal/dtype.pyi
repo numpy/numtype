@@ -2,7 +2,8 @@ import ctypes as ct
 import datetime as dt
 from decimal import Decimal
 from fractions import Fraction
-from typing import Any, Literal, TypeAlias, assert_type
+from typing import Any, Literal, TypeAlias
+from typing_extensions import assert_type
 
 import numpy as np
 from numpy.dtypes import StringDType

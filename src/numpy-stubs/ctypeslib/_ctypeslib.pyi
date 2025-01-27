@@ -1,7 +1,8 @@
 import ctypes as ct
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable, Sequence
-from typing import Any, ClassVar, Generic, Literal as L, TypeAlias, TypeVar, overload
+from typing import Any, ClassVar, Generic, Literal as L, TypeAlias, overload
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._core._internal import _ctypes
