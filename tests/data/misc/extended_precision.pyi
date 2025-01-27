@@ -1,4 +1,4 @@
-from typing import assert_type
+from typing_extensions import assert_type
 
 import numpy as np
 from numpy._typing import _80Bit, _96Bit, _128Bit, _256Bit
