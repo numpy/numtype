@@ -1,6 +1,7 @@
 from collections.abc import Generator, Iterator
 from types import EllipsisType
-from typing import Any, TypeAlias, TypeVar
+from typing import Any, TypeAlias
+from typing_extensions import TypeVar
 
 import numpy as np
 

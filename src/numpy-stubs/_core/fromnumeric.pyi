@@ -1,6 +1,6 @@
 from collections.abc import Sequence
-from typing import Any, Literal, NoReturn, Protocol, SupportsIndex, TypeAlias, TypeVar, overload, type_check_only
-from typing_extensions import Never, deprecated
+from typing import Any, Literal, NoReturn, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
+from typing_extensions import Never, TypeVar, deprecated
 
 import numpy as np
 from numpy._typing import (

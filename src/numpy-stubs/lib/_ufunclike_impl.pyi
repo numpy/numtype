@@ -1,4 +1,5 @@
-from typing import Any, TypeVar, overload
+from typing import Any, overload
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import NDArray, _ArrayLikeFloat_co, _ArrayLikeObject_co, _FloatLike_co

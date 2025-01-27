@@ -1,5 +1,5 @@
-from typing import ClassVar, Literal, TypeAlias, TypeVar, TypedDict, final, overload, type_check_only
-from typing_extensions import Never
+from typing import ClassVar, Literal, TypeAlias, TypedDict, final, overload, type_check_only
+from typing_extensions import Never, TypeVar
 
 import numpy as np
 

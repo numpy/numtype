@@ -1,4 +1,5 @@
-from typing import Any, Literal as L, SupportsIndex, TypeVar, overload
+from typing import Any, Literal as L, SupportsIndex, overload
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import DTypeLike, NDArray, _ArrayLikeComplex_co, _ArrayLikeFloat_co, _DTypeLike

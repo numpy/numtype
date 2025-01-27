@@ -1,5 +1,6 @@
 from collections.abc import Sequence
-from typing import Any, Protocol, TypeAlias, TypeVar, TypedDict, runtime_checkable
+from typing import Any, Protocol, TypeAlias, TypedDict, runtime_checkable
+from typing_extensions import TypeVar
 
 import numpy as np
 

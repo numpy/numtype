@@ -1,4 +1,5 @@
-from typing import Any, Literal as L, NoReturn, assert_type
+from typing import Any, Literal as L, NoReturn
+from typing_extensions import assert_type
 
 import numpy as np
 import numpy.typing as npt

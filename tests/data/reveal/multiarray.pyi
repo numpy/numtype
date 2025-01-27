@@ -1,5 +1,6 @@
 import datetime as dt
-from typing import Any, Literal, TypeVar, assert_type
+from typing import Any, Literal
+from typing_extensions import TypeVar, assert_type
 
 import numpy as np
 import numpy.typing as npt

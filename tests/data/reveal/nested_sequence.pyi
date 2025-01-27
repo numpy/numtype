@@ -1,5 +1,6 @@
 from collections.abc import Sequence
-from typing import Any, assert_type
+from typing import Any
+from typing_extensions import assert_type
 
 from numpy._typing import _NestedSequence
 

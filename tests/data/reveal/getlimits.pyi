@@ -1,4 +1,5 @@
-from typing import Any, LiteralString, assert_type
+from typing import Any
+from typing_extensions import LiteralString, assert_type
 
 import numpy as np
 from numpy._typing import _64Bit

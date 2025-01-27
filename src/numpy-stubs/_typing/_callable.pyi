@@ -3,11 +3,11 @@ from typing import (
     NoReturn,
     Protocol,
     TypeAlias,
-    TypeVar,
     final,
     overload,
     type_check_only,
 )
+from typing_extensions import TypeVar
 
 import numpy as np
 

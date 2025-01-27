@@ -1,8 +1,8 @@
 import ctypes as ct
 import operator
 from types import ModuleType
-from typing import Any, Literal, assert_type
-from typing_extensions import CapsuleType
+from typing import Any, Literal
+from typing_extensions import CapsuleType, assert_type
 
 import numpy as np
 import numpy.typing as npt

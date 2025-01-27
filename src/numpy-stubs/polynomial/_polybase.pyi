@@ -8,14 +8,12 @@ from typing import (
     Final,
     Generic,
     Literal,
-    LiteralString,
-    Self,
     SupportsIndex,
     TypeAlias,
     TypeGuard,
     overload,
 )
-from typing_extensions import TypeVar
+from typing_extensions import LiteralString, Self, TypeVar
 
 import numpy as np
 import numpy.typing as npt

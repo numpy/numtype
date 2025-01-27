@@ -1,5 +1,6 @@
 from collections.abc import Sequence
-from typing import Any, SupportsIndex, TypeVar, overload
+from typing import Any, SupportsIndex, overload
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import ArrayLike, DTypeLike, NDArray, _ArrayLike, _DTypeLike

@@ -9,13 +9,12 @@ from typing import (
     Protocol,
     SupportsIndex,
     TypeAlias,
-    TypeVar,
     TypedDict,
     final,
     overload,
     type_check_only,
 )
-from typing_extensions import CapsuleType, Unpack
+from typing_extensions import CapsuleType, TypeVar, Unpack
 
 import numpy as np
 from numpy import (  # noqa: ICN003

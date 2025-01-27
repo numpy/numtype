@@ -1,5 +1,6 @@
 from _typeshed import Incomplete
-from typing import Any, TypeVar
+from typing import Any
+from typing_extensions import TypeVar
 
 import numpy as np
 

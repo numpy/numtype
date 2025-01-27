@@ -1,4 +1,5 @@
-from typing import Any, Final, Literal as L, TypeVar
+from typing import Any, Final, Literal as L
+from typing_extensions import TypeVar
 
 import numpy as np
 

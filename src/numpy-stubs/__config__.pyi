@@ -1,6 +1,7 @@
 from enum import Enum
 from types import ModuleType
-from typing import Final, Literal as L, NotRequired, TypedDict, overload, type_check_only
+from typing import Final, Literal as L, TypedDict, overload, type_check_only
+from typing_extensions import NotRequired
 
 _CompilerConfigDictValue = TypedDict(
     "_CompilerConfigDictValue",

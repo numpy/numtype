@@ -7,10 +7,9 @@ from typing import (
     SupportsAbs,
     SupportsIndex,
     TypeAlias,
-    TypeVar,
     overload,
 )
-from typing_extensions import TypeIs, Unpack
+from typing_extensions import TypeIs, TypeVar, Unpack
 
 import numpy as np
 from numpy import (  # noqa: ICN003

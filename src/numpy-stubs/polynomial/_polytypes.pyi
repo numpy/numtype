@@ -2,17 +2,15 @@ from collections.abc import Callable, Sequence
 from typing import (
     Any,
     Literal,
-    LiteralString,
     NoReturn,
     Protocol,
-    Self,
     SupportsIndex,
     SupportsInt,
     TypeAlias,
     overload,
     type_check_only,
 )
-from typing_extensions import TypeVar
+from typing_extensions import LiteralString, Self, TypeVar
 
 import numpy as np
 import numpy.typing as npt
