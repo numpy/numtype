@@ -148,6 +148,7 @@ preview = true
             "DOC",     # flake8-docstrings
             "PYI054",  # flake8-pyi: numeric-literal-too-long
             "PYI064",  # flake8-pyi: redundant-final-literal
+            "SLF001",  # flake8-self: private-member-access
             "PLC2701", # pylint/C: import-private-name
             "PLR0904", # pylint/R: too-many-public-methods
             "PLR0913", # pylint/R: too-many-arguments
