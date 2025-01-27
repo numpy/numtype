@@ -43,14 +43,14 @@ faster-cache = [
 
 [[package]]
 name = "basedpyright"
-version = "1.24.0"
+version = "1.25.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nodejs-wheel-binaries" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d9/9a/ddf789a403dcd27469f4e51f1e75d889cb3eb3034e87d198d01a1d7d3572/basedpyright-1.24.0.tar.gz", hash = "sha256:425919327db8662f1be718dafe06b1e168781f9728e59a9cf717cbb3380acec9", size = 21271171 }
+sdist = { url = "https://files.pythonhosted.org/packages/91/ca/db0d980181a198a92f3e7cf6b8b55a45957019d6ac55c6909591406616d0/basedpyright-1.25.0.tar.gz", hash = "sha256:8d0c25ae285600684fb7a8015be688970259c318904fa1cd2b59ee5a63575e74", size = 21447756 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/80/8f/71e63c95eacaca491546d522812c214bc37bc8ec79a71229efbc56961e2d/basedpyright-1.24.0-py3-none-any.whl", hash = "sha256:32ae77b2334dc9737c9220bcbc1aee98f76884be033bd5f4f50e5940fa16391d", size = 11334150 },
+    { url = "https://files.pythonhosted.org/packages/e0/8d/2dfcf9c8bc5bd552b0ab5ff7e381c4b18f40bee867e05634a44cb23f348a/basedpyright-1.25.0-py3-none-any.whl", hash = "sha256:5c18aebe675a88976b749a2862d1c6188f6a331a050b16536c48481a8c545efc", size = 11443631 },
 ]
 
 [[package]]
@@ -219,7 +219,7 @@ requires-dist = [{ name = "numpy", marker = "extra == 'numpy'", specifier = ">=2
 [package.metadata.requires-dev]
 dev = [
     { name = "basedmypy", extras = ["faster-cache"], specifier = ">=2.9.1" },
-    { name = "basedpyright", specifier = ">=1.24.0" },
+    { name = "basedpyright", specifier = ">=1.25.0" },
     { name = "libcst", specifier = ">=1.6.0" },
     { name = "numtype", extras = ["numpy"] },
     { name = "ruff", specifier = ">=0.9.3" },
