@@ -44,6 +44,7 @@ dev = [
     "ruff>=0.9.3",
     "basedmypy[faster-cache]>=2.9.1",
     "basedpyright>=1.24.0",
+    "libcst>=1.6.0",
 ]
 
 [tool.hatch.build.targets.sdist]
