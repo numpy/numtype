@@ -34,7 +34,7 @@ _DUNDER_RETURN = {
 
 class AnnotateIncomplete(VisitorBasedCodemodCommand):
     """
-    Sets the the missing tpye annotations to `_typeshed.Incomplete`.
+    Sets the the missing type annotations to `_typeshed.Incomplete`.
 
     To run this codemod, run the following command from the root directory:
 
