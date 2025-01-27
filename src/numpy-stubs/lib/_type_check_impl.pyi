@@ -68,32 +68,32 @@ def nan_to_num(  # type: ignore[misc]
     x: _SCT,
     copy: bool = ...,
     nan: float = ...,
-    posinf: None | float = ...,
-    neginf: None | float = ...,
+    posinf: float | None = ...,
+    neginf: float | None = ...,
 ) -> _SCT: ...
 @overload
 def nan_to_num(
     x: _ScalarLike_co,
     copy: bool = ...,
     nan: float = ...,
-    posinf: None | float = ...,
-    neginf: None | float = ...,
+    posinf: float | None = ...,
+    neginf: float | None = ...,
 ) -> Any: ...
 @overload
 def nan_to_num(
     x: _ArrayLike[_SCT],
     copy: bool = ...,
     nan: float = ...,
-    posinf: None | float = ...,
-    neginf: None | float = ...,
+    posinf: float | None = ...,
+    neginf: float | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def nan_to_num(
     x: ArrayLike,
     copy: bool = ...,
     nan: float = ...,
-    posinf: None | float = ...,
-    neginf: None | float = ...,
+    posinf: float | None = ...,
+    neginf: float | None = ...,
 ) -> NDArray[Any]: ...
 
 # If one passes a complex array to `real_if_close`, then one is reasonably

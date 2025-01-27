@@ -1,3 +1,4 @@
+from _typeshed import Incomplete
 from typing import Any, TypeVar
 
 from numpy import dtype
@@ -19,75 +20,73 @@ _DType_co = TypeVar("_DType_co", bound=dtype[Any], covariant=True)
 class MaskedRecords(MaskedArray[_ShapeType_co, _DType_co]):
     def __new__(
         cls,
-        shape,
-        dtype=...,
-        buf=...,
-        offset=...,
-        strides=...,
-        formats=...,
-        names=...,
-        titles=...,
-        byteorder=...,
-        aligned=...,
-        mask=...,
-        hard_mask=...,
-        fill_value=...,
-        keep_mask=...,
-        copy=...,
-        **options,
-    ): ...
+        shape: Incomplete,
+        dtype: Incomplete = ...,
+        buf: Incomplete = ...,
+        offset: Incomplete = ...,
+        strides: Incomplete = ...,
+        formats: Incomplete = ...,
+        names: Incomplete = ...,
+        titles: Incomplete = ...,
+        byteorder: Incomplete = ...,
+        aligned: Incomplete = ...,
+        mask: Incomplete = ...,
+        hard_mask: Incomplete = ...,
+        fill_value: Incomplete = ...,
+        keep_mask: Incomplete = ...,
+        copy: Incomplete = ...,
+        **options: Incomplete,
+    ) -> Incomplete: ...
     _mask: Any
     _fill_value: Any
     @property
-    def _data(self): ...
+    def _data(self) -> Incomplete: ...
     @property
-    def _fieldmask(self): ...
-    def __array_finalize__(self, obj): ...
+    def _fieldmask(self) -> Incomplete: ...
+    def __array_finalize__(self, obj: Incomplete) -> Incomplete: ...
     def __len__(self) -> int: ...
-    def __getattribute__(self, attr): ...
-    def __setattr__(self, attr, val) -> None: ...
-    def __getitem__(self, indx): ...
-    def __setitem__(self, indx, value) -> None: ...
-    def view(self, dtype=..., type=...): ...
-    def harden_mask(self): ...
-    def soften_mask(self): ...
-    def copy(self): ...
-    def tolist(self, fill_value=...): ...
-    def __reduce__(self): ...
+    def __getattribute__(self, attr: Incomplete) -> Incomplete: ...
+    def __setattr__(self, attr: Incomplete, val: Incomplete) -> None: ...
+    def __getitem__(self, indx: Incomplete) -> Incomplete: ...
+    def __setitem__(self, indx: Incomplete, value: Incomplete) -> None: ...
+    def view(self, dtype: Incomplete = ..., type: Incomplete = ...) -> Incomplete: ...
+    def harden_mask(self) -> Incomplete: ...
+    def soften_mask(self) -> Incomplete: ...
+    def copy(self) -> Incomplete: ...
+    def tolist(self, fill_value: Incomplete = ...) -> Incomplete: ...
+    def __reduce__(self) -> Incomplete: ...
 
 mrecarray = MaskedRecords
 
 def fromarrays(
-    arraylist,
-    dtype=...,
-    shape=...,
-    formats=...,
-    names=...,
-    titles=...,
-    aligned=...,
-    byteorder=...,
-    fill_value=...,
-): ...
+    arraylist: Incomplete,
+    dtype: Incomplete = ...,
+    shape: Incomplete = ...,
+    formats: Incomplete = ...,
+    names: Incomplete = ...,
+    titles: Incomplete = ...,
+    aligned: Incomplete = ...,
+    byteorder: Incomplete = ...,
+    fill_value: Incomplete = ...,
+) -> Incomplete: ...
 def fromrecords(
-    reclist,
-    dtype=...,
-    shape=...,
-    formats=...,
-    names=...,
-    titles=...,
-    aligned=...,
-    byteorder=...,
-    fill_value=...,
-    mask=...,
-): ...
+    reclist: Incomplete,
+    dtype: Incomplete = ...,
+    shape: Incomplete = ...,
+    formats: Incomplete = ...,
+    names: Incomplete = ...,
+    titles: Incomplete = ...,
+    aligned: Incomplete = ...,
+    byteorder: Incomplete = ...,
+    fill_value: Incomplete = ...,
+    mask: Incomplete = ...,
+) -> Incomplete: ...
 def fromtextfile(
-    fname,
-    delimiter=...,
-    commentchar=...,
-    missingchar=...,
-    varnames=...,
-    vartypes=...,
-    # NOTE: deprecated: NumPy 1.22.0, 2021-09-23
-    # delimitor=...,
-): ...
-def addfield(mrecord, newfield, newfieldname=...): ...
+    fname: Incomplete,
+    delimiter: Incomplete = ...,
+    commentchar: Incomplete = ...,
+    missingchar: Incomplete = ...,
+    varnames: Incomplete = ...,
+    vartypes: Incomplete = ...,
+) -> Incomplete: ...
+def addfield(mrecord: Incomplete, newfield: Incomplete, newfieldname: Incomplete = ...) -> Incomplete: ...

@@ -10,26 +10,26 @@ _SCT = TypeVar("_SCT", bound=generic)
 
 class DummyArray:
     __array_interface__: dict[str, Any]
-    base: None | NDArray[Any]
+    base: NDArray[Any] | None
     def __init__(
         self,
         interface: dict[str, Any],
-        base: None | NDArray[Any] = ...,
+        base: NDArray[Any] | None = ...,
     ) -> None: ...
 
 @overload
 def as_strided(
     x: _ArrayLike[_SCT],
-    shape: None | Iterable[int] = ...,
-    strides: None | Iterable[int] = ...,
+    shape: Iterable[int] | None = ...,
+    strides: Iterable[int] | None = ...,
     subok: bool = ...,
     writeable: bool = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def as_strided(
     x: ArrayLike,
-    shape: None | Iterable[int] = ...,
-    strides: None | Iterable[int] = ...,
+    shape: Iterable[int] | None = ...,
+    strides: Iterable[int] | None = ...,
     subok: bool = ...,
     writeable: bool = ...,
 ) -> NDArray[Any]: ...
@@ -37,7 +37,7 @@ def as_strided(
 def sliding_window_view(
     x: _ArrayLike[_SCT],
     window_shape: int | Iterable[int],
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     subok: bool = ...,
     writeable: bool = ...,
@@ -46,7 +46,7 @@ def sliding_window_view(
 def sliding_window_view(
     x: ArrayLike,
     window_shape: int | Iterable[int],
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     subok: bool = ...,
     writeable: bool = ...,

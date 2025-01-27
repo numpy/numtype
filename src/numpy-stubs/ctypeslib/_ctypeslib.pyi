@@ -67,7 +67,7 @@ __all__ = ["as_array", "as_ctypes", "as_ctypes_type", "c_intp", "load_library", 
 
 # TODO: Add a proper `_Shape` bound once we've got variadic typevars
 _DType = TypeVar("_DType", bound=dtype[Any])
-_DTypeOptional = TypeVar("_DTypeOptional", bound=None | dtype[Any])
+_DTypeOptional = TypeVar("_DTypeOptional", bound=dtype[Any] | None)
 _SCT = TypeVar("_SCT", bound=generic)
 
 _FlagsKind: TypeAlias = L[
@@ -93,8 +93,8 @@ class _ndptr(ct.c_void_p, Generic[_DTypeOptional]):
     # returned by `ndpointer`
     _dtype_: ClassVar[_DTypeOptional]
     _shape_: ClassVar[None]
-    _ndim_: ClassVar[None | int]
-    _flags_: ClassVar[None | list[_FlagsKind]]
+    _ndim_: ClassVar[int | None]
+    _flags_: ClassVar[list[_FlagsKind] | None]
 
     @overload
     @classmethod
@@ -117,8 +117,8 @@ c_intp = _c_intp
 def ndpointer(
     dtype: None = ...,
     ndim: int = ...,
-    shape: None | _ShapeLike = ...,
-    flags: None | _FlagsKind | Iterable[_FlagsKind] | int | flagsobj = ...,
+    shape: _ShapeLike | None = ...,
+    flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = ...,
 ) -> type[_ndptr[None]]: ...
 @overload
 def ndpointer(
@@ -126,7 +126,7 @@ def ndpointer(
     ndim: int = ...,
     *,
     shape: _ShapeLike,
-    flags: None | _FlagsKind | Iterable[_FlagsKind] | int | flagsobj = ...,
+    flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = ...,
 ) -> type[_concrete_ndptr[dtype[_SCT]]]: ...
 @overload
 def ndpointer(
@@ -134,21 +134,21 @@ def ndpointer(
     ndim: int = ...,
     *,
     shape: _ShapeLike,
-    flags: None | _FlagsKind | Iterable[_FlagsKind] | int | flagsobj = ...,
+    flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = ...,
 ) -> type[_concrete_ndptr[dtype[Any]]]: ...
 @overload
 def ndpointer(
     dtype: _DTypeLike[_SCT],
     ndim: int = ...,
     shape: None = ...,
-    flags: None | _FlagsKind | Iterable[_FlagsKind] | int | flagsobj = ...,
+    flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = ...,
 ) -> type[_ndptr[dtype[_SCT]]]: ...
 @overload
 def ndpointer(
     dtype: DTypeLike,
     ndim: int = ...,
     shape: None = ...,
-    flags: None | _FlagsKind | Iterable[_FlagsKind] | int | flagsobj = ...,
+    flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = ...,
 ) -> type[_ndptr[dtype[Any]]]: ...
 @overload
 def as_ctypes_type(dtype: _BoolCodes | _DTypeLike[np.bool] | type[ct.c_bool]) -> type[ct.c_bool]: ...
@@ -187,9 +187,9 @@ def as_ctypes_type(dtype: str) -> type[Any]: ...
 @overload
 def as_array(obj: ct._PointerLike, shape: Sequence[int]) -> NDArray[Any]: ...
 @overload
-def as_array(obj: _ArrayLike[_SCT], shape: None | _ShapeLike = ...) -> NDArray[_SCT]: ...
+def as_array(obj: _ArrayLike[_SCT], shape: _ShapeLike | None = ...) -> NDArray[_SCT]: ...
 @overload
-def as_array(obj: object, shape: None | _ShapeLike = ...) -> NDArray[Any]: ...
+def as_array(obj: object, shape: _ShapeLike | None = ...) -> NDArray[Any]: ...
 @overload
 def as_ctypes(obj: np.bool) -> ct.c_bool: ...
 @overload

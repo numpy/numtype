@@ -112,19 +112,19 @@ class SVDResult(NamedTuple):
 def tensorsolve(
     a: _ArrayLikeInt_co,
     b: _ArrayLikeInt_co,
-    axes: None | Iterable[int] = ...,
+    axes: Iterable[int] | None = ...,
 ) -> NDArray[float64]: ...
 @overload
 def tensorsolve(
     a: _ArrayLikeFloat_co,
     b: _ArrayLikeFloat_co,
-    axes: None | Iterable[int] = ...,
+    axes: Iterable[int] | None = ...,
 ) -> NDArray[floating[Any]]: ...
 @overload
 def tensorsolve(
     a: _ArrayLikeComplex_co,
     b: _ArrayLikeComplex_co,
-    axes: None | Iterable[int] = ...,
+    axes: Iterable[int] | None = ...,
 ) -> NDArray[complexfloating[Any, Any]]: ...
 @overload
 def solve(
@@ -279,15 +279,15 @@ def svdvals(x: _ArrayLikeInt_co | _ArrayLikeFloat_co | _ArrayLikeComplex_co) -> 
 
 # TODO: Returns a scalar for 2D arrays and
 # a `(x.ndim - 2)`` dimensionl array otherwise
-def cond(x: _ArrayLikeComplex_co, p: None | float | L["fro", "nuc"] = ...) -> Any: ...
+def cond(x: _ArrayLikeComplex_co, p: float | L["fro", "nuc"] | None = ...) -> Any: ...
 
 # TODO: Returns `int` for <2D arrays and `intp` otherwise
 def matrix_rank(
     A: _ArrayLikeComplex_co,
-    tol: None | _ArrayLikeFloat_co = ...,
+    tol: _ArrayLikeFloat_co | None = ...,
     hermitian: bool = ...,
     *,
-    rtol: None | _ArrayLikeFloat_co = ...,
+    rtol: _ArrayLikeFloat_co | None = ...,
 ) -> Any: ...
 @overload
 def pinv(
@@ -317,7 +317,7 @@ def slogdet(a: _ArrayLikeComplex_co) -> SlogdetResult: ...
 def det(a: _ArrayLikeComplex_co) -> Any: ...
 @overload
 def lstsq(
-    a: _ArrayLikeInt_co, b: _ArrayLikeInt_co, rcond: None | float = ...
+    a: _ArrayLikeInt_co, b: _ArrayLikeInt_co, rcond: float | None = ...
 ) -> tuple[
     NDArray[float64],
     NDArray[float64],
@@ -326,7 +326,7 @@ def lstsq(
 ]: ...
 @overload
 def lstsq(
-    a: _ArrayLikeFloat_co, b: _ArrayLikeFloat_co, rcond: None | float = ...
+    a: _ArrayLikeFloat_co, b: _ArrayLikeFloat_co, rcond: float | None = ...
 ) -> tuple[
     NDArray[floating[Any]],
     NDArray[floating[Any]],
@@ -335,7 +335,7 @@ def lstsq(
 ]: ...
 @overload
 def lstsq(
-    a: _ArrayLikeComplex_co, b: _ArrayLikeComplex_co, rcond: None | float = ...
+    a: _ArrayLikeComplex_co, b: _ArrayLikeComplex_co, rcond: float | None = ...
 ) -> tuple[
     NDArray[complexfloating[Any, Any]],
     NDArray[floating[Any]],
@@ -345,41 +345,41 @@ def lstsq(
 @overload
 def norm(
     x: ArrayLike,
-    ord: None | float | L["fro", "nuc"] = ...,
+    ord: float | L["fro", "nuc"] | None = ...,
     axis: None = ...,
     keepdims: bool = ...,
 ) -> floating[Any]: ...
 @overload
 def norm(
     x: ArrayLike,
-    ord: None | float | L["fro", "nuc"] = ...,
+    ord: float | L["fro", "nuc"] | None = ...,
     axis: SupportsInt | SupportsIndex | tuple[int, ...] = ...,
     keepdims: bool = ...,
 ) -> Any: ...
 @overload
 def matrix_norm(
     x: ArrayLike,
-    ord: None | float | L["fro", "nuc"] = ...,
+    ord: float | L["fro", "nuc"] | None = ...,
     keepdims: bool = ...,
 ) -> floating[Any]: ...
 @overload
 def matrix_norm(
     x: ArrayLike,
-    ord: None | float | L["fro", "nuc"] = ...,
+    ord: float | L["fro", "nuc"] | None = ...,
     keepdims: bool = ...,
 ) -> Any: ...
 @overload
 def vector_norm(
     x: ArrayLike,
     axis: None = ...,
-    ord: None | float = ...,
+    ord: float | None = ...,
     keepdims: bool = ...,
 ) -> floating[Any]: ...
 @overload
 def vector_norm(
     x: ArrayLike,
     axis: SupportsInt | SupportsIndex | tuple[int, ...] = ...,
-    ord: None | float = ...,
+    ord: float | None = ...,
     keepdims: bool = ...,
 ) -> Any: ...
 
@@ -387,7 +387,7 @@ def vector_norm(
 def multi_dot(
     arrays: Iterable[_ArrayLikeComplex_co | _ArrayLikeObject_co | _ArrayLikeTD64_co],
     *,
-    out: None | NDArray[Any] = ...,
+    out: NDArray[Any] | None = ...,
 ) -> Any: ...
 def diagonal(
     x: ArrayLike,  # >= 2D array

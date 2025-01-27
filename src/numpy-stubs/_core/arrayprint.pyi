@@ -48,90 +48,90 @@ class _FormatOptions(TypedDict):
     suppress: bool
     nanstr: str
     infstr: str
-    formatter: None | _FormatDict
+    formatter: _FormatDict | None
     sign: Literal["-", "+", " "]
     floatmode: _FloatMode
     legacy: Literal[False, "1.13", "1.21"]
 
 def set_printoptions(
-    precision: None | SupportsIndex = ...,
-    threshold: None | int = ...,
-    edgeitems: None | int = ...,
-    linewidth: None | int = ...,
-    suppress: None | bool = ...,
-    nanstr: None | str = ...,
-    infstr: None | str = ...,
-    formatter: None | _FormatDict = ...,
+    precision: SupportsIndex | None = ...,
+    threshold: int | None = ...,
+    edgeitems: int | None = ...,
+    linewidth: int | None = ...,
+    suppress: bool | None = ...,
+    nanstr: str | None = ...,
+    infstr: str | None = ...,
+    formatter: _FormatDict | None = ...,
     sign: Literal["-", "+", " "] | None = ...,
-    floatmode: None | _FloatMode = ...,
+    floatmode: _FloatMode | None = ...,
     *,
     legacy: Literal[False, "1.13", "1.21"] | None = ...,
-    override_repr: None | Callable[[NDArray[Any]], str] = ...,
+    override_repr: Callable[[NDArray[Any]], str] | None = ...,
 ) -> None: ...
 def get_printoptions() -> _FormatOptions: ...
 def array2string(
     a: NDArray[Any],
-    max_line_width: None | int = ...,
-    precision: None | SupportsIndex = ...,
-    suppress_small: None | bool = ...,
+    max_line_width: int | None = ...,
+    precision: SupportsIndex | None = ...,
+    suppress_small: bool | None = ...,
     separator: str = ...,
     prefix: str = ...,
     # NOTE: With the `style` argument being deprecated,
     # all arguments between `formatter` and `suffix` are de facto
     # keyworld-only arguments
     *,
-    formatter: None | _FormatDict = ...,
-    threshold: None | int = ...,
-    edgeitems: None | int = ...,
+    formatter: _FormatDict | None = ...,
+    threshold: int | None = ...,
+    edgeitems: int | None = ...,
     sign: Literal["-", "+", " "] | None = ...,
-    floatmode: None | _FloatMode = ...,
+    floatmode: _FloatMode | None = ...,
     suffix: str = ...,
     legacy: Literal[False, "1.13", "1.21"] | None = ...,
 ) -> str: ...
 def format_float_scientific(
     x: _FloatLike_co,
-    precision: None | int = ...,
+    precision: int | None = ...,
     unique: bool = ...,
     trim: Literal["k", ".", "0", "-"] = ...,
     sign: bool = ...,
-    pad_left: None | int = ...,
-    exp_digits: None | int = ...,
-    min_digits: None | int = ...,
+    pad_left: int | None = ...,
+    exp_digits: int | None = ...,
+    min_digits: int | None = ...,
 ) -> str: ...
 def format_float_positional(
     x: _FloatLike_co,
-    precision: None | int = ...,
+    precision: int | None = ...,
     unique: bool = ...,
     fractional: bool = ...,
     trim: Literal["k", ".", "0", "-"] = ...,
     sign: bool = ...,
-    pad_left: None | int = ...,
-    pad_right: None | int = ...,
-    min_digits: None | int = ...,
+    pad_left: int | None = ...,
+    pad_right: int | None = ...,
+    min_digits: int | None = ...,
 ) -> str: ...
 def array_repr(
     arr: NDArray[Any],
-    max_line_width: None | int = ...,
-    precision: None | SupportsIndex = ...,
-    suppress_small: None | bool = ...,
+    max_line_width: int | None = ...,
+    precision: SupportsIndex | None = ...,
+    suppress_small: bool | None = ...,
 ) -> str: ...
 def array_str(
     a: NDArray[Any],
-    max_line_width: None | int = ...,
-    precision: None | SupportsIndex = ...,
-    suppress_small: None | bool = ...,
+    max_line_width: int | None = ...,
+    precision: SupportsIndex | None = ...,
+    suppress_small: bool | None = ...,
 ) -> str: ...
 def printoptions(
-    precision: None | SupportsIndex = ...,
-    threshold: None | int = ...,
-    edgeitems: None | int = ...,
-    linewidth: None | int = ...,
-    suppress: None | bool = ...,
-    nanstr: None | str = ...,
-    infstr: None | str = ...,
-    formatter: None | _FormatDict = ...,
+    precision: SupportsIndex | None = ...,
+    threshold: int | None = ...,
+    edgeitems: int | None = ...,
+    linewidth: int | None = ...,
+    suppress: bool | None = ...,
+    nanstr: str | None = ...,
+    infstr: str | None = ...,
+    formatter: _FormatDict | None = ...,
     sign: Literal["-", "+", " "] | None = ...,
-    floatmode: None | _FloatMode = ...,
+    floatmode: _FloatMode | None = ...,
     *,
     legacy: Literal[False, "1.13", "1.21"] | None = ...,
 ) -> _GeneratorContextManager[_FormatOptions]: ...
