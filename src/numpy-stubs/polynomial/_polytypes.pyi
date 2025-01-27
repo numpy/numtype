@@ -183,7 +183,7 @@ class _FuncPow(_Named[_Name_co], Protocol[_Name_co]):
         /,
         c: _SeriesLikeFloat_co,
         pow: _IntLike_co,
-        maxpower: None | _IntLike_co = ...,
+        maxpower: _IntLike_co | None = ...,
     ) -> _FloatSeries: ...
     @overload
     def __call__(
@@ -191,7 +191,7 @@ class _FuncPow(_Named[_Name_co], Protocol[_Name_co]):
         /,
         c: _SeriesLikeComplex_co,
         pow: _IntLike_co,
-        maxpower: None | _IntLike_co = ...,
+        maxpower: _IntLike_co | None = ...,
     ) -> _ComplexSeries: ...
     @overload
     def __call__(
@@ -199,7 +199,7 @@ class _FuncPow(_Named[_Name_co], Protocol[_Name_co]):
         /,
         c: _SeriesLikeCoef_co,
         pow: _IntLike_co,
-        maxpower: None | _IntLike_co = ...,
+        maxpower: _IntLike_co | None = ...,
     ) -> _ObjectSeries: ...
 
 @type_check_only
@@ -686,9 +686,9 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeFloat_co,
         y: _ArrayLikeFloat_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float = ...,
+        rcond: float | None = ...,
         full: Literal[False] = ...,
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> _FloatArray: ...
     @overload
     def __call__(
@@ -696,10 +696,10 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeFloat_co,
         y: _ArrayLikeFloat_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float,
+        rcond: float | None,
         full: Literal[True],
         /,
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> tuple[_FloatArray, _FullFitResult]: ...
     @overload
     def __call__(
@@ -708,10 +708,10 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeFloat_co,
         y: _ArrayLikeFloat_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float = ...,
+        rcond: float | None = ...,
         *,
         full: Literal[True],
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> tuple[_FloatArray, _FullFitResult]: ...
     @overload
     def __call__(
@@ -720,9 +720,9 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeComplex_co,
         y: _ArrayLikeComplex_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float = ...,
+        rcond: float | None = ...,
         full: Literal[False] = ...,
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> _ComplexArray: ...
     @overload
     def __call__(
@@ -730,10 +730,10 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeComplex_co,
         y: _ArrayLikeComplex_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float,
+        rcond: float | None,
         full: Literal[True],
         /,
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> tuple[_ComplexArray, _FullFitResult]: ...
     @overload
     def __call__(
@@ -742,10 +742,10 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeComplex_co,
         y: _ArrayLikeComplex_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float = ...,
+        rcond: float | None = ...,
         *,
         full: Literal[True],
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> tuple[_ComplexArray, _FullFitResult]: ...
     @overload
     def __call__(
@@ -754,9 +754,9 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeComplex_co,
         y: _ArrayLikeCoef_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float = ...,
+        rcond: float | None = ...,
         full: Literal[False] = ...,
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> _ObjectArray: ...
     @overload
     def __call__(
@@ -764,10 +764,10 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeComplex_co,
         y: _ArrayLikeCoef_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float,
+        rcond: float | None,
         full: Literal[True],
         /,
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> tuple[_ObjectArray, _FullFitResult]: ...
     @overload
     def __call__(
@@ -776,10 +776,10 @@ class _FuncFit(_Named[_Name_co], Protocol[_Name_co]):
         x: _SeriesLikeComplex_co,
         y: _ArrayLikeCoef_co,
         deg: int | _SeriesLikeInt_co,
-        rcond: None | float = ...,
+        rcond: float | None = ...,
         *,
         full: Literal[True],
-        w: None | _SeriesLikeFloat_co = ...,
+        w: _SeriesLikeFloat_co | None = ...,
     ) -> tuple[_ObjectArray, _FullFitResult]: ...
 
 @type_check_only

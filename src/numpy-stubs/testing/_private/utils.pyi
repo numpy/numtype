@@ -118,12 +118,12 @@ class clear_and_catch_warnings(warnings.catch_warnings[list[warnings.WarningMess
         record: bool,
         modules: Iterable[types.ModuleType] = ...,
     ) -> clear_and_catch_warnings: ...
-    def __enter__(self) -> None | list[warnings.WarningMessage]: ...
+    def __enter__(self) -> list[warnings.WarningMessage] | None: ...
     def __exit__(
         self,
-        __exc_type: None | type[BaseException] = ...,
-        __exc_val: None | BaseException = ...,
-        __exc_tb: None | types.TracebackType = ...,
+        __exc_type: type[BaseException] | None = ...,
+        __exc_val: BaseException | None = ...,
+        __exc_tb: types.TracebackType | None = ...,
     ) -> None: ...
 
 # Type-check only `clear_and_catch_warnings` subclasses for both values of the
@@ -147,20 +147,20 @@ class suppress_warnings:
         self,
         category: type[Warning] = ...,
         message: str = ...,
-        module: None | types.ModuleType = ...,
+        module: types.ModuleType | None = ...,
     ) -> None: ...
     def record(
         self,
         category: type[Warning] = ...,
         message: str = ...,
-        module: None | types.ModuleType = ...,
+        module: types.ModuleType | None = ...,
     ) -> list[warnings.WarningMessage]: ...
     def __enter__(self) -> Self: ...
     def __exit__(
         self,
-        __exc_type: None | type[BaseException] = ...,
-        __exc_val: None | BaseException = ...,
-        __exc_tb: None | types.TracebackType = ...,
+        __exc_type: type[BaseException] | None = ...,
+        __exc_val: BaseException | None = ...,
+        __exc_tb: types.TracebackType | None = ...,
     ) -> None: ...
     def __call__(self, func: _FT) -> _FT: ...
 
@@ -182,7 +182,7 @@ if sys.platform == "win32" or sys.platform == "cygwin":
     def memusage(processName: str = ..., instance: int = ...) -> int: ...
 
 elif sys.platform == "linux":
-    def memusage(_proc_pid_stat: StrOrBytesPath = ...) -> None | int: ...
+    def memusage(_proc_pid_stat: StrOrBytesPath = ...) -> int | None: ...
 
 else:
     def memusage() -> NoReturn: ...
@@ -202,7 +202,7 @@ def build_err_msg(
     header: str = ...,
     verbose: bool = ...,
     names: Sequence[str] = ...,
-    precision: None | SupportsIndex = ...,
+    precision: SupportsIndex | None = ...,
 ) -> str: ...
 def assert_equal(actual: object, desired: object, err_msg: object = ..., verbose: bool = ..., *, strict: bool = ...) -> None: ...
 def print_assert_equal(
@@ -269,7 +269,7 @@ def assert_array_less(
 ) -> None: ...
 def runstring(
     astr: str | bytes | types.CodeType,
-    dict: None | dict[str, Any],
+    dict: dict[str, Any] | None,
 ) -> Any: ...
 def assert_string_equal(actual: str, desired: str) -> None: ...
 def rundocs(
@@ -290,7 +290,7 @@ def assert_raises(  # type: ignore
 def assert_raises(
     expected_exception: type[_ET] | tuple[type[_ET], ...],
     *,
-    msg: None | str = ...,
+    msg: str | None = ...,
 ) -> unittest.case._AssertRaisesContext[_ET]: ...
 @overload
 def assert_raises_regex(
@@ -306,17 +306,17 @@ def assert_raises_regex(
     expected_exception: type[_ET] | tuple[type[_ET], ...],
     expected_regex: str | bytes | Pattern[Any],
     *,
-    msg: None | str = ...,
+    msg: str | None = ...,
 ) -> unittest.case._AssertRaisesContext[_ET]: ...
 def decorate_methods(
     cls: type[Any],
     decorator: Callable[[Callable[..., Any]], Any],
-    testmatch: None | str | bytes | Pattern[Any] = ...,
+    testmatch: str | bytes | Pattern[Any] | None = ...,
 ) -> None: ...
 def measure(
     code_str: str | bytes | ast.mod | ast.AST,
     times: int = ...,
-    label: None | str = ...,
+    label: str | None = ...,
 ) -> float: ...
 @overload
 def assert_allclose(

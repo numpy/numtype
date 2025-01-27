@@ -15,7 +15,7 @@ _RequirementsWithE: TypeAlias = _Requirements | _E
 def require(
     a: _ArrayType,
     dtype: None = ...,
-    requirements: None | _Requirements | Iterable[_Requirements] = ...,
+    requirements: _Requirements | Iterable[_Requirements] | None = ...,
     *,
     like: _SupportsArrayFunc = ...,
 ) -> _ArrayType: ...
@@ -27,7 +27,7 @@ def require(
 def require(
     a: object,
     dtype: DTypeLike = ...,
-    requirements: None | _Requirements | Iterable[_Requirements] = ...,
+    requirements: _Requirements | Iterable[_Requirements] | None = ...,
     *,
     like: _SupportsArrayFunc = ...,
 ) -> NDArray[Any]: ...

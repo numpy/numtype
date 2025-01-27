@@ -29,7 +29,7 @@ def linspace(
     dtype: None = ...,
     axis: SupportsIndex = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[floating[Any]]: ...
 @overload
 def linspace(
@@ -41,7 +41,7 @@ def linspace(
     dtype: None = ...,
     axis: SupportsIndex = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[complexfloating[Any, Any]]: ...
 @overload
 def linspace(
@@ -53,7 +53,7 @@ def linspace(
     dtype: _DTypeLike[_SCT] = ...,
     axis: SupportsIndex = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def linspace(
@@ -65,7 +65,7 @@ def linspace(
     dtype: DTypeLike = ...,
     axis: SupportsIndex = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[Any]: ...
 @overload
 def linspace(
@@ -77,7 +77,7 @@ def linspace(
     dtype: None = ...,
     axis: SupportsIndex = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> tuple[NDArray[floating[Any]], floating[Any]]: ...
 @overload
 def linspace(
@@ -89,7 +89,7 @@ def linspace(
     dtype: None = ...,
     axis: SupportsIndex = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> tuple[NDArray[complexfloating[Any, Any]], complexfloating[Any, Any]]: ...
 @overload
 def linspace(
@@ -101,7 +101,7 @@ def linspace(
     dtype: _DTypeLike[_SCT] = ...,
     axis: SupportsIndex = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> tuple[NDArray[_SCT], _SCT]: ...
 @overload
 def linspace(
@@ -113,7 +113,7 @@ def linspace(
     dtype: DTypeLike = ...,
     axis: SupportsIndex = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> tuple[NDArray[Any], Any]: ...
 @overload
 def logspace(

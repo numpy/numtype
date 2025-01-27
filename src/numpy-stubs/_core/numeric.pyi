@@ -194,7 +194,7 @@ def zeros_like(
     subok: L[True] = ...,
     shape: None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> _ArrayType: ...
 @overload
 def zeros_like(
@@ -202,9 +202,9 @@ def zeros_like(
     dtype: None = ...,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def zeros_like(
@@ -212,9 +212,9 @@ def zeros_like(
     dtype: None = ...,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[Any]: ...
 @overload
 def zeros_like(
@@ -222,9 +222,9 @@ def zeros_like(
     dtype: _DTypeLike[_SCT],
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def zeros_like(
@@ -232,9 +232,9 @@ def zeros_like(
     dtype: DTypeLike,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[Any]: ...
 
 ones: Final[_ConstructorEmpty]
@@ -247,7 +247,7 @@ def ones_like(
     subok: L[True] = ...,
     shape: None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> _ArrayType: ...
 @overload
 def ones_like(
@@ -255,9 +255,9 @@ def ones_like(
     dtype: None = ...,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def ones_like(
@@ -265,9 +265,9 @@ def ones_like(
     dtype: None = ...,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[Any]: ...
 @overload
 def ones_like(
@@ -275,9 +275,9 @@ def ones_like(
     dtype: _DTypeLike[_SCT],
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def ones_like(
@@ -285,9 +285,9 @@ def ones_like(
     dtype: DTypeLike,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[Any]: ...
 
 # TODO: Add overloads for bool, int, float, complex, str, bytes, and memoryview
@@ -320,7 +320,7 @@ def full(
 def full(
     shape: _SizeType,
     fill_value: Any,
-    dtype: None | DTypeLike = ...,
+    dtype: DTypeLike | None = ...,
     order: _OrderCF = ...,
     **kwargs: Unpack[_KwargsEmpty],
 ) -> _Array[tuple[_SizeType], Any]: ...
@@ -354,7 +354,7 @@ def full(
 def full(
     shape: _ShapeType,
     fill_value: Any,
-    dtype: None | DTypeLike = ...,
+    dtype: DTypeLike | None = ...,
     order: _OrderCF = ...,
     **kwargs: Unpack[_KwargsEmpty],
 ) -> _Array[_ShapeType, Any]: ...
@@ -388,7 +388,7 @@ def full(
 def full(
     shape: _ShapeLike,
     fill_value: Any,
-    dtype: None | DTypeLike = ...,
+    dtype: DTypeLike | None = ...,
     order: _OrderCF = ...,
     **kwargs: Unpack[_KwargsEmpty],
 ) -> NDArray[Any]: ...
@@ -401,7 +401,7 @@ def full_like(
     subok: L[True] = ...,
     shape: None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> _ArrayType: ...
 @overload
 def full_like(
@@ -410,9 +410,9 @@ def full_like(
     dtype: None = ...,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def full_like(
@@ -421,9 +421,9 @@ def full_like(
     dtype: None = ...,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[Any]: ...
 @overload
 def full_like(
@@ -432,9 +432,9 @@ def full_like(
     dtype: _DTypeLike[_SCT],
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def full_like(
@@ -443,9 +443,9 @@ def full_like(
     dtype: DTypeLike,
     order: _OrderKACF = ...,
     subok: bool = ...,
-    shape: None | _ShapeLike = ...,
+    shape: _ShapeLike | None = ...,
     *,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[Any]: ...
 @overload
 def count_nonzero(
@@ -666,13 +666,13 @@ def tensordot(
 def roll(
     a: _ArrayLike[_SCT],
     shift: _ShapeLike,
-    axis: None | _ShapeLike = ...,
+    axis: _ShapeLike | None = ...,
 ) -> NDArray[_SCT]: ...
 @overload
 def roll(
     a: ArrayLike,
     shift: _ShapeLike,
-    axis: None | _ShapeLike = ...,
+    axis: _ShapeLike | None = ...,
 ) -> NDArray[Any]: ...
 def rollaxis(
     a: NDArray[_SCT],
@@ -691,7 +691,7 @@ def cross(
     axisa: int = ...,
     axisb: int = ...,
     axisc: int = ...,
-    axis: None | int = ...,
+    axis: int | None = ...,
 ) -> NDArray[Any]: ...
 @overload
 def cross(
@@ -700,7 +700,7 @@ def cross(
     axisa: int = ...,
     axisb: int = ...,
     axisc: int = ...,
-    axis: None | int = ...,
+    axis: int | None = ...,
 ) -> NoReturn: ...
 @overload
 def cross(
@@ -709,7 +709,7 @@ def cross(
     axisa: int = ...,
     axisb: int = ...,
     axisc: int = ...,
-    axis: None | int = ...,
+    axis: int | None = ...,
 ) -> NDArray[unsignedinteger[Any]]: ...
 @overload
 def cross(
@@ -718,7 +718,7 @@ def cross(
     axisa: int = ...,
     axisb: int = ...,
     axisc: int = ...,
-    axis: None | int = ...,
+    axis: int | None = ...,
 ) -> NDArray[signedinteger[Any]]: ...
 @overload
 def cross(
@@ -727,7 +727,7 @@ def cross(
     axisa: int = ...,
     axisb: int = ...,
     axisc: int = ...,
-    axis: None | int = ...,
+    axis: int | None = ...,
 ) -> NDArray[floating[Any]]: ...
 @overload
 def cross(
@@ -736,7 +736,7 @@ def cross(
     axisa: int = ...,
     axisb: int = ...,
     axisc: int = ...,
-    axis: None | int = ...,
+    axis: int | None = ...,
 ) -> NDArray[complexfloating[Any, Any]]: ...
 @overload
 def cross(
@@ -745,7 +745,7 @@ def cross(
     axisa: int = ...,
     axisb: int = ...,
     axisc: int = ...,
-    axis: None | int = ...,
+    axis: int | None = ...,
 ) -> NDArray[object_]: ...
 @overload
 def indices(
@@ -792,7 +792,7 @@ def fromfunction(
     **kwargs: Any,
 ) -> _T: ...
 def isscalar(element: object) -> TypeGuard[generic | bool | int | float | complex | str | bytes | memoryview]: ...
-def binary_repr(num: SupportsIndex, width: None | int = ...) -> str: ...
+def binary_repr(num: SupportsIndex, width: int | None = ...) -> str: ...
 def base_repr(
     number: SupportsAbs[float],
     base: float = ...,
@@ -849,12 +849,12 @@ def astype(
     x: ndarray[_ShapeType, dtype[Any]],
     dtype: _DTypeLike[_SCT],
     copy: bool = ...,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> ndarray[_ShapeType, dtype[_SCT]]: ...
 @overload
 def astype(
     x: ndarray[_ShapeType, dtype[Any]],
     dtype: DTypeLike,
     copy: bool = ...,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> ndarray[_ShapeType, dtype[Any]]: ...

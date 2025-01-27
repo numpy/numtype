@@ -15,34 +15,34 @@ __all__ = ["fftfreq", "fftshift", "ifftshift", "rfftfreq"]
 _SCT = TypeVar("_SCT", bound=generic)
 
 @overload
-def fftshift(x: _ArrayLike[_SCT], axes: None | _ShapeLike = ...) -> NDArray[_SCT]: ...
+def fftshift(x: _ArrayLike[_SCT], axes: _ShapeLike | None = ...) -> NDArray[_SCT]: ...
 @overload
-def fftshift(x: ArrayLike, axes: None | _ShapeLike = ...) -> NDArray[Any]: ...
+def fftshift(x: ArrayLike, axes: _ShapeLike | None = ...) -> NDArray[Any]: ...
 @overload
-def ifftshift(x: _ArrayLike[_SCT], axes: None | _ShapeLike = ...) -> NDArray[_SCT]: ...
+def ifftshift(x: _ArrayLike[_SCT], axes: _ShapeLike | None = ...) -> NDArray[_SCT]: ...
 @overload
-def ifftshift(x: ArrayLike, axes: None | _ShapeLike = ...) -> NDArray[Any]: ...
+def ifftshift(x: ArrayLike, axes: _ShapeLike | None = ...) -> NDArray[Any]: ...
 @overload
 def fftfreq(
     n: int | integer[Any],
     d: _ArrayLikeFloat_co = ...,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[floating[Any]]: ...
 @overload
 def fftfreq(
     n: int | integer[Any],
     d: _ArrayLikeComplex_co = ...,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[complexfloating[Any, Any]]: ...
 @overload
 def rfftfreq(
     n: int | integer[Any],
     d: _ArrayLikeFloat_co = ...,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[floating[Any]]: ...
 @overload
 def rfftfreq(
     n: int | integer[Any],
     d: _ArrayLikeComplex_co = ...,
-    device: None | L["cpu"] = ...,
+    device: L["cpu"] | None = ...,
 ) -> NDArray[complexfloating[Any, Any]]: ...

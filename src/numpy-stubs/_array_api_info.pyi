@@ -13,7 +13,7 @@ from typing import (
 import numpy as np
 
 _Device: TypeAlias = Literal["cpu"]
-_DeviceLike: TypeAlias = None | _Device
+_DeviceLike: TypeAlias = _Device | None
 
 _Capabilities = TypedDict(
     "_Capabilities",

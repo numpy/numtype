@@ -67,25 +67,25 @@ def roots(p: ArrayLike) -> NDArray[complexfloating[Any, Any]] | NDArray[floating
 def polyint(
     p: poly1d,
     m: SupportsInt | SupportsIndex = ...,
-    k: None | _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
+    k: _ArrayLikeComplex_co | _ArrayLikeObject_co | None = ...,
 ) -> poly1d: ...
 @overload
 def polyint(
     p: _ArrayLikeFloat_co,
     m: SupportsInt | SupportsIndex = ...,
-    k: None | _ArrayLikeFloat_co = ...,
+    k: _ArrayLikeFloat_co | None = ...,
 ) -> NDArray[floating[Any]]: ...
 @overload
 def polyint(
     p: _ArrayLikeComplex_co,
     m: SupportsInt | SupportsIndex = ...,
-    k: None | _ArrayLikeComplex_co = ...,
+    k: _ArrayLikeComplex_co | None = ...,
 ) -> NDArray[complexfloating[Any, Any]]: ...
 @overload
 def polyint(
     p: _ArrayLikeObject_co,
     m: SupportsInt | SupportsIndex = ...,
-    k: None | _ArrayLikeObject_co = ...,
+    k: _ArrayLikeObject_co | None = ...,
 ) -> NDArray[object_]: ...
 @overload
 def polyder(
@@ -112,9 +112,9 @@ def polyfit(
     x: _ArrayLikeFloat_co,
     y: _ArrayLikeFloat_co,
     deg: SupportsIndex | SupportsInt,
-    rcond: None | float = ...,
+    rcond: float | None = ...,
     full: L[False] = ...,
-    w: None | _ArrayLikeFloat_co = ...,
+    w: _ArrayLikeFloat_co | None = ...,
     cov: L[False] = ...,
 ) -> NDArray[float64]: ...
 @overload
@@ -122,9 +122,9 @@ def polyfit(
     x: _ArrayLikeComplex_co,
     y: _ArrayLikeComplex_co,
     deg: SupportsIndex | SupportsInt,
-    rcond: None | float = ...,
+    rcond: float | None = ...,
     full: L[False] = ...,
-    w: None | _ArrayLikeFloat_co = ...,
+    w: _ArrayLikeFloat_co | None = ...,
     cov: L[False] = ...,
 ) -> NDArray[complex128]: ...
 @overload
@@ -132,9 +132,9 @@ def polyfit(
     x: _ArrayLikeFloat_co,
     y: _ArrayLikeFloat_co,
     deg: SupportsIndex | SupportsInt,
-    rcond: None | float = ...,
+    rcond: float | None = ...,
     full: L[False] = ...,
-    w: None | _ArrayLikeFloat_co = ...,
+    w: _ArrayLikeFloat_co | None = ...,
     cov: L[True, "unscaled"] = ...,
 ) -> _2Tup[NDArray[float64]]: ...
 @overload
@@ -142,9 +142,9 @@ def polyfit(
     x: _ArrayLikeComplex_co,
     y: _ArrayLikeComplex_co,
     deg: SupportsIndex | SupportsInt,
-    rcond: None | float = ...,
+    rcond: float | None = ...,
     full: L[False] = ...,
-    w: None | _ArrayLikeFloat_co = ...,
+    w: _ArrayLikeFloat_co | None = ...,
     cov: L[True, "unscaled"] = ...,
 ) -> _2Tup[NDArray[complex128]]: ...
 @overload
@@ -152,9 +152,9 @@ def polyfit(
     x: _ArrayLikeFloat_co,
     y: _ArrayLikeFloat_co,
     deg: SupportsIndex | SupportsInt,
-    rcond: None | float = ...,
+    rcond: float | None = ...,
     full: L[True] = ...,
-    w: None | _ArrayLikeFloat_co = ...,
+    w: _ArrayLikeFloat_co | None = ...,
     cov: bool | L["unscaled"] = ...,
 ) -> _5Tup[NDArray[float64]]: ...
 @overload
@@ -162,9 +162,9 @@ def polyfit(
     x: _ArrayLikeComplex_co,
     y: _ArrayLikeComplex_co,
     deg: SupportsIndex | SupportsInt,
-    rcond: None | float = ...,
+    rcond: float | None = ...,
     full: L[True] = ...,
-    w: None | _ArrayLikeFloat_co = ...,
+    w: _ArrayLikeFloat_co | None = ...,
     cov: bool | L["unscaled"] = ...,
 ) -> _5Tup[NDArray[complex128]]: ...
 @overload

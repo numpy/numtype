@@ -119,32 +119,32 @@ class UniqueInverseResult(NamedTuple, Generic[_SCT]):
 @overload
 def ediff1d(
     ary: _ArrayLikeBool_co,
-    to_end: None | ArrayLike = ...,
-    to_begin: None | ArrayLike = ...,
+    to_end: ArrayLike | None = ...,
+    to_begin: ArrayLike | None = ...,
 ) -> NDArray[int8]: ...
 @overload
 def ediff1d(
     ary: _ArrayLike[_NumberType],
-    to_end: None | ArrayLike = ...,
-    to_begin: None | ArrayLike = ...,
+    to_end: ArrayLike | None = ...,
+    to_begin: ArrayLike | None = ...,
 ) -> NDArray[_NumberType]: ...
 @overload
 def ediff1d(
     ary: _ArrayLikeNumber_co,
-    to_end: None | ArrayLike = ...,
-    to_begin: None | ArrayLike = ...,
+    to_end: ArrayLike | None = ...,
+    to_begin: ArrayLike | None = ...,
 ) -> NDArray[Any]: ...
 @overload
 def ediff1d(
     ary: _ArrayLikeDT64_co | _ArrayLikeTD64_co,
-    to_end: None | ArrayLike = ...,
-    to_begin: None | ArrayLike = ...,
+    to_end: ArrayLike | None = ...,
+    to_begin: ArrayLike | None = ...,
 ) -> NDArray[timedelta64]: ...
 @overload
 def ediff1d(
     ary: _ArrayLikeObject_co,
-    to_end: None | ArrayLike = ...,
-    to_begin: None | ArrayLike = ...,
+    to_end: ArrayLike | None = ...,
+    to_begin: ArrayLike | None = ...,
 ) -> NDArray[object_]: ...
 @overload
 def unique(
@@ -152,7 +152,7 @@ def unique(
     return_index: L[False] = ...,
     return_inverse: L[False] = ...,
     return_counts: L[False] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> NDArray[_SCT]: ...
@@ -162,7 +162,7 @@ def unique(
     return_index: L[False] = ...,
     return_inverse: L[False] = ...,
     return_counts: L[False] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> NDArray[Any]: ...
@@ -172,7 +172,7 @@ def unique(
     return_index: L[True] = ...,
     return_inverse: L[False] = ...,
     return_counts: L[False] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[_SCT], NDArray[intp]]: ...
@@ -182,7 +182,7 @@ def unique(
     return_index: L[True] = ...,
     return_inverse: L[False] = ...,
     return_counts: L[False] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[Any], NDArray[intp]]: ...
@@ -192,7 +192,7 @@ def unique(
     return_index: L[False] = ...,
     return_inverse: L[True] = ...,
     return_counts: L[False] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[_SCT], NDArray[intp]]: ...
@@ -202,7 +202,7 @@ def unique(
     return_index: L[False] = ...,
     return_inverse: L[True] = ...,
     return_counts: L[False] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[Any], NDArray[intp]]: ...
@@ -212,7 +212,7 @@ def unique(
     return_index: L[False] = ...,
     return_inverse: L[False] = ...,
     return_counts: L[True] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[_SCT], NDArray[intp]]: ...
@@ -222,7 +222,7 @@ def unique(
     return_index: L[False] = ...,
     return_inverse: L[False] = ...,
     return_counts: L[True] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[Any], NDArray[intp]]: ...
@@ -232,7 +232,7 @@ def unique(
     return_index: L[True] = ...,
     return_inverse: L[True] = ...,
     return_counts: L[False] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[_SCT], NDArray[intp], NDArray[intp]]: ...
@@ -242,7 +242,7 @@ def unique(
     return_index: L[True] = ...,
     return_inverse: L[True] = ...,
     return_counts: L[False] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp]]: ...
@@ -252,7 +252,7 @@ def unique(
     return_index: L[True] = ...,
     return_inverse: L[False] = ...,
     return_counts: L[True] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[_SCT], NDArray[intp], NDArray[intp]]: ...
@@ -262,7 +262,7 @@ def unique(
     return_index: L[True] = ...,
     return_inverse: L[False] = ...,
     return_counts: L[True] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp]]: ...
@@ -272,7 +272,7 @@ def unique(
     return_index: L[False] = ...,
     return_inverse: L[True] = ...,
     return_counts: L[True] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[_SCT], NDArray[intp], NDArray[intp]]: ...
@@ -282,7 +282,7 @@ def unique(
     return_index: L[False] = ...,
     return_inverse: L[True] = ...,
     return_counts: L[True] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp]]: ...
@@ -292,7 +292,7 @@ def unique(
     return_index: L[True] = ...,
     return_inverse: L[True] = ...,
     return_counts: L[True] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[_SCT], NDArray[intp], NDArray[intp], NDArray[intp]]: ...
@@ -302,7 +302,7 @@ def unique(
     return_index: L[True] = ...,
     return_inverse: L[True] = ...,
     return_counts: L[True] = ...,
-    axis: None | SupportsIndex = ...,
+    axis: SupportsIndex | None = ...,
     *,
     equal_nan: bool = ...,
 ) -> tuple[NDArray[Any], NDArray[intp], NDArray[intp], NDArray[intp]]: ...
@@ -368,7 +368,7 @@ def isin(
     assume_unique: bool = ...,
     invert: bool = ...,
     *,
-    kind: None | str = ...,
+    kind: str | None = ...,
 ) -> NDArray[np.bool]: ...
 @deprecated("Use 'isin' instead")
 def in1d(
@@ -377,7 +377,7 @@ def in1d(
     assume_unique: bool = ...,
     invert: bool = ...,
     *,
-    kind: None | str = ...,
+    kind: str | None = ...,
 ) -> NDArray[np.bool]: ...
 @overload
 def union1d(

@@ -29,7 +29,7 @@ _DTypeLikeUint64: TypeAlias = dtype[uint64] | _SupportsDType[dtype[uint64]] | ty
 
 @type_check_only
 class _SeedSeqState(TypedDict):
-    entropy: None | int | Sequence[int]
+    entropy: int | Sequence[int] | None
     spawn_key: tuple[int, ...]
     pool_size: int
     n_children_spawned: int
@@ -56,14 +56,14 @@ class SeedlessSeedSequence(ISpawnableSeedSequence):
     def spawn(self: _T, n_children: int) -> list[_T]: ...
 
 class SeedSequence(ISpawnableSeedSequence):
-    entropy: None | int | Sequence[int]
+    entropy: int | Sequence[int] | None
     spawn_key: tuple[int, ...]
     pool_size: int
     n_children_spawned: int
     pool: NDArray[uint32]
     def __init__(
         self,
-        entropy: None | int | Sequence[int] | _ArrayLikeInt_co = ...,
+        entropy: int | Sequence[int] | _ArrayLikeInt_co | None = ...,
         *,
         spawn_key: Sequence[int] = ...,
         pool_size: int = ...,
@@ -78,7 +78,7 @@ class SeedSequence(ISpawnableSeedSequence):
 
 class BitGenerator(abc.ABC):
     lock: Lock
-    def __init__(self, seed: None | _ArrayLikeInt_co | SeedSequence = ...) -> None: ...
+    def __init__(self, seed: _ArrayLikeInt_co | SeedSequence | None = ...) -> None: ...
     def __getstate__(self) -> tuple[dict[str, Any], ISeedSequence]: ...
     def __setstate__(self, state_seed_seq: dict[str, Any] | tuple[dict[str, Any], ISeedSequence]) -> None: ...
     def __reduce__(
@@ -97,7 +97,7 @@ class BitGenerator(abc.ABC):
     @overload
     def random_raw(self, size: _ShapeLike = ..., output: Literal[True] = ...) -> NDArray[uint64]: ...  # type: ignore[misc]
     @overload
-    def random_raw(self, size: None | _ShapeLike = ..., output: Literal[False] = ...) -> None: ...  # type: ignore[misc]
+    def random_raw(self, size: _ShapeLike | None = ..., output: Literal[False] = ...) -> None: ...  # type: ignore[misc]
     def _benchmark(self, cnt: int, method: str = ...) -> None: ...
     @property
     def ctypes(self) -> _Interface: ...
