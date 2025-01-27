@@ -3,16 +3,16 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "numpy-stubs"
-version = "2.2.2.0.dev0"
-description = "Official typing stubs for NumPy"
+name = "numtype"
+version = "0.0.0.0"
+description = "Coming soon"
 readme = "README.md"
 authors = [{name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com"}]
 maintainers = [{name = "NumPy Developers", email = "numpy-discussion@python.org"}]
 license = "BSD-3-Clause"
-keywords = ["numpy", "stubs", "typing", "types", "pep484"]
+keywords = ["numpy", "typing", "stubs"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 1 - Planning",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
@@ -25,34 +25,38 @@ classifiers = [
     "Typing :: Stubs Only",
     "Typing :: Typed",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = []
-
-    [project.optional-dependencies]
-    numpy = ["numpy>=2.2.2,<2.3"]
-
     [project.urls]
     Homepage = "https://numpy.org/"
-    Repository = "https://github.com/jorenham/numpyi/"
-    Issues = "https://github.com/jorenham/numpyi/issues"
-    Changelog = "https://github.com/jorenham/numpyi/releases"
+    Repository = "https://github.com/jorenham/numtype/"
 
 [dependency-groups]
-numpy = ["numpy-stubs[numpy]"]
+# numpy = ["numtype[numpy]"]
 dev = [
-    {include-group = "numpy"},
     "ruff>=0.9.3",
     "basedmypy[faster-cache]>=2.9.1",
     "basedpyright>=1.24.0",
 ]
 
-[tool.hatch.build]
-packages = ["numpy-stubs"]
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "/.github",
+    "/.vscode",
+    "/dist",
+    "/tests",
+    "/tests",
+    "CONTRIBUTING.md",
+    "uv.lock",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/numpy-stubs"]
 
 
 [tool.mypy]
 files = ["src/**/*.py", "src/**/*.pyi"]
-python_version = "3.11"
+python_version = "3.10"
 strict = true
 disable_bytearray_promotion = true
 disable_memoryview_promotion = true
@@ -65,12 +69,12 @@ disallow_any_explicit = false
 
 
 [tool.pyright]
-include = ["src"]
+include = ["src/numpy-stubs"]
 ignore = [".venv"]
-venv = ".venv"
+venv = ".venv/"
 venvPath = "."
-stubPath = "."
-pythonVersion = "3.11"
+stubPath = "src/"
+pythonVersion = "3.10"
 pythonPlatform = "All"
 typeCheckingMode = "strict"
 
@@ -86,7 +90,6 @@ reportPropertyTypeMismatch = false
 reportShadowedImports = true
 reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
-
 # basedpyright only
 failOnWarnings = true
 reportIgnoreCommentWithoutRule = true
@@ -145,10 +148,6 @@ preview = true
             "PLR6301", # pylint/R: no-self-use
             "PLW3201", # pylint/W: bad-dunder-method-name
             "FURB",    # refurb
-            # TODO:
-            "PYI042",
-            "PYI046",
-            "PYI047",
         ]
 
         [tool.ruff.lint.flake8-annotations]
@@ -156,6 +155,7 @@ preview = true
 
         [tool.ruff.lint.flake8-import-conventions]
         banned-from = ["abc", "ctypes", "datetime", "os", "sys", "numpy", "numpy.typing"]
+
             [tool.ruff.lint.flake8-import-conventions.extend-aliases]
             "ctypes" = "ct"
             "datetime" = "dt"
