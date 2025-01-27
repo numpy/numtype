@@ -17,7 +17,7 @@ from numpy._typing import (
 _T = TypeVar("_T")
 
 _2Tup: TypeAlias = tuple[_T, _T]
-_5Tup: TypeAlias = tuple[_T, NDArray[np.np.float64], NDArray[np.int32], NDArray[np.float64], NDArray[np.float64]]
+_5Tup: TypeAlias = tuple[_T, NDArray[np.float64], NDArray[np.int32], NDArray[np.float64], NDArray[np.float64]]
 
 __all__ = ["poly", "poly1d", "polyadd", "polyder", "polydiv", "polyfit", "polyint", "polymul", "polysub", "polyval", "roots"]
 
