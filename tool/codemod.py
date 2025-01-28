@@ -42,7 +42,7 @@ class AnnotateIncomplete(VisitorBasedCodemodCommand):
     To run this codemod, run the following command from the root directory:
 
     ```shell
-    uv run -m libcst.tool codemod -x --include-stubs tools.codemods.AnnotateIncomplete .
+    uv run -m libcst.tool codemod -x --include-stubs tool.codemod.AnnotateIncomplete .
     ```
     """
 
@@ -51,7 +51,10 @@ class AnnotateIncomplete(VisitorBasedCodemodCommand):
 
     @override
     def leave_Param(
-        self, /, original_node: cst.Param, updated_node: cst.Param
+        self,
+        /,
+        original_node: cst.Param,
+        updated_node: cst.Param,
     ) -> cst.Param:
         if (
             updated_node.annotation is not None
@@ -61,19 +64,22 @@ class AnnotateIncomplete(VisitorBasedCodemodCommand):
 
         AddImportsVisitor.add_needed_import(self.context, "_typeshed", "Incomplete")
         return updated_node.with_changes(
-            annotation=cst.Annotation(cst.Name("Incomplete"))
+            annotation=cst.Annotation(cst.Name("Incomplete")),
         )
 
     @override
     def leave_FunctionDef(
-        self, /, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
+        self,
+        /,
+        original_node: cst.FunctionDef,
+        updated_node: cst.FunctionDef,
     ) -> cst.FunctionDef:
         if updated_node.returns is not None:
             return updated_node
 
         if (name := updated_node.name.value) in _DUNDER_RETURN:
             return updated_node.with_changes(
-                returns=cst.Annotation(cst.Name(_DUNDER_RETURN[name]))
+                returns=cst.Annotation(cst.Name(_DUNDER_RETURN[name])),
             )
 
         AddImportsVisitor.add_needed_import(self.context, "_typeshed", "Incomplete")
@@ -87,7 +93,7 @@ class MoveNoneToEnd(VisitorBasedCodemodCommand):
     To run this codemod, run the following command from the root directory:
 
     ```shell
-    uv run -m libcst.tool codemod -x --include-stubs tools.codemods.MoveNoneToEnd .
+    uv run -m libcst.tool codemod -x --include-stubs tool.codemod.MoveNoneToEnd .
     ```
     """
 
@@ -194,7 +200,8 @@ class FixTypingImports310(VisitorBasedCodemodCommand):
             if len(aliases_out) != len(aliases):
                 # prevent trailing comma
                 aliases_out[-1] = aliases[-1].with_changes(
-                    name=aliases_out[-1].name, asname=aliases_out[-1].asname
+                    name=aliases_out[-1].name,
+                    asname=aliases_out[-1].asname,
                 )
                 return updated_node.with_changes(names=aliases_out)
 

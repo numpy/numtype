@@ -29,7 +29,7 @@ _PolyT = TypeVar("_PolyT", bound=ABCPolyBase)
 _AnyOther: TypeAlias = ABCPolyBase | _CoefLike_co | _SeriesLikeCoef_co
 _Hundred: TypeAlias = Literal[100]
 
-class ABCPolyBase(Generic[_NameT_co], metaclass=abc.ABCMeta):
+class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
     __hash__: ClassVar[None]  # type: ignore[assignment]  # pyright: ignore[reportIncompatibleMethodOverride]
     __array_ufunc__: ClassVar[None]
 

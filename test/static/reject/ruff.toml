@@ -1,0 +1,5 @@
+extend = "../ruff.toml"
+builtins = ["reveal_type"]
+
+[lint]
+extend-ignore = ["B"] # flake8-bugbear

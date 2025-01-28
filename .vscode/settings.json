@@ -1,6 +1,6 @@
 {
   "[python]": {
-    "editor.rulers": [130]
+    "editor.rulers": [88, 130]
   },
   "evenBetterToml.formatter.alignComments": true,
   "evenBetterToml.formatter.allowedBlankLines": 2,

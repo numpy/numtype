@@ -1,0 +1,21 @@
+extend = "../pyproject.toml"
+line-length = 130
+
+[lint]
+extend-ignore = [
+    "A",       # flake8-builtins
+    "S404",    # flake8-bandit: suspicious-subprocess-import
+    "PYI042",  # flake8-pyi:    snake-case-type-alias       # TODO
+    "PYI046",  # flake8-pyi:    unused-private-protocol     # TODO
+    "PYI047",  # flake8-pyi:    unused-private-type-alias   # TODO
+    "PYI064",  # flake8-pyi:    redundant-final-literal
+    "E741",    # pycodestyle/E: ambiguous-variable-name
+    "E742",    # pycodestyle/E: ambiguous-class-name
+    "E743",    # pycodestyle/E: ambiguous-function-name
+    "PLR2044", # pylint/R:      empty-comment
+    "PLR6301", # pylint/R:      no-self-use
+    "PLR0904", # pylint/R:      too-many-public-methods
+    "PLR0913", # pylint/R:      too-many-arguments
+    "PLR0917", # pylint/R:      too-many-positional-arguments
+    "PLW3201", # pylint/W:      bad-dunder-method-name
+]
