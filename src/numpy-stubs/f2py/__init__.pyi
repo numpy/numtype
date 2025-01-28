@@ -15,7 +15,13 @@ class _F2PyDict(_F2PyDictBase, total=False):
     fsrc: list[str]
     ltx: list[str]
 
+#
+def get_include() -> str: ...
+
+#
 def run_main(comline_list: Iterable[str]) -> dict[str, _F2PyDict]: ...
+
+#
 @overload
 def compile(
     source: str | bytes,
@@ -37,4 +43,3 @@ def compile(
     *,
     full_output: L[True],
 ) -> subprocess.CompletedProcess[bytes]: ...
-def get_include() -> str: ...

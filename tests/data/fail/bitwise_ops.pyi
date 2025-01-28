@@ -1,10 +1,12 @@
+from typing import Final
+
 import numpy as np
 
-i8 = np.int64()
-i4 = np.int32()
-u8 = np.uint64()
-b_ = np.bool()
-i = 0
+i8: Final[np.int64] = ...
+i4: Final[np.int32] = ...
+u8: Final[np.uint64] = ...
+b_: Final[np.bool] = ...
+i: Final[int] = 0
 
 f8 = np.float64()
 

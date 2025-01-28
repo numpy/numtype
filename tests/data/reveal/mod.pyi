@@ -1,24 +1,25 @@
 import datetime as dt
+from typing import Literal as L
 from typing_extensions import assert_type
 
 import numpy as np
 import numpy.typing as npt
 from numpy._typing import _32Bit, _64Bit
 
-f8 = np.float64()
-i8 = np.int64()
-u8 = np.uint64()
+f8: np.float64
+i8: np.int64
+u8: np.uint64
 
-f4 = np.float32()
-i4 = np.int32()
-u4 = np.uint32()
+f4: np.float32
+i4: np.int32
+u4: np.uint32
 
-td = np.timedelta64(0, "D")
-b_ = np.bool()
+td: np.timedelta64
+b_: np.bool[L[False]]
 
-b = False
-f = 0.0
-i = 0
+b: bool
+i: int
+f: float
 
 AR_b: npt.NDArray[np.bool]
 AR_m: npt.NDArray[np.timedelta64]

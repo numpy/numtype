@@ -7,9 +7,9 @@ from typing_extensions import TypeVar, assert_type
 import numpy as np
 import numpy.typing as npt
 
-_SCT = TypeVar("_SCT", bound=np.generic, covariant=True)
+_SCT_co = TypeVar("_SCT_co", bound=np.generic, covariant=True)
 
-class SubClass(npt.NDArray[_SCT]): ...
+class SubClass(npt.NDArray[_SCT_co]): ...
 
 i8: np.int64
 
@@ -48,7 +48,7 @@ assert_type(np.empty([1, 5, 6], dtype=np.int64), npt.NDArray[np.int64])
 assert_type(np.empty([1, 5, 6], dtype="c16"), npt.NDArray[Any])
 
 assert_type(np.concatenate(A), npt.NDArray[np.float64])
-assert_type(np.concatenate([A, A]), npt.NDArray[Any])
+assert_type(np.concatenate([A, A]), npt.NDArray[Any])  # pyright: ignore[reportAssertTypeFailure]  # npt.NDArray[np.float64]
 assert_type(np.concatenate([[1], A]), npt.NDArray[Any])
 assert_type(np.concatenate([[1], [1]]), npt.NDArray[Any])
 assert_type(np.concatenate((A, A)), npt.NDArray[np.float64])
@@ -227,7 +227,7 @@ assert_type(np.stack([C, C]), npt.NDArray[Any])
 assert_type(np.stack([A, A], axis=0), npt.NDArray[np.float64])
 assert_type(np.stack([A, A], out=B), SubClass[np.float64])
 
-assert_type(np.block([[A, A], [A, A]]), npt.NDArray[Any])
+assert_type(np.block([[A, A], [A, A]]), npt.NDArray[Any])  # pyright: ignore[reportAssertTypeFailure]  # npt.NDArray[np.float64]
 assert_type(np.block(C), npt.NDArray[Any])
 
 if sys.version_info >= (3, 12):

@@ -1,5 +1,6 @@
 import decimal
 import fractions
+from typing import Final
 from typing_extensions import assert_type
 
 import numpy as np
@@ -20,15 +21,15 @@ td = np.timedelta64(0, "D")
 
 b_ = np.bool()
 
-b = False
-c = complex()
-f = 0.0
-i = 0
+b: Final = True
+c: Final = 1j
+f: Final = 1.0
+i: Final = 1
 
-AR = np.array([0], dtype=np.int64)
+AR: Final = np.array([0], dtype=np.int64)  # noqa: PYI015
 AR.setflags(write=False)
 
-SEQ = (0, 1, 2, 3, 4)
+SEQ: Final = (0, 1, 2, 3, 4)
 
 # object-like comparisons
 
@@ -150,7 +151,7 @@ assert_type(i4 > f8, np.bool)
 assert_type(b_ > f8, np.bool)
 assert_type(b > f8, np.bool)
 assert_type(c > f8, np.bool)
-assert_type(f > f8, np.bool)
+assert_type(f > f8, np.bool)  # pyright: ignore[reportAssertTypeFailure]  # builtins.bool
 assert_type(i > f8, np.bool)
 assert_type(f8 < AR, npt.NDArray[np.bool])
 assert_type(f8 < SEQ, npt.NDArray[np.bool])

@@ -17,13 +17,10 @@ AR_i8: npt.NDArray[np.int64]
 
 bool_obj: bool
 suppress_obj: np.testing.suppress_warnings
-FT = TypeVar("FT", bound=Callable[..., Any])
+_FT = TypeVar("_FT", bound=Callable[..., object])
 
 def func() -> int: ...
-def func2(
-    x: npt.NDArray[np.number[Any]],
-    y: npt.NDArray[np.number[Any]],
-) -> npt.NDArray[np.bool]: ...
+def func2(x: npt.NDArray[np.number], y: npt.NDArray[np.number]) -> npt.NDArray[np.bool]: ...
 
 assert_type(np.testing.KnownFailureException(), np.testing.KnownFailureException)
 assert_type(np.testing.IgnoreException(), np.testing.IgnoreException)
@@ -144,11 +141,11 @@ assert_type(
     unittest.case._AssertRaisesContext[RuntimeWarning],
 )
 assert_type(np.testing.assert_raises_regex(RuntimeWarning, b"test", func3, 5), None)
-assert_type(np.testing.assert_raises_regex(RuntimeWarning, re.compile(b"test"), func3, 5), None)
+assert_type(np.testing.assert_raises_regex(RuntimeWarning, re.compile(rb"test"), func3, 5), None)
 
 class Test: ...
 
-def decorate(a: FT) -> FT: ...
+def decorate(a: _FT) -> _FT: ...
 
 assert_type(np.testing.decorate_methods(Test, decorate), None)
 assert_type(np.testing.decorate_methods(Test, decorate, None), None)

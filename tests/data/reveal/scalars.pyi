@@ -3,7 +3,7 @@ from typing_extensions import assert_type
 
 import numpy as np
 
-_1: TypeAlias = Literal[1]
+_1: TypeAlias = Literal[1]  # noqa: PYI042
 
 b: np.bool
 u8: np.uint64

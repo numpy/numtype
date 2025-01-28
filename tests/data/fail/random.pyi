@@ -1,62 +1,64 @@
+from typing import Final
+
 import numpy as np
 import numpy.typing as npt
 
-SEED_FLOAT: float = 457.3
-SEED_ARR_FLOAT: npt.NDArray[np.float64] = ...
-SEED_ARRLIKE_FLOAT: list[float] = [1.0, 2.0, 3.0, 4.0]
-SEED_SEED_SEQ: np.random.SeedSequence = ...
-SEED_STR: str = "String seeding not allowed"
+SEED_FLOAT: Final[float] = ...
+SEED_ARR_FLOAT: Final[npt.NDArray[np.float64]] = ...
+SEED_ARRLIKE_FLOAT: Final[list[float]] = ...
+SEED_SEED_SEQ: Final[np.random.SeedSequence] = ...
+SEED_STR: Final[str] = ...
 
 # default rng
-np.random.default_rng(SEED_FLOAT)  # E: incompatible type
-np.random.default_rng(SEED_ARR_FLOAT)  # E: incompatible type
-np.random.default_rng(SEED_ARRLIKE_FLOAT)  # E: incompatible type
-np.random.default_rng(SEED_STR)  # E: incompatible type
+np.random.default_rng(SEED_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.default_rng(SEED_ARR_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.default_rng(SEED_ARRLIKE_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.default_rng(SEED_STR)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
 # Seed Sequence
-np.random.SeedSequence(SEED_FLOAT)  # E: incompatible type
-np.random.SeedSequence(SEED_ARR_FLOAT)  # E: incompatible type
-np.random.SeedSequence(SEED_ARRLIKE_FLOAT)  # E: incompatible type
-np.random.SeedSequence(SEED_SEED_SEQ)  # E: incompatible type
-np.random.SeedSequence(SEED_STR)  # E: incompatible type
+np.random.SeedSequence(SEED_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.SeedSequence(SEED_ARR_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.SeedSequence(SEED_ARRLIKE_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.SeedSequence(SEED_SEED_SEQ)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.SeedSequence(SEED_STR)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
 seed_seq: np.random.bit_generator.SeedSequence = ...
-seed_seq.spawn(11.5)  # E: incompatible type
-seed_seq.generate_state(3.14)  # E: incompatible type
-seed_seq.generate_state(3, np.uint8)  # E: incompatible type
-seed_seq.generate_state(3, "uint8")  # E: incompatible type
-seed_seq.generate_state(3, "u1")  # E: incompatible type
-seed_seq.generate_state(3, np.uint16)  # E: incompatible type
-seed_seq.generate_state(3, "uint16")  # E: incompatible type
-seed_seq.generate_state(3, "u2")  # E: incompatible type
-seed_seq.generate_state(3, np.int32)  # E: incompatible type
-seed_seq.generate_state(3, "int32")  # E: incompatible type
-seed_seq.generate_state(3, "i4")  # E: incompatible type
+seed_seq.spawn(11.5)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3.14)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, np.uint8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, "uint8")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, "u1")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, np.uint16)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, "uint16")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, "u2")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, np.int32)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, "int32")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3, "i4")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
 # Bit Generators
-np.random.MT19937(SEED_FLOAT)  # E: incompatible type
-np.random.MT19937(SEED_ARR_FLOAT)  # E: incompatible type
-np.random.MT19937(SEED_ARRLIKE_FLOAT)  # E: incompatible type
-np.random.MT19937(SEED_STR)  # E: incompatible type
+np.random.MT19937(SEED_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.MT19937(SEED_ARR_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.MT19937(SEED_ARRLIKE_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.MT19937(SEED_STR)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.random.PCG64(SEED_FLOAT)  # E: incompatible type
-np.random.PCG64(SEED_ARR_FLOAT)  # E: incompatible type
-np.random.PCG64(SEED_ARRLIKE_FLOAT)  # E: incompatible type
-np.random.PCG64(SEED_STR)  # E: incompatible type
+np.random.PCG64(SEED_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.PCG64(SEED_ARR_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.PCG64(SEED_ARRLIKE_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.PCG64(SEED_STR)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.random.Philox(SEED_FLOAT)  # E: incompatible type
-np.random.Philox(SEED_ARR_FLOAT)  # E: incompatible type
-np.random.Philox(SEED_ARRLIKE_FLOAT)  # E: incompatible type
-np.random.Philox(SEED_STR)  # E: incompatible type
+np.random.Philox(SEED_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.Philox(SEED_ARR_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.Philox(SEED_ARRLIKE_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.Philox(SEED_STR)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.random.SFC64(SEED_FLOAT)  # E: incompatible type
-np.random.SFC64(SEED_ARR_FLOAT)  # E: incompatible type
-np.random.SFC64(SEED_ARRLIKE_FLOAT)  # E: incompatible type
-np.random.SFC64(SEED_STR)  # E: incompatible type
+np.random.SFC64(SEED_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.SFC64(SEED_ARR_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.SFC64(SEED_ARRLIKE_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.SFC64(SEED_STR)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
 # Generator
-np.random.Generator(None)  # E: incompatible type
-np.random.Generator(12333283902830213)  # E: incompatible type
-np.random.Generator("OxFEEDF00D")  # E: incompatible type
-np.random.Generator([123, 234])  # E: incompatible type
-np.random.Generator(np.array([123, 234], dtype="u4"))  # E: incompatible type
+np.random.Generator(None)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.Generator(12333283902830213)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.Generator("OxFEEDF00D")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.Generator([123, 234])  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.random.Generator(np.array([123, 234], dtype="u4"))  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
