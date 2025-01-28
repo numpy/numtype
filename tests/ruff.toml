@@ -1,0 +1,16 @@
+extend = "../pyproject.toml"
+
+builtins = ["reveal_type"]
+
+[lint]
+extend-ignore = ["B018"]
+
+    [lint.per-file-ignores]
+    "*.pyi" = [
+        "ERA001",  # eradicate: commented-out-code
+        "PYI017",  # flake8-pyi: complex-assignment-in-stub
+        "PT009",   # flake8-pytest-style: pytest-unittest-assertion
+        "PTH",     # flake8-use-pathlib
+        "PLC2801", # pylint/C: unnecessary-dunder-call
+        "PLR0124", # pylint/R: comparison-with-itself
+    ]
