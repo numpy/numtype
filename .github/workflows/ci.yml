@@ -17,7 +17,7 @@ env:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
@@ -35,3 +35,9 @@ jobs:
         run: |
           uv run ruff check --output-format=github
           uv run ruff format --check
+
+      # TODO: static acceptance tests
+      - name: test static (reject)
+        run: |
+          uv run mypy --hide-error-context --hide-error-code-links --no-pretty test/static/reject
+          uv run basedpyright test/static/reject
