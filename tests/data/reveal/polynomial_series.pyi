@@ -1,3 +1,5 @@
+# ruff: noqa: ERA001
+
 from collections.abc import Sequence
 from typing import Any, TypeAlias
 from typing_extensions import assert_type

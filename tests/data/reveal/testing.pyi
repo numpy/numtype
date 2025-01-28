@@ -1,3 +1,4 @@
+# ruff: noqa: PT009
 import contextlib
 import re
 import sys
@@ -17,7 +18,7 @@ AR_i8: npt.NDArray[np.int64]
 
 bool_obj: bool
 suppress_obj: np.testing.suppress_warnings
-FT = TypeVar("FT", bound=Callable[..., Any])
+_FT = TypeVar("_FT", bound=Callable[..., Any])
 
 def func() -> int: ...
 def func2(
@@ -33,15 +34,15 @@ assert_type(
     np.testing._private.utils._clear_and_catch_warnings_without_records,
 )
 assert_type(
-    np.testing.clear_and_catch_warnings(True),
+    np.testing.clear_and_catch_warnings(record=True),
     np.testing._private.utils._clear_and_catch_warnings_with_records,
 )
 assert_type(
-    np.testing.clear_and_catch_warnings(False),
+    np.testing.clear_and_catch_warnings(record=False),
     np.testing._private.utils._clear_and_catch_warnings_without_records,
 )
 assert_type(
-    np.testing.clear_and_catch_warnings(bool_obj),
+    np.testing.clear_and_catch_warnings(record=bool_obj),
     np.testing.clear_and_catch_warnings,
 )
 assert_type(
@@ -53,7 +54,7 @@ assert_type(
     set[types.ModuleType],
 )
 
-with np.testing.clear_and_catch_warnings(True) as c1:
+with np.testing.clear_and_catch_warnings(record=True) as c1:
     assert_type(c1, list[warnings.WarningMessage])
 with np.testing.clear_and_catch_warnings() as c2:
     assert_type(c2, None)
@@ -144,11 +145,11 @@ assert_type(
     unittest.case._AssertRaisesContext[RuntimeWarning],
 )
 assert_type(np.testing.assert_raises_regex(RuntimeWarning, b"test", func3, 5), None)
-assert_type(np.testing.assert_raises_regex(RuntimeWarning, re.compile(b"test"), func3, 5), None)
+assert_type(np.testing.assert_raises_regex(RuntimeWarning, re.compile(rb"test"), func3, 5), None)
 
 class Test: ...
 
-def decorate(a: FT) -> FT: ...
+def decorate(a: _FT) -> _FT: ...
 
 assert_type(np.testing.decorate_methods(Test, decorate), None)
 assert_type(np.testing.decorate_methods(Test, decorate, None), None)

@@ -22,7 +22,7 @@ assert_type(b1_0d.item(()), bool)
 assert_type(u2_1d.item((0,)), int)
 assert_type(i4_2d.item(-1, 2), int)
 assert_type(f8_3d.item(2, 1, -1), float)
-assert_type(cG_4d.item(-0xED_FED_DEB_A_DEAD_BEE), complex)  # c'mon Ed, we talked about this...
+assert_type(cG_4d.item(-...), complex)  # c'mon Ed, we talked about this...
 
 # tolist
 assert_type(b1_0d.tolist(), bool)
@@ -45,8 +45,8 @@ assert_type(i0_nd.astype(float), npt.NDArray[Any])
 assert_type(i0_nd.astype(np.float64), npt.NDArray[np.float64])
 assert_type(i0_nd.astype(np.float64, "K"), npt.NDArray[np.float64])
 assert_type(i0_nd.astype(np.float64, "K", "unsafe"), npt.NDArray[np.float64])
-assert_type(i0_nd.astype(np.float64, "K", "unsafe", True), npt.NDArray[np.float64])
-assert_type(i0_nd.astype(np.float64, "K", "unsafe", True, True), npt.NDArray[np.float64])
+assert_type(i0_nd.astype(np.float64, "K", "unsafe", subok=True), npt.NDArray[np.float64])
+assert_type(i0_nd.astype(np.float64, "K", "unsafe", subok=True, copy=True), npt.NDArray[np.float64])
 
 assert_type(np.astype(i0_nd, np.float64), npt.NDArray[np.float64])
 
@@ -59,7 +59,7 @@ assert_type(np.astype(i4_2d, uncertain_dtype), np.ndarray[tuple[int, int], np.dt
 
 # byteswap
 assert_type(i0_nd.byteswap(), npt.NDArray[np.int_])
-assert_type(i0_nd.byteswap(True), npt.NDArray[np.int_])
+assert_type(i0_nd.byteswap(inplace=True), npt.NDArray[np.int_])
 
 # copy
 assert_type(i0_nd.copy(), npt.NDArray[np.int_])

@@ -143,6 +143,7 @@ preview = true
             "N",       # pep8-naming
             "D",       # pydocstyle
             "ANN401",  # flake8-annotations: any-type
+            "S",       # flake8-bandit
             "A",       # flake8-builtins
             "DOC",     # flake8-docstrings
             "PYI054",  # flake8-pyi: numeric-literal-too-long

@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import numpy.typing as npt
 
@@ -22,7 +24,7 @@ np.random.SeedSequence(SEED_STR)  # E: incompatible type
 
 seed_seq: np.random.bit_generator.SeedSequence = ...
 seed_seq.spawn(11.5)  # E: incompatible type
-seed_seq.generate_state(3.14)  # E: incompatible type
+seed_seq.generate_state(math.pi)  # E: incompatible type
 seed_seq.generate_state(3, np.uint8)  # E: incompatible type
 seed_seq.generate_state(3, "uint8")  # E: incompatible type
 seed_seq.generate_state(3, "u1")  # E: incompatible type
@@ -56,7 +58,7 @@ np.random.SFC64(SEED_STR)  # E: incompatible type
 
 # Generator
 np.random.Generator(None)  # E: incompatible type
-np.random.Generator(12333283902830213)  # E: incompatible type
+np.random.Generator(...)  # E: incompatible type
 np.random.Generator("OxFEEDF00D")  # E: incompatible type
 np.random.Generator([123, 234])  # E: incompatible type
 np.random.Generator(np.array([123, 234], dtype="u4"))  # E: incompatible type

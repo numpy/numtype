@@ -3,7 +3,7 @@ from typing_extensions import assert_type
 
 import numpy as np
 
-_1: TypeAlias = Literal[1]
+_1: TypeAlias = Literal[1]  # noqa: PYI042
 
 b: np.bool
 u8: np.uint64
@@ -177,6 +177,8 @@ assert_type(complex(O), complex)
 # https://github.com/python/mypy/issues/15182
 # According to the typing spec, the following statements are valid, see
 # https://typing.readthedocs.io/en/latest/spec/constructors.html#new-method
+
+# ruff: noqa: ERA001
 
 # assert_type(np.object_(), None)
 # assert_type(np.object_(None), None)

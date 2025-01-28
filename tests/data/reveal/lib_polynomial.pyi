@@ -1,6 +1,6 @@
 from collections.abc import Iterator
 from typing import Any, NoReturn
-from typing_extensions import assert_type
+from typing_extensions import LiteralString, assert_type
 
 import numpy as np
 import numpy.typing as npt
@@ -14,7 +14,7 @@ AR_O: npt.NDArray[np.object_]
 
 poly_obj: np.poly1d
 
-assert_type(poly_obj.variable, str)
+assert_type(poly_obj.variable, LiteralString)
 assert_type(poly_obj.order, int)
 assert_type(poly_obj.o, int)
 assert_type(poly_obj.roots, npt.NDArray[Any])
