@@ -88,18 +88,18 @@ pythonVersion = "3.10"
 typeCheckingMode = "standard"                                                     # TODO(jorenham): set to "all"
 
 deprecateTypingAliases = true
-enableReachabilityAnalysis = false
 enableTypeIgnoreComments = false
+enableReachabilityAnalysis = false
 reportCallInDefaultInitializer = true
 reportImportCycles = true
+reportImplicitOverride = false             # TODO
 reportMissingSuperCall = false
 reportPrivateUsage = false
 reportPropertyTypeMismatch = false
 reportShadowedImports = true
 reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
-# TODO
-reportImplicitOverride = false
+reportUnusedExpression = false
 # basedpyright only
 failOnWarnings = true
 reportIgnoreCommentWithoutRule = true
@@ -108,7 +108,7 @@ reportImplicitRelativeImport = true
 reportImplicitStringConcatenation = false
 reportInvalidCast = true
 reportPrivateLocalImportUsage = true
-reportUnannotatedClassAttribute = true
+reportUnannotatedClassAttribute = false   # TODO
 strictGenericNarrowing = true
 
 
@@ -132,6 +132,7 @@ preview = true
         "EM",     # flake8-errmsg
         "FIX",    # flake8-fixme
         "ANN401", # flake8-annotations: any-type
+        "PYI041", # flake8-pyi:         redundant-numeric-union
     ]
 
         [tool.ruff.lint.per-file-ignores]
