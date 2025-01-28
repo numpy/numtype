@@ -42,7 +42,7 @@ class AnnotateIncomplete(VisitorBasedCodemodCommand):
     To run this codemod, run the following command from the root directory:
 
     ```shell
-    uv run -m libcst.tool codemod -x --include-stubs tools.codemods.AnnotateIncomplete src/numpy-stubs
+    uv run -m libcst.tool codemod -x --include-stubs tools.codemods.AnnotateIncomplete .
     ```
     """
 
@@ -50,20 +50,31 @@ class AnnotateIncomplete(VisitorBasedCodemodCommand):
         super().__init__(context)
 
     @override
-    def leave_Param(self, /, original_node: cst.Param, updated_node: cst.Param) -> cst.Param:
-        if updated_node.annotation is not None or updated_node.name.value in {"self", "cls", "_cls"}:
+    def leave_Param(
+        self, /, original_node: cst.Param, updated_node: cst.Param
+    ) -> cst.Param:
+        if (
+            updated_node.annotation is not None
+            or updated_node.name.value in {"self", "cls", "_cls"}
+        ):  # fmt: skip
             return updated_node
 
         AddImportsVisitor.add_needed_import(self.context, "_typeshed", "Incomplete")
-        return updated_node.with_changes(annotation=cst.Annotation(cst.Name("Incomplete")))
+        return updated_node.with_changes(
+            annotation=cst.Annotation(cst.Name("Incomplete"))
+        )
 
     @override
-    def leave_FunctionDef(self, /, original_node: cst.FunctionDef, updated_node: cst.FunctionDef) -> cst.FunctionDef:
+    def leave_FunctionDef(
+        self, /, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
+    ) -> cst.FunctionDef:
         if updated_node.returns is not None:
             return updated_node
 
         if (name := updated_node.name.value) in _DUNDER_RETURN:
-            return updated_node.with_changes(returns=cst.Annotation(cst.Name(_DUNDER_RETURN[name])))
+            return updated_node.with_changes(
+                returns=cst.Annotation(cst.Name(_DUNDER_RETURN[name]))
+            )
 
         AddImportsVisitor.add_needed_import(self.context, "_typeshed", "Incomplete")
         return updated_node.with_changes(returns=cst.Annotation(cst.Name("Incomplete")))
@@ -71,17 +82,13 @@ class AnnotateIncomplete(VisitorBasedCodemodCommand):
 
 class MoveNoneToEnd(VisitorBasedCodemodCommand):
     """
-    A codemod that moves `None` to the end of union types when using the `|` operator, fixing `RUF036`.
+    Moves `None` to the end, fixing `RUF036`, e.g. `None | T | D` => `T | D | None`.
 
     To run this codemod, run the following command from the root directory:
 
     ```shell
-    uv run -m libcst.tool codemod -x --include-stubs tools.codemods.MoveNoneToEnd src/numpy-stubs
+    uv run -m libcst.tool codemod -x --include-stubs tools.codemods.MoveNoneToEnd .
     ```
-
-    Example:
-        - Before: None | str | int
-        - After:  str | int | None
     """
 
     @override
@@ -96,7 +103,10 @@ class MoveNoneToEnd(VisitorBasedCodemodCommand):
 
         # Collect all types in the union
         def collect_types(node: cst.BaseExpression) -> list[cst.BaseExpression]:
-            if isinstance(node, cst.BinaryOperation) and isinstance(node.operator, cst.BitOr):
+            if (
+                isinstance(node, cst.BinaryOperation)
+                and isinstance(node.operator, cst.BitOr)
+            ):  # fmt: skip
                 return collect_types(node.left) + collect_types(node.right)
             return [node]
 
@@ -108,7 +118,9 @@ class MoveNoneToEnd(VisitorBasedCodemodCommand):
             return updated_node
 
         # Remove None and add it to the ends
-        other_types = [t for t in types if not (isinstance(t, cst.Name) and t.value == "None")]
+        other_types = [
+            t for t in types if not (isinstance(t, cst.Name) and t.value == "None")
+        ]
         reordered_types = other_types + none_types
 
         # Rebuild the union expression
@@ -121,7 +133,7 @@ class MoveNoneToEnd(VisitorBasedCodemodCommand):
 
 
 class FixTypingImports310(VisitorBasedCodemodCommand):
-    """Imports `typing` imports from `typing_extensions` instead, if they aren't available on Python 3.10."""
+    """Imports unavailable py310 `typing` imports from `typing_extensions`."""
 
     _UNAVAILABLE: ClassVar[set[str]] = {
         "LiteralString",
@@ -144,7 +156,10 @@ class FixTypingImports310(VisitorBasedCodemodCommand):
         original_node: cst.ImportFrom,
         updated_node: cst.ImportFrom,
     ) -> cst.ImportFrom | cst.RemovalSentinel:
-        if isinstance(module := updated_node.module, cst.Name) and module.value == "typing":
+        if (
+            isinstance(module := updated_node.module, cst.Name)
+            and module.value == "typing"
+        ):
             aliases = updated_node.names
             assert isinstance(aliases, Sequence)
 
@@ -158,17 +173,29 @@ class FixTypingImports310(VisitorBasedCodemodCommand):
                         asname = alias.asname.name
                         assert isinstance(asname, cst.Name)
 
-                        AddImportsVisitor.add_needed_import(self.context, "typing_extensions", name.value, asname.value)
+                        AddImportsVisitor.add_needed_import(
+                            self.context,
+                            "typing_extensions",
+                            name.value,
+                            asname.value,
+                        )
                     else:
-                        AddImportsVisitor.add_needed_import(self.context, "typing_extensions", name.value)
+                        AddImportsVisitor.add_needed_import(
+                            self.context,
+                            "typing_extensions",
+                            name.value,
+                        )
                 else:
                     aliases_out.append(alias)
 
             if not aliases_out:
                 return cst.RemovalSentinel.REMOVE
+
             if len(aliases_out) != len(aliases):
                 # prevent trailing comma
-                aliases_out[-1] = aliases[-1].with_changes(name=aliases_out[-1].name, asname=aliases_out[-1].asname)
+                aliases_out[-1] = aliases[-1].with_changes(
+                    name=aliases_out[-1].name, asname=aliases_out[-1].asname
+                )
                 return updated_node.with_changes(names=aliases_out)
 
         return updated_node
