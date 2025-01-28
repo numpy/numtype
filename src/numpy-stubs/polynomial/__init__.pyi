@@ -1,5 +1,7 @@
 from typing import Final, Literal
 
+from numpy._pytesttester import PytestTester as _PytestTester
+
 from . import chebyshev, hermite, hermite_e, laguerre, legendre, polynomial
 from .chebyshev import Chebyshev
 from .hermite import Hermite
@@ -26,6 +28,4 @@ __all__ = [
 
 def set_default_printstyle(style: Literal["ascii", "unicode"]) -> None: ...
 
-from numpy._pytesttester import PytestTester as _PytestTester
-
-test: Final[_PytestTester]
+test: Final[_PytestTester] = ...
