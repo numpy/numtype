@@ -11,21 +11,21 @@ AR_m: npt.NDArray[np.timedelta64]
 
 AR_LIKE_b: list[bool]
 
-np.eye(10, M=20.0)  # E: No overload variant
-np.eye(10, k=2.5, dtype=int)  # E: No overload variant
+np.eye(10, M=20.0)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.eye(10, k=2.5, dtype=int)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.diag(AR_b, k=0.5)  # E: No overload variant
-np.diagflat(AR_b, k=0.5)  # E: No overload variant
+np.diag(AR_b, k=0.5)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.diagflat(AR_b, k=0.5)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.tri(10, M=20.0)  # E: No overload variant
-np.tri(10, k=2.5, dtype=int)  # E: No overload variant
+np.tri(10, M=20.0)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.tri(10, k=2.5, dtype=int)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.tril(AR_b, k=0.5)  # E: No overload variant
-np.triu(AR_b, k=0.5)  # E: No overload variant
+np.tril(AR_b, k=0.5)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.triu(AR_b, k=0.5)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.vander(AR_m)  # E: incompatible type
+np.vander(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.histogram2d(AR_m)  # E: No overload variant
+np.histogram2d(AR_m)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 
-np.mask_indices(10, func1)  # E: incompatible type
-np.mask_indices(10, func2, 10.5)  # E: incompatible type
+np.mask_indices(10, func1)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.mask_indices(10, func2, 10.5)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]

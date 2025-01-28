@@ -2,4 +2,8 @@ extend = "../ruff.toml"
 builtins = ["reveal_type"]
 
 [lint]
-extend-ignore = ["B"] # flake8-bugbear
+extend-ignore = [
+    "B",      # flake8-bugbear
+    "PYI015", # flake8-pyi:     assignment-default-in-stub
+    "SIM300", # flake8-pyi:     yoda-conditions
+]

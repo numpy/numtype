@@ -1,22 +1,21 @@
-from typing import Any
-
 import numpy as np
 import numpy._typing as npt
 
 class Index:
     def __index__(self) -> int: ...
 
+ix: Index
 a: np.flatiter[npt.NDArray[np.float64]]
 supports_array: npt._SupportsArray[np.dtype[np.float64]]
 
-a.base = Any  # E: Property "base" defined in "flatiter" is read-only
-a.coords = Any  # E: Property "coords" defined in "flatiter" is read-only
-a.index = Any  # E: Property "index" defined in "flatiter" is read-only
-a.copy(order="C")  # E: Unexpected keyword argument
+###
 
-# NOTE: Contrary to `ndarray.__getitem__` its counterpart in `flatiter`
-# does not accept objects with the `__array__` or `__index__` protocols;
-# boolean indexing is just plain broken (gh-17175)
-a[np.bool()]  # E: No overload variant of "__getitem__"
-a[Index()]  # E: No overload variant of "__getitem__"
-a[supports_array]  # E: No overload variant of "__getitem__"
+a.base = int  # type: ignore[assignment,misc]  # pyright: ignore[reportAttributeAccessIssue]
+a.coords = ()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue]
+a.index = 0  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue]
+
+a.copy(order="C")  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+
+a[np.True_]  # type: ignore[index]  # pyright: ignore[reportCallIssue,reportArgumentType]
+a[ix]  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+a[supports_array]  # type: ignore[index]  # pyright: ignore[reportCallIssue,reportArgumentType]

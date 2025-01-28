@@ -28,96 +28,96 @@ AR_LIKE_M: list[np.datetime64]
 # Array subtraction
 
 # NOTE: mypys `NoReturn` errors are, unfortunately, not that great
-_1 = ...  # E: Need type annotation
-_2 = ...  # E: Need type annotation
-AR_i - b""  # E: No overload variant
+_1 = AR_b - AR_LIKE_b  # type: ignore[var-annotated]
+_2 = AR_LIKE_b - AR_b  # type: ignore[var-annotated]
+AR_i - b""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_f - AR_LIKE_m  # E: Unsupported operand types
-AR_f - AR_LIKE_M  # E: Unsupported operand types
-AR_c - AR_LIKE_m  # E: Unsupported operand types
-AR_c - AR_LIKE_M  # E: Unsupported operand types
+AR_f - AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_f - AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_c - AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_c - AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_m - AR_LIKE_f  # E: Unsupported operand types
-AR_M - AR_LIKE_f  # E: Unsupported operand types
-AR_m - AR_LIKE_c  # E: Unsupported operand types
-AR_M - AR_LIKE_c  # E: Unsupported operand types
+AR_m - AR_LIKE_f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M - AR_LIKE_f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_m - AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M - AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_m - AR_LIKE_M  # E: Unsupported operand types
-AR_LIKE_m - AR_M  # E: Unsupported operand types
+AR_m - AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_LIKE_m - AR_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 # array floor division
 
-AR_M // AR_LIKE_b  # E: Unsupported operand types
-AR_M // AR_LIKE_u  # E: Unsupported operand types
-AR_M // AR_LIKE_i  # E: Unsupported operand types
-AR_M // AR_LIKE_f  # E: Unsupported operand types
-AR_M // AR_LIKE_c  # E: Unsupported operand types
-AR_M // AR_LIKE_m  # E: Unsupported operand types
-AR_M // AR_LIKE_M  # E: Unsupported operand types
+AR_M // AR_LIKE_b  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M // AR_LIKE_u  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M // AR_LIKE_i  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M // AR_LIKE_f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M // AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_b // AR_LIKE_M  # E: Unsupported operand types
-AR_u // AR_LIKE_M  # E: Unsupported operand types
-AR_i // AR_LIKE_M  # E: Unsupported operand types
-AR_f // AR_LIKE_M  # E: Unsupported operand types
-AR_c // AR_LIKE_M  # E: Unsupported operand types
-AR_m // AR_LIKE_M  # E: Unsupported operand types
-AR_M // AR_LIKE_M  # E: Unsupported operand types
+AR_b // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_u // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_i // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_f // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_c // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_m // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-_3 = ...  # E: Need type annotation
-AR_m // AR_LIKE_c  # E: Unsupported operand types
+_3 = AR_m // AR_LIKE_b  # type: ignore[var-annotated]
+AR_m // AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_b // AR_LIKE_m  # E: Unsupported operand types
-AR_u // AR_LIKE_m  # E: Unsupported operand types
-AR_i // AR_LIKE_m  # E: Unsupported operand types
-AR_f // AR_LIKE_m  # E: Unsupported operand types
-AR_c // AR_LIKE_m  # E: Unsupported operand types
+AR_b // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_u // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_i // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_f // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_c // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 # Array multiplication
 
-AR_b *= AR_LIKE_u  # E: incompatible type
-AR_b *= AR_LIKE_i  # E: incompatible type
-AR_b *= AR_LIKE_f  # E: incompatible type
-AR_b *= AR_LIKE_c  # E: incompatible type
-AR_b *= AR_LIKE_m  # E: incompatible type
+AR_b *= AR_LIKE_u  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b *= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_u *= AR_LIKE_i  # E: incompatible type
-AR_u *= AR_LIKE_f  # E: incompatible type
-AR_u *= AR_LIKE_c  # E: incompatible type
-AR_u *= AR_LIKE_m  # E: incompatible type
+AR_u *= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_i *= AR_LIKE_f  # E: incompatible type
-AR_i *= AR_LIKE_c  # E: incompatible type
-AR_i *= AR_LIKE_m  # E: incompatible type
+AR_i *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_i *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_i *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_f *= AR_LIKE_c  # E: incompatible type
-AR_f *= AR_LIKE_m  # E: incompatible type
+AR_f *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_f *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
 # Array power
 
-AR_b **= AR_LIKE_b  # E: Invalid self argument
-AR_b **= AR_LIKE_u  # E: Invalid self argument
-AR_b **= AR_LIKE_i  # E: Invalid self argument
-AR_b **= AR_LIKE_f  # E: Invalid self argument
-AR_b **= AR_LIKE_c  # E: Invalid self argument
+AR_b **= AR_LIKE_b  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_u  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_i  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_f  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_c  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
 
-AR_u **= AR_LIKE_i  # E: incompatible type
-AR_u **= AR_LIKE_f  # E: incompatible type
-AR_u **= AR_LIKE_c  # E: incompatible type
+AR_u **= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_i **= AR_LIKE_f  # E: incompatible type
-AR_i **= AR_LIKE_c  # E: incompatible type
+AR_i **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_i **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_f **= AR_LIKE_c  # E: incompatible type
+AR_f **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
 # Scalars
 
-b_ - b_  # E: No overload variant
+b_ - b_  # type: ignore[call-overload]  # pyright: ignore[reportOperatorIssue]
 
-dt + dt  # E: Unsupported operand types
-td - dt  # E: Unsupported operand types
-td % 1  # E: Unsupported operand types
-td / dt  # E: No overload
-td % dt  # E: Unsupported operand types
+dt + dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+td - dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+td % 1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+td / dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+td % dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
--b_  # E: Unsupported operand type
-+b_  # E: Unsupported operand type
+-b_  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
++b_  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]

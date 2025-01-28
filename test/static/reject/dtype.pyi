@@ -1,17 +1,21 @@
 import numpy as np
 
+###
+
 class Test1:
-    not_dtype = np.dtype(float)
+    not_dtype: np.dtype[np.float64]
 
 class Test2:
-    dtype = float
+    dtype: type[float]
 
-np.dtype(Test1())  # E: No overload variant of "dtype" matches
-np.dtype(Test2())  # E: incompatible type
+###
 
-np.dtype(  # E: No overload variant of "dtype" matches
-    {
-        "field1": (float, 1),
-        "field2": (int, 3),
-    }
-)
+t1: Test1
+t2: Test2
+t3: dict[str, tuple[type[int | float], int]]
+
+###
+
+np.dtype(t1)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.dtype(t2)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.dtype(t3)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
