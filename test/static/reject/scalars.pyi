@@ -83,5 +83,5 @@ c8.__getnewargs__()  # E: Invalid self argument
 f2.__getnewargs__()  # E: Invalid self argument
 f2.hex()  # E: Invalid self argument
 np.float16.fromhex("0x0.0p+0")  # E: Invalid self argument
-f2.__trunc__()  # E: Invalid self argument
+f2.__trunc__()  # E: Invalid self argument  # noqa: PLC2801
 f2.__getformat__("float")  # E: Invalid self argument

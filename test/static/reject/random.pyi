@@ -24,7 +24,7 @@ np.random.SeedSequence(SEED_STR)  # type: ignore[arg-type]  # pyright: ignore[re
 
 seed_seq: np.random.bit_generator.SeedSequence = ...
 seed_seq.spawn(11.5)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-seed_seq.generate_state(3.14)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+seed_seq.generate_state(3.2)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 seed_seq.generate_state(3, np.uint8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 seed_seq.generate_state(3, "uint8")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 seed_seq.generate_state(3, "u1")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
