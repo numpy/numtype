@@ -178,8 +178,6 @@ assert_type(complex(O), complex)
 # According to the typing spec, the following statements are valid, see
 # https://typing.readthedocs.io/en/latest/spec/constructors.html#new-method
 
-# ruff: noqa: ERA001
-
 # assert_type(np.object_(), None)
 # assert_type(np.object_(None), None)
 # assert_type(np.object_(array_nd), np.ndarray[Any, np.dtype[np.object_]])
