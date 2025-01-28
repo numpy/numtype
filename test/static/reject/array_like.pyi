@@ -3,11 +3,11 @@ from numpy._typing import ArrayLike
 
 class A: ...
 
-x1: ArrayLike = ...  # E: Incompatible types in assignment
-x2: ArrayLike = ...  # E: Incompatible types in assignment
-x3: ArrayLike = {1: "foo", 2: "bar"}  # E: Incompatible types in assignment
+x1: ArrayLike = (i for i in range(10))  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+x2: ArrayLike = A()  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+x3: ArrayLike = {1: "foo", 2: "bar"}  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 
 scalar = np.int64(1)
-scalar.__array__(dtype=np.float64)  # E: No overload variant
+scalar.__array__(dtype=np.float64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 array = np.array([1])
-array.__array__(dtype=np.float64)  # E: No overload variant
+array.__array__(dtype=np.float64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
