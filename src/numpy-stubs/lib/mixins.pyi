@@ -13,7 +13,7 @@ __all__ = ["NDArrayOperatorsMixin"]
 # completely dependent on how `__array_ufunc__` is implemented.
 # As such, only little type safety can be provided here.
 
-class NDArrayOperatorsMixin(metaclass=abc.ABCMeta):
+class NDArrayOperatorsMixin(abc.ABC):
     @abc.abstractmethod
     def __array_ufunc__(
         self,

@@ -5,8 +5,8 @@ from typing_extensions import TypeVar
 import numpy.typing as npt
 from numpy.ctypeslib import c_intp
 
-_CastT = TypeVar("_CastT", bound=ct._CanCastTo)  # Copied from `ctypes.cast`
-_CT = TypeVar("_CT", bound=ct._CData)
+_CastT = TypeVar("_CastT", bound=ct._CanCastTo)  # noqa: SLF001
+_CT = TypeVar("_CT", bound=ct._CData)  # noqa: SLF001
 _PT_co = TypeVar("_PT_co", bound=int | None, default=None, covariant=True)
 
 # TODO: Let the likes of `shape_as` and `strides_as` return `None`
