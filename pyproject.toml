@@ -52,7 +52,9 @@ exclude = [
     "/.github",
     "/.vscode",
     "/dist",
-    "/tests",
+    "/test",
+    "/tool",
+    ".libcst.codemod.yaml",
     "CONTRIBUTING.md",
     "uv.lock",
 ]
@@ -62,27 +64,28 @@ packages = ["src/numpy-stubs"]
 
 
 [tool.mypy]
-files = ["src/**/*.py", "src/**/*.pyi", "tests/**/*.py", "tests/**/*.pyi"]
+files = ["src/numpy-stubs/**/*.pyi", "test/**/*.pyi", "tool/*.py"]
 python_version = "3.10"
 strict = true
 
 disable_bytearray_promotion = true
 disable_memoryview_promotion = true
 enable_error_code = ["ignore-without-code", "truthy-bool"]
+# TODO
+disable_error_code = ["explicit-override"]
 # basedmypy only
 warn_unreachable = false
 warn_unused_ignores = true
 disallow_any_explicit = false
-# TODO
-disable_error_code = ["explicit-override"]
+
 
 [tool.pyright]
-include = ["src/numpy-stubs", "tests"]
+include = ["src/numpy-stubs", "test/static/accept", "test/static/reject", "tool"]
 ignore = [".venv"]
 stubPath = "src"
 pythonPlatform = "All"
 pythonVersion = "3.10"
-typeCheckingMode = "standard"          # TODO(jorenham): set to "all"
+typeCheckingMode = "standard"                                                     # TODO(jorenham): set to "all"
 
 deprecateTypingAliases = true
 enableReachabilityAnalysis = false
@@ -95,6 +98,8 @@ reportPropertyTypeMismatch = false
 reportShadowedImports = true
 reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
+# TODO
+reportImplicitOverride = false
 # basedpyright only
 failOnWarnings = true
 reportIgnoreCommentWithoutRule = true
@@ -105,12 +110,10 @@ reportInvalidCast = true
 reportPrivateLocalImportUsage = true
 reportUnannotatedClassAttribute = true
 strictGenericNarrowing = true
-# TODO
-reportImplicitOverride = false
 
 
 [tool.ruff]
-src = ["src", "tests"]
+src = ["src", "test", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
 force-exclude = true
 # https://typing.readthedocs.io/en/latest/guides/writing_stubs.html#maximum-line-length
@@ -125,46 +128,19 @@ preview = true
     select = ["ALL"]
     ignore = [
         "FBT",    # flake8-boolean-trap
-        "COM812", # flake8-commas: missing-trailing-comma
         "CPY",    # flake8-copyright
         "EM",     # flake8-errmsg
-        "FA100",  # flake8-future-annotations: future-rewritable-type-annotation
-        "T20",    # flake8-print
-        "TC001",  # flake8-type-checking: typing-only-first-party-import
-        "TC003",  # flake8-type-checking: typing-only-standard-library-import
         "FIX",    # flake8-fixme
+        "ANN401", # flake8-annotations: any-type
     ]
 
         [tool.ruff.lint.per-file-ignores]
         "*.pyi" = [
-            "E741",    # pycodestyle/E: ambiguous-variable-name
-            "E742",    # pycodestyle/E: ambiguous-class-name
-            "E743",    # pycodestyle/E: ambiguous-function-name
             "N",       # pep8-naming
-            "D",       # pydocstyle
-            "ANN401",  # flake8-annotations: any-type
-            "S",       # flake8-bandit
-            "A",       # flake8-builtins
-            "DOC",     # flake8-docstrings
-            "PYI054",  # flake8-pyi: numeric-literal-too-long
-            "PYI064",  # flake8-pyi: redundant-final-literal
-            "SLF001",  # flake8-self: private-member-access
-            "PLC2701", # pylint/C: import-private-name
-            "PLR0904", # pylint/R: too-many-public-methods
-            "PLR0913", # pylint/R: too-many-arguments
-            "PLR0917", # pylint/R: too-many-positional-arguments
-            "PLR2044", # pylint/R: empty-comment
-            "PLR6301", # pylint/R: no-self-use
-            "PLW3201", # pylint/W: bad-dunder-method-name
-            "FURB",    # refurb
-            # TODO(jorenham): re-enable
-            "TD",     # flake8-todo
-        ]
-        "src/numpy-stubs/**/*.pyi" = [
-            # TODO(jorenham): re-enable
-            "PYI042", # flake8-pyi: snake-case-type-alias
-            "PYI046", # flake8-pyi: unused-private-protocol
-            "PYI047", # flake8-pyi: unused-private-type-alias
+            "TD",      # flake8-todo
+            "COM812",  # flake8-commas: missing-trailing-comma
+            "PYI054",  # flake8-pyi:    numeric-literal-too-long
+            "PLC2701", # pylint/C:      import-private-name
         ]
 
         [tool.ruff.lint.flake8-annotations]
@@ -179,14 +155,12 @@ preview = true
             "sys",
             "numpy",
             "numpy.typing",
-            "numtype",
         ]
             [tool.ruff.lint.flake8-import-conventions.extend-aliases]
             "ctypes" = "ct"
             "datetime" = "dt"
             "numpy" = "np"
             "numpy.typing" = "npt"
-            "numtype" = "nt"
 
         [tool.ruff.lint.isort]
         case-sensitive = true
