@@ -11,7 +11,6 @@
   "evenBetterToml.formatter.indentString": "    ",
   "evenBetterToml.formatter.indentTables": true,
   "evenBetterToml.formatter.trailingNewline": true,
-  "prettier.printWidth": 80,
   "mypy-type-checker.path": [
     "uv",
     "run",
