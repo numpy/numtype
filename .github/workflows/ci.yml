@@ -39,5 +39,5 @@ jobs:
       # TODO: static acceptance tests
       - name: test static (reject)
         run: |
-          uv run mypy --hide-error-context --hide-error-code-links --no-pretty test/static/reject
+          tool/my.py test/static/reject
           uv run basedpyright test/static/reject
