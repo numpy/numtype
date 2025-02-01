@@ -10,5 +10,15 @@
   "evenBetterToml.formatter.compactInlineTables": true,
   "evenBetterToml.formatter.indentString": "    ",
   "evenBetterToml.formatter.indentTables": true,
-  "evenBetterToml.formatter.trailingNewline": true
+  "evenBetterToml.formatter.trailingNewline": true,
+  "prettier.printWidth": 80,
+  "mypy-type-checker.path": [
+    "uv",
+    "run",
+    "--frozen",
+    "--isolated",
+    "--no-editable",
+    "--refresh-package=numtype",
+    "mypy"
+  ]
 }
