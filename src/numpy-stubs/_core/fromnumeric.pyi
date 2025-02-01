@@ -140,17 +140,19 @@ def reshape(  # shape: index
     shape: SupportsIndex,
     order: np._OrderACF = "C",
     *,
+    newshape: None = None,
     copy: bool | None = None,
 ) -> np.ndarray[tuple[int], np.dtype[_SCT]]: ...
 @overload
 def reshape(  # shape: (int, ...) @ np._AnyShapeT
     a: _ArrayLike[_SCT],
     /,
-    shape: np._AnyShapeT,
+    shape: _ShapeT,
     order: np._OrderACF = "C",
     *,
+    newshape: None = None,
     copy: bool | None = None,
-) -> np.ndarray[np._AnyShapeT, np.dtype[_SCT]]: ...
+) -> np.ndarray[_ShapeT, np.dtype[_SCT]]: ...
 @overload  # shape: Sequence[index]
 def reshape(
     a: _ArrayLike[_SCT],
@@ -158,6 +160,7 @@ def reshape(
     shape: Sequence[SupportsIndex],
     order: np._OrderACF = "C",
     *,
+    newshape: None = None,
     copy: bool | None = None,
 ) -> NDArray[_SCT]: ...
 @overload  # shape: index
@@ -167,17 +170,19 @@ def reshape(
     shape: SupportsIndex,
     order: np._OrderACF = "C",
     *,
+    newshape: None = None,
     copy: bool | None = None,
 ) -> np.ndarray[tuple[int], np.dtype[Any]]: ...
 @overload
 def reshape(  # shape: (int, ...) @ np._AnyShapeT
     a: ArrayLike,
     /,
-    shape: np._AnyShapeT,
+    shape: _ShapeT,
     order: np._OrderACF = "C",
     *,
+    newshape: None = None,
     copy: bool | None = None,
-) -> np.ndarray[np._AnyShapeT, np.dtype[Any]]: ...
+) -> np.ndarray[_ShapeT, np.dtype[Any]]: ...
 @overload  # shape: Sequence[index]
 def reshape(
     a: ArrayLike,
@@ -185,6 +190,7 @@ def reshape(
     shape: Sequence[SupportsIndex],
     order: np._OrderACF = "C",
     *,
+    newshape: None = None,
     copy: bool | None = None,
 ) -> NDArray[Any]: ...
 @overload
