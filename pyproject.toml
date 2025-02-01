@@ -37,6 +37,7 @@ dependencies = []
     Issues = "https://github.com/jorenham/numtype/issues"
     Changelog = "https://github.com/jorenham/numtype/releases"
 
+
 [dependency-groups]
 numpy = ["numtype[numpy]"]
 dev = [
@@ -52,6 +53,7 @@ exclude = [
     "/.github",
     "/.vscode",
     "/dist",
+    "/docs",
     "/test",
     "/tool",
     ".libcst.codemod.yaml",
@@ -71,12 +73,15 @@ strict = true
 disable_bytearray_promotion = true
 disable_memoryview_promotion = true
 enable_error_code = ["ignore-without-code", "truthy-bool"]
+warn_unused_ignores = true
 # TODO
 disable_error_code = ["explicit-override"]
-# basedmypy only
-warn_unreachable = false
-warn_unused_ignores = true
+# basedmypy/mypy compat
+bare_literals = false
+default_return = false
 disallow_any_explicit = false
+disallow_untyped_calls = false
+warn_unreachable = false
 
 
 [tool.pyright]
@@ -144,12 +149,10 @@ preview = true
             "PLC2701", # pylint/C:      import-private-name
         ]
 
-        [tool.ruff.lint.flake8-annotations]
-        suppress-dummy-args = true
-
         [tool.ruff.lint.flake8-import-conventions]
         banned-from = [
             "abc",
+            "basedtyping",
             "ctypes",
             "datetime",
             "os",
