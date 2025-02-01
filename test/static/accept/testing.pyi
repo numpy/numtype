@@ -12,30 +12,38 @@ from typing_extensions import TypeVar, assert_type
 import numpy as np
 import numpy.typing as npt
 
-AR_f8: npt.NDArray[np.float64]
+_FT = TypeVar("_FT", bound=Callable[..., object])
+
 AR_i8: npt.NDArray[np.int64]
+AR_f8: npt.NDArray[np.float64]
 
 bool_obj: bool
 suppress_obj: np.testing.suppress_warnings
-_FT = TypeVar("_FT", bound=Callable[..., object])
+func: Callable[[], int]
 
-def func() -> int: ...
+class Test: ...
+
 def func2(x: npt.NDArray[np.number], y: npt.NDArray[np.number]) -> npt.NDArray[np.bool]: ...
+def func3(a: int) -> bool: ...
+def func4(a: int, b: str) -> bool: ...
+def decorate(a: _FT) -> _FT: ...
+
+###
 
 assert_type(np.testing.KnownFailureException(), np.testing.KnownFailureException)
 assert_type(np.testing.IgnoreException(), np.testing.IgnoreException)
 
 assert_type(
     np.testing.clear_and_catch_warnings(modules=[np.testing]),
-    np.testing._private.utils._clear_and_catch_warnings_without_records,
+    np.testing.clear_and_catch_warnings[None],
 )
 assert_type(
     np.testing.clear_and_catch_warnings(True),
-    np.testing._private.utils._clear_and_catch_warnings_with_records,
+    np.testing.clear_and_catch_warnings[list[warnings.WarningMessage]],
 )
 assert_type(
     np.testing.clear_and_catch_warnings(False),
-    np.testing._private.utils._clear_and_catch_warnings_without_records,
+    np.testing.clear_and_catch_warnings[None],
 )
 assert_type(
     np.testing.clear_and_catch_warnings(bool_obj),
@@ -128,8 +136,6 @@ assert_type(np.testing.rundocs(), None)
 assert_type(np.testing.rundocs("test.py"), None)
 assert_type(np.testing.rundocs(Path("test.py"), raise_on_error=True), None)
 
-def func3(a: int) -> bool: ...
-
 assert_type(
     np.testing.assert_raises(RuntimeWarning),
     unittest.case._AssertRaisesContext[RuntimeWarning],
@@ -142,10 +148,6 @@ assert_type(
 )
 assert_type(np.testing.assert_raises_regex(RuntimeWarning, b"test", func3, 5), None)
 assert_type(np.testing.assert_raises_regex(RuntimeWarning, re.compile(rb"test"), func3, 5), None)
-
-class Test: ...
-
-def decorate(a: _FT) -> _FT: ...
 
 assert_type(np.testing.decorate_methods(Test, decorate), None)
 assert_type(np.testing.decorate_methods(Test, decorate, None), None)
@@ -170,8 +172,6 @@ assert_type(np.testing.assert_array_max_ulp(AR_i8, AR_f8, dtype=np.float32), npt
 
 assert_type(np.testing.assert_warns(RuntimeWarning), contextlib._GeneratorContextManager[None])
 assert_type(np.testing.assert_warns(RuntimeWarning, func3, 5), bool)
-
-def func4(a: int, b: str) -> bool: ...
 
 assert_type(np.testing.assert_no_warnings(), contextlib._GeneratorContextManager[None])
 assert_type(np.testing.assert_no_warnings(func3, 5), bool)
