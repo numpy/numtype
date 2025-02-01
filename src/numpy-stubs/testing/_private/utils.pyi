@@ -1,3 +1,5 @@
+# pyright: reportRedeclaration=false
+
 import ast
 import sys
 import types
@@ -12,14 +14,14 @@ from typing import (
     AnyStr,
     ClassVar,
     Final,
+    Generic,
     Literal as L,
     NoReturn,
     SupportsIndex,
     TypeAlias,
     overload,
-    type_check_only,
 )
-from typing_extensions import ParamSpec, Self, TypeVar
+from typing_extensions import ParamSpec, Self, TypeVar, override
 from unittest.case import SkipTest
 
 import numpy as np
@@ -80,100 +82,62 @@ __all__ = [
     "verbose",
 ]
 
+_WarnLog: TypeAlias = list[warnings.WarningMessage]
+_ToModules: TypeAlias = Iterable[types.ModuleType]
+_ComparisonFunc: TypeAlias = Callable[
+    [NDArray[Any], NDArray[Any]],
+    bool | np.bool | np.number | NDArray[np.bool | np.number | np.object_],
+]
+
 _P = ParamSpec("_P")
 _T = TypeVar("_T")
 _ET = TypeVar("_ET", bound=BaseException)
-_FT = TypeVar("_FT", bound=Callable[..., Any])
+_FT = TypeVar("_FT", bound=Callable[..., object])
+_W_co = TypeVar("_W_co", bound=_WarnLog | None, default=_WarnLog | None, covariant=True)
 
-# Must return a bool or an ndarray/generic type
-# that is supported by `np.logical_and.reduce`
-_ComparisonFunc: TypeAlias = Callable[
-    [NDArray[Any], NDArray[Any]], (bool | np.bool | np.number | NDArray[np.bool | np.number | np.object_])
-]
+###
+
+verbose: int = 0
+IS_EDITABLE: Final[bool] = ...
+IS_MUSL: Final[bool] = ...
+IS_PYPY: Final[bool] = ...
+IS_PYSTON: Final[bool] = ...
+IS_WASM: Final[bool] = ...
+HAS_REFCOUNT: Final[bool] = ...
+HAS_LAPACK64: Final[bool] = ...
+NOGIL_BUILD: Final[bool] = ...
 
 class KnownFailureException(Exception): ...
 class IgnoreException(Exception): ...
 
-class clear_and_catch_warnings(warnings.catch_warnings[list[warnings.WarningMessage]]):
-    class_modules: ClassVar[tuple[types.ModuleType, ...]]
-    modules: set[types.ModuleType]
-    @overload
-    def __new__(
-        cls,
-        record: L[False] = ...,
-        modules: Iterable[types.ModuleType] = ...,
-    ) -> _clear_and_catch_warnings_without_records: ...
-    @overload
-    def __new__(
-        cls,
-        record: L[True],
-        modules: Iterable[types.ModuleType] = ...,
-    ) -> _clear_and_catch_warnings_with_records: ...
-    @overload
-    def __new__(
-        cls,
-        record: bool,
-        modules: Iterable[types.ModuleType] = ...,
-    ) -> clear_and_catch_warnings: ...
-    def __enter__(self) -> list[warnings.WarningMessage] | None: ...
-    def __exit__(
-        self,
-        exc_type: type[BaseException] | None = ...,
-        exc_val: BaseException | None = ...,
-        exc_tb: types.TracebackType | None = ...,
-        /,
-    ) -> None: ...
+# NOTE: `warnings.catch_warnings[_W_co]` isn't possible because typeshed incorrectly
+# uses an invariant type parameter.
+class clear_and_catch_warnings(warnings.catch_warnings[_WarnLog | None], Generic[_W_co]):
+    class_modules: ClassVar[tuple[types.ModuleType, ...]] = ()
+    modules: Final[set[types.ModuleType]]
 
-# Type-check only `clear_and_catch_warnings` subclasses for both values of the
-# `record` parameter. Copied from the stdlib `warnings` stubs.
+    @overload  # record: False (default)
+    def __init__(self: clear_and_catch_warnings[None], /, record: L[False] = False, modules: _ToModules = ()) -> None: ...
+    @overload  # record: True
+    def __init__(self: clear_and_catch_warnings[_WarnLog], /, record: L[True], modules: _ToModules = ()) -> None: ...
+    @overload  # record; bool
+    def __init__(self: clear_and_catch_warnings[_WarnLog | None], /, record: bool, modules: _ToModules = ()) -> None: ...
 
-@type_check_only
-class _clear_and_catch_warnings_with_records(clear_and_catch_warnings):
-    def __enter__(self) -> list[warnings.WarningMessage]: ...
-
-@type_check_only
-class _clear_and_catch_warnings_without_records(clear_and_catch_warnings):
-    def __enter__(self) -> None: ...
+    ###
+    @override
+    def __enter__(self) -> _W_co: ...
 
 class suppress_warnings:
-    log: list[warnings.WarningMessage]
-    def __init__(
-        self,
-        forwarding_rule: L["always", "module", "once", "location"] = ...,
-    ) -> None: ...
-    def filter(
-        self,
-        category: type[Warning] = ...,
-        message: str = ...,
-        module: types.ModuleType | None = ...,
-    ) -> None: ...
-    def record(
-        self,
-        category: type[Warning] = ...,
-        message: str = ...,
-        module: types.ModuleType | None = ...,
-    ) -> list[warnings.WarningMessage]: ...
+    log: Final[_WarnLog]
+
+    def __init__(self, /, forwarding_rule: L["always", "module", "once", "location"] = "always") -> None: ...
     def __enter__(self) -> Self: ...
-    def __exit__(
-        self,
-        exc_type: type[BaseException] | None = ...,
-        exc_val: BaseException | None = ...,
-        exc_tb: types.TracebackType | None = ...,
-        /,
-    ) -> None: ...
-    def __call__(self, func: _FT) -> _FT: ...
+    def __exit__(self, cls: type[BaseException] | None, exc: BaseException | None, tb: types.TracebackType | None, /) -> None: ...
+    def __call__(self, /, func: _FT) -> _FT: ...
 
-verbose: int
-IS_EDITABLE: Final[bool]
-IS_MUSL: Final[bool]
-IS_PYPY: Final[bool]
-IS_PYSTON: Final[bool]
-IS_WASM: Final[bool]
-HAS_REFCOUNT: Final[bool]
-HAS_LAPACK64: Final[bool]
-NOGIL_BUILD: Final[bool]
-
-def assert_(val: object, msg: str | Callable[[], str] = ...) -> None: ...
+    #
+    def filter(self, /, category: type[Warning] = ..., message: str = "", module: types.ModuleType | None = None) -> None: ...
+    def record(self, /, category: type[Warning] = ..., message: str = "", module: types.ModuleType | None = None) -> _WarnLog: ...
 
 # Contrary to runtime we can't do `os.name` checks while type checking,
 # only `sys.platform` checks
@@ -186,61 +150,64 @@ elif sys.platform == "linux":
 else:
     def memusage() -> NoReturn: ...
 
+#
 if sys.platform == "linux":
-    def jiffies(
-        _proc_pid_stat: StrOrBytesPath = ...,
-        _load_time: list[float] = ...,
-    ) -> int: ...
+    def jiffies(_proc_pid_stat: StrOrBytesPath = ..., _load_time: list[float] = ...) -> int: ...
 
 else:
     def jiffies(_load_time: list[float] = ...) -> int: ...
 
-def build_err_msg(
-    arrays: Iterable[object],
-    err_msg: str,
-    header: str = ...,
-    verbose: bool = ...,
-    names: Sequence[str] = ...,
-    precision: SupportsIndex | None = ...,
-) -> str: ...
+#
+def assert_(val: object, msg: str | Callable[[], str] = ...) -> None: ...
 def assert_equal(actual: object, desired: object, err_msg: object = ..., verbose: bool = ..., *, strict: bool = ...) -> None: ...
-def print_assert_equal(
-    test_string: str,
-    actual: object,
-    desired: object,
-) -> None: ...
+def print_assert_equal(test_string: str, actual: object, desired: object) -> None: ...
+
+#
 def assert_almost_equal(
     actual: _ArrayLikeNumber_co | _ArrayLikeObject_co,
     desired: _ArrayLikeNumber_co | _ArrayLikeObject_co,
-    decimal: int = ...,
-    err_msg: object = ...,
-    verbose: bool = ...,
+    decimal: int = 7,
+    err_msg: object = "",
+    verbose: bool = True,
 ) -> None: ...
 
-# Anything that can be coerced into `builtins.float`
+#
 def assert_approx_equal(
     actual: ConvertibleToFloat,
     desired: ConvertibleToFloat,
-    significant: int = ...,
-    err_msg: object = ...,
-    verbose: bool = ...,
+    significant: int = 7,
+    err_msg: object = "",
+    verbose: bool = True,
 ) -> None: ...
+
+#
 def assert_array_compare(
     comparison: _ComparisonFunc,
     x: ArrayLike,
     y: ArrayLike,
+    err_msg: object = "",
+    verbose: bool = True,
+    header: str = "",
+    precision: SupportsIndex = 6,
+    equal_nan: bool = True,
+    equal_inf: bool = True,
+    *,
+    strict: bool = False,
+    names: tuple[str, str] = ("actual", "desired"),
+) -> None: ...
+
+#
+def assert_array_equal(
+    x: ArrayLike,
+    y: ArrayLike,
+    /,
     err_msg: object = ...,
     verbose: bool = ...,
-    header: str = ...,
-    precision: SupportsIndex = ...,
-    equal_nan: bool = ...,
-    equal_inf: bool = ...,
     *,
     strict: bool = ...,
 ) -> None: ...
-def assert_array_equal(
-    x: ArrayLike, y: ArrayLike, /, err_msg: object = ..., verbose: bool = ..., *, strict: bool = ...
-) -> None: ...
+
+#
 def assert_array_almost_equal(
     x: _ArrayLikeNumber_co | _ArrayLikeObject_co,
     y: _ArrayLikeNumber_co | _ArrayLikeObject_co,
@@ -249,6 +216,8 @@ def assert_array_almost_equal(
     err_msg: object = ...,
     verbose: bool = ...,
 ) -> None: ...
+
+#
 @overload
 def assert_array_less(
     x: _ArrayLikeNumber_co | _ArrayLikeObject_co,
@@ -260,23 +229,27 @@ def assert_array_less(
 ) -> None: ...
 @overload
 def assert_array_less(
-    x: _ArrayLikeTD64_co, y: _ArrayLikeTD64_co, err_msg: object = ..., verbose: bool = ..., *, strict: bool = ...
+    x: _ArrayLikeTD64_co,
+    y: _ArrayLikeTD64_co,
+    err_msg: object = ...,
+    verbose: bool = ...,
+    *,
+    strict: bool = ...,
 ) -> None: ...
 @overload
 def assert_array_less(
-    x: _ArrayLikeDT64_co, y: _ArrayLikeDT64_co, err_msg: object = ..., verbose: bool = ..., *, strict: bool = ...
+    x: _ArrayLikeDT64_co,
+    y: _ArrayLikeDT64_co,
+    err_msg: object = ...,
+    verbose: bool = ...,
+    *,
+    strict: bool = ...,
 ) -> None: ...
-def runstring(
-    astr: str | bytes | types.CodeType,
-    dict: dict[str, Any] | None,
-) -> Any: ...
+
+#
 def assert_string_equal(actual: str, desired: str) -> None: ...
-def rundocs(
-    filename: StrPath | None = ...,
-    raise_on_error: bool = ...,
-) -> None: ...
-def check_support_sve(cache: list[_T], /) -> _T: ...
-def raises(*args: type[BaseException]) -> Callable[[_FT], _FT]: ...
+
+#
 @overload
 def assert_raises(
     expected_exception: type[BaseException] | tuple[type[BaseException], ...],
@@ -291,6 +264,8 @@ def assert_raises(
     *,
     msg: str | None = ...,
 ) -> unittest.case._AssertRaisesContext[_ET]: ...
+
+#
 @overload
 def assert_raises_regex(
     expected_exception: type[BaseException] | tuple[type[BaseException], ...],
@@ -307,16 +282,10 @@ def assert_raises_regex(
     *,
     msg: str | None = ...,
 ) -> unittest.case._AssertRaisesContext[_ET]: ...
-def decorate_methods(
-    cls: type[Any],
-    decorator: Callable[[Callable[..., Any]], Any],
-    testmatch: str | bytes | Pattern[Any] | None = ...,
-) -> None: ...
-def measure(
-    code_str: str | bytes | ast.mod | ast.AST,
-    times: int = ...,
-    label: str | None = ...,
-) -> float: ...
+
+#
+
+#
 @overload
 def assert_allclose(
     actual: _ArrayLikeNumber_co | _ArrayLikeObject_co,
@@ -341,70 +310,123 @@ def assert_allclose(
     *,
     strict: bool = ...,
 ) -> None: ...
-def assert_array_almost_equal_nulp(
-    x: _ArrayLikeNumber_co,
-    y: _ArrayLikeNumber_co,
-    nulp: float = ...,
-) -> None: ...
+
+#
+def assert_array_almost_equal_nulp(x: _ArrayLikeNumber_co, y: _ArrayLikeNumber_co, nulp: float = ...) -> None: ...
+
+#
 def assert_array_max_ulp(
     a: _ArrayLikeNumber_co,
     b: _ArrayLikeNumber_co,
     maxulp: float = ...,
     dtype: DTypeLike = ...,
 ) -> NDArray[Any]: ...
+
+#
 @overload
 def assert_warns(warning_class: type[Warning]) -> _GeneratorContextManager[None]: ...
 @overload
-def assert_warns(
-    warning_class: type[Warning],
-    func: Callable[_P, _T],
-    /,
-    *args: _P.args,
-    **kwargs: _P.kwargs,
-) -> _T: ...
+def assert_warns(warning_class: type[Warning], func: Callable[_P, _T], /, *args: _P.args, **kwargs: _P.kwargs) -> _T: ...
+
+#
 @overload
 def assert_no_warnings() -> _GeneratorContextManager[None]: ...
 @overload
-def assert_no_warnings(
-    func: Callable[_P, _T],
-    /,
-    *args: _P.args,
-    **kwargs: _P.kwargs,
-) -> _T: ...
-@overload
-def tempdir(
-    suffix: None = ...,
-    prefix: None = ...,
-    dir: None = ...,
-) -> _GeneratorContextManager[str]: ...
-@overload
-def tempdir(
-    suffix: AnyStr | None = ...,
-    prefix: AnyStr | None = ...,
-    dir: GenericPath[AnyStr] | None = ...,
-) -> _GeneratorContextManager[AnyStr]: ...
-@overload
-def temppath(
-    suffix: None = ...,
-    prefix: None = ...,
-    dir: None = ...,
-    text: bool = ...,
-) -> _GeneratorContextManager[str]: ...
-@overload
-def temppath(
-    suffix: AnyStr | None = ...,
-    prefix: AnyStr | None = ...,
-    dir: GenericPath[AnyStr] | None = ...,
-    text: bool = ...,
-) -> _GeneratorContextManager[AnyStr]: ...
+def assert_no_warnings(func: Callable[_P, _T], /, *args: _P.args, **kwargs: _P.kwargs) -> _T: ...
+
+#
 @overload
 def assert_no_gc_cycles() -> _GeneratorContextManager[None]: ...
 @overload
-def assert_no_gc_cycles(
-    func: Callable[_P, Any],
-    /,
-    *args: _P.args,
-    **kwargs: _P.kwargs,
+def assert_no_gc_cycles(func: Callable[_P, Any], /, *args: _P.args, **kwargs: _P.kwargs) -> None: ...
+
+#
+@overload
+def tempdir(suffix: None = None, prefix: None = None, dir: None = None) -> _GeneratorContextManager[str]: ...
+@overload
+def tempdir(
+    suffix: AnyStr | None = None,
+    prefix: AnyStr | None = None,
+    *,
+    dir: GenericPath[AnyStr],
+) -> _GeneratorContextManager[AnyStr]: ...
+@overload
+def tempdir(
+    suffix: AnyStr | None = None,
+    *,
+    prefix: AnyStr,
+    dir: GenericPath[AnyStr] | None = None,
+) -> _GeneratorContextManager[AnyStr]: ...
+@overload
+def tempdir(
+    suffix: AnyStr,
+    prefix: AnyStr | None = None,
+    dir: GenericPath[AnyStr] | None = None,
+) -> _GeneratorContextManager[AnyStr]: ...
+
+#
+@overload
+def temppath(suffix: None = None, prefix: None = None, dir: None = None, text: bool = False) -> _GeneratorContextManager[str]: ...
+@overload
+def temppath(
+    suffix: AnyStr | None,
+    prefix: AnyStr | None,
+    dir: GenericPath[AnyStr],
+    text: bool = False,
+) -> _GeneratorContextManager[AnyStr]: ...
+@overload
+def temppath(
+    suffix: AnyStr | None = None,
+    prefix: AnyStr | None = None,
+    *,
+    dir: GenericPath[AnyStr],
+    text: bool = False,
+) -> _GeneratorContextManager[AnyStr]: ...
+@overload
+def temppath(
+    suffix: AnyStr | None,
+    prefix: AnyStr,
+    dir: GenericPath[AnyStr] | None = None,
+    text: bool = False,
+) -> _GeneratorContextManager[AnyStr]: ...
+@overload
+def temppath(
+    suffix: AnyStr | None = None,
+    *,
+    prefix: AnyStr,
+    dir: GenericPath[AnyStr] | None = None,
+    text: bool = False,
+) -> _GeneratorContextManager[AnyStr]: ...
+@overload
+def temppath(
+    suffix: AnyStr,
+    prefix: AnyStr | None = None,
+    dir: GenericPath[AnyStr] | None = None,
+    text: bool = False,
+) -> _GeneratorContextManager[AnyStr]: ...
+
+#
+def raises(*args: type[BaseException]) -> Callable[[_FT], _FT]: ...
+
+#
+def decorate_methods(
+    cls: type[Any],
+    decorator: Callable[[Callable[..., Any]], Any],
+    testmatch: str | bytes | Pattern[Any] | None = None,
 ) -> None: ...
+
+#
+def build_err_msg(
+    arrays: Iterable[object],
+    err_msg: str,
+    header: str = ...,
+    verbose: bool = ...,
+    names: Sequence[str] = ...,
+    precision: SupportsIndex | None = ...,
+) -> str: ...
+def measure(code_str: str | bytes | ast.mod | ast.AST, times: int = ..., label: str | None = ...) -> float: ...
 def break_cycles() -> None: ...
 def run_threaded(func: Callable[[], None], iters: int, pass_count: bool = False) -> None: ...
+def runstring(astr: str | bytes | types.CodeType, dict: dict[str, Any] | None) -> Any: ...
+def rundocs(filename: StrPath | None = ..., raise_on_error: bool = ...) -> None: ...
+def check_support_sve(cache: list[_T], /) -> _T: ...
