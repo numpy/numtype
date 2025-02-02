@@ -484,7 +484,7 @@ else:
     import array as _array
     import mmap as _mmap
 
-    from numpy import distutils as distutils  # type: ignore[attr-defined]  # noqa: ICN003
+    from numpy import distutils as distutils  # noqa: ICN003
 
     _SupportsBuffer: TypeAlias = (
         _Buffer | bytes | bytearray | memoryview | _array.array[Any] | _mmap.mmap | NDArray[Any] | generic
@@ -539,7 +539,7 @@ __all__ = [  # noqa: RUF022
     "float64", "longdouble", "complex64", "complex128", "clongdouble",
     "bytes_", "str_", "void", "object_", "datetime64", "timedelta64", "int8", "byte",
     "uint8", "ubyte", "int16", "short", "uint16", "ushort", "int32", "intc", "uint32",
-    "uintc", "int64", "long", "uint64", "ulong", "longlong", "ulonglong", "intp",
+    "uintc", "int64", "long", "uint64", "ulong", "longlong", "ulonglong", "uint", "intp",
     "uintp", "double", "cdouble", "single", "csingle", "half", "bool_", "int_", "uint64",
     "uint128", "uint256", "int128", "int256", "float80", "float96", "float128",
     "float256", "complex160", "complex192", "complex256", "complex512",
