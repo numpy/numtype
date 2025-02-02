@@ -36,9 +36,10 @@ jobs:
           uv run ruff check --output-format=github
           uv run ruff format --check
 
-      - name: mypy sanity check
+      - name: test static (sanity)
         run: |
-          tool/my.py test/static/stubs_exist.pyi
+          uv run basedpyright test/static/sanity
+          tool/my.py test/static/sanity
 
       - name: test static (reject)
         run: |

@@ -1,6 +1,6 @@
 # Ensure that mypy uses `numpy-stubs`, as opposed to the bundle `numpy` stubs.
 # in `uv` mypy only works.
-# To verify this, run `tool/my.py test/static/stubs_exist.pyi`.
+# To verify this, run `tool/my.py test/static/sanity`.
 
 from typing import Literal
 from typing_extensions import assert_type
