@@ -11,13 +11,5 @@
   "evenBetterToml.formatter.indentString": "    ",
   "evenBetterToml.formatter.indentTables": true,
   "evenBetterToml.formatter.trailingNewline": true,
-  "mypy-type-checker.path": [
-    "uv",
-    "run",
-    "--frozen",
-    "--isolated",
-    "--no-editable",
-    "--refresh-package=numtype",
-    "mypy"
-  ]
+  "mypy-type-checker.path": ["uv", "run", "--directory=test", "static", "bmp"]
 }
