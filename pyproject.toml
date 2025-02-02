@@ -48,25 +48,24 @@ dev = [
     "libcst>=1.6.0",
 ]
 
-[tool.hatch.build.targets.sdist]
-exclude = [
-    "/.github",
-    "/.vscode",
-    "/dist",
-    "/docs",
-    "/test",
-    "/tool",
-    ".libcst.codemod.yaml",
-    "CONTRIBUTING.md",
-    "uv.lock",
-]
 
-[tool.hatch.build.targets.wheel]
+[tool.hatch.build]
 packages = ["src/numpy-stubs"]
 
+    [tool.hatch.build.targets.sdist]
+    exclude = [
+        "/.github",
+        "/.vscode",
+        "/dist",
+        "/docs",
+        "/test",
+        "/tool",
+        ".libcst.codemod.yaml",
+        "CONTRIBUTING.md",
+        "uv.lock",
+    ]
 
 [tool.mypy]
-files = ["src/numpy-stubs/**/*.pyi", "test/**/*.pyi", "tool/*.py"]
 python_version = "3.10"
 strict = true
 
@@ -85,12 +84,18 @@ warn_unreachable = false
 
 
 [tool.pyright]
-include = ["src/numpy-stubs", "test/static/accept", "test/static/reject", "tool"]
+include = [
+    "src/numpy-stubs",
+    "test/static/accept",
+    "test/static/reject",
+    "test/static/sanity",
+    "tool",
+]
 ignore = [".venv"]
 stubPath = "src"
 pythonPlatform = "All"
 pythonVersion = "3.10"
-typeCheckingMode = "standard"                                                     # TODO(jorenham): set to "all"
+typeCheckingMode = "standard" # TODO(jorenham): set to "all"
 
 deprecateTypingAliases = true
 enableTypeIgnoreComments = false
