@@ -18,7 +18,7 @@ dependencies = [
     static = "main:static"
 
 [tool.uv.sources]
-numtype = {path = ".." }
+numtype = {path = ".."}
 
 [tool.hatch.build]
 packages = ["."]

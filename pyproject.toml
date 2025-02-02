@@ -42,10 +42,11 @@ dependencies = []
 numpy = ["numtype[numpy]"]
 dev = [
     {include-group = "numpy"},
-    "ruff>=0.9.4",
-    "basedmypy[faster-cache]>=2.9.1",
-    "basedpyright>=1.25.0",
     "libcst>=1.6.0",
+    "ruff>=0.9.4",
+    # keep in sync with test/pyproject.toml
+    "basedmypy[faster-cache]>=2.9.1",
+    "basedpyright>=1.26.0",
 ]
 
 
@@ -91,8 +92,9 @@ include = [
     "test/static/sanity",
     "tool",
 ]
-ignore = [".venv"]
+ignore = [".venv", "test/.venv"]
 stubPath = "src"
+venvPath = "./test"
 pythonPlatform = "All"
 pythonVersion = "3.10"
 typeCheckingMode = "standard" # TODO(jorenham): set to "all"
