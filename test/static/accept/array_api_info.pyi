@@ -1,5 +1,5 @@
-from typing import Literal, Never
-from typing_extensions import assert_type
+from typing import Literal
+from typing_extensions import Never, assert_type
 
 import numpy as np
 

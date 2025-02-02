@@ -10,5 +10,6 @@
   "evenBetterToml.formatter.compactInlineTables": true,
   "evenBetterToml.formatter.indentString": "    ",
   "evenBetterToml.formatter.indentTables": true,
-  "evenBetterToml.formatter.trailingNewline": true
+  "evenBetterToml.formatter.trailingNewline": true,
+  "mypy-type-checker.path": ["uv", "run", "--directory=test", "static", "bmp"]
 }

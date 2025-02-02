@@ -37,6 +37,7 @@ dependencies = []
     Issues = "https://github.com/jorenham/numtype/issues"
     Changelog = "https://github.com/jorenham/numtype/releases"
 
+
 [dependency-groups]
 numpy = ["numtype[numpy]"]
 dev = [
@@ -47,45 +48,54 @@ dev = [
     "libcst>=1.6.0",
 ]
 
-[tool.hatch.build.targets.sdist]
-exclude = [
-    "/.github",
-    "/.vscode",
-    "/dist",
-    "/test",
-    "/tool",
-    ".libcst.codemod.yaml",
-    "CONTRIBUTING.md",
-    "uv.lock",
-]
 
-[tool.hatch.build.targets.wheel]
+[tool.hatch.build]
 packages = ["src/numpy-stubs"]
 
+    [tool.hatch.build.targets.sdist]
+    exclude = [
+        "/.github",
+        "/.vscode",
+        "/dist",
+        "/docs",
+        "/test",
+        "/tool",
+        ".libcst.codemod.yaml",
+        "CONTRIBUTING.md",
+        "uv.lock",
+    ]
 
 [tool.mypy]
-files = ["src/numpy-stubs/**/*.pyi", "test/**/*.pyi", "tool/*.py"]
 python_version = "3.10"
 strict = true
 
 disable_bytearray_promotion = true
 disable_memoryview_promotion = true
 enable_error_code = ["ignore-without-code", "truthy-bool"]
+warn_unused_ignores = true
 # TODO
 disable_error_code = ["explicit-override"]
-# basedmypy only
-warn_unreachable = false
-warn_unused_ignores = true
+# basedmypy/mypy compat
+bare_literals = false
+default_return = false
 disallow_any_explicit = false
+disallow_untyped_calls = false
+warn_unreachable = false
 
 
 [tool.pyright]
-include = ["src/numpy-stubs", "test/static/accept", "test/static/reject", "tool"]
+include = [
+    "src/numpy-stubs",
+    "test/static/accept",
+    "test/static/reject",
+    "test/static/sanity",
+    "tool",
+]
 ignore = [".venv"]
 stubPath = "src"
 pythonPlatform = "All"
 pythonVersion = "3.10"
-typeCheckingMode = "standard"                                                     # TODO(jorenham): set to "all"
+typeCheckingMode = "standard" # TODO(jorenham): set to "all"
 
 deprecateTypingAliases = true
 enableTypeIgnoreComments = false
@@ -144,12 +154,10 @@ preview = true
             "PLC2701", # pylint/C:      import-private-name
         ]
 
-        [tool.ruff.lint.flake8-annotations]
-        suppress-dummy-args = true
-
         [tool.ruff.lint.flake8-import-conventions]
         banned-from = [
             "abc",
+            "basedtyping",
             "ctypes",
             "datetime",
             "os",
