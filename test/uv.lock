@@ -101,10 +101,10 @@ requires-dist = [{ name = "numpy", marker = "extra == 'numpy'", specifier = ">=2
 [package.metadata.requires-dev]
 dev = [
     { name = "basedmypy", extras = ["faster-cache"], specifier = ">=2.9.1" },
-    { name = "basedpyright", specifier = ">=1.25.0" },
+    { name = "basedpyright", specifier = ">=1.26.0" },
     { name = "libcst", specifier = ">=1.6.0" },
     { name = "numtype", extras = ["numpy"] },
-    { name = "ruff", specifier = ">=0.9.3" },
+    { name = "ruff", specifier = ">=0.9.4" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
 
