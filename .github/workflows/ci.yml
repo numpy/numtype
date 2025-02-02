@@ -37,17 +37,11 @@ jobs:
           uv run ruff format --check
 
       - name: test static (sanity)
-        run: |
-          uv run basedpyright test/static/sanity
-          tool/my.py test/static/sanity
+        run: uv run --directory test static all static/sanity
 
       - name: test static (reject)
-        run: |
-          uv run basedpyright test/static/reject
-          tool/my.py test/static/reject
+        run: uv run --directory test static all static/reject
 
       - name: test static (accept)
-        run: |
-          uv run basedpyright test/static/accept
-          tool/my.py test/static/accept
+        run: uv run --directory test static all static/accept
         continue-on-error: true  # TODO
