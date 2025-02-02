@@ -94,7 +94,6 @@ include = [
 ]
 ignore = [".venv", "test/.venv"]
 stubPath = "src"
-venvPath = "./test"
 pythonPlatform = "All"
 pythonVersion = "3.10"
 typeCheckingMode = "standard" # TODO(jorenham): set to "all"
