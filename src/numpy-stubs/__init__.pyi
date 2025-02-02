@@ -1126,6 +1126,9 @@ __future_scalars__: Final[set[_FutureScalar]] = ...
 __array_api_version__: Final = "2023.12"
 test: Final[PytestTester] = ...
 
+# NumType only
+__numtype__: Final = True
+
 @final
 class dtype(Generic[_SCT_co]):
     names: tuple[str, ...] | None
