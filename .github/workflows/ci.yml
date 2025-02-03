@@ -38,8 +38,14 @@ jobs:
           uv run ruff check --output-format=github
           uv run ruff format --check
 
-      - name: test static (basedmypy)
-        run: uv run --project test static bmp
+      - name: typecheck numpy-stubs/random (basedpyright)
+        run: uv run basedpyright src/numpy-stubs/random
+
+      - name: typecheck numpy-stubs/random (basedmypy)
+        run: uv run --no-editable mypy src/numpy-stubs/random
 
       - name: test static (basedpyright)
         run: uv run --project test static bpr
+
+      - name: test static (basedmypy)
+        run: uv run --project test static bmp
