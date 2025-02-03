@@ -21,7 +21,7 @@ from typing import (
     TypeAlias,
     overload,
 )
-from typing_extensions import ParamSpec, Self, TypeVar, override
+from typing_extensions import ParamSpec, Self, TypeVar
 from unittest.case import SkipTest
 
 import numpy as np
@@ -110,22 +110,17 @@ NOGIL_BUILD: Final[bool] = ...
 class KnownFailureException(Exception): ...
 class IgnoreException(Exception): ...
 
-# NOTE: `warnings.catch_warnings[_W_co]` isn't possible because typeshed incorrectly
-# uses an invariant type parameter.
-class clear_and_catch_warnings(warnings.catch_warnings[_WarnLog | None], Generic[_W_co]):
+# NOTE: `warnings.catch_warnings` is incorrectly defined as invariant in typeshed
+class clear_and_catch_warnings(warnings.catch_warnings[_W_co], Generic[_W_co]):  # type: ignore[type-var]  # pyright: ignore[reportInvalidTypeArguments]
     class_modules: ClassVar[tuple[types.ModuleType, ...]] = ()
     modules: Final[set[types.ModuleType]]
 
-    @overload  # record: False (default)
-    def __init__(self: clear_and_catch_warnings[None], /, record: L[False] = False, modules: _ToModules = ()) -> None: ...
     @overload  # record: True
     def __init__(self: clear_and_catch_warnings[_WarnLog], /, record: L[True], modules: _ToModules = ()) -> None: ...
+    @overload  # record: False (default)
+    def __init__(self: clear_and_catch_warnings[None], /, record: L[False] = False, modules: _ToModules = ()) -> None: ...
     @overload  # record; bool
-    def __init__(self: clear_and_catch_warnings[_WarnLog | None], /, record: bool, modules: _ToModules = ()) -> None: ...
-
-    ###
-    @override
-    def __enter__(self) -> _W_co: ...
+    def __init__(self, /, record: bool, modules: _ToModules = ()) -> None: ...
 
 class suppress_warnings:
     log: Final[_WarnLog]
