@@ -60,7 +60,7 @@ assert_type(
 
 with np.testing.clear_and_catch_warnings(True) as c1:
     assert_type(c1, list[warnings.WarningMessage])
-with np.testing.clear_and_catch_warnings() as c2:
+with np.testing.clear_and_catch_warnings() as c2:  # type: ignore[var-annotated]
     assert_type(c2, None)
 
 assert_type(np.testing.suppress_warnings("once"), np.testing.suppress_warnings)

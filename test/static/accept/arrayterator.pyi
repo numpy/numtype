@@ -5,7 +5,9 @@ import numpy as np
 import numpy.typing as npt
 
 AR_i8: npt.NDArray[np.int64]
-ar_iter = np.lib.Arrayterator(AR_i8)
+ar_iter: np.lib.Arrayterator[tuple[int, ...], np.dtype[np.int64]]
+
+###
 
 assert_type(ar_iter.var, npt.NDArray[np.int64])
 assert_type(ar_iter.buf_size, int | None)
