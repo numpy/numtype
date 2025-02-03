@@ -360,7 +360,8 @@ assert_type(m8_delta - delta, dt.timedelta)
 assert_type(m8_delta / delta, float)
 assert_type(m8_delta // delta, int)
 assert_type(m8_delta % delta, dt.timedelta)
-assert_type(divmod(m8_delta, delta), tuple[int, dt.timedelta])
+# workaround for https://github.com/microsoft/pyright/issues/9663
+assert_type(m8_delta.__divmod__(delta), tuple[int, dt.timedelta])
 
 # boolean
 

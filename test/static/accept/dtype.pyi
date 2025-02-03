@@ -3,7 +3,7 @@ import datetime as dt
 from decimal import Decimal
 from fractions import Fraction
 from typing import Any, Literal, TypeAlias
-from typing_extensions import assert_type
+from typing_extensions import LiteralString, assert_type
 
 import numpy as np
 from numpy.dtypes import StringDType
@@ -110,7 +110,7 @@ assert_type(dtype_U.base, np.dtype[Any])
 assert_type(dtype_U.subdtype, tuple[np.dtype[Any], tuple[int, ...]] | None)
 assert_type(dtype_U.newbyteorder(), np.dtype[np.str_])
 assert_type(dtype_U.type, type[np.str_])
-assert_type(dtype_U.name, str)
+assert_type(dtype_U.name, LiteralString)
 assert_type(dtype_U.names, tuple[str, ...] | None)
 
 assert_type(dtype_U * 0, np.dtype[np.str_])

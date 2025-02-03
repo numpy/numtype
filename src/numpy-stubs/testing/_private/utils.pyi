@@ -136,14 +136,13 @@ class suppress_warnings:
 
 # Contrary to runtime we can't do `os.name` checks while type checking,
 # only `sys.platform` checks
-if sys.platform == "win32" or sys.platform == "cygwin":
-    def memusage(processName: str = ..., instance: int = ...) -> int: ...
-
-elif sys.platform == "linux":
-    def memusage(_proc_pid_stat: StrOrBytesPath = ...) -> int | None: ...
-
-else:
+if sys.platform != "win32" and sys.platform != "cygwin" and sys.platform != "linux":
     def memusage() -> NoReturn: ...
+
+elif sys.platform == "win32" or sys.platform == "cygwin":
+    def memusage(processName: str = ..., instance: int = ...) -> int: ...
+else:
+    def memusage(_proc_pid_stat: StrOrBytesPath = ...) -> int | None: ...
 
 #
 if sys.platform == "linux":

@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from fractions import Fraction
 from typing import Any
-from typing_extensions import assert_type
+from typing_extensions import LiteralString, assert_type
 
 import numpy as np
 import numpy.typing as npt
@@ -36,8 +36,8 @@ def func(
 
 assert_type(vectorized_func.pyfunc, Callable[..., Any])
 assert_type(vectorized_func.cache, bool)
-assert_type(vectorized_func.signature, str | None)
-assert_type(vectorized_func.otypes, str | None)
+assert_type(vectorized_func.signature, LiteralString | None)
+assert_type(vectorized_func.otypes, LiteralString | None)
 assert_type(vectorized_func.excluded, set[int | str])
 assert_type(vectorized_func.__doc__, str | None)
 assert_type(vectorized_func([1]), Any)
@@ -96,11 +96,12 @@ assert_type(np.diff(AR_LIKE_f8, prepend=1.5), npt.NDArray[Any])
 assert_type(np.interp(1, [1], AR_f8), np.float64)
 assert_type(np.interp(1, [1], [1]), np.float64)
 assert_type(np.interp(1, [1], AR_c16), np.complex128)
-assert_type(np.interp(1, [1], [1j]), np.complex128)  # pyright correctly infers `complex128 | float64`
 assert_type(np.interp([1], [1], AR_f8), npt.NDArray[np.float64])
 assert_type(np.interp([1], [1], [1]), npt.NDArray[np.float64])
 assert_type(np.interp([1], [1], AR_c16), npt.NDArray[np.complex128])
-assert_type(np.interp([1], [1], [1j]), npt.NDArray[np.complex128])  # pyright correctly infers `NDArray[complex128 | float64]`
+# mypy is incorrect here
+assert_type(np.interp(1, [1], [1j]), np.float64 | np.complex128)  # type: ignore[assert-type]
+assert_type(np.interp([1], [1], [1j]), npt.NDArray[np.float64 | np.complex128])  # type: ignore[assert-type]
 
 assert_type(np.angle(f8), np.floating[Any])
 assert_type(np.angle(AR_f8), npt.NDArray[np.floating[Any]])
