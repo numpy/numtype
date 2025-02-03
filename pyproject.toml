@@ -26,7 +26,9 @@ classifiers = [
     "Typing :: Typed",
 ]
 requires-python = ">=3.10"
+packages = [{include = "src/numpy-stubs" }]
 dependencies = []
+
 
     [project.optional-dependencies]
     numpy = ["numpy>=2.2.2,<2.3"]
@@ -68,8 +70,14 @@ packages = ["src/numpy-stubs"]
 
 [tool.mypy]
 python_version = "3.10"
-strict = true
+mypy_path = "src"
 
+pretty = false
+show_error_context = false
+show_error_code_links = false
+show_traceback = false
+
+strict = true
 disable_bytearray_promotion = true
 disable_memoryview_promotion = true
 enable_error_code = ["ignore-without-code", "truthy-bool"]
@@ -93,7 +101,7 @@ include = [
     "tool",
 ]
 ignore = [".venv", "test/.venv"]
-stubPath = "src"
+stubPath = "."
 pythonPlatform = "All"
 pythonVersion = "3.10"
 typeCheckingMode = "standard" # TODO(jorenham): set to "all"
@@ -124,7 +132,7 @@ strictGenericNarrowing = true
 
 
 [tool.ruff]
-src = ["src", "test", "tool"]
+src = ["src/numpy-stubs", "test", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
 force-exclude = true
 # https://typing.readthedocs.io/en/latest/guides/writing_stubs.html#maximum-line-length
