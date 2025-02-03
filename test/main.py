@@ -21,15 +21,20 @@ def _call_static(args: list[str], *base_cmd: str) -> int:
 
 
 def _static_bmp(args: list[str], /) -> int:
+    if Path.cwd() == PROJECT_PATH:
+        return _call_static(args, "mypy")
+
     return _call_static(
         args,
         "mypy",
         "--config-file",
-        str((PROJECT_PATH / "pyproject.toml").relative_to(Path.cwd())),
+        str(PROJECT_PATH / "pyproject.toml"),
     )
 
 
 def _static_bpr(args: list[str], /) -> int:
+    if Path.cwd() == PROJECT_PATH:
+        return _call_static(args, "basedpyright")
     return _call_static(args, "basedpyright", "--project", str(PROJECT_PATH))
 
 
