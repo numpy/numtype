@@ -1,9 +1,10 @@
 from typing import TypedDict, type_check_only
+from typing_extensions import Self
 
 import numpy as np
 import numpy.typing as npt
 from numpy._typing import _ArrayLikeInt_co
-from numpy.random.bit_generator import BitGenerator, SeedSequence
+from numpy.random.bit_generator import BitGenerator
 
 @type_check_only
 class _MT19937Internal(TypedDict):
@@ -15,11 +16,6 @@ class _MT19937State(TypedDict):
     bit_generator: str
     state: _MT19937Internal
 
-class MT19937(BitGenerator):
-    def __init__(self, seed: _ArrayLikeInt_co | SeedSequence | None = ...) -> None: ...
+class MT19937(BitGenerator[_MT19937State]):
     def _legacy_seeding(self, seed: _ArrayLikeInt_co) -> None: ...
-    def jumped(self, jumps: int = ...) -> MT19937: ...
-    @property
-    def state(self) -> _MT19937State: ...
-    @state.setter
-    def state(self, value: _MT19937State, /) -> None: ...
+    def jumped(self, jumps: int = ...) -> Self: ...

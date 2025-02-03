@@ -1,4 +1,5 @@
 from typing import TypedDict, type_check_only
+from typing_extensions import Self
 
 import numpy as np
 import numpy.typing as npt
@@ -19,16 +20,13 @@ class _PhiloxState(TypedDict):
     has_uint32: int
     uinteger: int
 
-class Philox(BitGenerator):
+class Philox(BitGenerator[_PhiloxState]):
     def __init__(
         self,
-        seed: _ArrayLikeInt_co | SeedSequence | None = ...,
-        counter: _ArrayLikeInt_co | None = ...,
-        key: _ArrayLikeInt_co | None = ...,
+        /,
+        seed: _ArrayLikeInt_co | SeedSequence | None = None,
+        counter: _ArrayLikeInt_co | None = None,
+        key: _ArrayLikeInt_co | None = None,
     ) -> None: ...
-    @property
-    def state(self) -> _PhiloxState: ...
-    @state.setter
-    def state(self, value: _PhiloxState, /) -> None: ...
-    def jumped(self, jumps: int = ...) -> Philox: ...
-    def advance(self, delta: int) -> Philox: ...
+    def jumped(self, jumps: int = ...) -> Self: ...
+    def advance(self, delta: int) -> Self: ...
