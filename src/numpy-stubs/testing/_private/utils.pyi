@@ -141,6 +141,7 @@ if sys.platform != "win32" and sys.platform != "cygwin" and sys.platform != "lin
 
 elif sys.platform == "win32" or sys.platform == "cygwin":
     def memusage(processName: str = ..., instance: int = ...) -> int: ...
+
 else:
     def memusage(_proc_pid_stat: StrOrBytesPath = ...) -> int | None: ...
 
