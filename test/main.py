@@ -23,17 +23,13 @@ def _static_bmp(args: list[str], /) -> int:
     return _call_static(
         args,
         "mypy",
-        "--explicit-package-bases",
-        "--hide-error-context",
-        "--hide-error-code-links",
-        "--no-pretty",
-        "--tb",
-        "--config-file=../pyproject.toml",
+        "--config-file",
+        str(PROJECT_PATH / "pyproject.toml"),
     )
 
 
 def _static_bpr(args: list[str], /) -> int:
-    return _call_static(args, "basedpyright", "--project=../")
+    return _call_static(args, "basedpyright", "--project", str(PROJECT_PATH))
 
 
 def static(args: list[str] | None = None, /) -> int:
