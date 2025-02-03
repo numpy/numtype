@@ -3,7 +3,6 @@ from typing_extensions import assert_type
 
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _64Bit
 from numpy.lib._arraysetops_impl import UniqueAllResult, UniqueCountsResult, UniqueInverseResult
 
 AR_b: npt.NDArray[np.bool]
@@ -25,7 +24,7 @@ assert_type(np.intersect1d(AR_M, AR_M, assume_unique=True), npt.NDArray[np.datet
 assert_type(np.intersect1d(AR_f8, AR_i8), npt.NDArray[Any])
 assert_type(
     np.intersect1d(AR_f8, AR_f8, return_indices=True),
-    tuple[npt.NDArray[np.floating[_64Bit]], npt.NDArray[np.intp], npt.NDArray[np.intp]],
+    tuple[npt.NDArray[np.float64], npt.NDArray[np.intp], npt.NDArray[np.intp]],
 )
 
 assert_type(np.setxor1d(AR_i8, AR_i8), npt.NDArray[np.int64])

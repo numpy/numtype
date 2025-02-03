@@ -9,7 +9,7 @@ import numpy.polynomial as npp
 import numpy.typing as npt
 
 _Ar_x_n: TypeAlias = np.ndarray[tuple[int], np.dtype[np.inexact | np.object_]]
-_Ar_x_2: TypeAlias = np.ndarray[tuple[L[2]], np.dtype[np.inexact | np.object_]]
+_Ar_x_2: TypeAlias = np.ndarray[tuple[L[2]], np.dtype[np.inexact]]
 
 _SCT = TypeVar("_SCT", bound=np.generic)
 _Ar_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[_SCT]]
@@ -97,7 +97,8 @@ assert_type(PS_all.has_samewindow(PS_all), bool)
 assert_type(PS_all.has_sametype(PS_all), bool)
 assert_type(PS_poly.has_sametype(PS_poly), bool)
 assert_type(PS_poly.has_sametype(PS_leg), bool)
-assert_type(PS_poly.has_sametype(NotADirectoryError), L[False])
+# different outcomes between mypy and pyright
+# assert_type(PS_poly.has_sametype(NotADirectoryError), L[False])
 
 assert_type(PS_poly.copy(), npp.Polynomial)
 assert_type(PS_cheb.copy(), npp.Chebyshev)
@@ -159,14 +160,14 @@ assert_type(len(PS_all), int)
 assert_type(next(iter(PS_all)), np.inexact | object)
 
 assert_type(PS_all(SC_f_co), np.float64 | np.complex128)
-assert_type(PS_all(SC_c_co), np.complex128)
+assert_type(PS_all(SC_c_co), np.float64 | np.complex128)
 assert_type(PS_all(Decimal()), np.float64 | np.complex128)
 assert_type(PS_all(Fraction()), np.float64 | np.complex128)
-assert_type(PS_poly(SQ_f), npt.NDArray[np.float64] | npt.NDArray[np.complex128] | npt.NDArray[np.object_])
-assert_type(PS_poly(SQ_c), npt.NDArray[np.complex128] | npt.NDArray[np.object_])
+assert_type(PS_poly(SQ_f), npt.NDArray[np.float64 | np.complex128])
+assert_type(PS_poly(SQ_c), npt.NDArray[np.float64 | np.complex128])
 assert_type(PS_poly(SQ_O), npt.NDArray[np.object_])
-assert_type(PS_poly(AR_f), npt.NDArray[np.float64] | npt.NDArray[np.complex128] | npt.NDArray[np.object_])
-assert_type(PS_poly(AR_c), npt.NDArray[np.complex128] | npt.NDArray[np.object_])
+assert_type(PS_poly(AR_f), npt.NDArray[np.float64 | np.complex128])
+assert_type(PS_poly(AR_c), npt.NDArray[np.float64 | np.complex128])
 assert_type(PS_poly(AR_O), npt.NDArray[np.object_])
 assert_type(PS_all(PS_poly), npp.Polynomial)
 

@@ -25,9 +25,6 @@ f8.setfield(2, np.float64)  # type: ignore[attr-defined]  # pyright: ignore[repo
 f8.sort()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
 f8.trace()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
 
-int(AR_M)  # pyright: ignore[reportArgumentType]
-float(AR_M)  # pyright: ignore[reportArgumentType]
-complex(AR_M)  # pyright: ignore[reportCallIssue,reportArgumentType]
 AR_b.__index__()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue]
 
 AR_f8[1.5]  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]

@@ -1,5 +1,5 @@
 from types import EllipsisType
-from typing import Any, Literal
+from typing import Any
 from typing_extensions import assert_type
 
 import numpy as np
@@ -13,6 +13,8 @@ AR_LIKE_O: list[object]
 
 AR_i8: npt.NDArray[np.int64]
 AR_O: npt.NDArray[np.object_]
+
+i: int
 
 assert_type(np.ndenumerate(AR_i8), np.ndenumerate[np.int64])
 assert_type(np.ndenumerate(AR_LIKE_f), np.ndenumerate[np.float64])
@@ -57,13 +59,13 @@ assert_type(np.mgrid[1:1:2, None:10], npt.NDArray[Any])
 assert_type(np.ogrid[1:1:2], tuple[npt.NDArray[Any], ...])
 assert_type(np.ogrid[1:1:2, None:10], tuple[npt.NDArray[Any], ...])
 
-assert_type(np.index_exp[0:1], tuple[slice[int, int, None]])
-assert_type(np.index_exp[0:1, None:3], tuple[slice[int, int, None], slice[None, int, None]])
-assert_type(np.index_exp[0, 0:1, ..., [0, 1, 3]], tuple[Literal[0], slice[int, int, None], EllipsisType, list[int]])
+assert_type(np.index_exp[i:i], tuple[slice[int, int, None]])
+assert_type(np.index_exp[i:i, None:i], tuple[slice[int, int, None], slice[None, int, None]])
+assert_type(np.index_exp[i, i:i, ..., [i, i, i]], tuple[int, slice[int, int, None], EllipsisType, list[int]])
 
-assert_type(np.s_[0:1], slice[int, int, None])
-assert_type(np.s_[0:1, None:3], tuple[slice[int, int, None], slice[None, int, None]])
-assert_type(np.s_[0, 0:1, ..., [0, 1, 3]], tuple[Literal[0], slice[int, int, None], EllipsisType, list[int]])
+assert_type(np.s_[i:i], slice[int, int, None])
+assert_type(np.s_[i:i, None:i], tuple[slice[int, int, None], slice[None, int, None]])
+assert_type(np.s_[i, i:i, ..., [i, i, i]], tuple[int, slice[int, int, None], EllipsisType, list[int]])
 
 assert_type(np.ix_(AR_LIKE_b), tuple[npt.NDArray[np.bool], ...])
 assert_type(np.ix_(AR_LIKE_i, AR_LIKE_f), tuple[npt.NDArray[np.float64], ...])

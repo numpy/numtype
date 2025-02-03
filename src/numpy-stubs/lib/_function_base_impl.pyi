@@ -109,9 +109,6 @@ class _SupportsRMulFloat(Protocol[_T_co]):
 @type_check_only
 class _TrimZerosSequence(Protocol[_T_co]):
     def __len__(self) -> int: ...
-    @overload
-    def __getitem__(self, key: int, /) -> object: ...
-    @overload
     def __getitem__(self, key: slice, /) -> _T_co: ...
 
 ###

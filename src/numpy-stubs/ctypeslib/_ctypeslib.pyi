@@ -81,7 +81,7 @@ class _concrete_ndptr(_ndptr[_DTypeT_co, _ShapeT_co], Generic[_DTypeT_co, _Shape
 
 def load_library(libname: StrOrBytesPath, loader_path: StrOrBytesPath) -> ct.CDLL: ...
 
-c_intp: TypeAlias = ct.c_int32 | ct.c_int64
+c_intp = ct.c_ssize_t
 
 @overload
 def ndpointer(

@@ -10,8 +10,9 @@ PROJECT_PATH = Path(__file__).parent.parent.resolve()
 
 
 def _call_static(args: list[str], *base_cmd: str) -> int:
-    if not args or all(arg.startswith("-") for arg in args):  # noqa: SIM108
-        cmd = [*base_cmd, *args, "static"]
+    if not args or all(arg.startswith("-") for arg in args):
+        path = (PROJECT_PATH / "test" / "static").relative_to(Path.cwd())
+        cmd = [*base_cmd, *args, str(path)]
     else:
         cmd = [*base_cmd, *args]
 
@@ -20,6 +21,9 @@ def _call_static(args: list[str], *base_cmd: str) -> int:
 
 
 def _static_bmp(args: list[str], /) -> int:
+    if Path.cwd() == PROJECT_PATH:
+        return _call_static(args, "mypy")
+
     return _call_static(
         args,
         "mypy",
@@ -29,6 +33,8 @@ def _static_bmp(args: list[str], /) -> int:
 
 
 def _static_bpr(args: list[str], /) -> int:
+    if Path.cwd() == PROJECT_PATH:
+        return _call_static(args, "basedpyright")
     return _call_static(args, "basedpyright", "--project", str(PROJECT_PATH))
 
 

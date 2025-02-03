@@ -5,6 +5,8 @@ from typing_extensions import TypeVar, assert_type
 import numpy as np
 import numpy.typing as npt
 
+###
+
 _SCT_co = TypeVar("_SCT_co", bound=np.generic, covariant=True)
 
 class SubClass(npt.NDArray[_SCT_co]): ...
@@ -40,7 +42,9 @@ f8: np.float64
 
 def func11(a: int) -> bool: ...
 def func21(a: int, b: int) -> int: ...
-def func12(a: int) -> tuple[complex, bool]: ...
+def func12(a: int) -> tuple[complex, str]: ...
+
+###
 
 assert_type(next(b_f8), tuple[Any, ...])
 assert_type(b_f8.reset(), None)
@@ -141,22 +145,22 @@ assert_type(np.frompyfunc(func21, n2, n1, identity=0).ntypes, Literal[1])
 assert_type(np.frompyfunc(func21, n2, n1, identity=0).identity, int)
 assert_type(np.frompyfunc(func21, n2, n1, identity=0).signature, None)
 
-assert_type(np.frompyfunc(func12, n1, n2).nin, Literal[1])
-assert_type(np.frompyfunc(func12, n1, n2).nout, Literal[2])
+assert_type(np.frompyfunc(func12, n1, n2).nin, int)
+assert_type(np.frompyfunc(func12, n1, n2).nout, int)
 assert_type(np.frompyfunc(func12, n1, n2).nargs, int)
 assert_type(np.frompyfunc(func12, n1, n2).ntypes, Literal[1])
 assert_type(np.frompyfunc(func12, n1, n2).identity, None)
 assert_type(np.frompyfunc(func12, n1, n2).signature, None)
 assert_type(
     np.frompyfunc(func12, n2, n2)(f8, f8),
-    tuple[complex, complex, *tuple[complex, ...]],
+    tuple[complex | str, complex | str, *tuple[complex | str, ...]],
 )
 assert_type(
     np.frompyfunc(func12, n2, n2)(AR_f8, f8),
     tuple[
-        complex | npt.NDArray[np.object_],
-        complex | npt.NDArray[np.object_],
-        *tuple[complex | npt.NDArray[np.object_], ...],
+        complex | str | npt.NDArray[np.object_],
+        complex | str | npt.NDArray[np.object_],
+        *tuple[complex | str | npt.NDArray[np.object_], ...],
     ],
 )
 

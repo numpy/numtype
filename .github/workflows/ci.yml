@@ -18,6 +18,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    strategy:
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
@@ -36,12 +38,8 @@ jobs:
           uv run ruff check --output-format=github
           uv run ruff format --check
 
-      - name: test static (sanity)
-        run: uv run --directory test static all static/sanity
+      - name: test static (basedmypy)
+        run: uv run --project test static bmp
 
-      - name: test static (reject)
-        run: uv run --directory test static all static/reject
-
-      - name: test static (accept)
-        run: uv run --directory test static all static/accept
-        continue-on-error: true  # TODO
+      - name: test static (basedpyright)
+        run: uv run --project test static bpr

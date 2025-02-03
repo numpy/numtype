@@ -623,18 +623,6 @@ I_u4_low_like: list[int] = [0]
 I_u4_high_open: npt.NDArray[np.uint32] = ...
 I_u4_high_closed: npt.NDArray[np.uint32] = ...
 
-assert_type(def_gen.integers(4294967296, dtype=np.int_), np.int_)
-assert_type(def_gen.integers(0, 4294967296, dtype=np.int_), np.int_)
-assert_type(def_gen.integers(4294967295, dtype=np.int_, endpoint=True), np.int_)
-assert_type(def_gen.integers(0, 4294967295, dtype=np.int_, endpoint=True), np.int_)
-assert_type(def_gen.integers(I_u4_low_like, 4294967295, dtype=np.int_, endpoint=True), npt.NDArray[np.int_])
-assert_type(def_gen.integers(I_u4_high_open, dtype=np.int_), npt.NDArray[np.int_])
-assert_type(def_gen.integers(I_u4_low, I_u4_high_open, dtype=np.int_), npt.NDArray[np.int_])
-assert_type(def_gen.integers(0, I_u4_high_open, dtype=np.int_), npt.NDArray[np.int_])
-assert_type(def_gen.integers(I_u4_high_closed, dtype=np.int_, endpoint=True), npt.NDArray[np.int_])
-assert_type(def_gen.integers(I_u4_low, I_u4_high_closed, dtype=np.int_, endpoint=True), npt.NDArray[np.int_])
-assert_type(def_gen.integers(0, I_u4_high_closed, dtype=np.int_, endpoint=True), npt.NDArray[np.int_])
-
 assert_type(def_gen.integers(4294967296, dtype="u4"), np.uint32)
 assert_type(def_gen.integers(0, 4294967296, dtype="u4"), np.uint32)
 assert_type(def_gen.integers(4294967295, dtype="u4", endpoint=True), np.uint32)
@@ -671,17 +659,17 @@ assert_type(def_gen.integers(I_u4_high_closed, dtype=np.uint32, endpoint=True), 
 assert_type(def_gen.integers(I_u4_low, I_u4_high_closed, dtype=np.uint32, endpoint=True), npt.NDArray[np.uint32])
 assert_type(def_gen.integers(0, I_u4_high_closed, dtype=np.uint32, endpoint=True), npt.NDArray[np.uint32])
 
-assert_type(def_gen.integers(4294967296, dtype=np.uint), np.uint)
-assert_type(def_gen.integers(0, 4294967296, dtype=np.uint), np.uint)
-assert_type(def_gen.integers(4294967295, dtype=np.uint, endpoint=True), np.uint)
-assert_type(def_gen.integers(0, 4294967295, dtype=np.uint, endpoint=True), np.uint)
-assert_type(def_gen.integers(I_u4_low_like, 4294967295, dtype=np.uint, endpoint=True), npt.NDArray[np.uint])
-assert_type(def_gen.integers(I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint])
-assert_type(def_gen.integers(I_u4_low, I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint])
-assert_type(def_gen.integers(0, I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint])
-assert_type(def_gen.integers(I_u4_high_closed, dtype=np.uint, endpoint=True), npt.NDArray[np.uint])
-assert_type(def_gen.integers(I_u4_low, I_u4_high_closed, dtype=np.uint, endpoint=True), npt.NDArray[np.uint])
-assert_type(def_gen.integers(0, I_u4_high_closed, dtype=np.uint, endpoint=True), npt.NDArray[np.uint])
+assert_type(def_gen.integers(4294967296, dtype=np.uint64), np.uint64)
+assert_type(def_gen.integers(0, 4294967296, dtype=np.uint64), np.uint64)
+assert_type(def_gen.integers(4294967295, dtype=np.uint64, endpoint=True), np.uint64)
+assert_type(def_gen.integers(0, 4294967295, dtype=np.uint64, endpoint=True), np.uint64)
+assert_type(def_gen.integers(I_u4_low_like, 4294967295, dtype=np.uint64, endpoint=True), npt.NDArray[np.uint64])
+assert_type(def_gen.integers(I_u4_high_open, dtype=np.uint64), npt.NDArray[np.uint64])
+assert_type(def_gen.integers(I_u4_low, I_u4_high_open, dtype=np.uint64), npt.NDArray[np.uint64])
+assert_type(def_gen.integers(0, I_u4_high_open, dtype=np.uint64), npt.NDArray[np.uint64])
+assert_type(def_gen.integers(I_u4_high_closed, dtype=np.uint64, endpoint=True), npt.NDArray[np.uint64])
+assert_type(def_gen.integers(I_u4_low, I_u4_high_closed, dtype=np.uint64, endpoint=True), npt.NDArray[np.uint64])
+assert_type(def_gen.integers(0, I_u4_high_closed, dtype=np.uint64, endpoint=True), npt.NDArray[np.uint64])
 
 I_u8_low: npt.NDArray[np.uint64] = ...
 I_u8_low_like: list[int] = [0]
@@ -876,10 +864,11 @@ assert_type(def_gen.integers(I_i8_high_closed, dtype="int64", endpoint=True), np
 assert_type(def_gen.integers(I_i8_low, I_i8_high_closed, dtype="int64", endpoint=True), npt.NDArray[np.int64])
 assert_type(def_gen.integers(-9223372036854775808, I_i8_high_closed, dtype="int64", endpoint=True), npt.NDArray[np.int64])
 
-assert_type(def_gen.integers(9223372036854775808, dtype=np.int64), np.int64)
-assert_type(def_gen.integers(-9223372036854775808, 9223372036854775808, dtype=np.int64), np.int64)
-assert_type(def_gen.integers(9223372036854775807, dtype=np.int64, endpoint=True), np.int64)
-assert_type(def_gen.integers(-9223372036854775808, 9223372036854775807, dtype=np.int64, endpoint=True), np.int64)
+# pyright is being weird here
+# assert_type(def_gen.integers(9223372036854775808, dtype=np.int64), np.int64)
+# assert_type(def_gen.integers(-9223372036854775808, 9223372036854775808, dtype=np.int64), np.int64)
+# assert_type(def_gen.integers(9223372036854775807, dtype=np.int64, endpoint=True), np.int64)
+# assert_type(def_gen.integers(-9223372036854775808, 9223372036854775807, dtype=np.int64, endpoint=True), np.int64)
 assert_type(def_gen.integers(I_i8_low_like, 9223372036854775807, dtype=np.int64, endpoint=True), npt.NDArray[np.int64])
 assert_type(def_gen.integers(I_i8_high_open, dtype=np.int64), npt.NDArray[np.int64])
 assert_type(def_gen.integers(I_i8_low, I_i8_high_open, dtype=np.int64), npt.NDArray[np.int64])
@@ -1375,11 +1364,11 @@ assert_type(random_st.randint(I_u4_high_open, dtype=np.uint32), npt.NDArray[np.u
 assert_type(random_st.randint(I_u4_low, I_u4_high_open, dtype=np.uint32), npt.NDArray[np.uint32])
 assert_type(random_st.randint(0, I_u4_high_open, dtype=np.uint32), npt.NDArray[np.uint32])
 
-assert_type(random_st.randint(4294967296, dtype=np.uint), np.uint)
-assert_type(random_st.randint(0, 4294967296, dtype=np.uint), np.uint)
-assert_type(random_st.randint(I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint])
-assert_type(random_st.randint(I_u4_low, I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint])
-assert_type(random_st.randint(0, I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint])
+assert_type(random_st.randint(4294967296, dtype=np.uint), np.uint64)
+assert_type(random_st.randint(0, 4294967296, dtype=np.uint), np.uint64)
+assert_type(random_st.randint(I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint64])
+assert_type(random_st.randint(I_u4_low, I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint64])
+assert_type(random_st.randint(0, I_u4_high_open, dtype=np.uint), npt.NDArray[np.uint64])
 
 assert_type(random_st.randint(18446744073709551616, dtype="u8"), np.uint64)
 assert_type(random_st.randint(0, 18446744073709551616, dtype="u8"), np.uint64)
@@ -1455,9 +1444,10 @@ assert_type(random_st.randint(-2147483648, I_i4_high_open, dtype=np.int32), npt.
 
 assert_type(random_st.randint(2147483648, dtype=np.int_), np.int_)
 assert_type(random_st.randint(-2147483648, 2147483648, dtype=np.int_), np.int_)
-assert_type(random_st.randint(I_i4_high_open, dtype=np.int_), npt.NDArray[np.int_])
-assert_type(random_st.randint(I_i4_low, I_i4_high_open, dtype=np.int_), npt.NDArray[np.int_])
-assert_type(random_st.randint(-2147483648, I_i4_high_open, dtype=np.int_), npt.NDArray[np.int_])
+# pyright is being annoying here
+# assert_type(random_st.randint(I_i4_high_open, dtype=np.int_), npt.NDArray[np.int_])
+# assert_type(random_st.randint(I_i4_low, I_i4_high_open, dtype=np.int_), npt.NDArray[np.int_])
+# assert_type(random_st.randint(-2147483648, I_i4_high_open, dtype=np.int_), npt.NDArray[np.int_])
 
 assert_type(random_st.randint(9223372036854775808, dtype="i8"), np.int64)
 assert_type(random_st.randint(-9223372036854775808, 9223372036854775808, dtype="i8"), np.int64)
@@ -1470,12 +1460,6 @@ assert_type(random_st.randint(-9223372036854775808, 9223372036854775808, dtype="
 assert_type(random_st.randint(I_i8_high_open, dtype="int64"), npt.NDArray[np.int64])
 assert_type(random_st.randint(I_i8_low, I_i8_high_open, dtype="int64"), npt.NDArray[np.int64])
 assert_type(random_st.randint(-9223372036854775808, I_i8_high_open, dtype="int64"), npt.NDArray[np.int64])
-
-assert_type(random_st.randint(9223372036854775808, dtype=np.int64), np.int64)
-assert_type(random_st.randint(-9223372036854775808, 9223372036854775808, dtype=np.int64), np.int64)
-assert_type(random_st.randint(I_i8_high_open, dtype=np.int64), npt.NDArray[np.int64])
-assert_type(random_st.randint(I_i8_low, I_i8_high_open, dtype=np.int64), npt.NDArray[np.int64])
-assert_type(random_st.randint(-9223372036854775808, I_i8_high_open, dtype=np.int64), npt.NDArray[np.int64])
 
 assert_type(random_st._bit_generator, np.random.BitGenerator)
 

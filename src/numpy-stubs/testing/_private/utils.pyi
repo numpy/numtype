@@ -21,7 +21,7 @@ from typing import (
     TypeAlias,
     overload,
 )
-from typing_extensions import ParamSpec, Self, TypeVar, override
+from typing_extensions import ParamSpec, Self, TypeVar
 from unittest.case import SkipTest
 
 import numpy as np
@@ -110,22 +110,17 @@ NOGIL_BUILD: Final[bool] = ...
 class KnownFailureException(Exception): ...
 class IgnoreException(Exception): ...
 
-# NOTE: `warnings.catch_warnings[_W_co]` isn't possible because typeshed incorrectly
-# uses an invariant type parameter.
-class clear_and_catch_warnings(warnings.catch_warnings[_WarnLog | None], Generic[_W_co]):
+# NOTE: `warnings.catch_warnings` is incorrectly defined as invariant in typeshed
+class clear_and_catch_warnings(warnings.catch_warnings[_W_co], Generic[_W_co]):  # type: ignore[type-var]  # pyright: ignore[reportInvalidTypeArguments]
     class_modules: ClassVar[tuple[types.ModuleType, ...]] = ()
     modules: Final[set[types.ModuleType]]
 
-    @overload  # record: False (default)
-    def __init__(self: clear_and_catch_warnings[None], /, record: L[False] = False, modules: _ToModules = ()) -> None: ...
     @overload  # record: True
     def __init__(self: clear_and_catch_warnings[_WarnLog], /, record: L[True], modules: _ToModules = ()) -> None: ...
+    @overload  # record: False (default)
+    def __init__(self: clear_and_catch_warnings[None], /, record: L[False] = False, modules: _ToModules = ()) -> None: ...
     @overload  # record; bool
-    def __init__(self: clear_and_catch_warnings[_WarnLog | None], /, record: bool, modules: _ToModules = ()) -> None: ...
-
-    ###
-    @override
-    def __enter__(self) -> _W_co: ...
+    def __init__(self, /, record: bool, modules: _ToModules = ()) -> None: ...
 
 class suppress_warnings:
     log: Final[_WarnLog]
@@ -141,14 +136,14 @@ class suppress_warnings:
 
 # Contrary to runtime we can't do `os.name` checks while type checking,
 # only `sys.platform` checks
-if sys.platform == "win32" or sys.platform == "cygwin":
+if sys.platform != "win32" and sys.platform != "cygwin" and sys.platform != "linux":
+    def memusage() -> NoReturn: ...
+
+elif sys.platform == "win32" or sys.platform == "cygwin":
     def memusage(processName: str = ..., instance: int = ...) -> int: ...
 
-elif sys.platform == "linux":
-    def memusage(_proc_pid_stat: StrOrBytesPath = ...) -> int | None: ...
-
 else:
-    def memusage() -> NoReturn: ...
+    def memusage(_proc_pid_stat: StrOrBytesPath = ...) -> int | None: ...
 
 #
 if sys.platform == "linux":

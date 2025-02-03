@@ -21,34 +21,42 @@ __all__ = [
 
 _T = TypeVar("_T")
 _SCT = TypeVar("_SCT", bound=np.generic)
-_NBit1 = TypeVar("_NBit1", bound=NBitBase)
+_NBit = TypeVar("_NBit", bound=NBitBase)
 _NBit2 = TypeVar("_NBit2", bound=NBitBase)
 
-def mintypecode(
-    typechars: Iterable[str | ArrayLike],
-    typeset: Container[str] = ...,
-    default: str = ...,
-) -> str: ...
+def mintypecode(typechars: Iterable[str | ArrayLike], typeset: Container[str] = ..., default: str = ...) -> str: ...
+
+#
 @overload
 def real(val: np._HasRealAndImag[_T, Any]) -> _T: ...
 @overload
 def real(val: ArrayLike) -> NDArray[Any]: ...
+
+#
 @overload
 def imag(val: np._HasRealAndImag[Any, _T]) -> _T: ...
 @overload
 def imag(val: ArrayLike) -> NDArray[Any]: ...
+
+#
 @overload
-def iscomplex(x: _ScalarLike_co) -> np.bool: ...  # type: ignore[misc]
+def iscomplex(x: _ScalarLike_co) -> np.bool: ...
 @overload
 def iscomplex(x: ArrayLike) -> NDArray[np.bool]: ...
+
+#
 @overload
-def isreal(x: _ScalarLike_co) -> np.bool: ...  # type: ignore[misc]
+def isreal(x: _ScalarLike_co) -> np.bool: ...
 @overload
 def isreal(x: ArrayLike) -> NDArray[np.bool]: ...
+
+#
 def iscomplexobj(x: _SupportsDType[np.dtype[Any]] | ArrayLike) -> bool: ...
 def isrealobj(x: _SupportsDType[np.dtype[Any]] | ArrayLike) -> bool: ...
+
+#
 @overload
-def nan_to_num(  # type: ignore[misc]
+def nan_to_num(
     x: _SCT,
     copy: bool = ...,
     nan: float = ...,
@@ -84,11 +92,16 @@ def nan_to_num(
 # expected to verify the output dtype (so we can return an unsafe union here)
 
 @overload
-def real_if_close(a: _ArrayLike[np.complexfloating[_NBit1]], tol: float = ...) -> NDArray[np.inexact[_NBit1]]: ...
+def real_if_close(
+    a: _ArrayLike[np.complexfloating[_NBit]],
+    tol: float = 100,
+) -> NDArray[np.floating[_NBit]] | NDArray[np.complexfloating[_NBit]]: ...
 @overload
-def real_if_close(a: _ArrayLike[_SCT], tol: float = ...) -> NDArray[_SCT]: ...
+def real_if_close(a: _ArrayLike[_SCT], tol: float = 100) -> NDArray[_SCT]: ...
 @overload
-def real_if_close(a: ArrayLike, tol: float = ...) -> NDArray[Any]: ...
+def real_if_close(a: ArrayLike, tol: float = 100) -> NDArray[Any]: ...
+
+#
 @overload
 def typename(char: L["S1"]) -> L["character"]: ...
 @overload
@@ -133,15 +146,25 @@ def typename(char: L["U"]) -> L["unicode"]: ...
 def typename(char: L["V"]) -> L["void"]: ...
 @overload
 def typename(char: L["O"]) -> L["object"]: ...
-@overload
-def common_type(*arrays: _SupportsDType[np.dtype[np.integer]]) -> type[np.float64]: ...
-@overload
-def common_type(*arrays: _SupportsDType[np.dtype[np.floating[_NBit1]]]) -> type[np.floating[_NBit1]]: ...
-@overload
-def common_type(*arrays: _SupportsDType[np.dtype[np.integer | np.floating[_NBit1]]]) -> type[np.floating[_NBit1 | _64Bit]]: ...
-@overload
-def common_type(*arrays: _SupportsDType[np.dtype[np.inexact[_NBit1]]]) -> type[np.complexfloating[_NBit1]]: ...
+
+#
 @overload
 def common_type(
-    *arrays: _SupportsDType[np.dtype[np.integer | np.floating[_NBit1] | np.complexfloating[_NBit2]]],
-) -> type[np.complexfloating[_64Bit | _NBit1 | _NBit2]]: ...
+    *arrays: _SupportsDType[np.dtype[np.integer]],
+) -> type[np.float64]: ...
+@overload
+def common_type(
+    *arrays: _SupportsDType[np.dtype[np.floating[_NBit]]],
+) -> type[np.floating[_NBit]]: ...
+@overload
+def common_type(
+    *arrays: _SupportsDType[np.dtype[np.integer | np.floating[_NBit]]],
+) -> type[np.floating[_NBit | _64Bit]]: ...
+@overload
+def common_type(
+    *arrays: _SupportsDType[np.dtype[np.floating[_NBit] | np.complexfloating[_NBit2]]],
+) -> type[np.complexfloating[_NBit | _NBit2]]: ...
+@overload
+def common_type(
+    *arrays: _SupportsDType[np.dtype[np.integer | np.floating[_NBit] | np.complexfloating[_NBit2]]],
+) -> type[np.complexfloating[_NBit | _NBit2 | _64Bit]]: ...

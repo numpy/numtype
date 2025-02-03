@@ -1,6 +1,5 @@
 import contextlib
 import re
-import sys
 import types
 import unittest
 import warnings
@@ -60,7 +59,7 @@ assert_type(
 
 with np.testing.clear_and_catch_warnings(True) as c1:
     assert_type(c1, list[warnings.WarningMessage])
-with np.testing.clear_and_catch_warnings() as c2:
+with np.testing.clear_and_catch_warnings() as c2:  # type: ignore[var-annotated]
     assert_type(c2, None)
 
 assert_type(np.testing.suppress_warnings("once"), np.testing.suppress_warnings)
@@ -78,10 +77,11 @@ assert_type(np.testing.HAS_LAPACK64, bool)
 assert_type(np.testing.assert_(1, msg="test"), None)
 assert_type(np.testing.assert_(2, msg=lambda: "test"), None)
 
-if sys.platform == "win32" or sys.platform == "cygwin":
-    assert_type(np.testing.memusage(), int)
-elif sys.platform == "linux":
-    assert_type(np.testing.memusage(), int | None)
+# cannot be tested on pyright
+# if sys.platform == "win32" or sys.platform == "cygwin":
+#     assert_type(np.testing.memusage(), int)
+# elif sys.platform == "linux":
+#     assert_type(np.testing.memusage(), int | None)
 
 assert_type(np.testing.jiffies(), int)
 

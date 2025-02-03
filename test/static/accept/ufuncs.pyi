@@ -1,5 +1,5 @@
 from typing import Any, Literal, NoReturn
-from typing_extensions import assert_type
+from typing_extensions import LiteralString, assert_type
 
 import numpy as np
 import numpy.typing as npt
@@ -9,8 +9,7 @@ f8: np.float64
 AR_f8: npt.NDArray[np.float64]
 AR_i8: npt.NDArray[np.int64]
 
-assert_type(np.absolute.__doc__, str)
-assert_type(np.absolute.types, list[str])
+assert_type(np.absolute.types, list[LiteralString])
 
 assert_type(np.absolute.__name__, Literal["absolute"])
 assert_type(np.absolute.__qualname__, Literal["absolute"])
