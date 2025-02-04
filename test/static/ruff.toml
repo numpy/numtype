@@ -1,8 +1,7 @@
-extend = "../../pyproject.toml"
+extend = "../ruff.toml"
 
 [lint]
 extend-ignore = [
-    "ERA",    # eradicate
     "PTH",    # flake8-use-pathlib
     "PYI017", # flake8-pyi:     complex-assignment-in-stub
     "SLF001", # flake8-self:    private-member-access

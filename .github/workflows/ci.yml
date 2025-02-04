@@ -33,22 +33,23 @@ jobs:
           python-version: "3.13"
           version: latest
 
-      - name: ruff
-        run: |
-          uv run ruff check --output-format=github
-          uv run ruff format --check
+      - name: ruff check
+        run: uv run ruff check --output-format=github
 
-      - name: typecheck numpy-stubs/random (basedpyright)
+      - name: ruff format --check
+        run: uv run ruff format --check
+
+      - name: basedpyright (numpy-stubs)
         run: uv run basedpyright src/numpy-stubs/random
 
-      - name: typecheck numpy-stubs/random (basedmypy)
-        run: uv run --no-editable mypy src/numpy-stubs/random
+      - name: basedpyright (test)
+        run: uv run basedpyright test/
 
-      - name: typecheck test/static (basedpyright)
-        run: uv run --project test static bpr
+      - name: basedmypy (numpy-stubs)
+        run: uv run --no-editable src/numpy-stubs/random
 
-      - name: typecheck test/static (basedmypy)
-        run: uv run --project test static bmp
+      - name: basedmypy (test)
+        run: uv run test/bmp.py
 
-      - name: test runtime (pytest)
+      - name: pytest
         run: uv run pytest
