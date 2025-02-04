@@ -203,5 +203,8 @@ preview = true
         allow-dunder-method-names = ["__array__", "__array_ufunc__"]
 
 
+[tool.typos.default]
+extend-ignore-identifiers-re = ['ND|nd']
+
 [tool.typos.files]
 extend-exclude = ["*.pyi", ".mypyignore"]
