@@ -46,7 +46,7 @@ jobs:
         run: uv run basedpyright test/
 
       - name: basedmypy (numpy-stubs)
-        run: uv run --no-editable src/numpy-stubs/random
+        run: uv run --no-editable mypy src/numpy-stubs/random
 
       - name: basedmypy (test)
         run: uv run test/bmp.py
