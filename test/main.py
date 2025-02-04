@@ -1,4 +1,4 @@
-"""Run basedmypy, so that uses `numpy-stubs` instead of numpy's own stubs."""
+"""Run basedmypy, so that uses `numpy-stubs` instead of numpy's own stubs."""  # noqa: INP001
 
 # ruff: noqa: T201, S603, S404, D103, DOC201
 
