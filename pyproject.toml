@@ -35,9 +35,9 @@ dependencies = []
 
     [project.urls]
     Homepage = "https://numpy.org/"
-    Repository = "https://github.com/jorenham/numtype/"
-    Issues = "https://github.com/jorenham/numtype/issues"
-    Changelog = "https://github.com/jorenham/numtype/releases"
+    Repository = "https://github.com/numpy/numtype/"
+    Issues = "https://github.com/numpy/numtype/issues"
+    Changelog = "https://github.com/numpy/numtype/releases"
 
 
 [dependency-groups]
