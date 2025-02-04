@@ -1,10 +1,8 @@
-extend = "../../pyproject.toml"
+extend = "../ruff.toml"
 line-length = 88
 
 [lint]
 extend-ignore = [
-    "D",       # pydocstyle
-    "ERA",     # eradicate
     "ARG",     # flake8-unused-arguments
     "B015",    # flake8-bugbear:    useless-comparison
     "B018",    # flake8-bugbear:    useless-expression

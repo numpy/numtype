@@ -1,0 +1,9 @@
+extend = "../pyproject.toml"
+
+[lint]
+extend-ignore = [
+    "D",   # pydocstyle
+    "ERA", # eradicate
+    "S",   # flake8-bandit
+    "T",   # flake8-print
+]

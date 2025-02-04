@@ -29,7 +29,11 @@ i = 1
 
 
 class Object:
-    def __array__(self, dtype: npt.DTypeLike = None, copy: bool | None = None) -> npt.NDArray[np.object_]:
+    def __array__(
+        self,
+        dtype: npt.DTypeLike = None,
+        copy: bool | None = None,
+    ) -> npt.NDArray[np.object_]:
         ret = np.empty((), dtype=np.object_)
         ret[()] = self
         return ret
