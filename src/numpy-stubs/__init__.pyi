@@ -4272,6 +4272,9 @@ float32: TypeAlias = floating[_32Bit]
 
 # either a C `double`, `float`, or `longdouble`
 class float64(floating[_64Bit], float):  # type: ignore[misc]
+    def __new__(cls, x: _ConvertibleToFloat | None = ..., /) -> Self: ...
+
+    #
     @property
     def itemsize(self) -> L[8]: ...
     @property
@@ -4434,7 +4437,15 @@ class complexfloating(inexact[_NBit1, complex], Generic[_NBit1, _NBit2]):
     def imag(self) -> floating[_NBit2]: ...
 
     #
-    def __init__(self, value: _ConvertibleToComplex | None = ..., /) -> None: ...
+    @overload
+    def __init__(
+        self,
+        real: complex | SupportsComplex | SupportsFloat | SupportsIndex = ...,
+        imag: complex | SupportsFloat | SupportsIndex = ...,
+        /,
+    ) -> None: ...
+    @overload
+    def __init__(self, real: _ConvertibleToComplex | None = ..., /) -> None: ...
 
     # NOTE: `__complex__` is technically defined in the concrete subtypes
     def __complex__(self, /) -> complex: ...
@@ -4530,6 +4541,17 @@ class complexfloating(inexact[_NBit1, complex], Generic[_NBit1, _NBit2]):
     def __rpow__(self, other: number[_NBit], /) -> complexfloating[_NBit1, _NBit2] | complexfloating[_NBit]: ...
 
 class complex128(complexfloating[_64Bit], complex):  # type: ignore[misc]
+    @overload
+    def __new__(
+        cls,
+        real: complex | SupportsComplex | SupportsFloat | SupportsIndex = ...,
+        imag: complex | SupportsFloat | SupportsIndex = ...,
+        /,
+    ) -> Self: ...
+    @overload
+    def __new__(cls, real: _ConvertibleToComplex | None = ..., /) -> Self: ...
+
+    #
     @property
     def itemsize(self) -> L[16]: ...
     @property
@@ -4917,9 +4939,15 @@ class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):
 
 class bytes_(character[bytes], bytes):
     @overload
-    def __init__(self, value: object = ..., /) -> None: ...
+    def __new__(cls, o: object = ..., /) -> Self: ...
     @overload
-    def __init__(self, value: str, /, encoding: str = ..., errors: str = ...) -> None: ...
+    def __new__(cls, s: str, /, encoding: str, errors: str = ...) -> Self: ...
+
+    #
+    @overload
+    def __init__(self, o: object = ..., /) -> None: ...
+    @overload
+    def __init__(self, s: str, /, encoding: str, errors: str = ...) -> None: ...
 
     #
     def __bytes__(self, /) -> bytes: ...
