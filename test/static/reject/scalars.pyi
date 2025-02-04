@@ -14,8 +14,7 @@ class A:
 np.float32(3j)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.float32([1.0, 0.0, 0.0])  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.complex64([])  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-np.complex64(1, 2)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+np.complex64([])  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
 np.datetime64(0)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
@@ -42,7 +41,7 @@ np.flexible(b"test")  # type: ignore[abstract]
 np.float64(value=0.0)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
 np.int64(value=0)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
 np.uint64(value=0)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
-np.complex128(value=0.0j)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+np.complex128(value=0.0j)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 np.str_(value="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 np.bytes_(value=b"test")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 np.void(value=b"test")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
