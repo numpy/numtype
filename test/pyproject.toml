@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "numtype",
+    "pytest>=8.3.4",
     "basedmypy[faster-cache]>=2.9.1",
     # "mypy[faster-cache]>=1.14.1",
     "basedpyright>=1.26.0",
