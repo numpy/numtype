@@ -1,18 +1,30 @@
 # NumType testing
 
+## basedmypy
+
 Mypy and basedmypy will only recognize the `src/numpy-stubs` if `numtype` is installed in an
 isolated project, and it cannot be editable.
-The private `numtype-test` project in this directory provides entrypoints that will run basedmypy
-and basedpyright.
 
-To run basedmypy (`bmp` for short) on the static tests, run
+The `bmp.py` script creates an isolated environment, that doesn't include numpy, and will run
+basedmypy. If no paths are provided, it will default to `--explicit-package-bases test`.
 
 ```bash
-uv run static <bmp|bpr|all> [OPTIONS]
+uv run test/bmp.py [OPTIONS]
 ```
 
-Here, `bmp` runs (based)`mypy`, `bpr` runs `basedpyright`, and `all` runs both.
-If no options are provided, it defaults to `static/`.
+## basedpyright
 
-To run this form the root `numtype` directory, you can pass an additional `--project=test` flag
-to the `uv run` command (i.e. before `static`).
+Unlike mypy, no additional project isolation trickery is required, so it can be run directly
+from the main project:
+
+```bash
+uv run basedpyright [OPTIONS]
+```
+
+## pytest
+
+Pytest also works out-of-the box, and will, by default, run the tests in `test/runtime`:
+
+```bash
+uv run pytest [OPTIONS]
+```

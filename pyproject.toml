@@ -46,9 +46,9 @@ dev = [
     {include-group = "numpy"},
     "libcst>=1.6.0",
     "ruff>=0.9.4",
-    # keep in sync with test/pyproject.toml
-    "basedmypy[faster-cache]>=2.9.1",
+    "basedmypy[faster-cache]>=2.9.1",  # keep in sync with test/my.py
     "basedpyright>=1.26.0",
+    "pytest>=8.3.4",
 ]
 
 
@@ -60,7 +60,7 @@ packages = ["src/numpy-stubs"]
         "/.github",
         "/.vscode",
         "/dist",
-        "/docs",
+        "/doc",
         "/test",
         "/tool",
         ".libcst.codemod.yaml",
@@ -81,13 +81,15 @@ strict = true
 disable_bytearray_promotion = true
 disable_memoryview_promotion = true
 enable_error_code = ["ignore-without-code", "truthy-bool"]
+disallow_any_explicit = false
+disallow_any_expr = false
+disallow_any_decorated = false
 warn_unused_ignores = true
 # TODO
 disable_error_code = ["explicit-override"]
 # basedmypy/mypy compat
 bare_literals = false
 default_return = false
-disallow_any_explicit = false
 disallow_untyped_calls = false
 warn_unreachable = false
 
@@ -95,6 +97,7 @@ warn_unreachable = false
 [tool.pyright]
 include = [
     "src/numpy-stubs",
+    "test/runtime/accept",
     "test/static/accept",
     "test/static/reject",
     "test/static/sanity",
@@ -102,6 +105,8 @@ include = [
 ]
 ignore = [".venv", "test/.venv"]
 stubPath = "."
+venvPath = "."
+venv = ".venv"
 pythonPlatform = "All"
 pythonVersion = "3.10"
 typeCheckingMode = "standard" # TODO(jorenham): set to "all"
@@ -119,6 +124,7 @@ reportShadowedImports = true
 reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
 reportUnusedExpression = false
+reportUnusedParameter = false
 # basedpyright only
 failOnWarnings = true
 reportIgnoreCommentWithoutRule = true
@@ -132,7 +138,7 @@ strictGenericNarrowing = true
 
 
 [tool.ruff]
-src = ["src/numpy-stubs", "test", "tool"]
+src = ["src/numpy-stubs", "test/runtime", "test/static", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
 force-exclude = true
 # https://typing.readthedocs.io/en/latest/guides/writing_stubs.html#maximum-line-length
@@ -163,6 +169,9 @@ preview = true
             "PLC2701", # pylint/C:      import-private-name
         ]
 
+        [tool.ruff.lint.flake8-builtins]
+        builtins-allowed-modules = ["random"]
+
         [tool.ruff.lint.flake8-import-conventions]
         banned-from = [
             "abc",
@@ -190,6 +199,12 @@ preview = true
         [tool.ruff.lint.pydocstyle]
         convention = "numpy"
 
+        [tool.ruff.lint.pylint]
+        allow-dunder-method-names = ["__array__", "__array_ufunc__"]
+
+
+[tool.typos.default]
+extend-ignore-identifiers-re = ['ND|nd']
 
 [tool.typos.files]
 extend-exclude = ["*.pyi", ".mypyignore"]

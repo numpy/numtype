@@ -1,0 +1,15 @@
+extend = "../ruff.toml"
+line-length = 88
+
+[lint]
+extend-ignore = [
+    "ARG",     # flake8-unused-arguments
+    "B015",    # flake8-bugbear:    useless-comparison
+    "B018",    # flake8-bugbear:    useless-expression
+    "DTZ001",  # flake8-datetimez:  call-datetime-without-tzinfo
+    "SLF001",  # flake8-self:       private-member-access
+    "TD002",   # flake8-todos:      missing-todo-author
+    "PLC2801", # pylint/C:          unnecessary-dunder-call
+    "PLR0124", # pylint/R:          comparison-with-itself
+    "PLR6301", # pylint/R:          no-self-use
+]
