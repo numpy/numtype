@@ -15,5 +15,6 @@ a[:]
 a.__array__()
 a.__array__(np.dtype(np.float64))
 
-b = np.array([1]).flat
-a[b]
+if np.__version__ >= "2.3":
+    b = np.array([1]).flat
+    a[b]

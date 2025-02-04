@@ -44,8 +44,11 @@ jobs:
       - name: typecheck numpy-stubs/random (basedmypy)
         run: uv run --no-editable mypy src/numpy-stubs/random
 
-      - name: test static (basedpyright)
+      - name: typecheck test/static (basedpyright)
         run: uv run --project test static bpr
 
-      - name: test static (basedmypy)
+      - name: typecheck test/static (basedmypy)
         run: uv run --project test static bmp
+
+      - name: test runtime (pytest)
+        run: uv run pytest
