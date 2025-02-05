@@ -43,19 +43,54 @@ jobs:
         run: >
           uv run basedpyright
           src/numpy-stubs/_typing
+          src/numpy-stubs/char
+          src/numpy-stubs/core
+          src/numpy-stubs/distutils
+          src/numpy-stubs/f2py
+          src/numpy-stubs/fft
+          src/numpy-stubs/matrixlib
           src/numpy-stubs/random
-
-      - name: basedpyright (test)
-        run: uv run basedpyright test
+          src/numpy-stubs/rec
+          src/numpy-stubs/strings
+          src/numpy-stubs/testing
+          src/numpy-stubs/typing
+          src/numpy-stubs/__config__.pyi
+          src/numpy-stubs/_pytesttester.pyi
+          src/numpy-stubs/dtypes.pyi
+          src/numpy-stubs/exceptions.pyi
+          src/numpy-stubs/matlib.pyi
+          src/numpy-stubs/version.pyi
 
       - name: basedmypy (numpy-stubs)
         run: >
           uv run --no-editable mypy
           src/numpy-stubs/_typing
+          src/numpy-stubs/char
+          src/numpy-stubs/core
+          src/numpy-stubs/distutils
+          src/numpy-stubs/f2py
+          src/numpy-stubs/fft
+          src/numpy-stubs/matrixlib
           src/numpy-stubs/random
+          src/numpy-stubs/rec
+          src/numpy-stubs/strings
+          src/numpy-stubs/testing
+          src/numpy-stubs/typing
+          src/numpy-stubs/__config__.pyi
+          src/numpy-stubs/_pytesttester.pyi
+          src/numpy-stubs/dtypes.pyi
+          src/numpy-stubs/exceptions.pyi
+          src/numpy-stubs/matlib.pyi
+          src/numpy-stubs/version.pyi
+
+      - name: basedpyright (test)
+        run: uv run basedpyright test
 
       - name: basedmypy (test)
         run: uv run test/bmp.py
+
+      - name: basedpyright (tool)
+        run: uv run basedpyright tool
 
       - name: pytest
         run: uv run pytest
