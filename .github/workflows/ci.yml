@@ -61,7 +61,7 @@ jobs:
           src/numpy-stubs/matlib.pyi
           src/numpy-stubs/version.pyi
 
-      - name: basedmypy (numpy-stubs)
+      - name: mypy (numpy-stubs)
         run: >
           uv run --no-editable mypy
           src/numpy-stubs/_typing
@@ -86,8 +86,8 @@ jobs:
       - name: basedpyright (test)
         run: uv run basedpyright test
 
-      - name: basedmypy (test)
-        run: uv run test/bmp.py
+      - name: mypy (test)
+        run: uv run test/mypy.py
 
       - name: basedpyright (tool)
         run: uv run basedpyright tool

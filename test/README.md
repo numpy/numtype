@@ -5,11 +5,11 @@
 Mypy and basedmypy will only recognize the `src/numpy-stubs` if `numtype` is installed in an
 isolated project, and it cannot be editable.
 
-The `bmp.py` script creates an isolated environment, that doesn't include numpy, and will run
+The `mypy.py` script creates an isolated environment, that doesn't include numpy, and will run
 basedmypy. If no paths are provided, it will default to `--explicit-package-bases test`.
 
 ```bash
-uv run test/bmp.py [OPTIONS]
+uv run test/mypy.py [OPTIONS]
 ```
 
 ## basedpyright
