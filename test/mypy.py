@@ -1,8 +1,9 @@
 # /// script
 # dependencies = [
 #     "numtype",
+#     # "basedmypy[faster-cache]",
+#     "mypy[faster-cache]",
 #     "pytest",  # imported in test/runtime
-#     "basedmypy[faster-cache]",
 # ]
 #
 # [tool.uv]
@@ -13,7 +14,7 @@
 # ///
 
 """
-Usage: `uv run test/bmp.py <OPTIONS>`
+Usage: `uv run test/mypy.py <OPTIONS>`
 """
 
 import subprocess

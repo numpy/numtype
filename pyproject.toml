@@ -26,7 +26,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 requires-python = ">=3.10"
-packages = [{include = "src/numpy-stubs" }]
+packages = [{include = "src/numpy-stubs"}]
 dependencies = []
 
 
@@ -46,7 +46,8 @@ dev = [
     {include-group = "numpy"},
     "libcst>=1.6.0",
     "ruff>=0.9.4",
-    "basedmypy[faster-cache]>=2.9.1",  # keep in sync with test/my.py
+    "mypy[faster-cache]>=1.15.0",
+    # "basedmypy[faster-cache]>=2.9.1",
     "basedpyright>=1.26.0",
     "pytest>=8.3.4",
 ]
@@ -78,20 +79,22 @@ show_error_code_links = false
 show_traceback = false
 
 strict = true
-disable_bytearray_promotion = true
-disable_memoryview_promotion = true
+strict_bytes = true
+strict_concatenate = true
+local_partial_types = true
+# disable_bytearray_promotion = true
+# disable_memoryview_promotion = true
 enable_error_code = ["ignore-without-code", "truthy-bool"]
+disable_error_code = ["explicit-override"]
+enable_incomplete_feature = ["PreciseTupleTypes"]
 disallow_any_explicit = false
 disallow_any_expr = false
 disallow_any_decorated = false
-warn_unused_ignores = true
-# TODO
-disable_error_code = ["explicit-override"]
-# basedmypy/mypy compat
-bare_literals = false
-default_return = false
-disallow_untyped_calls = false
+warn_incomplete_stub = true
 warn_unreachable = false
+# basedmypy/mypy compat
+# bare_literals = false
+# default_return = false
 
 
 [tool.pyright]

@@ -58,7 +58,7 @@ from numpy._typing import (
     _SupportsDType,
     _TD64Like_co,
 )
-from numpy._typing._ufunc import _2PTuple, _PyFunc_Nin1P_Nout2P, _PyFunc_Nin1_Nout1, _PyFunc_Nin2_Nout1, _PyFunc_Nin3P_Nout1
+from numpy._typing._ufunc import _PyFunc_Nin1P_Nout2P, _PyFunc_Nin1_Nout1, _PyFunc_Nin2_Nout1, _PyFunc_Nin3P_Nout1
 from numpy.lib._array_utils_impl import normalize_axis_index
 
 __all__ = [
@@ -154,6 +154,8 @@ __all__ = [
 ]
 
 _ReturnT = TypeVar("_ReturnT")
+_ReturnT1 = TypeVar("_ReturnT1")
+_ReturnT2 = TypeVar("_ReturnT2")
 _IdentityT = TypeVar("_IdentityT")
 
 _SCT = TypeVar("_SCT", bound=np.generic)
@@ -762,6 +764,10 @@ def fromstring(
     like: _SupportsArrayFunc | None = ...,
 ) -> NDArray[Any]: ...
 
+_3P: TypeAlias = L[3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+_2P: TypeAlias = L[2] | _3P
+_1P: TypeAlias = L[1, 2] | _3P
+
 #
 @overload
 def frompyfunc(
@@ -770,7 +776,7 @@ def frompyfunc(
     nin: L[1],
     nout: L[1],
     *,
-    identity: None = ...,
+    identity: None = None,
 ) -> _PyFunc_Nin1_Nout1[_ReturnT, None]: ...
 @overload
 def frompyfunc(
@@ -788,7 +794,7 @@ def frompyfunc(
     nin: L[2],
     nout: L[1],
     *,
-    identity: None = ...,
+    identity: None = None,
 ) -> _PyFunc_Nin2_Nout1[_ReturnT, None]: ...
 @overload
 def frompyfunc(
@@ -803,38 +809,56 @@ def frompyfunc(
 def frompyfunc(
     func: Callable[..., _ReturnT],
     /,
-    nin: SupportsIndex,
+    nin: _3P,
     nout: L[1],
     *,
-    identity: None = ...,
+    identity: None = None,
 ) -> _PyFunc_Nin3P_Nout1[_ReturnT, None, int]: ...
 @overload
 def frompyfunc(
     func: Callable[..., _ReturnT],
     /,
-    nin: SupportsIndex,
+    nin: _3P,
     nout: L[1],
     *,
     identity: _IdentityT,
 ) -> _PyFunc_Nin3P_Nout1[_ReturnT, _IdentityT, int]: ...
 @overload
 def frompyfunc(
-    func: Callable[..., _2PTuple[_ReturnT]],
+    func: Callable[..., tuple[_ReturnT1, _ReturnT2]],
     /,
-    nin: SupportsIndex,
-    nout: SupportsIndex,
+    nin: _1P,
+    nout: _2P,
     *,
-    identity: None = ...,
-) -> _PyFunc_Nin1P_Nout2P[_ReturnT, None, int, int]: ...
+    identity: None = None,
+) -> _PyFunc_Nin1P_Nout2P[_ReturnT1 | _ReturnT2, None, int, int]: ...
 @overload
 def frompyfunc(
-    func: Callable[..., _2PTuple[_ReturnT]],
+    func: Callable[..., tuple[_ReturnT1, _ReturnT2]],
     /,
-    nin: SupportsIndex,
-    nout: SupportsIndex,
+    nin: _1P,
+    nout: _2P,
     *,
     identity: _IdentityT,
-) -> _PyFunc_Nin1P_Nout2P[_ReturnT, _IdentityT, int, int]: ...
+) -> _PyFunc_Nin1P_Nout2P[_ReturnT1 | _ReturnT2, _IdentityT, int, int]: ...
+@overload
+def frompyfunc(
+    func: Callable[..., tuple[_ReturnT1, _ReturnT2, Unpack[tuple[_ReturnT, ...]]]],
+    /,
+    nin: _1P,
+    nout: _2P,
+    *,
+    identity: None = None,
+) -> _PyFunc_Nin1P_Nout2P[_ReturnT1 | _ReturnT2 | _ReturnT, None, int, int]: ...
+@overload
+def frompyfunc(
+    func: Callable[..., tuple[_ReturnT1, _ReturnT2, Unpack[tuple[_ReturnT, ...]]]],
+    /,
+    nin: _1P,
+    nout: _2P,
+    *,
+    identity: _IdentityT,
+) -> _PyFunc_Nin1P_Nout2P[_ReturnT1 | _ReturnT2 | _ReturnT, _IdentityT, int, int]: ...
 @overload
 def frompyfunc(
     func: Callable[..., Any],
