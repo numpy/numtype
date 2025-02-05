@@ -42,9 +42,9 @@ b_ % u8
 b_ % f8
 b_ % AR
 
-divmod(b_, b)
 divmod(b_, b_)
 # workarounds for https://github.com/microsoft/pyright/issues/9663
+b_.__divmod__(b)
 b_.__divmod__(i)
 b_.__divmod__(f)
 b_.__divmod__(i8)
@@ -87,9 +87,9 @@ divmod(i8, b)
 # workarounds for https://github.com/microsoft/pyright/issues/9663
 i8.__divmod__(i)
 i8.__divmod__(f)
+i8.__divmod__(i4)
 divmod(i8, i8)
 divmod(i8, f8)
-divmod(i8, i4)
 divmod(i8, f4)
 divmod(i4, i4)
 divmod(i4, f4)
@@ -111,9 +111,9 @@ divmod(i, i8)
 divmod(f, i8)
 divmod(i8, i8)
 divmod(f8, i8)
-divmod(i4, i8)
 divmod(i4, i4)
 # workarounds for https://github.com/microsoft/pyright/issues/9663
+i4.__divmod__(i8)
 f4.__divmod__(i8)
 f4.__divmod__(i4)
 AR.__divmod__(i8)

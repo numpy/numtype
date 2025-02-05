@@ -40,13 +40,19 @@ jobs:
         run: uv run ruff format --check
 
       - name: basedpyright (numpy-stubs)
-        run: uv run basedpyright src/numpy-stubs/random
+        run: >
+          uv run basedpyright
+          src/numpy-stubs/_typing
+          src/numpy-stubs/random
 
       - name: basedpyright (test)
-        run: uv run basedpyright test/
+        run: uv run basedpyright test
 
       - name: basedmypy (numpy-stubs)
-        run: uv run --no-editable mypy src/numpy-stubs/random
+        run: >
+          uv run --no-editable mypy
+          src/numpy-stubs/_typing
+          src/numpy-stubs/random
 
       - name: basedmypy (test)
         run: uv run test/bmp.py

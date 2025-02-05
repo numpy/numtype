@@ -70,11 +70,11 @@ class _UFunc3Kwargs(TypedDict, total=False):
 # pyright: reportIncompatibleMethodOverride=false
 
 @type_check_only
-class _UFunc_Nin1_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]
+class _UFunc_Nin1_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def __name__(self) -> _NameT_co: ...
     @property
-    def __qualname__(self) -> _NameT_co: ...
+    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
     @property
     def ntypes(self) -> _NTypesT_co: ...
     @property
@@ -136,11 +136,11 @@ class _UFunc_Nin1_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
     def outer(self, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]
+class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def __name__(self) -> _NameT_co: ...
     @property
-    def __qualname__(self) -> _NameT_co: ...
+    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
     @property
     def ntypes(self) -> _NTypesT_co: ...
     @property
@@ -291,11 +291,11 @@ class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
     ) -> npt.NDArray[Any] | Any: ...
 
 @type_check_only
-class _UFunc_Nin1_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]
+class _UFunc_Nin1_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def __name__(self) -> _NameT_co: ...
     @property
-    def __qualname__(self) -> _NameT_co: ...
+    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
     @property
     def ntypes(self) -> _NTypesT_co: ...
     @property
@@ -362,11 +362,11 @@ class _UFunc_Nin1_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
     def outer(self, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _UFunc_Nin2_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]
+class _UFunc_Nin2_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def __name__(self) -> _NameT_co: ...
     @property
-    def __qualname__(self) -> _NameT_co: ...
+    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
     @property
     def ntypes(self) -> _NTypesT_co: ...
     @property
@@ -419,11 +419,11 @@ class _UFunc_Nin2_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
     def outer(self, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _GUFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co, _SignatureT_co]):  # type: ignore[misc]
+class _GUFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co, _SignatureT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def __name__(self) -> _NameT_co: ...
     @property
-    def __qualname__(self) -> _NameT_co: ...
+    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
     @property
     def ntypes(self) -> _NTypesT_co: ...
     @property
@@ -511,7 +511,7 @@ class _PyFunc_Kwargs_Nargs4P(TypedDict, total=False):
     signature: str | _4PTuple[DTypeLike]
 
 @type_check_only
-class _PyFunc_Nin1_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]
+class _PyFunc_Nin1_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def identity(self) -> _IdentityT_co: ...
     @property
@@ -563,7 +563,7 @@ class _PyFunc_Nin1_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
     def outer(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]
+class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def identity(self) -> _IdentityT_co: ...
     @property
@@ -792,7 +792,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
     ) -> Any: ...
 
 @type_check_only
-class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):  # type: ignore[misc]
+class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def identity(self) -> _IdentityT_co: ...
     @property
@@ -854,7 +854,7 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):
     def outer(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co, _NOutT_co]):  # type: ignore[misc]
+class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co, _NOutT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def identity(self) -> _IdentityT_co: ...
     @property
