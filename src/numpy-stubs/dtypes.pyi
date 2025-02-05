@@ -53,7 +53,7 @@ __all__ = [
 _SCT_co = TypeVar("_SCT_co", bound=np.generic, covariant=True)
 
 @type_check_only
-class _SimpleDType(np.dtype[_SCT_co], Generic[_SCT_co]):  # type: ignore[misc]
+class _SimpleDType(np.dtype[_SCT_co], Generic[_SCT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     names: None  # pyright: ignore[reportIncompatibleVariableOverride]
     def __new__(cls, /) -> Self: ...
     def __getitem__(self, key: Any, /) -> NoReturn: ...
@@ -454,7 +454,7 @@ class VoidDType(  # type: ignore[misc]
     _TypeCodes[L["V"], L["V"], L[20]],
     _NoOrder,
     _NBit[L[1], _ItemSize_co],
-    np.dtype[np.void],
+    np.dtype[np.void],  # pyright: ignore[reportGeneralTypeIssues]
     Generic[_ItemSize_co],
 ):
     # NOTE: `VoidDType(...)` raises a `TypeError` at the moment
@@ -613,8 +613,9 @@ class StringDType(  # type: ignore[misc]
     _TypeCodes[L["T"], L["T"], L[2056]],
     _NativeOrder,
     _NBit[L[8], L[16]],
-    # TODO: Replace the (invalid) `str` with the scalar type, once implemented
-    np.dtype[str],  # type: ignore[type-var]
+    # TODO(jorenham): change once we have a string scalar type:
+    # https://github.com/numpy/numpy/pull/28196
+    np.dtype[str],  # type: ignore[type-var]  # pyright: ignore[reportGeneralTypeIssues,reportInvalidTypeArguments]
 ):
     def __new__(cls, /) -> StringDType: ...
     def __getitem__(self, key: Any, /) -> NoReturn: ...
