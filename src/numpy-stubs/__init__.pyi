@@ -466,6 +466,7 @@ from . import (
     typing as npt,
     version as version,
 )
+from ._expired_attrs_2_0 import __expired_attributes__ as __expired_attributes__
 from ._globals import _CopyMode
 
 @runtime_checkable
