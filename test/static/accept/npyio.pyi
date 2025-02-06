@@ -29,12 +29,12 @@ class BytesReader:
 bytes_writer: BytesWriter
 bytes_reader: BytesReader
 
-assert_type(npz_file.zip, zipfile.ZipFile)
+assert_type(npz_file.zip, zipfile.ZipFile | None)
 assert_type(npz_file.fid, IO[str] | None)
 assert_type(npz_file.files, list[str])
 assert_type(npz_file.allow_pickle, bool)
 assert_type(npz_file.pickle_kwargs, Mapping[str, Any] | None)
-assert_type(npz_file.f, BagObj[np.lib.npyio.NpzFile])
+assert_type(npz_file.f, BagObj[np.lib.npyio.NpzFile] | None)
 assert_type(npz_file["test"], npt.NDArray[Any])
 assert_type(len(npz_file), int)
 with npz_file as f:
