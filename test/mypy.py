@@ -1,9 +1,11 @@
 # /// script
+# requires-python = ">=3.10"
 # dependencies = [
 #     "numtype",
-#     # "basedmypy[faster-cache]",
-#     "mypy[faster-cache]",
-#     "pytest",  # imported in test/runtime
+#
+#     # Keep in sync with pyproject.toml
+#     "mypy[faster-cache]>=1.15.0",
+#     "pytest>=8.3.4",
 # ]
 #
 # [tool.uv]
