@@ -2,7 +2,6 @@ import abc
 import builtins
 import ctypes as ct
 import datetime as dt
-import enum
 import sys
 from _typeshed import StrOrBytesPath, SupportsFlush, SupportsLenAndGetItem, SupportsWrite
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
@@ -467,6 +466,7 @@ from . import (
     typing as npt,
     version as version,
 )
+from ._globals import _CopyMode
 
 @runtime_checkable
 class _Buffer(Protocol):
@@ -1779,7 +1779,7 @@ class dtype(Generic[_SCT_co]):
 
 @final
 class flatiter(Generic[_ArrayT_co]):
-    __hash__: ClassVar[None]
+    __hash__: ClassVar[None] = None  # type: ignore[assignment]  # pyright: ignore[reportIncompatibleMethodOverride]
     @property
     def base(self) -> _ArrayT_co: ...
     @property
@@ -1791,11 +1791,7 @@ class flatiter(Generic[_ArrayT_co]):
     def __next__(self: flatiter[NDArray[_SCT]]) -> _SCT: ...
     def __len__(self) -> int: ...
     @overload
-    def __getitem__(
-        self: flatiter[NDArray[_SCT]],
-        key: int | integer | tuple[int | integer],
-        /,
-    ) -> _SCT: ...
+    def __getitem__(self: flatiter[NDArray[_SCT]], key: int | integer | tuple[int | integer], /) -> _SCT: ...
     @overload
     def __getitem__(
         self,
@@ -5279,11 +5275,6 @@ bitwise_invert: Final = invert
 bitwise_right_shift: Final = right_shift
 permute_dims: Final = transpose
 pow: Final = power
-
-class _CopyMode(enum.Enum):
-    ALWAYS: L[True]
-    IF_NEEDED: L[False]
-    NEVER: L[2]
 
 class errstate:
     def __init__(

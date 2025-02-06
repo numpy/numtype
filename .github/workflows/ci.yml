@@ -55,6 +55,7 @@ jobs:
           src/numpy-stubs/testing
           src/numpy-stubs/typing
           src/numpy-stubs/__config__.pyi
+          src/numpy-stubs/_globals.pyi
           src/numpy-stubs/_pytesttester.pyi
           src/numpy-stubs/dtypes.pyi
           src/numpy-stubs/exceptions.pyi
@@ -77,6 +78,7 @@ jobs:
           src/numpy-stubs/testing
           src/numpy-stubs/typing
           src/numpy-stubs/__config__.pyi
+          src/numpy-stubs/_globals.pyi
           src/numpy-stubs/_pytesttester.pyi
           src/numpy-stubs/dtypes.pyi
           src/numpy-stubs/exceptions.pyi
