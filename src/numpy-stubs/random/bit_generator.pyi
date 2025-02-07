@@ -1,16 +1,7 @@
 import abc
 from collections.abc import Callable, Mapping, Sequence
 from threading import Lock
-from typing import (
-    Any,
-    Generic,
-    Literal,
-    NamedTuple,
-    TypeAlias,
-    TypedDict,
-    overload,
-    type_check_only,
-)
+from typing import Any, Generic, Literal, NamedTuple, TypeAlias, TypedDict, overload, type_check_only
 from typing_extensions import Self, TypeVar
 
 import numpy as np
@@ -18,7 +9,6 @@ from numpy._typing import NDArray, _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UI
 
 __all__ = ["BitGenerator", "SeedSequence"]
 
-_T = TypeVar("_T")
 _StateT = TypeVar("_StateT", bound=Mapping[str, object], default=Mapping[str, Any])
 
 _DTypeLikeUint32: TypeAlias = _DTypeLike[np.uint32] | _UInt32Codes
@@ -52,13 +42,15 @@ class ISeedSequence(abc.ABC):
 
 class ISpawnableSeedSequence(ISeedSequence, abc.ABC):
     @abc.abstractmethod
-    def spawn(self: _T, n_children: int) -> list[_T]: ...
+    def spawn(self, n_children: int) -> list[Self]: ...
 
 class SeedlessSeedSequence(ISpawnableSeedSequence):
     def generate_state(
-        self, n_words: int, dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...
+        self,
+        n_words: int,
+        dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...,
     ) -> NDArray[np.uint32 | np.uint64]: ...
-    def spawn(self: _T, n_children: int) -> list[_T]: ...
+    def spawn(self, n_children: int) -> list[Self]: ...
 
 class SeedSequence(ISpawnableSeedSequence):
     entropy: int | Sequence[int] | None
@@ -66,6 +58,11 @@ class SeedSequence(ISpawnableSeedSequence):
     pool_size: int
     n_children_spawned: int
     pool: NDArray[np.uint32]
+
+    @property
+    def state(self) -> _SeedSeqState: ...
+
+    #
     def __init__(
         self,
         entropy: int | Sequence[int] | _ArrayLikeInt_co | None = None,
@@ -74,8 +71,6 @@ class SeedSequence(ISpawnableSeedSequence):
         pool_size: int = ...,
         n_children_spawned: int = ...,
     ) -> None: ...
-    @property
-    def state(self) -> _SeedSeqState: ...
     def generate_state(
         self,
         n_words: int,
@@ -85,6 +80,7 @@ class SeedSequence(ISpawnableSeedSequence):
 
 class BitGenerator(abc.ABC, Generic[_StateT]):
     lock: Lock
+
     def __init__(self, /, seed: _ArrayLikeInt_co | SeedSequence | None = None) -> None: ...
     def __getstate__(self) -> tuple[_StateT, ISeedSequence]: ...
     def __setstate__(self, state_seed_seq: _StateT | tuple[Mapping[str, Any], ISeedSequence]) -> None: ...
