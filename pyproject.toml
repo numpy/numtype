@@ -2,6 +2,7 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+
 [project]
 name = "numtype"
 version = "2.2.2.0.dev0"
@@ -29,7 +30,6 @@ requires-python = ">=3.10"
 packages = [{include = "src/numpy-stubs"}]
 dependencies = []
 
-
     [project.optional-dependencies]
     numpy = ["numpy>=2.2.2,<2.3"]
 
@@ -47,8 +47,7 @@ dev = [
     "libcst>=1.6.0",
     "ruff>=0.9.5",
     "mypy[faster-cache]>=1.15.0",
-    # "basedmypy[faster-cache]>=2.9.1",
-    "basedpyright>=1.26.0",
+    "basedpyright>=1.27.0",
     "pytest>=8.3.4",
 ]
 
@@ -69,6 +68,7 @@ packages = ["src/numpy-stubs"]
         "uv.lock",
     ]
 
+
 [tool.mypy]
 python_version = "3.10"
 mypy_path = "src"
@@ -82,8 +82,6 @@ strict = true
 strict_bytes = true
 strict_concatenate = true
 local_partial_types = true
-# disable_bytearray_promotion = true
-# disable_memoryview_promotion = true
 enable_error_code = ["ignore-without-code", "truthy-bool"]
 disable_error_code = ["explicit-override"]
 enable_incomplete_feature = ["PreciseTupleTypes"]
