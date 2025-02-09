@@ -26,8 +26,11 @@ classifiers = [
     "Typing :: Stubs Only",
     "Typing :: Typed",
 ]
+packages = [
+    {include = "src/numpy-stubs"},
+    {include = "src/numtype"},
+]
 requires-python = ">=3.10"
-packages = [{include = "src/numpy-stubs"}]
 dependencies = []
 
     [project.optional-dependencies]
@@ -53,7 +56,7 @@ dev = [
 
 
 [tool.hatch.build]
-packages = ["src/numpy-stubs"]
+packages = ["src/numpy-stubs", "src/numtype"]
 
     [tool.hatch.build.targets.sdist]
     exclude = [
@@ -64,6 +67,7 @@ packages = ["src/numpy-stubs"]
         "/test",
         "/tool",
         ".libcst.codemod.yaml",
+        ".pre-commit-config.yaml",
         "CONTRIBUTING.md",
         "uv.lock",
     ]
@@ -98,10 +102,9 @@ warn_unreachable = false
 [tool.pyright]
 include = [
     "src/numpy-stubs",
-    "test/runtime/accept",
-    "test/static/accept",
-    "test/static/reject",
-    "test/static/sanity",
+    "src/numtype",
+    "test/runtime",
+    "test/static",
     "tool",
 ]
 ignore = [".venv", "test/.venv"]
@@ -139,7 +142,7 @@ strictGenericNarrowing = true
 
 
 [tool.ruff]
-src = ["src/numpy-stubs", "test/runtime", "test/static", "tool"]
+src = ["src/numpy-stubs", "src/numtype", "test", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
 force-exclude = true
 # https://typing.readthedocs.io/en/latest/guides/writing_stubs.html#maximum-line-length
@@ -189,6 +192,7 @@ preview = true
             "datetime" = "dt"
             "numpy" = "np"
             "numpy.typing" = "npt"
+            "numtype" = "nt"
 
         [tool.ruff.lint.isort]
         case-sensitive = true
