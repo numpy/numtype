@@ -10,7 +10,7 @@ np.rec.fromarrays(  # type: ignore[call-overload]  # pyright: ignore[reportCallI
     formats=["f8", "f8"],  # pyright: ignore[reportArgumentType]
 )
 
-np.rec.fromrecords(AR_i8)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.rec.fromrecords(AR_i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.rec.fromrecords(  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
     [(1.5,)],
     dtype=[("f8", "f8")],
