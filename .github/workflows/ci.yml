@@ -42,12 +42,41 @@ jobs:
       - name: basedpyright (numpy-stubs)
         run: >
           uv run basedpyright
+          src/numpy-stubs/_core/__init__.pyi
+          src/numpy-stubs/_core/_asarray.pyi
+          src/numpy-stubs/_core/_internal.pyi
+          src/numpy-stubs/_core/_type_aliases.pyi
+          src/numpy-stubs/_core/_ufunc_config.pyi
+          src/numpy-stubs/_core/arrayprint.pyi
+          src/numpy-stubs/_core/numerictypes.pyi
+          src/numpy-stubs/_core/shape_base.pyi
+          src/numpy-stubs/_core/strings.pyi
           src/numpy-stubs/_typing
           src/numpy-stubs/char
           src/numpy-stubs/core
           src/numpy-stubs/distutils
           src/numpy-stubs/f2py
           src/numpy-stubs/fft
+          src/numpy-stubs/lib/__init__.pyi
+          src/numpy-stubs/lib/_array_utils_impl.pyi
+          src/numpy-stubs/lib/_arraypad_impl.pyi
+          src/numpy-stubs/lib/_datasource.pyi
+          src/numpy-stubs/lib/_histograms_impl.pyi
+          src/numpy-stubs/lib/_iotools.pyi
+          src/numpy-stubs/lib/_nanfunctions_impl.pyi
+          src/numpy-stubs/lib/_npyio_impl.pyi
+          src/numpy-stubs/lib/_stride_tricks_impl.pyi
+          src/numpy-stubs/lib/_user_array_impl.pyi
+          src/numpy-stubs/lib/_utils_impl.pyi
+          src/numpy-stubs/lib/array_utils.pyi
+          src/numpy-stubs/lib/format.pyi
+          src/numpy-stubs/lib/introspect.pyi
+          src/numpy-stubs/lib/mixins.pyi
+          src/numpy-stubs/lib/npyio.pyi
+          src/numpy-stubs/lib/recfunctions.pyi
+          src/numpy-stubs/lib/scimath.pyi
+          src/numpy-stubs/lib/stride_tricks.pyi
+          src/numpy-stubs/lib/user_array.pyi
           src/numpy-stubs/matrixlib
           src/numpy-stubs/random
           src/numpy-stubs/rec
@@ -55,6 +84,9 @@ jobs:
           src/numpy-stubs/testing
           src/numpy-stubs/typing
           src/numpy-stubs/__config__.pyi
+          src/numpy-stubs/_configtool.pyi
+          src/numpy-stubs/_distributor_init.pyi
+          src/numpy-stubs/_expired_attrs_2_0.pyi
           src/numpy-stubs/_globals.pyi
           src/numpy-stubs/_pytesttester.pyi
           src/numpy-stubs/dtypes.pyi
@@ -65,12 +97,40 @@ jobs:
       - name: mypy (numpy-stubs)
         run: >
           uv run --no-editable mypy
+          src/numpy-stubs/_core/__init__.pyi
+          src/numpy-stubs/_core/_asarray.pyi
+          src/numpy-stubs/_core/_internal.pyi
+          src/numpy-stubs/_core/_type_aliases.pyi
+          src/numpy-stubs/_core/_ufunc_config.pyi
+          src/numpy-stubs/_core/arrayprint.pyi
+          src/numpy-stubs/_core/numerictypes.pyi
+          src/numpy-stubs/_core/shape_base.pyi
           src/numpy-stubs/_typing
           src/numpy-stubs/char
           src/numpy-stubs/core
           src/numpy-stubs/distutils
           src/numpy-stubs/f2py
           src/numpy-stubs/fft
+          src/numpy-stubs/lib/__init__.pyi
+          src/numpy-stubs/lib/_array_utils_impl.pyi
+          src/numpy-stubs/lib/_arraypad_impl.pyi
+          src/numpy-stubs/lib/_datasource.pyi
+          src/numpy-stubs/lib/_histograms_impl.pyi
+          src/numpy-stubs/lib/_iotools.pyi
+          src/numpy-stubs/lib/_nanfunctions_impl.pyi
+          src/numpy-stubs/lib/_npyio_impl.pyi
+          src/numpy-stubs/lib/_stride_tricks_impl.pyi
+          src/numpy-stubs/lib/_user_array_impl.pyi
+          src/numpy-stubs/lib/_utils_impl.pyi
+          src/numpy-stubs/lib/array_utils.pyi
+          src/numpy-stubs/lib/format.pyi
+          src/numpy-stubs/lib/introspect.pyi
+          src/numpy-stubs/lib/mixins.pyi
+          src/numpy-stubs/lib/npyio.pyi
+          src/numpy-stubs/lib/recfunctions.pyi
+          src/numpy-stubs/lib/scimath.pyi
+          src/numpy-stubs/lib/stride_tricks.pyi
+          src/numpy-stubs/lib/user_array.pyi
           src/numpy-stubs/matrixlib
           src/numpy-stubs/random
           src/numpy-stubs/rec
@@ -78,6 +138,9 @@ jobs:
           src/numpy-stubs/testing
           src/numpy-stubs/typing
           src/numpy-stubs/__config__.pyi
+          src/numpy-stubs/_configtool.pyi
+          src/numpy-stubs/_distributor_init.pyi
+          src/numpy-stubs/_expired_attrs_2_0.pyi
           src/numpy-stubs/_globals.pyi
           src/numpy-stubs/_pytesttester.pyi
           src/numpy-stubs/dtypes.pyi
