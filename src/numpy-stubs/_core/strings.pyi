@@ -12,6 +12,56 @@ from numpy._typing import (
     _SupportsArray,
 )
 
+__all__ = [
+    "add",
+    "capitalize",
+    "center",
+    "count",
+    "decode",
+    "encode",
+    "endswith",
+    "equal",
+    "expandtabs",
+    "find",
+    "greater",
+    "greater_equal",
+    "index",
+    "isalnum",
+    "isalpha",
+    "isdecimal",
+    "isdigit",
+    "islower",
+    "isnumeric",
+    "isspace",
+    "istitle",
+    "isupper",
+    "less",
+    "less_equal",
+    "ljust",
+    "lower",
+    "lstrip",
+    "mod",
+    "multiply",
+    "not_equal",
+    "partition",
+    "replace",
+    "rfind",
+    "rindex",
+    "rjust",
+    "rpartition",
+    "rstrip",
+    "startswith",
+    "str_len",
+    "strip",
+    "swapcase",
+    "title",
+    "translate",
+    "upper",
+    "zfill",
+]
+
+###
+
 _StringArrayLike: TypeAlias = _SupportsArray[np.dtypes.StringDType] | _NestedSequence[_SupportsArray[np.dtypes.StringDType]]
 
 _BoolArray: TypeAlias = NDArray[np.bool]
@@ -22,11 +72,12 @@ _StringArray: TypeAlias = np.ndarray[tuple[int, ...], np.dtypes.StringDType]
 
 ###
 
-#
+# TODO(jorenham): Move to `.umath`, rewrite as `ufunc`, and re-export.
+# https://github.com/numpy/numtype/issues/46
 def isdecimal(x: ToStrND | ToStringND) -> _BoolArray: ...
 def isnumeric(x: ToStrND | ToStringND) -> _BoolArray: ...
-def isalpha(x: ToAnyStringND) -> _BoolArray: ...
 def isalnum(a: ToAnyStringND) -> _BoolArray: ...
+def isalpha(x: ToAnyStringND) -> _BoolArray: ...
 def isdigit(x: ToAnyStringND) -> _BoolArray: ...
 def isspace(x: ToAnyStringND) -> _BoolArray: ...
 def islower(a: ToAnyStringND) -> _BoolArray: ...
