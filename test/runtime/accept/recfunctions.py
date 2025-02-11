@@ -93,7 +93,7 @@ def test_repack_fields() -> None:
     assert_type(rfn.repack_fields(dt), np.dtype[np.void])
     assert_type(rfn.repack_fields(dt.type(0)), np.void)
     assert_type(
-        rfn.repack_fields(np.ones((int(3),), dtype=dt)),
+        rfn.repack_fields(np.ones((3,), dtype=dt)),
         np.ndarray[tuple[int], np.dtype[np.void]],
     )
 
