@@ -45,13 +45,16 @@ jobs:
           src/numpy-stubs/_core/__init__.pyi
           src/numpy-stubs/_core/_asarray.pyi
           src/numpy-stubs/_core/_internal.pyi
+          src/numpy-stubs/_core/_multiarray_umath.pyi
           src/numpy-stubs/_core/_type_aliases.pyi
           src/numpy-stubs/_core/_ufunc_config.pyi
           src/numpy-stubs/_core/arrayprint.pyi
+          src/numpy-stubs/_core/multiarray.pyi
           src/numpy-stubs/_core/numerictypes.pyi
           src/numpy-stubs/_core/records.pyi
           src/numpy-stubs/_core/shape_base.pyi
           src/numpy-stubs/_core/strings.pyi
+          src/numpy-stubs/_core/umath.pyi
           src/numpy-stubs/_typing
           src/numpy-stubs/char
           src/numpy-stubs/core
@@ -101,13 +104,16 @@ jobs:
           src/numpy-stubs/_core/__init__.pyi
           src/numpy-stubs/_core/_asarray.pyi
           src/numpy-stubs/_core/_internal.pyi
+          src/numpy-stubs/_core/_multiarray_umath.pyi
           src/numpy-stubs/_core/_type_aliases.pyi
           src/numpy-stubs/_core/_ufunc_config.pyi
           src/numpy-stubs/_core/arrayprint.pyi
+          src/numpy-stubs/_core/multiarray.pyi
           src/numpy-stubs/_core/numerictypes.pyi
           src/numpy-stubs/_core/records.pyi
           src/numpy-stubs/_core/shape_base.pyi
           src/numpy-stubs/_core/strings.pyi
+          src/numpy-stubs/_core/umath.pyi
           src/numpy-stubs/_typing
           src/numpy-stubs/char
           src/numpy-stubs/core
