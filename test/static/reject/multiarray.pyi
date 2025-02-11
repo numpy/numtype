@@ -20,7 +20,7 @@ np.where(AR_b, 1)  # type: ignore[call-overload]  # pyright: ignore[reportCallIs
 
 np.can_cast(AR_f8, 1)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.vdot(AR_M, AR_M)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.vdot(AR_M, AR_M)  # type: ignore[type-var]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
 np.copyto(AR_LIKE_f, AR_f8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
@@ -36,12 +36,9 @@ np.shares_memory(1, 1, max_work=i8)  # type: ignore[arg-type]  # pyright: ignore
 np.may_share_memory(1, 1, max_work=i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
 np.arange(M)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.arange(stop=10)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 
 np.datetime_data(int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.datetime_as_string("2012")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-
-np.busday_offset("2012", 10)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
 np.char.compare_chararrays("a", b"a", "==", False)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 

@@ -25,19 +25,20 @@ _2Tuple: TypeAlias = tuple[_T, _T]
 _3Tuple: TypeAlias = tuple[_T, _T, _T]
 _4Tuple: TypeAlias = tuple[_T, _T, _T, _T]
 
-_2PTuple: TypeAlias = tuple[_T, _T, *tuple[_T, ...]]
-_3PTuple: TypeAlias = tuple[_T, _T, _T, *tuple[_T, ...]]
-_4PTuple: TypeAlias = tuple[_T, _T, _T, _T, *tuple[_T, ...]]
+_2PTuple: TypeAlias = tuple[_T, _T, Unpack[tuple[_T, ...]]]
+_3PTuple: TypeAlias = tuple[_T, _T, _T, Unpack[tuple[_T, ...]]]
+_4PTuple: TypeAlias = tuple[_T, _T, _T, _T, Unpack[tuple[_T, ...]]]
 
 _NTypesT_co = TypeVar("_NTypesT_co", bound=int, covariant=True)
-_IdentityT_co = TypeVar("_IdentityT_co", covariant=True)
+_IdentityT_co = TypeVar("_IdentityT_co", default=None, covariant=True)
 _NameT_co = TypeVar("_NameT_co", bound=LiteralString, covariant=True)
 _SignatureT_co = TypeVar("_SignatureT_co", bound=LiteralString, covariant=True)
-
-_NInT_co = TypeVar("_NInT_co", bound=int, covariant=True)
-_NOutT_co = TypeVar("_NOutT_co", bound=int, covariant=True)
 _OutT_co = TypeVar("_OutT_co", covariant=True)
+_OutT1_co = TypeVar("_OutT1_co", covariant=True)
+_OutT2_co = TypeVar("_OutT2_co", covariant=True)
 _ArrayT = TypeVar("_ArrayT", bound=npt.NDArray[Any])
+_ArrayT1 = TypeVar("_ArrayT1", bound=npt.NDArray[Any])
+_ArrayT2 = TypeVar("_ArrayT2", bound=npt.NDArray[Any])
 
 @type_check_only
 class _SupportsArrayUFunc(Protocol):
@@ -92,7 +93,7 @@ class _UFunc_Nin1_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
         self,
         x1: _ScalarLike_co,
         /,
-        out: None = ...,
+        out: None = None,
         *,
         where: _ArrayLikeBool_co | None = ...,
         casting: np._CastingKind = ...,
@@ -444,7 +445,7 @@ class _GUFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co
         x1: ArrayLike,
         x2: ArrayLike,
         /,
-        out: None = ...,
+        out: None = None,
         *,
         casting: np._CastingKind = ...,
         order: np._OrderKACF = ...,
@@ -529,7 +530,7 @@ class _PyFunc_Nin1_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         self,
         x1: _ScalarLike_co,
         /,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs2],
     ) -> _OutT_co: ...
     @overload
@@ -537,7 +538,7 @@ class _PyFunc_Nin1_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         self,
         x1: ArrayLike,
         /,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs2],
     ) -> _OutT_co | npt.NDArray[np.object_]: ...
     @overload
@@ -582,7 +583,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         x1: _ScalarLike_co,
         x2: _ScalarLike_co,
         /,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> _OutT_co: ...
     @overload
@@ -591,7 +592,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         x1: ArrayLike,
         x2: ArrayLike,
         /,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> _OutT_co | npt.NDArray[np.object_]: ...
     @overload
@@ -654,7 +655,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         array: ArrayLike,
         axis: _ShapeLike | None = ...,
         dtype: DTypeLike = ...,
-        out: None = ...,
+        out: None = None,
         *,
         keepdims: Literal[True],
         initial: _ScalarLike_co = ...,
@@ -667,7 +668,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         array: ArrayLike,
         axis: _ShapeLike | None = ...,
         dtype: DTypeLike = ...,
-        out: None = ...,
+        out: None = None,
         keepdims: bool = ...,
         initial: _ScalarLike_co = ...,
         where: _ArrayLikeBool_co = ...,
@@ -701,7 +702,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         indices: _ArrayLikeInt_co,
         axis: SupportsIndex = ...,
         dtype: DTypeLike = ...,
-        out: None = ...,
+        out: None = None,
     ) -> npt.NDArray[np.object_]: ...
     @overload
     def reduceat(
@@ -738,7 +739,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         array: ArrayLike,
         axis: SupportsIndex = ...,
         dtype: DTypeLike = ...,
-        out: None = ...,
+        out: None = None,
     ) -> npt.NDArray[np.object_]: ...
     @overload
     def outer(
@@ -747,7 +748,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         B: _ScalarLike_co,
         /,
         *,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> _OutT_co: ...
     @overload
@@ -757,7 +758,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         B: ArrayLike,
         /,
         *,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> _OutT_co | npt.NDArray[np.object_]: ...
     @overload
@@ -777,7 +778,7 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         B: _SupportsArrayUFunc | ArrayLike,
         /,
         *,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> Any: ...
     @overload
@@ -787,16 +788,16 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         B: _SupportsArrayUFunc | ArrayLike,
         /,
         *,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
     ) -> Any: ...
 
 @type_check_only
-class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
+class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def identity(self) -> _IdentityT_co: ...
     @property
-    def nin(self) -> _NInT_co: ...
+    def nin(self) -> int: ...
     @property
     def nout(self) -> Literal[1]: ...
     @property
@@ -811,7 +812,7 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):
         x3: _ScalarLike_co,
         /,
         *xs: _ScalarLike_co,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs4P],
     ) -> _OutT_co: ...
     @overload
@@ -822,7 +823,7 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):
         x3: ArrayLike,
         /,
         *xs: ArrayLike,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs4P],
     ) -> _OutT_co | npt.NDArray[np.object_]: ...
     @overload
@@ -854,13 +855,13 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co]):
     def outer(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co, _NOutT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
+class _PyFunc_Nin1P_Nout2(np.ufunc, Generic[_OutT1_co, _OutT2_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @property
     def identity(self) -> _IdentityT_co: ...
     @property
-    def nin(self) -> _NInT_co: ...
+    def nin(self) -> int: ...
     @property
-    def nout(self) -> _NOutT_co: ...
+    def nout(self) -> Literal[2]: ...
     @property
     def ntypes(self) -> Literal[1]: ...
     @property
@@ -871,7 +872,61 @@ class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co, 
         x1: _ScalarLike_co,
         /,
         *xs: _ScalarLike_co,
-        out: None = ...,
+        out: None = None,
+        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
+    ) -> tuple[_OutT1_co, _OutT2_co]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        /,
+        *xs: ArrayLike,
+        out: None = None,
+        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
+    ) -> tuple[_OutT1_co | npt.NDArray[np.object_], _OutT2_co | npt.NDArray[np.object_]]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        /,
+        *xs: ArrayLike,
+        out: tuple[_ArrayT1, _ArrayT2],
+        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
+    ) -> tuple[_ArrayT1, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x1: _SupportsArrayUFunc | ArrayLike,
+        /,
+        *xs: _SupportsArrayUFunc | ArrayLike,
+        out: _2PTuple[npt.NDArray[Any]] | None = ...,
+        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
+    ) -> Any: ...
+    def at(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
+    def reduce(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
+    def accumulate(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
+    def reduceat(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
+    def outer(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
+
+@type_check_only
+class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
+    @property
+    def identity(self) -> _IdentityT_co: ...
+    @property
+    def nin(self) -> int: ...
+    @property
+    def nout(self) -> int: ...
+    @property
+    def ntypes(self) -> Literal[1]: ...
+    @property
+    def signature(self) -> None: ...
+    @overload
+    def __call__(
+        self,
+        x1: _ScalarLike_co,
+        /,
+        *xs: _ScalarLike_co,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
     ) -> _2PTuple[_OutT_co]: ...
     @overload
@@ -880,7 +935,7 @@ class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co, _NInT_co, 
         x1: ArrayLike,
         /,
         *xs: ArrayLike,
-        out: None = ...,
+        out: None = None,
         **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
     ) -> _2PTuple[_OutT_co | npt.NDArray[np.object_]]: ...
     @overload

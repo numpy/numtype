@@ -1,20 +1,15 @@
 from collections.abc import Callable, Sequence
-from typing import (
-    Any,
-    Final,
-    Literal as L,
-    NoReturn,
-    SupportsAbs,
-    SupportsIndex,
-    TypeAlias,
-    overload,
-)
+from typing import Any, Literal as L, NoReturn, SupportsAbs, SupportsIndex, TypeAlias, overload
 from typing_extensions import TypeIs, TypeVar, Unpack
 
 import numpy as np
+import numpy.typing as npt
 from numpy import (  # noqa: ICN003
     False_,
     True_,
+    _AnyShapeT,
+    _OrderCF,
+    _OrderKACF,
     bitwise_not,
     broadcast,
     dtype,
@@ -47,15 +42,10 @@ from numpy._typing import (
     _ScalarLike_co,
     _ShapeLike,
     _SupportsArrayFunc,
-    _SupportsDType,
 )
 
+from ._multiarray_umath import _Array, _Array1D, _FloatType, _KwargsD, _KwargsDL
 from .multiarray import (
-    # other
-    _Array,
-    _ConstructorEmpty,
-    _KwargsEmpty,
-    # re-exports
     arange,
     array,
     asanyarray,
@@ -162,215 +152,246 @@ __all__ = [
 ]
 
 _T = TypeVar("_T")
-_SCT = TypeVar("_SCT", bound=np.generic)
-_DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
-_SizeT = TypeVar("_SizeT", bound=int)
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 
 _CorrelateMode: TypeAlias = L["valid", "same", "full"]
 
+###
+
+# keep in sync with `empty` and `zeros` in `._multiarray_umath.ones`
+@overload  # 1d
+def ones(
+    shape: int | tuple[int],
+    dtype: _FloatType | None = ...,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array1D[np.float64]: ...
+@overload
+def ones(
+    shape: int | tuple[int],
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array1D[_ScalarT]: ...
+@overload
+def ones(
+    shape: int | tuple[int],
+    dtype: npt.DTypeLike = ...,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array1D: ...
+@overload  # known shape
+def ones(
+    shape: _AnyShapeT,
+    dtype: _FloatType | None = ...,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array[np.float64, _AnyShapeT]: ...
+@overload
+def ones(
+    shape: _AnyShapeT,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array[_ScalarT, _AnyShapeT]: ...
+@overload
+def ones(
+    shape: _AnyShapeT,
+    dtype: npt.DTypeLike = ...,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array[Any, _AnyShapeT]: ...
+@overload  # unknown shape
+def ones(
+    shape: _ShapeLike,
+    dtype: _FloatType | None = ...,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array[np.float64]: ...
+@overload
+def ones(
+    shape: _ShapeLike,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array[_ScalarT]: ...
+@overload
+def ones(
+    shape: _ShapeLike,
+    dtype: npt.DTypeLike = ...,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array: ...
+
+# keep in sync with `ones`
+@overload
+def full(
+    shape: int | tuple[int],
+    fill_value: _ScalarT,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array1D[_ScalarT]: ...
+@overload
+def full(
+    shape: int | tuple[int],
+    fill_value: object,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array1D[_ScalarT]: ...
+@overload
+def full(
+    shape: int | tuple[int],
+    fill_value: object,
+    dtype: DTypeLike | None = None,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array1D: ...
+@overload
+def full(
+    shape: _ShapeT,
+    fill_value: _ScalarT,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array[_ScalarT, _ShapeT]: ...
+@overload
+def full(
+    shape: _ShapeT,
+    fill_value: object,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array[_ScalarT, _ShapeT]: ...
+@overload
+def full(
+    shape: _ShapeT,
+    fill_value: object,
+    dtype: DTypeLike | None = None,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array[Any, _ShapeT]: ...
+@overload
+def full(
+    shape: _ShapeLike,
+    fill_value: _ScalarT,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> NDArray[_ScalarT]: ...
+@overload
+def full(
+    shape: _ShapeLike,
+    fill_value: object,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> NDArray[_ScalarT]: ...
+@overload
+def full(
+    shape: _ShapeLike,
+    fill_value: object,
+    dtype: DTypeLike | None = None,
+    order: _OrderCF = "C",
+    **kwargs: Unpack[_KwargsDL],
+) -> _Array: ...
+
+#
 @overload
 def zeros_like(
     a: _ArrayT,
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: L[True] = ...,
     shape: None = ...,
-    *,
-    device: L["cpu"] | None = ...,
+    **kwargs: Unpack[_KwargsD],
 ) -> _ArrayT: ...
 @overload
 def zeros_like(
-    a: _ArrayLike[_SCT],
+    a: _ArrayLike[_ScalarT],
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[_SCT]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> NDArray[_ScalarT]: ...
 @overload
 def zeros_like(
     a: object,
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[Any]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> _Array: ...
 @overload
 def zeros_like(
     a: Any,
-    dtype: _DTypeLike[_SCT],
-    order: np._OrderKACF = ...,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[_SCT]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> NDArray[_ScalarT]: ...
 @overload
 def zeros_like(
     a: Any,
     dtype: DTypeLike,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[Any]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> _Array: ...
 
-ones: Final[_ConstructorEmpty]
-
+#
 @overload
 def ones_like(
     a: _ArrayT,
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: L[True] = ...,
     shape: None = ...,
-    *,
-    device: L["cpu"] | None = ...,
+    **kwargs: Unpack[_KwargsD],
 ) -> _ArrayT: ...
 @overload
 def ones_like(
-    a: _ArrayLike[_SCT],
+    a: _ArrayLike[_ScalarT],
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[_SCT]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> NDArray[_ScalarT]: ...
 @overload
 def ones_like(
     a: object,
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[Any]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> _Array: ...
 @overload
 def ones_like(
     a: Any,
-    dtype: _DTypeLike[_SCT],
-    order: np._OrderKACF = ...,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[_SCT]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> NDArray[_ScalarT]: ...
 @overload
 def ones_like(
     a: Any,
     dtype: DTypeLike,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[Any]: ...
-
-# TODO: Add overloads for bool, int, float, complex, str, bytes, and memoryview
-@overload
-def full(
-    shape: _SizeT,
-    fill_value: _SCT,
-    dtype: None = ...,
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> _Array[tuple[_SizeT], _SCT]: ...
-@overload
-def full(
-    shape: _SizeT,
-    fill_value: Any,
-    dtype: _DTypeT | _SupportsDType[_DTypeT],
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> np.ndarray[tuple[_SizeT], _DTypeT]: ...
-@overload
-def full(
-    shape: _SizeT,
-    fill_value: Any,
-    dtype: type[_SCT],
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> _Array[tuple[_SizeT], _SCT]: ...
-@overload
-def full(
-    shape: _SizeT,
-    fill_value: Any,
-    dtype: DTypeLike | None = ...,
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> _Array[tuple[_SizeT], Any]: ...
-@overload
-def full(
-    shape: _ShapeT,
-    fill_value: _SCT,
-    dtype: None = ...,
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> _Array[_ShapeT, _SCT]: ...
-@overload
-def full(
-    shape: _ShapeT,
-    fill_value: Any,
-    dtype: _DTypeT | _SupportsDType[_DTypeT],
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> np.ndarray[_ShapeT, _DTypeT]: ...
-@overload
-def full(
-    shape: _ShapeT,
-    fill_value: Any,
-    dtype: type[_SCT],
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> _Array[_ShapeT, _SCT]: ...
-@overload
-def full(
-    shape: _ShapeT,
-    fill_value: Any,
-    dtype: DTypeLike | None = ...,
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> _Array[_ShapeT, Any]: ...
-@overload
-def full(
-    shape: _ShapeLike,
-    fill_value: _SCT,
-    dtype: None = ...,
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> NDArray[_SCT]: ...
-@overload
-def full(
-    shape: _ShapeLike,
-    fill_value: Any,
-    dtype: _DTypeT | _SupportsDType[_DTypeT],
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> np.ndarray[Any, _DTypeT]: ...
-@overload
-def full(
-    shape: _ShapeLike,
-    fill_value: Any,
-    dtype: type[_SCT],
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> NDArray[_SCT]: ...
-@overload
-def full(
-    shape: _ShapeLike,
-    fill_value: Any,
-    dtype: DTypeLike | None = ...,
-    order: np._OrderCF = ...,
-    **kwargs: Unpack[_KwargsEmpty],
-) -> NDArray[Any]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> _Array: ...
 
 #
 @overload
@@ -378,56 +399,51 @@ def full_like(
     a: _ArrayT,
     fill_value: Any,
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: L[True] = ...,
     shape: None = ...,
-    *,
-    device: L["cpu"] | None = ...,
+    **kwargs: Unpack[_KwargsD],
 ) -> _ArrayT: ...
 @overload
 def full_like(
-    a: _ArrayLike[_SCT],
+    a: _ArrayLike[_ScalarT],
     fill_value: Any,
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[_SCT]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> NDArray[_ScalarT]: ...
 @overload
 def full_like(
     a: object,
     fill_value: Any,
     dtype: None = ...,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[Any]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> _Array: ...
 @overload
 def full_like(
     a: Any,
     fill_value: Any,
-    dtype: _DTypeLike[_SCT],
-    order: np._OrderKACF = ...,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[_SCT]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> NDArray[_ScalarT]: ...
 @overload
 def full_like(
     a: Any,
     fill_value: Any,
     dtype: DTypeLike,
-    order: np._OrderKACF = ...,
+    order: _OrderKACF = ...,
     subok: bool = ...,
     shape: _ShapeLike | None = ...,
-    *,
-    device: L["cpu"] | None = ...,
-) -> NDArray[Any]: ...
+    **kwargs: Unpack[_KwargsD],
+) -> _Array: ...
 
 #
 @overload
@@ -436,13 +452,13 @@ def count_nonzero(a: ArrayLike, axis: None = ..., *, keepdims: L[False] = ...) -
 def count_nonzero(a: ArrayLike, axis: _ShapeLike = ..., *, keepdims: bool = ...) -> Any: ...
 
 #
-def isfortran(a: NDArray[Any] | np.generic) -> bool: ...
+def isfortran(a: _Array | np.generic) -> bool: ...
 def argwhere(a: ArrayLike) -> NDArray[np.int_]: ...
 def flatnonzero(a: ArrayLike) -> NDArray[np.int_]: ...
 
 #
 @overload
-def correlate(a: _ArrayLikeUnknown, v: _ArrayLikeUnknown, mode: _CorrelateMode = ...) -> NDArray[Any]: ...
+def correlate(a: _ArrayLikeUnknown, v: _ArrayLikeUnknown, mode: _CorrelateMode = ...) -> _Array: ...
 @overload
 def correlate(a: _ArrayLikeBool_co, v: _ArrayLikeBool_co, mode: _CorrelateMode = ...) -> NDArray[np.bool]: ...
 @overload
@@ -460,7 +476,7 @@ def correlate(a: _ArrayLikeObject_co, v: _ArrayLikeObject_co, mode: _CorrelateMo
 
 #
 @overload
-def convolve(a: _ArrayLikeUnknown, v: _ArrayLikeUnknown, mode: _CorrelateMode = ...) -> NDArray[Any]: ...
+def convolve(a: _ArrayLikeUnknown, v: _ArrayLikeUnknown, mode: _CorrelateMode = ...) -> _Array: ...
 @overload
 def convolve(a: _ArrayLikeBool_co, v: _ArrayLikeBool_co, mode: _CorrelateMode = ...) -> NDArray[np.bool]: ...
 @overload
@@ -478,7 +494,7 @@ def convolve(a: _ArrayLikeObject_co, v: _ArrayLikeObject_co, mode: _CorrelateMod
 
 #
 @overload
-def outer(a: _ArrayLikeUnknown, b: _ArrayLikeUnknown, out: None = ...) -> NDArray[Any]: ...
+def outer(a: _ArrayLikeUnknown, b: _ArrayLikeUnknown, out: None = ...) -> _Array: ...
 @overload
 def outer(a: _ArrayLikeBool_co, b: _ArrayLikeBool_co, out: None = ...) -> NDArray[np.bool]: ...
 @overload
@@ -506,7 +522,7 @@ def tensordot(
     a: _ArrayLikeUnknown,
     b: _ArrayLikeUnknown,
     axes: int | tuple[_ShapeLike, _ShapeLike] = ...,
-) -> NDArray[Any]: ...
+) -> _Array: ...
 @overload
 def tensordot(
     a: _ArrayLikeBool_co,
@@ -552,13 +568,13 @@ def tensordot(
 
 #
 @overload
-def roll(a: _ArrayLike[_SCT], shift: _ShapeLike, axis: _ShapeLike | None = ...) -> NDArray[_SCT]: ...
+def roll(a: _ArrayLike[_ScalarT], shift: _ShapeLike, axis: _ShapeLike | None = ...) -> NDArray[_ScalarT]: ...
 @overload
-def roll(a: ArrayLike, shift: _ShapeLike, axis: _ShapeLike | None = ...) -> NDArray[Any]: ...
+def roll(a: ArrayLike, shift: _ShapeLike, axis: _ShapeLike | None = ...) -> _Array: ...
 
 #
-def rollaxis(a: NDArray[_SCT], axis: int, start: int = ...) -> NDArray[_SCT]: ...
-def moveaxis(a: NDArray[_SCT], source: _ShapeLike, destination: _ShapeLike) -> NDArray[_SCT]: ...
+def rollaxis(a: NDArray[_ScalarT], axis: int, start: int = ...) -> NDArray[_ScalarT]: ...
+def moveaxis(a: NDArray[_ScalarT], source: _ShapeLike, destination: _ShapeLike) -> NDArray[_ScalarT]: ...
 
 #
 @overload
@@ -569,7 +585,7 @@ def cross(
     axisb: int = ...,
     axisc: int = ...,
     axis: int | None = ...,
-) -> NDArray[Any]: ...
+) -> _Array: ...
 @overload
 def cross(
     x1: _ArrayLikeBool_co,
@@ -641,27 +657,27 @@ def indices(
 @overload
 def indices(
     dimensions: Sequence[int],
-    dtype: _DTypeLike[_SCT],
+    dtype: _DTypeLike[_ScalarT],
     sparse: L[False] = ...,
-) -> NDArray[_SCT]: ...
+) -> NDArray[_ScalarT]: ...
 @overload
 def indices(
     dimensions: Sequence[int],
-    dtype: _DTypeLike[_SCT],
+    dtype: _DTypeLike[_ScalarT],
     sparse: L[True],
-) -> tuple[NDArray[_SCT], ...]: ...
+) -> tuple[NDArray[_ScalarT], ...]: ...
 @overload
 def indices(
     dimensions: Sequence[int],
     dtype: DTypeLike,
     sparse: L[False] = ...,
-) -> NDArray[Any]: ...
+) -> _Array: ...
 @overload
 def indices(
     dimensions: Sequence[int],
     dtype: DTypeLike,
     sparse: L[True],
-) -> tuple[NDArray[Any], ...]: ...
+) -> tuple[_Array, ...]: ...
 
 #
 def fromfunction(
@@ -670,7 +686,7 @@ def fromfunction(
     *,
     dtype: DTypeLike = ...,
     like: _SupportsArrayFunc = ...,
-    **kwargs: Any,
+    **kwargs: object,
 ) -> _T: ...
 
 #
@@ -686,9 +702,9 @@ def base_repr(number: SupportsAbs[float], base: float = ..., padding: SupportsIn
 @overload
 def identity(n: int, dtype: None = ..., *, like: _SupportsArrayFunc = ...) -> NDArray[np.float64]: ...
 @overload
-def identity(n: int, dtype: _DTypeLike[_SCT], *, like: _SupportsArrayFunc = ...) -> NDArray[_SCT]: ...
+def identity(n: int, dtype: _DTypeLike[_ScalarT], *, like: _SupportsArrayFunc = ...) -> NDArray[_ScalarT]: ...
 @overload
-def identity(n: int, dtype: DTypeLike, *, like: _SupportsArrayFunc = ...) -> NDArray[Any]: ...
+def identity(n: int, dtype: DTypeLike, *, like: _SupportsArrayFunc = ...) -> _Array: ...
 
 #
 def allclose(a: ArrayLike, b: ArrayLike, rtol: ArrayLike = ..., atol: ArrayLike = ..., equal_nan: bool = ...) -> bool: ...
@@ -719,14 +735,18 @@ def array_equiv(a1: ArrayLike, a2: ArrayLike) -> bool: ...
 @overload
 def astype(
     x: ndarray[_ShapeT, dtype[Any]],
-    dtype: _DTypeLike[_SCT],
-    copy: bool = ...,
-    device: L["cpu"] | None = ...,
-) -> ndarray[_ShapeT, dtype[_SCT]]: ...
+    dtype: _DTypeLike[_ScalarT],
+    /,
+    *,
+    copy: bool = True,
+    **kwargs: Unpack[_KwargsD],
+) -> ndarray[_ShapeT, dtype[_ScalarT]]: ...
 @overload
 def astype(
     x: ndarray[_ShapeT, dtype[Any]],
     dtype: DTypeLike,
-    copy: bool = ...,
-    device: L["cpu"] | None = ...,
+    /,
+    *,
+    copy: bool = True,
+    **kwargs: Unpack[_KwargsD],
 ) -> ndarray[_ShapeT, dtype[Any]]: ...
