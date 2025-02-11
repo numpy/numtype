@@ -100,7 +100,7 @@ jobs:
 
       - name: mypy (numpy-stubs)
         run: >
-          uv run --no-editable mypy
+          uv run test/mypy.py
           src/numpy-stubs/_core/__init__.pyi
           src/numpy-stubs/_core/_asarray.pyi
           src/numpy-stubs/_core/_internal.pyi
