@@ -1,3 +1,4 @@
+import _contextvars
 import datetime as dt
 from _typeshed import Incomplete, StrOrBytesPath, SupportsLenAndGetItem
 from builtins import bool as py_bool
@@ -18,7 +19,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import CapsuleType, Self, TypeAliasType, TypeVar, Unpack
+from typing_extensions import CapsuleType, Self, TypeAliasType, TypeVar, Unpack, deprecated
 
 import numpy as np
 import numpy.typing as npt
@@ -137,7 +138,9 @@ _Roll = TypeAliasType(
 _TimeUnit: TypeAlias = L["Y", "M", "D", "h", "m", "s", "ms", "us", "μs", "ns", "ps", "fs", "as"]
 _TimeZone: TypeAlias = L["naive", "UTC", "local"] | dt.tzinfo
 _CorrMode: TypeAlias = L[0, "valid", 1, "same", 2, "full"]
+_ExtObjValue: TypeAlias = L["ignore", "warn", "raise", "call", "print", "log"]
 
+_Ignored: TypeAlias = object
 _Copy: TypeAlias = py_bool | L[2] | _CopyMode
 _WeekMask: TypeAlias = str | Sequence[L[0, 1] | py_bool | np.bool]
 
@@ -181,6 +184,10 @@ class _CanDLPack(Protocol[_T_contra]):
     def __dlpack__(self, /, *, stream: _T_contra | None = None) -> CapsuleType: ...
 
 @type_check_only
+class _CanWriteErr(Protocol):
+    def write(self, err: str, flag: int, /) -> _Ignored: ...
+
+@type_check_only
 class _HasDoc(Protocol):
     __doc__: str | None
 
@@ -217,6 +224,15 @@ class _KwargsDCL(TypedDict, total=False):
     device: _Device | None
     copy: _Copy | None
     like: _SupportsArrayFunc | None
+
+@type_check_only
+class _ExtObjDict(TypedDict):
+    divide: _ExtObjValue
+    over: _ExtObjValue
+    under: _ExtObjValue
+    invalid: _ExtObjValue
+    call: Callable[[str, int], _Ignored] | _CanWriteErr | None
+    bufsize: int
 
 ###
 
@@ -267,20 +283,39 @@ NAN: Final[float] = ...
 error: Final = Exception
 
 tracemalloc_domain: Final[int] = ...
+_extobj_contextvar: _contextvars.ContextVar[CapsuleType]
 
 __cpu_baseline__: Final[list[str]] = ...
 __cpu_dispatch__: Final[list[str]] = ...
 __cpu_features__: Final[dict[str, bool]] = ...
 __cpu_targets_info__: Final[dict[str, dict[str, dict[str, str]]]] = ...
 
-_flagdict: Final[dict[str, int]] = ...
 typeinfo: Final[dict[str, np.dtype[Any]]] = ...
+_flagdict: Final[dict[str, int]] = ...
 
 e: Final[float] = ...
 euler_gamma: Final[float] = ...
 pi: Final[float] = ...
 
-#
+clip: np.ufunc
+count: np.ufunc
+endswith: np.ufunc
+find: np.ufunc
+index: np.ufunc
+isalnum: np.ufunc
+isalpha: np.ufunc
+isdecimal: np.ufunc
+isdigit: np.ufunc
+islower: np.ufunc
+isnumeric: np.ufunc
+isspace: np.ufunc
+istitle: np.ufunc
+isupper: np.ufunc
+rfind: np.ufunc
+rindex: np.ufunc
+startswith: np.ufunc
+str_len: np.ufunc
+
 _arg: np.ufunc
 _center: np.ufunc
 _expandtabs: np.ufunc
@@ -300,25 +335,6 @@ _rstrip_whitespace: np.ufunc
 _strip_chars: np.ufunc
 _strip_whitespace: np.ufunc
 _zfill: np.ufunc
-#
-clip: np.ufunc
-count: np.ufunc
-endswith: np.ufunc
-find: np.ufunc
-index: np.ufunc
-isalnum: np.ufunc
-isalpha: np.ufunc
-isdecimal: np.ufunc
-isdigit: np.ufunc
-islower: np.ufunc
-isnumeric: np.ufunc
-isspace: np.ufunc
-istitle: np.ufunc
-isupper: np.ufunc
-rfind: np.ufunc
-rindex: np.ufunc
-startswith: np.ufunc
-str_len: np.ufunc
 
 @final
 class flagsobj:
@@ -1596,7 +1612,6 @@ def c_einsum(
 
 ###
 
-#
 @overload
 def scalar(dtype: np.dtype[np.object_], obj: object) -> Any: ...
 @overload
@@ -1606,7 +1621,8 @@ def scalar(dtype: np.dtype[_SafeScalarT]) -> _SafeScalarT: ...
 @overload
 def scalar(dtype: np.dtype[_SafeScalarT], obj: bytes) -> _SafeScalarT: ...
 
-#
+###
+
 @overload
 def compare_chararrays(
     a1: _ArrayLikeStr_co,
@@ -1622,28 +1638,19 @@ def compare_chararrays(
     rstrip: bool,
 ) -> _Array[np.bool]: ...
 
-#
+###
+
 def add_docstring(obj: Callable[..., object] | _HasDoc, docstring: str, /) -> None: ...
 
 #
+@deprecated("_add_newdoc_ufunc is deprecated. Use `ufunc.__doc__ = newdoc` instead.")
+def _add_newdoc_ufunc(ufunc: np.ufunc, new_docstring: str, /) -> None: ...
+
+###
+
 def dragon4_positional(*args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
 def dragon4_scientific(*args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
 def format_longfloat(*args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
-
-#
-def _get_madvise_hugepage() -> bool: ...
-def _set_madvise_hugepage(enabled: bool, /) -> bool: ...
-def _get_ndarray_c_version() -> int: ...
-
-#
-def _monotonicity(x: _ArrayLikeFloat_co) -> L[0, 1]: ...
-def _place(input: npt.ArrayLike, mask: _ArrayLikeBool_co, vals: npt.ArrayLike) -> None: ...
-def _reconstruct(
-    subtype: type[_Array],
-    shape: _AnyShapeT,
-    dtype: _DTypeT,
-) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
-def _vec_string(a: _ArrayLikeAnyString_co, dtype: npt.DTypeLike, attr: str, /) -> _Array: ...
 
 ###
 
@@ -1684,3 +1691,23 @@ def frompyfunc(
 def frompyfunc(f: Callable[..., Any], /, nin: SupportsIndex, nout: SupportsIndex, *, identity: object = None) -> np.ufunc: ...
 
 ###
+
+#
+def _get_madvise_hugepage() -> bool: ...
+def _set_madvise_hugepage(enabled: bool, /) -> bool: ...
+def _get_ndarray_c_version() -> int: ...
+
+#
+
+def _get_extobj_dict() -> _ExtObjDict: ...
+def _make_extobj() -> CapsuleType: ...
+
+#
+def _monotonicity(x: _ArrayLikeFloat_co) -> L[0, 1]: ...
+def _place(input: npt.ArrayLike, mask: _ArrayLikeBool_co, vals: npt.ArrayLike) -> None: ...
+def _reconstruct(
+    subtype: type[_Array],
+    shape: _AnyShapeT,
+    dtype: _DTypeT,
+) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+def _vec_string(a: _ArrayLikeAnyString_co, dtype: npt.DTypeLike, attr: str, /) -> _Array: ...
