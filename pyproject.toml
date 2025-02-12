@@ -50,7 +50,7 @@ dev = [
     "libcst>=1.6.0",
     "ruff>=0.9.6",
     "mypy[faster-cache]>=1.15.0",
-    "basedpyright>=1.27.0",
+    "basedpyright>=1.27.1",
     "pytest>=8.3.4",
 ]
 
