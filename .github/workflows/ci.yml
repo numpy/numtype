@@ -49,6 +49,7 @@ jobs:
           src/numpy-stubs/_core/_type_aliases.pyi
           src/numpy-stubs/_core/_ufunc_config.pyi
           src/numpy-stubs/_core/arrayprint.pyi
+          src/numpy-stubs/_core/getlimits.pyi
           src/numpy-stubs/_core/multiarray.pyi
           src/numpy-stubs/_core/numerictypes.pyi
           src/numpy-stubs/_core/records.pyi
@@ -108,6 +109,7 @@ jobs:
           src/numpy-stubs/_core/_type_aliases.pyi
           src/numpy-stubs/_core/_ufunc_config.pyi
           src/numpy-stubs/_core/arrayprint.pyi
+          src/numpy-stubs/_core/getlimits.pyi
           src/numpy-stubs/_core/multiarray.pyi
           src/numpy-stubs/_core/numerictypes.pyi
           src/numpy-stubs/_core/records.pyi

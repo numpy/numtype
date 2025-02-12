@@ -94,6 +94,7 @@ from numpy._core.fromnumeric import (
     var,
 )
 from numpy._core.function_base import geomspace, linspace, logspace
+from numpy._core.getlimits import finfo, iinfo
 from numpy._core.multiarray import (
     arange,
     array,
@@ -661,9 +662,7 @@ _SCT = TypeVar("_SCT", bound=generic)
 _SCT_co = TypeVar("_SCT_co", bound=generic, covariant=True)
 _NumberT = TypeVar("_NumberT", bound=number)
 _RealNumberT = TypeVar("_RealNumberT", bound=floating | integer)
-_FloatingT_co = TypeVar("_FloatingT_co", bound=floating, default=floating, covariant=True)
 _IntegerT = TypeVar("_IntegerT", bound=integer)
-_IntegerT_co = TypeVar("_IntegerT_co", bound=integer, default=integer, covariant=True)
 
 _NBit = TypeVar("_NBit", bound=NBitBase, default=Any)
 _NBit1 = TypeVar("_NBit1", bound=NBitBase, default=Any)
@@ -5240,57 +5239,6 @@ class ndindex:
     #
     def __iter__(self) -> Self: ...
     def __next__(self) -> _Shape: ...
-
-class finfo(Generic[_FloatingT_co]):
-    dtype: Final[dtype[_FloatingT_co]]
-    bits: Final[int]
-    eps: Final[_FloatingT_co]
-    epsneg: Final[_FloatingT_co]
-    iexp: Final[int]
-    machep: Final[int]
-    max: Final[_FloatingT_co]
-    maxexp: Final[int]
-    min: Final[_FloatingT_co]
-    minexp: Final[int]
-    negep: Final[int]
-    nexp: Final[int]
-    nmant: Final[int]
-    precision: Final[int]
-    resolution: Final[_FloatingT_co]
-    smallest_subnormal: Final[_FloatingT_co]
-
-    @property
-    def smallest_normal(self) -> _FloatingT_co: ...
-    @property
-    def tiny(self) -> _FloatingT_co: ...
-
-    #
-    @overload
-    def __new__(cls, dtype: inexact[_NBit] | _DTypeLike[inexact[_NBit]]) -> finfo[floating[_NBit]]: ...
-    @overload
-    def __new__(cls, dtype: type[float | complex] | float | complex) -> finfo[float64]: ...
-    @overload
-    def __new__(cls, dtype: str) -> finfo[floating]: ...
-
-class iinfo(Generic[_IntegerT_co]):
-    dtype: Final[dtype[_IntegerT_co]]
-    kind: Final[LiteralString]
-    bits: Final[int]
-    key: Final[LiteralString]
-
-    #
-    @property
-    def min(self) -> int: ...
-    @property
-    def max(self) -> int: ...
-
-    #
-    @overload
-    def __new__(cls, dtype: _IntegerT_co | _DTypeLike[_IntegerT_co]) -> iinfo[_IntegerT_co]: ...
-    @overload
-    def __new__(cls, dtype: int | type[int]) -> iinfo[int_]: ...
-    @overload
-    def __new__(cls, dtype: str) -> iinfo[Any]: ...
 
 class memmap(ndarray[_ShapeT_co, _DType_co]):
     __array_priority__: ClassVar[float]  # pyright: ignore[reportIncompatibleMethodOverride]
