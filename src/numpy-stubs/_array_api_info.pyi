@@ -1,42 +1,16 @@
-from typing import ClassVar, Literal, TypeAlias, TypedDict, final, overload, type_check_only
-from typing_extensions import Never, TypeVar
+from typing import Literal as L, TypeAlias, TypedDict, overload, type_check_only
+from typing_extensions import TypeVar
 
 import numpy as np
 
-_Device: TypeAlias = Literal["cpu"]
-_DeviceLike: TypeAlias = _Device | None
+###
 
-_Capabilities = TypedDict(
-    "_Capabilities",
-    {
-        "boolean indexing": Literal[True],
-        "data-dependent shapes": Literal[True],
-    },
-)
-
-_DefaultDTypes = TypedDict(
-    "_DefaultDTypes",
-    {
-        "real floating": np.dtype[np.float64],
-        "complex floating": np.dtype[np.complex128],
-        "integral": np.dtype[np.intp],
-        "indexing": np.dtype[np.intp],
-    },
-)
-
-_KindBool: TypeAlias = Literal["bool"]
-_KindInt: TypeAlias = Literal["signed integer"]
-_KindUInt: TypeAlias = Literal["unsigned integer"]
-_KindInteger: TypeAlias = Literal["integral"]
-_KindFloat: TypeAlias = Literal["real floating"]
-_KindComplex: TypeAlias = Literal["complex floating"]
-_KindNumber: TypeAlias = Literal["numeric"]
-_Kind: TypeAlias = _KindBool | _KindInt | _KindUInt | _KindInteger | _KindFloat | _KindComplex | _KindNumber
-
+_T = TypeVar("_T")
 _T1 = TypeVar("_T1")
 _T2 = TypeVar("_T2")
 _T3 = TypeVar("_T3")
-_Permute1: TypeAlias = _T1 | tuple[_T1]
+
+_Permute1: TypeAlias = _T | tuple[_T]
 _Permute2: TypeAlias = tuple[_T1, _T2] | tuple[_T2, _T1]
 _Permute3: TypeAlias = (
     tuple[_T1, _T2, _T3]
@@ -46,37 +20,73 @@ _Permute3: TypeAlias = (
     | tuple[_T3, _T1, _T2]
     | tuple[_T3, _T2, _T1]
 )
+_Permute12: TypeAlias = _Permute1[_T] | _Permute2[_T1, _T2]
+_Permute13: TypeAlias = _Permute1[_T] | _Permute3[_T1, _T2, _T3]
+
+_Device: TypeAlias = L["cpu"]
+_KindBool: TypeAlias = L["bool"]
+_KindInt: TypeAlias = L["signed integer"]
+_KindUInt: TypeAlias = L["unsigned integer"]
+_KindInteger: TypeAlias = L["integral"]
+_KindFloat: TypeAlias = L["real floating"]
+_KindComplex: TypeAlias = L["complex floating"]
+_KindNumber: TypeAlias = L["numeric"]
+_Kind: TypeAlias = L[_KindBool, _KindInt, _KindUInt, _KindInteger, _KindFloat, _KindComplex, _KindNumber]
+
+###
+
+_Capabilities = TypedDict(
+    "_Capabilities",
+    {
+        "boolean indexing": L[True],
+        "data-dependent shapes": L[True],
+        # 'max rank' will be part of the 2024.12 standard
+        # "max rank": 64,
+    },
+)
+_DefaultDTypes = TypedDict(
+    "_DefaultDTypes",
+    {
+        "real floating": np.dtypes.Float64DType,
+        "complex floating": np.dtypes.Complex128DType,
+        "integral": np.dtype[np.int_],
+        "indexing": np.dtype[np.intp],
+    },
+)
 
 @type_check_only
 class _DTypesBool(TypedDict):
-    bool: np.dtype[np.bool]
+    bool: np.dtypes.BoolDType
 
 @type_check_only
 class _DTypesInt(TypedDict):
-    int8: np.dtype[np.int8]
-    int16: np.dtype[np.int16]
-    int32: np.dtype[np.int32]
-    int64: np.dtype[np.int64]
+    int8: np.dtypes.Int8DType
+    int16: np.dtypes.Int16DType
+    int32: np.dtypes.Int32DType
+    int64: np.dtypes.Int64DType
 
 @type_check_only
 class _DTypesUInt(TypedDict):
-    uint8: np.dtype[np.uint8]
-    uint16: np.dtype[np.uint16]
-    uint32: np.dtype[np.uint32]
-    uint64: np.dtype[np.uint64]
-
-@type_check_only
-class _DTypesInteger(_DTypesInt, _DTypesUInt): ...
+    uint8: np.dtypes.UInt8DType
+    uint16: np.dtypes.UInt16DType
+    uint32: np.dtypes.UInt32DType
+    uint64: np.dtypes.UInt64DType
 
 @type_check_only
 class _DTypesFloat(TypedDict):
-    float32: np.dtype[np.float32]
-    float64: np.dtype[np.float64]
+    float32: np.dtypes.Float32DType
+    float64: np.dtypes.Float64DType
 
 @type_check_only
 class _DTypesComplex(TypedDict):
-    complex64: np.dtype[np.complex64]
-    complex128: np.dtype[np.complex128]
+    complex64: np.dtypes.Complex64DType
+    complex128: np.dtypes.Complex128DType
+
+@type_check_only
+class _DTypesEmpty(TypedDict): ...
+
+@type_check_only
+class _DTypesInteger(_DTypesInt, _DTypesUInt): ...
 
 @type_check_only
 class _DTypesNumber(_DTypesInteger, _DTypesFloat, _DTypesComplex): ...
@@ -86,101 +96,60 @@ class _DTypes(_DTypesBool, _DTypesNumber): ...
 
 @type_check_only
 class _DTypesUnion(TypedDict, total=False):
-    bool: np.dtype[np.bool]
-    int8: np.dtype[np.int8]
-    int16: np.dtype[np.int16]
-    int32: np.dtype[np.int32]
-    int64: np.dtype[np.int64]
-    uint8: np.dtype[np.uint8]
-    uint16: np.dtype[np.uint16]
-    uint32: np.dtype[np.uint32]
-    uint64: np.dtype[np.uint64]
-    float32: np.dtype[np.float32]
-    float64: np.dtype[np.float64]
-    complex64: np.dtype[np.complex64]
-    complex128: np.dtype[np.complex128]
+    bool: np.dtypes.BoolDType
+    int8: np.dtypes.Int8DType
+    int16: np.dtypes.Int16DType
+    int32: np.dtypes.Int32DType
+    int64: np.dtypes.Int64DType
+    uint8: np.dtypes.UInt8DType
+    uint16: np.dtypes.UInt16DType
+    uint32: np.dtypes.UInt32DType
+    uint64: np.dtypes.UInt64DType
+    float32: np.dtypes.Float32DType
+    float64: np.dtypes.Float64DType
+    complex64: np.dtypes.Complex64DType
+    complex128: np.dtypes.Complex128DType
 
-_EmptyDict: TypeAlias = dict[Never, Never]
+###
 
-@final
 class __array_namespace_info__:
-    __module__: ClassVar[Literal["numpy"]]
+    __module__: L["numpy"] = "numpy"
 
-    def capabilities(self) -> _Capabilities: ...
-    def default_device(self) -> _Device: ...
-    def default_dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-    ) -> _DefaultDTypes: ...
-    def devices(self) -> list[_Device]: ...
+    def capabilities(self, /) -> _Capabilities: ...
+    def devices(self, /) -> list[_Device]: ...
+    def default_device(self, /) -> _Device: ...
+    def default_dtypes(self, /, *, device: _Device | None = None) -> _DefaultDTypes: ...
+
+    # the mypy errors are false positives
     @overload
-    def dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-        kind: None = ...,
-    ) -> _DTypes: ...
+    def dtypes(self, /, *, device: _Device | None = None, kind: None = ...) -> _DTypes: ...
     @overload
-    def dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-        kind: _Permute1[_KindBool],
-    ) -> _DTypesBool: ...
+    def dtypes(self, /, *, device: _Device | None = None, kind: tuple[()]) -> _DTypesEmpty: ...  # type: ignore[overload-overlap]
     @overload
-    def dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-        kind: _Permute1[_KindInt],
-    ) -> _DTypesInt: ...
+    def dtypes(self, /, *, device: _Device | None = None, kind: _Permute1[_KindBool]) -> _DTypesBool: ...  # type: ignore[overload-overlap]
     @overload
-    def dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-        kind: _Permute1[_KindUInt],
-    ) -> _DTypesUInt: ...
+    def dtypes(self, /, *, device: _Device | None = None, kind: _Permute1[_KindInt]) -> _DTypesInt: ...  # type: ignore[overload-overlap]
     @overload
-    def dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-        kind: _Permute1[_KindFloat],
-    ) -> _DTypesFloat: ...
+    def dtypes(self, /, *, device: _Device | None = None, kind: _Permute1[_KindUInt]) -> _DTypesUInt: ...  # type: ignore[overload-overlap]
     @overload
-    def dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-        kind: _Permute1[_KindComplex],
-    ) -> _DTypesComplex: ...
+    def dtypes(self, /, *, device: _Device | None = None, kind: _Permute1[_KindFloat]) -> _DTypesFloat: ...  # type: ignore[overload-overlap]
     @overload
-    def dtypes(
+    def dtypes(self, /, *, device: _Device | None = None, kind: _Permute1[_KindComplex]) -> _DTypesComplex: ...  # type: ignore[overload-overlap]
+    @overload
+    def dtypes(  # type: ignore[overload-overlap]
         self,
+        /,
         *,
-        device: _DeviceLike = ...,
-        kind: (_Permute1[_KindInteger] | _Permute2[_KindInt, _KindUInt]),
+        device: _Device | None = None,
+        kind: _Permute12[_KindInteger, _KindInt, _KindUInt],
     ) -> _DTypesInteger: ...
     @overload
-    def dtypes(
+    def dtypes(  # type: ignore[overload-overlap]
         self,
+        /,
         *,
-        device: _DeviceLike = ...,
-        kind: (_Permute1[_KindNumber] | _Permute3[_KindInteger, _KindFloat, _KindComplex]),
+        device: _Device | None = None,
+        kind: _Permute13[_KindNumber, _KindInteger, _KindFloat, _KindComplex],
     ) -> _DTypesNumber: ...
     @overload
-    def dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-        kind: tuple[()],
-    ) -> _EmptyDict: ...
-    @overload
-    def dtypes(
-        self,
-        *,
-        device: _DeviceLike = ...,
-        kind: tuple[_Kind, ...],
-    ) -> _DTypesUnion: ...
+    def dtypes(self, /, *, device: _Device | None = None, kind: tuple[_Kind, ...]) -> _DTypesUnion: ...

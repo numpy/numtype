@@ -89,6 +89,7 @@ jobs:
           src/numpy-stubs/testing
           src/numpy-stubs/typing
           src/numpy-stubs/__config__.pyi
+          src/numpy-stubs/_array_api_info.pyi
           src/numpy-stubs/_configtool.pyi
           src/numpy-stubs/_distributor_init.pyi
           src/numpy-stubs/_expired_attrs_2_0.pyi
@@ -149,6 +150,7 @@ jobs:
           src/numpy-stubs/testing
           src/numpy-stubs/typing
           src/numpy-stubs/__config__.pyi
+          src/numpy-stubs/_array_api_info.pyi
           src/numpy-stubs/_configtool.pyi
           src/numpy-stubs/_distributor_init.pyi
           src/numpy-stubs/_expired_attrs_2_0.pyi
