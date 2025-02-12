@@ -95,6 +95,7 @@ from numpy._core.fromnumeric import (
 )
 from numpy._core.function_base import geomspace, linspace, logspace
 from numpy._core.getlimits import finfo, iinfo
+from numpy._core.memmap import memmap
 from numpy._core.multiarray import (
     arange,
     array,
@@ -500,7 +501,10 @@ __all__ = [  # noqa: RUF022
     # _core.__all__
     "abs", "acos", "acosh", "asin", "asinh", "atan", "atanh", "atan2", "bitwise_invert",
     "bitwise_left_shift", "bitwise_right_shift", "concat", "pow", "permute_dims",
-    "memmap", "sctypeDict", "record", "recarray",
+    "sctypeDict", "record", "recarray",
+
+    # _core.memmap.__all__
+    "memmap",
 
     # _core.numeric.__all__
     "newaxis", "ndarray", "flatiter", "nditer", "nested_iters", "ufunc", "arange",
@@ -906,7 +910,6 @@ _FutureScalar: TypeAlias = L["bytes", "str", "object"]
 _ByteOrderChar: TypeAlias = L["<", ">", "=", "|"]
 _CastingKind: TypeAlias = L["no", "equiv", "safe", "same_kind", "unsafe"]
 _ModeKind: TypeAlias = L["raise", "wrap", "clip"]
-_ModeKindMM: TypeAlias = L["readonly", "r", "copyonwrite", "c", "readwrite", "r+", "write", "w+"]
 _PartitionKind: TypeAlias = L["introselect"]
 _SortKind: TypeAlias = L[
     "Q", "quick", "quicksort",
@@ -955,9 +958,6 @@ class _SupportsFileMethods(SupportsFlush, Protocol):
     def fileno(self) -> SupportsIndex: ...
     def tell(self) -> SupportsIndex: ...
     def seek(self, offset: int, whence: int, /) -> object: ...
-
-@type_check_only
-class _SupportsFileMethodsRW(SupportsWrite[bytes], _SupportsFileMethods, Protocol): ...
 
 @type_check_only
 class _SupportsItem(Protocol[_T_co]):
@@ -5239,56 +5239,6 @@ class ndindex:
     #
     def __iter__(self) -> Self: ...
     def __next__(self) -> _Shape: ...
-
-class memmap(ndarray[_ShapeT_co, _DType_co]):
-    __array_priority__: ClassVar[float]  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    filename: str | None
-    offset: int
-    mode: str
-
-    @overload
-    def __new__(
-        cls,
-        filename: StrOrBytesPath | _SupportsFileMethodsRW,
-        dtype: type[uint8] = ...,
-        mode: _ModeKindMM = ...,
-        offset: int = ...,
-        shape: int | tuple[int, ...] | None = ...,
-        order: _OrderKACF = ...,
-    ) -> memmap[Any, dtype[uint8]]: ...
-    @overload
-    def __new__(
-        cls,
-        filename: StrOrBytesPath | _SupportsFileMethodsRW,
-        dtype: _DTypeLike[_SCT],
-        mode: _ModeKindMM = ...,
-        offset: int = ...,
-        shape: int | tuple[int, ...] | None = ...,
-        order: _OrderKACF = ...,
-    ) -> memmap[Any, dtype[_SCT]]: ...
-    @overload
-    def __new__(
-        cls,
-        filename: StrOrBytesPath | _SupportsFileMethodsRW,
-        dtype: DTypeLike,
-        mode: _ModeKindMM = ...,
-        offset: int = ...,
-        shape: int | tuple[int, ...] | None = ...,
-        order: _OrderKACF = ...,
-    ) -> memmap[Any, dtype[Any]]: ...
-
-    #
-    def __array_finalize__(self, obj: object) -> None: ...
-    def __array_wrap__(
-        self,
-        array: memmap[_ShapeT_co, _DType_co],
-        context: tuple[ufunc, tuple[Any, ...], int] | None = ...,
-        return_scalar: builtins.bool = ...,
-    ) -> Any: ...
-
-    #
-    def flush(self) -> None: ...
 
 class vectorize:
     __doc__: str | None
