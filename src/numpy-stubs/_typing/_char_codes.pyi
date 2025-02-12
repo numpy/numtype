@@ -1,54 +1,105 @@
 from typing import Literal, TypeAlias
 
+# bool
 _BoolCodes: TypeAlias = Literal["bool", "bool_", "?", "|?", "=?", "<?", ">?"]
 
-_UInt8Codes: TypeAlias = Literal["uint8", "u1", "|u1", "=u1", "<u1", ">u1"]
-_UInt16Codes: TypeAlias = Literal["uint16", "u2", "|u2", "=u2", "<u2", ">u2"]
-_UInt32Codes: TypeAlias = Literal["uint32", "u4", "|u4", "=u4", "<u4", ">u4"]
-_UInt64Codes: TypeAlias = Literal["uint64", "u8", "|u8", "=u8", "<u8", ">u8"]
-
-_Int8Codes: TypeAlias = Literal["int8", "i1", "|i1", "=i1", "<i1", ">i1"]
-_Int16Codes: TypeAlias = Literal["int16", "i2", "|i2", "=i2", "<i2", ">i2"]
-_Int32Codes: TypeAlias = Literal["int32", "i4", "|i4", "=i4", "<i4", ">i4"]
-_Int64Codes: TypeAlias = Literal["int64", "i8", "|i8", "=i8", "<i8", ">i8"]
-
-_Float16Codes: TypeAlias = Literal["float16", "f2", "|f2", "=f2", "<f2", ">f2"]
-_Float32Codes: TypeAlias = Literal["float32", "f4", "|f4", "=f4", "<f4", ">f4"]
-_Float64Codes: TypeAlias = Literal["float64", "f8", "|f8", "=f8", "<f8", ">f8"]
-
-_Complex64Codes: TypeAlias = Literal["complex64", "c8", "|c8", "=c8", "<c8", ">c8"]
-_Complex128Codes: TypeAlias = Literal["complex128", "c16", "|c16", "=c16", "<c16", ">c16"]
-
-_ByteCodes: TypeAlias = Literal["byte", "b", "|b", "=b", "<b", ">b"]
-_ShortCodes: TypeAlias = Literal["short", "h", "|h", "=h", "<h", ">h"]
-_IntCCodes: TypeAlias = Literal["intc", "i", "|i", "=i", "<i", ">i"]
-_IntPCodes: TypeAlias = Literal["intp", "int", "int_", "n", "|n", "=n", "<n", ">n"]
-_LongCodes: TypeAlias = Literal["long", "l", "|l", "=l", "<l", ">l"]
-_IntCodes = _IntPCodes
+# signed integer
+_Int8Codes: TypeAlias = Literal["int8", "byte", "i1", "b", "|i1", "|b", "=i1", "=b", "<i1", "<b", ">i1", ">b"]
+_Int16Codes: TypeAlias = Literal["int16", "short", "i2", "h", "|i2", "|h", "=i2", "=h", "<i2", "<h", ">i2", ">h"]
+_Int32Codes: TypeAlias = Literal["int32", "intc", "i4", "i", "|i4", "|i", "=i4", "=i", "<i4", "<i", ">i4", ">i"]
+_Int64Codes: TypeAlias = Literal["int64", "longlong", "i8", "q", "|i8", "|q", "=i8", "=q", "<i8", "<q", ">i8", ">q"]
+_IntPCodes: TypeAlias = Literal["intp", "int", "int_", "n", "|n", "=n", "<n", ">n"]  # either int32 or int64
+_LongCodes: TypeAlias = Literal["long", "l", "|l", "=l", "<l", ">l"]  # either int32 or int64
 _LongLongCodes: TypeAlias = Literal["longlong", "q", "|q", "=q", "<q", ">q"]
+_ByteCodes: TypeAlias = _Int8Codes
+_ShortCodes: TypeAlias = _Int16Codes
+_IntCCodes: TypeAlias = _Int32Codes
+_IntCodes: TypeAlias = _IntPCodes
+_SignedIntegerCodes: TypeAlias = Literal[
+    _Int8Codes,
+    _Int16Codes,
+    _Int32Codes,
+    _Int64Codes,
+    _IntPCodes,
+    _LongCodes,
+]
 
-_UByteCodes: TypeAlias = Literal["ubyte", "B", "|B", "=B", "<B", ">B"]
-_UShortCodes: TypeAlias = Literal["ushort", "H", "|H", "=H", "<H", ">H"]
-_UIntCCodes: TypeAlias = Literal["uintc", "I", "|I", "=I", "<I", ">I"]
-_UIntPCodes: TypeAlias = Literal["uintp", "uint", "N", "|N", "=N", "<N", ">N"]
-_ULongCodes: TypeAlias = Literal["ulong", "L", "|L", "=L", "<L", ">L"]
-_UIntCodes = _UIntPCodes
+# unsigned integer
+_UInt8Codes: TypeAlias = Literal["uint8", "ubyte", "u1", "B", "|u1", "|B", "=u1", "=B", "<u1", "<B", ">u1", ">B"]
+_UInt16Codes: TypeAlias = Literal["uint16", "ushort", "u2", "H", "|u2", "|H", "=u2", "=H", "<u2", "<H", ">u2", ">H"]
+_UInt32Codes: TypeAlias = Literal["uint32", "uintc", "u4", "I", "|u4", "|I", "=u4", "=I", "<u4", "<I", ">u4", ">I"]
+_UInt64Codes: TypeAlias = Literal["uint64", "ulonglong", "u8", "L", "|u8", "|L", "=u8", "=L", "<u8", "<L", ">u8", ">L"]
+_UIntPCodes: TypeAlias = Literal["uintp", "uint", "N", "|N", "=N", "<N", ">N"]  # either uint32 or uint64
+_ULongCodes: TypeAlias = Literal["ulong", "L", "|L", "=L", "<L", ">L"]  # either uint32 or uint64
 _ULongLongCodes: TypeAlias = Literal["ulonglong", "Q", "|Q", "=Q", "<Q", ">Q"]
+_UByteCodes: TypeAlias = _UInt8Codes
+_UShortCodes: TypeAlias = _UInt16Codes
+_UIntCCodes: TypeAlias = _UInt32Codes
+_UIntCodes: TypeAlias = _UIntPCodes
+_UnsignedIntegerCodes: TypeAlias = Literal[
+    _UInt8Codes,
+    _UInt16Codes,
+    _UInt32Codes,
+    _UInt64Codes,
+    _UIntCodes,
+    _ULongCodes,
+]
 
-_HalfCodes: TypeAlias = Literal["half", "e", "|e", "=e", "<e", ">e"]
-_SingleCodes: TypeAlias = Literal["single", "f", "|f", "=f", "<f", ">f"]
-_DoubleCodes: TypeAlias = Literal["double", "float", "d", "|d", "=d", "<d", ">d"]
-_LongDoubleCodes: TypeAlias = Literal["longdouble", "g", "|g", "=g", "<g", ">g"]
+# real floating
+_Float16Codes: TypeAlias = Literal["float16", "half", "f2", "e", "|f2", "|e", "=f2", "=e", "<f2", "<e", ">f2", ">2"]
+_Float32Codes: TypeAlias = Literal["float32", "single", "f4", "f", "|f4", "|f", "=f4", "=f", "<f4", "<f", ">4f", ">f"]
+_Float64Codes: TypeAlias = Literal["float64", "double", "float", "f8", "d", "|f8", "|d", "=f8", "=d", "<f8", "<d", ">f8", ">d"]
+_Float96Codes: TypeAlias = Literal["float96", "f12", "|f12", "=f12", "<f12", ">f12"]
+_Float128Codes: TypeAlias = Literal["float128", "f16", "|f16", "=f16", "<f16", ">f16"]
+_LongDoubleCodes: TypeAlias = Literal["longdouble", "g", "|g", "=g", "<g", ">g"]  # either float96 or float128
+_HalfCodes: TypeAlias = _Float16Codes
+_SingleCodes: TypeAlias = _Float32Codes
+_DoubleCodes: TypeAlias = _Float64Codes
+_FloatingCodes: TypeAlias = Literal[
+    _Float16Codes,
+    _Float32Codes,
+    _Float64Codes,
+    _Float96Codes,
+    _Float128Codes,
+    _LongDoubleCodes,
+]
 
-_CSingleCodes: TypeAlias = Literal["csingle", "F", "|F", "=F", "<F", ">F"]
-_CDoubleCodes: TypeAlias = Literal["cdouble", "complex", "D", "|D", "=D", "<D", ">D"]
-_CLongDoubleCodes: TypeAlias = Literal["clongdouble", "G", "|G", "=G", "<G", ">G"]
+# complex floating
+_Complex64Codes: TypeAlias = Literal["complex64", "csingle", "c8", "F", "|c8", "|F", "=c8", "=F", "<c8", "<F", ">c8", ">F"]
+_Complex128Codes: TypeAlias = Literal[
+    "complex128", "cdouble", "complex",
+    "c16", "D", "|c16", "|D", "=c16", "=D", "<c16", "<D", ">c16", ">D",
+]  # fmt: skip
+_Complex192Codes: TypeAlias = Literal["complex192", "c24", "|c24", "=c24", "<c24", ">c24"]
+_Complex256Codes: TypeAlias = Literal["complex256", "c32", "|c32", "=c32", "<c32", ">c32"]
+_CLongDoubleCodes: TypeAlias = Literal["clongdouble", "G", "|G", "=G", "<G", ">G"]  # either complex192 or complex256
+_CSingleCodes: TypeAlias = _Complex64Codes
+_CDoubleCodes: TypeAlias = _Complex128Codes
+_ComplexFloatingCodes: TypeAlias = Literal[
+    _Complex64Codes,
+    _Complex128Codes,
+    _Complex192Codes,
+    _Complex256Codes,
+    _CLongDoubleCodes,
+]
 
+_IntegerCodes: TypeAlias = Literal[_UnsignedIntegerCodes, _SignedIntegerCodes]
+_InexactCodes: TypeAlias = Literal[_FloatingCodes, _ComplexFloatingCodes]
+_NumberCodes: TypeAlias = Literal[_IntegerCodes, _InexactCodes]
+
+# NOTE: These are infinitely many "flexible" codes
 _StrCodes: TypeAlias = Literal["str", "str_", "unicode", "U", "|U", "=U", "<U", ">U"]
 _BytesCodes: TypeAlias = Literal["bytes", "bytes_", "S", "|S", "=S", "<S", ">S"]
+_CharacterCodes: TypeAlias = Literal[_StrCodes, _BytesCodes]
 _VoidCodes: TypeAlias = Literal["void", "V", "|V", "=V", "<V", ">V"]
+_FlexibleCodes: TypeAlias = Literal[_VoidCodes, _CharacterCodes]
+
 _ObjectCodes: TypeAlias = Literal["object", "object_", "O", "|O", "=O", "<O", ">O"]
 
+# NOTE: `StringDType' has no scalar type, and therefore has no name that can be passed to the `dtype` constructor
+_StringCodes: TypeAlias = Literal["T", "|T", "=T", "<T", ">T"]
+
+# NOTE: The datetime64 and timedelta64 aren't complete, because e.g. "M8[6D]" is also valid.
 _DT64Codes: TypeAlias = Literal[
     "datetime64", "|datetime64", "=datetime64", "<datetime64", ">datetime64",
     "datetime64[Y]", "|datetime64[Y]", "=datetime64[Y]", "<datetime64[Y]", ">datetime64[Y]",
@@ -111,56 +162,5 @@ _TD64Codes: TypeAlias = Literal[
     "m8[fs]", "|m8[fs]", "=m8[fs]", "<m8[fs]", ">m8[fs]",
     "m8[as]", "|m8[as]", "=m8[as]", "<m8[as]", ">m8[as]",
 ]  # fmt: skip
-
-# NOTE: `StringDType' has no scalar type, and therefore has no name that can
-# be passed to the `dtype` constructor
-_StringCodes: TypeAlias = Literal["T", "|T", "=T", "<T", ">T"]
-
-# NOTE: Nested literals get flattened and de-duplicated at runtime, which isn't
-# the case for a `Union` of `Literal`s.
-# So even though they're equivalent when type-checking, they differ at runtime.
-# Another advantage of nesting, is that they always have a "flat"
-# `Literal.__args__`, which is a tuple of *literally* all its literal values.
-
-_UnsignedIntegerCodes: TypeAlias = Literal[
-    _UInt8Codes,
-    _UInt16Codes,
-    _UInt32Codes,
-    _UInt64Codes,
-    _UIntCodes,
-    _UByteCodes,
-    _UShortCodes,
-    _UIntCCodes,
-    _ULongCodes,
-    _ULongLongCodes,
-]
-_SignedIntegerCodes: TypeAlias = Literal[
-    _Int8Codes,
-    _Int16Codes,
-    _Int32Codes,
-    _Int64Codes,
-    _IntCodes,
-    _ByteCodes,
-    _ShortCodes,
-    _IntCCodes,
-    _LongCodes,
-    _LongLongCodes,
-]
-_FloatingCodes: TypeAlias = Literal[
-    _Float16Codes, _Float32Codes, _Float64Codes, _HalfCodes, _SingleCodes, _DoubleCodes, _LongDoubleCodes
-]
-_ComplexFloatingCodes: TypeAlias = Literal[
-    _Complex64Codes,
-    _Complex128Codes,
-    _CSingleCodes,
-    _CDoubleCodes,
-    _CLongDoubleCodes,
-]
-_IntegerCodes: TypeAlias = Literal[_UnsignedIntegerCodes, _SignedIntegerCodes]
-_InexactCodes: TypeAlias = Literal[_FloatingCodes, _ComplexFloatingCodes]
-_NumberCodes: TypeAlias = Literal[_IntegerCodes, _InexactCodes]
-
-_CharacterCodes: TypeAlias = Literal[_StrCodes, _BytesCodes]
-_FlexibleCodes: TypeAlias = Literal[_VoidCodes, _CharacterCodes]
 
 _GenericCodes: TypeAlias = Literal[_BoolCodes, _NumberCodes, _FlexibleCodes, _DT64Codes, _TD64Codes, _ObjectCodes]

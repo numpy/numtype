@@ -45,7 +45,7 @@ assert_type(np.ctypeslib.as_ctypes_type(ct.c_double), type[ct.c_double])
 assert_type(np.ctypeslib.as_ctypes_type("q"), type[ct.c_longlong])
 assert_type(np.ctypeslib.as_ctypes_type([("i8", np.int64), ("f8", np.float64)]), type[Any])
 assert_type(np.ctypeslib.as_ctypes_type("i8"), type[Any])
-assert_type(np.ctypeslib.as_ctypes_type("f8"), type[Any])
+assert_type(np.ctypeslib.as_ctypes_type("f8"), type[ct.c_double])
 
 assert_type(np.ctypeslib.as_ctypes(AR_bool.take(0)), ct.c_bool)
 assert_type(np.ctypeslib.as_ctypes(AR_ubyte.take(0)), ct.c_ubyte)
