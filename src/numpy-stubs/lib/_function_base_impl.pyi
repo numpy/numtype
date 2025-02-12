@@ -1,3 +1,4 @@
+import datetime as dt
 from collections.abc import Callable, Iterable, Sequence
 from typing import (
     Any,
@@ -78,6 +79,8 @@ __all__ = [
     "vectorize",
 ]
 
+###
+
 _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
 _Pss = ParamSpec("_Pss")
@@ -101,6 +104,14 @@ _MethodKind: TypeAlias = L[
     "midpoint",
     "nearest",
 ]
+
+_ToFloat64: TypeAlias = float | np.integer | np.bool
+_ToFloat64_1d: TypeAlias = Sequence[_ToFloat64] | np.ndarray[tuple[int], np.dtype[np.float64 | np.integer | np.bool]]
+_ToJustComplex128_1d: TypeAlias = Sequence[np.complex128] | np.ndarray[tuple[int], np.dtype[np.complex128]]
+_ToComplex128: TypeAlias = complex | _ToFloat64
+_ToComplex128_1d: TypeAlias = (
+    Sequence[_ToComplex128] | np.ndarray[tuple[int], np.dtype[np.complex128 | np.float64 | np.integer | np.bool]]
+)
 
 @type_check_only
 class _SupportsRMulFloat(Protocol[_T_co]):
@@ -706,53 +717,74 @@ quantile = percentile
 
 @overload
 def trapezoid(
-    y: Sequence[_FloatLike_co],
-    x: Sequence[_FloatLike_co] | None = ...,
-    dx: float = ...,
-    axis: SupportsIndex = ...,
+    y: _ToFloat64_1d,
+    x: _ToFloat64_1d | None = None,
+    dx: float = 1.0,
+    axis: SupportsIndex = -1,
 ) -> np.float64: ...
 @overload
 def trapezoid(
-    y: Sequence[_ComplexLike_co],
-    x: Sequence[_ComplexLike_co] | None = ...,
-    dx: float = ...,
-    axis: SupportsIndex = ...,
+    y: _ToJustComplex128_1d,
+    x: _ToJustComplex128_1d | None = None,
+    dx: complex = 1.0,
+    axis: SupportsIndex = -1,
+) -> np.complex128: ...
+@overload
+def trapezoid(  # type: ignore[overload-overlap]
+    y: _ToComplex128_1d,
+    x: _ToComplex128_1d | None = None,
+    dx: complex = 1.0,
+    axis: SupportsIndex = -1,
+) -> np.float64 | np.complex128: ...
+@overload
+def trapezoid(
+    y: Sequence[dt.timedelta],
+    x: Sequence[dt.timedelta] | _ArrayLikeFloat_co | None = None,
+    dx: complex = 1.0,
+    axis: SupportsIndex = -1,
 ) -> np.complex128: ...
 @overload
 def trapezoid(
-    y: _ArrayLike[np.bool_ | np.integer],
-    x: _ArrayLike[np.bool_ | np.integer] | None = ...,
-    dx: float = ...,
-    axis: SupportsIndex = ...,
-) -> np.float64 | NDArray[np.float64]: ...
-@overload
-def trapezoid(
-    y: _ArrayLikeObject_co,
-    x: _ArrayLikeFloat_co | _ArrayLikeObject_co | None = ...,
-    dx: float = ...,
-    axis: SupportsIndex = ...,
-) -> float | NDArray[np.object_]: ...
-@overload
-def trapezoid(
-    y: _ArrayLike[_SCT_fcm],
-    x: _ArrayLike[_SCT_fcm] | _ArrayLikeInt_co | None = ...,
-    dx: float = ...,
-    axis: SupportsIndex = ...,
-) -> _SCT_fcm | NDArray[_SCT_fcm]: ...
+    y: Sequence[_SupportsRMulFloat[float]],
+    x: Sequence[_SupportsRMulFloat[float] | float] | None = None,
+    dx: float = 1.0,
+    axis: SupportsIndex = -1,
+) -> float: ...
 @overload
 def trapezoid(
     y: Sequence[_SupportsRMulFloat[_T]],
-    x: Sequence[_SupportsRMulFloat[_T] | _T] | None = ...,
-    dx: float = ...,
-    axis: SupportsIndex = ...,
+    x: Sequence[_SupportsRMulFloat[_T]] | Sequence[_T] | None = None,
+    dx: float = 1.0,
+    axis: SupportsIndex = -1,
 ) -> _T: ...
 @overload
+def trapezoid(  # type: ignore[overload-overlap]
+    y: _ArrayLike[_SCT_fcm],
+    x: _ArrayLike[_SCT_fcm] | _ArrayLikeInt_co | None = None,
+    dx: float = 1.0,
+    axis: SupportsIndex = -1,
+) -> _SCT_fcm | NDArray[_SCT_fcm]: ...
+@overload
 def trapezoid(
-    y: _ArrayLikeComplex_co | _ArrayLikeTD64_co | _ArrayLikeObject_co,
-    x: _ArrayLikeComplex_co | _ArrayLikeTD64_co | _ArrayLikeObject_co | None = ...,
-    dx: float = ...,
-    axis: SupportsIndex = ...,
-) -> np.inexact | np.timedelta64 | NDArray[np.inexact | np.timedelta64 | np.object_]: ...
+    y: _ArrayLikeInt_co,
+    x: _ArrayLikeInt_co | None = None,
+    dx: float = 1.0,
+    axis: SupportsIndex = -1,
+) -> np.float64 | NDArray[np.float64]: ...
+@overload
+def trapezoid(
+    y: _ArrayLikeTD64_co,
+    x: _ArrayLikeTD64_co | None = None,
+    dx: float = 1.0,
+    axis: SupportsIndex = -1,
+) -> np.float64 | np.timedelta64 | NDArray[np.float64 | np.timedelta64]: ...
+@overload
+def trapezoid(
+    y: _ArrayLikeObject_co,
+    x: _ArrayLikeFloat_co | _ArrayLikeObject_co | None = None,
+    dx: float = 1.0,
+    axis: SupportsIndex = -1,
+) -> Any: ...
 
 #
 @deprecated("Use 'trapezoid' instead")

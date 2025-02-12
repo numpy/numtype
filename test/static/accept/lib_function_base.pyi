@@ -25,14 +25,7 @@ CHAR_AR_U: np.char.chararray[tuple[int, ...], np.dtype[np.str_]]
 
 AR_b_list: list[npt.NDArray[np.bool]]
 
-def func(
-    a: npt.NDArray[Any],
-    posarg: bool = ...,
-    /,
-    arg: int = ...,
-    *,
-    kwarg: str = ...,
-) -> npt.NDArray[Any]: ...
+def func(a: npt.NDArray[Any], posarg: bool = ..., /, arg: int = ..., *, kwarg: str = ...) -> npt.NDArray[Any]: ...
 
 assert_type(vectorized_func.pyfunc, Callable[..., Any])
 assert_type(vectorized_func.cache, bool)
@@ -181,9 +174,9 @@ assert_type(np.quantile(AR_f8, [0.5], out=AR_c16), npt.NDArray[np.complex128])
 
 assert_type(np.trapezoid(AR_LIKE_f8), np.float64)
 assert_type(np.trapezoid(AR_LIKE_f8, AR_LIKE_f8), np.float64)
-assert_type(np.trapezoid(AR_LIKE_c16), np.complex128)
-assert_type(np.trapezoid(AR_LIKE_c16, AR_LIKE_f8), np.complex128)
-assert_type(np.trapezoid(AR_LIKE_f8, AR_LIKE_c16), np.complex128)
+assert_type(np.trapezoid(AR_LIKE_c16), np.float64 | np.complex128)
+assert_type(np.trapezoid(AR_LIKE_c16, AR_LIKE_f8), np.float64 | np.complex128)
+assert_type(np.trapezoid(AR_LIKE_f8, AR_LIKE_c16), np.float64 | np.complex128)
 assert_type(np.trapezoid(AR_LIKE_O), float)
 assert_type(np.trapezoid(AR_LIKE_O, AR_LIKE_f8), float)
 assert_type(np.trapezoid(AR_f8), np.float64 | npt.NDArray[np.float64])
@@ -191,8 +184,8 @@ assert_type(np.trapezoid(AR_f8, AR_f8), np.float64 | npt.NDArray[np.float64])
 assert_type(np.trapezoid(AR_c16), np.complex128 | npt.NDArray[np.complex128])
 assert_type(np.trapezoid(AR_c16, AR_c16), np.complex128 | npt.NDArray[np.complex128])
 assert_type(np.trapezoid(AR_m), np.timedelta64 | npt.NDArray[np.timedelta64])
-assert_type(np.trapezoid(AR_O), float | npt.NDArray[np.object_])
-assert_type(np.trapezoid(AR_O, AR_LIKE_f8), float | npt.NDArray[np.object_])
+assert_type(np.trapezoid(AR_O), Any)
+assert_type(np.trapezoid(AR_O, AR_LIKE_f8), Any)
 
 assert_type(np.meshgrid(AR_f8, AR_i8, copy=False), tuple[npt.NDArray[Any], ...])
 assert_type(np.meshgrid(AR_f8, AR_i8, AR_c16, indexing="ij"), tuple[npt.NDArray[Any], ...])
