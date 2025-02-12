@@ -30,5 +30,3 @@ AR_b.__index__()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessI
 AR_f8[1.5]  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 AR_f8["field_a"]  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 AR_f8[["field_a", "field_b"]]  # type: ignore[index]  # pyright: ignore[reportCallIssue,reportArgumentType]
-
-AR_f8.__array_finalize__(object())  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]

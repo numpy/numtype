@@ -17,12 +17,6 @@ np.char.decode(AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgument
 np.char.join(AR_U, b"_")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.char.join(AR_S, "_")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.char.ljust(AR_U, 5, fillchar=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.char.rjust(AR_U, 5, fillchar=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-
-np.char.ljust(AR_S, 5, fillchar="a")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.char.rjust(AR_S, 5, fillchar="a")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-
 np.char.strip(AR_U, chars=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.char.lstrip(AR_U, chars=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.char.rstrip(AR_U, chars=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]

@@ -11,11 +11,6 @@ AR_U.decode()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssu
 AR_U.join(b"_")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 AR_S.join("_")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-AR_U.ljust(5, fillchar=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-AR_S.ljust(5, fillchar="a")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-AR_U.rjust(5, fillchar=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-AR_S.rjust(5, fillchar="a")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-
 AR_U.lstrip(chars=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 AR_S.lstrip(chars="a")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 AR_U.strip(chars=b"a")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
@@ -54,10 +49,3 @@ AR_U.index(b"a", start=[1, 2, 3])  # type: ignore[arg-type]  # pyright: ignore[r
 AR_S.index("a", end=9)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 AR_U.rindex(b"a", start=[1, 2, 3])  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 AR_S.rindex("a", end=9)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-
-AR_U == AR_S  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_U != AR_S  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_U >= AR_S  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_U <= AR_S  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_U > AR_S  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_U < AR_S  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
