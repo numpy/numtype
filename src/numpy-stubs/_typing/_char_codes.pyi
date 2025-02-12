@@ -10,10 +10,10 @@ _Int32Codes: TypeAlias = Literal["int32", "intc", "i4", "i", "|i4", "|i", "=i4",
 _Int64Codes: TypeAlias = Literal["int64", "longlong", "i8", "q", "|i8", "|q", "=i8", "=q", "<i8", "<q", ">i8", ">q"]
 _IntPCodes: TypeAlias = Literal["intp", "int", "int_", "n", "|n", "=n", "<n", ">n"]  # either int32 or int64
 _LongCodes: TypeAlias = Literal["long", "l", "|l", "=l", "<l", ">l"]  # either int32 or int64
+_LongLongCodes: TypeAlias = Literal["longlong", "q", "|q", "=q", "<q", ">q"]
 _ByteCodes: TypeAlias = _Int8Codes
 _ShortCodes: TypeAlias = _Int16Codes
 _IntCCodes: TypeAlias = _Int32Codes
-_LongLongCodes: TypeAlias = _Int64Codes
 _IntCodes: TypeAlias = _IntPCodes
 _SignedIntegerCodes: TypeAlias = Literal[
     _Int8Codes,
@@ -31,10 +31,10 @@ _UInt32Codes: TypeAlias = Literal["uint32", "uintc", "u4", "I", "|u4", "|I", "=u
 _UInt64Codes: TypeAlias = Literal["uint64", "ulonglong", "u8", "L", "|u8", "|L", "=u8", "=L", "<u8", "<L", ">u8", ">L"]
 _UIntPCodes: TypeAlias = Literal["uintp", "uint", "N", "|N", "=N", "<N", ">N"]  # either uint32 or uint64
 _ULongCodes: TypeAlias = Literal["ulong", "L", "|L", "=L", "<L", ">L"]  # either uint32 or uint64
+_ULongLongCodes: TypeAlias = Literal["ulonglong", "Q", "|Q", "=Q", "<Q", ">Q"]
 _UByteCodes: TypeAlias = _UInt8Codes
 _UShortCodes: TypeAlias = _UInt16Codes
 _UIntCCodes: TypeAlias = _UInt32Codes
-_ULongLongCodes: TypeAlias = _UInt64Codes
 _UIntCodes: TypeAlias = _UIntPCodes
 _UnsignedIntegerCodes: TypeAlias = Literal[
     _UInt8Codes,
