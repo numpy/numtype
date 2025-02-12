@@ -2135,11 +2135,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DType_co]):
         args: Iterable[Any],
         kwargs: Mapping[str, Any],
     ) -> Any: ...
-
-    # NOTE: In practice any object is accepted by `obj`, but as `__array_finalize__`
-    # is a pseudo-abstract method the type has been narrowed down in order to
-    # grant subclasses a bit more flexibility
-    def __array_finalize__(self, obj: NDArray[Any] | None, /) -> None: ...
+    def __array_finalize__(self, obj: NDArray[Any] | Any, /) -> None: ...
     def __array_wrap__(
         self,
         array: ndarray[_ShapeT, _DType],
@@ -5357,9 +5353,6 @@ class matrix(ndarray[_2DShapeT_co, _DType_co]):
 
     #
     def __new__(cls, data: ArrayLike, dtype: DTypeLike = ..., copy: builtins.bool = ...) -> matrix[_2D, Any]: ...
-
-    #
-    def __array_finalize__(self, obj: object) -> None: ...
 
     #
     @overload
