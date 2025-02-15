@@ -39,9 +39,11 @@ jobs:
       - name: ruff format --check
         run: uv run ruff format --check
 
-      - name: basedpyright (numpy-stubs)
+      - name: basedpyright (src)
         run: >
           uv run basedpyright
+          src/_numtype/
+          src/numtype/
           src/numpy-stubs/_core/__init__.pyi
           src/numpy-stubs/_core/_asarray.pyi
           src/numpy-stubs/_core/_internal.pyi
@@ -100,9 +102,11 @@ jobs:
           src/numpy-stubs/matlib.pyi
           src/numpy-stubs/version.pyi
 
-      - name: mypy (numpy-stubs)
+      - name: mypy (src)
         run: >
           uv run test/mypy.py
+          src/_numtype/
+          src/numtype/
           src/numpy-stubs/_core/__init__.pyi
           src/numpy-stubs/_core/_asarray.pyi
           src/numpy-stubs/_core/_internal.pyi
