@@ -2,6 +2,7 @@
 # future.
 
 # NOTE: The `TypeAliasType` backport is used to avoid long type-checker error messages.
+from collections.abc import Sequence
 from typing import Any, TypeAlias, final, type_check_only
 from typing_extensions import Protocol, TypeAliasType, TypeVar
 
@@ -19,14 +20,6 @@ _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, default=Any, covariant=Tr
 
 ###
 # Protocols
-
-# A slimmed down version of `collections.abc.Sequence`, for faster type-checking.
-@type_check_only
-class Sequence_1d(Protocol[_T_co]):
-    def __len__(self, /) -> int: ...
-    def __getitem__(self, index: int, /) -> _T_co: ...
-    def __contains__(self, x: object, /) -> bool: ...
-    def index(self, value: Any, /) -> int: ...
 
 # A slimmed down version of `_NestedSequence`, based on `optype.numpy.SequenceND`.
 # https://github.com/jorenham/optype
@@ -94,14 +87,14 @@ _ToObject: TypeAlias = np.generic
 _To1_0d: TypeAlias = _ScalarT | CanArray[_ScalarT, tuple[()]]
 _To2_0d: TypeAlias = _ScalarT | _T | CanArray[_ScalarT, tuple[()]]
 
-_To1_1d: TypeAlias = CanLenArray[_ScalarT, tuple[int]] | Sequence_1d[_To1_0d[_ScalarT]]
-_To2_1d: TypeAlias = CanLenArray[_ScalarT, tuple[int]] | Sequence_1d[_To2_0d[_ScalarT, _T]]
+_To1_1d: TypeAlias = CanLenArray[_ScalarT, tuple[int]] | Sequence[_To1_0d[_ScalarT]]
+_To2_1d: TypeAlias = CanLenArray[_ScalarT, tuple[int]] | Sequence[_To2_0d[_ScalarT, _T]]
 
-_To1_2d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int]] | Sequence_1d[_To1_1d[_ScalarT]]
-_To2_2d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int]] | Sequence_1d[_To2_1d[_ScalarT, _T]]
+_To1_2d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int]] | Sequence[_To1_1d[_ScalarT]]
+_To2_2d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int]] | Sequence[_To2_1d[_ScalarT, _T]]
 
-_To1_3d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int, int]] | Sequence_1d[_To1_2d[_ScalarT]]
-_To2_3d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int, int]] | Sequence_1d[_To2_2d[_ScalarT, _T]]
+_To1_3d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int, int]] | Sequence[_To1_2d[_ScalarT]]
+_To2_3d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int, int]] | Sequence[_To2_2d[_ScalarT, _T]]
 
 _To1_nd: TypeAlias = CanLenArray[_ScalarT] | Sequence_nd[CanLenArray[_ScalarT]]
 _To2_nd: TypeAlias = CanLenArray[_ScalarT] | Sequence_nd[_T | _ScalarT] | Sequence_nd[CanLenArray[_ScalarT]]
