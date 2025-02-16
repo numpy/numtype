@@ -1,0 +1,11 @@
+extend = "../../pyproject.toml"
+line-length = 130
+
+[lint]
+extend-ignore = [
+    "A",       # flake8-builtins
+    "PYI064",  # flake8-pyi:    redundant-final-literal
+    "PLR2044", # pylint/R:      empty-comment
+    "PLR6301", # pylint/R:      no-self-use
+    "PLW3201", # pylint/W:      bad-dunder-method-name
+]
