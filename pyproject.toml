@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "numtype"
-version = "2.2.2.0.dev0"
+version = "2.2.3.0.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
 authors = [{name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com"}]
@@ -35,7 +35,7 @@ requires-python = ">=3.10"
 dependencies = []
 
     [project.optional-dependencies]
-    numpy = ["numpy>=2.2.2,<2.3"]
+    numpy = ["numpy>=2.2.3,<2.3"]
 
     [project.urls]
     Homepage = "https://numpy.org/"
