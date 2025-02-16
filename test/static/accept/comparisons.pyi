@@ -26,7 +26,7 @@ c: Final = 1j
 f: Final = 1.0
 i: Final = 1
 
-AR: Final = np.array([0], dtype=np.int64)  # noqa: PYI015
+AR: Final = np.array([0], dtype=np.int64)
 AR.setflags(write=False)
 
 SEQ: Final = (0, 1, 2, 3, 4)
