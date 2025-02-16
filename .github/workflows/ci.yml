@@ -39,9 +39,11 @@ jobs:
       - name: ruff format --check
         run: uv run ruff format --check
 
-      - name: basedpyright (src)
+      - name: basedpyright
         run: >
           uv run basedpyright
+          test/
+          tool/
           src/_numtype/
           src/numtype/
           src/numpy-stubs/_core/__init__.pyi
@@ -165,14 +167,8 @@ jobs:
           src/numpy-stubs/matlib.pyi
           src/numpy-stubs/version.pyi
 
-      - name: basedpyright (test)
-        run: uv run basedpyright test
-
       - name: mypy (test)
         run: uv run test/mypy.py
-
-      - name: basedpyright (tool)
-        run: uv run basedpyright tool
 
       - name: pytest
         run: uv run pytest
