@@ -1,8 +1,8 @@
-import numtype as nt
 import pytest
 
 import numpy as np
 import numpy.typing as npt
+import numtype as nt
 
 
 def test_superset() -> None:
