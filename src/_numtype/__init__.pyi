@@ -4,7 +4,7 @@
 # NOTE: The `TypeAliasType` backport is used to avoid long type-checker error messages.
 from collections.abc import Sequence
 from typing import Any, TypeAlias, final, type_check_only
-from typing_extensions import Protocol, TypeAliasType, TypeVar
+from typing_extensions import Protocol, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
 
@@ -13,7 +13,6 @@ import numpy as np
 
 _T = TypeVar("_T", default=Any)
 _T_co = TypeVar("_T_co", covariant=True)
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...], default=tuple[int, ...])
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=Any, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic, default=Any)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, default=Any, covariant=True)
@@ -98,6 +97,52 @@ _To2_3d: TypeAlias = CanLenArray[_ScalarT, tuple[int, int, int]] | Sequence[_To2
 
 _To1_nd: TypeAlias = CanLenArray[_ScalarT] | Sequence_nd[CanLenArray[_ScalarT]]
 _To2_nd: TypeAlias = CanLenArray[_ScalarT] | Sequence_nd[_T | _ScalarT] | Sequence_nd[CanLenArray[_ScalarT]]
+
+###
+# Shaped array aliases
+
+NDim0: TypeAlias = tuple[()]
+NDim1: TypeAlias = tuple[int]
+NDim2: TypeAlias = tuple[int, int]
+NDim3: TypeAlias = tuple[int, int, int]
+
+NDim: TypeAlias = tuple[int, ...]
+NDim1p: TypeAlias = tuple[int, Unpack[tuple[int, ...]]]
+NDim2p: TypeAlias = tuple[int, int, Unpack[tuple[int, ...]]]
+NDim3p: TypeAlias = tuple[int, int, int, Unpack[tuple[int, ...]]]
+
+AnyShapeC = TypeVar(  # noqa: PYI001
+    "AnyShapeC",
+    NDim0,
+    NDim1,
+    NDim1 | NDim0,
+    NDim2,
+    NDim2 | NDim1,
+    NDim2 | NDim1 | NDim0,
+    NDim3,
+    NDim3 | NDim2,
+    NDim3 | NDim2 | NDim1,
+    NDim3 | NDim2 | NDim1 | NDim0,
+    NDim3p,
+    NDim2p,
+    NDim1p,
+    tuple[int, ...],
+    default=tuple[int, ...],
+)
+
+Array = TypeAliasType("Array", np.ndarray[AnyShapeC, np.dtype[_ScalarT]], type_params=(_ScalarT, AnyShapeC))
+Array0 = TypeAliasType("Array0", np.ndarray[NDim0, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+Array1 = TypeAliasType("Array1", np.ndarray[NDim1, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+Array2 = TypeAliasType("Array2", np.ndarray[NDim2, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+Array3 = TypeAliasType("Array3", np.ndarray[NDim3, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+
+MArray = TypeAliasType("MArray", np.ma.MaskedArray[AnyShapeC, np.dtype[_ScalarT]], type_params=(_ScalarT, AnyShapeC))
+MArray0 = TypeAliasType("MArray0", np.ma.MaskedArray[NDim0, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+MArray1 = TypeAliasType("MArray1", np.ma.MaskedArray[NDim1, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+MArray2 = TypeAliasType("MArray2", np.ma.MaskedArray[NDim2, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+MArray3 = TypeAliasType("MArray3", np.ma.MaskedArray[NDim3, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+
+Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
 
 ###
 # Array-likes
@@ -308,7 +353,7 @@ As3D_number = TypeAliasType("As3D_number", _To2_3d[np.number, _PyNumber])
 AsND_number = TypeAliasType("AsND_number", _To2_nd[np.number, _PyNumber])
 
 # `npt.NDArray` variant with (optional) 2nd shape-typing parameter
-ToND = TypeAliasType("ToND", np.ndarray[_ShapeT, np.dtype[_ScalarT]], type_params=(_ScalarT, _ShapeT))
+ToND = TypeAliasType("ToND", np.ndarray[AnyShapeC, np.dtype[_ScalarT]], type_params=(_ScalarT, AnyShapeC))
 To0D = TypeAliasType("To0D", np.ndarray[tuple[()], np.dtype[_ScalarT]], type_params=(_ScalarT,))
 To1D = TypeAliasType("To1D", np.ndarray[tuple[int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
 To2D = TypeAliasType("To2D", np.ndarray[tuple[int, int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
