@@ -1250,7 +1250,7 @@ def diagonal(x: Sequence_2nd[ToObject_0d], /, *, offset: CanIndex = 0) -> Array[
 @overload
 def diagonal(x: ToAny_1nd, /, *, offset: CanIndex = 0) -> Array[Any]: ...
 
-# TODO(jorenham)
+#
 @overload
 def trace(x: _ToArray_2ds[_ScalarT], /, *, offset: CanIndex = 0, dtype: None = None) -> _ScalarT: ...
 @overload

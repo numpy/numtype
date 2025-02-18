@@ -19,7 +19,7 @@ from numpy._typing import _64Bit
 
 _T = TypeVar("_T", default=Any)
 _T_co = TypeVar("_T_co", covariant=True)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=Any, covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...], covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic, default=Any)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, default=Any, covariant=True)
 _ToT = TypeVar("_ToT", default=_ScalarT)
@@ -586,7 +586,8 @@ ToStr_1nd = TypeAliasType("ToStr_1nd", _ToArray_1nd[_ToStr, Is[str]])
 ToStr_2nd = TypeAliasType("ToStr_2nd", _ToArray_2nd[_ToStr, Is[str]])
 ToStr_3nd = TypeAliasType("ToStr_3nd", _ToArray_3nd[_ToStr, Is[str]])
 
-ToCharacter_nd = TypeAliasType("ToCharacter_nd", _ToArray_nd[np.character, _PyCharacter])
+# the `bytes | str` work around a pyright false positive bug within nested sequences
+ToCharacter_nd = TypeAliasType("ToCharacter_nd", _ToArray_nd[np.character, bytes | str])
 ToCharacter_0d = TypeAliasType("ToCharacter_0d", _ToArray_0d[np.character, _PyCharacter])
 ToCharacter_1d = TypeAliasType("ToCharacter_1d", _ToArray_1d[np.character, _PyCharacter])
 ToCharacter_2d = TypeAliasType("ToCharacter_2d", _ToArray_2d[np.character, _PyCharacter])
@@ -594,9 +595,9 @@ ToCharacter_3d = TypeAliasType("ToCharacter_3d", _ToArray_3d[np.character, _PyCh
 ToCharacter_1ds = TypeAliasType("ToCharacter_1ds", _ToArray_1ds[np.character, _PyCharacter])
 ToCharacter_2ds = TypeAliasType("ToCharacter_2ds", _ToArray_2ds[np.character, _PyCharacter])
 ToCharacter_3ds = TypeAliasType("ToCharacter_3ds", _ToArray_3ds[np.character, _PyCharacter])
-ToCharacter_1nd = TypeAliasType("ToCharacter_1nd", _ToArray_1nd[np.character, _PyCharacter])
-ToCharacter_2nd = TypeAliasType("ToCharacter_2nd", _ToArray_2nd[np.character, _PyCharacter])
-ToCharacter_3nd = TypeAliasType("ToCharacter_3nd", _ToArray_3nd[np.character, _PyCharacter])
+ToCharacter_1nd = TypeAliasType("ToCharacter_1nd", _ToArray_1nd[np.character, bytes | str])
+ToCharacter_2nd = TypeAliasType("ToCharacter_2nd", _ToArray_2nd[np.character, bytes | str])
+ToCharacter_3nd = TypeAliasType("ToCharacter_3nd", _ToArray_3nd[np.character, bytes | str])
 
 # python object
 ToObject_nd = TypeAliasType("ToObject_nd", _ToArray_nd[np.object_, _PyObject])
