@@ -68,10 +68,24 @@ bool_nd_accept_0d: _nt.ToBool_nd = b1_0d
 bool_nd_accept_1d: _nt.ToBool_nd = like_bool_1d
 bool_nd_accept_2d: _nt.ToBool_nd = like_bool_2d
 bool_nd_accept_3d: _nt.ToBool_nd = like_bool_3d
-bool_nd_reject_0d: _nt.ToBool_nd = b1  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 bool_nd_reject_1d_sc: _nt.ToBool_nd = [f_]  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 bool_nd_reject_2d_sc: _nt.ToBool_nd = [[f_]]  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 bool_nd_reject_3d_sc: _nt.ToBool_nd = [[[f_]]]  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+
+bool_1nd_reject_0d: _nt.ToBool_1nd = b1  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_1nd_accept_1d: _nt.ToBool_1nd = b1_1d
+bool_1nd_accept_2d: _nt.ToBool_1nd = b1_2d
+bool_1nd_accept_3d: _nt.ToBool_1nd = b1_3d
+
+bool_2nd_reject_0d: _nt.ToBool_2nd = b1  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_2nd_reject_1d: _nt.ToBool_2nd = b1_1d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_2nd_accept_2d: _nt.ToBool_2nd = b1_2d
+bool_2nd_accept_3d: _nt.ToBool_2nd = b1_3d
+
+bool_3nd_reject_0d: _nt.ToBool_3nd = b1  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_3nd_reject_1d: _nt.ToBool_3nd = b1_1d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_3nd_reject_2d: _nt.ToBool_3nd = b1_2d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_3nd_accept_3d: _nt.ToBool_3nd = b1_3d
 
 # TODO(jorenham): also do this for`CoBool*`
 
