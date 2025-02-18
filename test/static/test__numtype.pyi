@@ -46,23 +46,23 @@ bool_0d_reject_nd: _nt.ToBool_0d = b1_nd  # type: ignore[assignment]  # pyright:
 bool_1d_accept: _nt.ToBool_1d = like_bool_1d
 bool_1d_reject_sc: _nt.ToBool_1d = [f_]  # type: ignore[list-item]  # pyright: ignore[reportAssignmentType]
 bool_1d_reject_0d: _nt.ToBool_1d = b1  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_1d_reject_2d: _nt.ToBool_1d = b1_2d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_1d_reject_3d: _nt.ToBool_1d = b1_3d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_1d_reject_nd: _nt.ToBool_1d = b1_nd  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_1d_reject_2d: _nt.ToBool_1ds = b1_2d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_1d_reject_3d: _nt.ToBool_1ds = b1_3d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_1d_reject_nd: _nt.ToBool_1ds = b1_nd  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 
 bool_2d_accept: _nt.ToBool_2d = like_bool_2d
 bool_2d_reject_sc: _nt.ToBool_2d = [[f_]]  # type: ignore[list-item]  # pyright: ignore[reportAssignmentType]
 bool_2d_reject_0d: _nt.ToBool_2d = b1  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_2d_reject_1d: _nt.ToBool_2d = b1_1d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_2d_reject_3d: _nt.ToBool_2d = b1_3d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_2d_reject_nd: _nt.ToBool_2d = b1_nd  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_2d_reject_1d: _nt.ToBool_2ds = b1_1d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_2d_reject_3d: _nt.ToBool_2ds = b1_3d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_2d_reject_nd: _nt.ToBool_2ds = b1_nd  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 
 bool_3d_accept: _nt.ToBool_3d = like_bool_3d
 bool_3d_reject_sc: _nt.ToBool_3d = [[[f_]]]  # type: ignore[list-item]  # pyright: ignore[reportAssignmentType]
 bool_3d_reject_0d: _nt.ToBool_3d = b1  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_3d_reject_1d: _nt.ToBool_3d = b1_1d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_3d_reject_2d: _nt.ToBool_3d = b1_2d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-bool_3d_reject_nd: _nt.ToBool_3d = b1_nd  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_3d_reject_1d: _nt.ToBool_3ds = b1_1d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_3d_reject_2d: _nt.ToBool_3ds = b1_2d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+bool_3d_reject_nd: _nt.ToBool_3ds = b1_nd  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 
 bool_nd_accept_0d: _nt.ToBool_nd = b1_0d
 bool_nd_accept_1d: _nt.ToBool_nd = like_bool_1d
