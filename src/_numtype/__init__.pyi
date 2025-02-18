@@ -133,7 +133,7 @@ _ToArray_0d = TypeAliasType("_ToArray_0d", _ToT | CanArray[_ScalarT, tuple[()]],
 _ToArray_1d: TypeAlias = CanArraySized[_ScalarT, tuple[int]] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
 _ToArray_2d: TypeAlias = CanArraySized[_ScalarT, tuple[int, int]] | Sequence[_ToArray_1d[_ScalarT, _ToT]]
 _ToArray_3d: TypeAlias = CanArraySized[_ScalarT, tuple[int, int, int]] | Sequence[_ToArray_2d[_ScalarT, _ToT]]
-_ToArray_nd: TypeAlias = CanArraySized[_ScalarT] | NDSequence[_ToT | CanArray[_ScalarT]]
+_ToArray_nd: TypeAlias = CanArraySized[_ScalarT] | NDSequence[_ToT | _ScalarT] | NDSequence[CanArray[_ScalarT]]
 
 ###
 # Non-overlapping scalar- and array-like aliases for all scalar types.
