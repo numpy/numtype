@@ -130,9 +130,10 @@ _PyObject: TypeAlias = (  # anything immutable that results in an `object_` dtyp
 )
 
 _ToArray_0d = TypeAliasType("_ToArray_0d", _ToT | CanArray[_ScalarT, tuple[()]], type_params=(_ScalarT, _ToT))
-_ToArray_1d: TypeAlias = CanArraySized[_ScalarT, tuple[int]] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
-_ToArray_2d: TypeAlias = CanArraySized[_ScalarT, tuple[int, int]] | Sequence[_ToArray_1d[_ScalarT, _ToT]]
-_ToArray_3d: TypeAlias = CanArraySized[_ScalarT, tuple[int, int, int]] | Sequence[_ToArray_2d[_ScalarT, _ToT]]
+# This is almost always used for input: don't enfore shape-types (yet?)
+_ToArray_1d: TypeAlias = CanArraySized[_ScalarT] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
+_ToArray_2d: TypeAlias = CanArraySized[_ScalarT] | Sequence[_ToArray_1d[_ScalarT, _ToT]]
+_ToArray_3d: TypeAlias = CanArraySized[_ScalarT] | Sequence[_ToArray_2d[_ScalarT, _ToT]]
 _ToArray_nd: TypeAlias = CanArraySized[_ScalarT] | NDSequence[_ToT | _ScalarT] | NDSequence[CanArray[_ScalarT]]
 
 ###
@@ -493,6 +494,11 @@ CoLongLong_3d = TypeAliasType("CoLongLong_3d", _ToArray_3d[_CoLongLong, int])
 CoLongLong_nd = TypeAliasType("CoLongLong_nd", _ToArray_nd[_CoLongLong, int])
 
 _CoInteger: TypeAlias = np.integer | _ToBool
+CoInteger_0d = TypeAliasType("CoInteger_0d", _ToArray_0d[_CoInteger, int])
+CoInteger_1d = TypeAliasType("CoInteger_1d", _ToArray_1d[_CoInteger, int])
+CoInteger_2d = TypeAliasType("CoInteger_2d", _ToArray_2d[_CoInteger, int])
+CoInteger_3d = TypeAliasType("CoInteger_3d", _ToArray_3d[_CoInteger, int])
+CoInteger_nd = TypeAliasType("CoInteger_nd", _ToArray_nd[_CoInteger, int])
 
 # real floats
 
@@ -539,12 +545,12 @@ CoComplex128_2d = TypeAliasType("CoComplex128_2d", _ToArray_2d[_CoComplex128, co
 CoComplex128_3d = TypeAliasType("CoComplex128_3d", _ToArray_3d[_CoComplex128, complex])
 CoComplex128_nd = TypeAliasType("CoComplex128_nd", _ToArray_nd[_CoComplex128, complex])
 
-_CoCFloating: TypeAlias = np.number | _ToBool
-CoCFloating_0d = TypeAliasType("CoCFloating_0d", _ToArray_0d[_CoCFloating, complex])
-CoCFloating_1d = TypeAliasType("CoCFloating_1d", _ToArray_1d[_CoCFloating, complex])
-CoCFloating_2d = TypeAliasType("CoCFloating_2d", _ToArray_2d[_CoCFloating, complex])
-CoCFloating_3d = TypeAliasType("CoCFloating_3d", _ToArray_3d[_CoCFloating, complex])
-CoCFloating_nd = TypeAliasType("CoCFloating_nd", _ToArray_nd[_CoCFloating, complex])
+_CoNumber: TypeAlias = np.number | _ToBool
+CoNumber_0d = TypeAliasType("CoNumber_0d", _ToArray_0d[_CoNumber, complex])
+CoNumber_1d = TypeAliasType("CoNumber_1d", _ToArray_1d[_CoNumber, complex])
+CoNumber_2d = TypeAliasType("CoNumber_2d", _ToArray_2d[_CoNumber, complex])
+CoNumber_3d = TypeAliasType("CoNumber_3d", _ToArray_3d[_CoNumber, complex])
+CoNumber_nd = TypeAliasType("CoNumber_nd", _ToArray_nd[_CoNumber, complex])
 
 # temporal
 _CoTimeDelta: TypeAlias = _ToTimeDelta | _CoInteger
