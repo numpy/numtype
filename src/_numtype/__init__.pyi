@@ -27,15 +27,7 @@ _ToT = TypeVar("_ToT", default=_ScalarT)
 ###
 # Type constraints (bijective type mappings)
 
-ShapeC = TypeVar(  # noqa: PYI001
-    "ShapeC",
-    tuple[int, ...],  # using the `Shape` alias here triggers a mypy false positive
-    Shape_0d,
-    Shape_1d, Shape_l1d, Shape_g1d,
-    Shape_2d, Shape_l2d, Shape_g2d,
-    Shape_3d, Shape_l3d, Shape_g3d,
-    default=tuple[int, ...],
-)  # fmt: skip
+_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...], default=tuple[int, ...])
 
 ItemC = TypeVar(  # noqa: PYI001
     "ItemC",
@@ -91,14 +83,9 @@ class Unhashable(Protocol):
 
 Shape: TypeAlias = tuple[int, ...]
 
-Shape_0d: TypeAlias = tuple[()]
-Shape_1d: TypeAlias = tuple[int]
-Shape_2d: TypeAlias = tuple[int, int]
-Shape_3d: TypeAlias = tuple[int, int, int]
-
-Shape_l1d = TypeAliasType("Shape_l1d", Shape_1d | Shape_0d)
-Shape_l2d = TypeAliasType("Shape_l2d", Shape_2d | Shape_l1d)
-Shape_l3d = TypeAliasType("Shape_l3d", Shape_3d | Shape_l2d)
+Shape_l1d = TypeAliasType("Shape_l1d", tuple[int] | tuple[()])
+Shape_l2d = TypeAliasType("Shape_l2d", tuple[int, int] | tuple[int] | tuple[()])
+Shape_l3d = TypeAliasType("Shape_l3d", tuple[int, int, int] | tuple[int, int] | tuple[int] | tuple[()])
 
 Shape_g1d = TypeAliasType("Shape_g1d", tuple[int, Unpack[tuple[int, ...]]])
 Shape_g2d = TypeAliasType("Shape_g2d", tuple[int, int, Unpack[tuple[int, ...]]])
@@ -108,17 +95,17 @@ Shape_g4d = TypeAliasType("Shape_g4d", tuple[int, int, int, int, Unpack[tuple[in
 ###
 # Shape-typed array aliases
 
-Array = TypeAliasType("Array", np.ndarray[ShapeC, np.dtype[_ScalarT]], type_params=(_ScalarT, ShapeC))
-Array_0d = TypeAliasType("Array_0d", Array[_ScalarT, Shape_0d], type_params=(_ScalarT,))
-Array_1d = TypeAliasType("Array_1d", Array[_ScalarT, Shape_1d], type_params=(_ScalarT,))
-Array_2d = TypeAliasType("Array_2d", Array[_ScalarT, Shape_2d], type_params=(_ScalarT,))
-Array_3d = TypeAliasType("Array_3d", Array[_ScalarT, Shape_3d], type_params=(_ScalarT,))
+Array = TypeAliasType("Array", np.ndarray[_ShapeT, np.dtype[_ScalarT]], type_params=(_ScalarT, _ShapeT))
+Array_0d = TypeAliasType("Array_0d", np.ndarray[tuple[()], np.dtype[_ScalarT]], type_params=(_ScalarT,))
+Array_1d = TypeAliasType("Array_1d", np.ndarray[tuple[int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
+Array_2d = TypeAliasType("Array_2d", np.ndarray[tuple[int, int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
+Array_3d = TypeAliasType("Array_3d", np.ndarray[tuple[int, int, int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
 
-MArray = TypeAliasType("MArray", np.ma.MaskedArray[ShapeC, np.dtype[_ScalarT]], type_params=(_ScalarT, ShapeC))
-MArray_0d = TypeAliasType("MArray_0d", np.ma.MaskedArray[Shape_0d, np.dtype[_ScalarT]], type_params=(_ScalarT,))
-MArray_1d = TypeAliasType("MArray_1d", np.ma.MaskedArray[Shape_1d, np.dtype[_ScalarT]], type_params=(_ScalarT,))
-MArray_2d = TypeAliasType("MArray_2d", np.ma.MaskedArray[Shape_2d, np.dtype[_ScalarT]], type_params=(_ScalarT,))
-MArray_3d = TypeAliasType("MArray_3d", np.ma.MaskedArray[Shape_3d, np.dtype[_ScalarT]], type_params=(_ScalarT,))
+MArray = TypeAliasType("MArray", np.ma.MaskedArray[_ShapeT, np.dtype[_ScalarT]], type_params=(_ScalarT, _ShapeT))
+MArray_0d = TypeAliasType("MArray_0d", np.ma.MaskedArray[tuple[()], np.dtype[_ScalarT]], type_params=(_ScalarT,))
+MArray_1d = TypeAliasType("MArray_1d", np.ma.MaskedArray[tuple[int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
+MArray_2d = TypeAliasType("MArray_2d", np.ma.MaskedArray[tuple[int, int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
+MArray_3d = TypeAliasType("MArray_3d", np.ma.MaskedArray[tuple[int, int, int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
 
 Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT]], type_params=(_ScalarT,))
 
@@ -143,9 +130,9 @@ _PyObject: TypeAlias = (  # anything immutable that results in an `object_` dtyp
 )
 
 _ToArray_0d = TypeAliasType("_ToArray_0d", _ToT | CanArray[_ScalarT, tuple[()]], type_params=(_ScalarT, _ToT))
-_ToArray_1d: TypeAlias = CanArraySized[_ScalarT, Shape_1d] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
-_ToArray_2d: TypeAlias = CanArraySized[_ScalarT, Shape_2d] | Sequence[_ToArray_1d[_ScalarT, _ToT]]
-_ToArray_3d: TypeAlias = CanArraySized[_ScalarT, Shape_3d] | Sequence[_ToArray_2d[_ScalarT, _ToT]]
+_ToArray_1d: TypeAlias = CanArraySized[_ScalarT, tuple[int]] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
+_ToArray_2d: TypeAlias = CanArraySized[_ScalarT, tuple[int, int]] | Sequence[_ToArray_1d[_ScalarT, _ToT]]
+_ToArray_3d: TypeAlias = CanArraySized[_ScalarT, tuple[int, int, int]] | Sequence[_ToArray_2d[_ScalarT, _ToT]]
 _ToArray_nd: TypeAlias = CanArraySized[_ScalarT] | NDSequence[_ToT | CanArray[_ScalarT]]
 
 ###
