@@ -60,12 +60,12 @@ jobs:
           src/numpy-stubs/_core/shape_base.pyi
           src/numpy-stubs/_core/strings.pyi
           src/numpy-stubs/_core/umath.pyi
-          src/numpy-stubs/_typing
-          src/numpy-stubs/char
-          src/numpy-stubs/core
-          src/numpy-stubs/distutils
-          src/numpy-stubs/f2py
-          src/numpy-stubs/fft
+          src/numpy-stubs/_typing/
+          src/numpy-stubs/char/
+          src/numpy-stubs/core/
+          src/numpy-stubs/distutils/
+          src/numpy-stubs/f2py/
+          src/numpy-stubs/fft/
           src/numpy-stubs/lib/__init__.pyi
           src/numpy-stubs/lib/_array_utils_impl.pyi
           src/numpy-stubs/lib/_arraypad_impl.pyi
@@ -86,12 +86,13 @@ jobs:
           src/numpy-stubs/lib/scimath.pyi
           src/numpy-stubs/lib/stride_tricks.pyi
           src/numpy-stubs/lib/user_array.pyi
-          src/numpy-stubs/matrixlib
-          src/numpy-stubs/random
-          src/numpy-stubs/rec
-          src/numpy-stubs/strings
-          src/numpy-stubs/testing
-          src/numpy-stubs/typing
+          src/numpy-stubs/linalg/
+          src/numpy-stubs/matrixlib/
+          src/numpy-stubs/random/
+          src/numpy-stubs/rec/
+          src/numpy-stubs/strings/
+          src/numpy-stubs/testing/
+          src/numpy-stubs/typing/
           src/numpy-stubs/__config__.pyi
           src/numpy-stubs/_array_api_info.pyi
           src/numpy-stubs/_configtool.pyi
@@ -123,12 +124,12 @@ jobs:
           src/numpy-stubs/_core/shape_base.pyi
           src/numpy-stubs/_core/strings.pyi
           src/numpy-stubs/_core/umath.pyi
-          src/numpy-stubs/_typing
-          src/numpy-stubs/char
-          src/numpy-stubs/core
-          src/numpy-stubs/distutils
-          src/numpy-stubs/f2py
-          src/numpy-stubs/fft
+          src/numpy-stubs/_typing/
+          src/numpy-stubs/char/
+          src/numpy-stubs/core/
+          src/numpy-stubs/distutils/
+          src/numpy-stubs/f2py/
+          src/numpy-stubs/fft/
           src/numpy-stubs/lib/__init__.pyi
           src/numpy-stubs/lib/_array_utils_impl.pyi
           src/numpy-stubs/lib/_arraypad_impl.pyi
@@ -149,12 +150,13 @@ jobs:
           src/numpy-stubs/lib/scimath.pyi
           src/numpy-stubs/lib/stride_tricks.pyi
           src/numpy-stubs/lib/user_array.pyi
-          src/numpy-stubs/matrixlib
-          src/numpy-stubs/random
-          src/numpy-stubs/rec
-          src/numpy-stubs/strings
-          src/numpy-stubs/testing
-          src/numpy-stubs/typing
+          src/numpy-stubs/linalg/
+          src/numpy-stubs/matrixlib/
+          src/numpy-stubs/random/
+          src/numpy-stubs/rec/
+          src/numpy-stubs/strings/
+          src/numpy-stubs/testing/
+          src/numpy-stubs/typing/
           src/numpy-stubs/__config__.pyi
           src/numpy-stubs/_array_api_info.pyi
           src/numpy-stubs/_configtool.pyi
