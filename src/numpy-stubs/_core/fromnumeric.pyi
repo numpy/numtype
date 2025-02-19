@@ -1,25 +1,56 @@
+from _typeshed import Incomplete
 from collections.abc import Sequence
-from typing import Any, Literal, NoReturn, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
-from typing_extensions import Never, TypeVar, deprecated
+from typing import Any, Literal as L, NoReturn, Protocol, SupportsIndex as CanIndex, TypeAlias, overload, type_check_only
+from typing_extensions import TypeVar, TypedDict, Unpack, deprecated
 
 import numpy as np
+from _numtype import (
+    Array,
+    Array_0d,
+    Array_1d,
+    CanArray,
+    CanArraySized,
+    CoFloating_nd,
+    CoInteger_0d,
+    CoInteger_1nd,
+    CoInteger_nd,
+    CoNumber_1nd,
+    CoNumber_nd,
+    Is,
+    ToAny_1nd,
+    ToBool_0d,
+    ToBool_1nd,
+    ToBool_nd,
+    ToBytes_nd,
+    ToCFloating_nd,
+    ToComplex128_nd,
+    ToFloat64_nd,
+    ToFloating_nd,
+    ToIntP_nd,
+    ToInteger_1d,
+    ToNumber_nd,
+    ToObject_0d,
+    ToObject_1nd,
+    ToObject_nd,
+    ToSInteger_nd,
+    ToStr_nd,
+    ToTimeDelta_nd,
+    ToUInteger_nd,
+    _ToArray_0d,
+    _ToArray_1ds,
+    _ToArray_1nd,
+)
+from numpy import _CastingKind, _ModeKind, _OrderACF, _OrderKACF, _SortKind, _SortSide  # noqa: ICN003
+from numpy._globals import _NoValueType
 from numpy._typing import (
     ArrayLike,
     DTypeLike,
-    NDArray,
     _ArrayLike,
     _ArrayLikeBool_co,
     _ArrayLikeComplex_co,
-    _ArrayLikeFloat_co,
     _ArrayLikeInt_co,
-    _ArrayLikeObject_co,
-    _ArrayLikeTD64_co,
-    _ArrayLikeUInt_co,
-    _BoolLike_co,
-    _ComplexLike_co,
     _DTypeLike,
     _IntLike_co,
-    _NestedSequence,
     _NumberLike_co,
     _ScalarLike_co,
     _ShapeLike,
@@ -73,403 +104,480 @@ __all__ = [
 ]
 
 _T = TypeVar("_T")
-_SCT = TypeVar("_SCT", bound=np.generic)
-_SCT_uifcO = TypeVar("_SCT_uifcO", bound=np.number | np.object_)
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
-_SizeT = TypeVar("_SizeT", bound=int)
+
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_NumberT = TypeVar("_NumberT", bound=np.number | np.object_)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
+_IndT_contra = TypeVar("_IndT_contra", contravariant=True)
+_VT_contra = TypeVar("_VT_contra", contravariant=True)
+_RT_co = TypeVar("_RT_co", covariant=True)
+
+_AnyShapeT0 = TypeVar(
+    "_AnyShapeT0",
+    tuple[()],
+    tuple[int],
+    tuple[int, int],
+    tuple[int, int, int],
+    tuple[int, int, int, int],
+    tuple[int, int, int, int, int],
+    tuple[int, int, int, int, int, int],
+    tuple[int, int, int, int, int, int, int],
+    tuple[int, int, int, int, int, int, int, int],
+    tuple[int, ...],
+)
+
+_PyArray: TypeAlias = list[_T] | tuple[_T, ...]
+_PyScalar: TypeAlias = complex | bytes | str
+
+_Order: TypeAlias = str | Sequence[str]
+
+_ToGeneric_0d: TypeAlias = _ToArray_0d[np.generic, _PyScalar]
+_ToGeneric_1ds: TypeAlias = _ToArray_1ds[np.generic, _PyScalar]
 
 @type_check_only
-class _SupportsShape(Protocol[_ShapeT_co]):
+class _CanPut(Protocol[_IndT_contra, _VT_contra, _RT_co]):
+    def put(self, ind: _IndT_contra, v: _VT_contra, /, *, mode: _ModeKind) -> _RT_co: ...
+
+@type_check_only
+class _HasShape(Protocol[_ShapeT_co]):
     # NOTE: it matters that `self` is positional only
     @property
     def shape(self, /) -> _ShapeT_co: ...
 
-# a "sequence" that isn't a string, bytes, bytearray, or memoryview
-_PyArray: TypeAlias = list[_T] | tuple[_T, ...]
-# `int` also covers `bool`
-_PyScalar: TypeAlias = complex | bytes | str
+@type_check_only
+class UFuncKwargs(TypedDict, total=False):
+    where: _ArrayLikeBool_co | None
+    order: _OrderKACF
+    subok: bool
+    signature: str | tuple[str | None, ...]
+    casting: _CastingKind
+
+###
 
 @overload
 def take(
-    a: _ArrayLike[_SCT],
+    a: _ArrayLike[_ScalarT],
     indices: _IntLike_co,
-    axis: None = ...,
-    out: None = ...,
-    mode: np._ModeKind = ...,
-) -> _SCT: ...
+    axis: None = None,
+    out: None = None,
+    mode: _ModeKind = "raise",
+) -> _ScalarT: ...
+@overload
+def take(
+    a: _ArrayLike[_ScalarT],
+    indices: CoInteger_1nd,
+    axis: CanIndex | None = None,
+    out: None = None,
+    mode: _ModeKind = "raise",
+) -> Array[_ScalarT]: ...
 @overload
 def take(
     a: ArrayLike,
     indices: _IntLike_co,
-    axis: SupportsIndex | None = ...,
-    out: None = ...,
-    mode: np._ModeKind = ...,
+    axis: CanIndex | None = None,
+    out: None = None,
+    mode: _ModeKind = "raise",
 ) -> Any: ...
 @overload
 def take(
-    a: _ArrayLike[_SCT],
-    indices: _ArrayLikeInt_co,
-    axis: SupportsIndex | None = ...,
-    out: None = ...,
-    mode: np._ModeKind = ...,
-) -> NDArray[_SCT]: ...
+    a: ArrayLike,
+    indices: CoInteger_1nd,
+    axis: CanIndex | None = None,
+    out: None = None,
+    mode: _ModeKind = "raise",
+) -> Array[Any]: ...
 @overload
 def take(
     a: ArrayLike,
-    indices: _ArrayLikeInt_co,
-    axis: SupportsIndex | None = ...,
-    out: None = ...,
-    mode: np._ModeKind = ...,
-) -> NDArray[Any]: ...
-@overload
-def take(
-    a: ArrayLike,
-    indices: _ArrayLikeInt_co,
-    axis: SupportsIndex | None = ...,
-    out: _ArrayT = ...,
-    mode: np._ModeKind = ...,
+    indices: CoInteger_1nd,
+    axis: CanIndex | None = None,
+    *,
+    out: _ArrayT,
+    mode: _ModeKind = "raise",
 ) -> _ArrayT: ...
+
+#
+def put(a: _CanPut[_IndT_contra, _VT_contra, _RT_co], ind: _IndT_contra, v: _VT_contra, mode: _ModeKind = "raise") -> _RT_co: ...
+
+#
+@overload
+def choose(a: CoInteger_nd, choices: ArrayLike, out: _ArrayT, mode: _ModeKind = "raise") -> _ArrayT: ...
+@overload
+def choose(a: CoInteger_0d, choices: ArrayLike, out: None = None, mode: _ModeKind = "raise") -> Any: ...
+@overload
+def choose(a: CoInteger_1nd, choices: _ArrayLike[_ScalarT], out: None = None, mode: _ModeKind = "raise") -> Array[_ScalarT]: ...
+@overload
+def choose(a: CoInteger_1nd, choices: ArrayLike, out: None = None, mode: _ModeKind = "raise") -> Array[Any]: ...
 
 #
 @overload
 def reshape(  # shape: index
-    a: _ArrayLike[_SCT],
+    a: _ArrayLike[_ScalarT],
     /,
-    shape: SupportsIndex,
-    order: np._OrderACF = "C",
+    shape: CanIndex,
+    order: _OrderACF = "C",
     *,
     newshape: None = None,
     copy: bool | None = None,
-) -> np.ndarray[tuple[int], np.dtype[_SCT]]: ...
+) -> np.ndarray[tuple[int], np.dtype[_ScalarT]]: ...
 @overload
 def reshape(  # shape: (int, ...) @ np._AnyShapeT
-    a: _ArrayLike[_SCT],
+    a: _ArrayLike[_ScalarT],
     /,
-    shape: _ShapeT,
-    order: np._OrderACF = "C",
+    shape: _AnyShapeT0,
+    order: _OrderACF = "C",
     *,
     newshape: None = None,
     copy: bool | None = None,
-) -> np.ndarray[_ShapeT, np.dtype[_SCT]]: ...
+) -> Array[_ScalarT, _AnyShapeT0]: ...
 @overload  # shape: Sequence[index]
 def reshape(
-    a: _ArrayLike[_SCT],
+    a: _ArrayLike[_ScalarT],
     /,
-    shape: Sequence[SupportsIndex],
-    order: np._OrderACF = "C",
+    shape: Sequence[CanIndex],
+    order: _OrderACF = "C",
     *,
     newshape: None = None,
     copy: bool | None = None,
-) -> NDArray[_SCT]: ...
+) -> Array[_ScalarT]: ...
 @overload  # shape: index
 def reshape(
     a: ArrayLike,
     /,
-    shape: SupportsIndex,
-    order: np._OrderACF = "C",
+    shape: CanIndex,
+    order: _OrderACF = "C",
     *,
     newshape: None = None,
     copy: bool | None = None,
-) -> np.ndarray[tuple[int], np.dtype[Any]]: ...
+) -> Array[Any, tuple[int]]: ...
 @overload
 def reshape(  # shape: (int, ...) @ np._AnyShapeT
     a: ArrayLike,
     /,
-    shape: _ShapeT,
-    order: np._OrderACF = "C",
+    shape: _AnyShapeT0,
+    order: _OrderACF = "C",
     *,
     newshape: None = None,
     copy: bool | None = None,
-) -> np.ndarray[_ShapeT, np.dtype[Any]]: ...
+) -> Array[Any, _AnyShapeT0]: ...
 @overload  # shape: Sequence[index]
 def reshape(
     a: ArrayLike,
     /,
-    shape: Sequence[SupportsIndex],
-    order: np._OrderACF = "C",
+    shape: Sequence[CanIndex],
+    order: _OrderACF = "C",
     *,
     newshape: None = None,
     copy: bool | None = None,
-) -> NDArray[Any]: ...
+) -> Array[Any]: ...
 @overload
-@deprecated(
-    "`newshape` keyword argument is deprecated, use `shape=...` or pass shape positionally instead. (deprecated in NumPy 2.1)"
-)
+@deprecated("`newshape` is deprecated, `shape` instead. (deprecated in NumPy 2.1)")
 def reshape(
     a: ArrayLike,
     /,
     shape: None = None,
-    order: np._OrderACF = "C",
+    order: _OrderACF = "C",
     *,
     newshape: _ShapeLike,
     copy: bool | None = None,
-) -> NDArray[Any]: ...
+) -> Array[Any]: ...
 
 #
 @overload
-def choose(a: _IntLike_co, choices: ArrayLike, out: None = ..., mode: np._ModeKind = ...) -> Any: ...
+def swapaxes(a: _ArrayLike[_ScalarT], axis1: CanIndex, axis2: CanIndex) -> Array[_ScalarT]: ...
 @overload
-def choose(a: _ArrayLikeInt_co, choices: _ArrayLike[_SCT], out: None = ..., mode: np._ModeKind = ...) -> NDArray[_SCT]: ...
-@overload
-def choose(a: _ArrayLikeInt_co, choices: ArrayLike, out: None = ..., mode: np._ModeKind = ...) -> NDArray[Any]: ...
-@overload
-def choose(a: _ArrayLikeInt_co, choices: ArrayLike, out: _ArrayT = ..., mode: np._ModeKind = ...) -> _ArrayT: ...
+def swapaxes(a: ArrayLike, axis1: CanIndex, axis2: CanIndex) -> Array[Any]: ...
 
 #
 @overload
-def repeat(a: _ArrayLike[_SCT], repeats: _ArrayLikeInt_co, axis: SupportsIndex | None = ...) -> NDArray[_SCT]: ...
+def repeat(a: _ArrayLike[_ScalarT], repeats: _ArrayLikeInt_co, axis: CanIndex | None = None) -> Array[_ScalarT]: ...
 @overload
-def repeat(a: ArrayLike, repeats: _ArrayLikeInt_co, axis: SupportsIndex | None = ...) -> NDArray[Any]: ...
-
-#
-def put(a: NDArray[Any], ind: _ArrayLikeInt_co, v: ArrayLike, mode: np._ModeKind = ...) -> None: ...
+def repeat(a: ArrayLike, repeats: _ArrayLikeInt_co, axis: CanIndex | None = None) -> Array[Any]: ...
 
 #
 @overload
-def swapaxes(a: _ArrayLike[_SCT], axis1: SupportsIndex, axis2: SupportsIndex) -> NDArray[_SCT]: ...
+def transpose(a: _ArrayLike[_ScalarT], axes: _ShapeLike | None = ...) -> Array[_ScalarT]: ...
 @overload
-def swapaxes(a: ArrayLike, axis1: SupportsIndex, axis2: SupportsIndex) -> NDArray[Any]: ...
+def transpose(a: ArrayLike, axes: _ShapeLike | None = ...) -> Array[Any]: ...
 
 #
 @overload
-def transpose(a: _ArrayLike[_SCT], axes: _ShapeLike | None = ...) -> NDArray[_SCT]: ...
+def matrix_transpose(x: _ArrayLike[_ScalarT]) -> Array[_ScalarT]: ...
 @overload
-def transpose(a: ArrayLike, axes: _ShapeLike | None = ...) -> NDArray[Any]: ...
-
-#
-@overload
-def matrix_transpose(x: _ArrayLike[_SCT]) -> NDArray[_SCT]: ...
-@overload
-def matrix_transpose(x: ArrayLike) -> NDArray[Any]: ...
+def matrix_transpose(x: ArrayLike) -> Array[Any]: ...
 
 #
 @overload
 def partition(
-    a: _ArrayLike[_SCT],
+    a: _ArrayLike[_ScalarT],
     kth: _ArrayLikeInt_co,
-    axis: SupportsIndex | None = ...,
+    axis: CanIndex | None = None,
     kind: np._PartitionKind = ...,
-    order: str | Sequence[str] | None = ...,
-) -> NDArray[_SCT]: ...
+    order: _Order | None = ...,
+) -> Array[_ScalarT]: ...
 @overload
 def partition(
     a: ArrayLike,
     kth: _ArrayLikeInt_co,
-    axis: SupportsIndex | None = ...,
+    axis: CanIndex | None = None,
     kind: np._PartitionKind = ...,
-    order: str | Sequence[str] | None = ...,
-) -> NDArray[Any]: ...
+    order: _Order | None = ...,
+) -> Array[Any]: ...
 def argpartition(
     a: ArrayLike,
     kth: _ArrayLikeInt_co,
-    axis: SupportsIndex | None = ...,
+    axis: CanIndex | None = None,
     kind: np._PartitionKind = ...,
-    order: str | Sequence[str] | None = ...,
-) -> NDArray[np.int_]: ...
+    order: _Order | None = ...,
+) -> Array[np.int_]: ...
 
 #
-@overload
+@overload  # known shape, known dtype, axis=<given>
 def sort(
-    a: _ArrayLike[_SCT],
-    axis: SupportsIndex | None = ...,
-    kind: np._SortKind | None = ...,
-    order: str | Sequence[str] | None = ...,
+    a: CanArraySized[_ScalarT, _ShapeT],
+    axis: CanIndex = -1,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
     *,
-    stable: bool | None = ...,
-) -> NDArray[_SCT]: ...
-@overload
+    stable: bool | None = None,
+) -> Array[_ScalarT, _ShapeT]: ...
+@overload  # 0d, known dtype, axis=None
+def sort(
+    a: _ScalarT | CanArray[_ScalarT, tuple[()]],
+    axis: None,
+    kind: CanIndex | None = -1,
+    order: _Order | None = None,
+    *,
+    stable: bool | None = None,
+) -> Array_1d[_ScalarT]: ...
+@overload  # unknown shape, known dtype, axis=<given>
+def sort(
+    a: _ArrayLike[_ScalarT],
+    axis: CanIndex = -1,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
+    *,
+    stable: bool | None = None,
+) -> Array[_ScalarT]: ...
+@overload  # unknown shape, known dtype, axis=None
+def sort(
+    a: _ArrayLike[_ScalarT],
+    axis: None,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
+    *,
+    stable: bool | None = None,
+) -> Array_1d[_ScalarT]: ...
+@overload  # unknown shape, unknown dtype, axis=<given>
 def sort(
     a: ArrayLike,
-    axis: SupportsIndex | None = ...,
-    kind: np._SortKind | None = ...,
-    order: str | Sequence[str] | None = ...,
+    axis: CanIndex = -1,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
     *,
-    stable: bool | None = ...,
-) -> NDArray[Any]: ...
+    stable: bool | None = None,
+) -> Array[Any]: ...
+@overload  # unknown shape, unknown dtype, axis=None
+def sort(
+    a: ArrayLike,
+    axis: None,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
+    *,
+    stable: bool | None = None,
+) -> Array_1d[Any]: ...
 
 #
+@overload  # known shape
+def argsort(
+    a: CanArraySized[Any, _ShapeT],
+    axis: CanIndex = -1,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
+    *,
+    stable: bool | None = None,
+) -> Array[np.intp, _ShapeT]: ...
+@overload  # 0d or 1d array-like
+def argsort(
+    a: _ToGeneric_0d | _ToGeneric_1ds,
+    axis: CanIndex | None = -1,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
+    *,
+    stable: bool | None = None,
+) -> Array_1d[np.intp]: ...
+@overload  # axis=None
 def argsort(
     a: ArrayLike,
-    axis: SupportsIndex | None = ...,
-    kind: np._SortKind | None = ...,
-    order: str | Sequence[str] | None = ...,
+    axis: None,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
     *,
-    stable: bool | None = ...,
-) -> NDArray[np.int_]: ...
+    stable: bool | None = None,
+) -> Array_1d[np.intp]: ...
+@overload  # fallback
+def argsort(
+    a: ArrayLike,
+    axis: CanIndex | None = -1,
+    kind: _SortKind | None = None,
+    order: _Order | None = None,
+    *,
+    stable: bool | None = None,
+) -> Array[np.intp]: ...
 
 #
-@overload
+@overload  # 0d or 1d , keepdims=False
+def argmax(
+    a: _ToGeneric_0d | _ToGeneric_1ds,
+    axis: CanIndex,
+    out: None = None,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> np.intp: ...
+@overload  # axis=None, keepdims=False
+def argmax(a: ArrayLike, axis: None = None, out: None = None, *, keepdims: L[False] | _NoValueType = ...) -> np.intp: ...
+@overload  # keepdims=True
+def argmax(a: ArrayLike, axis: CanIndex | None = None, out: None = None, *, keepdims: L[True]) -> Array[np.intp]: ...
+@overload  # out=<given> (positional)
+def argmax(a: ArrayLike, axis: CanIndex | None, out: _ArrayT, *, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
+@overload  # out=<given> (keyword)
+def argmax(a: ArrayLike, axis: CanIndex | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
+@overload  # fallback
 def argmax(
     a: ArrayLike,
-    axis: None = ...,
-    out: None = ...,
+    axis: CanIndex | None = None,
+    out: Array[Any] | None = None,
     *,
-    keepdims: Literal[False] = ...,
-) -> np.int_: ...
-@overload
-def argmax(
-    a: ArrayLike,
-    axis: SupportsIndex | None = ...,
-    out: None = ...,
-    *,
-    keepdims: bool = ...,
-) -> Any: ...
-@overload
-def argmax(
-    a: ArrayLike,
-    axis: SupportsIndex | None = ...,
-    out: _ArrayT = ...,
-    *,
-    keepdims: bool = ...,
-) -> _ArrayT: ...
+    keepdims: bool | _NoValueType = ...,
+) -> Incomplete: ...
 
 #
-@overload
+@overload  # 0d or 1d , keepdims=False
+def argmin(
+    a: _ToGeneric_0d | _ToGeneric_1ds,
+    axis: CanIndex,
+    out: None = None,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> np.intp: ...
+@overload  # axis=None, keepdims=False
+def argmin(a: ArrayLike, axis: None = None, out: None = None, *, keepdims: L[False] | _NoValueType = ...) -> np.intp: ...
+@overload  # keepdims=True
+def argmin(a: ArrayLike, axis: CanIndex | None = None, out: None = None, *, keepdims: L[True]) -> Array[np.intp]: ...
+@overload  # out=<given> (positional)
+def argmin(a: ArrayLike, axis: CanIndex | None, out: _ArrayT, *, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
+@overload  # out=<given> (keyword)
+def argmin(a: ArrayLike, axis: CanIndex | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
+@overload  # fallback
 def argmin(
     a: ArrayLike,
-    axis: None = ...,
-    out: None = ...,
+    axis: CanIndex | None = None,
+    out: Array[Any] | None = None,
     *,
-    keepdims: Literal[False] = ...,
-) -> np.int_: ...
-@overload
-def argmin(
-    a: ArrayLike,
-    axis: SupportsIndex | None = ...,
-    out: None = ...,
-    *,
-    keepdims: bool = ...,
-) -> Any: ...
-@overload
-def argmin(
-    a: ArrayLike,
-    axis: SupportsIndex | None = ...,
-    out: _ArrayT = ...,
-    *,
-    keepdims: bool = ...,
-) -> _ArrayT: ...
+    keepdims: bool | _NoValueType = ...,
+) -> Incomplete: ...
 
 #
 @overload
-def searchsorted(
-    a: ArrayLike,
-    v: _ScalarLike_co,
-    side: np._SortSide = ...,
-    sorter: _ArrayLikeInt_co | None = ...,  # 1D int array
-) -> np.int_: ...
+def searchsorted(a: ArrayLike, v: _ScalarLike_co, side: _SortSide = "left", sorter: ToInteger_1d | None = None) -> np.intp: ...
 @overload
-def searchsorted(
-    a: ArrayLike,
-    v: ArrayLike,
-    side: np._SortSide = ...,
-    sorter: _ArrayLikeInt_co | None = ...,  # 1D int array
-) -> NDArray[np.int_]: ...
-
-# unlike `reshape`, `resize` only accepts positive integers, so literal ints can be used
-@overload
-def resize(a: _ArrayLike[_SCT], new_shape: _SizeT) -> np.ndarray[tuple[_SizeT], np.dtype[_SCT]]: ...
-@overload
-def resize(a: _ArrayLike[_SCT], new_shape: SupportsIndex) -> np.ndarray[tuple[int], np.dtype[_SCT]]: ...
-@overload
-def resize(a: _ArrayLike[_SCT], new_shape: _ShapeT) -> np.ndarray[_ShapeT, np.dtype[_SCT]]: ...
-@overload
-def resize(a: _ArrayLike[_SCT], new_shape: Sequence[SupportsIndex]) -> NDArray[_SCT]: ...
-@overload
-def resize(a: ArrayLike, new_shape: _SizeT) -> np.ndarray[tuple[_SizeT], np.dtype[Any]]: ...
-@overload
-def resize(a: ArrayLike, new_shape: SupportsIndex) -> np.ndarray[tuple[int], np.dtype[Any]]: ...
-@overload
-def resize(a: ArrayLike, new_shape: _ShapeT) -> np.ndarray[_ShapeT, np.dtype[Any]]: ...
-@overload
-def resize(a: ArrayLike, new_shape: Sequence[SupportsIndex]) -> NDArray[Any]: ...
+def searchsorted(a: ArrayLike, v: ToAny_1nd, side: _SortSide = "left", sorter: ToInteger_1d | None = None) -> Array[np.intp]: ...
 
 #
 @overload
-def squeeze(a: _SCT, axis: _ShapeLike | None = ...) -> _SCT: ...
+def resize(a: _ArrayLike[_ScalarT], new_shape: CanIndex) -> Array_1d[_ScalarT]: ...
 @overload
-def squeeze(a: _ArrayLike[_SCT], axis: _ShapeLike | None = ...) -> NDArray[_SCT]: ...
+def resize(a: _ArrayLike[_ScalarT], new_shape: _AnyShapeT0) -> Array[_ScalarT, _AnyShapeT0]: ...
 @overload
-def squeeze(a: ArrayLike, axis: _ShapeLike | None = ...) -> NDArray[Any]: ...
+def resize(a: _ArrayLike[_ScalarT], new_shape: Sequence[CanIndex]) -> Array[_ScalarT]: ...
+@overload
+def resize(a: ArrayLike, new_shape: CanIndex) -> Array_1d[Any]: ...
+@overload
+def resize(a: ArrayLike, new_shape: _AnyShapeT0) -> Array[Any, _AnyShapeT0]: ...
+@overload
+def resize(a: ArrayLike, new_shape: Sequence[CanIndex]) -> Array[Any]: ...
 
 #
 @overload
-def diagonal(
-    a: _ArrayLike[_SCT],
-    offset: SupportsIndex = ...,
-    axis1: SupportsIndex = ...,
-    axis2: SupportsIndex = ...,  # >= 2D array
-) -> NDArray[_SCT]: ...
+def squeeze(a: _ToArray_0d[_ScalarT], axis: _ShapeLike | None = None) -> Array_0d[_ScalarT]: ...
 @overload
-def diagonal(
-    a: ArrayLike,
-    offset: SupportsIndex = ...,
-    axis1: SupportsIndex = ...,
-    axis2: SupportsIndex = ...,  # >= 2D array
-) -> NDArray[Any]: ...
+def squeeze(a: _ArrayLike[_ScalarT], axis: _ShapeLike | None = None) -> Array[_ScalarT]: ...
+@overload
+def squeeze(a: ArrayLike, axis: _ShapeLike | None = None) -> Array[Any]: ...
+
+#
+@overload
+def diagonal(a: _ArrayLike[_ScalarT], offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1) -> Array[_ScalarT]: ...
+@overload
+def diagonal(a: ArrayLike, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1) -> Array[Any]: ...
 
 #
 @overload
 def trace(
-    a: ArrayLike,  # >= 2D array
-    offset: SupportsIndex = ...,
-    axis1: SupportsIndex = ...,
-    axis2: SupportsIndex = ...,
-    dtype: DTypeLike = ...,
-    out: None = ...,
-) -> Any: ...
+    a: ArrayLike,
+    offset: CanIndex = 0,
+    axis1: CanIndex = 0,
+    axis2: CanIndex = 1,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+) -> Incomplete: ...
 @overload
 def trace(
-    a: ArrayLike,  # >= 2D array
-    offset: SupportsIndex = ...,
-    axis1: SupportsIndex = ...,
-    axis2: SupportsIndex = ...,
-    dtype: DTypeLike = ...,
-    out: _ArrayT = ...,
+    a: ArrayLike,
+    offset: CanIndex,
+    axis1: CanIndex,
+    axis2: CanIndex,
+    dtype: DTypeLike | None,
+    out: _ArrayT,
+) -> _ArrayT: ...
+@overload
+def trace(
+    a: ArrayLike,
+    offset: CanIndex = 0,
+    axis1: CanIndex = 0,
+    axis2: CanIndex = 1,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
 ) -> _ArrayT: ...
 
-_Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_SCT]]
-
+#
 @overload
-def ravel(a: _ArrayLike[_SCT], order: np._OrderKACF = "C") -> _Array1D[_SCT]: ...
+def ravel(a: _ArrayLike[_ScalarT], order: _OrderKACF = "C") -> Array_1d[_ScalarT]: ...  # pyright: ignore[reportOverlappingOverload]
 @overload
-def ravel(a: bytes | _NestedSequence[bytes], order: np._OrderKACF = "C") -> _Array1D[np.bytes_]: ...
+def ravel(a: ToBytes_nd, order: _OrderKACF = "C") -> Array_1d[np.bytes_]: ...
 @overload
-def ravel(a: str | _NestedSequence[str], order: np._OrderKACF = "C") -> _Array1D[np.str_]: ...
+def ravel(a: ToStr_nd, order: _OrderKACF = "C") -> Array_1d[np.str_]: ...
 @overload
-def ravel(a: bool | _NestedSequence[bool], order: np._OrderKACF = "C") -> _Array1D[np.bool]: ...
+def ravel(a: ToBool_nd, order: _OrderKACF = "C") -> Array_1d[np.bool]: ...
 @overload
-def ravel(a: int | _NestedSequence[int], order: np._OrderKACF = "C") -> _Array1D[np.int_ | np.bool]: ...
+def ravel(a: ToIntP_nd, order: _OrderKACF = "C") -> Array_1d[np.int_ | np.bool]: ...
 @overload
-def ravel(a: float | _NestedSequence[float], order: np._OrderKACF = "C") -> _Array1D[np.float64 | np.int_ | np.bool]: ...
+def ravel(a: ToFloat64_nd, order: _OrderKACF = "C") -> Array_1d[np.float64]: ...
 @overload
-def ravel(
-    a: complex | _NestedSequence[complex],
-    order: np._OrderKACF = "C",
-) -> _Array1D[np.complex128 | np.float64 | np.int_ | np.bool]: ...
+def ravel(a: ToComplex128_nd, order: _OrderKACF = "C") -> Array_1d[np.complex128]: ...
 @overload
-def ravel(a: ArrayLike, order: np._OrderKACF = "C") -> np.ndarray[tuple[int], np.dtype[Any]]: ...
+def ravel(a: ArrayLike, order: _OrderKACF = "C") -> Array_1d[Any]: ...
 
 #
 @overload
 def nonzero(a: np.generic | np.ndarray[tuple[()], Any]) -> NoReturn: ...
 @overload
-def nonzero(a: _ArrayLike[Any]) -> tuple[NDArray[np.int_], ...]: ...
+def nonzero(a: _ArrayLike[Any]) -> tuple[Array[np.int_], ...]: ...
 
 #
 @overload
-def shape(a: _SupportsShape[Never]) -> tuple[int, ...]: ...
-@overload
-def shape(a: _SupportsShape[_ShapeT]) -> _ShapeT: ...
+def shape(a: _HasShape[_ShapeT]) -> _ShapeT: ...
 @overload
 def shape(a: _PyScalar) -> tuple[()]: ...
 @overload
-def shape(a: _PyArray[_PyScalar]) -> tuple[int]: ...
+def shape(a: _PyArray[_ToGeneric_0d] | memoryview | bytearray) -> tuple[int]: ...
 @overload
-def shape(a: _PyArray[_PyArray[_PyScalar]]) -> tuple[int, int]: ...
+def shape(a: _PyArray[_PyArray[_ToGeneric_0d]]) -> tuple[int, int]: ...
 @overload
-def shape(a: memoryview | bytearray) -> tuple[int]: ...
+def shape(a: _PyArray[_PyArray[_PyArray[_ToGeneric_0d]]]) -> tuple[int, int, int]: ...
 @overload
 def shape(a: ArrayLike) -> tuple[int, ...]: ...
 
@@ -477,205 +585,174 @@ def shape(a: ArrayLike) -> tuple[int, ...]: ...
 @overload
 def compress(
     condition: _ArrayLikeBool_co,
-    a: _ArrayLike[_SCT],
-    axis: SupportsIndex | None = ...,
-    out: None = ...,
-) -> NDArray[_SCT]: ...
+    a: _ArrayLike[_ScalarT],
+    axis: CanIndex | None = None,
+    out: None = None,
+) -> Array[_ScalarT]: ...
 @overload
-def compress(
-    condition: _ArrayLikeBool_co,
-    a: ArrayLike,
-    axis: SupportsIndex | None = ...,
-    out: None = ...,
-) -> NDArray[Any]: ...
+def compress(condition: _ArrayLikeBool_co, a: ArrayLike, axis: CanIndex | None = None, out: None = None) -> Array[Any]: ...
 @overload
-def compress(
-    condition: _ArrayLikeBool_co,
-    a: ArrayLike,
-    axis: SupportsIndex | None = ...,
-    out: _ArrayT = ...,
-) -> _ArrayT: ...
+def compress(condition: _ArrayLikeBool_co, a: ArrayLike, axis: CanIndex | None, out: _ArrayT) -> _ArrayT: ...
+@overload
+def compress(condition: _ArrayLikeBool_co, a: ArrayLike, axis: CanIndex | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
 #
 @overload
 def clip(
-    a: _SCT,
-    a_min: ArrayLike | None,
-    a_max: ArrayLike | None,
-    out: None = ...,
+    a: _ScalarT,
+    a_min: ToNumber_nd | _NoValueType | None = ...,
+    a_max: ToNumber_nd | _NoValueType | None = ...,
+    out: None = None,
     *,
-    min: ArrayLike | None = ...,
-    max: ArrayLike | None = ...,
-    dtype: None = ...,
-    where: _ArrayLikeBool_co | None = ...,
-    order: np._OrderKACF = ...,
-    subok: bool = ...,
-    signature: str | tuple[str | None, ...] = ...,
-    casting: np._CastingKind = ...,
-) -> _SCT: ...
+    min: ToNumber_nd | _NoValueType | None = ...,
+    max: ToNumber_nd | _NoValueType | None = ...,
+    dtype: None = None,
+    **kwargs: Unpack[UFuncKwargs],
+) -> _ScalarT: ...
 @overload
 def clip(
     a: _ScalarLike_co,
-    a_min: ArrayLike | None,
-    a_max: ArrayLike | None,
-    out: None = ...,
+    a_min: ToNumber_nd | _NoValueType | None = ...,
+    a_max: ToNumber_nd | _NoValueType | None = ...,
+    out: None = None,
     *,
-    min: ArrayLike | None = ...,
-    max: ArrayLike | None = ...,
-    dtype: None = ...,
-    where: _ArrayLikeBool_co | None = ...,
-    order: np._OrderKACF = ...,
-    subok: bool = ...,
-    signature: str | tuple[str | None, ...] = ...,
-    casting: np._CastingKind = ...,
+    min: ToNumber_nd | _NoValueType | None = ...,
+    max: ToNumber_nd | _NoValueType | None = ...,
+    dtype: None = None,
+    **kwargs: Unpack[UFuncKwargs],
 ) -> Any: ...
 @overload
 def clip(
-    a: _ArrayLike[_SCT],
-    a_min: ArrayLike | None,
-    a_max: ArrayLike | None,
-    out: None = ...,
+    a: _ToArray_1nd[_ScalarT],
+    a_min: ToNumber_nd | _NoValueType | None = ...,
+    a_max: ToNumber_nd | _NoValueType | None = ...,
+    out: None = None,
     *,
-    min: ArrayLike | None = ...,
-    max: ArrayLike | None = ...,
-    dtype: None = ...,
-    where: _ArrayLikeBool_co | None = ...,
-    order: np._OrderKACF = ...,
-    subok: bool = ...,
-    signature: str | tuple[str | None, ...] = ...,
-    casting: np._CastingKind = ...,
-) -> NDArray[_SCT]: ...
+    min: ToNumber_nd | _NoValueType | None = ...,
+    max: ToNumber_nd | _NoValueType | None = ...,
+    dtype: None = None,
+    **kwargs: Unpack[UFuncKwargs],
+) -> Array[_ScalarT]: ...
+@overload
+def clip(
+    a: _ToArray_1nd[Any, _PyScalar],
+    a_min: ToNumber_nd | _NoValueType | None = ...,
+    a_max: ToNumber_nd | _NoValueType | None = ...,
+    out: None = None,
+    *,
+    min: ToNumber_nd | _NoValueType | None = ...,
+    max: ToNumber_nd | _NoValueType | None = ...,
+    dtype: None = None,
+    **kwargs: Unpack[UFuncKwargs],
+) -> Array[Any]: ...
 @overload
 def clip(
     a: ArrayLike,
-    a_min: ArrayLike | None,
-    a_max: ArrayLike | None,
-    out: None = ...,
-    *,
-    min: ArrayLike | None = ...,
-    max: ArrayLike | None = ...,
-    dtype: None = ...,
-    where: _ArrayLikeBool_co | None = ...,
-    order: np._OrderKACF = ...,
-    subok: bool = ...,
-    signature: str | tuple[str | None, ...] = ...,
-    casting: np._CastingKind = ...,
-) -> NDArray[Any]: ...
-@overload
-def clip(
-    a: ArrayLike,
-    a_min: ArrayLike | None,
-    a_max: ArrayLike | None,
-    out: _ArrayT = ...,
-    *,
-    min: ArrayLike | None = ...,
-    max: ArrayLike | None = ...,
-    dtype: DTypeLike,
-    where: _ArrayLikeBool_co | None = ...,
-    order: np._OrderKACF = ...,
-    subok: bool = ...,
-    signature: str | tuple[str | None, ...] = ...,
-    casting: np._CastingKind = ...,
-) -> Any: ...
-@overload
-def clip(
-    a: ArrayLike,
-    a_min: ArrayLike | None,
-    a_max: ArrayLike | None,
+    a_min: ToNumber_nd | _NoValueType | None,
+    a_max: ToNumber_nd | _NoValueType | None,
     out: _ArrayT,
     *,
-    min: ArrayLike | None = ...,
-    max: ArrayLike | None = ...,
-    dtype: DTypeLike = ...,
-    where: _ArrayLikeBool_co | None = ...,
-    order: np._OrderKACF = ...,
-    subok: bool = ...,
-    signature: str | tuple[str | None, ...] = ...,
-    casting: np._CastingKind = ...,
+    min: ToNumber_nd | _NoValueType | None = ...,
+    max: ToNumber_nd | _NoValueType | None = ...,
+    dtype: DTypeLike | None = None,
+    **kwargs: Unpack[UFuncKwargs],
+) -> _ArrayT: ...
+@overload
+def clip(
+    a: ArrayLike,
+    a_min: ToNumber_nd | _NoValueType | None = ...,
+    a_max: ToNumber_nd | _NoValueType | None = ...,
+    *,
+    out: _ArrayT,
+    min: ToNumber_nd | _NoValueType | None = ...,
+    max: ToNumber_nd | _NoValueType | None = ...,
+    dtype: DTypeLike | None = None,
+    **kwargs: Unpack[UFuncKwargs],
 ) -> _ArrayT: ...
 
 #
 @overload
 def sum(
-    a: _ArrayLike[_SCT],
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+    a: _ArrayLike[_ScalarT],
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
-) -> _SCT: ...
+) -> _ScalarT: ...
 @overload
 def sum(
-    a: _ArrayLike[_SCT],
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: bool = ...,
+    a: _ArrayLike[_ScalarT],
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
-) -> _SCT | NDArray[_SCT]: ...
+) -> _ScalarT | Array[_ScalarT]: ...
 @overload
 def sum(
     a: ArrayLike,
     axis: None,
-    dtype: _DTypeLike[_SCT],
-    out: None = ...,
-    keepdims: Literal[False] = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT: ...
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def sum(
     a: ArrayLike,
-    axis: None = ...,
+    axis: None = None,
     *,
-    dtype: _DTypeLike[_SCT],
-    out: None = ...,
-    keepdims: Literal[False] = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT: ...
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def sum(
     a: ArrayLike,
     axis: _ShapeLike | None,
-    dtype: _DTypeLike[_SCT],
-    out: None = ...,
-    keepdims: bool = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT | NDArray[_SCT]: ...
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT | Array[_ScalarT]: ...
 @overload
 def sum(
     a: ArrayLike,
-    axis: _ShapeLike | None = ...,
+    axis: _ShapeLike | None = None,
     *,
-    dtype: _DTypeLike[_SCT],
-    out: None = ...,
-    keepdims: bool = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT | NDArray[_SCT]: ...
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT | Array[_ScalarT]: ...
 @overload
 def sum(
     a: ArrayLike,
     axis: _ShapeLike | None = ...,
-    dtype: DTypeLike = ...,
-    out: None = ...,
-    keepdims: bool = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> Any: ...
 @overload
 def sum(
     a: ArrayLike,
-    axis: _ShapeLike | None = ...,
-    dtype: DTypeLike = ...,
-    out: _ArrayT = ...,
-    keepdims: bool = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> _ArrayT: ...
 
 #
@@ -684,7 +761,7 @@ def all(
     a: ArrayLike,
     axis: None = None,
     out: None = None,
-    keepdims: Literal[False, 0] = False,
+    keepdims: L[False, 0] = False,
     *,
     where: _ArrayLikeBool_co = True,
 ) -> np.bool: ...
@@ -693,16 +770,16 @@ def all(
     a: ArrayLike,
     axis: int | tuple[int, ...] | None = None,
     out: None = None,
-    keepdims: SupportsIndex = False,
+    keepdims: CanIndex = False,
     *,
     where: _ArrayLikeBool_co = True,
-) -> np.bool | NDArray[np.bool]: ...
+) -> np.bool | Array[np.bool]: ...
 @overload
 def all(
     a: ArrayLike,
     axis: int | tuple[int, ...] | None,
     out: _ArrayT,
-    keepdims: SupportsIndex = False,
+    keepdims: CanIndex = False,
     *,
     where: _ArrayLikeBool_co = True,
 ) -> _ArrayT: ...
@@ -712,7 +789,7 @@ def all(
     axis: int | tuple[int, ...] | None = None,
     *,
     out: _ArrayT,
-    keepdims: SupportsIndex = False,
+    keepdims: CanIndex = False,
     where: _ArrayLikeBool_co = True,
 ) -> _ArrayT: ...
 
@@ -722,7 +799,7 @@ def any(
     a: ArrayLike,
     axis: None = None,
     out: None = None,
-    keepdims: Literal[False, 0] = False,
+    keepdims: L[False, 0] = False,
     *,
     where: _ArrayLikeBool_co = True,
 ) -> np.bool: ...
@@ -731,16 +808,16 @@ def any(
     a: ArrayLike,
     axis: int | tuple[int, ...] | None = None,
     out: None = None,
-    keepdims: SupportsIndex = False,
+    keepdims: CanIndex = False,
     *,
     where: _ArrayLikeBool_co = True,
-) -> np.bool | NDArray[np.bool]: ...
+) -> np.bool | Array[np.bool]: ...
 @overload
 def any(
     a: ArrayLike,
     axis: int | tuple[int, ...] | None,
     out: _ArrayT,
-    keepdims: SupportsIndex = False,
+    keepdims: CanIndex = False,
     *,
     where: _ArrayLikeBool_co = True,
 ) -> _ArrayT: ...
@@ -750,138 +827,158 @@ def any(
     axis: int | tuple[int, ...] | None = None,
     *,
     out: _ArrayT,
-    keepdims: SupportsIndex = False,
+    keepdims: CanIndex = False,
     where: _ArrayLikeBool_co = True,
 ) -> _ArrayT: ...
 
 #
 @overload
-def cumsum(a: _ArrayLike[_SCT], axis: SupportsIndex | None = ..., dtype: None = ..., out: None = ...) -> NDArray[_SCT]: ...
+def cumsum(a: _ArrayLike[_ScalarT], axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[_ScalarT]: ...
 @overload
-def cumsum(a: ArrayLike, axis: SupportsIndex | None = ..., dtype: None = ..., out: None = ...) -> NDArray[Any]: ...
+def cumsum(a: ArrayLike, axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[Any]: ...
 @overload
-def cumsum(a: ArrayLike, axis: SupportsIndex | None = ..., dtype: _DTypeLike[_SCT] = ..., out: None = ...) -> NDArray[_SCT]: ...
+def cumsum(a: ArrayLike, axis: CanIndex | None = None, *, dtype: _DTypeLike[_ScalarT], out: None = None) -> Array[_ScalarT]: ...
 @overload
-def cumsum(a: ArrayLike, axis: SupportsIndex | None = ..., dtype: DTypeLike = ..., out: None = ...) -> NDArray[Any]: ...
+def cumsum(a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None = None, out: None = None) -> Array[Any]: ...
 @overload
-def cumsum(a: ArrayLike, axis: SupportsIndex | None = ..., dtype: DTypeLike = ..., out: _ArrayT = ...) -> _ArrayT: ...
+def cumsum(a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
 #
 @overload
 def cumulative_sum(
-    x: _ArrayLike[_SCT],
+    x: _ArrayLike[_ScalarT],
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[_SCT]: ...
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[_ScalarT]: ...
 @overload
 def cumulative_sum(
     x: ArrayLike,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[Any]: ...
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[Any]: ...
 @overload
 def cumulative_sum(
     x: ArrayLike,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: _DTypeLike[_SCT] = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[_SCT]: ...
+    axis: CanIndex | None = None,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[_ScalarT]: ...
 @overload
 def cumulative_sum(
     x: ArrayLike,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: DTypeLike = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[Any]: ...
+    axis: CanIndex | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[Any]: ...
 @overload
 def cumulative_sum(
     x: ArrayLike,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: DTypeLike = ...,
-    out: _ArrayT = ...,
-    include_initial: bool = ...,
+    axis: CanIndex | None = None,
+    dtype: DTypeLike | None = None,
+    out: _ArrayT,
+    include_initial: bool = False,
 ) -> _ArrayT: ...
 
 #
 @overload
-def ptp(a: _ArrayLike[_SCT], axis: None = ..., out: None = ..., keepdims: Literal[False] = ...) -> _SCT: ...
+def ptp(a: _ArrayLike[_ScalarT], axis: None = None, out: None = None, keepdims: L[False] | _NoValueType = ...) -> _ScalarT: ...
 @overload
-def ptp(a: ArrayLike, axis: _ShapeLike | None = ..., out: None = ..., keepdims: bool = ...) -> Any: ...
+def ptp(a: ArrayLike, axis: _ShapeLike | None = None, out: None = None, keepdims: bool | _NoValueType = ...) -> Any: ...
 @overload
-def ptp(a: ArrayLike, axis: _ShapeLike | None = ..., out: _ArrayT = ..., keepdims: bool = ...) -> _ArrayT: ...
+def ptp(a: ArrayLike, axis: _ShapeLike | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
 
 #
 @overload
 def amax(
-    a: _ArrayLike[_SCT],
-    axis: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT: ...
+    a: _ArrayLike[_ScalarT],
+    axis: None = None,
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def amax(
     a: ArrayLike,
-    axis: _ShapeLike | None = ...,
-    out: None = ...,
-    keepdims: bool = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> Any: ...
 @overload
 def amax(
     a: ArrayLike,
-    axis: _ShapeLike | None = ...,
-    out: _ArrayT = ...,
-    keepdims: bool = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
+    axis: _ShapeLike | None,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def amax(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> _ArrayT: ...
 
 #
 @overload
 def amin(
-    a: _ArrayLike[_SCT],
-    axis: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT: ...
+    a: _ArrayLike[_ScalarT],
+    axis: None = None,
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def amin(
     a: ArrayLike,
-    axis: _ShapeLike | None = ...,
-    out: None = ...,
-    keepdims: bool = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> Any: ...
 @overload
 def amin(
     a: ArrayLike,
-    axis: _ShapeLike | None = ...,
-    out: _ArrayT = ...,
-    keepdims: bool = ...,
-    initial: _NumberLike_co = ...,
-    where: _ArrayLikeBool_co = ...,
+    axis: _ShapeLike | None,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def amin(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+    initial: _NumberLike_co | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> _ArrayT: ...
 
 # TODO: `np.prod()``: For object arrays `initial` does not necessarily
@@ -892,91 +989,113 @@ def amin(
 # Note that the same situation holds for all wrappers around
 # `np.ufunc.reduce`, e.g. `np.sum()` (`.__add__()`).
 @overload
-def prod(
-    a: _ArrayLikeBool_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+def prod(  # type: ignore[overload-overlap]
+    a: ToBool_nd,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
 ) -> np.int_: ...
 @overload
-def prod(
-    a: _ArrayLikeUInt_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+def prod(  # type: ignore[overload-overlap]
+    a: ToUInteger_nd,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
 ) -> np.uint64: ...
 @overload
 def prod(
-    a: _ArrayLikeInt_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+    a: ToSInteger_nd,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
 ) -> np.int64: ...
 @overload
 def prod(
-    a: _ArrayLikeFloat_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+    a: ToFloating_nd,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
 ) -> np.floating: ...
 @overload
 def prod(
-    a: _ArrayLikeComplex_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+    a: ToCFloating_nd,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
 ) -> np.complexfloating: ...
 @overload
 def prod(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
+    a: CoNumber_nd | ToObject_nd,
     axis: _ShapeLike | None = ...,
-    dtype: None = ...,
-    out: None = ...,
+    dtype: None = None,
+    out: None = None,
     keepdims: bool = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
 ) -> Any: ...
 @overload
 def prod(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: None = ...,
-    dtype: _DTypeLike[_SCT] = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: None,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: L[False] = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
-) -> _SCT: ...
+) -> _ScalarT: ...
 @overload
 def prod(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
+    a: CoNumber_nd | ToObject_nd,
+    axis: None = None,
+    *,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: L[False] = ...,
+    initial: _NumberLike_co = ...,
+    where: _ArrayLikeBool_co = ...,
+) -> _ScalarT: ...
+@overload
+def prod(
+    a: CoNumber_nd | ToObject_nd,
     axis: _ShapeLike | None = ...,
     dtype: DTypeLike | None = ...,
-    out: None = ...,
+    out: None = None,
     keepdims: bool = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
 ) -> Any: ...
 @overload
 def prod(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None,
+    dtype: DTypeLike | None,
+    out: _ArrayT,
+    keepdims: bool = ...,
+    initial: _NumberLike_co = ...,
+    where: _ArrayLikeBool_co = ...,
+) -> _ArrayT: ...
+@overload
+def prod(
+    a: CoNumber_nd | ToObject_nd,
     axis: _ShapeLike | None = ...,
     dtype: DTypeLike | None = ...,
-    out: _ArrayT = ...,
+    *,
+    out: _ArrayT,
     keepdims: bool = ...,
     initial: _NumberLike_co = ...,
     where: _ArrayLikeBool_co = ...,
@@ -984,406 +1103,501 @@ def prod(
 
 #
 @overload
-def cumprod(
-    a: _ArrayLikeBool_co,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-) -> NDArray[np.int_]: ...
+def cumprod(  # type: ignore[overload-overlap]
+    a: ToBool_nd,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+) -> Array[np.int_]: ...
+@overload
+def cumprod(  # type: ignore[overload-overlap]
+    a: ToUInteger_nd,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+) -> Array[np.uint64]: ...
+@overload
+def cumprod(  # type: ignore[overload-overlap]
+    a: ToSInteger_nd,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+) -> Array[np.int64]: ...
+@overload
+def cumprod(  # type: ignore[overload-overlap]
+    a: ToFloating_nd,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+) -> Array[np.floating]: ...
+@overload
+def cumprod(  # type: ignore[overload-overlap]
+    a: ToCFloating_nd,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+) -> Array[np.complexfloating]: ...
 @overload
 def cumprod(
-    a: _ArrayLikeUInt_co,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-) -> NDArray[np.uint64]: ...
+    a: ToObject_nd,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+) -> Array[np.object_]: ...
 @overload
 def cumprod(
-    a: _ArrayLikeInt_co,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-) -> NDArray[np.int64]: ...
+    a: CoNumber_nd | ToObject_nd,
+    axis: CanIndex | None,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+) -> Array[_ScalarT]: ...
 @overload
 def cumprod(
-    a: _ArrayLikeFloat_co,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-) -> NDArray[np.floating]: ...
+    a: CoNumber_nd | ToObject_nd,
+    axis: CanIndex | None = None,
+    *,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+) -> Array[_ScalarT]: ...
 @overload
 def cumprod(
-    a: _ArrayLikeComplex_co,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-) -> NDArray[np.complexfloating]: ...
+    a: CoNumber_nd | ToObject_nd,
+    axis: CanIndex | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+) -> Array[Any]: ...
 @overload
 def cumprod(
-    a: _ArrayLikeObject_co,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-) -> NDArray[np.object_]: ...
+    a: CoNumber_nd | ToObject_nd,
+    axis: CanIndex | None,
+    dtype: DTypeLike | None,
+    out: _ArrayT,
+) -> _ArrayT: ...
 @overload
 def cumprod(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: SupportsIndex | None = ...,
-    dtype: _DTypeLike[_SCT] = ...,
-    out: None = ...,
-) -> NDArray[_SCT]: ...
-@overload
-def cumprod(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: SupportsIndex | None = ...,
-    dtype: DTypeLike = ...,
-    out: None = ...,
-) -> NDArray[Any]: ...
-@overload
-def cumprod(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: SupportsIndex | None = ...,
-    dtype: DTypeLike = ...,
-    out: _ArrayT = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: CanIndex | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
 ) -> _ArrayT: ...
 
 #
 @overload
-def cumulative_prod(
-    x: _ArrayLikeBool_co,
+def cumulative_prod(  # type: ignore[overload-overlap]
+    x: ToBool_nd,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[np.int_]: ...
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[np.int_]: ...
+@overload
+def cumulative_prod(  # type: ignore[overload-overlap]
+    x: ToUInteger_nd,
+    /,
+    *,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[np.uint64]: ...
+@overload
+def cumulative_prod(  # type: ignore[overload-overlap]
+    x: ToSInteger_nd,
+    /,
+    *,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[np.int64]: ...
+@overload
+def cumulative_prod(  # type: ignore[overload-overlap]
+    x: ToFloating_nd,
+    /,
+    *,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[np.floating]: ...
+@overload
+def cumulative_prod(  # type: ignore[overload-overlap]
+    x: ToCFloating_nd,
+    /,
+    *,
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[np.complexfloating]: ...
 @overload
 def cumulative_prod(
-    x: _ArrayLikeUInt_co,
+    x: ToObject_nd,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[np.uint64]: ...
+    axis: CanIndex | None = None,
+    dtype: None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[np.object_]: ...
 @overload
 def cumulative_prod(
-    x: _ArrayLikeInt_co,
+    x: CoNumber_nd | ToObject_nd,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[np.int64]: ...
+    axis: CanIndex | None = None,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[_ScalarT]: ...
 @overload
 def cumulative_prod(
-    x: _ArrayLikeFloat_co,
+    x: CoNumber_nd | ToObject_nd,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[np.floating]: ...
+    axis: CanIndex | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    include_initial: bool = False,
+) -> Array[Any]: ...
 @overload
 def cumulative_prod(
-    x: _ArrayLikeComplex_co,
+    x: CoNumber_nd | ToObject_nd,
     /,
     *,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[np.complexfloating]: ...
-@overload
-def cumulative_prod(
-    x: _ArrayLikeObject_co,
-    /,
-    *,
-    axis: SupportsIndex | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[np.object_]: ...
-@overload
-def cumulative_prod(
-    x: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    /,
-    *,
-    axis: SupportsIndex | None = ...,
-    dtype: _DTypeLike[_SCT] = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[_SCT]: ...
-@overload
-def cumulative_prod(
-    x: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    /,
-    *,
-    axis: SupportsIndex | None = ...,
-    dtype: DTypeLike = ...,
-    out: None = ...,
-    include_initial: bool = ...,
-) -> NDArray[Any]: ...
-@overload
-def cumulative_prod(
-    x: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    /,
-    *,
-    axis: SupportsIndex | None = ...,
-    dtype: DTypeLike = ...,
-    out: _ArrayT = ...,
-    include_initial: bool = ...,
+    axis: CanIndex | None = None,
+    dtype: DTypeLike | None = None,
+    out: _ArrayT,
+    include_initial: bool = False,
 ) -> _ArrayT: ...
 
 #
 def ndim(a: ArrayLike) -> int: ...
-def size(a: ArrayLike, axis: int | None = ...) -> int: ...
+def size(a: ArrayLike, axis: int | None = None) -> int: ...
 
 #
 @overload
-def around(a: _BoolLike_co, decimals: SupportsIndex = ..., out: None = ...) -> np.float16: ...
+def around(a: ToBool_0d, decimals: CanIndex = 0, out: None = None) -> np.float16: ...  # type: ignore[overload-overlap]
 @overload
-def around(a: _SCT_uifcO, decimals: SupportsIndex = ..., out: None = ...) -> _SCT_uifcO: ...
+def around(a: ToBool_1nd, decimals: CanIndex = 0, out: None = None) -> Array[np.float16]: ...  # type: ignore[overload-overlap]
 @overload
-def around(a: _ComplexLike_co | np.object_, decimals: SupportsIndex = ..., out: None = ...) -> Any: ...
+def around(a: _ToArray_0d[_NumberT], decimals: CanIndex = 0, out: None = None) -> _NumberT: ...  # type: ignore[overload-overlap]
 @overload
-def around(a: _ArrayLikeBool_co, decimals: SupportsIndex = ..., out: None = ...) -> NDArray[np.float16]: ...
+def around(a: _ToArray_1nd[_NumberT], decimals: CanIndex = 0, out: None = None) -> Array[_NumberT]: ...
 @overload
-def around(a: _ArrayLike[_SCT_uifcO], decimals: SupportsIndex = ..., out: None = ...) -> NDArray[_SCT_uifcO]: ...
+def around(a: Is[int], decimals: CanIndex = 0, out: None = None) -> np.intp: ...
 @overload
-def around(a: _ArrayLikeComplex_co | _ArrayLikeObject_co, decimals: SupportsIndex = ..., out: None = ...) -> NDArray[Any]: ...
+def around(a: Is[float], decimals: CanIndex = 0, out: None = None) -> np.float64: ...
 @overload
-def around(a: _ArrayLikeComplex_co | _ArrayLikeObject_co, decimals: SupportsIndex = ..., out: _ArrayT = ...) -> _ArrayT: ...
+def around(a: Is[complex], decimals: CanIndex = 0, out: None = None) -> np.complex128: ...
+@overload
+def around(a: ToObject_0d, decimals: CanIndex = 0, out: None = None) -> Any: ...
+@overload
+def around(a: CoNumber_nd | ToObject_nd, decimals: CanIndex, out: _ArrayT) -> _ArrayT: ...
+@overload
+def around(a: CoNumber_nd | ToObject_nd, decimals: CanIndex = 0, *, out: _ArrayT) -> _ArrayT: ...
+@overload
+def around(a: CoNumber_1nd | ToObject_1nd, decimals: CanIndex = 0, out: None = None) -> Array[Any]: ...
 
 #
 @overload
-def mean(
-    a: _ArrayLikeFloat_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+def mean(  # type: ignore[overload-overlap]
+    a: CoFloating_nd,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> np.floating: ...
 @overload
-def mean(
-    a: _ArrayLikeComplex_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+def mean(  # type: ignore[overload-overlap]
+    a: ToCFloating_nd,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> np.complexfloating: ...
 @overload
 def mean(
-    a: _ArrayLikeTD64_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
+    a: ToTimeDelta_nd,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> np.timedelta64: ...
 @overload
 def mean(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
+    a: CoNumber_nd | ToObject_nd,
     axis: _ShapeLike | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    keepdims: bool = ...,
+    dtype: None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> Any: ...
 @overload
 def mean(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: None = ...,
-    dtype: _DTypeLike[_SCT] = ...,
-    out: None = ...,
-    keepdims: Literal[False] = ...,
-    *,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT: ...
-@overload
-def mean(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
+    a: CoNumber_nd | ToObject_nd,
     axis: None,
-    dtype: _DTypeLike[_SCT],
-    out: None = ...,
-    keepdims: bool = ...,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT | NDArray[_SCT]: ...
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def mean(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: None = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: None = None,
     *,
-    dtype: _DTypeLike[_SCT],
-    out: None = ...,
-    keepdims: bool = ...,
-    where: _ArrayLikeBool_co = ...,
-) -> _SCT | NDArray[_SCT]: ...
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: L[False] | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def mean(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: _ShapeLike | None = ...,
-    dtype: DTypeLike = ...,
-    out: None = ...,
-    keepdims: bool = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: None,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT | Array[_ScalarT]: ...
+@overload
+def mean(
+    a: CoNumber_nd | ToObject_nd,
+    axis: None = None,
+    *,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ScalarT | Array[_ScalarT]: ...
+@overload
+def mean(
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+    *,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> Any: ...
 @overload
 def mean(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: _ShapeLike | None = ...,
-    dtype: DTypeLike = ...,
-    out: _ArrayT = ...,
-    keepdims: bool = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None,
+    dtype: DTypeLike | None,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def mean(
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
     *,
-    where: _ArrayLikeBool_co = ...,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
 ) -> _ArrayT: ...
 
 #
 @overload
 def std(
     a: _ArrayLikeComplex_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    ddof: float = ...,
-    keepdims: Literal[False] = ...,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    ddof: float = 0,
+    keepdims: L[False] | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co = ...,
-    correction: float = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: _ArrayLikeComplex_co | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
 ) -> np.floating: ...
 @overload
 def std(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
+    a: CoNumber_nd | ToObject_nd,
     axis: _ShapeLike | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    ddof: float = ...,
-    keepdims: bool = ...,
+    dtype: None = None,
+    out: None = None,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
-    correction: float = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
 ) -> Any: ...
 @overload
 def std(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: None = ...,
-    dtype: _DTypeLike[_SCT] = ...,
-    out: None = ...,
-    ddof: float = ...,
-    keepdims: Literal[False] = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: None,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    ddof: float = 0,
+    keepdims: L[False] | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
-    correction: float = ...,
-) -> _SCT: ...
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def std(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: _ShapeLike | None = ...,
-    dtype: DTypeLike = ...,
-    out: None = ...,
-    ddof: float = ...,
-    keepdims: bool = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: None = None,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
-    correction: float = ...,
-) -> Any: ...
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    ddof: float = 0,
+    keepdims: L[False] | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def std(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: _ShapeLike | None = ...,
-    dtype: DTypeLike = ...,
-    out: _ArrayT = ...,
-    ddof: float = ...,
-    keepdims: bool = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None,
+    dtype: DTypeLike | None,
+    out: _ArrayT,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
-    correction: float = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
 ) -> _ArrayT: ...
+@overload
+def std(
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def std(
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    *,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
+) -> Any: ...
 
 #
 @overload
 def var(
     a: _ArrayLikeComplex_co,
-    axis: None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    ddof: float = ...,
-    keepdims: Literal[False] = ...,
+    axis: None = None,
+    dtype: None = None,
+    out: None = None,
+    ddof: float = 0,
+    keepdims: L[False] | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co = ...,
-    correction: float = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: _ArrayLikeComplex_co | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
 ) -> np.floating: ...
 @overload
 def var(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
+    a: CoNumber_nd | ToObject_nd,
     axis: _ShapeLike | None = ...,
-    dtype: None = ...,
-    out: None = ...,
-    ddof: float = ...,
-    keepdims: bool = ...,
+    dtype: None = None,
+    out: None = None,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
-    correction: float = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
 ) -> Any: ...
 @overload
 def var(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: None = ...,
-    dtype: _DTypeLike[_SCT] = ...,
-    out: None = ...,
-    ddof: float = ...,
-    keepdims: Literal[False] = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: None,
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    ddof: float = 0,
+    keepdims: L[False] | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
-    correction: float = ...,
-) -> _SCT: ...
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def var(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: _ShapeLike | None = ...,
-    dtype: DTypeLike = ...,
-    out: None = ...,
-    ddof: float = ...,
-    keepdims: bool = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: None = None,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
-    correction: float = ...,
-) -> Any: ...
+    dtype: _DTypeLike[_ScalarT],
+    out: None = None,
+    ddof: float = 0,
+    keepdims: L[False] | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
+) -> _ScalarT: ...
 @overload
 def var(
-    a: _ArrayLikeComplex_co | _ArrayLikeObject_co,
-    axis: _ShapeLike | None = ...,
-    dtype: DTypeLike = ...,
-    out: _ArrayT = ...,
-    ddof: float = ...,
-    keepdims: bool = ...,
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None,
+    dtype: DTypeLike | None,
+    out: _ArrayT,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
     *,
-    where: _ArrayLikeBool_co = ...,
-    mean: _ArrayLikeComplex_co | _ArrayLikeObject_co = ...,
-    correction: float = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
 ) -> _ArrayT: ...
+@overload
+def var(
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def var(
+    a: CoNumber_nd | ToObject_nd,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    *,
+    where: _ArrayLikeBool_co | _NoValueType = ...,
+    mean: CoNumber_nd | ToObject_nd | _NoValueType = ...,
+    correction: float | _NoValueType = ...,
+) -> Any: ...
 
 max = amax
 min = amin
