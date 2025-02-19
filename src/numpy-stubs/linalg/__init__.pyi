@@ -1,7 +1,5 @@
-from numpy._core.fromnumeric import matrix_transpose
-from numpy._core.numeric import tensordot, vecdot
-
 from ._linalg import (
+    LinAlgError,
     cholesky,
     cond,
     cross,
@@ -17,6 +15,7 @@ from ._linalg import (
     matrix_norm,
     matrix_power,
     matrix_rank,
+    matrix_transpose,
     multi_dot,
     norm,
     outer,
@@ -26,9 +25,11 @@ from ._linalg import (
     solve,
     svd,
     svdvals,
+    tensordot,
     tensorinv,
     tensorsolve,
     trace,
+    vecdot,
     vector_norm,
 )
 
@@ -66,5 +67,3 @@ __all__ = [
     "vecdot",
     "vector_norm",
 ]
-
-class LinAlgError(ValueError): ...
