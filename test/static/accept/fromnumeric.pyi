@@ -1,4 +1,4 @@
-from typing import Any, NoReturn
+from typing import Any
 from typing_extensions import assert_type
 
 import numpy as np
@@ -123,11 +123,8 @@ assert_type(np.ravel(f), np.ndarray[tuple[int], np.dtype[np.float64]])
 assert_type(np.ravel(AR_b), np.ndarray[tuple[int], np.dtype[np.bool]])
 assert_type(np.ravel(AR_f4), np.ndarray[tuple[int], np.dtype[np.float32]])
 
-assert_type(np.nonzero(b), NoReturn)
-assert_type(np.nonzero(f4), NoReturn)
 assert_type(np.nonzero(AR_b), tuple[npt.NDArray[np.intp], ...])
 assert_type(np.nonzero(AR_f4), tuple[npt.NDArray[np.intp], ...])
-assert_type(np.nonzero(AR_0d), NoReturn)
 assert_type(np.nonzero(AR_1d), tuple[npt.NDArray[np.intp], ...])
 assert_type(np.nonzero(AR_nd), tuple[npt.NDArray[np.intp], ...])
 

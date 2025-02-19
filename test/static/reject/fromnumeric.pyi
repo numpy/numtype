@@ -69,7 +69,7 @@ np.trace(AR_b1, axis2=[])  # type: ignore[call-overload]  # pyright: ignore[repo
 
 np.ravel(b1, order="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.nonzero(0)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.nonzero(0)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
 np.compress([True], AR_b1, axis=1.0)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
