@@ -32,11 +32,11 @@ np.linalg.eigvalsh(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportCall
 np.linalg.eigvalsh(AR_O, UPLO="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
 np.linalg.cond(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.linalg.cond(AR_f8, p="bob")  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.linalg.cond(AR_f8, p="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
 np.linalg.det(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.linalg.slogdet(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
 np.linalg.norm(AR_f8, ord="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.linalg.multi_dot([AR_M])  # type: ignore[list-item]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.linalg.multi_dot([AR_M])  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
