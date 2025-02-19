@@ -134,7 +134,6 @@ from numpy._core import (
     max,
     may_share_memory,
     mean,
-    memmap,
     min,
     min_scalar_type,
     moveaxis,
@@ -195,6 +194,7 @@ from numpy._core import (
 )
 from numpy._core._internal import _ctypes
 from numpy._core._ufunc_config import _ErrCall, _ErrKind
+from numpy._core.memmap import memmap
 from numpy._core.multiarray import bincount, flagsobj, packbits, unpackbits
 from numpy._pytesttester import PytestTester
 from numpy._typing import (
