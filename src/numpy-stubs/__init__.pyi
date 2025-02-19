@@ -142,6 +142,8 @@ from numpy._core.multiarray import (
     zeros,
 )
 from numpy._core.numeric import (
+    False_,
+    True_,
     allclose,
     argwhere,
     array_equal,
@@ -159,10 +161,14 @@ from numpy._core.numeric import (
     full_like,
     identity,
     indices,
+    inf,
     isclose,
     isfortran,
     isscalar,
+    little_endian,
     moveaxis,
+    nan,
+    newaxis,
     ones,
     ones_like,
     outer,
@@ -1043,17 +1049,9 @@ class _IntegralMixin(_RealMixin):
 
 __version__: Final = "2.2.2"
 
-newaxis: Final = None
-inf: Final[float] = ...
-nan: Final[float] = ...
 pi: Final[float] = ...
 e: Final[float] = ...
 euler_gamma: Final[float] = ...
-
-False_: Final[np.bool[L[False]]] = ...
-True_: Final[np.bool[L[True]]] = ...
-
-little_endian: Final[builtins.bool] = ...
 
 # not in __all__
 __NUMPY_SETUP__: Final = False
