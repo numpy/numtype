@@ -1412,7 +1412,7 @@ def dot(a: npt.ArrayLike, b: npt.ArrayLike, out: _ArrayT) -> _ArrayT: ...
 
 #
 @overload
-def vdot(a: _ArrayLike[_NumericT], b: _ArrayLike[_NumericT], /) -> _NumericT: ...  # type: ignore[overload-overlap]  # false positive
+def vdot(a: _ArrayLike[_NumericT], b: _ArrayLike[_NumericT], /) -> _NumericT: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
 @overload
 def vdot(a: _ArrayLikeInt_co, b: _ArrayLikeInt_co, /) -> np.signedinteger: ...
 @overload
