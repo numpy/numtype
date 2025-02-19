@@ -57,20 +57,7 @@ from numpy import (  # noqa: ICN003
     void,
 )
 from numpy._typing import DTypeLike
-from numpy._typing._extended_precision import (
-    complex160,
-    complex192,
-    complex256,
-    complex512,
-    float80,
-    float96,
-    float128,
-    float256,
-    int128,
-    int256,
-    uint128,
-    uint256,
-)
+from numpy._typing._extended_precision import complex192, complex256, float96, float128
 
 from ._type_aliases import sctypeDict as sctypeDict
 from .multiarray import busday_count, busday_offset, busdaycalendar, datetime_as_string, datetime_data, is_busday
@@ -89,10 +76,8 @@ __all__ = [
     "clongdouble",
     "complex64",
     "complex128",
-    "complex160",
     "complex192",
     "complex256",
-    "complex512",
     "complexfloating",
     "csingle",
     "datetime64",
@@ -103,10 +88,8 @@ __all__ = [
     "float16",
     "float32",
     "float64",
-    "float80",
     "float96",
     "float128",
-    "float256",
     "floating",
     "generic",
     "half",
@@ -115,8 +98,6 @@ __all__ = [
     "int16",
     "int32",
     "int64",
-    "int128",
-    "int256",
     "int_",
     "intc",
     "integer",
@@ -141,8 +122,6 @@ __all__ = [
     "uint32",
     "uint64",
     "uint64",
-    "uint128",
-    "uint256",
     "uintc",
     "uintp",
     "ulong",
