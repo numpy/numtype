@@ -9,7 +9,7 @@ import ipaddress as ip
 import uuid
 from collections.abc import Sequence
 from typing import Any, ClassVar, TypeAlias, final, type_check_only
-from typing_extensions import Protocol, TypeAliasType, TypeVar, Unpack
+from typing_extensions import Never, Protocol, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
 from numpy._typing import _64Bit
@@ -22,7 +22,7 @@ _T_co = TypeVar("_T_co", covariant=True)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...], covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic, default=Any)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, default=Any, covariant=True)
-_ToT = TypeVar("_ToT", default=_ScalarT)
+_ToT = TypeVar("_ToT", default=Never)
 
 ###
 # Type constraints (bijective type mappings)
@@ -137,8 +137,8 @@ _PyObject: TypeAlias = (  # anything immutable that results in an `object_` dtyp
     | ip.IPv6Address
 )
 
-_ToArray_nd: TypeAlias = CanArray[_ScalarT] | _ToT | Sequence_nd[_ToT | _ScalarT] | Sequence_nd[CanArray[_ScalarT]]
-_ToArray_0d = TypeAliasType("_ToArray_0d", _ToT | CanArray[_ScalarT, tuple[()]], type_params=(_ScalarT, _ToT))
+_ToArray_nd: TypeAlias = _ScalarT | _ToT | CanArray[_ScalarT] | Sequence_nd[_ToT | _ScalarT] | Sequence_nd[CanArray[_ScalarT]]
+_ToArray_0d: TypeAlias = _ScalarT | _ToT | CanArray[_ScalarT, tuple[()]]
 
 # don't require matching shape-types by default
 _ToArray_1d: TypeAlias = CanArraySized[_ScalarT] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
