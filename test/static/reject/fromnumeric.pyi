@@ -42,9 +42,9 @@ np.sort(AR_b1, axis="bob")  # type: ignore[call-overload]  # pyright: ignore[rep
 np.sort(AR_b1, kind="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.sort(AR_b1, order=range(5))  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.argsort(AR_b1, axis="bob")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-np.argsort(AR_b1, kind="bob")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-np.argsort(AR_b1, order=range(5))  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.argsort(AR_b1, axis="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.argsort(AR_b1, kind="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.argsort(AR_b1, order=range(5))  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
 np.argmax(AR_b1, axis="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.argmax(AR_b1, kind="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
@@ -63,9 +63,9 @@ np.diagonal(AR_b1, offset=None)  # type: ignore[call-overload]  # pyright: ignor
 np.diagonal(AR_b1, axis1="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.diagonal(AR_b1, axis2=[])  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.trace(AR_b1, offset=None)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.trace(AR_b1, axis1="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.trace(AR_b1, axis2=[])  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.trace(AR_b1, offset=None)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]
+np.trace(AR_b1, axis1="bob")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]
+np.trace(AR_b1, axis2=[])  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]
 
 np.ravel(b1, order="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 

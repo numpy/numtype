@@ -1,4 +1,4 @@
-from typing import Any, Literal as L, NoReturn
+from typing import Any, NoReturn
 from typing_extensions import assert_type
 
 import numpy as np
@@ -98,14 +98,14 @@ assert_type(np.searchsorted(AR_f4[0], 0), np.intp)
 assert_type(np.searchsorted(AR_b[0], [0]), npt.NDArray[np.intp])
 assert_type(np.searchsorted(AR_f4[0], [0]), npt.NDArray[np.intp])
 
-assert_type(np.resize(b, (5, 5)), np.ndarray[tuple[L[5], L[5]], np.dtype[np.bool]])
-assert_type(np.resize(f4, (5, 5)), np.ndarray[tuple[L[5], L[5]], np.dtype[np.float32]])
-assert_type(np.resize(f, (5, 5)), np.ndarray[tuple[L[5], L[5]], np.dtype[Any]])
-assert_type(np.resize(AR_b, (5, 5)), np.ndarray[tuple[L[5], L[5]], np.dtype[np.bool]])
-assert_type(np.resize(AR_f4, (5, 5)), np.ndarray[tuple[L[5], L[5]], np.dtype[np.float32]])
+assert_type(np.resize(b, (5, 5)), np.ndarray[tuple[int, int], np.dtype[np.bool]])
+assert_type(np.resize(f4, (5, 5)), np.ndarray[tuple[int, int], np.dtype[np.float32]])
+assert_type(np.resize(f, (5, 5)), np.ndarray[tuple[int, int], np.dtype[Any]])
+assert_type(np.resize(AR_b, (5, 5)), np.ndarray[tuple[int, int], np.dtype[np.bool]])
+assert_type(np.resize(AR_f4, (5, 5)), np.ndarray[tuple[int, int], np.dtype[np.float32]])
 
-assert_type(np.squeeze(b), np.bool)
-assert_type(np.squeeze(f4), np.float32)
+assert_type(np.squeeze(b), np.ndarray[tuple[()], np.dtype[np.bool]])
+assert_type(np.squeeze(f4), np.ndarray[tuple[()], np.dtype[np.float32]])
 assert_type(np.squeeze(f), npt.NDArray[Any])
 assert_type(np.squeeze(AR_b), npt.NDArray[np.bool])
 assert_type(np.squeeze(AR_f4), npt.NDArray[np.float32])
@@ -119,7 +119,7 @@ assert_type(np.trace(AR_f4, out=AR_subclass), NDArraySubclass)
 
 assert_type(np.ravel(b), np.ndarray[tuple[int], np.dtype[np.bool]])
 assert_type(np.ravel(f4), np.ndarray[tuple[int], np.dtype[np.float32]])
-assert_type(np.ravel(f), np.ndarray[tuple[int], np.dtype[np.float64 | np.int_ | np.bool]])
+assert_type(np.ravel(f), np.ndarray[tuple[int], np.dtype[np.float64]])
 assert_type(np.ravel(AR_b), np.ndarray[tuple[int], np.dtype[np.bool]])
 assert_type(np.ravel(AR_f4), np.ndarray[tuple[int], np.dtype[np.float32]])
 
@@ -135,7 +135,8 @@ assert_type(np.shape(b), tuple[()])
 assert_type(np.shape(f), tuple[()])
 assert_type(np.shape([1]), tuple[int])
 assert_type(np.shape([[2]]), tuple[int, int])
-assert_type(np.shape([[[3]]]), tuple[int, ...])
+assert_type(np.shape([[[3]]]), tuple[int, int, int])
+assert_type(np.shape([[[[4]]]]), tuple[int, ...])
 assert_type(np.shape(AR_b), tuple[int, ...])
 assert_type(np.shape(AR_nd), tuple[int, ...])
 # these fail on mypy, but it works as expected with pyright/pylance
@@ -292,7 +293,7 @@ assert_type(np.size(AR_b), int)
 assert_type(np.size(AR_f4), int)
 
 assert_type(np.around(b), np.float16)
-assert_type(np.around(f), Any)
+assert_type(np.around(f), np.float64)
 assert_type(np.around(i8), np.int64)
 assert_type(np.around(f4), np.float32)
 assert_type(np.around(AR_b), npt.NDArray[np.float16])
