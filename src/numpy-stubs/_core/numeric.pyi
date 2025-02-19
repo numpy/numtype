@@ -49,11 +49,20 @@ from _numtype import (
     _ToArray_1nd,
     _ToArray_nd,
 )
-from numpy import _AnyShapeT, _OrderCF, _OrderKACF, bitwise_not, dtype, matmul, ndarray, ufunc, vecdot  # noqa: ICN003
+from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ScalarLike_co, _ShapeLike, _SupportsArrayFunc
 
 from ._multiarray_umath import _KwargsD, _KwargsDL
+from ._type_aliases import sctypes as sctypes
 from .multiarray import (
+    ALLOW_THREADS as ALLOW_THREADS,
+    BUFSIZE as BUFSIZE,
+    CLIP as CLIP,
+    MAXDIMS as MAXDIMS,
+    MAY_SHARE_BOUNDS as MAY_SHARE_BOUNDS,
+    MAY_SHARE_EXACT as MAY_SHARE_EXACT,
+    RAISE as RAISE,
+    WRAP as WRAP,
     arange,
     array,
     asanyarray,
@@ -65,6 +74,7 @@ from .multiarray import (
     concatenate,
     copyto,
     dot,
+    dtype,
     empty,
     empty_like,
     flatiter,
@@ -75,18 +85,23 @@ from .multiarray import (
     fromstring,
     inner,
     lexsort,
+    matmul,
     may_share_memory,
     min_scalar_type,
+    ndarray,
     nditer,
     nested_iters,
+    normalize_axis_index as normalize_axis_index,
     promote_types,
     putmask,
     result_type,
     shares_memory,
     vdot,
+    vecdot,
     where,
     zeros,
 )
+from .umath import invert, multiply as multiply, sin as sin
 
 __all__ = [
     "False_",
@@ -174,6 +189,7 @@ _Axes: TypeAlias = int | tuple[_ShapeLike, _ShapeLike]
 
 ###
 
+bitwise_not = invert
 newaxis: Final[None] = None
 
 little_endian: Final[bool] = ...
