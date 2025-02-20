@@ -16,7 +16,6 @@ OUTPUT_FILE = Path(__file__).parent / "generated/emath.pyi"
 
 LINESEP: Final = "\n###\n"
 
-# TODO(jorenham): object_  # noqa: TD003
 VALS_EMATH: Final[dict[str, list[Any]]] = {
     # "np.bool": [np.True_],  # same as int8
     "np.uint8": [np.uint8(0), np.uint8(1), np.uint8(9)],
@@ -259,13 +258,7 @@ def _gen_all() -> Generator[str]:
 
 @np.errstate(all="ignore")
 def main() -> None:
-    """
-    Output the generated `.pyi` source to stdout.
-
-    TODO:
-        - `intp`
-        - `object_`
-    """
+    """Regenerate `test/generated/emath.pyi`."""
     OUTPUT_FILE.write_text("\n".join(_gen_all()), encoding="utf-8", newline="\n")
 
 
