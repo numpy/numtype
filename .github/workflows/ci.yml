@@ -50,6 +50,7 @@ jobs:
           src/numpy-stubs/_typing/
           src/numpy-stubs/char/
           src/numpy-stubs/core/
+          src/numpy-stubs/ctypeslib/
           src/numpy-stubs/distutils/
           src/numpy-stubs/f2py/
           src/numpy-stubs/fft/
@@ -101,6 +102,7 @@ jobs:
           src/numpy-stubs/_typing/
           src/numpy-stubs/char/
           src/numpy-stubs/core/
+          src/numpy-stubs/ctypeslib/
           src/numpy-stubs/distutils/
           src/numpy-stubs/f2py/
           src/numpy-stubs/fft/
