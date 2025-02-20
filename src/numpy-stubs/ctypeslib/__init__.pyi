@@ -1,5 +1,4 @@
 from ._ctypeslib import (
-    __all__ as __all__,
     __doc__ as __doc__,
     _concrete_ndptr as _concrete_ndptr,
     _ndptr as _ndptr,
@@ -10,3 +9,5 @@ from ._ctypeslib import (
     load_library as load_library,
     ndpointer as ndpointer,
 )
+
+__all__ = ["as_array", "as_ctypes", "as_ctypes_type", "c_intp", "load_library", "ndpointer"]
