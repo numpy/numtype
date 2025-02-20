@@ -129,8 +129,10 @@ reportImplicitOverride = false             # TODO
 reportMissingSuperCall = false
 reportPrivateUsage = false
 reportPropertyTypeMismatch = false
+reportSelfClsParameterName = false
 reportShadowedImports = true
 reportUninitializedInstanceVariable = true
+
 reportUnnecessaryTypeIgnoreComment = true
 reportUnusedExpression = false
 reportUnusedParameter = false
