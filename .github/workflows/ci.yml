@@ -62,6 +62,7 @@ jobs:
           src/numpy-stubs/lib/_iotools.pyi
           src/numpy-stubs/lib/_nanfunctions_impl.pyi
           src/numpy-stubs/lib/_npyio_impl.pyi
+          src/numpy-stubs/lib/_scimath_impl.pyi
           src/numpy-stubs/lib/_stride_tricks_impl.pyi
           src/numpy-stubs/lib/_user_array_impl.pyi
           src/numpy-stubs/lib/_utils_impl.pyi
@@ -114,6 +115,7 @@ jobs:
           src/numpy-stubs/lib/_iotools.pyi
           src/numpy-stubs/lib/_nanfunctions_impl.pyi
           src/numpy-stubs/lib/_npyio_impl.pyi
+          src/numpy-stubs/lib/_scimath_impl.pyi
           src/numpy-stubs/lib/_stride_tricks_impl.pyi
           src/numpy-stubs/lib/_user_array_impl.pyi
           src/numpy-stubs/lib/_utils_impl.pyi
