@@ -80,7 +80,7 @@ __all__ = [
     "poly2cheb",
 ]
 
-_SCT = TypeVar("_SCT", bound=np.number[Any] | np.object_)
+_SCT = TypeVar("_SCT", bound=np.number | np.object_)
 
 def _cseries_to_zseries(c: npt.NDArray[_SCT]) -> _Series[_SCT]: ...
 def _zseries_to_cseries(zs: npt.NDArray[_SCT]) -> _Series[_SCT]: ...
@@ -131,7 +131,7 @@ chebpts1: _FuncPts[L["chebpts1"]]
 chebpts2: _FuncPts[L["chebpts2"]]
 
 # keep in sync with `Chebyshev.interpolate`
-_RT = TypeVar("_RT", bound=np.number[Any] | np.bool | np.object_)
+_RT = TypeVar("_RT", bound=np.number | np.bool | np.object_)
 
 @overload
 def chebinterpolate(

@@ -22,7 +22,7 @@ from numpy._typing import (
 
 __all__ = ["einsum", "einsum_path"]
 
-_ArrayT = TypeVar("_ArrayT", bound=NDArray[np.bool | np.number[Any]])
+_ArrayT = TypeVar("_ArrayT", bound=NDArray[np.bool | np.number])
 
 _OptimizeKind: TypeAlias = bool | Literal["greedy", "optimal"] | Sequence[Any] | None
 _CastingSafe: TypeAlias = Literal["no", "equiv", "safe", "same_kind"]

@@ -1,3 +1,4 @@
+import _ctypes as _ct
 import ctypes as ct
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable, Sequence
@@ -151,9 +152,9 @@ def as_ctypes_type(dtype: _DoubleCodes | _DTypeLike[np.double] | type[float | ct
 @overload
 def as_ctypes_type(dtype: _LongDoubleCodes | _DTypeLike[np.longdouble] | type[ct.c_longdouble]) -> type[ct.c_longdouble]: ...
 @overload
-def as_ctypes_type(dtype: _VoidDTypeLike) -> type[Any]: ...  # `ctypes.Union` or `ctypes.Structure`
+def as_ctypes_type(dtype: _VoidDTypeLike) -> _ct._UnionType | _ct._PyCStructType: ...
 @overload
-def as_ctypes_type(dtype: str) -> type[Any]: ...
+def as_ctypes_type(dtype: str) -> type: ...
 @overload
 def as_array(obj: ct._PointerLike, shape: Sequence[int]) -> NDArray[Any]: ...
 @overload

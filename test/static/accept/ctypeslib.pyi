@@ -1,3 +1,4 @@
+import _ctypes as _ct
 import ctypes as ct
 from typing import Any
 from typing_extensions import assert_type
@@ -43,8 +44,8 @@ assert_type(np.ctypeslib.as_ctypes_type(np.single), type[ct.c_float])
 assert_type(np.ctypeslib.as_ctypes_type(np.double), type[ct.c_double])
 assert_type(np.ctypeslib.as_ctypes_type(ct.c_double), type[ct.c_double])
 assert_type(np.ctypeslib.as_ctypes_type("q"), type[ct.c_longlong])
-assert_type(np.ctypeslib.as_ctypes_type([("i8", np.int64), ("f8", np.float64)]), type[Any])
-assert_type(np.ctypeslib.as_ctypes_type("i8"), type[Any])
+assert_type(np.ctypeslib.as_ctypes_type([("i8", np.int64), ("f8", np.float64)]), _ct._UnionType | _ct._PyCStructType)
+assert_type(np.ctypeslib.as_ctypes_type("i8"), type)
 assert_type(np.ctypeslib.as_ctypes_type("f8"), type[ct.c_double])
 
 assert_type(np.ctypeslib.as_ctypes(AR_bool.take(0)), ct.c_bool)

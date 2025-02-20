@@ -405,7 +405,7 @@ def raises(*args: type[BaseException]) -> Callable[[_FT], _FT]: ...
 
 #
 def decorate_methods(
-    cls: type[Any],
+    cls: type,
     decorator: Callable[[Callable[..., Any]], Any],
     testmatch: str | bytes | Pattern[Any] | None = None,
 ) -> None: ...
