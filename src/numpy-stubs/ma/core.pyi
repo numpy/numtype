@@ -577,7 +577,7 @@ class MaskedArray(np.ndarray[_ShapeType_co, _DType_co]):
 
 class mvoid(MaskedArray[_ShapeType_co, _DType_co]):
     def __new__(
-        self,
+        self,  # noqa: PLW0211
         data: Incomplete,
         mask: Incomplete = ...,
         dtype: Incomplete = ...,
