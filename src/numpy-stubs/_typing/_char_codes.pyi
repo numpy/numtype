@@ -28,7 +28,7 @@ _SignedIntegerCodes: TypeAlias = Literal[
 _UInt8Codes: TypeAlias = Literal["uint8", "ubyte", "u1", "B", "|u1", "|B", "=u1", "=B", "<u1", "<B", ">u1", ">B"]
 _UInt16Codes: TypeAlias = Literal["uint16", "ushort", "u2", "H", "|u2", "|H", "=u2", "=H", "<u2", "<H", ">u2", ">H"]
 _UInt32Codes: TypeAlias = Literal["uint32", "uintc", "u4", "I", "|u4", "|I", "=u4", "=I", "<u4", "<I", ">u4", ">I"]
-_UInt64Codes: TypeAlias = Literal["uint64", "ulonglong", "u8", "L", "|u8", "|L", "=u8", "=L", "<u8", "<L", ">u8", ">L"]
+_UInt64Codes: TypeAlias = Literal["uint64", "ulonglong", "u8", "Q", "|u8", "|Q", "=u8", "=Q", "<u8", "<Q", ">u8", ">Q"]
 _UIntPCodes: TypeAlias = Literal["uintp", "uint", "N", "|N", "=N", "<N", ">N"]  # either uint32 or uint64
 _ULongCodes: TypeAlias = Literal["ulong", "L", "|L", "=L", "<L", ">L"]  # either uint32 or uint64
 _ULongLongCodes: TypeAlias = Literal["ulonglong", "Q", "|Q", "=Q", "<Q", ">Q"]
