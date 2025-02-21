@@ -57,6 +57,7 @@ jobs:
           src/numpy-stubs/lib/__init__.pyi
           src/numpy-stubs/lib/_array_utils_impl.pyi
           src/numpy-stubs/lib/_arraypad_impl.pyi
+          src/numpy-stubs/lib/_arraysetops_impl.pyi
           src/numpy-stubs/lib/_datasource.pyi
           src/numpy-stubs/lib/_histograms_impl.pyi
           src/numpy-stubs/lib/_iotools.pyi
@@ -110,6 +111,7 @@ jobs:
           src/numpy-stubs/lib/__init__.pyi
           src/numpy-stubs/lib/_array_utils_impl.pyi
           src/numpy-stubs/lib/_arraypad_impl.pyi
+          src/numpy-stubs/lib/_arraysetops_impl.pyi
           src/numpy-stubs/lib/_datasource.pyi
           src/numpy-stubs/lib/_histograms_impl.pyi
           src/numpy-stubs/lib/_iotools.pyi
