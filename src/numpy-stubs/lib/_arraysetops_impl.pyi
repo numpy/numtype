@@ -18,7 +18,6 @@ from _numtype import (
     ToFloat64_nd,
     ToIntP_nd,
     ToObject_nd,
-    ToTimeDelta_nd,
     _ToArray_nd,
 )
 from numpy._typing import ArrayLike, _ArrayLike
@@ -85,36 +84,36 @@ class UniqueInverseResult(NamedTuple, Generic[_ScalarT]):
     values: Array_1d[_ScalarT]
     inverse_indices: Array[np.intp]
 
-# NOTE: the first overload will be used for `Sequence[Never]` (empty sequence)
+#
 @overload
-def ediff1d(
+def ediff1d(  # type: ignore[overload-overlap]
     ary: ToFloat64_nd,
     to_end: CoFloating_nd | None = None,
     to_begin: CoFloating_nd | None = None,
 ) -> Array_1d[np.float64]: ...
 @overload
-def ediff1d(
+def ediff1d(  # type: ignore[overload-overlap]
     ary: CoBool_nd,
     to_end: ArrayLike | None = None,
     to_begin: ArrayLike | None = None,
 ) -> Array_1d[np.int8]: ...
 @overload
-def ediff1d(
+def ediff1d(  # type: ignore[overload-overlap]
     ary: ToIntP_nd,
     to_end: CoInteger_nd | None = None,
     to_begin: CoInteger_nd | None = None,
 ) -> Array_1d[np.intp]: ...
 @overload
-def ediff1d(
+def ediff1d(  # type: ignore[overload-overlap]
     ary: ToComplex128_nd,
     to_end: CoComplex_nd | None = None,
     to_begin: CoComplex_nd | None = None,
 ) -> Array_1d[np.complex128]: ...
 @overload
-def ediff1d(
+def ediff1d(  # type: ignore[overload-overlap]
     ary: CoDateTime_nd,
-    to_end: ToTimeDelta_nd | None = None,
-    to_begin: ToTimeDelta_nd | None = None,
+    to_end: CoTimeDelta_nd | None = None,
+    to_begin: CoTimeDelta_nd | None = None,
 ) -> Array_1d[np.timedelta64]: ...
 @overload
 def ediff1d(
@@ -125,8 +124,8 @@ def ediff1d(
 @overload
 def ediff1d(
     ary: _ToArray_nd[_CoNumberT],
-    to_end: CoComplex_nd | CoTimeDelta_nd | None = None,
-    to_begin: CoComplex_nd | CoTimeDelta_nd | None = None,
+    to_end: ArrayLike | None = None,
+    to_begin: ArrayLike | None = None,
 ) -> Array_1d[_CoNumberT]: ...
 @overload
 def ediff1d(
