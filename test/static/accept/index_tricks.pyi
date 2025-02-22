@@ -68,7 +68,7 @@ assert_type(np.s_[i:i, None:i], tuple[slice[int, int, None], slice[None, int, No
 assert_type(np.s_[i, i:i, ..., [i, i, i]], tuple[int, slice[int, int, None], EllipsisType, list[int]])
 
 assert_type(np.ix_(AR_LIKE_b), tuple[npt.NDArray[np.bool], ...])
-assert_type(np.ix_(AR_LIKE_i, AR_LIKE_f), tuple[npt.NDArray[np.float64], ...])
+assert_type(np.ix_(AR_LIKE_i, AR_LIKE_f), tuple[npt.NDArray[np.float64 | np.intp | np.bool], ...])
 assert_type(np.ix_(AR_i8), tuple[npt.NDArray[np.int64], ...])
 
 assert_type(np.fill_diagonal(AR_i8, 5), None)
