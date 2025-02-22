@@ -18,7 +18,7 @@ from _numtype import (
     ToFloat64_nd,
     ToIntP_nd,
     ToObject_nd,
-    _ToArray_nd,
+    _ToArray1_nd,
 )
 from numpy._typing import ArrayLike, _ArrayLike
 
@@ -86,13 +86,7 @@ class UniqueInverseResult(NamedTuple, Generic[_ScalarT]):
 
 #
 @overload
-def ediff1d(  # type: ignore[overload-overlap]
-    ary: ToFloat64_nd,
-    to_end: CoFloating_nd | None = None,
-    to_begin: CoFloating_nd | None = None,
-) -> Array_1d[np.float64]: ...
-@overload
-def ediff1d(  # type: ignore[overload-overlap]
+def ediff1d(
     ary: CoBool_nd,
     to_end: ArrayLike | None = None,
     to_begin: ArrayLike | None = None,
@@ -105,12 +99,18 @@ def ediff1d(  # type: ignore[overload-overlap]
 ) -> Array_1d[np.intp]: ...
 @overload
 def ediff1d(  # type: ignore[overload-overlap]
+    ary: ToFloat64_nd,
+    to_end: CoFloating_nd | None = None,
+    to_begin: CoFloating_nd | None = None,
+) -> Array_1d[np.float64]: ...
+@overload
+def ediff1d(  # type: ignore[overload-overlap]
     ary: ToComplex128_nd,
     to_end: CoComplex_nd | None = None,
     to_begin: CoComplex_nd | None = None,
 ) -> Array_1d[np.complex128]: ...
 @overload
-def ediff1d(  # type: ignore[overload-overlap]
+def ediff1d(
     ary: CoDateTime_nd,
     to_end: CoTimeDelta_nd | None = None,
     to_begin: CoTimeDelta_nd | None = None,
@@ -123,7 +123,7 @@ def ediff1d(
 ) -> Array_1d[np.object_]: ...
 @overload
 def ediff1d(
-    ary: _ToArray_nd[_CoNumberT],
+    ary: _ToArray1_nd[_CoNumberT],
     to_end: ArrayLike | None = None,
     to_begin: ArrayLike | None = None,
 ) -> Array_1d[_CoNumberT]: ...
@@ -378,11 +378,11 @@ def unique(
 
 #
 @overload
-def unique_all(x: ToFloat64_nd, /) -> UniqueAllResult[np.float64]: ...
-@overload
 def unique_all(x: CoBool_nd, /) -> UniqueAllResult[np.bool]: ...
 @overload
 def unique_all(x: ToIntP_nd, /) -> UniqueAllResult[np.intp]: ...
+@overload
+def unique_all(x: ToFloat64_nd, /) -> UniqueAllResult[np.float64]: ...
 @overload
 def unique_all(x: ToComplex128_nd, /) -> UniqueAllResult[np.complex128]: ...
 @overload
@@ -392,11 +392,11 @@ def unique_all(x: ArrayLike, /) -> UniqueAllResult: ...
 
 #
 @overload
-def unique_counts(x: ToFloat64_nd, /) -> UniqueCountsResult[np.float64]: ...
-@overload
 def unique_counts(x: CoBool_nd, /) -> UniqueCountsResult[np.bool]: ...
 @overload
 def unique_counts(x: ToIntP_nd, /) -> UniqueCountsResult[np.intp]: ...
+@overload
+def unique_counts(x: ToFloat64_nd, /) -> UniqueCountsResult[np.float64]: ...
 @overload
 def unique_counts(x: ToComplex128_nd, /) -> UniqueCountsResult[np.complex128]: ...
 @overload
@@ -406,11 +406,11 @@ def unique_counts(x: ArrayLike, /) -> UniqueCountsResult: ...
 
 #
 @overload
-def unique_inverse(x: ToFloat64_nd, /) -> UniqueInverseResult[np.float64]: ...
-@overload
 def unique_inverse(x: CoBool_nd, /) -> UniqueInverseResult[np.bool]: ...
 @overload
 def unique_inverse(x: ToIntP_nd, /) -> UniqueInverseResult[np.intp]: ...
+@overload
+def unique_inverse(x: ToFloat64_nd, /) -> UniqueInverseResult[np.float64]: ...
 @overload
 def unique_inverse(x: ToComplex128_nd, /) -> UniqueInverseResult[np.complex128]: ...
 @overload
@@ -420,11 +420,11 @@ def unique_inverse(x: ArrayLike, /) -> UniqueInverseResult: ...
 
 #
 @overload
-def unique_values(x: ToFloat64_nd, /) -> Array_1d[np.float64]: ...
-@overload
 def unique_values(x: CoBool_nd, /) -> Array_1d[np.bool]: ...
 @overload
 def unique_values(x: ToIntP_nd, /) -> Array_1d[np.intp]: ...
+@overload
+def unique_values(x: ToFloat64_nd, /) -> Array_1d[np.float64]: ...
 @overload
 def unique_values(x: ToComplex128_nd, /) -> Array_1d[np.complex128]: ...
 @overload
