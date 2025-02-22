@@ -88,11 +88,14 @@ from _numtype import (
     ToTimeDelta_1d,
     ToTimeDelta_1nd,
     ToUInteger_1nd,
-    _ToArray_1d,
-    _ToArray_1ds,
+    _ToArray1_1d,
+    _ToArray1_1ds,
+    _ToArray1_1nd,
+    _ToArray1_2ds,
+    _ToArray1_2nd,
+    _ToArray1_3nd,
     _ToArray_1nd,
     _ToArray_2ds,
-    _ToArray_2nd,
     _ToArray_3nd,
 )
 from numpy._core.fromnumeric import matrix_transpose
@@ -194,17 +197,17 @@ _ToFloat64_1nd: TypeAlias = _ToArray_1nd[np.floating[_64Bit] | np.integer | np.b
 _ToFloat64_2ds: TypeAlias = _ToArray_2ds[np.floating[_64Bit] | np.integer | np.bool, float]
 _ToFloat64_3nd: TypeAlias = _ToArray_3nd[np.floating[_64Bit] | np.integer | np.bool, float]
 
-_ToInexact32_1nd: TypeAlias = _ToArray_1nd[np.inexact[_32Bit]]
-_ToInexact32_2ds: TypeAlias = _ToArray_2ds[np.inexact[_32Bit]]
-_ToInexact32_3nd: TypeAlias = _ToArray_3nd[np.inexact[_32Bit]]
+_ToInexact32_1nd: TypeAlias = _ToArray1_1nd[np.inexact[_32Bit]]
+_ToInexact32_2ds: TypeAlias = _ToArray1_2ds[np.inexact[_32Bit]]
+_ToInexact32_3nd: TypeAlias = _ToArray1_3nd[np.inexact[_32Bit]]
 
 _ToInexact64_1nd: TypeAlias = _ToArray_1nd[np.inexact[_64Bit] | np.integer | np.bool, complex]
 _ToInexact64_2ds: TypeAlias = _ToArray_2ds[np.inexact[_64Bit] | np.integer | np.bool, complex]
 _ToInexact64_3nd: TypeAlias = _ToArray_3nd[np.inexact[_64Bit] | np.integer | np.bool, complex]
 
-_ToInexactLD_1nd: TypeAlias = _ToArray_1nd[np.longdouble | np.clongdouble]
-_ToInexactLD_2ds: TypeAlias = _ToArray_2ds[np.longdouble | np.clongdouble]
-_ToInexactLD_3nd: TypeAlias = _ToArray_3nd[np.longdouble | np.clongdouble]
+_ToInexactLD_1nd: TypeAlias = _ToArray1_1nd[np.longdouble | np.clongdouble]
+_ToInexactLD_2ds: TypeAlias = _ToArray1_2ds[np.longdouble | np.clongdouble]
+_ToInexactLD_3nd: TypeAlias = _ToArray1_3nd[np.longdouble | np.clongdouble]
 
 _ToUnsafe64_1nd: TypeAlias = _ToArray_1nd[np.inexact[_64Bit] | np.integer | np.bool | np.character, complex | bytes | str]
 _ToUnsafe64_2ds: TypeAlias = _ToArray_2ds[np.inexact[_64Bit] | np.integer | np.bool | np.character, complex | bytes | str]
@@ -241,17 +244,17 @@ class LinAlgError(ValueError): ...
 
 # keep in sync with `solve`
 @overload
-def tensorsolve(a: _ToFloat64_1nd, b: CoFloat64_1nd, axes: _Axes | None = None) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
+def tensorsolve(a: _ToFloat64_1nd, b: CoFloat64_1nd, axes: _Axes | None = None) -> Array[np.float64]: ...
 @overload
-def tensorsolve(a: CoFloat64_1nd, b: _ToFloat64_1nd, axes: _Axes | None = None) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
+def tensorsolve(a: CoFloat64_1nd, b: _ToFloat64_1nd, axes: _Axes | None = None) -> Array[np.float64]: ...
 @overload
-def tensorsolve(a: ToComplex128_1nd, b: CoComplex128_1nd, axes: _Axes | None = None) -> Array[np.complex128]: ...  # type: ignore[overload-overlap]
+def tensorsolve(a: ToComplex128_1nd, b: CoComplex128_1nd, axes: _Axes | None = None) -> Array[np.complex128]: ...
 @overload
-def tensorsolve(a: CoComplex128_1nd, b: ToComplex128_1nd, axes: _Axes | None = None) -> Array[np.complex128]: ...  # type: ignore[overload-overlap]
+def tensorsolve(a: CoComplex128_1nd, b: ToComplex128_1nd, axes: _Axes | None = None) -> Array[np.complex128]: ...
 @overload
-def tensorsolve(a: ToFloat32_1nd, b: ToFloat32_1nd, axes: _Axes | None = None) -> Array[np.float32]: ...  # type: ignore[overload-overlap]
+def tensorsolve(a: ToFloat32_1nd, b: ToFloat32_1nd, axes: _Axes | None = None) -> Array[np.float32]: ...
 @overload
-def tensorsolve(a: ToComplex64_1nd, b: ToComplex64_1nd, axes: _Axes | None = None) -> Array[np.complex64]: ...  # type: ignore[overload-overlap]
+def tensorsolve(a: ToComplex64_1nd, b: ToComplex64_1nd, axes: _Axes | None = None) -> Array[np.complex64]: ...
 @overload
 def tensorsolve(a: CoFloat64_1nd, b: CoFloat64_1nd, axes: _Axes | None = None) -> Array[np.floating]: ...
 @overload
@@ -259,17 +262,17 @@ def tensorsolve(a: CoComplex128_1nd, b: CoComplex128_1nd, axes: _Axes | None = N
 
 # keep in sync with `tensorsolve`
 @overload
-def solve(a: _ToFloat64_1nd, b: CoFloat64_1nd) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
+def solve(a: _ToFloat64_1nd, b: CoFloat64_1nd) -> Array[np.float64]: ...
 @overload
-def solve(a: CoFloat64_1nd, b: _ToFloat64_1nd) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
+def solve(a: CoFloat64_1nd, b: _ToFloat64_1nd) -> Array[np.float64]: ...
 @overload
-def solve(a: ToComplex128_1nd, b: CoComplex128_1nd) -> Array[np.complex128]: ...  # type: ignore[overload-overlap]
+def solve(a: ToComplex128_1nd, b: CoComplex128_1nd) -> Array[np.complex128]: ...
 @overload
-def solve(a: CoComplex128_1nd, b: ToComplex128_1nd) -> Array[np.complex128]: ...  # type: ignore[overload-overlap]
+def solve(a: CoComplex128_1nd, b: ToComplex128_1nd) -> Array[np.complex128]: ...
 @overload
-def solve(a: ToFloat32_1nd, b: ToFloat32_1nd) -> Array[np.float32]: ...  # type: ignore[overload-overlap]
+def solve(a: ToFloat32_1nd, b: ToFloat32_1nd) -> Array[np.float32]: ...
 @overload
-def solve(a: ToComplex64_1nd, b: ToComplex64_1nd) -> Array[np.complex64]: ...  # type: ignore[overload-overlap]
+def solve(a: ToComplex64_1nd, b: ToComplex64_1nd) -> Array[np.complex64]: ...
 @overload
 def solve(a: CoFloat64_1nd, b: CoFloat64_1nd) -> Array[np.floating]: ...
 @overload
@@ -277,13 +280,13 @@ def solve(a: CoComplex128_1nd, b: CoComplex128_1nd) -> Array[np.inexact]: ...
 
 # keep in sync with `inv`
 @overload
-def tensorinv(a: _ToFloat64_1nd, ind: int = 2) -> _Array_2nd[np.float64]: ...  # type: ignore[overload-overlap]
+def tensorinv(a: _ToFloat64_1nd, ind: int = 2) -> _Array_2nd[np.float64]: ...
 @overload
-def tensorinv(a: ToComplex128_1nd, ind: int = 2) -> _Array_2nd[np.complex128]: ...  # type: ignore[overload-overlap]
+def tensorinv(a: ToComplex128_1nd, ind: int = 2) -> _Array_2nd[np.complex128]: ...
 @overload
-def tensorinv(a: ToFloat32_1nd, ind: int = 2) -> _Array_2nd[np.float32]: ...  # type: ignore[overload-overlap]
+def tensorinv(a: ToFloat32_1nd, ind: int = 2) -> _Array_2nd[np.float32]: ...
 @overload
-def tensorinv(a: ToComplex64_1nd, ind: int = 2) -> _Array_2nd[np.complex64]: ...  # type: ignore[overload-overlap]
+def tensorinv(a: ToComplex64_1nd, ind: int = 2) -> _Array_2nd[np.complex64]: ...
 @overload
 def tensorinv(a: CoFloat64_1nd, ind: int = 2) -> _Array_2nd[np.floating]: ...
 @overload
@@ -291,13 +294,13 @@ def tensorinv(a: CoComplex128_1nd, ind: int = 2) -> _Array_2nd[np.inexact]: ...
 
 # keep in sync with `tensorinv`
 @overload
-def inv(a: _ToFloat64_1nd) -> _Array_2nd[np.float64]: ...  # type: ignore[overload-overlap]
+def inv(a: _ToFloat64_1nd) -> _Array_2nd[np.float64]: ...
 @overload
-def inv(a: ToComplex128_1nd) -> _Array_2nd[np.complex128]: ...  # type: ignore[overload-overlap]
+def inv(a: ToComplex128_1nd) -> _Array_2nd[np.complex128]: ...
 @overload
-def inv(a: ToFloat32_1nd) -> _Array_2nd[np.float32]: ...  # type: ignore[overload-overlap]
+def inv(a: ToFloat32_1nd) -> _Array_2nd[np.float32]: ...
 @overload
-def inv(a: ToComplex64_1nd) -> _Array_2nd[np.complex64]: ...  # type: ignore[overload-overlap]
+def inv(a: ToComplex64_1nd) -> _Array_2nd[np.complex64]: ...
 @overload
 def inv(a: CoFloat64_1nd) -> _Array_2nd[np.floating]: ...
 @overload
@@ -305,7 +308,7 @@ def inv(a: CoComplex128_1nd) -> _Array_2nd[np.inexact]: ...
 
 #
 @overload
-def pinv(  # type: ignore[overload-overlap]
+def pinv(
     a: _ToFloat64_1nd,
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
@@ -313,7 +316,7 @@ def pinv(  # type: ignore[overload-overlap]
     rtol: ToFloating_nd | None = None,
 ) -> _Array_2nd[np.float64]: ...
 @overload
-def pinv(  # type: ignore[overload-overlap]
+def pinv(
     a: ToComplex128_1nd,
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
@@ -321,7 +324,7 @@ def pinv(  # type: ignore[overload-overlap]
     rtol: ToFloating_nd | None = None,
 ) -> _Array_2nd[np.complex128]: ...
 @overload
-def pinv(  # type: ignore[overload-overlap]
+def pinv(
     a: ToFloat32_1nd,
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
@@ -329,7 +332,7 @@ def pinv(  # type: ignore[overload-overlap]
     rtol: ToFloating_nd | None = None,
 ) -> _Array_2nd[np.float32]: ...
 @overload
-def pinv(  # type: ignore[overload-overlap]
+def pinv(
     a: ToComplex64_1nd,
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
@@ -360,19 +363,19 @@ _NegInt: TypeAlias = L[-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -
 @overload
 def matrix_power(a: CanArraySized[_NumberT, _Shape2T], n: _PosInt) -> Array[_NumberT, _Shape2T]: ...  # type: ignore[overload-overlap]
 @overload
-def matrix_power(a: CoBool_1nd, n: _PosInt) -> _Array_2nd[np.bool]: ...  # type: ignore[overload-overlap]
+def matrix_power(a: CoBool_1nd, n: _PosInt) -> _Array_2nd[np.bool]: ...
 @overload
 def matrix_power(a: ToIntP_1nd, n: _PosInt) -> _Array_2nd[np.intp]: ...  # type: ignore[overload-overlap]
 @overload
-def matrix_power(a: CoInteger_1nd, n: _NegInt) -> _Array_2nd[np.float64]: ...  # type: ignore[overload-overlap]
+def matrix_power(a: CoInteger_1nd, n: _NegInt) -> _Array_2nd[np.float64]: ...
 @overload
 def matrix_power(a: ToFloat64_1nd, n: CanIndex) -> _Array_2nd[np.float64]: ...  # type: ignore[overload-overlap]
 @overload
 def matrix_power(a: ToComplex128_1nd, n: CanIndex) -> _Array_2nd[np.complex128]: ...  # type: ignore[overload-overlap]
 @overload
-def matrix_power(a: ToFloat32_1nd, n: CanIndex) -> _Array_2nd[np.float32]: ...  # type: ignore[overload-overlap]
+def matrix_power(a: ToFloat32_1nd, n: CanIndex) -> _Array_2nd[np.float32]: ...
 @overload
-def matrix_power(a: ToComplex64_1nd, n: CanIndex) -> _Array_2nd[np.complex64]: ...  # type: ignore[overload-overlap]
+def matrix_power(a: ToComplex64_1nd, n: CanIndex) -> _Array_2nd[np.complex64]: ...
 @overload
 def matrix_power(a: ToObject_1nd, n: CanIndex) -> _Array_2nd[np.object_]: ...  # type: ignore[overload-overlap]
 @overload
@@ -386,13 +389,13 @@ def matrix_power(a: CoComplex_1nd | ToObject_1nd, n: CanIndex) -> _Array_2nd[Any
 
 #
 @overload
-def cholesky(a: _ToFloat64_1nd) -> _Array_2nd[np.float64]: ...  # type: ignore[overload-overlap]
+def cholesky(a: _ToFloat64_1nd) -> _Array_2nd[np.float64]: ...
 @overload
-def cholesky(a: ToComplex128_1nd) -> _Array_2nd[np.complex128]: ...  # type: ignore[overload-overlap]
+def cholesky(a: ToComplex128_1nd) -> _Array_2nd[np.complex128]: ...
 @overload
-def cholesky(a: ToFloat32_1nd) -> _Array_2nd[np.float32]: ...  # type: ignore[overload-overlap]
+def cholesky(a: ToFloat32_1nd) -> _Array_2nd[np.float32]: ...
 @overload
-def cholesky(a: ToComplex64_1nd) -> _Array_2nd[np.complex64]: ...  # type: ignore[overload-overlap]
+def cholesky(a: ToComplex64_1nd) -> _Array_2nd[np.complex64]: ...
 @overload
 def cholesky(a: CoFloat64_1nd) -> _Array_2nd[np.floating]: ...
 @overload
@@ -400,29 +403,29 @@ def cholesky(a: CoComplex128_1nd) -> _Array_2nd[np.inexact]: ...
 
 #
 @overload
-def outer(x1: _ToArray_1d[_IntegerT], x2: _ToArray_1d[_IntegerT], /) -> Array_2d[_IntegerT]: ...  # type: ignore[overload-overlap]
+def outer(x1: _ToArray1_1d[_IntegerT], x2: _ToArray1_1d[_IntegerT], /) -> Array_2d[_IntegerT]: ...
 @overload
-def outer(x1: ToBool_1d, x2: ToBool_1d, /) -> Array_2d[np.bool]: ...  # type: ignore[overload-overlap]
+def outer(x1: ToBool_1d, x2: ToBool_1d, /) -> Array_2d[np.bool]: ...
 @overload
-def outer(x1: ToIntP_1d, x2: CoIntP_1d, /) -> Array_2d[np.intp]: ...  # type: ignore[overload-overlap]
+def outer(x1: ToIntP_1d, x2: CoIntP_1d, /) -> Array_2d[np.intp]: ...
 @overload
-def outer(x1: CoIntP_1d, x2: ToIntP_1d, /) -> Array_2d[np.intp]: ...  # type: ignore[overload-overlap]
+def outer(x1: CoIntP_1d, x2: ToIntP_1d, /) -> Array_2d[np.intp]: ...
 @overload
-def outer(x1: ToFloat64_1d, x2: CoFloat64_1d, /) -> Array_2d[np.float64]: ...  # type: ignore[overload-overlap]
+def outer(x1: ToFloat64_1d, x2: CoFloat64_1d, /) -> Array_2d[np.float64]: ...
 @overload
-def outer(x1: CoFloat64_1d, x2: ToFloat64_1d, /) -> Array_2d[np.float64]: ...  # type: ignore[overload-overlap]
+def outer(x1: CoFloat64_1d, x2: ToFloat64_1d, /) -> Array_2d[np.float64]: ...
 @overload
-def outer(x1: ToComplex128_1d, x2: CoComplex128_1d, /) -> Array_2d[np.complex128]: ...  # type: ignore[overload-overlap]
+def outer(x1: ToComplex128_1d, x2: CoComplex128_1d, /) -> Array_2d[np.complex128]: ...
 @overload
-def outer(x1: CoComplex128_1d, x2: ToComplex128_1d, /) -> Array_2d[np.complex128]: ...  # type: ignore[overload-overlap]
+def outer(x1: CoComplex128_1d, x2: ToComplex128_1d, /) -> Array_2d[np.complex128]: ...
 @overload
-def outer(x1: ToTimeDelta_1d, x2: CoTimeDelta_1d, /) -> Array_2d[np.timedelta64]: ...  # type: ignore[overload-overlap]
+def outer(x1: ToTimeDelta_1d, x2: CoTimeDelta_1d, /) -> Array_2d[np.timedelta64]: ...
 @overload
-def outer(x1: CoTimeDelta_1d, x2: ToTimeDelta_1d, /) -> Array_2d[np.timedelta64]: ...  # type: ignore[overload-overlap]
+def outer(x1: CoTimeDelta_1d, x2: ToTimeDelta_1d, /) -> Array_2d[np.timedelta64]: ...
 @overload
-def outer(x1: ToFloat32_1d, x2: ToFloat32_1d, /) -> Array_2d[np.float32]: ...  # type: ignore[overload-overlap]
+def outer(x1: ToFloat32_1d, x2: ToFloat32_1d, /) -> Array_2d[np.float32]: ...
 @overload
-def outer(x1: ToComplex64_1d, x2: ToComplex64_1d, /) -> Array_2d[np.complex64]: ...  # type: ignore[overload-overlap]
+def outer(x1: ToComplex64_1d, x2: ToComplex64_1d, /) -> Array_2d[np.complex64]: ...
 @overload
 def outer(x1: ToObject_1d, x2: ToObject_1d, /) -> Array_2d[np.object_]: ...
 @overload
@@ -434,9 +437,9 @@ def outer(x1: ToNumber_1d, x2: ToNumber_1d, /) -> Array_2d[Any]: ...
 
 #
 @overload
-def multi_dot(arrays: Iterable[_ToArray_1ds[_AnyNumberT]], *, out: None = None) -> _AnyNumberT: ...  # type: ignore[overload-overlap]
+def multi_dot(arrays: Iterable[_ToArray1_1ds[_AnyNumberT]], *, out: None = None) -> _AnyNumberT: ...  # type: ignore[overload-overlap]
 @overload
-def multi_dot(arrays: Iterable[_ToArray_2nd[_AnyNumberT]], *, out: None = None) -> Array[_AnyNumberT]: ...  # type: ignore[overload-overlap]
+def multi_dot(arrays: Iterable[_ToArray1_2nd[_AnyNumberT]], *, out: None = None) -> Array[_AnyNumberT]: ...
 @overload
 def multi_dot(arrays: Iterable[Sequence[bool]], *, out: None = None) -> np.bool: ...
 @overload
@@ -461,8 +464,8 @@ def multi_dot(arrays: Iterable[CoComplex_1nd | ToTimeDelta_1nd | ToObject_1nd], 
 # pyright false positive in case of typevar constraints
 @overload
 def cross(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
-    x1: _ToArray_1nd[_AnyNumberT],
-    x2: _ToArray_1nd[_AnyNumberT],
+    x1: _ToArray1_1nd[_AnyNumberT],
+    x2: _ToArray1_1nd[_AnyNumberT],
     /,
     *,
     axis: int = -1,
@@ -498,11 +501,11 @@ def cross(x1: CoComplex_1nd, x2: CoComplex_1nd, /, *, axis: int = -1) -> Array[A
 
 # pyright false positive in case of typevar constraints
 @overload
-def matmul(x1: _ToArray_1ds[_AnyNumberT], x2: _ToArray_1ds[_AnyNumberT], /) -> _AnyNumberT: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def matmul(x1: _ToArray1_1ds[_AnyNumberT], x2: _ToArray1_1ds[_AnyNumberT], /) -> _AnyNumberT: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
 @overload
-def matmul(x1: _ToArray_2nd[_AnyNumberT], x2: _ToArray_1nd[_AnyNumberT], /) -> Array[_AnyNumberT]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def matmul(x1: _ToArray1_2nd[_AnyNumberT], x2: _ToArray1_1nd[_AnyNumberT], /) -> Array[_AnyNumberT]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
 @overload
-def matmul(x1: _ToArray_1nd[_AnyNumberT], x2: _ToArray_2nd[_AnyNumberT], /) -> Array[_AnyNumberT]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def matmul(x1: _ToArray1_1nd[_AnyNumberT], x2: _ToArray1_2nd[_AnyNumberT], /) -> Array[_AnyNumberT]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
 @overload
 def matmul(x1: ToBool_1ds, x2: ToBool_1ds, /) -> np.bool: ...  # type: ignore[overload-overlap]
 @overload
@@ -566,9 +569,9 @@ def matmul(x1: CoComplex_1nd, x2: CoComplex_1nd, /) -> Any: ...
 
 #
 @overload  # float64
-def eig(a: _ToFloat64_1nd) -> EigResult[np.float64] | EigResult[np.complex128]: ...  # type: ignore[overload-overlap]
+def eig(a: _ToFloat64_1nd) -> EigResult[np.float64] | EigResult[np.complex128]: ...
 @overload  # complex128
-def eig(a: ToComplex128_1nd) -> EigResult[np.complex128]: ...  # type: ignore[overload-overlap]
+def eig(a: ToComplex128_1nd) -> EigResult[np.complex128]: ...
 @overload  # complex64
 def eig(a: ToComplex64_1nd) -> EigResult[np.complex64]: ...
 @overload  # float32
@@ -578,9 +581,9 @@ def eig(a: CoComplex128_1nd) -> EigResult: ...
 
 #
 @overload  # float64
-def eigvals(a: _ToFloat64_1nd) -> Array[np.float64] | Array[np.complex128]: ...  # type: ignore[overload-overlap]
+def eigvals(a: _ToFloat64_1nd) -> Array[np.float64] | Array[np.complex128]: ...
 @overload  # complex128
-def eigvals(a: ToComplex128_1nd) -> Array[np.complex128]: ...  # type: ignore[overload-overlap]
+def eigvals(a: ToComplex128_1nd) -> Array[np.complex128]: ...
 @overload  # complex64
 def eigvals(a: ToComplex64_1nd) -> Array[np.complex64]: ...
 @overload  # float32
@@ -590,11 +593,11 @@ def eigvals(a: CoComplex128_1nd) -> Array[np.inexact]: ...
 
 #
 @overload  # float64
-def eigh(a: _ToFloat64_1nd, UPLO: _UPLO = "L") -> EighResult[np.float64, np.float64]: ...  # type: ignore[overload-overlap]
+def eigh(a: _ToFloat64_1nd, UPLO: _UPLO = "L") -> EighResult[np.float64, np.float64]: ...
 @overload  # complex128
-def eigh(a: ToComplex128_1nd, UPLO: _UPLO = "L") -> EighResult[np.float64, np.complex128]: ...  # type: ignore[overload-overlap]
+def eigh(a: ToComplex128_1nd, UPLO: _UPLO = "L") -> EighResult[np.float64, np.complex128]: ...
 @overload  # float32
-def eigh(a: ToFloat32_1nd, UPLO: _UPLO = "L") -> EighResult[np.float32, np.float32]: ...  # type: ignore[overload-overlap]
+def eigh(a: ToFloat32_1nd, UPLO: _UPLO = "L") -> EighResult[np.float32, np.float32]: ...
 @overload  # complex64
 def eigh(a: ToComplex64_1nd, UPLO: _UPLO = "L") -> EighResult[np.float32, np.complex64]: ...
 @overload  # +complex128
@@ -610,23 +613,23 @@ def eigvalsh(a: CoComplex128_1nd, UPLO: _UPLO = "L") -> Array[np.floating]: ...
 
 #
 @overload  # float64, reduced|complete
-def qr(a: _ToFloat64_1nd, mode: L["reduced", "complete"] = "reduced") -> QRResult[np.float64]: ...  # type: ignore[overload-overlap]
+def qr(a: _ToFloat64_1nd, mode: L["reduced", "complete"] = "reduced") -> QRResult[np.float64]: ...
 @overload  # float64, raw
-def qr(a: _ToFloat64_1nd, mode: L["raw"]) -> _2Tuple[_Array_2nd[np.float64]]: ...  # type: ignore[overload-overlap]
+def qr(a: _ToFloat64_1nd, mode: L["raw"]) -> _2Tuple[_Array_2nd[np.float64]]: ...
 @overload  # float64, r
-def qr(a: _ToFloat64_1nd, mode: L["r"]) -> _Array_2nd[np.float64]: ...  # type: ignore[overload-overlap]
+def qr(a: _ToFloat64_1nd, mode: L["r"]) -> _Array_2nd[np.float64]: ...
 @overload  # complex128, reduced|complete
-def qr(a: ToComplex128_1nd, mode: L["reduced", "complete"] = "reduced") -> QRResult[np.complex128]: ...  # type: ignore[overload-overlap]
+def qr(a: ToComplex128_1nd, mode: L["reduced", "complete"] = "reduced") -> QRResult[np.complex128]: ...
 @overload  # complex128, raw
-def qr(a: ToComplex128_1nd, mode: L["raw"]) -> _2Tuple[_Array_2nd[np.complex128]]: ...  # type: ignore[overload-overlap]
+def qr(a: ToComplex128_1nd, mode: L["raw"]) -> _2Tuple[_Array_2nd[np.complex128]]: ...
 @overload  # complex128, r
-def qr(a: ToComplex128_1nd, mode: L["r"]) -> _Array_2nd[np.complex128]: ...  # type: ignore[overload-overlap]
+def qr(a: ToComplex128_1nd, mode: L["r"]) -> _Array_2nd[np.complex128]: ...
 @overload  # float32, reduced|complete
-def qr(a: ToFloat32_1nd, mode: L["reduced", "complete"] = "reduced") -> QRResult[np.float32]: ...  # type: ignore[overload-overlap]
+def qr(a: ToFloat32_1nd, mode: L["reduced", "complete"] = "reduced") -> QRResult[np.float32]: ...
 @overload  # float32, raw
-def qr(a: ToFloat32_1nd, mode: L["raw"]) -> _2Tuple[_Array_2nd[np.float32]]: ...  # type: ignore[overload-overlap]
+def qr(a: ToFloat32_1nd, mode: L["raw"]) -> _2Tuple[_Array_2nd[np.float32]]: ...
 @overload  # float32, r
-def qr(a: ToFloat32_1nd, mode: L["r"]) -> _Array_2nd[np.float32]: ...  # type: ignore[overload-overlap]
+def qr(a: ToFloat32_1nd, mode: L["r"]) -> _Array_2nd[np.float32]: ...
 @overload  # complex64, reduced|complete
 def qr(a: ToComplex64_1nd, mode: L["reduced", "complete"] = "reduced") -> QRResult[np.complex64]: ...
 @overload  # complex64, raw
@@ -657,21 +660,21 @@ def svd(
     hermitian: bool = False,
 ) -> Array[np.float64]: ...
 @overload  # float64, compute_uv=True
-def svd(  # type: ignore[overload-overlap]
+def svd(
     a: _ToFloat64_1nd,
     full_matrices: bool = True,
     compute_uv: _True = True,
     hermitian: bool = False,
 ) -> SVDResult[np.float64, np.float64]: ...
 @overload  # complex128, compute_uv=True
-def svd(  # type: ignore[overload-overlap]
+def svd(
     a: ToComplex128_1nd,
     full_matrices: bool = True,
     compute_uv: _True = True,
     hermitian: bool = False,
 ) -> SVDResult[np.float64, np.complex128]: ...
 @overload  # float32, compute_uv=True
-def svd(  # type: ignore[overload-overlap]
+def svd(
     a: ToFloat32_1nd,
     full_matrices: bool = True,
     compute_uv: _True = True,
@@ -790,9 +793,9 @@ def slogdet(a: ToComplex128_2ds) -> SlogdetResult[np.float64, np.complex128]: ..
 @overload  # 2d complex64
 def slogdet(a: ToComplex64_2ds) -> SlogdetResult[np.float32, np.complex64]: ...  # type: ignore[overload-overlap]
 @overload  # >2d float64
-def slogdet(a: _ToFloat64_3nd) -> SlogdetResult[Array[np.float64], Array[np.float64]]: ...  # type: ignore[overload-overlap]
+def slogdet(a: _ToFloat64_3nd) -> SlogdetResult[Array[np.float64], Array[np.float64]]: ...
 @overload  # >2d float32
-def slogdet(a: ToFloat32_3nd) -> SlogdetResult[Array[np.float32], Array[np.float32]]: ...  # type: ignore[overload-overlap]
+def slogdet(a: ToFloat32_3nd) -> SlogdetResult[Array[np.float32], Array[np.float32]]: ...
 @overload  # >2d complex128
 def slogdet(a: ToComplex128_3nd) -> SlogdetResult[Array[np.float64], Array[np.complex128]]: ...
 @overload  # >2d complex64
@@ -810,9 +813,9 @@ def det(a: ToComplex128_2ds) -> np.complex128: ...  # type: ignore[overload-over
 @overload  # 2d complex64
 def det(a: ToComplex64_2ds) -> np.complex64: ...  # type: ignore[overload-overlap]
 @overload  # >2d float64
-def det(a: _ToFloat64_3nd) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
+def det(a: _ToFloat64_3nd) -> Array[np.float64]: ...
 @overload  # >2d float32
-def det(a: ToFloat32_3nd) -> Array[np.float32]: ...  # type: ignore[overload-overlap]
+def det(a: ToFloat32_3nd) -> Array[np.float32]: ...
 @overload  # >2d complex128
 def det(a: ToComplex128_3nd) -> Array[np.complex128]: ...
 @overload  # >2d complex64
@@ -822,11 +825,11 @@ def det(a: CoComplex128_1nd) -> Any: ...
 
 #
 @overload  # float64, +float64
-def lstsq(a: _ToFloat64_1nd, b: CoFloat64_1nd, rcond: float | None = None) -> _LstSqResult[np.float64, np.float64]: ...  # type: ignore[overload-overlap]
+def lstsq(a: _ToFloat64_1nd, b: CoFloat64_1nd, rcond: float | None = None) -> _LstSqResult[np.float64, np.float64]: ...
 @overload  # +float64, float64
-def lstsq(a: CoFloat64_1nd, b: _ToFloat64_1nd, rcond: float | None = None) -> _LstSqResult[np.float64, np.float64]: ...  # type: ignore[overload-overlap]
+def lstsq(a: CoFloat64_1nd, b: _ToFloat64_1nd, rcond: float | None = None) -> _LstSqResult[np.float64, np.float64]: ...
 @overload  # float32, float32
-def lstsq(a: ToFloat32_1nd, b: ToFloat32_1nd, rcond: float | None = None) -> _LstSqResult[np.float32, np.float32]: ...  # type: ignore[overload-overlap]
+def lstsq(a: ToFloat32_1nd, b: ToFloat32_1nd, rcond: float | None = None) -> _LstSqResult[np.float32, np.float32]: ...
 @overload  # complex128, +complex128
 def lstsq(  # type: ignore[overload-overlap]
     a: ToComplex128_1nd,
@@ -839,10 +842,16 @@ def lstsq(  # type: ignore[overload-overlap]
     b: ToComplex128_1nd,
     rcond: float | None = None,
 ) -> _LstSqResult[np.complex128, np.float64]: ...
-@overload  # complex64, complex64
+@overload  # complex64, +complex64
 def lstsq(
     a: ToComplex64_1nd,
     b: CoComplex64_1nd,
+    rcond: float | None = None,
+) -> _LstSqResult[np.complex64, np.float32]: ...
+@overload  # +complex64, complex64
+def lstsq(
+    a: CoComplex64_1nd,
+    b: ToComplex64_1nd,
     rcond: float | None = None,
 ) -> _LstSqResult[np.complex64, np.float32]: ...
 @overload  # +complex128, +complex128
@@ -884,9 +893,9 @@ def norm(
     x: _ToInexactLD_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, *, keepdims: _True
 ) -> _Array_2nd[np.longdouble]: ...
 @overload  # longdouble | clongdouble, axis=<given> (positional)
-def norm(x: _ToInexactLD_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.longdouble]: ...  # type: ignore[overload-overlap]
+def norm(x: _ToInexactLD_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.longdouble]: ...
 @overload  # longdouble | clongdouble, axis=<given> (keyword)
-def norm(x: _ToInexactLD_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.longdouble]: ...  # type: ignore[overload-overlap]
+def norm(x: _ToInexactLD_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.longdouble]: ...
 @overload  # +number, axis=None, keepdims=False
 def norm(x: CoComplex_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.floating: ...
 @overload  # +number, keepdims=True
@@ -970,7 +979,7 @@ def vector_norm(x: CoComplex_1nd, /, *, axis: _Ax2 | None = None, keepdims: bool
 @overload
 def diagonal(x: Sequence_2nd[ToObject_0d], /, *, offset: CanIndex = 0) -> Array[np.object_]: ...
 @overload
-def diagonal(x: _ToArray_2ds[_ScalarT], /, *, offset: CanIndex = 0) -> Array[_ScalarT, tuple[int]]: ...
+def diagonal(x: _ToArray1_2ds[_ScalarT], /, *, offset: CanIndex = 0) -> Array[_ScalarT, tuple[int]]: ...
 @overload
 def diagonal(x: _ToArray_2nd_ish[_ScalarT], /, *, offset: CanIndex = 0) -> Array[_ScalarT]: ...
 @overload
@@ -990,9 +999,9 @@ def diagonal(x: ToGeneric_1nd, /, *, offset: CanIndex = 0) -> Array[Any]: ...
 
 #
 @overload
-def trace(x: _ToArray_2ds[_ScalarT], /, *, offset: CanIndex = 0, dtype: None = None) -> _ScalarT: ...  # type: ignore[overload-overlap]
+def trace(x: _ToArray1_2ds[_ScalarT], /, *, offset: CanIndex = 0, dtype: None = None) -> _ScalarT: ...  # type: ignore[overload-overlap]
 @overload
-def trace(x: _ToArray_3nd[_ScalarT], /, *, offset: CanIndex = 0, dtype: None = None) -> Array[_ScalarT]: ...  # type: ignore[overload-overlap]
+def trace(x: _ToArray1_3nd[_ScalarT], /, *, offset: CanIndex = 0, dtype: None = None) -> Array[_ScalarT]: ...
 @overload
 def trace(x: Sequence_2d[bool], /, *, offset: CanIndex = 0, dtype: None = None) -> np.bool: ...
 @overload

@@ -33,6 +33,8 @@ from _numtype import (
     ToFloating_1d,
     ToFloating_1nd,
     ToFloating_nd,
+    ToGeneric_1nd,
+    ToGeneric_nd,
     ToInteger_1d,
     ToObject_1d,
     ToObject_1nd,
@@ -46,8 +48,6 @@ from _numtype import (
     ToUInteger_1d,
     ToUInteger_1nd,
     ToUInteger_nd,
-    _ToArray_1nd,
-    _ToArray_nd,
 )
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ScalarLike_co, _ShapeLike, _SupportsArrayFunc
@@ -503,23 +503,23 @@ def isfortran(a: Array | np.generic) -> bool: ...
 
 #
 @overload
-def correlate(a: ToBool_1d, v: ToBool_1d, mode: _Mode = "valid") -> Array_1d[np.bool]: ...  # type: ignore[overload-overlap]
+def correlate(a: ToBool_1d, v: ToBool_1d, mode: _Mode = "valid") -> Array_1d[np.bool]: ...
 @overload
-def correlate(a: ToUInteger_1d, v: CoUInteger_1d, mode: _Mode = "valid") -> Array_1d[np.unsignedinteger]: ...  # type: ignore[overload-overlap]
+def correlate(a: ToUInteger_1d, v: CoUInteger_1d, mode: _Mode = "valid") -> Array_1d[np.unsignedinteger]: ...
 @overload
-def correlate(a: CoUInteger_1d, v: ToUInteger_1d, mode: _Mode = "valid") -> Array_1d[np.unsignedinteger]: ...  # type: ignore[overload-overlap]
+def correlate(a: CoUInteger_1d, v: ToUInteger_1d, mode: _Mode = "valid") -> Array_1d[np.unsignedinteger]: ...  #
 @overload
-def correlate(a: ToSInteger_1d, v: CoSInteger_1d, mode: _Mode = "valid") -> Array_1d[np.signedinteger]: ...  # type: ignore[overload-overlap]
+def correlate(a: ToSInteger_1d, v: CoSInteger_1d, mode: _Mode = "valid") -> Array_1d[np.signedinteger]: ...
 @overload
-def correlate(a: CoSInteger_1d, v: ToSInteger_1d, mode: _Mode = "valid") -> Array_1d[np.signedinteger]: ...  # type: ignore[overload-overlap]
+def correlate(a: CoSInteger_1d, v: ToSInteger_1d, mode: _Mode = "valid") -> Array_1d[np.signedinteger]: ...
 @overload
-def correlate(a: ToFloating_1d, v: CoFloating_1d, mode: _Mode = "valid") -> Array_1d[np.floating]: ...  # type: ignore[overload-overlap]
+def correlate(a: ToFloating_1d, v: CoFloating_1d, mode: _Mode = "valid") -> Array_1d[np.floating]: ...
 @overload
-def correlate(a: CoFloating_1d, v: ToFloating_1d, mode: _Mode = "valid") -> Array_1d[np.floating]: ...  # type: ignore[overload-overlap]
+def correlate(a: CoFloating_1d, v: ToFloating_1d, mode: _Mode = "valid") -> Array_1d[np.floating]: ...
 @overload
-def correlate(a: ToComplex_1d, v: CoComplex_1d, mode: _Mode = "valid") -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
+def correlate(a: ToComplex_1d, v: CoComplex_1d, mode: _Mode = "valid") -> Array_1d[np.complexfloating]: ...
 @overload
-def correlate(a: CoComplex_1d, v: ToComplex_1d, mode: _Mode = "valid") -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
+def correlate(a: CoComplex_1d, v: ToComplex_1d, mode: _Mode = "valid") -> Array_1d[np.complexfloating]: ...
 @overload
 def correlate(a: ToTimeDelta_1d, v: CoTimeDelta_1d, mode: _Mode = "valid") -> Array_1d[np.timedelta64]: ...
 @overload
@@ -535,23 +535,23 @@ def correlate(
 
 #
 @overload
-def convolve(a: ToBool_1d, v: ToBool_1d, mode: _Mode = "valid") -> Array_1d[np.bool]: ...  # type: ignore[overload-overlap]
+def convolve(a: ToBool_1d, v: ToBool_1d, mode: _Mode = "valid") -> Array_1d[np.bool]: ...
 @overload
-def convolve(a: ToUInteger_1d, v: CoUInteger_1d, mode: _Mode = "valid") -> Array_1d[np.unsignedinteger]: ...  # type: ignore[overload-overlap]
+def convolve(a: ToUInteger_1d, v: CoUInteger_1d, mode: _Mode = "valid") -> Array_1d[np.unsignedinteger]: ...
 @overload
-def convolve(a: CoUInteger_1d, v: ToUInteger_1d, mode: _Mode = "valid") -> Array_1d[np.unsignedinteger]: ...  # type: ignore[overload-overlap]
+def convolve(a: CoUInteger_1d, v: ToUInteger_1d, mode: _Mode = "valid") -> Array_1d[np.unsignedinteger]: ...
 @overload
-def convolve(a: ToSInteger_1d, v: CoSInteger_1d, mode: _Mode = "valid") -> Array_1d[np.signedinteger]: ...  # type: ignore[overload-overlap]
+def convolve(a: ToSInteger_1d, v: CoSInteger_1d, mode: _Mode = "valid") -> Array_1d[np.signedinteger]: ...
 @overload
-def convolve(a: CoSInteger_1d, v: ToSInteger_1d, mode: _Mode = "valid") -> Array_1d[np.signedinteger]: ...  # type: ignore[overload-overlap]
+def convolve(a: CoSInteger_1d, v: ToSInteger_1d, mode: _Mode = "valid") -> Array_1d[np.signedinteger]: ...
 @overload
-def convolve(a: ToFloating_1d, v: CoFloating_1d, mode: _Mode = "valid") -> Array_1d[np.floating]: ...  # type: ignore[overload-overlap]
+def convolve(a: ToFloating_1d, v: CoFloating_1d, mode: _Mode = "valid") -> Array_1d[np.floating]: ...
 @overload
-def convolve(a: CoFloating_1d, v: ToFloating_1d, mode: _Mode = "valid") -> Array_1d[np.floating]: ...  # type: ignore[overload-overlap]
+def convolve(a: CoFloating_1d, v: ToFloating_1d, mode: _Mode = "valid") -> Array_1d[np.floating]: ...
 @overload
-def convolve(a: ToComplex_1d, v: CoComplex_1d, mode: _Mode = "valid") -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
+def convolve(a: ToComplex_1d, v: CoComplex_1d, mode: _Mode = "valid") -> Array_1d[np.complexfloating]: ...
 @overload
-def convolve(a: CoComplex_1d, v: ToComplex_1d, mode: _Mode = "valid") -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
+def convolve(a: CoComplex_1d, v: ToComplex_1d, mode: _Mode = "valid") -> Array_1d[np.complexfloating]: ...
 @overload
 def convolve(a: ToTimeDelta_1d, v: CoTimeDelta_1d, mode: _Mode = "valid") -> Array_1d[np.timedelta64]: ...
 @overload
@@ -567,23 +567,23 @@ def convolve(
 
 #
 @overload
-def outer(a: ToBool_nd, b: ToBool_nd, out: None = None) -> Array_2d[np.bool]: ...  # type: ignore[overload-overlap]
+def outer(a: ToBool_nd, b: ToBool_nd, out: None = None) -> Array_2d[np.bool]: ...
 @overload
-def outer(a: ToUInteger_nd, b: CoUInteger_nd, out: None = None) -> Array_2d[np.unsignedinteger]: ...  # type: ignore[overload-overlap]
+def outer(a: ToUInteger_nd, b: CoUInteger_nd, out: None = None) -> Array_2d[np.unsignedinteger]: ...
 @overload
-def outer(a: CoUInteger_nd, b: ToUInteger_nd, out: None = None) -> Array_2d[np.unsignedinteger]: ...  # type: ignore[overload-overlap]
+def outer(a: CoUInteger_nd, b: ToUInteger_nd, out: None = None) -> Array_2d[np.unsignedinteger]: ...
 @overload
-def outer(a: ToSInteger_nd, b: CoSInteger_nd, out: None = None) -> Array_2d[np.signedinteger]: ...  # type: ignore[overload-overlap]
+def outer(a: ToSInteger_nd, b: CoSInteger_nd, out: None = None) -> Array_2d[np.signedinteger]: ...
 @overload
-def outer(a: CoSInteger_nd, b: ToSInteger_nd, out: None = None) -> Array_2d[np.signedinteger]: ...  # type: ignore[overload-overlap]
+def outer(a: CoSInteger_nd, b: ToSInteger_nd, out: None = None) -> Array_2d[np.signedinteger]: ...
 @overload
-def outer(a: ToFloating_nd, b: CoFloating_nd, out: None = None) -> Array_2d[np.floating]: ...  # type: ignore[overload-overlap]
+def outer(a: ToFloating_nd, b: CoFloating_nd, out: None = None) -> Array_2d[np.floating]: ...
 @overload
-def outer(a: CoFloating_nd, b: ToFloating_nd, out: None = None) -> Array_2d[np.floating]: ...  # type: ignore[overload-overlap]
+def outer(a: CoFloating_nd, b: ToFloating_nd, out: None = None) -> Array_2d[np.floating]: ...
 @overload
-def outer(a: ToComplex_nd, b: CoComplex_nd, out: None = None) -> Array_2d[np.complexfloating]: ...  # type: ignore[overload-overlap]
+def outer(a: ToComplex_nd, b: CoComplex_nd, out: None = None) -> Array_2d[np.complexfloating]: ...
 @overload
-def outer(a: CoComplex_nd, b: ToComplex_nd, out: None = None) -> Array_2d[np.complexfloating]: ...  # type: ignore[overload-overlap]
+def outer(a: CoComplex_nd, b: ToComplex_nd, out: None = None) -> Array_2d[np.complexfloating]: ...
 @overload
 def outer(a: ToTimeDelta_nd, b: CoTimeDelta_nd, out: None = None) -> Array_2d[np.timedelta64]: ...
 @overload
@@ -599,23 +599,23 @@ def outer(
 
 #
 @overload
-def tensordot(a: ToBool_1nd, b: ToBool_1nd, axes: _Axes = 2) -> Array[np.bool]: ...  # type: ignore[overload-overlap]
+def tensordot(a: ToBool_1nd, b: ToBool_1nd, axes: _Axes = 2) -> Array[np.bool]: ...
 @overload
-def tensordot(a: ToUInteger_1nd, b: CoUInteger_1nd, axes: _Axes = 2) -> Array[np.unsignedinteger]: ...  # type: ignore[overload-overlap]
+def tensordot(a: ToUInteger_1nd, b: CoUInteger_1nd, axes: _Axes = 2) -> Array[np.unsignedinteger]: ...
 @overload
-def tensordot(a: CoUInteger_1nd, b: ToUInteger_1nd, axes: _Axes = 2) -> Array[np.unsignedinteger]: ...  # type: ignore[overload-overlap]
+def tensordot(a: CoUInteger_1nd, b: ToUInteger_1nd, axes: _Axes = 2) -> Array[np.unsignedinteger]: ...
 @overload
-def tensordot(a: ToSInteger_1nd, b: CoSInteger_1nd, axes: _Axes = 2) -> Array[np.signedinteger]: ...  # type: ignore[overload-overlap]
+def tensordot(a: ToSInteger_1nd, b: CoSInteger_1nd, axes: _Axes = 2) -> Array[np.signedinteger]: ...
 @overload
-def tensordot(a: CoSInteger_1nd, b: ToSInteger_1nd, axes: _Axes = 2) -> Array[np.signedinteger]: ...  # type: ignore[overload-overlap]
+def tensordot(a: CoSInteger_1nd, b: ToSInteger_1nd, axes: _Axes = 2) -> Array[np.signedinteger]: ...
 @overload
-def tensordot(a: ToFloating_1nd, b: CoFloating_1nd, axes: _Axes = 2) -> Array[np.floating]: ...  # type: ignore[overload-overlap]
+def tensordot(a: ToFloating_1nd, b: CoFloating_1nd, axes: _Axes = 2) -> Array[np.floating]: ...
 @overload
-def tensordot(a: CoFloating_1nd, b: ToFloating_1nd, axes: _Axes = 2) -> Array[np.floating]: ...  # type: ignore[overload-overlap]
+def tensordot(a: CoFloating_1nd, b: ToFloating_1nd, axes: _Axes = 2) -> Array[np.floating]: ...
 @overload
-def tensordot(a: ToComplex_1nd, b: CoComplex_1nd, axes: _Axes = 2) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+def tensordot(a: ToComplex_1nd, b: CoComplex_1nd, axes: _Axes = 2) -> Array[np.complexfloating]: ...
 @overload
-def tensordot(a: CoComplex_1nd, b: ToComplex_1nd, axes: _Axes = 2) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+def tensordot(a: CoComplex_1nd, b: ToComplex_1nd, axes: _Axes = 2) -> Array[np.complexfloating]: ...
 @overload
 def tensordot(a: ToTimeDelta_1nd, b: CoTimeDelta_1nd, axes: _Axes = 2) -> Array[np.timedelta64]: ...
 @overload
@@ -650,7 +650,7 @@ def cross(
     axis: int | None = None,
 ) -> NoReturn: ...
 @overload
-def cross(  # type: ignore[overload-overlap]
+def cross(
     x1: ToUInteger_1nd,
     x2: CoUInteger_1nd,
     axisa: int = -1,
@@ -659,7 +659,7 @@ def cross(  # type: ignore[overload-overlap]
     axis: int | None = None,
 ) -> Array[np.unsignedinteger]: ...
 @overload
-def cross(  # type: ignore[overload-overlap]
+def cross(
     x1: CoUInteger_1nd,
     x2: ToUInteger_1nd,
     axisa: int = -1,
@@ -788,16 +788,16 @@ def isclose(
 ) -> np.bool: ...
 @overload
 def isclose(
-    a: _ToArray_1nd[np.generic, _PyScalar],
-    b: _ToArray_nd[np.generic, _PyScalar],
+    a: ToGeneric_1nd,
+    b: ToGeneric_nd,
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: bool = False,
 ) -> Array[np.bool]: ...
 @overload
 def isclose(
-    a: _ToArray_nd[np.generic, _PyScalar],
-    b: _ToArray_1nd[np.generic, _PyScalar],
+    a: ToGeneric_nd,
+    b: ToGeneric_1nd,
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: bool = False,
