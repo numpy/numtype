@@ -45,7 +45,7 @@ assert_type(np.tril(AR_LIKE_b, k=0), npt.NDArray[Any])
 assert_type(np.triu(AR_b), npt.NDArray[np.bool])
 assert_type(np.triu(AR_LIKE_b, k=0), npt.NDArray[Any])
 
-assert_type(np.vander(AR_b), npt.NDArray[np.signedinteger])
+assert_type(np.vander(AR_b), npt.NDArray[np.intp])
 assert_type(np.vander(AR_u), npt.NDArray[np.signedinteger])
 assert_type(np.vander(AR_i, N=2), npt.NDArray[np.signedinteger])
 assert_type(np.vander(AR_f, increasing=True), npt.NDArray[np.floating])
@@ -116,7 +116,7 @@ assert_type(
         npt.NDArray[np.uint64],
     ],
 )
-assert_type(
+assert_type(  # type: ignore[assert-type]  # mypy fail
     np.histogram2d(AR_c, AR_c, bins=(AR_u, AR_u)),
     tuple[
         npt.NDArray[np.float64],
@@ -136,10 +136,8 @@ assert_type(
 assert_type(np.mask_indices(10, func1), tuple[npt.NDArray[np.intp], npt.NDArray[np.intp]])
 assert_type(np.mask_indices(8, func2, "0"), tuple[npt.NDArray[np.intp], npt.NDArray[np.intp]])
 
-assert_type(np.tril_indices(10), tuple[npt.NDArray[np.int_], npt.NDArray[np.int_]])
+assert_type(np.tril_indices(10), tuple[npt.NDArray[np.intp], npt.NDArray[np.intp]])
+assert_type(np.triu_indices(10), tuple[npt.NDArray[np.intp], npt.NDArray[np.intp]])
 
-assert_type(np.tril_indices_from(AR_b), tuple[npt.NDArray[np.int_], npt.NDArray[np.int_]])
-
-assert_type(np.triu_indices(10), tuple[npt.NDArray[np.int_], npt.NDArray[np.int_]])
-
-assert_type(np.triu_indices_from(AR_b), tuple[npt.NDArray[np.int_], npt.NDArray[np.int_]])
+assert_type(np.tril_indices_from(AR_b), tuple[npt.NDArray[np.intp], npt.NDArray[np.intp]])
+assert_type(np.triu_indices_from(AR_b), tuple[npt.NDArray[np.intp], npt.NDArray[np.intp]])
