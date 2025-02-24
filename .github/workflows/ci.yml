@@ -54,28 +54,7 @@ jobs:
           src/numpy-stubs/distutils/
           src/numpy-stubs/f2py/
           src/numpy-stubs/fft/
-          src/numpy-stubs/lib/__init__.pyi
-          src/numpy-stubs/lib/_array_utils_impl.pyi
-          src/numpy-stubs/lib/_arraypad_impl.pyi
-          src/numpy-stubs/lib/_arraysetops_impl.pyi
-          src/numpy-stubs/lib/_datasource.pyi
-          src/numpy-stubs/lib/_histograms_impl.pyi
-          src/numpy-stubs/lib/_iotools.pyi
-          src/numpy-stubs/lib/_nanfunctions_impl.pyi
-          src/numpy-stubs/lib/_npyio_impl.pyi
-          src/numpy-stubs/lib/_scimath_impl.pyi
-          src/numpy-stubs/lib/_stride_tricks_impl.pyi
-          src/numpy-stubs/lib/_user_array_impl.pyi
-          src/numpy-stubs/lib/_utils_impl.pyi
-          src/numpy-stubs/lib/array_utils.pyi
-          src/numpy-stubs/lib/format.pyi
-          src/numpy-stubs/lib/introspect.pyi
-          src/numpy-stubs/lib/mixins.pyi
-          src/numpy-stubs/lib/npyio.pyi
-          src/numpy-stubs/lib/recfunctions.pyi
-          src/numpy-stubs/lib/scimath.pyi
-          src/numpy-stubs/lib/stride_tricks.pyi
-          src/numpy-stubs/lib/user_array.pyi
+          src/numpy-stubs/lib/
           src/numpy-stubs/linalg/
           src/numpy-stubs/matrixlib/
           src/numpy-stubs/random/
@@ -108,28 +87,7 @@ jobs:
           src/numpy-stubs/distutils/
           src/numpy-stubs/f2py/
           src/numpy-stubs/fft/
-          src/numpy-stubs/lib/__init__.pyi
-          src/numpy-stubs/lib/_array_utils_impl.pyi
-          src/numpy-stubs/lib/_arraypad_impl.pyi
-          src/numpy-stubs/lib/_arraysetops_impl.pyi
-          src/numpy-stubs/lib/_datasource.pyi
-          src/numpy-stubs/lib/_histograms_impl.pyi
-          src/numpy-stubs/lib/_iotools.pyi
-          src/numpy-stubs/lib/_nanfunctions_impl.pyi
-          src/numpy-stubs/lib/_npyio_impl.pyi
-          src/numpy-stubs/lib/_scimath_impl.pyi
-          src/numpy-stubs/lib/_stride_tricks_impl.pyi
-          src/numpy-stubs/lib/_user_array_impl.pyi
-          src/numpy-stubs/lib/_utils_impl.pyi
-          src/numpy-stubs/lib/array_utils.pyi
-          src/numpy-stubs/lib/format.pyi
-          src/numpy-stubs/lib/introspect.pyi
-          src/numpy-stubs/lib/mixins.pyi
-          src/numpy-stubs/lib/npyio.pyi
-          src/numpy-stubs/lib/recfunctions.pyi
-          src/numpy-stubs/lib/scimath.pyi
-          src/numpy-stubs/lib/stride_tricks.pyi
-          src/numpy-stubs/lib/user_array.pyi
+          src/numpy-stubs/lib/
           src/numpy-stubs/linalg/
           src/numpy-stubs/matrixlib/
           src/numpy-stubs/random/
