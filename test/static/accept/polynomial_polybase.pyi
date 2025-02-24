@@ -8,11 +8,8 @@ import numpy as np
 import numpy.polynomial as npp
 import numpy.typing as npt
 
-_Ar_x_n: TypeAlias = np.ndarray[tuple[int], np.dtype[np.inexact | np.object_]]
-_Ar_x_2: TypeAlias = np.ndarray[tuple[L[2]], np.dtype[np.inexact]]
-
-_SCT = TypeVar("_SCT", bound=np.generic)
-_Ar_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[_SCT]]
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
 
 ###
 
@@ -84,9 +81,9 @@ assert_type(type(PS_herme).cast(PS_leg), npp.HermiteE)
 
 # attributes / properties
 
-assert_type(PS_all.coef, _Ar_x_n)
-assert_type(PS_all.domain, _Ar_x_2)
-assert_type(PS_all.window, _Ar_x_2)
+assert_type(PS_all.coef, _Array1D[np.inexact | np.object_])
+assert_type(PS_all.domain, _Array1D[np.inexact])
+assert_type(PS_all.window, _Array1D[np.inexact])
 assert_type(PS_all.symbol, LiteralString)
 
 # instance methods
@@ -125,16 +122,16 @@ assert_type(PS_lag.integ(SC_i_co, SC_f_co), npp.Laguerre)
 assert_type(PS_poly.deriv(), npp.Polynomial)
 assert_type(PS_herm.deriv(SC_i_co), npp.Hermite)
 
-assert_type(PS_poly.roots(), _Ar_x_n)
+assert_type(PS_poly.roots(), _Array1D[np.inexact | np.object_])
 
 assert_type(
     PS_poly.linspace(),
-    tuple[_Ar_1d[np.float64 | np.complex128], _Ar_1d[np.float64 | np.complex128]],
+    tuple[_Array1D[np.float64 | np.complex128], _Array1D[np.float64 | np.complex128]],
 )
 
 assert_type(
     PS_poly.linspace(9),
-    tuple[_Ar_1d[np.float64 | np.complex128], _Ar_1d[np.float64 | np.complex128]],
+    tuple[_Array1D[np.float64 | np.complex128], _Array1D[np.float64 | np.complex128]],
 )
 
 assert_type(PS_cheb.fit(AR_c_co, AR_c_co, SC_i_co), npp.Chebyshev)
@@ -161,8 +158,8 @@ assert_type(next(iter(PS_all)), np.inexact | object)
 
 assert_type(PS_all(SC_f_co), np.float64 | np.complex128)
 assert_type(PS_all(SC_c_co), np.float64 | np.complex128)
-assert_type(PS_all(Decimal()), np.float64 | np.complex128)
-assert_type(PS_all(Fraction()), np.float64 | np.complex128)
+assert_type(PS_all(Decimal()), Any)
+assert_type(PS_all(Fraction()), Any)
 assert_type(PS_poly(SQ_f), npt.NDArray[np.float64 | np.complex128])
 assert_type(PS_poly(SQ_c), npt.NDArray[np.float64 | np.complex128])
 assert_type(PS_poly(SQ_O), npt.NDArray[np.object_])

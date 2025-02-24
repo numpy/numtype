@@ -1,21 +1,24 @@
 from collections.abc import Sequence
 from decimal import Decimal
 from fractions import Fraction
-from typing import Literal as L, TypeAlias
-from typing_extensions import assert_type
+from typing import Any, TypeAlias
+from typing_extensions import TypeVar, assert_type
 
 import numpy as np
 import numpy.polynomial.polyutils as pu
 import numpy.typing as npt
 from numpy.polynomial._polytypes import _Tuple2
 
-_ArrFloat1D: TypeAlias = np.ndarray[tuple[int], np.dtype[np.floating]]
-_ArrComplex1D: TypeAlias = np.ndarray[tuple[int], np.dtype[np.complexfloating]]
-_ArrObject1D: TypeAlias = np.ndarray[tuple[int], np.dtype[np.object_]]
+###
 
-_ArrFloat1D_2: TypeAlias = np.ndarray[tuple[L[2]], np.dtype[np.float64]]
-_ArrComplex1D_2: TypeAlias = np.ndarray[tuple[L[2]], np.dtype[np.complex128]]
-_ArrObject1D_2: TypeAlias = np.ndarray[tuple[L[2]], np.dtype[np.object_]]
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
+
+_Floating1D: TypeAlias = _Array1D[np.floating]
+_Complex1D: TypeAlias = _Array1D[np.complexfloating]
+_Object1D: TypeAlias = _Array1D[np.object_]
+
+###
 
 num_int: int
 num_float: float
@@ -60,91 +63,91 @@ seq_seq_sct_object: Sequence[Sequence[np.object_]]  # doesn't exist at runtime
 
 # as_series
 
-assert_type(pu.as_series(arr_int), list[_ArrFloat1D])
-assert_type(pu.as_series(arr_float), list[_ArrFloat1D])
-assert_type(pu.as_series(arr_complex), list[_ArrComplex1D])
-assert_type(pu.as_series(arr_object), list[_ArrObject1D])
+assert_type(pu.as_series(arr_int), list[_Floating1D])
+assert_type(pu.as_series(arr_float), list[_Floating1D])
+assert_type(pu.as_series(arr_complex), list[_Complex1D])
+assert_type(pu.as_series(arr_object), list[_Object1D])
 
-assert_type(pu.as_series(seq_num_int), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_num_float), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_num_complex), list[_ArrComplex1D])
-assert_type(pu.as_series(seq_num_object), list[_ArrObject1D])
+assert_type(pu.as_series(seq_num_int), list[_Floating1D])
+assert_type(pu.as_series(seq_num_float), list[_Floating1D])
+assert_type(pu.as_series(seq_num_complex), list[_Complex1D])
+assert_type(pu.as_series(seq_num_object), list[_Object1D])
 
-assert_type(pu.as_series(seq_sct_int), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_sct_float), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_sct_complex), list[_ArrComplex1D])
-assert_type(pu.as_series(seq_sct_object), list[_ArrObject1D])
+assert_type(pu.as_series(seq_sct_int), list[_Floating1D])
+assert_type(pu.as_series(seq_sct_float), list[_Floating1D])
+assert_type(pu.as_series(seq_sct_complex), list[_Complex1D])
+assert_type(pu.as_series(seq_sct_object), list[_Object1D])
 
-assert_type(pu.as_series(seq_arr_int), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_arr_float), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_arr_complex), list[_ArrComplex1D])
-assert_type(pu.as_series(seq_arr_object), list[_ArrObject1D])
+assert_type(pu.as_series(seq_arr_int), list[_Floating1D])
+assert_type(pu.as_series(seq_arr_float), list[_Floating1D])
+assert_type(pu.as_series(seq_arr_complex), list[_Complex1D])
+assert_type(pu.as_series(seq_arr_object), list[_Object1D])
 
-assert_type(pu.as_series(seq_seq_num_int), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_seq_num_float), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_seq_num_complex), list[_ArrComplex1D])
-assert_type(pu.as_series(seq_seq_num_object), list[_ArrObject1D])
+assert_type(pu.as_series(seq_seq_num_int), list[_Floating1D])
+assert_type(pu.as_series(seq_seq_num_float), list[_Floating1D])
+assert_type(pu.as_series(seq_seq_num_complex), list[_Complex1D])
+assert_type(pu.as_series(seq_seq_num_object), list[_Object1D])
 
-assert_type(pu.as_series(seq_seq_sct_int), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_seq_sct_float), list[_ArrFloat1D])
-assert_type(pu.as_series(seq_seq_sct_complex), list[_ArrComplex1D])
-assert_type(pu.as_series(seq_seq_sct_object), list[_ArrObject1D])
+assert_type(pu.as_series(seq_seq_sct_int), list[_Floating1D])
+assert_type(pu.as_series(seq_seq_sct_float), list[_Floating1D])
+assert_type(pu.as_series(seq_seq_sct_complex), list[_Complex1D])
+assert_type(pu.as_series(seq_seq_sct_object), list[_Object1D])
 
 # trimcoef
 
-assert_type(pu.trimcoef(num_int), _ArrFloat1D)
-assert_type(pu.trimcoef(num_float), _ArrFloat1D)
-assert_type(pu.trimcoef(num_complex), _ArrComplex1D)
-assert_type(pu.trimcoef(num_object), _ArrObject1D)
-assert_type(pu.trimcoef(num_object), _ArrObject1D)
+assert_type(pu.trimcoef(num_int), _Floating1D)
+assert_type(pu.trimcoef(num_float), _Floating1D)
+assert_type(pu.trimcoef(num_complex), _Complex1D)
+assert_type(pu.trimcoef(num_object), _Object1D)
+assert_type(pu.trimcoef(num_object), _Object1D)
 
-assert_type(pu.trimcoef(sct_int), _ArrFloat1D)
-assert_type(pu.trimcoef(sct_float), _ArrFloat1D)
-assert_type(pu.trimcoef(sct_complex), _ArrComplex1D)
-assert_type(pu.trimcoef(sct_object), _ArrObject1D)
+assert_type(pu.trimcoef(sct_int), _Floating1D)
+assert_type(pu.trimcoef(sct_float), _Floating1D)
+assert_type(pu.trimcoef(sct_complex), _Complex1D)
+assert_type(pu.trimcoef(sct_object), _Object1D)
 
-assert_type(pu.trimcoef(arr_int), _ArrFloat1D)
-assert_type(pu.trimcoef(arr_float), _ArrFloat1D)
-assert_type(pu.trimcoef(arr_complex), _ArrComplex1D)
-assert_type(pu.trimcoef(arr_object), _ArrObject1D)
+assert_type(pu.trimcoef(arr_int), _Floating1D)
+assert_type(pu.trimcoef(arr_float), _Floating1D)
+assert_type(pu.trimcoef(arr_complex), _Complex1D)
+assert_type(pu.trimcoef(arr_object), _Object1D)
 
-assert_type(pu.trimcoef(seq_num_int), _ArrFloat1D)
-assert_type(pu.trimcoef(seq_num_float), _ArrFloat1D)
-assert_type(pu.trimcoef(seq_num_complex), _ArrComplex1D)
-assert_type(pu.trimcoef(seq_num_object), _ArrObject1D)
+assert_type(pu.trimcoef(seq_num_int), _Floating1D)
+assert_type(pu.trimcoef(seq_num_float), _Floating1D)
+assert_type(pu.trimcoef(seq_num_complex), _Complex1D)
+assert_type(pu.trimcoef(seq_num_object), _Object1D)
 
-assert_type(pu.trimcoef(seq_sct_int), _ArrFloat1D)
-assert_type(pu.trimcoef(seq_sct_float), _ArrFloat1D)
-assert_type(pu.trimcoef(seq_sct_complex), _ArrComplex1D)
-assert_type(pu.trimcoef(seq_sct_object), _ArrObject1D)
+assert_type(pu.trimcoef(seq_sct_int), _Floating1D)
+assert_type(pu.trimcoef(seq_sct_float), _Floating1D)
+assert_type(pu.trimcoef(seq_sct_complex), _Complex1D)
+assert_type(pu.trimcoef(seq_sct_object), _Object1D)
 
 # getdomain
 
-assert_type(pu.getdomain(num_int), _ArrFloat1D_2)
-assert_type(pu.getdomain(num_float), _ArrFloat1D_2)
-assert_type(pu.getdomain(num_complex), _ArrComplex1D_2)
-assert_type(pu.getdomain(num_object), _ArrObject1D_2)
-assert_type(pu.getdomain(num_object), _ArrObject1D_2)
+assert_type(pu.getdomain(num_int), _Array1D[np.float64])
+assert_type(pu.getdomain(num_float), _Array1D[np.float64])
+assert_type(pu.getdomain(num_complex), _Array1D[np.complex128])
+assert_type(pu.getdomain(num_object), _Object1D)
+assert_type(pu.getdomain(num_object), _Object1D)
 
-assert_type(pu.getdomain(sct_int), _ArrFloat1D_2)
-assert_type(pu.getdomain(sct_float), _ArrFloat1D_2)
-assert_type(pu.getdomain(sct_complex), _ArrComplex1D_2)
-assert_type(pu.getdomain(sct_object), _ArrObject1D_2)
+assert_type(pu.getdomain(sct_int), _Array1D[np.float64])
+assert_type(pu.getdomain(sct_float), _Array1D[np.float64])
+assert_type(pu.getdomain(sct_complex), _Array1D[np.complex128])
+assert_type(pu.getdomain(sct_object), _Object1D)
 
-assert_type(pu.getdomain(arr_int), _ArrFloat1D_2)
-assert_type(pu.getdomain(arr_float), _ArrFloat1D_2)
-assert_type(pu.getdomain(arr_complex), _ArrComplex1D_2)
-assert_type(pu.getdomain(arr_object), _ArrObject1D_2)
+assert_type(pu.getdomain(arr_int), _Array1D[np.float64])
+assert_type(pu.getdomain(arr_float), _Array1D[np.float64])
+assert_type(pu.getdomain(arr_complex), _Array1D[np.complex128])
+assert_type(pu.getdomain(arr_object), _Object1D)
 
-assert_type(pu.getdomain(seq_num_int), _ArrFloat1D_2)
-assert_type(pu.getdomain(seq_num_float), _ArrFloat1D_2)
-assert_type(pu.getdomain(seq_num_complex), _ArrComplex1D_2)
-assert_type(pu.getdomain(seq_num_object), _ArrObject1D_2)
+assert_type(pu.getdomain(seq_num_int), _Array1D[np.float64])
+assert_type(pu.getdomain(seq_num_float), _Array1D[np.float64])
+assert_type(pu.getdomain(seq_num_complex), _Array1D[np.complex128])
+assert_type(pu.getdomain(seq_num_object), _Object1D)
 
-assert_type(pu.getdomain(seq_sct_int), _ArrFloat1D_2)
-assert_type(pu.getdomain(seq_sct_float), _ArrFloat1D_2)
-assert_type(pu.getdomain(seq_sct_complex), _ArrComplex1D_2)
-assert_type(pu.getdomain(seq_sct_object), _ArrObject1D_2)
+assert_type(pu.getdomain(seq_sct_int), _Array1D[np.float64])
+assert_type(pu.getdomain(seq_sct_float), _Array1D[np.float64])
+assert_type(pu.getdomain(seq_sct_complex), _Array1D[np.complex128])
+assert_type(pu.getdomain(seq_sct_object), _Object1D)
 
 # mapparms
 
@@ -153,24 +156,24 @@ assert_type(pu.mapparms(seq_num_int, seq_num_float), _Tuple2[float])
 assert_type(pu.mapparms(seq_num_float, seq_num_float), _Tuple2[float])
 assert_type(pu.mapparms(seq_num_float, seq_num_complex), _Tuple2[complex])
 assert_type(pu.mapparms(seq_num_complex, seq_num_complex), _Tuple2[complex])
-assert_type(pu.mapparms(seq_num_complex, seq_num_object), _Tuple2[object])
-assert_type(pu.mapparms(seq_num_object, seq_num_object), _Tuple2[object])
+assert_type(pu.mapparms(seq_num_complex, seq_num_object), _Tuple2[Any])
+assert_type(pu.mapparms(seq_num_object, seq_num_object), _Tuple2[Any])
 
 assert_type(pu.mapparms(seq_sct_int, seq_sct_int), _Tuple2[np.floating])
 assert_type(pu.mapparms(seq_sct_int, seq_sct_float), _Tuple2[np.floating])
 assert_type(pu.mapparms(seq_sct_float, seq_sct_float), _Tuple2[float])
 assert_type(pu.mapparms(seq_sct_float, seq_sct_complex), _Tuple2[complex])
 assert_type(pu.mapparms(seq_sct_complex, seq_sct_complex), _Tuple2[complex])
-assert_type(pu.mapparms(seq_sct_complex, seq_sct_object), _Tuple2[object])
-assert_type(pu.mapparms(seq_sct_object, seq_sct_object), _Tuple2[object])
+assert_type(pu.mapparms(seq_sct_complex, seq_sct_object), _Tuple2[Any])
+assert_type(pu.mapparms(seq_sct_object, seq_sct_object), _Tuple2[Any])
 
 assert_type(pu.mapparms(arr_int, arr_int), _Tuple2[np.floating])
 assert_type(pu.mapparms(arr_int, arr_float), _Tuple2[np.floating])
 assert_type(pu.mapparms(arr_float, arr_float), _Tuple2[np.floating])
 assert_type(pu.mapparms(arr_float, arr_complex), _Tuple2[np.complexfloating])
 assert_type(pu.mapparms(arr_complex, arr_complex), _Tuple2[np.complexfloating])
-assert_type(pu.mapparms(arr_complex, arr_object), _Tuple2[object])
-assert_type(pu.mapparms(arr_object, arr_object), _Tuple2[object])
+assert_type(pu.mapparms(arr_complex, arr_object), _Tuple2[Any])
+assert_type(pu.mapparms(arr_object, arr_object), _Tuple2[Any])
 
 # mapdomain
 
@@ -181,39 +184,39 @@ assert_type(pu.mapdomain(num_float, seq_num_float, seq_num_float), np.floating)
 assert_type(pu.mapdomain(num_float, seq_num_float, seq_num_complex), np.complexfloating)
 assert_type(pu.mapdomain(num_float, seq_num_complex, seq_num_complex), np.complexfloating)
 assert_type(pu.mapdomain(num_complex, seq_num_complex, seq_num_complex), np.complexfloating)
-assert_type(pu.mapdomain(num_complex, seq_num_complex, seq_num_object), object)
-assert_type(pu.mapdomain(num_complex, seq_num_object, seq_num_object), object)
-assert_type(pu.mapdomain(num_object, seq_num_object, seq_num_object), object)
+assert_type(pu.mapdomain(num_complex, seq_num_complex, seq_num_object), Any)
+assert_type(pu.mapdomain(num_complex, seq_num_object, seq_num_object), Any)
+assert_type(pu.mapdomain(num_object, seq_num_object, seq_num_object), Any)
 
-assert_type(pu.mapdomain(seq_num_int, seq_num_int, seq_num_int), _ArrFloat1D)
-assert_type(pu.mapdomain(seq_num_int, seq_num_int, seq_num_float), _ArrFloat1D)
-assert_type(pu.mapdomain(seq_num_int, seq_num_float, seq_num_float), _ArrFloat1D)
-assert_type(pu.mapdomain(seq_num_float, seq_num_float, seq_num_float), _ArrFloat1D)
-assert_type(pu.mapdomain(seq_num_float, seq_num_float, seq_num_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(seq_num_float, seq_num_complex, seq_num_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(seq_num_complex, seq_num_complex, seq_num_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(seq_num_complex, seq_num_complex, seq_num_object), _ArrObject1D)
-assert_type(pu.mapdomain(seq_num_complex, seq_num_object, seq_num_object), _ArrObject1D)
-assert_type(pu.mapdomain(seq_num_object, seq_num_object, seq_num_object), _ArrObject1D)
+assert_type(pu.mapdomain(seq_num_int, seq_num_int, seq_num_int), _Floating1D)
+assert_type(pu.mapdomain(seq_num_int, seq_num_int, seq_num_float), _Floating1D)
+assert_type(pu.mapdomain(seq_num_int, seq_num_float, seq_num_float), _Floating1D)
+assert_type(pu.mapdomain(seq_num_float, seq_num_float, seq_num_float), _Floating1D)
+assert_type(pu.mapdomain(seq_num_float, seq_num_float, seq_num_complex), _Complex1D)
+assert_type(pu.mapdomain(seq_num_float, seq_num_complex, seq_num_complex), _Complex1D)
+assert_type(pu.mapdomain(seq_num_complex, seq_num_complex, seq_num_complex), _Complex1D)
+assert_type(pu.mapdomain(seq_num_complex, seq_num_complex, seq_num_object), _Object1D)
+assert_type(pu.mapdomain(seq_num_complex, seq_num_object, seq_num_object), _Object1D)
+assert_type(pu.mapdomain(seq_num_object, seq_num_object, seq_num_object), _Object1D)
 
-assert_type(pu.mapdomain(seq_sct_int, seq_sct_int, seq_sct_int), _ArrFloat1D)
-assert_type(pu.mapdomain(seq_sct_int, seq_sct_int, seq_sct_float), _ArrFloat1D)
-assert_type(pu.mapdomain(seq_sct_int, seq_sct_float, seq_sct_float), _ArrFloat1D)
-assert_type(pu.mapdomain(seq_sct_float, seq_sct_float, seq_sct_float), _ArrFloat1D)
-assert_type(pu.mapdomain(seq_sct_float, seq_sct_float, seq_sct_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(seq_sct_float, seq_sct_complex, seq_sct_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(seq_sct_complex, seq_sct_complex, seq_sct_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(seq_sct_complex, seq_sct_complex, seq_sct_object), _ArrObject1D)
-assert_type(pu.mapdomain(seq_sct_complex, seq_sct_object, seq_sct_object), _ArrObject1D)
-assert_type(pu.mapdomain(seq_sct_object, seq_sct_object, seq_sct_object), _ArrObject1D)
+assert_type(pu.mapdomain(seq_sct_int, seq_sct_int, seq_sct_int), _Floating1D)
+assert_type(pu.mapdomain(seq_sct_int, seq_sct_int, seq_sct_float), _Floating1D)
+assert_type(pu.mapdomain(seq_sct_int, seq_sct_float, seq_sct_float), _Floating1D)
+assert_type(pu.mapdomain(seq_sct_float, seq_sct_float, seq_sct_float), _Floating1D)
+assert_type(pu.mapdomain(seq_sct_float, seq_sct_float, seq_sct_complex), _Complex1D)
+assert_type(pu.mapdomain(seq_sct_float, seq_sct_complex, seq_sct_complex), _Complex1D)
+assert_type(pu.mapdomain(seq_sct_complex, seq_sct_complex, seq_sct_complex), _Complex1D)
+assert_type(pu.mapdomain(seq_sct_complex, seq_sct_complex, seq_sct_object), _Object1D)
+assert_type(pu.mapdomain(seq_sct_complex, seq_sct_object, seq_sct_object), _Object1D)
+assert_type(pu.mapdomain(seq_sct_object, seq_sct_object, seq_sct_object), _Object1D)
 
-assert_type(pu.mapdomain(arr_int, arr_int, arr_int), _ArrFloat1D)
-assert_type(pu.mapdomain(arr_int, arr_int, arr_float), _ArrFloat1D)
-assert_type(pu.mapdomain(arr_int, arr_float, arr_float), _ArrFloat1D)
-assert_type(pu.mapdomain(arr_float, arr_float, arr_float), _ArrFloat1D)
-assert_type(pu.mapdomain(arr_float, arr_float, arr_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(arr_float, arr_complex, arr_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(arr_complex, arr_complex, arr_complex), _ArrComplex1D)
-assert_type(pu.mapdomain(arr_complex, arr_complex, arr_object), _ArrObject1D)
-assert_type(pu.mapdomain(arr_complex, arr_object, arr_object), _ArrObject1D)
-assert_type(pu.mapdomain(arr_object, arr_object, arr_object), _ArrObject1D)
+assert_type(pu.mapdomain(arr_int, arr_int, arr_int), _Floating1D)
+assert_type(pu.mapdomain(arr_int, arr_int, arr_float), _Floating1D)
+assert_type(pu.mapdomain(arr_int, arr_float, arr_float), _Floating1D)
+assert_type(pu.mapdomain(arr_float, arr_float, arr_float), _Floating1D)
+assert_type(pu.mapdomain(arr_float, arr_float, arr_complex), _Complex1D)
+assert_type(pu.mapdomain(arr_float, arr_complex, arr_complex), _Complex1D)
+assert_type(pu.mapdomain(arr_complex, arr_complex, arr_complex), _Complex1D)
+assert_type(pu.mapdomain(arr_complex, arr_complex, arr_object), _Object1D)
+assert_type(pu.mapdomain(arr_complex, arr_object, arr_object), _Object1D)
+assert_type(pu.mapdomain(arr_object, arr_object, arr_object), _Object1D)
