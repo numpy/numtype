@@ -57,6 +57,7 @@ jobs:
           src/numpy-stubs/lib/
           src/numpy-stubs/linalg/
           src/numpy-stubs/matrixlib/
+          src/numpy-stubs/polynomial/
           src/numpy-stubs/random/
           src/numpy-stubs/rec/
           src/numpy-stubs/strings/
@@ -90,6 +91,7 @@ jobs:
           src/numpy-stubs/lib/
           src/numpy-stubs/linalg/
           src/numpy-stubs/matrixlib/
+          src/numpy-stubs/polynomial/
           src/numpy-stubs/random/
           src/numpy-stubs/rec/
           src/numpy-stubs/strings/
