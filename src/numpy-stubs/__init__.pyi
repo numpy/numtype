@@ -7,7 +7,7 @@ from _typeshed import StrOrBytesPath, SupportsFlush, SupportsLenAndGetItem, Supp
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from decimal import Decimal
 from fractions import Fraction
-from types import EllipsisType, GenericAlias, MappingProxyType, ModuleType, TracebackType
+from types import EllipsisType, GenericAlias, MappingProxyType, ModuleType
 from typing import (
     Any,
     ClassVar,
@@ -193,7 +193,7 @@ from numpy._core import (
     zeros_like,
 )
 from numpy._core._internal import _ctypes
-from numpy._core._ufunc_config import _ErrCall, _ErrKind
+from numpy._core._ufunc_config import errstate
 from numpy._core.memmap import memmap
 from numpy._core.multiarray import bincount, flagsobj, packbits, unpackbits
 from numpy._pytesttester import PytestTester
@@ -656,8 +656,6 @@ _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
 _RealT_co = TypeVar("_RealT_co", covariant=True)
 _ImagT_co = TypeVar("_ImagT_co", covariant=True)
-
-_CallableT = TypeVar("_CallableT", bound=Callable[..., object])
 
 _DType = TypeVar("_DType", bound=dtype[Any])
 _DType_co = TypeVar("_DType_co", bound=dtype[Any], covariant=True)
@@ -5176,25 +5174,6 @@ bitwise_invert: Final = invert
 bitwise_right_shift: Final = right_shift
 permute_dims: Final = transpose
 pow: Final = power
-
-class errstate:
-    def __init__(
-        self,
-        *,
-        call: _ErrCall = ...,
-        all: _ErrKind | None = ...,
-        divide: _ErrKind | None = ...,
-        over: _ErrKind | None = ...,
-        under: _ErrKind | None = ...,
-        invalid: _ErrKind | None = ...,
-    ) -> None: ...
-
-    #
-    def __enter__(self) -> None: ...
-    def __exit__(self, cls: type[BaseException] | None, exc: BaseException | None, tb: TracebackType | None, /) -> None: ...
-
-    #
-    def __call__(self, func: _CallableT) -> _CallableT: ...
 
 class ndenumerate(Generic[_SCT_co]):
     @property
