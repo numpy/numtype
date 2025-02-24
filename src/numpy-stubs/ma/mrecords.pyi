@@ -1,6 +1,6 @@
 from _typeshed import Incomplete
 from typing import Any
-from typing_extensions import TypeVar
+from typing_extensions import Self, TypeVar
 
 import numpy as np
 
@@ -12,6 +12,8 @@ _ShapeType_co = TypeVar("_ShapeType_co", covariant=True, bound=tuple[int, ...])
 _DType_co = TypeVar("_DType_co", bound=np.dtype[Any], covariant=True)
 
 class MaskedRecords(MaskedArray[_ShapeType_co, _DType_co]):
+    _mask: Any
+    _fill_value: Any
     def __new__(
         cls,
         shape: Incomplete,
@@ -30,9 +32,7 @@ class MaskedRecords(MaskedArray[_ShapeType_co, _DType_co]):
         keep_mask: Incomplete = ...,
         copy: Incomplete = ...,
         **options: Incomplete,
-    ) -> Incomplete: ...
-    _mask: Any
-    _fill_value: Any
+    ) -> Self: ...
     @property
     def _data(self) -> Incomplete: ...
     @property
@@ -43,14 +43,12 @@ class MaskedRecords(MaskedArray[_ShapeType_co, _DType_co]):
     def __setattr__(self, attr: Incomplete, val: Incomplete) -> None: ...
     def __getitem__(self, indx: Incomplete) -> Incomplete: ...
     def __setitem__(self, indx: Incomplete, value: Incomplete) -> None: ...
-    def view(self, dtype: Incomplete = ..., type: Incomplete = ...) -> Incomplete: ...
+    def view(self, dtype: Incomplete = ..., type: Incomplete = ...) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     def harden_mask(self) -> Incomplete: ...
     def soften_mask(self) -> Incomplete: ...
-    def copy(self) -> Incomplete: ...
+    def copy(self) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     def tolist(self, fill_value: Incomplete = ...) -> Incomplete: ...
     def __reduce__(self) -> Incomplete: ...
-
-mrecarray = MaskedRecords
 
 def fromarrays(
     arraylist: Incomplete,
@@ -84,3 +82,5 @@ def fromtextfile(
     vartypes: Incomplete = ...,
 ) -> Incomplete: ...
 def addfield(mrecord: Incomplete, newfield: Incomplete, newfieldname: Incomplete = ...) -> Incomplete: ...
+
+mrecarray = MaskedRecords
