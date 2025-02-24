@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import TypeAlias
+from typing import Any, TypeAlias
 from typing_extensions import assert_type
 
 import numpy as np
@@ -50,7 +50,7 @@ assert_type(npp.polynomial.polypow(AR_c16, 2), _ArrComplex1D)
 assert_type(npp.polynomial.polypow(AR_O, 2), _ArrObject1D)
 
 # assert_type(npp.polynomial.polyder(PS_poly), npt.NDArray[np.object_])
-assert_type(npp.polynomial.polyder(AR_f8), npt.NDArray[np.floating])
+assert_type(npp.polynomial.polyder(AR_f8), npt.NDArray[np.float64])
 assert_type(npp.polynomial.polyder(AR_c16), npt.NDArray[np.complexfloating])
 assert_type(npp.polynomial.polyder(AR_O, m=2), npt.NDArray[np.object_])
 
@@ -133,7 +133,4 @@ assert_type(npp.chebyshev.cheb2poly(AR_O), _ArrObject1D)
 assert_type(npp.chebyshev.chebpts1(6), _ArrFloat1D64)
 assert_type(npp.chebyshev.chebpts2(6), _ArrFloat1D64)
 
-assert_type(
-    npp.chebyshev.chebinterpolate(np.tanh, 3),
-    npt.NDArray[np.float64 | np.complex128 | np.object_],
-)
+assert_type(npp.chebyshev.chebinterpolate(np.tanh, 3), npt.NDArray[Any])

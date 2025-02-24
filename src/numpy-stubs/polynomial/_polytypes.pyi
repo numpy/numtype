@@ -1,10 +1,9 @@
 from collections.abc import Callable, Sequence
 from typing import (
     Any,
-    Literal,
-    NoReturn,
+    Literal as L,
     Protocol,
-    SupportsIndex,
+    SupportsIndex as CanIndex,
     SupportsInt,
     TypeAlias,
     overload,
@@ -14,24 +13,46 @@ from typing_extensions import LiteralString, Self, TypeVar
 
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import (
-    _ArrayLikeComplex_co,
-    # array-likes
-    _ArrayLikeFloat_co,
-    _ArrayLikeNumber_co,
-    _ArrayLikeObject_co,
-    _ComplexLike_co,
-    _FloatLike_co,
-    # scalar-likes
-    _IntLike_co,
-    _NestedSequence,
-    _NumberLike_co,
-    _SupportsArray,
+from _numtype import (
+    Array,
+    Array_1d,
+    Array_2d,
+    CoComplex128_0d,
+    CoComplex_0d,
+    CoComplex_1d,
+    CoComplex_1nd,
+    CoComplex_nd,
+    CoFloat64_0d,
+    CoFloating_0d,
+    CoFloating_1d,
+    CoFloating_1nd,
+    CoFloating_nd,
+    CoIntP_0d,
+    CoInteger_0d,
+    CoInteger_1d,
+    CoInteger_nd,
+    ToComplex128_0d,
+    ToComplex_0d,
+    ToComplex_1d,
+    ToComplex_1nd,
+    ToComplex_nd,
+    ToFloat64_0d,
+    ToFloat64_nd,
+    ToFloating_1d,
+    ToFloating_nd,
+    ToObject_1d,
+    ToObject_1nd,
+    ToObject_nd,
+    ToReal_1d,
+    _ToArray_1d,
+    _ToArray_nd,
 )
+from numpy._typing import _NestedSequence, _NumberLike_co
 
 _T = TypeVar("_T")
 _T_contra = TypeVar("_T_contra", contravariant=True, default=Any)
-_SCT = TypeVar("_SCT", bound=np.bool | np.number | np.object_)
+_CoefT = TypeVar("_CoefT", bound=np.number | np.bool | np.object_)
+_NameT_co = TypeVar("_NameT_co", bound=str, default=LiteralString, covariant=True)
 
 # compatible with e.g. int, float, complex, Decimal, Fraction, and ABCPolyBase
 @type_check_only
@@ -48,518 +69,618 @@ class _SupportsCoefOps(Protocol[_T_contra]):
     def __rsub__(self, x: _T_contra, /) -> Self: ...
     def __rmul__(self, x: _T_contra, /) -> Self: ...
 
-_Series: TypeAlias = np.ndarray[tuple[int], np.dtype[_SCT]]
-
-_FloatSeries: TypeAlias = _Series[np.floating]
-_ComplexSeries: TypeAlias = _Series[np.complexfloating]
-_ObjectSeries: TypeAlias = _Series[np.object_]
-_CoefSeries: TypeAlias = _Series[np.inexact | np.object_]
-
-_FloatArray: TypeAlias = npt.NDArray[np.floating]
-_ComplexArray: TypeAlias = npt.NDArray[np.complexfloating]
-_ObjectArray: TypeAlias = npt.NDArray[np.object_]
-_CoefArray: TypeAlias = npt.NDArray[np.inexact | np.object_]
-
 _Tuple2: TypeAlias = tuple[_T, _T]
-_Array1: TypeAlias = np.ndarray[tuple[Literal[1]], np.dtype[_SCT]]
-_Array2: TypeAlias = np.ndarray[tuple[Literal[2]], np.dtype[_SCT]]
+_ToInt: TypeAlias = SupportsInt | CanIndex
 
-_AnyInt: TypeAlias = SupportsInt | SupportsIndex
+_InexactObject_1d: TypeAlias = Array_1d[np.inexact | np.object_]
+_InexactObject_nd: TypeAlias = Array[np.inexact | np.object_]
 
-_CoefObjectLike_co: TypeAlias = np.object_ | _SupportsCoefOps
-_CoefLike_co: TypeAlias = _NumberLike_co | _CoefObjectLike_co
+_ToNumericObject_0d: TypeAlias = np.object_ | _SupportsCoefOps
+_ToNumericObject_nd: TypeAlias = _ToNumericObject_0d | ToObject_1d | _NestedSequence[ToObject_1d]
 
-# The term "series" is used here to refer to 1-d arrays of numeric scalars.
-_SeriesLikeBool_co: TypeAlias = _SupportsArray[np.dtype[np.bool]] | Sequence[bool | np.bool]
-_SeriesLikeInt_co: TypeAlias = _SupportsArray[np.dtype[np.integer | np.bool]] | Sequence[_IntLike_co]
-_SeriesLikeFloat_co: TypeAlias = _SupportsArray[np.dtype[np.floating | np.integer | np.bool]] | Sequence[_FloatLike_co]
-_SeriesLikeComplex_co: TypeAlias = _SupportsArray[np.dtype[np.inexact | np.integer | np.bool]] | Sequence[_ComplexLike_co]
-_SeriesLikeObject_co: TypeAlias = _SupportsArray[np.dtype[np.object_]] | Sequence[_CoefObjectLike_co]
-_SeriesLikeCoef_co: TypeAlias = _SupportsArray[np.dtype[np.number | np.bool | np.object_]] | Sequence[_CoefLike_co]
+_ToNumeric_0d: TypeAlias = _NumberLike_co | _ToNumericObject_0d
+_ToNumeric_1d: TypeAlias = _ToArray_1d[np.number | np.bool | np.object_, complex | _SupportsCoefOps]
+_ToNumeric_nd: TypeAlias = _ToArray_nd[np.number | np.bool | np.object_, complex | _SupportsCoefOps]
 
-_ArrayLikeCoefObject_co: TypeAlias = _CoefObjectLike_co | _SeriesLikeObject_co | _NestedSequence[_SeriesLikeObject_co]
-_ArrayLikeCoef_co: TypeAlias = npt.NDArray[np.number | np.bool | np.object_] | _ArrayLikeNumber_co | _ArrayLikeCoefObject_co
-
-_NameT_co = TypeVar("_NameT_co", bound=LiteralString, default=LiteralString, covariant=True)
+_ToValF: TypeAlias = Callable[[Array[Any], Array[Any], bool], _ToNumeric_nd]
+_ToVanderF: TypeAlias = Callable[[Array[Any], int], _ToNumericObject_nd]
 
 @type_check_only
-class _Named(Protocol[_NameT_co]):
+class _HasName(Protocol[_NameT_co]):
     @property
     def __name__(self, /) -> _NameT_co: ...
 
-_Line: TypeAlias = np.ndarray[tuple[Literal[1, 2]], np.dtype[_SCT]]
+@type_check_only
+class _FuncLine(_HasName[_NameT_co], Protocol[_NameT_co]):
+    @overload
+    def __call__(self, /, off: CoIntP_0d, scl: CoIntP_0d) -> Array_1d[np.intp]: ...
+    @overload
+    def __call__(self, /, off: ToFloat64_0d, scl: CoFloat64_0d) -> Array_1d[np.float64]: ...
+    @overload
+    def __call__(self, /, off: CoFloat64_0d, scl: ToFloat64_0d) -> Array_1d[np.float64]: ...
+    @overload
+    def __call__(self, /, off: ToComplex128_0d, scl: CoComplex128_0d) -> Array_1d[np.complex128]: ...
+    @overload
+    def __call__(self, /, off: CoComplex128_0d, scl: ToComplex128_0d) -> Array_1d[np.complex128]: ...
+    @overload
+    def __call__(self, /, off: _CoefT, scl: _CoefT) -> Array_1d[_CoefT]: ...
+    @overload
+    def __call__(self, /, off: _SupportsCoefOps, scl: _SupportsCoefOps) -> Array_1d[np.object_]: ...
 
 @type_check_only
-class _FuncLine(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncFromRoots(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, off: _SCT, scl: _SCT) -> _Line[_SCT]: ...
+    def __call__(self, /, roots: CoFloating_1d) -> Array_1d[np.floating]: ...
     @overload
-    def __call__(self, /, off: int, scl: int) -> _Line[np.int_]: ...
+    def __call__(self, /, roots: ToComplex_1d) -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, off: float, scl: float) -> _Line[np.float64]: ...
-    @overload
-    def __call__(self, /, off: complex, scl: complex) -> _Line[np.complex128]: ...
-    @overload
-    def __call__(self, /, off: _SupportsCoefOps, scl: _SupportsCoefOps) -> _Line[np.object_]: ...
+    def __call__(self, /, roots: ToObject_1d) -> Array_1d[np.object_]: ...
 
 @type_check_only
-class _FuncFromRoots(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncUnOp(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, roots: _SeriesLikeFloat_co) -> _FloatSeries: ...
+    def __call__(self, /, c: CoFloating_1d) -> Array_1d[np.floating]: ...
     @overload
-    def __call__(self, /, roots: _SeriesLikeComplex_co) -> _ComplexSeries: ...
+    def __call__(self, /, c: ToComplex_1d) -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, roots: _SeriesLikeCoef_co) -> _ObjectSeries: ...
+    def __call__(self, /, c: ToObject_1d) -> Array_1d[np.object_]: ...
 
 @type_check_only
-class _FuncBinOp(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncPoly2Ortho(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, c1: _SeriesLikeBool_co, c2: _SeriesLikeBool_co) -> NoReturn: ...
+    def __call__(self, /, pol: CoFloating_1d) -> Array_1d[np.floating]: ...
     @overload
-    def __call__(self, /, c1: _SeriesLikeFloat_co, c2: _SeriesLikeFloat_co) -> _FloatSeries: ...
+    def __call__(self, /, pol: ToComplex_1d) -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, c1: _SeriesLikeComplex_co, c2: _SeriesLikeComplex_co) -> _ComplexSeries: ...
-    @overload
-    def __call__(self, /, c1: _SeriesLikeCoef_co, c2: _SeriesLikeCoef_co) -> _ObjectSeries: ...
+    def __call__(self, /, pol: ToObject_1d) -> Array_1d[np.object_]: ...
 
 @type_check_only
-class _FuncUnOp(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncPow(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, c: _SeriesLikeFloat_co) -> _FloatSeries: ...
+    def __call__(self, /, c: CoFloating_1d, pow: CoInteger_0d, maxpower: CoInteger_0d | None = None) -> Array_1d[np.floating]: ...
     @overload
-    def __call__(self, /, c: _SeriesLikeComplex_co) -> _ComplexSeries: ...
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        c: ToComplex_1d,
+        pow: CoInteger_0d,
+        maxpower: CoInteger_0d | None = None,
+    ) -> Array_1d[np.complexfloating]: ...
     @overload
-    def __call__(self, /, c: _SeriesLikeCoef_co) -> _ObjectSeries: ...
+    def __call__(self, /, c: ToObject_1d, pow: CoInteger_0d, maxpower: CoInteger_0d | None = None) -> Array_1d[np.object_]: ...
 
 @type_check_only
-class _FuncPoly2Ortho(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncBinOp(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, pol: _SeriesLikeFloat_co) -> _FloatSeries: ...
+    def __call__(self, /, c1: ToReal_1d, c2: CoFloating_1d) -> Array_1d[np.floating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, pol: _SeriesLikeComplex_co) -> _ComplexSeries: ...
+    def __call__(self, /, c1: CoFloating_1d, c2: ToReal_1d) -> Array_1d[np.floating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, pol: _SeriesLikeCoef_co) -> _ObjectSeries: ...
+    def __call__(self, /, c1: ToComplex_1d, c2: CoComplex_1d) -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, c1: CoComplex_1d, c2: ToComplex_1d) -> Array_1d[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, c1: ToObject_1d, c2: _ToNumeric_1d) -> Array_1d[np.object_]: ...
+    @overload
+    def __call__(self, /, c1: _ToNumeric_1d, c2: ToObject_1d) -> Array_1d[np.object_]: ...
 
 @type_check_only
-class _FuncPow(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncDer(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, c: _SeriesLikeFloat_co, pow: _IntLike_co, maxpower: _IntLike_co | None = ...) -> _FloatSeries: ...
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        c: ToFloat64_nd | CoInteger_nd,
+        m: CanIndex = 1,
+        scl: CoFloating_0d = 1,
+        axis: CanIndex = 0,
+    ) -> Array[np.float64]: ...
     @overload
-    def __call__(self, /, c: _SeriesLikeComplex_co, pow: _IntLike_co, maxpower: _IntLike_co | None = ...) -> _ComplexSeries: ...
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        c: ToFloating_nd,
+        m: CanIndex = 1,
+        scl: CoFloating_0d = 1,
+        axis: CanIndex = 0,
+    ) -> Array[np.floating]: ...
     @overload
-    def __call__(self, /, c: _SeriesLikeCoef_co, pow: _IntLike_co, maxpower: _IntLike_co | None = ...) -> _ObjectSeries: ...
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        c: ToComplex_nd,
+        m: CanIndex = 1,
+        scl: CoComplex_0d = 1,
+        axis: CanIndex = 0,
+    ) -> Array[np.complexfloating]: ...
+    @overload
+    def __call__(self, /, c: ToObject_nd, m: CanIndex = 1, scl: _ToNumeric_0d = 1, axis: CanIndex = 0) -> Array[np.object_]: ...
 
 @type_check_only
-class _FuncDer(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncInteg(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
     def __call__(
         self,
         /,
-        c: _ArrayLikeFloat_co,
-        m: SupportsIndex = ...,
-        scl: _FloatLike_co = ...,
-        axis: SupportsIndex = ...,
-    ) -> _FloatArray: ...
+        c: CoFloating_nd,
+        m: CanIndex = 1,
+        k: CoFloating_0d | CoFloating_1d = ...,
+        lbnd: CoFloating_0d = 0,
+        scl: CoFloating_0d = 1,
+        axis: CanIndex = 0,
+    ) -> Array[np.floating]: ...
+    @overload
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        c: ToComplex_nd,
+        m: CanIndex = 1,
+        k: CoComplex_0d | CoComplex_1d = ...,
+        lbnd: CoComplex_0d = 0,
+        scl: CoComplex_0d = 1,
+        axis: CanIndex = 0,
+    ) -> Array[np.complexfloating]: ...
     @overload
     def __call__(
         self,
         /,
-        c: _ArrayLikeComplex_co,
-        m: SupportsIndex = ...,
-        scl: _ComplexLike_co = ...,
-        axis: SupportsIndex = ...,
-    ) -> _ComplexArray: ...
+        c: CoComplex_nd,
+        m: CanIndex = 1,
+        *,
+        k: ToComplex_0d | ToComplex_1d,
+        lbnd: CoComplex_0d = 0,
+        scl: CoComplex_0d = 1,
+        axis: CanIndex = 0,
+    ) -> Array[np.complexfloating]: ...
     @overload
     def __call__(
         self,
         /,
-        c: _ArrayLikeCoef_co,
-        m: SupportsIndex = ...,
-        scl: _CoefLike_co = ...,
-        axis: SupportsIndex = ...,
-    ) -> _ObjectArray: ...
+        c: ToObject_nd,
+        m: CanIndex = 1,
+        k: _ToNumeric_0d | _ToNumeric_1d = ...,
+        lbnd: _ToNumeric_0d = 0,
+        scl: _ToNumeric_0d = 1,
+        axis: CanIndex = 0,
+    ) -> Array[np.object_]: ...
 
 @type_check_only
-class _FuncInteg(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncValFromRoots(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(
-        self,
-        /,
-        c: _ArrayLikeFloat_co,
-        m: SupportsIndex = ...,
-        k: _FloatLike_co | _SeriesLikeFloat_co = ...,
-        lbnd: _FloatLike_co = ...,
-        scl: _FloatLike_co = ...,
-        axis: SupportsIndex = ...,
-    ) -> _FloatArray: ...
+    def __call__(self, /, x: CoFloating_0d, r: CoFloating_0d, tensor: bool = True) -> np.floating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(
-        self,
-        /,
-        c: _ArrayLikeComplex_co,
-        m: SupportsIndex = ...,
-        k: _ComplexLike_co | _SeriesLikeComplex_co = ...,
-        lbnd: _ComplexLike_co = ...,
-        scl: _ComplexLike_co = ...,
-        axis: SupportsIndex = ...,
-    ) -> _ComplexArray: ...
+    def __call__(self, /, x: CoFloating_1nd, r: CoFloating_nd, tensor: bool = True) -> Array[np.floating]: ...
     @overload
-    def __call__(
-        self,
-        /,
-        c: _ArrayLikeCoef_co,
-        m: SupportsIndex = ...,
-        k: _CoefLike_co | _SeriesLikeCoef_co = ...,
-        lbnd: _CoefLike_co = ...,
-        scl: _CoefLike_co = ...,
-        axis: SupportsIndex = ...,
-    ) -> _ObjectArray: ...
+    def __call__(self, /, x: CoFloating_nd, r: CoFloating_1nd, tensor: bool = True) -> Array[np.floating]: ...
+    @overload
+    def __call__(self, /, x: ToComplex_0d, r: CoComplex_0d, tensor: bool = True) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_0d, r: ToComplex_0d, tensor: bool = True) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: ToComplex_1nd, r: CoComplex_nd, tensor: bool = True) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: ToComplex_nd, r: CoComplex_1nd, tensor: bool = True) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_1nd, r: ToComplex_nd, tensor: bool = True) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_nd, r: ToComplex_1nd, tensor: bool = True) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: ToObject_1nd, r: _ToNumeric_nd, tensor: bool = True) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: _ToNumeric_nd, r: ToObject_1nd, tensor: bool = True) -> Array[np.object_]: ...
 
 @type_check_only
-class _FuncValFromRoots(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncVal(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, x: _FloatLike_co, r: _FloatLike_co, tensor: bool = ...) -> np.floating: ...
+    def __call__(self, /, x: CoFloating_0d, c: CoFloating_1d, tensor: bool = True) -> np.floating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _NumberLike_co, r: _NumberLike_co, tensor: bool = ...) -> np.complexfloating: ...
+    def __call__(self, /, x: ToComplex_0d, c: CoComplex_1d, tensor: bool = True) -> np.complexfloating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _FloatLike_co | _ArrayLikeFloat_co, r: _ArrayLikeFloat_co, tensor: bool = ...) -> _FloatArray: ...
+    def __call__(self, /, x: CoComplex_0d, c: ToComplex_1d, tensor: bool = True) -> np.complexfloating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(
-        self,
-        /,
-        x: _NumberLike_co | _ArrayLikeComplex_co,
-        r: _ArrayLikeComplex_co,
-        tensor: bool = ...,
-    ) -> _ComplexArray: ...
+    def __call__(self, /, x: CoFloating_1nd, c: CoFloating_1nd, tensor: bool = True) -> Array[np.floating]: ...
     @overload
-    def __call__(self, /, x: _CoefLike_co | _ArrayLikeCoef_co, r: _ArrayLikeCoef_co, tensor: bool = ...) -> _ObjectArray: ...
+    def __call__(self, /, x: ToComplex_1nd, c: CoComplex_1nd, tensor: bool = True) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _CoefLike_co, r: _CoefLike_co, tensor: bool = ...) -> _SupportsCoefOps: ...
+    def __call__(self, /, x: CoComplex_1nd, c: ToComplex_1nd, tensor: bool = True) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: ToObject_1nd, c: _ToNumeric_nd, tensor: bool = True) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: _ToNumeric_nd, c: ToObject_1nd, tensor: bool = True) -> Array[np.object_]: ...
 
 @type_check_only
-class _FuncVal(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncVal2D(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, x: _FloatLike_co, c: _SeriesLikeFloat_co, tensor: bool = ...) -> np.floating: ...
+    def __call__(self, /, x: CoFloating_0d, y: CoFloating_0d, c: CoFloating_1d) -> np.floating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _NumberLike_co, c: _SeriesLikeComplex_co, tensor: bool = ...) -> np.complexfloating: ...
+    def __call__(self, /, x: ToComplex_0d, y: CoComplex_0d, c: CoComplex_1d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _ArrayLikeFloat_co, c: _ArrayLikeFloat_co, tensor: bool = ...) -> _FloatArray: ...
+    def __call__(self, /, x: CoComplex_0d, y: ToComplex_0d, c: CoComplex_1d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _ArrayLikeComplex_co, c: _ArrayLikeComplex_co, tensor: bool = ...) -> _ComplexArray: ...
+    def __call__(self, /, x: CoComplex_0d, y: CoComplex_0d, c: ToComplex_1d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _ArrayLikeCoef_co, c: _ArrayLikeCoef_co, tensor: bool = ...) -> _ObjectArray: ...
+    def __call__(self, /, x: CoFloating_1nd, y: CoFloating_nd, c: CoFloating_1nd) -> Array[np.floating]: ...
     @overload
-    def __call__(self, /, x: _CoefLike_co, c: _SeriesLikeObject_co, tensor: bool = ...) -> _SupportsCoefOps: ...
+    def __call__(self, /, x: CoFloating_nd, y: CoFloating_1nd, c: CoFloating_1nd) -> Array[np.floating]: ...
+    @overload
+    def __call__(self, /, x: ToComplex_1nd, y: CoComplex_nd, c: CoComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_1nd, y: ToComplex_nd, c: CoComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_1nd, y: CoComplex_nd, c: ToComplex_1nd) -> Array[np.complexfloating]: ...
+    @overload
+    def __call__(self, /, x: ToComplex_nd, y: CoComplex_1nd, c: CoComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_nd, y: ToComplex_1nd, c: CoComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_nd, y: CoComplex_1nd, c: ToComplex_1nd) -> Array[np.complexfloating]: ...
+    @overload
+    def __call__(self, /, x: ToObject_1nd, y: _ToNumeric_nd, c: _ToNumeric_nd) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: _ToNumeric_nd, y: ToObject_1nd, c: _ToNumeric_nd) -> Array[np.object_]: ...
 
 @type_check_only
-class _FuncVal2D(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncVal3D(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, x: _FloatLike_co, y: _FloatLike_co, c: _SeriesLikeFloat_co) -> np.floating: ...
+    def __call__(self, /, x: CoFloating_0d, y: CoFloating_0d, z: CoFloating_0d, c: CoFloating_1d) -> np.floating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _NumberLike_co, y: _NumberLike_co, c: _SeriesLikeComplex_co) -> np.complexfloating: ...
+    def __call__(self, /, x: CoFloating_1nd, y: CoFloating_nd, z: CoFloating_nd, c: CoFloating_1nd) -> Array[np.floating]: ...
     @overload
-    def __call__(self, /, x: _ArrayLikeFloat_co, y: _ArrayLikeFloat_co, c: _ArrayLikeFloat_co) -> _FloatArray: ...
+    def __call__(self, /, x: CoFloating_nd, y: CoFloating_1nd, z: CoFloating_nd, c: CoFloating_1nd) -> Array[np.floating]: ...
     @overload
-    def __call__(self, /, x: _ArrayLikeComplex_co, y: _ArrayLikeComplex_co, c: _ArrayLikeComplex_co) -> _ComplexArray: ...
+    def __call__(self, /, x: CoFloating_nd, y: CoFloating_nd, z: CoFloating_1nd, c: CoFloating_1nd) -> Array[np.floating]: ...
     @overload
-    def __call__(self, /, x: _ArrayLikeCoef_co, y: _ArrayLikeCoef_co, c: _ArrayLikeCoef_co) -> _ObjectArray: ...
+    def __call__(self, /, x: ToComplex_0d, y: CoComplex_0d, z: CoComplex_0d, c: CoComplex_1d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _CoefLike_co, y: _CoefLike_co, c: _SeriesLikeCoef_co) -> _SupportsCoefOps: ...
+    def __call__(self, /, x: CoComplex_0d, y: ToComplex_0d, z: CoComplex_0d, c: CoComplex_1d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_0d, y: CoComplex_0d, z: ToComplex_0d, c: CoComplex_1d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_0d, y: CoComplex_0d, z: CoComplex_0d, c: ToComplex_1d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: ToComplex_1nd, y: CoComplex_nd, z: CoComplex_nd, c: CoComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_nd, y: ToComplex_1nd, z: CoComplex_nd, c: CoComplex_1nd) -> Array[np.complexfloating]: ...
+    @overload
+    def __call__(self, /, x: CoComplex_nd, y: CoComplex_nd, z: ToComplex_1nd, c: CoComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_1nd, y: CoComplex_nd, z: CoComplex_nd, c: ToComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_nd, y: CoComplex_1nd, z: CoComplex_nd, c: ToComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: CoComplex_nd, y: CoComplex_nd, z: CoComplex_1nd, c: ToComplex_1nd) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __call__(self, /, x: ToObject_1nd, y: _ToNumeric_nd, z: _ToNumeric_nd, c: _ToNumeric_nd) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: ToObject_1nd, y: ToObject_1nd, z: _ToNumeric_nd, c: _ToNumeric_nd) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: _ToNumeric_nd, y: _ToNumeric_nd, z: ToObject_1nd, c: _ToNumeric_nd) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: _ToNumeric_nd, y: _ToNumeric_nd, z: _ToNumeric_nd, c: ToObject_1nd) -> Array[np.object_]: ...
 
 @type_check_only
-class _FuncVal3D(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncValND(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, x: _FloatLike_co, y: _FloatLike_co, z: _FloatLike_co, c: _SeriesLikeFloat_co) -> np.floating: ...
+    def __call__(self, val_f: _ToValF, c: CoFloating_1d, arg0: CoFloating_0d, /, *args: CoFloating_0d) -> np.floating: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(
-        self,
-        /,
-        x: _NumberLike_co,
-        y: _NumberLike_co,
-        z: _NumberLike_co,
-        c: _SeriesLikeComplex_co,
-    ) -> np.complexfloating: ...
+    def __call__(self, val_f: _ToValF, c: ToComplex_1d, arg0: CoComplex_0d, /, *args: CoComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
     @overload
     def __call__(
         self,
+        val_f: _ToValF,
+        c: CoFloating_1nd,
+        arg0: CoFloating_1nd,
         /,
-        x: _ArrayLikeFloat_co,
-        y: _ArrayLikeFloat_co,
-        z: _ArrayLikeFloat_co,
-        c: _ArrayLikeFloat_co,
-    ) -> _FloatArray: ...
+        *args: CoFloating_nd,
+    ) -> Array[np.floating]: ...
     @overload
     def __call__(
         self,
+        val_f: _ToValF,
+        c: ToComplex_1nd,
+        arg0: CoComplex_1nd,
         /,
-        x: _ArrayLikeComplex_co,
-        y: _ArrayLikeComplex_co,
-        z: _ArrayLikeComplex_co,
-        c: _ArrayLikeComplex_co,
-    ) -> _ComplexArray: ...
+        *args: CoComplex_nd,
+    ) -> Array[np.complexfloating]: ...
     @overload
-    def __call__(
-        self,
-        /,
-        x: _ArrayLikeCoef_co,
-        y: _ArrayLikeCoef_co,
-        z: _ArrayLikeCoef_co,
-        c: _ArrayLikeCoef_co,
-    ) -> _ObjectArray: ...
-    @overload
-    def __call__(
-        self,
-        /,
-        x: _CoefLike_co,
-        y: _CoefLike_co,
-        z: _CoefLike_co,
-        c: _SeriesLikeCoef_co,
-    ) -> _SupportsCoefOps: ...
-
-_AnyValF: TypeAlias = Callable[[npt.ArrayLike, npt.ArrayLike, bool], _CoefArray]
+    def __call__(self, val_f: _ToValF, c: ToObject_1nd, /, *args: _ToNumeric_nd) -> Any: ...
 
 @type_check_only
-class _FuncValND(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncVander(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, val_f: _AnyValF, c: _SeriesLikeFloat_co, /, *args: _FloatLike_co) -> np.floating: ...
+    def __call__(self, /, x: CoFloating_nd, deg: CanIndex) -> Array[np.floating]: ...
     @overload
-    def __call__(self, val_f: _AnyValF, c: _SeriesLikeComplex_co, /, *args: _NumberLike_co) -> np.complexfloating: ...
+    def __call__(self, /, x: ToComplex_nd, deg: CanIndex) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, val_f: _AnyValF, c: _ArrayLikeFloat_co, /, *args: _ArrayLikeFloat_co) -> _FloatArray: ...
+    def __call__(self, /, x: ToObject_nd, deg: CanIndex) -> Array[np.object_]: ...
     @overload
-    def __call__(self, val_f: _AnyValF, c: _ArrayLikeComplex_co, /, *args: _ArrayLikeComplex_co) -> _ComplexArray: ...
-    @overload
-    def __call__(self, val_f: _AnyValF, c: _SeriesLikeObject_co, /, *args: _CoefObjectLike_co) -> _SupportsCoefOps: ...
-    @overload
-    def __call__(self, val_f: _AnyValF, c: _ArrayLikeCoef_co, /, *args: _ArrayLikeCoef_co) -> _ObjectArray: ...
+    def __call__(self, /, x: npt.ArrayLike, deg: CanIndex) -> Array[Any]: ...
+
+_Indices: TypeAlias = Sequence[CanIndex]
 
 @type_check_only
-class _FuncVander(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncVander2D(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, x: _ArrayLikeFloat_co, deg: SupportsIndex) -> _FloatArray: ...
+    def __call__(self, /, x: CoFloating_nd, y: CoFloating_nd, deg: _Indices) -> Array[np.floating]: ...
     @overload
-    def __call__(self, /, x: _ArrayLikeComplex_co, deg: SupportsIndex) -> _ComplexArray: ...
+    def __call__(self, /, x: ToComplex_nd, y: CoComplex_nd, deg: _Indices) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: _ArrayLikeCoef_co, deg: SupportsIndex) -> _ObjectArray: ...
+    def __call__(self, /, x: CoComplex_nd, y: ToComplex_nd, deg: _Indices) -> Array[np.complexfloating]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, x: npt.ArrayLike, deg: SupportsIndex) -> _CoefArray: ...
-
-_AnyDegrees: TypeAlias = Sequence[SupportsIndex]
-
-@type_check_only
-class _FuncVander2D(_Named[_NameT_co], Protocol[_NameT_co]):
+    def __call__(self, /, x: ToObject_nd, y: _ToNumeric_nd, deg: _Indices) -> Array[np.object_]: ...
     @overload
-    def __call__(self, /, x: _ArrayLikeFloat_co, y: _ArrayLikeFloat_co, deg: _AnyDegrees) -> _FloatArray: ...
+    def __call__(self, /, x: _ToNumeric_nd, y: ToObject_nd, deg: _Indices) -> Array[np.object_]: ...
     @overload
-    def __call__(self, /, x: _ArrayLikeComplex_co, y: _ArrayLikeComplex_co, deg: _AnyDegrees) -> _ComplexArray: ...
-    @overload
-    def __call__(self, /, x: _ArrayLikeCoef_co, y: _ArrayLikeCoef_co, deg: _AnyDegrees) -> _ObjectArray: ...
-    @overload
-    def __call__(self, /, x: npt.ArrayLike, y: npt.ArrayLike, deg: _AnyDegrees) -> _CoefArray: ...
+    def __call__(self, /, x: npt.ArrayLike, y: npt.ArrayLike, deg: _Indices) -> Array[Any]: ...
 
 @type_check_only
-class _FuncVander3D(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncVander3D(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
     def __call__(
         self,
         /,
-        x: _ArrayLikeFloat_co,
-        y: _ArrayLikeFloat_co,
-        z: _ArrayLikeFloat_co,
-        deg: _AnyDegrees,
-    ) -> _FloatArray: ...
+        x: CoFloating_nd,
+        y: CoFloating_nd,
+        z: CoFloating_nd,
+        deg: _Indices,
+    ) -> Array[np.floating]: ...
     @overload
-    def __call__(
+    def __call__(  # type: ignore[overload-overlap]
         self,
         /,
-        x: _ArrayLikeComplex_co,
-        y: _ArrayLikeComplex_co,
-        z: _ArrayLikeComplex_co,
-        deg: _AnyDegrees,
-    ) -> _ComplexArray: ...
+        x: ToComplex_nd,
+        y: CoComplex_nd,
+        z: CoComplex_nd,
+        deg: _Indices,
+    ) -> Array[np.complexfloating]: ...
     @overload
-    def __call__(self, /, x: _ArrayLikeCoef_co, y: _ArrayLikeCoef_co, z: _ArrayLikeCoef_co, deg: _AnyDegrees) -> _ObjectArray: ...
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        x: CoComplex_nd,
+        y: ToComplex_nd,
+        z: CoComplex_nd,
+        deg: _Indices,
+    ) -> Array[np.complexfloating]: ...
     @overload
-    def __call__(self, /, x: npt.ArrayLike, y: npt.ArrayLike, z: npt.ArrayLike, deg: _AnyDegrees) -> _CoefArray: ...
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        x: CoComplex_nd,
+        y: CoComplex_nd,
+        z: ToComplex_nd,
+        deg: _Indices,
+    ) -> Array[np.complexfloating]: ...
+    @overload
+    def __call__(self, /, x: ToObject_nd, y: _ToNumeric_nd, z: _ToNumeric_nd, deg: _Indices) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: _ToNumeric_nd, y: ToObject_nd, z: _ToNumeric_nd, deg: _Indices) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: _ToNumeric_nd, y: _ToNumeric_nd, z: ToObject_nd, deg: _Indices) -> Array[np.object_]: ...
+    @overload
+    def __call__(self, /, x: npt.ArrayLike, y: npt.ArrayLike, z: npt.ArrayLike, deg: _Indices) -> Array[Any]: ...
 
 # keep in sync with the broadest overload of `._FuncVander`
-_AnyFuncVander: TypeAlias = Callable[[npt.ArrayLike, SupportsIndex], _CoefArray]
 
 @type_check_only
-class _FuncVanderND(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncVanderND(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
     def __call__(
         self,
         /,
-        vander_fs: Sequence[_AnyFuncVander],
-        points: Sequence[_ArrayLikeFloat_co],
-        degrees: Sequence[SupportsIndex],
-    ) -> _FloatArray: ...
+        vander_fs: Sequence[_ToVanderF],
+        points: Sequence[CoFloating_nd],
+        degrees: Sequence[CanIndex],
+    ) -> Array[np.floating]: ...
+    @overload
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        vander_fs: Sequence[_ToVanderF],
+        points: Sequence[ToComplex_nd],
+        degrees: Sequence[CanIndex],
+    ) -> Array[np.complexfloating]: ...
     @overload
     def __call__(
         self,
         /,
-        vander_fs: Sequence[_AnyFuncVander],
-        points: Sequence[_ArrayLikeComplex_co],
-        degrees: Sequence[SupportsIndex],
-    ) -> _ComplexArray: ...
+        vander_fs: Sequence[_ToVanderF],
+        points: Sequence[ToObject_nd],
+        degrees: Sequence[CanIndex],
+    ) -> Array[np.object_]: ...
     @overload
     def __call__(
         self,
         /,
-        vander_fs: Sequence[_AnyFuncVander],
-        points: Sequence[_ArrayLikeObject_co | _ArrayLikeComplex_co,],
-        degrees: Sequence[SupportsIndex],
-    ) -> _ObjectArray: ...
-    @overload
-    def __call__(
-        self,
-        /,
-        vander_fs: Sequence[_AnyFuncVander],
+        vander_fs: Sequence[_ToVanderF],
         points: Sequence[npt.ArrayLike],
-        degrees: Sequence[SupportsIndex],
-    ) -> _CoefArray: ...
+        degrees: Sequence[CanIndex],
+    ) -> Array[Any]: ...
 
 _FullFitResult: TypeAlias = Sequence[np.inexact | np.int32]
 
 @type_check_only
-class _FuncFit(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncFit(_HasName[_NameT_co], Protocol[_NameT_co]):
+    @overload
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        x: ToFloating_1d,
+        y: CoFloating_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
+        full: L[False] = False,
+        w: ToFloating_1d | None = None,
+    ) -> Array[np.floating]: ...
     @overload
     def __call__(
         self,
         /,
-        x: _SeriesLikeFloat_co,
-        y: _ArrayLikeFloat_co,
-        deg: int | _SeriesLikeInt_co,
-        rcond: float | None = ...,
-        full: Literal[False] = ...,
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> _FloatArray: ...
-    @overload
-    def __call__(
-        self,
-        x: _SeriesLikeFloat_co,
-        y: _ArrayLikeFloat_co,
-        deg: int | _SeriesLikeInt_co,
+        x: ToFloating_1d,
+        y: CoFloating_nd,
+        deg: int | CoInteger_1d,
         rcond: float | None,
-        full: Literal[True],
-        /,
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> tuple[_FloatArray, _FullFitResult]: ...
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.floating], _FullFitResult]: ...
     @overload
-    def __call__(
+    def __call__(  # type: ignore[overload-overlap]
         self,
         /,
-        x: _SeriesLikeFloat_co,
-        y: _ArrayLikeFloat_co,
-        deg: int | _SeriesLikeInt_co,
-        rcond: float | None = ...,
+        x: ToFloating_1d,
+        y: CoFloating_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
         *,
-        full: Literal[True],
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> tuple[_FloatArray, _FullFitResult]: ...
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.floating], _FullFitResult]: ...
+    @overload
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        x: ToComplex_1d,
+        y: CoComplex_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
+        full: L[False] = False,
+        w: ToFloating_1d | None = None,
+    ) -> Array[np.complexfloating]: ...
     @overload
     def __call__(
         self,
         /,
-        x: _SeriesLikeComplex_co,
-        y: _ArrayLikeComplex_co,
-        deg: int | _SeriesLikeInt_co,
-        rcond: float | None = ...,
-        full: Literal[False] = ...,
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> _ComplexArray: ...
+        x: CoComplex_1d,
+        y: ToComplex_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
+        full: L[False] = False,
+        w: ToFloating_1d | None = None,
+    ) -> Array[np.complexfloating]: ...
     @overload
     def __call__(
         self,
-        x: _SeriesLikeComplex_co,
-        y: _ArrayLikeComplex_co,
-        deg: int | _SeriesLikeInt_co,
+        /,
+        x: ToComplex_1d,
+        y: CoComplex_nd,
+        deg: int | CoInteger_1d,
         rcond: float | None,
-        full: Literal[True],
-        /,
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> tuple[_ComplexArray, _FullFitResult]: ...
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.complexfloating], _FullFitResult]: ...
     @overload
-    def __call__(
+    def __call__(  # type: ignore[overload-overlap]
         self,
         /,
-        x: _SeriesLikeComplex_co,
-        y: _ArrayLikeComplex_co,
-        deg: int | _SeriesLikeInt_co,
-        rcond: float | None = ...,
-        *,
-        full: Literal[True],
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> tuple[_ComplexArray, _FullFitResult]: ...
-    @overload
-    def __call__(
-        self,
-        /,
-        x: _SeriesLikeComplex_co,
-        y: _ArrayLikeCoef_co,
-        deg: int | _SeriesLikeInt_co,
-        rcond: float | None = ...,
-        full: Literal[False] = ...,
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> _ObjectArray: ...
-    @overload
-    def __call__(
-        self,
-        x: _SeriesLikeComplex_co,
-        y: _ArrayLikeCoef_co,
-        deg: int | _SeriesLikeInt_co,
+        x: CoComplex_1d,
+        y: ToComplex_nd,
+        deg: int | CoInteger_1d,
         rcond: float | None,
-        full: Literal[True],
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.complexfloating], _FullFitResult]: ...
+    @overload
+    def __call__(  # type: ignore[overload-overlap]
+        self,
         /,
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> tuple[_ObjectArray, _FullFitResult]: ...
+        x: CoComplex_1d,
+        y: ToComplex_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
+        *,
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.complexfloating], _FullFitResult]: ...
+    @overload
+    def __call__(  # type: ignore[overload-overlap]
+        self,
+        /,
+        x: ToComplex_1d,
+        y: CoComplex_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
+        *,
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.complexfloating], _FullFitResult]: ...
     @overload
     def __call__(
         self,
         /,
-        x: _SeriesLikeComplex_co,
-        y: _ArrayLikeCoef_co,
-        deg: int | _SeriesLikeInt_co,
-        rcond: float | None = ...,
+        x: ToObject_1d,
+        y: _ToNumeric_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
+        full: L[False] = False,
+        w: ToFloating_1d | None = None,
+    ) -> Array[np.object_]: ...
+    @overload
+    def __call__(
+        self,
+        /,
+        x: _ToNumeric_1d,
+        y: ToObject_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None,
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.object_], _FullFitResult]: ...
+    @overload
+    def __call__(
+        self,
+        /,
+        x: ToObject_1d,
+        y: _ToNumeric_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
         *,
-        full: Literal[True],
-        w: _SeriesLikeFloat_co | None = ...,
-    ) -> tuple[_ObjectArray, _FullFitResult]: ...
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.object_], _FullFitResult]: ...
+    @overload
+    def __call__(
+        self,
+        /,
+        x: _ToNumeric_1d,
+        y: ToObject_nd,
+        deg: int | CoInteger_1d,
+        rcond: float | None = None,
+        *,
+        full: L[True],
+        w: ToFloating_1d | None = None,
+    ) -> tuple[Array[np.object_], _FullFitResult]: ...
 
 @type_check_only
-class _FuncRoots(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncRoots(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, c: _SeriesLikeFloat_co) -> _Series[np.float64]: ...
+    def __call__(self, /, c: CoFloating_1d) -> Array_1d[np.float64]: ...
     @overload
-    def __call__(self, /, c: _SeriesLikeComplex_co) -> _Series[np.complex128]: ...
+    def __call__(self, /, c: ToComplex_1d) -> Array_1d[np.complex128]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, c: _SeriesLikeCoef_co) -> _ObjectSeries: ...
-
-_Companion: TypeAlias = np.ndarray[tuple[int, int], np.dtype[_SCT]]
+    def __call__(self, /, c: ToObject_1d) -> Array_1d[np.object_]: ...
 
 @type_check_only
-class _FuncCompanion(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncCompanion(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, c: _SeriesLikeFloat_co) -> _Companion[np.float64]: ...
+    def __call__(self, /, c: CoFloating_1d) -> Array_2d[np.float64]: ...
     @overload
-    def __call__(self, /, c: _SeriesLikeComplex_co) -> _Companion[np.complex128]: ...
+    def __call__(self, /, c: ToComplex_1d) -> Array_2d[np.complex128]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, c: _SeriesLikeCoef_co) -> _Companion[np.object_]: ...
+    def __call__(self, /, c: ToObject_1d) -> Array_2d[np.object_]: ...
 
 @type_check_only
-class _FuncGauss(_Named[_NameT_co], Protocol[_NameT_co]):
-    def __call__(self, /, deg: SupportsIndex) -> _Tuple2[_Series[np.float64]]: ...
+class _FuncGauss(_HasName[_NameT_co], Protocol[_NameT_co]):
+    def __call__(self, /, deg: CanIndex) -> _Tuple2[Array_1d[np.float64]]: ...
 
 @type_check_only
-class _FuncWeight(_Named[_NameT_co], Protocol[_NameT_co]):
+class _FuncWeight(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
-    def __call__(self, /, c: _ArrayLikeFloat_co) -> npt.NDArray[np.float64]: ...
+    def __call__(self, /, c: CoFloating_nd) -> Array[np.float64]: ...
     @overload
-    def __call__(self, /, c: _ArrayLikeComplex_co) -> npt.NDArray[np.complex128]: ...
+    def __call__(self, /, c: ToComplex_nd) -> Array[np.complex128]: ...  # type: ignore[overload-overlap]
     @overload
-    def __call__(self, /, c: _ArrayLikeCoef_co) -> _ObjectArray: ...
+    def __call__(self, /, c: ToObject_nd) -> Array[np.object_]: ...
 
 @type_check_only
-class _FuncPts(_Named[_NameT_co], Protocol[_NameT_co]):
-    def __call__(self, /, npts: _AnyInt) -> _Series[np.float64]: ...
+class _FuncPts(_HasName[_NameT_co], Protocol[_NameT_co]):
+    def __call__(self, /, npts: _ToInt) -> Array_1d[np.float64]: ...
