@@ -1,5 +1,5 @@
 from _typeshed import Incomplete
-from typing import Any
+from typing import Final
 
 from numpy.lib._index_tricks_impl import AxisConcatenator
 
@@ -54,49 +54,56 @@ __all__ = [
     "vstack",
 ]
 
-def count_masked(arr: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
-def masked_all(shape: Incomplete, dtype: Incomplete = ...) -> Incomplete: ...
-def masked_all_like(arr: Incomplete) -> Incomplete: ...
-
 class _fromnxfunction:
-    __name__: Any
-    __doc__: Any
+    __name__: str
+    __doc__: str
     def __init__(self, funcname: Incomplete) -> None: ...
     def getdoc(self) -> Incomplete: ...
     def __call__(self, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
 class _fromnxfunction_single(_fromnxfunction):
+    __doc__: str
     def __call__(self, x: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
 class _fromnxfunction_seq(_fromnxfunction):
+    __doc__: str
     def __call__(self, x: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
 class _fromnxfunction_allargs(_fromnxfunction):
+    __doc__: str
     def __call__(self, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
-atleast_1d: _fromnxfunction_allargs
-atleast_2d: _fromnxfunction_allargs
-atleast_3d: _fromnxfunction_allargs
+class MAxisConcatenator(AxisConcatenator):
+    @classmethod
+    def makemat(cls, arr: Incomplete) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
-vstack: _fromnxfunction_seq
-row_stack: _fromnxfunction_seq
-hstack: _fromnxfunction_seq
-column_stack: _fromnxfunction_seq
-dstack: _fromnxfunction_seq
-stack: _fromnxfunction_seq
+class mr_class(MAxisConcatenator):
+    def __init__(self) -> None: ...
 
-hsplit: _fromnxfunction_single
-diagflat: _fromnxfunction_single
-
+def count_masked(arr: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
+def masked_all(shape: Incomplete, dtype: Incomplete = ...) -> Incomplete: ...
+def masked_all_like(arr: Incomplete) -> Incomplete: ...
 def apply_along_axis(
-    func1d: Incomplete, axis: Incomplete, arr: Incomplete, *args: Incomplete, **kwargs: Incomplete
+    func1d: Incomplete,
+    axis: Incomplete,
+    arr: Incomplete,
+    *args: Incomplete,
+    **kwargs: Incomplete,
 ) -> Incomplete: ...
 def apply_over_axes(func: Incomplete, a: Incomplete, axes: Incomplete) -> Incomplete: ...
 def average(
-    a: Incomplete, axis: Incomplete = ..., weights: Incomplete = ..., returned: Incomplete = ..., keepdims: Incomplete = ...
+    a: Incomplete,
+    axis: Incomplete = ...,
+    weights: Incomplete = ...,
+    returned: Incomplete = ...,
+    keepdims: Incomplete = ...,
 ) -> Incomplete: ...
 def median(
-    a: Incomplete, axis: Incomplete = ..., out: Incomplete = ..., overwrite_input: Incomplete = ..., keepdims: Incomplete = ...
+    a: Incomplete,
+    axis: Incomplete = ...,
+    out: Incomplete = ...,
+    overwrite_input: Incomplete = ...,
+    keepdims: Incomplete = ...,
 ) -> Incomplete: ...
 def compress_nd(x: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
 def compress_rowcols(x: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
@@ -110,7 +117,10 @@ def intersect1d(ar1: Incomplete, ar2: Incomplete, assume_unique: Incomplete = ..
 def setxor1d(ar1: Incomplete, ar2: Incomplete, assume_unique: Incomplete = ...) -> Incomplete: ...
 def in1d(ar1: Incomplete, ar2: Incomplete, assume_unique: Incomplete = ..., invert: Incomplete = ...) -> Incomplete: ...
 def isin(
-    element: Incomplete, test_elements: Incomplete, assume_unique: Incomplete = ..., invert: Incomplete = ...
+    element: Incomplete,
+    test_elements: Incomplete,
+    assume_unique: Incomplete = ...,
+    invert: Incomplete = ...,
 ) -> Incomplete: ...
 def union1d(ar1: Incomplete, ar2: Incomplete) -> Incomplete: ...
 def setdiff1d(ar1: Incomplete, ar2: Incomplete, assume_unique: Incomplete = ...) -> Incomplete: ...
@@ -130,18 +140,6 @@ def corrcoef(
     allow_masked: Incomplete = ...,
     ddof: Incomplete = ...,
 ) -> Incomplete: ...
-
-class MAxisConcatenator(AxisConcatenator):
-    concatenate: Any
-    @classmethod
-    def makemat(cls, arr: Incomplete) -> Incomplete: ...
-    def __getitem__(self, key: Incomplete) -> Incomplete: ...
-
-class mr_class(MAxisConcatenator):
-    def __init__(self) -> None: ...
-
-mr_: mr_class
-
 def ndenumerate(a: Incomplete, compressed: Incomplete = ...) -> Incomplete: ...
 def flatnotmasked_edges(a: Incomplete) -> Incomplete: ...
 def notmasked_edges(a: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
@@ -159,3 +157,19 @@ def polyfit(
     w: Incomplete = ...,
     cov: Incomplete = ...,
 ) -> Incomplete: ...
+
+mr_: Final[mr_class] = ...
+
+atleast_1d: _fromnxfunction_allargs
+atleast_2d: _fromnxfunction_allargs
+atleast_3d: _fromnxfunction_allargs
+
+vstack: _fromnxfunction_seq
+row_stack: _fromnxfunction_seq
+hstack: _fromnxfunction_seq
+column_stack: _fromnxfunction_seq
+dstack: _fromnxfunction_seq
+stack: _fromnxfunction_seq
+
+hsplit: _fromnxfunction_single
+diagflat: _fromnxfunction_single
