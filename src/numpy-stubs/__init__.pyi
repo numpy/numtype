@@ -373,6 +373,7 @@ from numpy.lib._function_base_impl import (
     trapz,
     trim_zeros,
     unwrap,
+    vectorize,
 )
 from numpy.lib._histograms_impl import histogram, histogram_bin_edges, histogramdd
 from numpy.lib._index_tricks_impl import (
@@ -5237,28 +5238,6 @@ class ndindex:
     #
     def __iter__(self) -> Self: ...
     def __next__(self) -> _Shape: ...
-
-class vectorize:
-    __doc__: str | None
-    pyfunc: Callable[..., Any]
-    cache: builtins.bool
-    signature: LiteralString | None
-    otypes: LiteralString | None
-    excluded: set[int | str]
-
-    #
-    def __init__(
-        self,
-        pyfunc: Callable[..., Any],
-        otypes: str | Iterable[DTypeLike] | None = ...,
-        doc: str | None = ...,
-        excluded: Iterable[int | str] | None = ...,
-        cache: builtins.bool = ...,
-        signature: str | None = ...,
-    ) -> None: ...
-
-    #
-    def __call__(self, /, *args: Any, **kwargs: Any) -> Any: ...
 
 class matrix(ndarray[_2DShapeT_co, _DType_co]):
     __array_priority__: ClassVar[float] = ...
