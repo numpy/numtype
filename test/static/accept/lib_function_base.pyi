@@ -1,10 +1,17 @@
 from collections.abc import Callable
 from fractions import Fraction
-from typing import Any
+from typing import Any, TypeAlias, TypeVar
 from typing_extensions import LiteralString, assert_type
 
 import numpy as np
 import numpy.typing as npt
+
+###
+
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
+
+###
 
 vectorized_func: np.vectorize
 
@@ -26,6 +33,8 @@ CHAR_AR_U: np.char.chararray[tuple[int, ...], np.dtype[np.str_]]
 AR_b_list: list[npt.NDArray[np.bool]]
 
 def func(a: npt.NDArray[Any], posarg: bool = ..., /, arg: int = ..., *, kwarg: str = ...) -> npt.NDArray[Any]: ...
+
+###
 
 assert_type(vectorized_func.pyfunc, Callable[..., Any])
 assert_type(vectorized_func.cache, bool)
@@ -51,11 +60,11 @@ assert_type(np.flip(AR_LIKE_f8, axis=0), npt.NDArray[Any])
 assert_type(np.iterable(1), bool)
 assert_type(np.iterable([1]), bool)
 
-assert_type(np.average(AR_f8), np.floating)
+assert_type(np.average(AR_f8), np.float64)
+assert_type(np.average(AR_f8, returned=True), tuple[np.float64, np.float64])
 assert_type(np.average(AR_f8, weights=AR_c16), np.complexfloating)
-assert_type(np.average(AR_O), Any)
-assert_type(np.average(AR_f8, returned=True), tuple[np.floating, np.floating])
 assert_type(np.average(AR_f8, weights=AR_c16, returned=True), tuple[np.complexfloating, np.complexfloating])
+assert_type(np.average(AR_O), Any)
 assert_type(np.average(AR_O, returned=True), tuple[Any, Any])
 assert_type(np.average(AR_f8, axis=0), Any)
 assert_type(np.average(AR_f8, axis=0, returned=True), tuple[Any, Any])
@@ -71,7 +80,7 @@ assert_type(np.piecewise(AR_f8, AR_b_list, [func], True, -1, kwarg=""), npt.NDAr
 assert_type(np.piecewise(AR_f8, AR_b_list, [func], True, arg=-1, kwarg=""), npt.NDArray[np.float64])
 assert_type(np.piecewise(AR_LIKE_f8, AR_b_list, [func]), npt.NDArray[Any])
 
-assert_type(np.select([AR_f8], [AR_f8]), npt.NDArray[Any])
+assert_type(np.select([AR_f8], [AR_f8]), npt.NDArray[np.float64])
 
 assert_type(np.copy(AR_LIKE_f8), npt.NDArray[Any])
 assert_type(np.copy(AR_U), npt.NDArray[np.str_])
@@ -83,7 +92,7 @@ assert_type(np.gradient(AR_f8, axis=None), Any)
 assert_type(np.gradient(AR_LIKE_f8, edge_order=2), Any)
 
 assert_type(np.diff("bob", n=0), str)
-assert_type(np.diff(AR_f8, axis=0), npt.NDArray[Any])
+assert_type(np.diff(AR_f8, axis=0), npt.NDArray[np.float64])
 assert_type(np.diff(AR_LIKE_f8, prepend=1.5), npt.NDArray[Any])
 
 assert_type(np.interp(1, [1], AR_f8), np.float64)
@@ -124,12 +133,12 @@ assert_type(np.corrcoef(AR_f8, AR_c16), npt.NDArray[np.complexfloating])
 assert_type(np.corrcoef(AR_f8, dtype=np.float32), npt.NDArray[np.float32])
 assert_type(np.corrcoef(AR_f8, dtype=float), npt.NDArray[Any])
 
-assert_type(np.blackman(5), npt.NDArray[np.floating])
-assert_type(np.bartlett(6), npt.NDArray[np.floating])
-assert_type(np.hanning(4.5), npt.NDArray[np.floating])
-assert_type(np.hamming(0), npt.NDArray[np.floating])
+assert_type(np.blackman(5), _Array1D[np.floating])
+assert_type(np.bartlett(6), _Array1D[np.floating])
+assert_type(np.hanning(4.5), _Array1D[np.floating])
+assert_type(np.hamming(0), _Array1D[np.floating])
+assert_type(np.kaiser(4, 5.9), _Array1D[np.floating])
 assert_type(np.i0(AR_i8), npt.NDArray[np.floating])
-assert_type(np.kaiser(4, 5.9), npt.NDArray[np.floating])
 
 assert_type(np.sinc(1.0), np.floating)
 assert_type(np.sinc(1j), np.complexfloating)
@@ -174,15 +183,16 @@ assert_type(np.quantile(AR_f8, [0.5], out=AR_c16), npt.NDArray[np.complex128])
 
 assert_type(np.trapezoid(AR_LIKE_f8), np.float64)
 assert_type(np.trapezoid(AR_LIKE_f8, AR_LIKE_f8), np.float64)
-assert_type(np.trapezoid(AR_LIKE_c16), np.float64 | np.complex128)
-assert_type(np.trapezoid(AR_LIKE_c16, AR_LIKE_f8), np.float64 | np.complex128)
-assert_type(np.trapezoid(AR_LIKE_f8, AR_LIKE_c16), np.float64 | np.complex128)
-assert_type(np.trapezoid(AR_LIKE_O), float)
-assert_type(np.trapezoid(AR_LIKE_O, AR_LIKE_f8), float)
+assert_type(np.trapezoid(AR_LIKE_c16), np.complexfloating)
+assert_type(np.trapezoid(AR_LIKE_c16, AR_LIKE_f8), np.complexfloating)
+assert_type(np.trapezoid(AR_LIKE_f8, AR_LIKE_c16), np.complexfloating)
+# pyright bug: https://github.com/microsoft/pyright/issues/9896
+assert_type(np.trapezoid(AR_LIKE_O), float)  # pyright: ignore[reportAssertTypeFailure]
+assert_type(np.trapezoid(AR_LIKE_O, AR_LIKE_f8), float)  # pyright: ignore[reportAssertTypeFailure]
 assert_type(np.trapezoid(AR_f8), np.float64 | npt.NDArray[np.float64])
 assert_type(np.trapezoid(AR_f8, AR_f8), np.float64 | npt.NDArray[np.float64])
-assert_type(np.trapezoid(AR_c16), np.complex128 | npt.NDArray[np.complex128])
-assert_type(np.trapezoid(AR_c16, AR_c16), np.complex128 | npt.NDArray[np.complex128])
+assert_type(np.trapezoid(AR_c16), np.complexfloating | npt.NDArray[np.complexfloating])
+assert_type(np.trapezoid(AR_c16, AR_c16), np.complexfloating | npt.NDArray[np.complexfloating])
 assert_type(np.trapezoid(AR_m), np.timedelta64 | npt.NDArray[np.timedelta64])
 assert_type(np.trapezoid(AR_O), Any)
 assert_type(np.trapezoid(AR_O, AR_LIKE_f8), Any)
