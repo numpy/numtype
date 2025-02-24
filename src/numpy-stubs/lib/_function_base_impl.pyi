@@ -3,6 +3,7 @@ from collections.abc import Callable, Iterable, Sequence
 from typing import (
     Any,
     Concatenate,
+    Final,
     Literal as L,
     Protocol,
     SupportsIndex,
@@ -11,7 +12,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import ParamSpec, TypeIs, TypeVar, deprecated
+from typing_extensions import LiteralString, ParamSpec, TypeIs, TypeVar, deprecated
 
 import numpy as np
 from _numtype import (
@@ -66,7 +67,7 @@ from _numtype import (
     ToTimeDelta_nd,
     _ToArray1_1nd,
 )
-from numpy import _OrderKACF, vectorize  # noqa: ICN003
+from numpy import _OrderKACF  # noqa: ICN003
 from numpy._core.multiarray import bincount
 from numpy._globals import _NoValueType
 from numpy._typing import (
@@ -166,6 +167,32 @@ class _CanLenAndGetSlice(Protocol[_T_co]):
 
 ###
 
+class vectorize:
+    __doc__: str | None
+    pyfunc: Callable[..., Any]
+    cache: Final[bool]
+    signature: Final[LiteralString | None]
+    otypes: Final[LiteralString | None]
+    excluded: Final[set[int | str]]
+
+    #
+    def __init__(
+        self,
+        /,
+        pyfunc: Callable[..., Any] | _NoValueType = ...,
+        otypes: str | Iterable[DTypeLike] | None = None,
+        doc: str | None = None,
+        excluded: Iterable[int | str] | None = None,
+        cache: bool = False,
+        signature: str | None = None,
+    ) -> None: ...
+
+    #
+    def __call__(self, /, *args: Any, **kwargs: Any) -> Any: ...
+
+###
+
+#
 @overload
 def rot90(m: _ArrayLike[_ScalarT], k: int = 1, axes: tuple[int, int] = (0, 1)) -> Array[_ScalarT]: ...
 @overload
