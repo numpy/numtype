@@ -16,10 +16,9 @@ def fn_ar_i(a: npt.NDArray[np.float64], posarg: int, /) -> npt.NDArray[Any]: ...
 np.angle(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.unwrap(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.unwrap(AR_c16)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.trim_zeros(1)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.trim_zeros(1)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.vectorize(1)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.piecewise(AR_f8, True, [fn_ar_i], 42)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 # NOTE: mypy still doesn't (fully) support `ParamSpec` (released in 2021...)
 np.piecewise(AR_f8, AR_b_list, [fn_none_i])  # pyright: ignore[reportCallIssue]
 np.piecewise(AR_f8, AR_b_list, [fn_ar_i])  # pyright: ignore[reportCallIssue]
@@ -36,8 +35,8 @@ np.average(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,re
 np.median(AR_M)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.percentile(AR_f8, 50j)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.quantile(AR_f8, 0.5j)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.percentile(AR_f8, 50, interpolation="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
-np.quantile(AR_f8, 0.5, interpolation="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
+np.percentile(AR_f8, 50, interpolation="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.quantile(AR_f8, 0.5, interpolation="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
 np.cov(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.cov(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
@@ -57,7 +56,7 @@ np.sinc(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,repor
 
 np.meshgrid(AR_f8, AR_f8, indexing="bob")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.select(1, [AR_f8])  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.select(1, [AR_f8])  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.delete(AR_f8, AR_f8)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.insert(AR_f8, AR_f8, 1.5)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.place(1, [True], 1.5)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
