@@ -3,18 +3,7 @@ from typing import Final, Literal as L, TypeAlias, TypedDict, type_check_only
 
 import numpy as np
 
-__all__ = (
-    "_abstract_type_names",
-    "_aliases",
-    "_extra_aliases",
-    "allTypes",
-    "c_names_dict",
-    "sctypeDict",
-    "sctypes",
-)
-
-sctypeDict: Final[dict[str, type[np.generic]]]
-allTypes: Final[dict[str, type[np.generic]]]
+###
 
 @type_check_only
 class _CNamesDict(TypedDict):
@@ -43,8 +32,6 @@ class _CNamesDict(TypedDict):
     LONGLONG: np.dtype[np.longlong]
     ULONGLONG: np.dtype[np.ulonglong]
 
-c_names_dict: Final[_CNamesDict]
-
 _AbstractTypeName: TypeAlias = L[
     "generic",
     "flexible",
@@ -57,7 +44,6 @@ _AbstractTypeName: TypeAlias = L[
     "floating",
     "complexfloating",
 ]
-_abstract_type_names: Final[set[_AbstractTypeName]]
 
 @type_check_only
 class _AliasesType(TypedDict):
@@ -70,8 +56,6 @@ class _AliasesType(TypedDict):
     int_: L["intp"]
     uint: L["intp"]
 
-_aliases: Final[_AliasesType]
-
 @type_check_only
 class _ExtraAliasesType(TypedDict):
     float: L["float64"]
@@ -83,8 +67,6 @@ class _ExtraAliasesType(TypedDict):
     str: L["str_"]
     unicode: L["str_"]
 
-_extra_aliases: Final[_ExtraAliasesType]
-
 @type_check_only
 class _SCTypes(TypedDict):
     int: Collection[type[np.signedinteger]]
@@ -93,4 +75,20 @@ class _SCTypes(TypedDict):
     complex: Collection[type[np.complexfloating]]
     others: Collection[type[np.flexible | np.bool | np.object_]]
 
-sctypes: Final[_SCTypes]
+###
+
+sctypeDict: Final[dict[str, type[np.generic]]] = ...
+allTypes: Final[dict[str, type[np.generic]]] = ...
+c_names_dict: Final[_CNamesDict] = ...
+sctypes: Final[_SCTypes] = ...
+
+_abstract_type_names: Final[set[_AbstractTypeName]] = ...
+_aliases: Final[_AliasesType] = ...
+_extra_aliases: Final[_ExtraAliasesType] = ...
+
+concrete_type: type[np.generic]  # undocumented
+longdouble_type: type[np.longdouble | np.clongdouble]  # undocumented
+bits: int  # undocumented
+base_name: L["float", "complex"]  # undocumented
+extended_prec_name: L["float96", "float128", "complex192", "complex256"]  # undocumented
+sctype_list: list[type[np.generic]]  # undocumented
