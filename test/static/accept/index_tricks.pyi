@@ -1,3 +1,5 @@
+from decimal import Decimal
+from fractions import Fraction
 from types import EllipsisType
 from typing import Any
 from typing_extensions import assert_type
@@ -9,7 +11,7 @@ AR_LIKE_b: list[bool]
 AR_LIKE_i: list[int]
 AR_LIKE_f: list[float]
 AR_LIKE_U: list[str]
-AR_LIKE_O: list[object]
+AR_LIKE_O: list[Decimal | Fraction]
 
 AR_i8: npt.NDArray[np.int64]
 AR_O: npt.NDArray[np.object_]
