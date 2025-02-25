@@ -121,6 +121,7 @@ pythonVersion = "3.10"
 typeCheckingMode = "standard" # TODO(jorenham): set to "all"
 
 deprecateTypingAliases = true
+disableBytesTypePromotions = true
 enableTypeIgnoreComments = false
 enableReachabilityAnalysis = false
 reportCallInDefaultInitializer = true
