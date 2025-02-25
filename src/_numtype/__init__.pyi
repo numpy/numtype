@@ -15,12 +15,12 @@ from numpy._typing import _64Bit
 ###
 # Type parameters
 
-_T = TypeVar("_T", default=Any)
+_T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...], covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 _ScalarT0 = TypeVar("_ScalarT0", bound=np.generic, default=Any)
-_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, default=Any, covariant=True)
 _ToT = TypeVar("_ToT")
 
 ###
@@ -45,19 +45,26 @@ ItemC = TypeVar(  # noqa: PYI001
 # Protocols
 
 @type_check_only
-class CanArray(Protocol[_ScalarT_co, _ShapeT_co]):
+class _CanArray2_nd(Protocol[_ScalarT_co, _ShapeT_co]):
     def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
 
-# A shape-typed version of `numpy._typing._Can`, parametrized by the
-# scalar-type and shape-type, and excludes `np.generic` scalars (through `__len__`).
 @type_check_only
-class CanArraySized(CanArray[_ScalarT_co, _ShapeT_co], Protocol[_ScalarT_co, _ShapeT_co]):
+class _CanArray2_1nd(_CanArray2_nd[_ScalarT_co, _ShapeT_co], Protocol[_ScalarT_co, _ShapeT_co]):
     def __len__(self, /) -> int: ...
+    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
 
-# Type-check-only equivalent of `optype.Just`.
-# https://github.com/jorenham/optype#just
 @type_check_only
-@final
+class _CanArray_nd(Protocol[_ScalarT_co]):
+    def __array__(self, /) -> np.ndarray[tuple[int, ...], np.dtype[_ScalarT_co]]: ...
+
+@type_check_only
+class _CanArray_1nd(Protocol[_ScalarT_co]):
+    def __len__(self, /) -> int: ...
+    def __array__(self, /) -> np.ndarray[tuple[int, ...], np.dtype[_ScalarT_co]]: ...
+
+# Type-check-only equivalent of `optype.Just`, see https://github.com/jorenham/optype#just
+@type_check_only
+@final  # the pyright and mypy errors are false positives because of this @final
 class Is(Protocol[_T]):
     @property  # type: ignore[override]
     def __class__(self, /) -> type[_T]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -125,53 +132,53 @@ _PyInexact: TypeAlias = Is[float] | Is[complex]
 _PyNumber: TypeAlias = Is[int] | _PyInexact
 _PyCharacter: TypeAlias = Is[bytes] | Is[str]
 # anything immutable that results in an `object_` dtype
-_PyObject: TypeAlias = Is[object] | dt.time | decimal.Decimal | fractions.Fraction
+_PyObject: TypeAlias = dt.time | decimal.Decimal | fractions.Fraction
+_PyScalar: TypeAlias = complex | _PyCharacter | _PyObject
 
-_ToArray1_0d: TypeAlias = _ScalarT | CanArray[_ScalarT, tuple[()]]
-_ToArray1_nd: TypeAlias = _ScalarT | CanArray[_ScalarT, Any] | Sequence_1nd[CanArray[_ScalarT, Any]]
-_ToArray_0d: TypeAlias = CanArray[_ScalarT, tuple[()]] | _ToT
-_ToArray_nd: TypeAlias = CanArray[_ScalarT, Any] | _ToT | Sequence_1nd[_ToT | CanArray[_ScalarT, Any]]
+_ToArray1_0d: TypeAlias = _ScalarT | _CanArray2_nd[_ScalarT, tuple[()]]
+_ToArray1_nd: TypeAlias = _ScalarT | _CanArray_nd[_ScalarT] | Sequence_1nd[_CanArray_nd[_ScalarT]]
+_ToArray_0d: TypeAlias = _CanArray2_nd[_ScalarT, tuple[()]] | _ToT
+_ToArray_nd: TypeAlias = _CanArray_nd[_ScalarT] | _ToT | Sequence_1nd[_ToT | _CanArray_nd[_ScalarT]]
 
 # don't require matching shape-types by default
-_ToArray1_1d: TypeAlias = CanArraySized[_ScalarT, Any] | Sequence[_ToArray1_0d[_ScalarT]]
-_ToArray1_2d: TypeAlias = CanArraySized[_ScalarT, Any] | Sequence[_ToArray1_1d[_ScalarT]]
-_ToArray1_3d: TypeAlias = CanArraySized[_ScalarT, Any] | Sequence[_ToArray1_2d[_ScalarT]]
-_ToArray_1d: TypeAlias = CanArraySized[_ScalarT, Any] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
-_ToArray_2d: TypeAlias = CanArraySized[_ScalarT, Any] | Sequence[_ToArray_1d[_ScalarT, _ToT]]
-_ToArray_3d: TypeAlias = CanArraySized[_ScalarT, Any] | Sequence[_ToArray_2d[_ScalarT, _ToT]]
+_ToArray1_1d: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence[_ToArray1_0d[_ScalarT]]
+_ToArray1_2d: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence[_ToArray1_1d[_ScalarT]]
+_ToArray1_3d: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence[_ToArray1_2d[_ScalarT]]
+_ToArray_1d: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
+_ToArray_2d: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence[_ToArray_1d[_ScalarT, _ToT]]
+_ToArray_3d: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence[_ToArray_2d[_ScalarT, _ToT]]
 
 # requires ndarray to be shape-types (the `s` suffix stands for "strict")
-_ToArray1_1ds: TypeAlias = CanArraySized[_ScalarT, tuple[int]] | Sequence[_ToArray1_0d[_ScalarT]]
-_ToArray1_2ds: TypeAlias = CanArraySized[_ScalarT, tuple[int, int]] | Sequence[_ToArray1_1ds[_ScalarT]]
-_ToArray1_3ds: TypeAlias = CanArraySized[_ScalarT, tuple[int, int, int]] | Sequence[_ToArray1_2ds[_ScalarT]]
-_ToArray_1ds: TypeAlias = CanArraySized[_ScalarT, tuple[int]] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
-_ToArray_2ds: TypeAlias = CanArraySized[_ScalarT, tuple[int, int]] | Sequence[_ToArray_1ds[_ScalarT, _ToT]]
-_ToArray_3ds: TypeAlias = CanArraySized[_ScalarT, tuple[int, int, int]] | Sequence[_ToArray_2ds[_ScalarT, _ToT]]
+_ToArray1_1ds: TypeAlias = _CanArray2_1nd[_ScalarT, tuple[int]] | Sequence[_ToArray1_0d[_ScalarT]]
+_ToArray1_2ds: TypeAlias = _CanArray2_1nd[_ScalarT, tuple[int, int]] | Sequence[_ToArray1_1ds[_ScalarT]]
+_ToArray1_3ds: TypeAlias = _CanArray2_1nd[_ScalarT, tuple[int, int, int]] | Sequence[_ToArray1_2ds[_ScalarT]]
+_ToArray_1ds: TypeAlias = _CanArray2_1nd[_ScalarT, tuple[int]] | Sequence[_ToArray_0d[_ScalarT, _ToT]]
+_ToArray_2ds: TypeAlias = _CanArray2_1nd[_ScalarT, tuple[int, int]] | Sequence[_ToArray_1ds[_ScalarT, _ToT]]
+_ToArray_3ds: TypeAlias = _CanArray2_1nd[_ScalarT, tuple[int, int, int]] | Sequence[_ToArray_2ds[_ScalarT, _ToT]]
 
 # requires a lower bound on dimensionality, e.g. `_2nd` denotes `ndin` within `[2, n]`
-_ToArray1_1nd: TypeAlias = CanArraySized[_ScalarT, Any] | Sequence_1nd[CanArray[_ScalarT, Any]]
-_ToArray1_2nd: TypeAlias = CanArraySized[_ScalarT, AtLeast2D] | Sequence[_ToArray1_1nd[_ScalarT]]
-_ToArray1_3nd: TypeAlias = CanArraySized[_ScalarT, AtLeast3D] | Sequence[_ToArray1_2nd[_ScalarT]]
-_ToArray_1nd: TypeAlias = CanArraySized[_ScalarT, Any] | Sequence_1nd[_ToT | _ScalarT] | Sequence_1nd[CanArray[_ScalarT, Any]]
-_ToArray_2nd: TypeAlias = CanArraySized[_ScalarT, AtLeast2D] | Sequence[_ToArray_1nd[_ScalarT, _ToT]]
-_ToArray_3nd: TypeAlias = CanArraySized[_ScalarT, AtLeast3D] | Sequence[_ToArray_2nd[_ScalarT, _ToT]]
+_ToArray1_1nd: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence_1nd[_CanArray_nd[_ScalarT]]
+_ToArray1_2nd: TypeAlias = _CanArray2_1nd[_ScalarT, AtLeast2D] | Sequence[_ToArray1_1nd[_ScalarT]]
+_ToArray1_3nd: TypeAlias = _CanArray2_1nd[_ScalarT, AtLeast3D] | Sequence[_ToArray1_2nd[_ScalarT]]
+_ToArray_1nd: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence_1nd[_ToT | _CanArray_nd[_ScalarT]]
+_ToArray_2nd: TypeAlias = _CanArray2_1nd[_ScalarT, AtLeast2D] | Sequence[_ToArray_1nd[_ScalarT, _ToT]]
+_ToArray_3nd: TypeAlias = _CanArray2_1nd[_ScalarT, AtLeast3D] | Sequence[_ToArray_2nd[_ScalarT, _ToT]]
 
 ###
 # Non-overlapping scalar- and array-like aliases for all scalar types.
 
 # bool
-_ToBool: TypeAlias = np.bool[Any]
-ToBool_nd = TypeAliasType("ToBool_nd", _ToArray_nd[_ToBool, bool])
-ToBool_0d = TypeAliasType("ToBool_0d", _ToArray_0d[_ToBool, bool])
-ToBool_1d = TypeAliasType("ToBool_1d", _ToArray_1d[_ToBool, bool])
-ToBool_2d = TypeAliasType("ToBool_2d", _ToArray_2d[_ToBool, bool])
-ToBool_3d = TypeAliasType("ToBool_3d", _ToArray_3d[_ToBool, bool])
-ToBool_1ds = TypeAliasType("ToBool_1ds", _ToArray_1ds[_ToBool, bool])
-ToBool_2ds = TypeAliasType("ToBool_2ds", _ToArray_2ds[_ToBool, bool])
-ToBool_3ds = TypeAliasType("ToBool_3ds", _ToArray_3ds[_ToBool, bool])
-ToBool_1nd = TypeAliasType("ToBool_1nd", _ToArray_1nd[_ToBool, bool])
-ToBool_2nd = TypeAliasType("ToBool_2nd", _ToArray_2nd[_ToBool, bool])
-ToBool_3nd = TypeAliasType("ToBool_3nd", _ToArray_3nd[_ToBool, bool])
+ToBool_nd = TypeAliasType("ToBool_nd", _ToArray_nd[np.bool, bool])
+ToBool_0d = TypeAliasType("ToBool_0d", _ToArray_0d[np.bool, bool])
+ToBool_1d = TypeAliasType("ToBool_1d", _ToArray_1d[np.bool, bool])
+ToBool_2d = TypeAliasType("ToBool_2d", _ToArray_2d[np.bool, bool])
+ToBool_3d = TypeAliasType("ToBool_3d", _ToArray_3d[np.bool, bool])
+ToBool_1ds = TypeAliasType("ToBool_1ds", _ToArray_1ds[np.bool, bool])
+ToBool_2ds = TypeAliasType("ToBool_2ds", _ToArray_2ds[np.bool, bool])
+ToBool_3ds = TypeAliasType("ToBool_3ds", _ToArray_3ds[np.bool, bool])
+ToBool_1nd = TypeAliasType("ToBool_1nd", _ToArray_1nd[np.bool, bool])
+ToBool_2nd = TypeAliasType("ToBool_2nd", _ToArray_2nd[np.bool, bool])
+ToBool_3nd = TypeAliasType("ToBool_3nd", _ToArray_3nd[np.bool, bool])
 
 # unsigned integers
 ToUInt8_nd = TypeAliasType("ToUInt8_nd", _ToArray1_nd[np.uint8])
@@ -587,8 +594,7 @@ ToStr_1nd = TypeAliasType("ToStr_1nd", _ToArray_1nd[_ToStr, Is[str]])
 ToStr_2nd = TypeAliasType("ToStr_2nd", _ToArray_2nd[_ToStr, Is[str]])
 ToStr_3nd = TypeAliasType("ToStr_3nd", _ToArray_3nd[_ToStr, Is[str]])
 
-# the `bytes | str` work around a pyright false positive bug within nested sequences
-ToCharacter_nd = TypeAliasType("ToCharacter_nd", _ToArray_nd[np.character, bytes | str])
+ToCharacter_nd = TypeAliasType("ToCharacter_nd", _ToArray_nd[np.character, _PyCharacter])
 ToCharacter_0d = TypeAliasType("ToCharacter_0d", _ToArray_0d[np.character, _PyCharacter])
 ToCharacter_1d = TypeAliasType("ToCharacter_1d", _ToArray_1d[np.character, _PyCharacter])
 ToCharacter_2d = TypeAliasType("ToCharacter_2d", _ToArray_2d[np.character, _PyCharacter])
@@ -596,9 +602,9 @@ ToCharacter_3d = TypeAliasType("ToCharacter_3d", _ToArray_3d[np.character, _PyCh
 ToCharacter_1ds = TypeAliasType("ToCharacter_1ds", _ToArray_1ds[np.character, _PyCharacter])
 ToCharacter_2ds = TypeAliasType("ToCharacter_2ds", _ToArray_2ds[np.character, _PyCharacter])
 ToCharacter_3ds = TypeAliasType("ToCharacter_3ds", _ToArray_3ds[np.character, _PyCharacter])
-ToCharacter_1nd = TypeAliasType("ToCharacter_1nd", _ToArray_1nd[np.character, bytes | str])
-ToCharacter_2nd = TypeAliasType("ToCharacter_2nd", _ToArray_2nd[np.character, bytes | str])
-ToCharacter_3nd = TypeAliasType("ToCharacter_3nd", _ToArray_3nd[np.character, bytes | str])
+ToCharacter_1nd = TypeAliasType("ToCharacter_1nd", _ToArray_1nd[np.character, _PyCharacter])
+ToCharacter_2nd = TypeAliasType("ToCharacter_2nd", _ToArray_2nd[np.character, _PyCharacter])
+ToCharacter_3nd = TypeAliasType("ToCharacter_3nd", _ToArray_3nd[np.character, _PyCharacter])
 
 # python object
 ToObject_nd = TypeAliasType("ToObject_nd", _ToArray_nd[np.object_, _PyObject])
@@ -614,23 +620,23 @@ ToObject_2nd = TypeAliasType("ToObject_2nd", _ToArray_2nd[np.object_, _PyObject]
 ToObject_3nd = TypeAliasType("ToObject_3nd", _ToArray_3nd[np.object_, _PyObject])
 
 # any scalar
-ToGeneric_nd = TypeAliasType("ToGeneric_nd", _ToArray_nd[np.generic, complex | bytes | str])
-ToGeneric_0d = TypeAliasType("ToGeneric_0d", _ToArray_0d[np.generic, complex | bytes | str])
-ToGeneric_1d = TypeAliasType("ToGeneric_1d", _ToArray_1d[np.generic, complex | bytes | str])
-ToGeneric_2d = TypeAliasType("ToGeneric_2d", _ToArray_2d[np.generic, complex | bytes | str])
-ToGeneric_3d = TypeAliasType("ToGeneric_3d", _ToArray_3d[np.generic, complex | bytes | str])
-ToGeneric_1ds = TypeAliasType("ToGeneric_1ds", _ToArray_1ds[np.generic, complex | bytes | str])
-ToGeneric_2ds = TypeAliasType("ToGeneric_2ds", _ToArray_2ds[np.generic, complex | bytes | str])
-ToGeneric_3ds = TypeAliasType("ToGeneric_3ds", _ToArray_3ds[np.generic, complex | bytes | str])
-ToGeneric_1nd = TypeAliasType("ToGeneric_1nd", _ToArray_1nd[np.generic, complex | bytes | str])
-ToGeneric_2nd = TypeAliasType("ToGeneric_2nd", _ToArray_2nd[np.generic, complex | bytes | str])
-ToGeneric_3nd = TypeAliasType("ToGeneric_3nd", _ToArray_3nd[np.generic, complex | bytes | str])
+ToGeneric_nd = TypeAliasType("ToGeneric_nd", _ToArray_nd[np.generic, _PyScalar])
+ToGeneric_0d = TypeAliasType("ToGeneric_0d", _ToArray_0d[np.generic, _PyScalar])
+ToGeneric_1d = TypeAliasType("ToGeneric_1d", _ToArray_1d[np.generic, _PyScalar])
+ToGeneric_2d = TypeAliasType("ToGeneric_2d", _ToArray_2d[np.generic, _PyScalar])
+ToGeneric_3d = TypeAliasType("ToGeneric_3d", _ToArray_3d[np.generic, _PyScalar])
+ToGeneric_1ds = TypeAliasType("ToGeneric_1ds", _ToArray_1ds[np.generic, _PyScalar])
+ToGeneric_2ds = TypeAliasType("ToGeneric_2ds", _ToArray_2ds[np.generic, _PyScalar])
+ToGeneric_3ds = TypeAliasType("ToGeneric_3ds", _ToArray_3ds[np.generic, _PyScalar])
+ToGeneric_1nd = TypeAliasType("ToGeneric_1nd", _ToArray_1nd[np.generic, _PyScalar])
+ToGeneric_2nd = TypeAliasType("ToGeneric_2nd", _ToArray_2nd[np.generic, _PyScalar])
+ToGeneric_3nd = TypeAliasType("ToGeneric_3nd", _ToArray_3nd[np.generic, _PyScalar])
 
 ###
 # Coercible (overlapping) scalar- and array-likes
 
 # unsigned integers
-_CoUInt8: TypeAlias = np.uint8 | _ToBool
+_CoUInt8: TypeAlias = np.uint8 | np.bool
 CoUInt8_nd = TypeAliasType("CoUInt8_nd", _ToArray_nd[_CoUInt8, bool])
 CoUInt8_0d = TypeAliasType("CoUInt8_0d", _ToArray_0d[_CoUInt8, bool])
 CoUInt8_1d = TypeAliasType("CoUInt8_1d", _ToArray_1d[_CoUInt8, bool])
@@ -708,7 +714,7 @@ CoUIntP_1nd = TypeAliasType("CoUIntP_1nd", _ToArray_1nd[_CoUIntP, bool])
 CoUIntP_2nd = TypeAliasType("CoUIntP_2nd", _ToArray_2nd[_CoUIntP, bool])
 CoUIntP_3nd = TypeAliasType("CoUIntP_3nd", _ToArray_3nd[_CoUIntP, bool])
 
-_CoUInteger: TypeAlias = np.unsignedinteger | _ToBool
+_CoUInteger: TypeAlias = np.unsignedinteger | np.bool
 CoUInteger_nd = TypeAliasType("CoUInteger_nd", _ToArray_nd[_CoUInteger, bool])
 CoUInteger_0d = TypeAliasType("CoUInteger_0d", _ToArray_0d[_CoUInteger, bool])
 CoUInteger_1d = TypeAliasType("CoUInteger_1d", _ToArray_1d[_CoUInteger, bool])
@@ -722,7 +728,7 @@ CoUInteger_2nd = TypeAliasType("CoUInteger_2nd", _ToArray_2nd[_CoUInteger, bool]
 CoUInteger_3nd = TypeAliasType("CoUInteger_3nd", _ToArray_3nd[_CoUInteger, bool])
 
 # signed integers
-_CoInt8: TypeAlias = np.int8 | _ToBool
+_CoInt8: TypeAlias = np.int8 | np.bool
 CoInt8_nd = TypeAliasType("CoInt8_nd", _ToArray_nd[_CoInt8, bool])
 CoInt8_0d = TypeAliasType("CoInt8_0d", _ToArray_0d[_CoInt8, bool])
 CoInt8_1d = TypeAliasType("CoInt8_1d", _ToArray_1d[_CoInt8, bool])
@@ -813,7 +819,7 @@ CoSInteger_1nd = TypeAliasType("CoSInteger_1nd", _ToArray_1nd[_CoSInteger, int])
 CoSInteger_2nd = TypeAliasType("CoSInteger_2nd", _ToArray_2nd[_CoSInteger, int])
 CoSInteger_3nd = TypeAliasType("CoSInteger_3nd", _ToArray_3nd[_CoSInteger, int])
 
-_CoInteger: TypeAlias = np.integer | _ToBool
+_CoInteger: TypeAlias = np.integer | np.bool
 CoInteger_nd = TypeAliasType("CoInteger_nd", _ToArray_nd[_CoInteger, int])
 CoInteger_0d = TypeAliasType("CoInteger_0d", _ToArray_0d[_CoInteger, int])
 CoInteger_1d = TypeAliasType("CoInteger_1d", _ToArray_1d[_CoInteger, int])
@@ -828,7 +834,7 @@ CoInteger_3nd = TypeAliasType("CoInteger_3nd", _ToArray_3nd[_CoInteger, int])
 
 # real floats
 
-_CoFloat16: TypeAlias = np.float16 | np.uint8 | np.int16 | _ToBool
+_CoFloat16: TypeAlias = np.float16 | np.uint8 | np.int16 | np.bool
 CoFloat16_nd = TypeAliasType("CoFloat16_nd", _ToArray_nd[_CoFloat16, bool])
 CoFloat16_0d = TypeAliasType("CoFloat16_0d", _ToArray_0d[_CoFloat16, bool])
 CoFloat16_1d = TypeAliasType("CoFloat16_1d", _ToArray_1d[_CoFloat16, bool])
@@ -867,7 +873,7 @@ CoFloat64_1nd = TypeAliasType("CoFloat64_1nd", _ToArray_1nd[_CoFloat64, float])
 CoFloat64_2nd = TypeAliasType("CoFloat64_2nd", _ToArray_2nd[_CoFloat64, float])
 CoFloat64_3nd = TypeAliasType("CoFloat64_3nd", _ToArray_3nd[_CoFloat64, float])
 
-_CoFloating: TypeAlias = np.floating | np.integer | _ToBool
+_CoFloating: TypeAlias = np.floating | np.integer | np.bool
 CoFloating_nd = TypeAliasType("CoFloating_nd", _ToArray_nd[_CoFloating, float])
 CoFloating_0d = TypeAliasType("CoFloating_0d", _ToArray_0d[_CoFloating, float])
 CoFloating_1d = TypeAliasType("CoFloating_1d", _ToArray_1d[_CoFloating, float])
@@ -907,7 +913,7 @@ CoComplex128_1nd = TypeAliasType("CoComplex128_1nd", _ToArray_1nd[_CoComplex128,
 CoComplex128_2nd = TypeAliasType("CoComplex128_2nd", _ToArray_2nd[_CoComplex128, complex])
 CoComplex128_3nd = TypeAliasType("CoComplex128_3nd", _ToArray_3nd[_CoComplex128, complex])
 
-_CoComplex: TypeAlias = np.number | _ToBool
+_CoComplex: TypeAlias = np.number | np.bool
 CoComplex_nd = TypeAliasType("CoComplex_nd", _ToArray_nd[_CoComplex, complex])
 CoComplex_0d = TypeAliasType("CoComplex_0d", _ToArray_0d[_CoComplex, complex])
 CoComplex_1d = TypeAliasType("CoComplex_1d", _ToArray_1d[_CoComplex, complex])
