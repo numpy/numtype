@@ -5,7 +5,6 @@ import numpy as np
 from _numtype import (
     Array,
     Array_1d,
-    CoBool_nd,
     CoComplex128_nd,
     CoComplex_nd,
     CoDateTime_nd,
@@ -14,6 +13,7 @@ from _numtype import (
     CoIntP_nd,
     CoInteger_nd,
     CoTimeDelta_nd,
+    ToBool_nd,
     ToComplex128_nd,
     ToFloat64_nd,
     ToIntP_nd,
@@ -87,24 +87,24 @@ class UniqueInverseResult(NamedTuple, Generic[_ScalarT]):
 #
 @overload
 def ediff1d(
-    ary: CoBool_nd,
+    ary: ToBool_nd,
     to_end: ArrayLike | None = None,
     to_begin: ArrayLike | None = None,
 ) -> Array_1d[np.int8]: ...
 @overload
-def ediff1d(  # type: ignore[overload-overlap]
+def ediff1d(
     ary: ToIntP_nd,
     to_end: CoInteger_nd | None = None,
     to_begin: CoInteger_nd | None = None,
 ) -> Array_1d[np.intp]: ...
 @overload
-def ediff1d(  # type: ignore[overload-overlap]
+def ediff1d(
     ary: ToFloat64_nd,
     to_end: CoFloating_nd | None = None,
     to_begin: CoFloating_nd | None = None,
 ) -> Array_1d[np.float64]: ...
 @overload
-def ediff1d(  # type: ignore[overload-overlap]
+def ediff1d(
     ary: ToComplex128_nd,
     to_end: CoComplex_nd | None = None,
     to_begin: CoComplex_nd | None = None,
@@ -378,7 +378,7 @@ def unique(
 
 #
 @overload
-def unique_all(x: CoBool_nd, /) -> UniqueAllResult[np.bool]: ...
+def unique_all(x: ToBool_nd, /) -> UniqueAllResult[np.bool]: ...
 @overload
 def unique_all(x: ToIntP_nd, /) -> UniqueAllResult[np.intp]: ...
 @overload
@@ -392,7 +392,7 @@ def unique_all(x: ArrayLike, /) -> UniqueAllResult: ...
 
 #
 @overload
-def unique_counts(x: CoBool_nd, /) -> UniqueCountsResult[np.bool]: ...
+def unique_counts(x: ToBool_nd, /) -> UniqueCountsResult[np.bool]: ...
 @overload
 def unique_counts(x: ToIntP_nd, /) -> UniqueCountsResult[np.intp]: ...
 @overload
@@ -406,7 +406,7 @@ def unique_counts(x: ArrayLike, /) -> UniqueCountsResult: ...
 
 #
 @overload
-def unique_inverse(x: CoBool_nd, /) -> UniqueInverseResult[np.bool]: ...
+def unique_inverse(x: ToBool_nd, /) -> UniqueInverseResult[np.bool]: ...
 @overload
 def unique_inverse(x: ToIntP_nd, /) -> UniqueInverseResult[np.intp]: ...
 @overload
@@ -420,7 +420,7 @@ def unique_inverse(x: ArrayLike, /) -> UniqueInverseResult: ...
 
 #
 @overload
-def unique_values(x: CoBool_nd, /) -> Array_1d[np.bool]: ...
+def unique_values(x: ToBool_nd, /) -> Array_1d[np.bool]: ...
 @overload
 def unique_values(x: ToIntP_nd, /) -> Array_1d[np.intp]: ...
 @overload
@@ -465,15 +465,15 @@ def intersect1d(
 ) -> _IntersectResult[np.float64]: ...
 @overload
 def intersect1d(
-    ar1: CoBool_nd,
-    ar2: CoBool_nd,
+    ar1: ToBool_nd,
+    ar2: ToBool_nd,
     assume_unique: bool = False,
     return_indices: L[False] = False,
 ) -> Array_1d[np.bool]: ...
 @overload
 def intersect1d(
-    ar1: CoBool_nd,
-    ar2: CoBool_nd,
+    ar1: ToBool_nd,
+    ar2: ToBool_nd,
     assume_unique: bool = False,
     *,
     return_indices: L[True],
@@ -575,7 +575,7 @@ def union1d(ar1: ToFloat64_nd, ar2: CoFloat64_nd, assume_unique: bool = False) -
 @overload
 def union1d(ar1: CoFloat64_nd, ar2: ToFloat64_nd, assume_unique: bool = False) -> Array_1d[np.float64]: ...
 @overload
-def union1d(ar1: CoBool_nd, ar2: CoBool_nd, assume_unique: bool = False) -> Array_1d[np.bool]: ...
+def union1d(ar1: ToBool_nd, ar2: ToBool_nd, assume_unique: bool = False) -> Array_1d[np.bool]: ...
 @overload
 def union1d(ar1: ToIntP_nd, ar2: CoIntP_nd, assume_unique: bool = False) -> Array_1d[np.intp]: ...
 @overload
@@ -595,7 +595,7 @@ def setxor1d(ar1: ToFloat64_nd, ar2: CoFloat64_nd, assume_unique: bool = False) 
 @overload
 def setxor1d(ar1: CoFloat64_nd, ar2: ToFloat64_nd, assume_unique: bool = False) -> Array_1d[np.float64]: ...
 @overload
-def setxor1d(ar1: CoBool_nd, ar2: CoBool_nd, assume_unique: bool = False) -> Array_1d[np.bool]: ...
+def setxor1d(ar1: ToBool_nd, ar2: ToBool_nd, assume_unique: bool = False) -> Array_1d[np.bool]: ...
 @overload
 def setxor1d(ar1: ToIntP_nd, ar2: CoIntP_nd, assume_unique: bool = False) -> Array_1d[np.intp]: ...
 @overload
@@ -619,7 +619,7 @@ def setdiff1d(ar1: ToFloat64_nd, ar2: CoFloat64_nd, assume_unique: bool = False)
 @overload
 def setdiff1d(ar1: CoFloat64_nd, ar2: ToFloat64_nd, assume_unique: bool = False) -> Array_1d[np.float64]: ...
 @overload
-def setdiff1d(ar1: CoBool_nd, ar2: CoBool_nd, assume_unique: bool = False) -> Array_1d[np.bool]: ...
+def setdiff1d(ar1: ToBool_nd, ar2: ToBool_nd, assume_unique: bool = False) -> Array_1d[np.bool]: ...
 @overload
 def setdiff1d(ar1: ToIntP_nd, ar2: CoIntP_nd, assume_unique: bool = False) -> Array_1d[np.intp]: ...
 @overload

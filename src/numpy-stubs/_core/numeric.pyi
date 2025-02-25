@@ -33,6 +33,7 @@ from _numtype import (
     ToFloating_1d,
     ToFloating_1nd,
     ToFloating_nd,
+    ToGeneric_0d,
     ToGeneric_1nd,
     ToGeneric_nd,
     ToInteger_1d,
@@ -50,7 +51,7 @@ from _numtype import (
     ToUInteger_nd,
 )
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ScalarLike_co, _ShapeLike, _SupportsArrayFunc
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc
 
 from ._multiarray_umath import _KwargsD, _KwargsDL
 from ._type_aliases import sctypes as sctypes
@@ -780,8 +781,8 @@ def allclose(a: ArrayLike, b: ArrayLike, rtol: ArrayLike = ..., atol: ArrayLike 
 #
 @overload
 def isclose(
-    a: _ScalarLike_co,
-    b: _ScalarLike_co,
+    a: ToGeneric_0d,
+    b: ToGeneric_0d,
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: bool = False,

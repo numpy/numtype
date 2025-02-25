@@ -87,9 +87,5 @@ bool_3nd_reject_1d: _nt.ToBool_3nd = b1_1d  # type: ignore[assignment]  # pyrigh
 bool_3nd_reject_2d: _nt.ToBool_3nd = b1_2d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 bool_3nd_accept_3d: _nt.ToBool_3nd = b1_3d
 
-# TODO(jorenham): also do this for`CoBool*`
-
 ###
-# TODO(jorenham): repeat for all the other `_As` types
-# TODO(jorenham): repeat for the `_To` types
-# TODO(jorenham): realize that I'm not a factory worker => codegen it (parametrized pytests)
+# TODO(jorenham): repeat for all the other `_To` and `_Co` types (codegen)

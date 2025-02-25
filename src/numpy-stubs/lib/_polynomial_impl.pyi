@@ -151,19 +151,19 @@ class poly1d(Generic[_ScalarT_co]):
     @overload
     def __call__(self: poly1d[np.object_], /, val: CoComplex_0d) -> Any: ...
     @overload
-    def __call__(self: poly1d[np.bool], /, val: ToBool_0d) -> np.bool: ...  # type: ignore[overload-overlap]
+    def __call__(self: poly1d[np.bool], /, val: ToBool_0d) -> np.bool: ...
     @overload
-    def __call__(self: poly1d[np.integer], /, val: CoInteger_0d) -> np.integer: ...  # type: ignore[overload-overlap]
+    def __call__(self: poly1d[np.integer], /, val: CoInteger_0d) -> np.integer: ...
     @overload
-    def __call__(self: poly1d[np.integer | np.bool], /, val: ToInteger_0d) -> np.integer: ...  # type: ignore[overload-overlap]
+    def __call__(self: poly1d[np.integer | np.bool], /, val: ToInteger_0d) -> np.integer: ...
     @overload
-    def __call__(self: poly1d[np.floating], /, val: CoFloating_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+    def __call__(self: poly1d[np.floating], /, val: CoFloating_0d) -> np.floating: ...
     @overload
-    def __call__(self: poly1d[np.floating | np.integer | np.bool], /, val: ToFloating_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+    def __call__(self: poly1d[np.floating | np.integer | np.bool], /, val: ToFloating_0d) -> np.floating: ...
     @overload
-    def __call__(self: poly1d[np.complexfloating], /, val: CoComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+    def __call__(self: poly1d[np.complexfloating], /, val: CoComplex_0d) -> np.complexfloating: ...
     @overload
-    def __call__(self: poly1d[np.number | np.bool], /, val: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+    def __call__(self: poly1d[np.number | np.bool], /, val: ToComplex_0d) -> np.complexfloating: ...
     @overload
     def __call__(self: poly1d[np.object_], /, val: CoComplex_1nd | ToObject_1nd) -> Array[Any]: ...
     @overload
@@ -262,11 +262,11 @@ def poly(seq_of_zeros: CoComplex128_1d | CoComplex128_2d) -> Array_1d[np.inexact
 @overload
 def roots(p: CoInteger_1d) -> Array_1d[np.float64 | np.complex128]: ...
 @overload
-def roots(p: ToFloat64_1d) -> Array_1d[np.float64 | np.complex128]: ...
+def roots(p: ToFloat64_1d) -> Array_1d[np.float64 | np.complex128]: ...  # type: ignore[overload-overlap]
+@overload
+def roots(p: ToComplex128_1d) -> Array_1d[np.complex128]: ...  # type: ignore[overload-overlap]
 @overload
 def roots(p: ToFloat32_1d) -> Array_1d[np.float32 | np.complex64]: ...
-@overload
-def roots(p: ToComplex128_1d) -> Array_1d[np.complex128]: ...
 @overload
 def roots(p: ToComplex64_1d) -> Array_1d[np.complex64]: ...
 @overload
@@ -278,9 +278,9 @@ def polyder(p: poly1d, m: _ToInt = 1) -> poly1d: ...
 @overload
 def polyder(p: CoInteger_1d, m: _ToInt = 1) -> Array_1d[np.intp]: ...
 @overload
-def polyder(p: _ToArray_1d[np.float64 | np.float32 | np.float16, Is[float]], m: _ToInt = 1) -> Array_1d[np.float64]: ...  # type: ignore[overload-overlap]
+def polyder(p: _ToArray_1d[np.float64 | np.float32 | np.float16, Is[float]], m: _ToInt = 1) -> Array_1d[np.float64]: ...
 @overload
-def polyder(p: _ToArray_1d[np.complex128 | np.complex64, Is[complex]], m: _ToInt = 1) -> Array_1d[np.complex128]: ...  # type: ignore[overload-overlap]
+def polyder(p: _ToArray_1d[np.complex128 | np.complex64, Is[complex]], m: _ToInt = 1) -> Array_1d[np.complex128]: ...
 @overload
 def polyder(p: ToLongDouble_1d, m: _ToInt = 1) -> Array_1d[np.longdouble]: ...  # type: ignore[overload-overlap]
 @overload
@@ -294,19 +294,19 @@ def polyder(p: CoComplex128_1d, m: _ToInt = 1) -> Array_1d[np.complex128 | np.fl
 @overload
 def polyint(p: poly1d, m: _ToInt = 1, k: CoComplex_nd | ToObject_nd | None = None) -> poly1d: ...
 @overload
-def polyint(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def polyint(
     p: CoFloat64_1d,
     m: _ToInt = 1,
     k: CoFloat64_0d | CoFloat64_1d | None = None,
 ) -> Array_1d[np.float64]: ...
 @overload
-def polyint(  # type: ignore[overload-overlap]
+def polyint(
     p: ToLongDouble_1d,
     m: _ToInt = 1,
     k: CoFloating_0d | CoFloating_1d | None = None,
 ) -> Array_1d[np.longdouble]: ...
 @overload
-def polyint(  # type: ignore[overload-overlap]
+def polyint(
     p: ToComplex128_1d | ToComplex64_1d,
     m: _ToInt = 1,
     k: CoComplex128_0d | CoComplex128_1d | None = None,
@@ -314,8 +314,15 @@ def polyint(  # type: ignore[overload-overlap]
 @overload
 def polyint(
     p: CoComplex128_1d,
+    m: _ToInt,
+    k: ToComplex128_0d | ToComplex128_1d | ToComplex64_0d | ToComplex64_1d,
+) -> Array_1d[np.complex128]: ...
+@overload
+def polyint(
+    p: CoComplex128_1d,
     m: _ToInt = 1,
-    k: ToComplex128_0d | ToComplex128_1d | ToComplex64_0d | ToComplex64_1d | None = None,
+    *,
+    k: ToComplex128_0d | ToComplex128_1d | ToComplex64_0d | ToComplex64_1d,
 ) -> Array_1d[np.complex128]: ...
 @overload
 def polyint(
@@ -460,23 +467,23 @@ def polyfit(
 
 #
 @overload
-def polyval(p: ToBool_1d, x: ToBool_0d) -> np.bool: ...  # type: ignore[overload-overlap]
+def polyval(p: ToBool_1d, x: ToBool_0d) -> np.bool: ...
 @overload
-def polyval(p: ToUInteger_1d, x: CoUInteger_0d) -> np.unsignedinteger: ...  # type: ignore[overload-overlap]
+def polyval(p: ToUInteger_1d, x: CoUInteger_0d) -> np.unsignedinteger: ...
 @overload
-def polyval(p: CoUInteger_1d, x: ToUInteger_0d) -> np.unsignedinteger: ...  # type: ignore[overload-overlap]
+def polyval(p: CoUInteger_1d, x: ToUInteger_0d) -> np.unsignedinteger: ...
 @overload
-def polyval(p: ToSInteger_1d, x: CoSInteger_0d) -> np.signedinteger: ...  # type: ignore[overload-overlap]
+def polyval(p: ToSInteger_1d, x: CoSInteger_0d) -> np.signedinteger: ...
 @overload
-def polyval(p: CoSInteger_1d, x: ToSInteger_0d) -> np.signedinteger: ...  # type: ignore[overload-overlap]
+def polyval(p: CoSInteger_1d, x: ToSInteger_0d) -> np.signedinteger: ...
 @overload
-def polyval(p: ToFloating_1d, x: CoFloating_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def polyval(p: ToFloating_1d, x: CoFloating_0d) -> np.floating: ...
 @overload
-def polyval(p: CoFloating_1d, x: ToFloating_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def polyval(p: CoFloating_1d, x: ToFloating_0d) -> np.floating: ...
 @overload
-def polyval(p: ToComplex_1d, x: CoComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def polyval(p: ToComplex_1d, x: CoComplex_0d) -> np.complexfloating: ...
 @overload
-def polyval(p: CoComplex_1d, x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def polyval(p: CoComplex_1d, x: ToComplex_0d) -> np.complexfloating: ...
 @overload
 def polyval(p: ToBool_1d, x: ToBool_1nd) -> Array[np.bool]: ...
 @overload

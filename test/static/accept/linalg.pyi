@@ -111,7 +111,7 @@ assert_type(
     np.linalg.slogdet([[[1.0]]]),
     SlogdetResult[npt.NDArray[np.float64], npt.NDArray[np.float64]],
 )
-assert_type(  # type: ignore[assert-type]  # mypy bug?
+assert_type(
     np.linalg.slogdet([[[1j]]]),
     SlogdetResult[npt.NDArray[np.float64], npt.NDArray[np.complex128]],
 )

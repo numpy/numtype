@@ -76,35 +76,35 @@ __all__ = ["arccos", "arcsin", "arctanh", "log", "log2", "log10", "logn", "power
 @overload
 def sqrt(x: CoUInt8_0d) -> np.float16: ...  # type: ignore[overload-overlap]
 @overload
-def sqrt(x: _ToArray1_0d[np.uint64 | np.uint32]) -> np.float64: ...  # type: ignore[overload-overlap]
+def sqrt(x: _ToArray1_0d[np.uint64 | np.uint32]) -> np.float64: ...
 @overload
-def sqrt(x: ToUInt16_0d) -> np.float32: ...  # type: ignore[overload-overlap]
+def sqrt(x: ToUInt16_0d) -> np.float32: ...
 @overload
-def sqrt(x: CoUInteger_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def sqrt(x: CoUInteger_0d) -> np.floating: ...
 @overload
 def sqrt(x: _ToArray_0d[np.int64 | np.int32, Is[int]]) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def sqrt(x: ToInt16_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def sqrt(x: ToInt16_0d) -> np.float32 | np.complex64: ...
 @overload
-def sqrt(x: ToInt8_0d) -> np.float16 | np.complex64: ...  # type: ignore[overload-overlap]
+def sqrt(x: ToInt8_0d) -> np.float16 | np.complex64: ...
 @overload
 def sqrt(x: ToFloat64_0d) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
 def sqrt(x: ToFloat32_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
 @overload
-def sqrt(x: ToFloat16_0d) -> np.float16 | np.complex128: ...  # type: ignore[overload-overlap]
+def sqrt(x: ToFloat16_0d) -> np.float16 | np.complex128: ...
 @overload
-def sqrt(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...  # type: ignore[overload-overlap]
+def sqrt(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...
 @overload
 def sqrt(x: ToComplex128_0d) -> np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def sqrt(x: ToComplex64_0d) -> np.complex64: ...  # type: ignore[overload-overlap]
+def sqrt(x: ToComplex64_0d) -> np.complex64: ...
 @overload
-def sqrt(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...  # type: ignore[overload-overlap]
+def sqrt(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...
 @overload
-def sqrt(x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def sqrt(x: ToComplex_0d) -> np.complexfloating: ...
 @overload
-def sqrt(x: CoComplex_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def sqrt(x: CoComplex_0d) -> np.inexact: ...
 @overload
 def sqrt(x: _ToArray1_1nd[np.uint64 | np.uint32]) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
 @overload
@@ -142,35 +142,35 @@ def sqrt(x: CoComplex_1nd) -> Array[np.inexact]: ...
 @overload
 def log(x: CoUInt8_0d) -> np.float16: ...  # type: ignore[overload-overlap]
 @overload
-def log(x: _ToArray1_0d[np.uint64 | np.uint32]) -> np.float64: ...  # type: ignore[overload-overlap]
+def log(x: _ToArray1_0d[np.uint64 | np.uint32]) -> np.float64: ...
 @overload
-def log(x: ToUInt16_0d) -> np.float32: ...  # type: ignore[overload-overlap]
+def log(x: ToUInt16_0d) -> np.float32: ...
 @overload
-def log(x: CoUInteger_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def log(x: CoUInteger_0d) -> np.floating: ...
 @overload
 def log(x: _ToArray_0d[np.int64 | np.int32, Is[int]]) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def log(x: ToInt16_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def log(x: ToInt16_0d) -> np.float32 | np.complex64: ...
 @overload
-def log(x: ToInt8_0d) -> np.float16 | np.complex64: ...  # type: ignore[overload-overlap]
+def log(x: ToInt8_0d) -> np.float16 | np.complex64: ...
 @overload
 def log(x: ToFloat64_0d) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
 def log(x: ToFloat32_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
 @overload
-def log(x: ToFloat16_0d) -> np.float16 | np.complex128: ...  # type: ignore[overload-overlap]
+def log(x: ToFloat16_0d) -> np.float16 | np.complex128: ...
 @overload
-def log(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...  # type: ignore[overload-overlap]
+def log(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...
 @overload
 def log(x: ToComplex128_0d) -> np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def log(x: ToComplex64_0d) -> np.complex64: ...  # type: ignore[overload-overlap]
+def log(x: ToComplex64_0d) -> np.complex64: ...
 @overload
-def log(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...  # type: ignore[overload-overlap]
+def log(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...
 @overload
-def log(x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def log(x: ToComplex_0d) -> np.complexfloating: ...
 @overload
-def log(x: CoComplex_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def log(x: CoComplex_0d) -> np.inexact: ...
 @overload
 def log(x: _ToArray1_1nd[np.uint64 | np.uint32]) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
 @overload
@@ -208,35 +208,35 @@ def log(x: CoComplex_1nd) -> Array[np.inexact]: ...
 @overload
 def log10(x: CoUInt8_0d) -> np.float16: ...  # type: ignore[overload-overlap]
 @overload
-def log10(x: _ToArray1_0d[np.uint64 | np.uint32]) -> np.float64: ...  # type: ignore[overload-overlap]
+def log10(x: _ToArray1_0d[np.uint64 | np.uint32]) -> np.float64: ...
 @overload
-def log10(x: ToUInt16_0d) -> np.float32: ...  # type: ignore[overload-overlap]
+def log10(x: ToUInt16_0d) -> np.float32: ...
 @overload
-def log10(x: CoUInteger_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def log10(x: CoUInteger_0d) -> np.floating: ...
 @overload
 def log10(x: _ToArray_0d[np.int64 | np.int32, Is[int]]) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def log10(x: ToInt16_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def log10(x: ToInt16_0d) -> np.float32 | np.complex64: ...
 @overload
-def log10(x: ToInt8_0d) -> np.float16 | np.complex64: ...  # type: ignore[overload-overlap]
+def log10(x: ToInt8_0d) -> np.float16 | np.complex64: ...
 @overload
 def log10(x: ToFloat64_0d) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
 def log10(x: ToFloat32_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
 @overload
-def log10(x: ToFloat16_0d) -> np.float16 | np.complex128: ...  # type: ignore[overload-overlap]
+def log10(x: ToFloat16_0d) -> np.float16 | np.complex128: ...
 @overload
-def log10(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...  # type: ignore[overload-overlap]
+def log10(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...
 @overload
 def log10(x: ToComplex128_0d) -> np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def log10(x: ToComplex64_0d) -> np.complex64: ...  # type: ignore[overload-overlap]
+def log10(x: ToComplex64_0d) -> np.complex64: ...
 @overload
-def log10(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...  # type: ignore[overload-overlap]
+def log10(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...
 @overload
-def log10(x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def log10(x: ToComplex_0d) -> np.complexfloating: ...
 @overload
-def log10(x: CoComplex_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def log10(x: CoComplex_0d) -> np.inexact: ...
 @overload
 def log10(x: _ToArray1_1nd[np.uint64 | np.uint32]) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
 @overload
@@ -274,35 +274,35 @@ def log10(x: CoComplex_1nd) -> Array[np.inexact]: ...
 @overload
 def log2(x: CoUInt8_0d) -> np.float16: ...  # type: ignore[overload-overlap]
 @overload
-def log2(x: _ToArray1_0d[np.uint64 | np.uint32]) -> np.float64: ...  # type: ignore[overload-overlap]
+def log2(x: _ToArray1_0d[np.uint64 | np.uint32]) -> np.float64: ...
 @overload
-def log2(x: ToUInt16_0d) -> np.float32: ...  # type: ignore[overload-overlap]
+def log2(x: ToUInt16_0d) -> np.float32: ...
 @overload
-def log2(x: CoUInteger_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def log2(x: CoUInteger_0d) -> np.floating: ...
 @overload
 def log2(x: _ToArray_0d[np.int64 | np.int32, Is[int]]) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def log2(x: ToInt16_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def log2(x: ToInt16_0d) -> np.float32 | np.complex64: ...
 @overload
-def log2(x: ToInt8_0d) -> np.float16 | np.complex64: ...  # type: ignore[overload-overlap]
+def log2(x: ToInt8_0d) -> np.float16 | np.complex64: ...
 @overload
 def log2(x: ToFloat64_0d) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
 def log2(x: ToFloat32_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
 @overload
-def log2(x: ToFloat16_0d) -> np.float16 | np.complex128: ...  # type: ignore[overload-overlap]
+def log2(x: ToFloat16_0d) -> np.float16 | np.complex128: ...
 @overload
-def log2(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...  # type: ignore[overload-overlap]
+def log2(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...
 @overload
 def log2(x: ToComplex128_0d) -> np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def log2(x: ToComplex64_0d) -> np.complex64: ...  # type: ignore[overload-overlap]
+def log2(x: ToComplex64_0d) -> np.complex64: ...
 @overload
-def log2(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...  # type: ignore[overload-overlap]
+def log2(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...
 @overload
-def log2(x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def log2(x: ToComplex_0d) -> np.complexfloating: ...
 @overload
-def log2(x: CoComplex_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def log2(x: CoComplex_0d) -> np.inexact: ...
 @overload
 def log2(x: _ToArray1_1nd[np.uint64 | np.uint32]) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
 @overload
@@ -344,25 +344,25 @@ def arccos(x: _ToArray_0d[np.uint8 | np.int8 | np.bool, bool]) -> np.float16 | n
 @overload
 def arccos(x: _ToArray_0d[np.uint64 | np.int64 | np.uint32 | np.int32, Is[int]]) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arccos(x: _ToArray1_0d[np.uint16 | np.int16]) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def arccos(x: _ToArray1_0d[np.uint16 | np.int16]) -> np.float32 | np.complex64: ...
 @overload
 def arccos(x: ToFloat64_0d) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arccos(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...  # type: ignore[overload-overlap]
+def arccos(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...
 @overload
-def arccos(x: ToFloat32_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def arccos(x: ToFloat32_0d) -> np.float32 | np.complex64: ...
 @overload
-def arccos(x: ToFloat16_0d) -> np.float16 | np.complex128: ...  # type: ignore[overload-overlap]
+def arccos(x: ToFloat16_0d) -> np.float16 | np.complex128: ...
 @overload
 def arccos(x: ToComplex128_0d) -> np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arccos(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...  # type: ignore[overload-overlap]
+def arccos(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...
 @overload
-def arccos(x: ToComplex64_0d) -> np.complex64: ...  # type: ignore[overload-overlap]
+def arccos(x: ToComplex64_0d) -> np.complex64: ...
 @overload
-def arccos(x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def arccos(x: ToComplex_0d) -> np.complexfloating: ...
 @overload
-def arccos(x: CoComplex_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def arccos(x: CoComplex_0d) -> np.inexact: ...
 @overload
 def arccos(x: _ToArray_1nd[np.uint8 | np.int8 | np.bool, bool]) -> Array[np.float16 | np.complex64]: ...  # type: ignore[overload-overlap]
 @overload
@@ -394,25 +394,25 @@ def arcsin(x: _ToArray_0d[np.uint8 | np.int8 | np.bool, bool]) -> np.float16 | n
 @overload
 def arcsin(x: _ToArray_0d[np.uint64 | np.int64 | np.uint32 | np.int32, Is[int]]) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arcsin(x: _ToArray1_0d[np.uint16 | np.int16]) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def arcsin(x: _ToArray1_0d[np.uint16 | np.int16]) -> np.float32 | np.complex64: ...
 @overload
 def arcsin(x: ToFloat64_0d) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arcsin(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...  # type: ignore[overload-overlap]
+def arcsin(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...
 @overload
-def arcsin(x: ToFloat32_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def arcsin(x: ToFloat32_0d) -> np.float32 | np.complex64: ...
 @overload
-def arcsin(x: ToFloat16_0d) -> np.float16 | np.complex128: ...  # type: ignore[overload-overlap]
+def arcsin(x: ToFloat16_0d) -> np.float16 | np.complex128: ...
 @overload
 def arcsin(x: ToComplex128_0d) -> np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arcsin(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...  # type: ignore[overload-overlap]
+def arcsin(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...
 @overload
-def arcsin(x: ToComplex64_0d) -> np.complex64: ...  # type: ignore[overload-overlap]
+def arcsin(x: ToComplex64_0d) -> np.complex64: ...
 @overload
-def arcsin(x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def arcsin(x: ToComplex_0d) -> np.complexfloating: ...
 @overload
-def arcsin(x: CoComplex_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def arcsin(x: CoComplex_0d) -> np.inexact: ...
 @overload
 def arcsin(x: _ToArray_1nd[np.uint8 | np.int8 | np.bool, bool]) -> Array[np.float16 | np.complex64]: ...  # type: ignore[overload-overlap]
 @overload
@@ -444,25 +444,25 @@ def arctanh(x: _ToArray_0d[np.uint8 | np.int8 | np.bool, bool]) -> np.float16 | 
 @overload
 def arctanh(x: _ToArray_0d[np.uint64 | np.int64 | np.uint32 | np.int32, Is[int]]) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arctanh(x: _ToArray1_0d[np.uint16 | np.int16]) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def arctanh(x: _ToArray1_0d[np.uint16 | np.int16]) -> np.float32 | np.complex64: ...
 @overload
 def arctanh(x: ToFloat64_0d) -> np.float64 | np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arctanh(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...  # type: ignore[overload-overlap]
+def arctanh(x: ToLongDouble_0d) -> np.longdouble | np.complex128: ...
 @overload
-def arctanh(x: ToFloat32_0d) -> np.float32 | np.complex64: ...  # type: ignore[overload-overlap]
+def arctanh(x: ToFloat32_0d) -> np.float32 | np.complex64: ...
 @overload
-def arctanh(x: ToFloat16_0d) -> np.float16 | np.complex128: ...  # type: ignore[overload-overlap]
+def arctanh(x: ToFloat16_0d) -> np.float16 | np.complex128: ...
 @overload
 def arctanh(x: ToComplex128_0d) -> np.complex128: ...  # type: ignore[overload-overlap]
 @overload
-def arctanh(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...  # type: ignore[overload-overlap]
+def arctanh(x: ToCLongDouble_0d) -> np.complex128 | np.clongdouble: ...
 @overload
-def arctanh(x: ToComplex64_0d) -> np.complex64: ...  # type: ignore[overload-overlap]
+def arctanh(x: ToComplex64_0d) -> np.complex64: ...
 @overload
-def arctanh(x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def arctanh(x: ToComplex_0d) -> np.complexfloating: ...
 @overload
-def arctanh(x: CoComplex_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def arctanh(x: CoComplex_0d) -> np.inexact: ...
 @overload
 def arctanh(x: _ToArray_1nd[np.uint8 | np.int8 | np.bool, bool]) -> Array[np.float16 | np.complex64]: ...  # type: ignore[overload-overlap]
 @overload
@@ -490,15 +490,15 @@ def arctanh(x: CoComplex_1nd) -> Array[np.inexact]: ...
 
 #
 @overload
-def logn(n: CoUInt8_0d, x: CoUInt8_0d) -> np.float16: ...  # type: ignore[overload-overlap]
+def logn(n: CoUInt8_0d, x: CoUInt8_0d) -> np.float16: ...
 @overload
-def logn(n: CoUInteger_0d, x: CoUInteger_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def logn(n: CoUInteger_0d, x: CoUInteger_0d) -> np.floating: ...
 @overload
-def logn(n: ToComplex_0d, x: CoComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def logn(n: ToComplex_0d, x: CoComplex_0d) -> np.complexfloating: ...
 @overload
-def logn(n: CoComplex_0d, x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def logn(n: CoComplex_0d, x: ToComplex_0d) -> np.complexfloating: ...
 @overload
-def logn(n: CoComplex_0d, x: CoComplex_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def logn(n: CoComplex_0d, x: CoComplex_0d) -> np.inexact: ...
 @overload
 def logn(n: CoUInt8_nd, x: CoUInt8_1nd) -> Array[np.float16]: ...
 @overload
@@ -522,27 +522,27 @@ def logn(n: CoComplex_1nd, x: CoComplex_nd) -> Array[np.inexact]: ...
 
 #
 @overload
-def power(x: CoInt8_0d, p: CoInt8_0d) -> np.int8: ...  # type: ignore[overload-overlap]
+def power(x: CoInt8_0d, p: CoInt8_0d) -> np.int8: ...
 @overload
-def power(x: ToUInteger_0d, p: CoUInteger_0d) -> np.unsignedinteger: ...  # type: ignore[overload-overlap]
+def power(x: ToUInteger_0d, p: CoUInteger_0d) -> np.unsignedinteger: ...
 @overload
-def power(x: CoUInteger_0d, p: ToUInteger_0d) -> np.unsignedinteger: ...  # type: ignore[overload-overlap]
+def power(x: CoUInteger_0d, p: ToUInteger_0d) -> np.unsignedinteger: ...
 @overload
-def power(x: CoUInteger_0d, p: ToSInteger_0d) -> np.signedinteger | np.float64: ...  # type: ignore[overload-overlap]
+def power(x: CoUInteger_0d, p: ToSInteger_0d) -> np.signedinteger | np.float64: ...
 @overload
-def power(x: CoUInteger_0d, p: ToFloating_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def power(x: CoUInteger_0d, p: ToFloating_0d) -> np.floating: ...
 @overload
-def power(x: ToSInteger_0d, p: CoUInteger_0d) -> np.signedinteger | np.complexfloating: ...  # type: ignore[overload-overlap]
+def power(x: ToSInteger_0d, p: CoUInteger_0d) -> np.signedinteger | np.complexfloating: ...
 @overload
-def power(x: ToSInteger_0d, p: CoInteger_0d) -> np.signedinteger | np.inexact: ...  # type: ignore[overload-overlap]
+def power(x: ToSInteger_0d, p: CoInteger_0d) -> np.signedinteger | np.inexact: ...
 @overload
-def power(x: ToFloating_0d, p: CoFloating_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def power(x: ToFloating_0d, p: CoFloating_0d) -> np.inexact: ...
 @overload
-def power(x: CoFloating_0d, p: ToFloating_0d) -> np.inexact: ...  # type: ignore[overload-overlap]
+def power(x: CoFloating_0d, p: ToFloating_0d) -> np.inexact: ...
 @overload
-def power(x: ToComplex_0d, p: CoComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def power(x: ToComplex_0d, p: CoComplex_0d) -> np.complexfloating: ...
 @overload
-def power(x: CoComplex_0d, p: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def power(x: CoComplex_0d, p: ToComplex_0d) -> np.complexfloating: ...
 @overload
 def power(x: CoInt8_nd, p: CoInt8_1nd) -> Array[np.int8]: ...
 @overload
