@@ -8,8 +8,6 @@ from _numtype import (
     Array,
     Array_0d,
     Array_1d,
-    CanArray,
-    CanArraySized,
     CoComplex_0d,
     CoComplex_1nd,
     CoComplex_nd,
@@ -37,6 +35,7 @@ from _numtype import (
     ToStr_nd,
     ToTimeDelta_nd,
     ToUInteger_nd,
+    _CanArray2_1nd,
     _ToArray1_0d,
     _ToArray1_1nd,
     _ToArray1_nd,
@@ -143,7 +142,7 @@ class UFuncKwargs(TypedDict, total=False):
 ###
 
 @overload
-def take(  # type: ignore[overload-overlap]
+def take(
     a: _ToArray1_nd[_ScalarT],
     indices: CoInteger_0d,
     axis: None = None,
@@ -324,7 +323,7 @@ def argpartition(
 #
 @overload  # known shape, known dtype, axis=<given>
 def sort(
-    a: CanArraySized[_ScalarT, _ShapeT],
+    a: _CanArray2_1nd[_ScalarT, _ShapeT],
     axis: CanIndex = -1,
     kind: _SortKind | None = None,
     order: _Order | None = None,
@@ -333,7 +332,7 @@ def sort(
 ) -> Array[_ScalarT, _ShapeT]: ...
 @overload  # 0d, known dtype, axis=None
 def sort(
-    a: _ScalarT | CanArray[_ScalarT, tuple[()]],
+    a: _ToArray1_0d[_ScalarT],
     axis: None,
     kind: CanIndex | None = -1,
     order: _Order | None = None,
@@ -380,7 +379,7 @@ def sort(
 #
 @overload  # known shape
 def argsort(
-    a: CanArraySized[Any, _ShapeT],
+    a: _CanArray2_1nd[Any, _ShapeT],
     axis: CanIndex = -1,
     kind: _SortKind | None = None,
     order: _Order | None = None,
@@ -469,7 +468,7 @@ def argmin(
 
 #
 @overload
-def searchsorted(  # type: ignore[overload-overlap]
+def searchsorted(
     a: ArrayLike,
     v: ToGeneric_0d,
     side: _SortSide = "left",
@@ -543,7 +542,7 @@ def trace(
 
 #
 @overload
-def ravel(a: _ToArray1_nd[_ScalarT], order: _OrderKACF = "C") -> Array_1d[_ScalarT]: ...  # type: ignore[overload-overlap]
+def ravel(a: _ToArray1_nd[_ScalarT], order: _OrderKACF = "C") -> Array_1d[_ScalarT]: ...
 @overload
 def ravel(a: ToBytes_nd, order: _OrderKACF = "C") -> Array_1d[np.bytes_]: ...
 @overload
@@ -1094,47 +1093,17 @@ def prod(
 
 #
 @overload
-def cumprod(
-    a: ToBool_nd,
-    axis: CanIndex | None = None,
-    dtype: None = None,
-    out: None = None,
-) -> Array[np.int_]: ...
+def cumprod(a: ToBool_nd, axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[np.int_]: ...
 @overload
-def cumprod(
-    a: ToUInteger_nd,
-    axis: CanIndex | None = None,
-    dtype: None = None,
-    out: None = None,
-) -> Array[np.uint64]: ...
+def cumprod(a: ToUInteger_nd, axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[np.uint64]: ...
 @overload
-def cumprod(  # type: ignore[overload-overlap]
-    a: ToSInteger_nd,
-    axis: CanIndex | None = None,
-    dtype: None = None,
-    out: None = None,
-) -> Array[np.int64]: ...
+def cumprod(a: ToSInteger_nd, axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[np.int64]: ...
 @overload
-def cumprod(  # type: ignore[overload-overlap]
-    a: ToFloating_nd,
-    axis: CanIndex | None = None,
-    dtype: None = None,
-    out: None = None,
-) -> Array[np.floating]: ...
+def cumprod(a: ToFloating_nd, axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[np.floating]: ...
 @overload
-def cumprod(  # type: ignore[overload-overlap]
-    a: ToComplex_nd,
-    axis: CanIndex | None = None,
-    dtype: None = None,
-    out: None = None,
-) -> Array[np.complexfloating]: ...
+def cumprod(a: ToComplex_nd, axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[np.complexfloating]: ...
 @overload
-def cumprod(
-    a: ToObject_nd,
-    axis: CanIndex | None = None,
-    dtype: None = None,
-    out: None = None,
-) -> Array[np.object_]: ...
+def cumprod(a: ToObject_nd, axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[np.object_]: ...
 @overload
 def cumprod(
     a: CoComplex_nd | ToObject_nd,
@@ -1195,7 +1164,7 @@ def cumulative_prod(
     include_initial: bool = False,
 ) -> Array[np.uint64]: ...
 @overload
-def cumulative_prod(  # type: ignore[overload-overlap]
+def cumulative_prod(
     x: ToSInteger_nd,
     /,
     *,
@@ -1205,7 +1174,7 @@ def cumulative_prod(  # type: ignore[overload-overlap]
     include_initial: bool = False,
 ) -> Array[np.int64]: ...
 @overload
-def cumulative_prod(  # type: ignore[overload-overlap]
+def cumulative_prod(
     x: ToFloating_nd,
     /,
     *,
@@ -1215,7 +1184,7 @@ def cumulative_prod(  # type: ignore[overload-overlap]
     include_initial: bool = False,
 ) -> Array[np.floating]: ...
 @overload
-def cumulative_prod(  # type: ignore[overload-overlap]
+def cumulative_prod(
     x: ToComplex_nd,
     /,
     *,
@@ -1271,11 +1240,11 @@ def size(a: ArrayLike, axis: int | None = None) -> int: ...
 
 #
 @overload
-def around(a: ToBool_0d, decimals: CanIndex = 0, out: None = None) -> np.float16: ...  # type: ignore[overload-overlap]
+def around(a: ToBool_0d, decimals: CanIndex = 0, out: None = None) -> np.float16: ...
 @overload
 def around(a: ToBool_1nd, decimals: CanIndex = 0, out: None = None) -> Array[np.float16]: ...
 @overload
-def around(a: _ToArray1_0d[_NumberT], decimals: CanIndex = 0, out: None = None) -> _NumberT: ...  # type: ignore[overload-overlap]
+def around(a: _ToArray1_0d[_NumberT], decimals: CanIndex = 0, out: None = None) -> _NumberT: ...
 @overload
 def around(a: _ToArray1_1nd[_NumberT], decimals: CanIndex = 0, out: None = None) -> Array[_NumberT]: ...
 @overload

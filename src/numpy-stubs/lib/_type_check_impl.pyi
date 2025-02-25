@@ -102,13 +102,13 @@ def imag(val: ArrayLike) -> Array[Any]: ...
 
 #
 @overload
-def iscomplex(x: ToGeneric_0d) -> np.bool: ...  # type: ignore[overload-overlap]
+def iscomplex(x: ToGeneric_0d) -> np.bool: ...
 @overload
 def iscomplex(x: ToGeneric_1nd) -> Array[np.bool]: ...
 
 #
 @overload
-def isreal(x: ToGeneric_0d) -> np.bool: ...  # type: ignore[overload-overlap]
+def isreal(x: ToGeneric_0d) -> np.bool: ...
 @overload
 def isreal(x: ToGeneric_1nd) -> Array[np.bool]: ...
 
@@ -154,7 +154,7 @@ def nan_to_num(
 # expected to verify the output dtype (so we can return an unsafe union here)
 
 @overload
-def real_if_close(a: ToComplex128_nd, tol: float = 100) -> Array[np.float64 | np.complex128]: ...
+def real_if_close(a: ToComplex128_nd, tol: float = 100) -> Array[np.float64 | np.complex128]: ...  # type: ignore[overload-overlap]
 @overload
 def real_if_close(a: ToComplex64_nd, tol: float = 100) -> Array[np.float32 | np.complex64]: ...
 @overload

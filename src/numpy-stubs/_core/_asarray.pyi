@@ -45,7 +45,7 @@ def require(
     like: _Like | None = None,
 ) -> NDArray[np.bool]: ...
 @overload
-def require(  # type: ignore[overload-overlap]
+def require(
     a: ToIntP_nd,
     dtype: None = None,
     requirements: _ToReqsE | None = None,
@@ -53,7 +53,7 @@ def require(  # type: ignore[overload-overlap]
     like: _Like | None = None,
 ) -> NDArray[np.intp]: ...
 @overload
-def require(  # type: ignore[overload-overlap]
+def require(
     a: ToFloat64_nd,
     dtype: None = None,
     requirements: _ToReqsE | None = None,
@@ -61,7 +61,7 @@ def require(  # type: ignore[overload-overlap]
     like: _Like | None = None,
 ) -> NDArray[np.float64]: ...
 @overload
-def require(  # type: ignore[overload-overlap]
+def require(
     a: ToComplex128_nd,
     dtype: None = None,
     requirements: _ToReqsE | None = None,
@@ -69,7 +69,7 @@ def require(  # type: ignore[overload-overlap]
     like: _Like | None = None,
 ) -> NDArray[np.complex128]: ...
 @overload
-def require(  # type: ignore[overload-overlap]
+def require(
     a: ToBytes_nd,
     dtype: None = None,
     requirements: _ToReqsE | None = None,
@@ -77,7 +77,7 @@ def require(  # type: ignore[overload-overlap]
     like: _Like | None = None,
 ) -> NDArray[np.bytes_]: ...
 @overload
-def require(  # type: ignore[overload-overlap]
+def require(
     a: ToStr_nd,
     dtype: None = None,
     requirements: _ToReqsE | None = None,

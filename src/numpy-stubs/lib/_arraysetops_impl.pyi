@@ -92,19 +92,19 @@ def ediff1d(
     to_begin: ArrayLike | None = None,
 ) -> Array_1d[np.int8]: ...
 @overload
-def ediff1d(  # type: ignore[overload-overlap]
+def ediff1d(
     ary: ToIntP_nd,
     to_end: CoInteger_nd | None = None,
     to_begin: CoInteger_nd | None = None,
 ) -> Array_1d[np.intp]: ...
 @overload
-def ediff1d(  # type: ignore[overload-overlap]
+def ediff1d(
     ary: ToFloat64_nd,
     to_end: CoFloating_nd | None = None,
     to_begin: CoFloating_nd | None = None,
 ) -> Array_1d[np.float64]: ...
 @overload
-def ediff1d(  # type: ignore[overload-overlap]
+def ediff1d(
     ary: ToComplex128_nd,
     to_end: CoComplex_nd | None = None,
     to_begin: CoComplex_nd | None = None,

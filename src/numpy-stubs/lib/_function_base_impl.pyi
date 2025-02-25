@@ -18,7 +18,6 @@ import numpy as np
 from _numtype import (
     Array,
     Array_1d,
-    CanArray,
     CoComplex_0d,
     CoComplex_1ds,
     CoComplex_1nd,
@@ -65,6 +64,7 @@ from _numtype import (
     ToTimeDelta_1nd,
     ToTimeDelta_2nd,
     ToTimeDelta_nd,
+    _CanArray2_nd,
     _ToArray1_1nd,
 )
 from numpy import _OrderKACF  # noqa: ICN003
@@ -413,7 +413,7 @@ def copy(a: _ArrayT, order: _OrderKACF, subok: L[True]) -> _ArrayT: ...
 @overload
 def copy(a: _ArrayT, order: _OrderKACF = "K", *, subok: L[True]) -> _ArrayT: ...
 @overload
-def copy(a: CanArray[_ScalarT, _ShapeT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT, _ShapeT]: ...
+def copy(a: _CanArray2_nd[_ScalarT, _ShapeT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT, _ShapeT]: ...
 @overload
 def copy(a: _ArrayLike[_ScalarT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT]: ...
 @overload
@@ -536,7 +536,7 @@ def interp(
 
 #
 @overload
-def angle(z: CoComplex_0d, deg: bool = False) -> np.floating: ...  # type: ignore[overload-overlap]
+def angle(z: CoComplex_0d, deg: bool = False) -> np.floating: ...
 @overload
 def angle(z: CoComplex_1nd, deg: bool = False) -> Array[np.floating]: ...
 @overload
@@ -555,7 +555,7 @@ def sort_complex(a: ArrayLike) -> Array[np.complexfloating]: ...
 
 #
 @overload
-def trim_zeros(filt: _CanLenAndGetSlice[_T], trim: L["f", "b", "fb", "bf"] = "fb", axis: None = None) -> _T: ...
+def trim_zeros(filt: _CanLenAndGetSlice[_T], trim: L["f", "b", "fb", "bf"] = "fb", axis: None = None) -> _T: ...  # type: ignore[overload-overlap]
 @overload
 def trim_zeros(filt: ToGeneric_1nd, trim: L["f", "b", "fb", "bf"] = "fb", axis: _ShapeLike | None = None) -> Array: ...
 
@@ -682,9 +682,9 @@ def i0(x: CoFloating_nd) -> Array[np.floating]: ...
 
 #
 @overload
-def sinc(x: CoFloating_0d) -> np.floating: ...  # type: ignore[overload-overlap]
+def sinc(x: CoFloating_0d) -> np.floating: ...
 @overload
-def sinc(x: ToComplex_0d) -> np.complexfloating: ...  # type: ignore[overload-overlap]
+def sinc(x: ToComplex_0d) -> np.complexfloating: ...
 @overload
 def sinc(x: CoFloating_1nd) -> Array[np.floating]: ...
 @overload
@@ -753,7 +753,7 @@ def median(
 # TODO(jorenham): deprecate interpolation
 # TODO(jorenham): deprecate only allow weights if method="inverted_cdf"
 @overload
-def percentile(  # type: ignore[overload-overlap]
+def percentile(
     a: CoFloating_nd,
     q: CoFloating_0d,
     axis: None = None,
@@ -779,7 +779,7 @@ def percentile(
     interpolation: None = None,
 ) -> Array[np.floating]: ...
 @overload
-def percentile(  # type: ignore[overload-overlap]
+def percentile(
     a: ToComplex_nd,
     q: CoFloating_0d,
     axis: None = None,
@@ -792,7 +792,7 @@ def percentile(  # type: ignore[overload-overlap]
     interpolation: None = None,
 ) -> np.complexfloating: ...
 @overload
-def percentile(  # type: ignore[overload-overlap]
+def percentile(
     a: ToComplex_nd,
     q: CoFloating_1nd,
     axis: None = None,
@@ -805,7 +805,7 @@ def percentile(  # type: ignore[overload-overlap]
     interpolation: None = None,
 ) -> Array[np.complexfloating]: ...
 @overload
-def percentile(  # type: ignore[overload-overlap]
+def percentile(
     a: ToTimeDelta_nd,
     q: CoFloating_0d,
     axis: None = None,
@@ -831,7 +831,7 @@ def percentile(
     interpolation: None = None,
 ) -> Array[np.timedelta64]: ...
 @overload
-def percentile(  # type: ignore[overload-overlap]
+def percentile(
     a: ToDateTime_nd,
     q: CoFloating_0d,
     axis: None = None,
@@ -926,14 +926,14 @@ def percentile(
 quantile = percentile
 
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: ToFloat64_1ds | CoInteger_1ds,
     x: ToFloat64_1ds | CoInteger_1ds | None = None,
     dx: CoFloating_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.float64: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: ToFloat64_2nd | CoInteger_2nd,
     x: ToFloat64_1nd | CoInteger_1nd | None = None,
     dx: CoFloating_0d = 1.0,
@@ -947,49 +947,49 @@ def trapezoid(  # type: ignore[overload-overlap]
     axis: SupportsIndex = -1,
 ) -> np.float64 | Array[np.float64]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoFloating_1ds,
     x: CoFloating_1ds | None = None,
     dx: CoFloating_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.floating: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoFloating_2nd,
     x: CoFloating_1nd | None = None,
     dx: CoFloating_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.floating]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoFloating_1nd,
     x: CoFloating_2nd,
     dx: CoFloating_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.floating]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoFloating_1nd,
     x: CoFloating_1nd | None = None,
     dx: CoFloating_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.floating | Array[np.floating]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: ToComplex_1ds,
     x: CoComplex_1ds | None = None,
     dx: CoComplex_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.complexfloating: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: ToComplex_2nd,
     x: CoComplex_1nd | None = None,
     dx: CoComplex_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.complexfloating]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: ToComplex_1nd,
     x: CoComplex_2nd,
     dx: CoComplex_0d = 1.0,
@@ -1003,35 +1003,35 @@ def trapezoid(  # type: ignore[overload-overlap]
     axis: SupportsIndex = -1,
 ) -> np.complexfloating | Array[np.complexfloating]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoComplex_1ds,
     x: ToComplex_1ds,
     dx: CoComplex_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.complexfloating: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoComplex_2nd,
     x: ToComplex_1nd,
     dx: CoComplex_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.complexfloating]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoComplex_1nd,
     x: ToComplex_2nd,
     dx: CoComplex_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.complexfloating]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoComplex_1nd,
     x: ToComplex_1nd,
     dx: CoComplex_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.complexfloating | Array[np.complexfloating]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: ToTimeDelta_1ds,
     x: CoTimeDelta_1ds | None = None,
     dx: CoFloating_0d = 1.0,
@@ -1059,7 +1059,7 @@ def trapezoid(
     axis: SupportsIndex = -1,
 ) -> np.timedelta64 | Array[np.timedelta64]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
+def trapezoid(
     y: CoTimeDelta_1ds,
     x: ToTimeDelta_1ds,
     dx: CoFloating_0d = 1.0,
@@ -1093,13 +1093,6 @@ def trapezoid(
     dx: CoComplex_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> dt.timedelta: ...
-@overload
-def trapezoid(
-    y: CoComplex_1ds,
-    x: CoComplex_1ds | None = None,
-    dx: CoComplex_0d = 1.0,
-    axis: SupportsIndex = -1,
-) -> np.inexact: ...
 @overload
 def trapezoid(
     y: Sequence[_CanRMulFloat[_T]],
@@ -1149,6 +1142,6 @@ def append(arr: ArrayLike, values: ArrayLike, axis: SupportsIndex | None = ...) 
 
 #
 @overload
-def digitize(x: CoFloating_0d, bins: CoFloating_1d, right: bool = False) -> np.intp: ...  # type: ignore[overload-overlap]
+def digitize(x: CoFloating_0d, bins: CoFloating_1d, right: bool = False) -> np.intp: ...
 @overload
 def digitize(x: CoFloating_1nd, bins: CoFloating_1d, right: bool = False) -> Array[np.intp]: ...

@@ -8,7 +8,6 @@ from _numtype import (
     Array_1d,
     Array_2d,
     Array_3d,
-    CanArraySized,
     CoFloating_0d,
     CoFloating_1ds,
     CoFloating_1nd,
@@ -22,6 +21,7 @@ from _numtype import (
     ToFloat64_1nd,
     ToIntP_0d,
     ToIntP_1nd,
+    _CanArray2_1nd,
     _ToArray1_0d,
     _ToArray1_1ds,
     _ToArray1_1nd,
@@ -45,13 +45,13 @@ def fix(x: CoFloating_nd, out: _ArrayT) -> _ArrayT: ...
 @overload
 def fix(x: _ArrayT, out: None) -> _ArrayT: ...
 @overload
-def fix(x: ToBool_0d, out: None = None) -> np.bool: ...  # type: ignore[overload-overlap]
+def fix(x: ToBool_0d, out: None = None) -> np.bool: ...
 @overload
-def fix(x: ToIntP_0d, out: None = None) -> np.intp: ...  # type: ignore[overload-overlap]
+def fix(x: ToIntP_0d, out: None = None) -> np.intp: ...
 @overload
-def fix(x: ToFloat64_0d, out: None = None) -> np.float64: ...  # type: ignore[overload-overlap]
+def fix(x: ToFloat64_0d, out: None = None) -> np.float64: ...
 @overload
-def fix(x: _ToArray1_0d[_RealT], out: None = None) -> _RealT: ...  # type: ignore[overload-overlap]
+def fix(x: _ToArray1_0d[_RealT], out: None = None) -> _RealT: ...
 @overload
 def fix(x: _ToArray1_1ds[_RealT], out: None = None) -> Array_1d[_RealT]: ...
 @overload
@@ -71,7 +71,7 @@ def fix(x: _ToArray1_1nd[_RealT], out: None = None) -> Array[_RealT]: ...
 @overload
 def isposinf(x: CoFloating_0d, out: None = None) -> np.bool: ...  # type: ignore[overload-overlap]
 @overload
-def isposinf(x: CanArraySized[np.bool | np.integer | np.floating, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...  # type: ignore[overload-overlap]
+def isposinf(x: _CanArray2_1nd[np.bool | np.integer | np.floating, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...  # type: ignore[overload-overlap]
 @overload
 def isposinf(x: CoFloating_1ds, out: None = None) -> Array_1d[np.bool]: ...
 @overload
@@ -87,7 +87,7 @@ def isposinf(x: CoFloating_nd, out: _ArrayT) -> _ArrayT: ...
 @overload
 def isneginf(x: CoFloating_0d, out: None = None) -> np.bool: ...  # type: ignore[overload-overlap]
 @overload
-def isneginf(x: CanArraySized[np.bool | np.integer | np.floating, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...  # type: ignore[overload-overlap]
+def isneginf(x: _CanArray2_1nd[np.bool | np.integer | np.floating, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...  # type: ignore[overload-overlap]
 @overload
 def isneginf(x: CoFloating_1ds, out: None = None) -> Array_1d[np.bool]: ...
 @overload
