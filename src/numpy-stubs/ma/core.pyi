@@ -308,7 +308,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @property
     def shape(self) -> _ShapeT_co: ...
     @shape.setter
-    def shape(self: MaskedArray[_ShapeT], shape: _ShapeT, /) -> None: ...
+    def shape(self: MaskedArray[_ShapeT], shape: _ShapeT, /) -> None: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @property
@@ -438,7 +438,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __deepcopy__(self, /, memo: Incomplete = ...) -> Self: ...
 
     #
-    def view(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def view(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
         dtype: Incomplete = None,
@@ -463,7 +463,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         refcheck: Incomplete = ...,
         order: Incomplete = ...,
     ) -> Incomplete: ...
-    def put(self, indices: Incomplete, values: Incomplete, mode: Incomplete = ...) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def put(self, indices: Incomplete, values: Incomplete, mode: Incomplete = ...) -> Incomplete: ...
     def ids(self) -> Incomplete: ...
     def iscontiguous(self) -> Incomplete: ...
     def all(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -479,7 +479,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
     def nonzero(self) -> Incomplete: ...
-    def trace(
+    def trace(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         offset: Incomplete = ...,
         axis1: Incomplete = ...,
@@ -619,8 +619,19 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def argpartition(self, *args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
 
     #
-    def take(self, indices: Incomplete, axis: Incomplete = ..., out: Incomplete = ..., mode: Incomplete = ...) -> Incomplete: ...
+    def take(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        /,
+        indices: Incomplete,
+        axis: Incomplete = ...,
+        out: Incomplete = ...,
+        mode: Incomplete = ...,
+    ) -> Incomplete: ...
+
+    #
     def copy(self, /, order: _OrderKACF = "C") -> Self: ...
+
+    #
     diagonal: Any
     flatten: Any
     repeat: Any
@@ -673,7 +684,7 @@ class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
     def __iadd__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
-    def __ifloordiv__(self, other: Incomplete, /) -> Self: ...
+    def __ifloordiv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __itruediv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __ipow__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 

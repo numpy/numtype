@@ -1,6 +1,8 @@
+from typing import cast
+
 import numpy as np
 
-nd1 = np.array([[1, 2], [3, 4]])
+nd1 = cast("np.ndarray[tuple[int, int], np.dtype[np.intp]]", np.array([[1, 2], [3, 4]]))
 
 # reshape
 nd1.reshape(4)
@@ -12,12 +14,11 @@ nd1.reshape(4, order="C")
 
 # resize
 nd1.resize()
-nd1.resize(4)
 nd1.resize(2, 2)
 nd1.resize((2, 2))
 
 nd1.resize((2, 2), refcheck=True)
-nd1.resize(4, refcheck=True)
+nd1.resize(2, 2, refcheck=True)
 
 nd2 = np.array([[1, 2], [3, 4]])
 

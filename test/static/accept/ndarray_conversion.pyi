@@ -29,8 +29,8 @@ assert_type(b1_0d.tolist(), bool)
 assert_type(u2_1d.tolist(), list[int])
 assert_type(i4_2d.tolist(), list[list[int]])
 assert_type(f8_3d.tolist(), list[list[list[float]]])
-assert_type(cG_4d.tolist(), complex | list[complex] | list[list[complex]] | list[list[list[Any]]])
-assert_type(i0_nd.tolist(), int | list[int] | list[list[int]] | list[list[list[Any]]])
+assert_type(cG_4d.tolist(), list[list[list[list[complex]]]])
+assert_type(i0_nd.tolist(), Any)
 
 # itemset does not return a value
 # tostring is pretty simple
@@ -72,8 +72,8 @@ assert_type(i0_nd.view(), npt.NDArray[np.int_])
 assert_type(i0_nd.view(np.float64), npt.NDArray[np.float64])
 assert_type(i0_nd.view(float), npt.NDArray[Any])
 assert_type(
-    i0_nd.view(np.float64, np.matrix),  # pyright: ignore[reportAssertTypeFailure]  # matrix[Unknown, Unknown]
-    np.matrix[tuple[int, int], Any],
+    i0_nd.view(np.float64, np.matrix),
+    np.matrix[tuple[int, int], np.dtype[np.float64]],
 )
 
 # getfield

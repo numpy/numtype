@@ -25,12 +25,12 @@ import numpy as np
 import numpy.typing as npt
 from numpy import (  # noqa: ICN003
     _AnyShapeT,
+    _CanSeekTellFileNo,
     _CastingKind,
     _ModeKind,
     _OrderCF,
     _OrderKACF,
     _SupportsBuffer,
-    _SupportsFileMethods,
     # NOTE: These implicitly re-exported ufuncs are defined in this ext-module at runtime
     absolute as absolute,
     add as add,
@@ -266,7 +266,7 @@ _ToDeltaArray = TypeAliasType(
     _ArrayLike[np.timedelta64[Any] | np.integer] | _NestedSequence[_ToDelta],
 )
 
-_ToFile: TypeAlias = StrOrBytesPath | _SupportsFileMethods
+_ToFile: TypeAlias = StrOrBytesPath | _CanSeekTellFileNo
 
 _3P = TypeAliasType("_3P", L[3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 _2: TypeAlias = L[2]
