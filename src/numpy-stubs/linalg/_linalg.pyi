@@ -8,7 +8,6 @@ from _numtype import (
     Array_2d,
     AtLeast2D,
     CanArraySized,
-    CoBool_1nd,
     CoComplex64_1nd,
     CoComplex128_0d,
     CoComplex128_1d,
@@ -363,7 +362,7 @@ _NegInt: TypeAlias = L[-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -
 @overload
 def matrix_power(a: CanArraySized[_NumberT, _Shape2T], n: _PosInt) -> Array[_NumberT, _Shape2T]: ...  # type: ignore[overload-overlap]
 @overload
-def matrix_power(a: CoBool_1nd, n: _PosInt) -> _Array_2nd[np.bool]: ...
+def matrix_power(a: ToBool_1nd, n: _PosInt) -> _Array_2nd[np.bool]: ...
 @overload
 def matrix_power(a: ToIntP_1nd, n: _PosInt) -> _Array_2nd[np.intp]: ...  # type: ignore[overload-overlap]
 @overload
@@ -471,7 +470,7 @@ def cross(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappin
     axis: int = -1,
 ) -> Array[_AnyNumberT]: ...
 @overload
-def cross(x1: CoBool_1nd, x2: CoBool_1nd, /, *, axis: int = -1) -> Array[np.bool]: ...
+def cross(x1: ToBool_1nd, x2: ToBool_1nd, /, *, axis: int = -1) -> Array[np.bool]: ...
 @overload
 def cross(x1: ToIntP_1nd, x2: CoIntP_1nd, /, *, axis: int = -1) -> Array[np.intp]: ...
 @overload
