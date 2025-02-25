@@ -234,7 +234,6 @@ from numpy._typing import (
     _DTypeLike,
     _DTypeLikeVoid,
     _DoubleCodes,
-    _FiniteNestedSequence,
     _FlexibleCodes,
     _Float16Codes,
     _Float32Codes,
@@ -384,6 +383,8 @@ from numpy.lib._index_tricks_impl import (
     index_exp,
     ix_,
     mgrid,
+    ndenumerate,
+    ndindex,
     ogrid,
     r_,
     ravel_multi_index,
@@ -5174,49 +5175,6 @@ bitwise_invert: Final = invert
 bitwise_right_shift: Final = right_shift
 permute_dims: Final = transpose
 pow: Final = power
-
-class ndenumerate(Generic[_SCT_co]):
-    @property
-    def iter(self) -> flatiter[NDArray[_SCT_co]]: ...
-
-    #
-    @overload
-    def __new__(cls, arr: _FiniteNestedSequence[_SupportsArray[dtype[_SCT_co]]]) -> Self: ...
-    @overload
-    def __new__(cls, arr: str | _NestedSequence[str]) -> ndenumerate[str_]: ...
-    @overload
-    def __new__(cls, arr: bytes | _NestedSequence[bytes]) -> ndenumerate[bytes_]: ...
-    @overload
-    def __new__(cls, arr: builtins.bool | _NestedSequence[builtins.bool]) -> ndenumerate[np.bool]: ...
-    @overload
-    def __new__(cls, arr: int | _NestedSequence[int]) -> ndenumerate[int_]: ...
-    @overload
-    def __new__(cls, arr: float | _NestedSequence[float]) -> ndenumerate[float64]: ...
-    @overload
-    def __new__(cls, arr: complex | _NestedSequence[complex]) -> ndenumerate[complex128]: ...
-    @overload
-    def __new__(cls, arr: object) -> ndenumerate[object_]: ...
-
-    # The first overload is a (semi-)workaround for a mypy bug (tested with v1.10 and v1.11)
-    @overload
-    def __next__(self: ndenumerate[np.bool | datetime64 | timedelta64 | number | flexible], /) -> tuple[_Shape, _SCT_co]: ...
-    @overload
-    def __next__(self: ndenumerate[object_], /) -> tuple[_Shape, Any]: ...
-    @overload
-    def __next__(self, /) -> tuple[_Shape, _SCT_co]: ...
-
-    #
-    def __iter__(self) -> Self: ...
-
-class ndindex:
-    @overload
-    def __init__(self, shape: tuple[SupportsIndex, ...], /) -> None: ...
-    @overload
-    def __init__(self, *shape: SupportsIndex) -> None: ...
-
-    #
-    def __iter__(self) -> Self: ...
-    def __next__(self) -> _Shape: ...
 
 class matrix(ndarray[_2DShapeT_co, _DType_co]):
     __array_priority__: ClassVar[float] = ...

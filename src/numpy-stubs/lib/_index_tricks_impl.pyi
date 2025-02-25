@@ -1,11 +1,23 @@
 from _typeshed import Incomplete
 from collections.abc import Sequence
 from typing import Any, Final, Generic, Literal as L, SupportsIndex, TypeAlias, final, overload
-from typing_extensions import TypeVar
+from typing_extensions import Self, TypeVar
 
 import numpy as np
-from _numtype import Array, Is, Matrix, Sequence_nd, _ToArray1_nd
-from numpy import ndenumerate, ndindex  # noqa: ICN003
+from _numtype import (
+    Array,
+    Is,
+    Matrix,
+    Sequence_nd,
+    ToBool_nd,
+    ToBytes_nd,
+    ToComplex128_nd,
+    ToFloat64_nd,
+    ToIntP_nd,
+    ToObject_nd,
+    ToStr_nd,
+    _ToArray1_nd,
+)
 from numpy._core.multiarray import ravel_multi_index, unravel_index
 from numpy._typing import ArrayLike, DTypeLike, _DTypeLike, _SupportsDType as _HasDType
 
@@ -29,6 +41,7 @@ __all__ = [
 _T = TypeVar("_T")
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, default=Any, covariant=True)
 _TupleT = TypeVar("_TupleT", bound=tuple[object, ...])
 _ArrayT = TypeVar("_ArrayT", bound=Array)
 
@@ -42,6 +55,52 @@ _Trans1DT_co = TypeVar("_Trans1DT_co", bound=int, default=L[-1], covariant=True)
 _Arrays: TypeAlias = tuple[Array[_ScalarT], ...]
 
 ###
+
+class ndenumerate(Generic[_ScalarT_co]):
+    @property
+    def iter(self) -> np.flatiter[Array[_ScalarT_co]]: ...
+
+    #
+    @overload
+    def __init__(self: ndenumerate[_ScalarT], /, arr: _ToArray1_nd[_ScalarT]) -> None: ...
+    @overload
+    def __init__(self: ndenumerate[np.bytes_], /, arr: ToBytes_nd) -> None: ...
+    @overload
+    def __init__(self: ndenumerate[np.str_], /, arr: ToStr_nd) -> None: ...
+    @overload
+    def __init__(self: ndenumerate[np.bool], /, arr: ToBool_nd) -> None: ...
+    @overload
+    def __init__(self: ndenumerate[np.intp], /, arr: ToIntP_nd) -> None: ...
+    @overload
+    def __init__(self: ndenumerate[np.float64], /, arr: ToFloat64_nd) -> None: ...
+    @overload
+    def __init__(self: ndenumerate[np.complex128], /, arr: ToComplex128_nd) -> None: ...
+    @overload
+    def __init__(self: ndenumerate[np.object_], /, arr: ToObject_nd) -> None: ...
+
+    # The first overload is a (semi-)workaround for a mypy bug (tested with v1.10 and v1.11)
+    @overload
+    def __next__(
+        self: ndenumerate[np.bool | np.number | np.flexible | np.datetime64 | np.timedelta64],
+        /,
+    ) -> tuple[tuple[int, ...], _ScalarT_co]: ...
+    @overload
+    def __next__(self: ndenumerate[np.object_], /) -> tuple[tuple[int, ...], Any]: ...
+    @overload
+    def __next__(self, /) -> tuple[tuple[int, ...], _ScalarT_co]: ...
+
+    #
+    def __iter__(self) -> Self: ...
+
+class ndindex:
+    @overload
+    def __init__(self, shape: tuple[SupportsIndex, ...], /) -> None: ...
+    @overload
+    def __init__(self, /, *shape: SupportsIndex) -> None: ...
+
+    #
+    def __iter__(self) -> Self: ...
+    def __next__(self) -> tuple[int, ...]: ...
 
 class nd_grid(Generic[_BoolT_co]):
     sparse: _BoolT_co
