@@ -1,6 +1,6 @@
 from _typeshed import ConvertibleToInt
 from typing import Any, Literal as L, SupportsIndex, TypeAlias, overload
-from typing_extensions import Self, TypeVar
+from typing_extensions import Self, TypeVar, override
 
 import numpy as np
 import numpy.typing as npt
@@ -134,11 +134,17 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> chararray[_Shape, np.dtype[np.str_]]: ...
 
     #
-    def __eq__(self, other: _ToCharND, /) -> npt.NDArray[np.bool]: ...  # type: ignore[override]
-    def __ne__(self, other: _ToCharND, /) -> npt.NDArray[np.bool]: ...  # type: ignore[override]
+    @override
+    def __eq__(self, other: _ToCharND, /) -> npt.NDArray[np.bool]: ...  # type: ignore[override] # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __ne__(self, other: _ToCharND, /) -> npt.NDArray[np.bool]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __ge__(self, other: _ToCharND, /) -> npt.NDArray[np.bool]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __gt__(self, other: _ToCharND, /) -> npt.NDArray[np.bool]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __lt__(self, other: _ToCharND, /) -> npt.NDArray[np.bool]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __le__(self, other: _ToCharND, /) -> npt.NDArray[np.bool]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
@@ -153,9 +159,12 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __radd__(self: _CharArray[np.bytes_], lhs: _ToBytesND, /) -> _CharArray[np.bytes_]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
+    @override
     def __mul__(self, rhs: _ToIntND, /) -> chararray[_Shape, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __rmul__(self, lhs: _ToIntND, /) -> chararray[_Shape, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-    def __mod__(self, rhs: object, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __mod__(self, rhs: object, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def decode(
