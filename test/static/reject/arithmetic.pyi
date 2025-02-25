@@ -55,7 +55,7 @@ AR_M // AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIss
 AR_M // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_b // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_b // AR_LIKE_M  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
 AR_u // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_i // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_f // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -66,48 +66,47 @@ AR_M // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIss
 _3 = AR_m // AR_LIKE_b  # type: ignore[var-annotated]
 AR_m // AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_b // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_b // AR_LIKE_m  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
 AR_u // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_i // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_f // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_c // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 # Array multiplication
+# NOTE: huh; why does pyright allow the array-likes?
 
 AR_b *= AR_LIKE_u  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_b *= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_b *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_b *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b *= AR_LIKE_i  # type: ignore[arg-type]
+AR_b *= AR_LIKE_f  # type: ignore[arg-type]
+AR_b *= AR_LIKE_c  # type: ignore[arg-type]
 AR_b *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_u *= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_u *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_u *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u *= AR_LIKE_f  # type: ignore[arg-type]
+AR_u *= AR_LIKE_c  # type: ignore[arg-type]
 AR_u *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_i *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_i *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_i *= AR_LIKE_f  # type: ignore[arg-type]
+AR_i *= AR_LIKE_c  # type: ignore[arg-type]
 AR_i *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_f *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_f *= AR_LIKE_c  # type: ignore[arg-type]
 AR_f *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
 # Array power
 
 AR_b **= AR_LIKE_b  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
 AR_b **= AR_LIKE_u  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_i  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_f  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_c  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_i  # type: ignore[misc]
+AR_b **= AR_LIKE_f  # type: ignore[misc]
+AR_b **= AR_LIKE_c  # type: ignore[misc]
 
-AR_u **= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_u **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_u **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u **= AR_LIKE_f  # type: ignore[arg-type]
+AR_u **= AR_LIKE_c  # type: ignore[arg-type]
 
-AR_i **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_i **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_i **= AR_LIKE_f  # type: ignore[arg-type]
+AR_i **= AR_LIKE_c  # type: ignore[arg-type]
 
-AR_f **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_f **= AR_LIKE_c  # type: ignore[arg-type]
 
 # Scalars
 

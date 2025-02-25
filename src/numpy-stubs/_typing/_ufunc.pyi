@@ -46,6 +46,7 @@ class _SupportsArrayUFunc(Protocol):
         self,
         ufunc: np.ufunc,
         method: Literal["__call__", "reduce", "reduceat", "accumulate", "outer", "at"],
+        /,
         *inputs: Any,
         **kwargs: Any,
     ) -> Any: ...
