@@ -26,7 +26,7 @@ from typing import (
     runtime_checkable,
     type_check_only,
 )
-from typing_extensions import CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, Unpack, deprecated
+from typing_extensions import CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, Unpack, deprecated, override
 
 from . import (
     __config__ as __config__,
@@ -881,6 +881,8 @@ _NativeTD64Unit: TypeAlias = L[_DayUnit, _NativeTimeUnit]
 _IntTD64Unit: TypeAlias = L[_MonthUnit, _IntTimeUnit]
 _TD64Unit: TypeAlias = L[_DateUnit, _TimeUnit]
 _TimeUnitSpec: TypeAlias = _TD64UnitT | tuple[_TD64UnitT, CanIndex]
+
+_BinOperandComplex128_co: TypeAlias = complex | floating[_64Bit] | integer[_64Bit] | integer[_32Bit]
 
 ###
 # TypedDict's (for internal use only)
@@ -5464,7 +5466,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_NBitT, float]):
     @overload
     def __mul__(self, x: number | bool_, /) -> inexact: ...
 
-    # keep in sync with `__radd__` (minus the `datetime64` overloads, plus a `timedelta64` overload)
+    # keep in sync with `__radd__` (plus a `timedelta64` overload)
     @overload
     def __rmul__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
@@ -5687,193 +5689,56 @@ class floating(_RealMixin, _RoundMixin, inexact[_NBitT, float]):
     def __divmod__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> _2Tuple[float64]: ...
     @overload
     def __divmod__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> _2Tuple[float32]: ...
-    @overload
-    def __divmod__(self, x: floating | integer | bool_, /) -> _2Tuple[floating]: ...
 
     # keep in sync with `__rmod__`
     @overload
     def __rdivmod__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
     @overload
-    def __rdivmod__(self, x: longdouble, /) -> _2Tuple[longdouble]: ...
+    def __rdivmod__(self, x: longdouble, /) -> _2Tuple[longdouble]: ...  # type: ignore[overload-overlap]
     @overload
-    def __rdivmod__(self: longdouble, x: integer, /) -> _2Tuple[longdouble]: ...
+    def __rdivmod__(self: longdouble, x: integer, /) -> _2Tuple[longdouble]: ...  # type: ignore[overload-overlap]
     @overload
-    def __rdivmod__(self: floating[_64Bit], x: integer, /) -> _2Tuple[float64]: ...
+    def __rdivmod__(self: floating[_64Bit], x: float32 | float16 | integer, /) -> _2Tuple[float64]: ...  # type: ignore[misc]
     @overload
     def __rdivmod__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> _2Tuple[float64]: ...
     @overload
     def __rdivmod__(self: float32 | float16, x: integer[_16Bit], /) -> _2Tuple[float32]: ...
-    @overload
-    def __rdivmod__(self, x: integer, /) -> _2Tuple[floating]: ...
 
     # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
     # https://github.com/numpy/numtype/issues/136
     def is_integer(self, /) -> py_bool: ...
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
 
-# either a C `double`, `float`, or `longdouble`
 class float64(floating[_64Bit], float):  # type: ignore[misc]
-    def __new__(cls, x: _ConvertibleToFloat | None = ..., /) -> Self: ...
-
-    #
     @property
+    @override
     def itemsize(self) -> L[8]: ...
     @property
+    @override
     def nbytes(self) -> L[8]: ...
-
-    # overrides for `floating` and `builtins.float` compatibility (`_RealMixin` doesn't work)
     @property
+    @override
     def real(self) -> Self: ...
     @property
+    @override
     def imag(self) -> Self: ...
 
     #
+    @override
     def conjugate(self) -> Self: ...
+    @override
+    def is_integer(self, /) -> py_bool: ...
+    @override
+    def as_integer_ratio(self, /) -> tuple[int, int]: ...
 
     #
+    def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
     def __getformat__(self, typestr: L["double", "float"], /) -> str: ...
     def __getnewargs__(self, /) -> tuple[float]: ...
-
-    # float64-specific operator overrides
-    @overload
-    def __add__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __add__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __add__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __add__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __radd__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __radd__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __radd__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __radd__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __sub__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __sub__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __sub__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __sub__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __rsub__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __rsub__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __rsub__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __rsub__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __mul__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __mul__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __mul__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __mul__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __rmul__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __rmul__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __rmul__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __rmul__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __truediv__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __truediv__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __truediv__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __truediv__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __rtruediv__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __rtruediv__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __rtruediv__(
-        self, other: complexfloating[_NBitT1, _NBitT2], /
-    ) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __rtruediv__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __floordiv__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __floordiv__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __floordiv__(
-        self, other: complexfloating[_NBitT1, _NBitT2], /
-    ) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __floordiv__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __rfloordiv__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __rfloordiv__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __rfloordiv__(
-        self, other: complexfloating[_NBitT1, _NBitT2], /
-    ) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __rfloordiv__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __pow__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __pow__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __pow__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __pow__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    @overload
-    def __rpow__(self, other: _Float64_co, /) -> float64: ...
-    @overload
-    def __rpow__(self, other: complexfloating[_64Bit], /) -> complex128: ...
-    @overload
-    def __rpow__(self, other: complexfloating[_NBitT1, _NBitT2], /) -> complexfloating[_NBitT1 | _64Bit, _NBitT2 | _64Bit]: ...
-    @overload
-    def __rpow__(self, other: complex, /) -> float64 | complex128: ...
-
-    #
-    def __mod__(self, other: _Float64_co, /) -> float64: ...  # type: ignore[override]
-    def __rmod__(self, other: _Float64_co, /) -> float64: ...  # type: ignore[override]
-
-    #
-    def __divmod__(self, other: _Float64_co, /) -> _2Tuple[float64]: ...  # type: ignore[override]
-    def __rdivmod__(self, other: _Float64_co, /) -> _2Tuple[float64]: ...  # type: ignore[override]
 
 # The main reason for `complexfloating` having two typevars is cosmetic.
 # It is used to clarify why `complex128`s precision is `_64Bit`, the latter
 # describing the two 64 bit floats representing its real and imaginary component
-
-_BinOperandComplex128_co: TypeAlias = complex | int32 | int64 | uint32 | uint64 | float64
-
 class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
     @property
     def real(self) -> floating[_NBitT1]: ...
@@ -5891,11 +5756,13 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
     @overload
     def __init__(self, real: _ConvertibleToComplex | None = ..., /) -> None: ...
 
-    # NOTE: `__complex__` is technically defined in the concrete subtypes
+    # TODO(jorenham): This method doesn't exist here; move to concrete subtypes once we have them
+    # https://github.com/numpy/numtype/issues/136
     def __complex__(self, /) -> complex: ...
 
     #
-    def __abs__(self, /) -> floating[_NBitT1 | _NBitT2]: ...  # type: ignore[override]
+    @override
+    def __abs__(self, /) -> floating[_NBitT1 | _NBitT2]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @deprecated(
