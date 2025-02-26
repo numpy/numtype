@@ -6,7 +6,7 @@ import numpy as np
 from . import NBitBase
 from ._array_like import NDArray
 from ._nbit import _NBitLongDouble
-from ._nbit_base import _8Bit, _16Bit, _32Bit, _64Bit
+from ._nbit_base import _16Bit, _32Bit
 from ._nested_sequence import _NestedSequence
 from ._scalars import _BoolLike_co, _IntLike_co
 
@@ -14,8 +14,8 @@ _T = TypeVar("_T")
 _T1_contra = TypeVar("_T1_contra", contravariant=True)
 _T2_contra = TypeVar("_T2_contra", contravariant=True)
 
-_NBit = TypeVar("_NBit", bound=NBitBase)
-_NBit1 = TypeVar("_NBit1", bound=NBitBase)
+_NBitT = TypeVar("_NBitT", bound=NBitBase)
+_NBitT1 = TypeVar("_NBitT1", bound=NBitBase)
 
 _RealT = TypeVar("_RealT", bound=np.integer | np.floating)
 _InexactT = TypeVar("_InexactT", bound=np.inexact)
@@ -87,119 +87,9 @@ class _BoolDivMod(Protocol):
 ###
 
 @type_check_only
-class _UnsignedIntOp(Protocol[_NBit]):
+class _FloatOp(Protocol[_NBitT]):
     @overload
-    def __call__(self, x: int | np.unsignedinteger[_NBit] | np.uint8 | np.bool, /) -> np.unsignedinteger[_NBit]: ...
-    @overload
-    def __call__(self, x: np.uint64, /) -> np.uint64: ...
-    @overload
-    def __call__(self: _UnsignedIntOp[_64Bit], x: np.unsignedinteger, /) -> np.uint64: ...
-    @overload
-    def __call__(self, x: np.unsignedinteger[_NBit1], /) -> np.unsignedinteger[_NBit | _NBit1]: ...
-    @overload
-    def __call__(self: _UnsignedIntOp[_8Bit] | _UnsignedIntOp[_16Bit], x: np.int32, /) -> np.int32: ...
-    @overload
-    def __call__(self: _UnsignedIntOp[_8Bit] | _UnsignedIntOp[_16Bit], x: np.int64, /) -> np.int64: ...
-    @overload
-    def __call__(self: _UnsignedIntOp[_8Bit], x: np.int8 | np.int16, /) -> np.int16: ...
-    @overload
-    def __call__(self: _UnsignedIntOp[_16Bit], x: np.int8 | np.int16, /) -> np.int32: ...
-    @overload
-    def __call__(self: _UnsignedIntOp[_32Bit], x: np.signedinteger, /) -> np.int64: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(self: _UnsignedIntOp[_64Bit], x: np.signedinteger, /) -> np.float64: ...
-    @overload
-    def __call__(self, x: np.signedinteger, /) -> Any: ...
-    @overload
-    def __call__(self, x: np.float64, /) -> np.float64: ...
-    @overload
-    def __call__(self, x: int | float, /) -> np.unsignedinteger[_NBit] | np.float64: ...
-    @overload
-    def __call__(self, x: np.complex128, /) -> np.complex128: ...
-    @overload
-    def __call__(self, x: int | float | complex, /) -> np.unsignedinteger[_NBit] | np.float64 | np.complex128: ...
-
-# same as _UnsignedIntOp, minus the last (complex) overloads
-@type_check_only
-class _UnsignedIntMod(Protocol[_NBit]):
-    @overload
-    def __call__(self, x: int | np.unsignedinteger[_NBit] | np.uint8 | np.bool, /) -> np.unsignedinteger[_NBit]: ...
-    @overload
-    def __call__(self, x: np.unsignedinteger[_NBit1], /) -> np.unsignedinteger[_NBit | _NBit1]: ...
-    @overload
-    def __call__(self: _UnsignedIntMod[_8Bit] | _UnsignedIntMod[_16Bit], x: np.int32, /) -> np.int32: ...
-    @overload
-    def __call__(self: _UnsignedIntMod[_8Bit] | _UnsignedIntMod[_16Bit], x: np.int64, /) -> np.int64: ...
-    @overload
-    def __call__(self: _UnsignedIntMod[_8Bit], x: np.int8 | np.int16, /) -> np.int16: ...
-    @overload
-    def __call__(self: _UnsignedIntMod[_16Bit], x: np.int8 | np.int16, /) -> np.int32: ...
-    @overload
-    def __call__(self: _UnsignedIntMod[_32Bit], x: np.signedinteger, /) -> np.int64: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(self: _UnsignedIntMod[_64Bit], x: np.signedinteger, /) -> np.float64: ...
-    @overload
-    def __call__(self, x: np.signedinteger, /) -> np.signedinteger | np.float64: ...
-    @overload
-    def __call__(self, x: np.float64, /) -> np.float64: ...
-    @overload
-    def __call__(self, x: int | float, /) -> np.unsignedinteger[_NBit] | np.float64: ...
-
-# keep in sync with _UnsignedIntMod
-@type_check_only
-class _UnsignedIntDivMod(Protocol[_NBit]):
-    @overload
-    def __call__(self, x: int | np.unsignedinteger[_NBit] | np.uint8 | np.bool, /) -> _2Tuple[np.unsignedinteger[_NBit]]: ...
-    @overload
-    def __call__(self, x: np.unsignedinteger[_NBit1], /) -> _2Tuple[np.unsignedinteger[_NBit | _NBit1]]: ...
-    @overload
-    def __call__(self: _UnsignedIntDivMod[_8Bit] | _UnsignedIntDivMod[_16Bit], x: np.int32, /) -> _2Tuple[np.int32]: ...
-    @overload
-    def __call__(self: _UnsignedIntDivMod[_8Bit] | _UnsignedIntDivMod[_16Bit], x: np.int64, /) -> _2Tuple[np.int64]: ...
-    @overload
-    def __call__(self: _UnsignedIntDivMod[_8Bit], x: np.int8 | np.int16, /) -> _2Tuple[np.int16]: ...
-    @overload
-    def __call__(self: _UnsignedIntDivMod[_16Bit], x: np.int8 | np.int16, /) -> _2Tuple[np.int32]: ...
-    @overload
-    def __call__(self: _UnsignedIntDivMod[_32Bit], x: np.signedinteger, /) -> _2Tuple[np.int64]: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(self: _UnsignedIntDivMod[_64Bit], x: np.signedinteger, /) -> _2Tuple[np.float64]: ...
-    @overload
-    def __call__(self, x: np.signedinteger, /) -> _2Tuple[np.signedinteger] | _2Tuple[np.float64]: ...
-    @overload
-    def __call__(self, x: np.float64, /) -> _2Tuple[np.float64]: ...
-    @overload
-    def __call__(self, x: int | float, /) -> _2Tuple[np.unsignedinteger[_NBit]] | _2Tuple[np.float64]: ...
-
-@type_check_only
-class _UnsignedIntBitOp(Protocol[_NBit]):
-    @overload
-    def __call__(self, x: int | np.unsignedinteger[_NBit] | np.uint8 | np.bool, /) -> np.unsignedinteger[_NBit]: ...
-    @overload
-    def __call__(self, x: np.unsignedinteger[_NBit1], /) -> np.unsignedinteger[_NBit | _NBit1]: ...
-    @overload
-    def __call__(self: _UnsignedIntBitOp[_8Bit], x: np.int8 | np.int16, /) -> np.int16: ...
-    @overload
-    def __call__(self: _UnsignedIntBitOp[_8Bit], x: np.int32, /) -> np.int32: ...
-    @overload
-    def __call__(self: _UnsignedIntBitOp[_16Bit], x: np.int8 | np.int16 | np.int32, /) -> np.int32: ...
-    @overload
-    def __call__(self: _UnsignedIntBitOp[_32Bit], x: np.signedinteger, /) -> np.int64: ...
-    @overload
-    def __call__(self: _UnsignedIntBitOp[_8Bit] | _UnsignedIntBitOp[_16Bit], x: np.int64, /) -> np.int64: ...
-    @overload
-    def __call__(
-        self: _UnsignedIntBitOp[_8Bit] | _UnsignedIntBitOp[_16Bit] | _UnsignedIntBitOp[_32Bit],
-        x: np.signedinteger,
-        /,
-    ) -> np.signedinteger: ...
-
-###
-
-@type_check_only
-class _FloatOp(Protocol[_NBit]):
-    @overload
-    def __call__(self, x: np.bool | np.uint8 | int, /) -> np.floating[_NBit]: ...  # type: ignore[overload-overlap]
+    def __call__(self, x: np.bool | np.uint8 | int, /) -> np.floating[_NBitT]: ...  # type: ignore[overload-overlap]
     @overload
     def __call__(self: _FloatOp[_16Bit] | _FloatOp[_32Bit], x: np.uint16 | np.int32 | np.float32, /) -> np.float32: ...  # type: ignore[overload-overlap]
     @overload
@@ -219,16 +109,16 @@ class _FloatOp(Protocol[_NBit]):
     @overload
     def __call__(self: _FloatOp[_NBitLongDouble], x: np.complexfloating, /) -> np.clongdouble: ...
     @overload
-    def __call__(self, x: np.signedinteger[_NBit1] | np.floating[_NBit1], /) -> np.floating[_NBit | _NBit1]: ...
+    def __call__(self, x: np.signedinteger[_NBitT1] | np.floating[_NBitT1], /) -> np.floating[_NBitT | _NBitT1]: ...
     @overload
-    def __call__(self, x: int | float, /) -> np.floating[_NBit]: ...
+    def __call__(self, x: int | float, /) -> np.floating[_NBitT]: ...
     @overload
-    def __call__(self, x: int | float | complex, /) -> np.floating[_NBit] | np.complexfloating[_NBit]: ...
+    def __call__(self, x: int | float | complex, /) -> np.floating[_NBitT] | np.complexfloating[_NBitT]: ...
 
 @type_check_only
-class _FloatMod(Protocol[_NBit]):
+class _FloatMod(Protocol[_NBitT]):
     @overload
-    def __call__(self, x: np.bool | np.uint8 | int | float, /) -> np.floating[_NBit]: ...  # type: ignore[overload-overlap]
+    def __call__(self, x: np.bool | np.uint8 | int | float, /) -> np.floating[_NBitT]: ...  # type: ignore[overload-overlap]
     @overload
     def __call__(self: _FloatMod[_16Bit] | _FloatMod[_32Bit], x: np.uint16 | np.int32 | np.float32, /) -> np.float32: ...  # type: ignore[overload-overlap]
     @overload
@@ -240,11 +130,11 @@ class _FloatMod(Protocol[_NBit]):
     @overload
     def __call__(self: _FloatMod[_NBitLongDouble], x: np.integer | np.floating, /) -> np.longdouble: ...
     @overload
-    def __call__(self, x: np.signedinteger[_NBit1] | np.floating[_NBit1], /) -> np.floating[_NBit | _NBit1]: ...
+    def __call__(self, x: np.signedinteger[_NBitT1] | np.floating[_NBitT1], /) -> np.floating[_NBitT | _NBitT1]: ...
 
-class _FloatDivMod(Protocol[_NBit]):
+class _FloatDivMod(Protocol[_NBitT]):
     @overload
-    def __call__(self, x: np.bool | np.uint8 | int | float, /) -> _2Tuple[np.floating[_NBit]]: ...  # type: ignore[overload-overlap]
+    def __call__(self, x: np.bool | np.uint8 | int | float, /) -> _2Tuple[np.floating[_NBitT]]: ...  # type: ignore[overload-overlap]
     @overload
     def __call__(  # type: ignore[overload-overlap]
         self: _FloatDivMod[_16Bit] | _FloatDivMod[_32Bit],
@@ -260,7 +150,7 @@ class _FloatDivMod(Protocol[_NBit]):
     @overload
     def __call__(self: _FloatDivMod[_NBitLongDouble], x: np.integer | np.floating, /) -> _2Tuple[np.longdouble]: ...
     @overload
-    def __call__(self, x: np.signedinteger[_NBit1] | np.floating[_NBit1], /) -> _2Tuple[np.floating[_NBit | _NBit1]]: ...
+    def __call__(self, x: np.signedinteger[_NBitT1] | np.floating[_NBitT1], /) -> _2Tuple[np.floating[_NBitT | _NBitT1]]: ...
 
 ###
 
