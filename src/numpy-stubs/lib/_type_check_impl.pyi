@@ -210,11 +210,11 @@ def typename(char: L["V"]) -> L["void"]: ...
 @overload
 def typename(char: L["O"]) -> L["object"]: ...
 
-# NOTE: both mypy and pyright are report false-positive overlapping overloads (I think)
+# NOTE: mypy reports false-positive overlapping overloads
 @overload
 def common_type() -> type[np.float16]: ...
 @overload
-def common_type(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def common_type(  # type: ignore[overload-overlap]
     array0: _HasDType[np.float16],
     /,
     *arrays: _HasDType[np.float16],
@@ -226,19 +226,19 @@ def common_type(  # type: ignore[overload-overlap]
     *arrays: _HasDType[np.float32 | np.float16],
 ) -> type[np.float32]: ...
 @overload
-def common_type(  # pyright: ignore[reportOverlappingOverload]
+def common_type(
     array0: _HasDType[np.double | np.integer],
     /,
     *arrays: _HasDType[np.double | np.float32 | np.float16 | np.integer],
 ) -> type[np.float64]: ...
 @overload
-def common_type(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def common_type(  # type: ignore[overload-overlap]
     array0: _HasDType[np.longdouble],
     /,
     *arrays: _HasDType[np.floating | np.integer],
 ) -> type[np.longdouble]: ...
 @overload
-def common_type(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def common_type(  # type: ignore[overload-overlap]
     array0: _HasDType[np.complex64],
     /,
     *arrays: _HasDType[np.complex64 | np.float32 | np.float16],
@@ -319,7 +319,7 @@ def common_type(
     *arrays: _HasDType[np.cdouble | np.complex64 | np.double | np.float32 | np.float16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
-def common_type(  # pyright: ignore[reportOverlappingOverload]
+def common_type(
     array0: _HasDType[np.floating | np.integer],
     /,
     *arrays: _HasDType[np.floating | np.integer],
