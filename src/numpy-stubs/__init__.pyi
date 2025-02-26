@@ -254,15 +254,12 @@ from ._typing import (
     _DTypeLikeVoid,
     _GUFunc_Nin2_Nout1,
     _IntLike_co,
-    _NBitByte,
     _NBitDouble,
     _NBitHalf,
-    _NBitIntC,
     _NBitIntP,
     _NBitLong,
     _NBitLongDouble,
     _NBitLongLong,
-    _NBitShort,
     _NBitSingle,
     _NestedSequence,
     _NumberLike_co,
@@ -288,7 +285,6 @@ from ._typing._callable import (
     _FloatDivMod,
     _FloatMod,
     _FloatOp,
-    _SignedIntOp,
     _UnsignedIntBitOp,
     _UnsignedIntDivMod,
     _UnsignedIntMod,
@@ -588,7 +584,6 @@ __all__ = [  # noqa: RUF022
 ###
 # Constrained types (for internal use only)
 
-_AnyStr = TypeVar("_AnyStr", LiteralString, str, bytes)
 _AnyShapeT = TypeVar(
     "_AnyShapeT",
     tuple[()],  # 0-d
@@ -635,6 +630,7 @@ _ScalarT_co = TypeVar("_ScalarT_co", bound=generic, covariant=True)
 _NumberT = TypeVar("_NumberT", bound=number)
 _RealNumberT = TypeVar("_RealNumberT", bound=floating | integer)
 _IntegerT = TypeVar("_IntegerT", bound=integer)
+_SignedIntegerT = TypeVar("_SignedIntegerT", bound=signedinteger)
 _CharT = TypeVar("_CharT", bound=character)
 
 _NBitT = TypeVar("_NBitT", bound=NBitBase, default=Any)
@@ -779,8 +775,6 @@ _GenericCType: TypeAlias = _NumberCType | type[ct.c_bool | ct.c_char | ct.py_obj
 # `dtype[object_]`, when their *type* is passed to the `dtype` constructor
 # NOTE: `builtins.object` should not be included here
 _BuiltinObjectLike: TypeAlias = Decimal | Fraction
-# Introduce an alias for `dtype` to avoid naming conflicts.
-_dtype: TypeAlias = dtype[_ScalarT]
 
 # can be anything, is case-insensitive, and only the first character matters
 _ByteOrder: TypeAlias = L[
@@ -1555,6 +1549,9 @@ class _ArrayOrScalarCommon:
     @property
     def device(self) -> _Device: ...
 
+    if sys.version_info >= (3, 12):
+        def __buffer__(self, flags: int, /) -> memoryview: ...
+
     #
     @property
     def __array_interface__(self) -> dict[str, Any]: ...
@@ -1924,6 +1921,7 @@ class _ArrayOrScalarCommon:
         correction: float = ...,
     ) -> _ArrayT: ...
 
+#
 class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     __hash__: ClassVar[None]  # type: ignore[assignment]  # pyright: ignore[reportIncompatibleMethodOverride]
 
@@ -1982,9 +1980,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     def __class_getitem__(cls, item: object, /) -> GenericAlias: ...
-
-    if sys.version_info >= (3, 12):
-        def __buffer__(self, flags: int, /) -> memoryview: ...
 
     #
     @overload
@@ -3762,22 +3757,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 # the missing `ABCMeta` metaclass.
 # See https://github.com/numpy/numpy-stubs/pull/80 for more details.
 class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
-    @abc.abstractmethod
-    def __init__(self, *args: Any, **kwargs: Any) -> None: ...
-
-    #
-    def __hash__(self) -> int: ...
-
-    #
-    @overload
-    def __array__(self, dtype: None = None, /) -> ndarray[tuple[()], dtype[Self]]: ...
-    @overload
-    def __array__(self, dtype: _DTypeT, /) -> ndarray[tuple[()], _DTypeT]: ...
-
-    #
-    if sys.version_info >= (3, 12):
-        def __buffer__(self, flags: int, /) -> memoryview: ...
-
     @property
     def base(self) -> None: ...
     @property
@@ -3792,86 +3771,124 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def flat(self) -> flatiter[ndarray[tuple[int], dtype[Self]]]: ...
 
     #
+    @abc.abstractmethod
+    def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
+
+    if sys.version_info >= (3, 12):
+        def __buffer__(self, flags: int, /) -> memoryview: ...
+
+    #
+    def __hash__(self) -> int: ...
+
+    #
+    @overload
+    def __array__(self, dtype: None = None, /) -> ndarray[tuple[()], dtype[Self]]: ...
+    @overload
+    def __array__(self, dtype: _DTypeT, /) -> ndarray[tuple[()], _DTypeT]: ...
+
+    #
     @overload
     def item(self, /) -> _ItemT_co: ...
     @overload
-    def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()] = ..., /) -> _ItemT_co: ...
+    def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> _ItemT_co: ...
 
     #
     def tolist(self, /) -> _ItemT_co: ...
 
     #
-    def byteswap(self, inplace: L[False] = ...) -> Self: ...
+    def byteswap(self, /, inplace: L[False] = False) -> Self: ...
 
     #
     @overload
     def astype(
         self,
+        /,
         dtype: _DTypeLike[_ScalarT],
-        order: _OrderKACF = ...,
-        casting: _CastingKind = ...,
-        subok: py_bool = ...,
-        copy: py_bool | _CopyMode = ...,
+        order: _OrderKACF = "K",
+        casting: _CastingKind = "unsafe",
+        subok: py_bool = True,
+        copy: py_bool | _CopyMode = True,
     ) -> _ScalarT: ...
     @overload
     def astype(
         self,
+        /,
         dtype: DTypeLike,
-        order: _OrderKACF = ...,
-        casting: _CastingKind = ...,
-        subok: py_bool = ...,
-        copy: py_bool | _CopyMode = ...,
+        order: _OrderKACF = "K",
+        casting: _CastingKind = "unsafe",
+        subok: py_bool = True,
+        copy: py_bool | _CopyMode = True,
     ) -> Any: ...
-
-    # NOTE: `view` will perform a 0D->scalar cast,
-    # thus the array `type` is irrelevant to the output type
-    @overload
-    def view(self, type: type[NDArray[Any]] = ...) -> Self: ...
-    @overload
-    def view(self, dtype: _DTypeLike[_ScalarT], type: type[NDArray[Any]] = ...) -> _ScalarT: ...
-    @overload
-    def view(self, dtype: DTypeLike, type: type[NDArray[Any]] = ...) -> Any: ...
 
     #
     @overload
-    def getfield(self, dtype: _DTypeLike[_ScalarT], offset: CanIndex = ...) -> _ScalarT: ...
+    def view(self, /) -> Self: ...
     @overload
-    def getfield(self, dtype: DTypeLike, offset: CanIndex = ...) -> Any: ...
+    def view(self, /, dtype: type[NDArray[Any]]) -> Self: ...
+    @overload
+    def view(self, /, *, type: type[NDArray[Any]]) -> Self: ...
+    @overload
+    def view(self, /, dtype: _DTypeLike[_ScalarT]) -> _ScalarT: ...
+    @overload
+    def view(self, /, dtype: _DTypeLike[_ScalarT], type: type[NDArray[Any]]) -> _ScalarT: ...
+    @overload
+    def view(self, /, dtype: DTypeLike) -> Any: ...
+    @overload
+    def view(self, /, dtype: DTypeLike, type: type[NDArray[Any]]) -> Any: ...
+
+    #
+    @overload
+    def getfield(self, /, dtype: _DTypeLike[_ScalarT], offset: CanIndex = 0) -> _ScalarT: ...
+    @overload
+    def getfield(self, /, dtype: DTypeLike, offset: CanIndex = 0) -> Any: ...
 
     #
     @overload
     def take(
         self,
+        /,
         indices: _IntLike_co,
-        axis: CanIndex | None = ...,
-        out: None = ...,
-        mode: _ModeKind = ...,
+        axis: CanIndex | None = None,
+        out: None = None,
+        mode: _ModeKind = "raise",
     ) -> Self: ...
     @overload
     def take(
         self,
-        indices: _ArrayLikeInt_co,
-        axis: CanIndex | None = ...,
-        out: None = ...,
-        mode: _ModeKind = ...,
+        /,
+        indices: _NestedSequence[CanIndex],
+        axis: CanIndex | None = None,
+        out: None = None,
+        mode: _ModeKind = "raise",
     ) -> NDArray[Self]: ...
     @overload
     def take(
         self,
+        /,
         indices: _ArrayLikeInt_co,
-        axis: CanIndex | None = ...,
-        out: _ArrayT = ...,
-        mode: _ModeKind = ...,
+        axis: CanIndex | None,
+        out: _ArrayT,
+        mode: _ModeKind = "raise",
+    ) -> _ArrayT: ...
+    @overload
+    def take(
+        self,
+        /,
+        indices: _ArrayLikeInt_co,
+        axis: CanIndex | None = None,
+        *,
+        out: _ArrayT,
+        mode: _ModeKind = "raise",
     ) -> _ArrayT: ...
 
     #
-    def repeat(self, repeats: _ArrayLikeInt_co, axis: CanIndex | None = ...) -> NDArray[Self]: ...
+    def repeat(self, /, repeats: _ArrayLikeInt_co, axis: CanIndex | None = None) -> NDArray[Self]: ...
 
     #
     def flatten(self, /, order: _OrderKACF = "C") -> ndarray[tuple[int], dtype[Self]]: ...
     def ravel(self, /, order: _OrderKACF = "C") -> ndarray[tuple[int], dtype[Self]]: ...
-    def squeeze(self, axis: L[0] | tuple[()] | None = ...) -> Self: ...
-    def transpose(self, axes: tuple[()] | None = ..., /) -> Self: ...
+    def squeeze(self, axis: L[0] | tuple[()] | None = None) -> Self: ...
+    def transpose(self, axes: tuple[()] | None = None, /) -> Self: ...
 
     #
     @overload  # (() | [])
@@ -4022,6 +4039,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     #
     def argsort(
         self,
+        /,
         axis: CanIndex | None = -1,
         kind: _SortKind | None = None,
         order: str | Sequence[str] | None = None,
@@ -4031,7 +4049,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
     # Keep `dtype` at the bottom to avoid name conflicts with `dtype`
     @property
-    def dtype(self) -> _dtype[Self]: ...
+    def dtype(self) -> dtype[Self]: ...
 
 class number(generic[_NumberItemT_co], Generic[_NBitT, _NumberItemT_co]):
     @abc.abstractmethod
@@ -4084,7 +4102,7 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __bool__(self, /) -> _BoolItemT_co: ...
 
     #
-    @deprecated("In future, it will be an error for 'bool_' scalars to be interpreted as an index")
+    @deprecated("In future, it will be an error for 'np.bool' scalars to be interpreted as an index")
     def __index__(self, /) -> L[0, 1]: ...
 
     #
@@ -4198,7 +4216,9 @@ class object_(_RealMixin, generic):
     @overload
     def __new__(cls, nothing_to_see_here: None = None, /) -> None: ...  # type: ignore[misc]
     @overload
-    def __new__(cls, stringy: _AnyStr, /) -> _AnyStr: ...  # type: ignore[misc]
+    def __new__(cls, stringy: str, /) -> str: ...  # type: ignore[misc]  # pyright: ignore[reportOverlappingOverload]
+    @overload
+    def __new__(cls, stringy: bytes, /) -> bytes: ...  # type: ignore[misc]
     @overload
     def __new__(cls, array: ndarray[_ShapeT, Any], /) -> ndarray[_ShapeT, dtype[Self]]: ...  # type: ignore[misc]
     @overload
@@ -4306,21 +4326,161 @@ class integer(_IntegralMixin, _RoundMixin, number[_NBitT, int]):
 class signedinteger(integer[_NBitT]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
 
-    __add__: _SignedIntOp[_NBitT]
-    __radd__: _SignedIntOp[_NBitT]
+    #
+    @overload
+    def __add__(self, x: int | Self | int8 | bool_, /) -> Self: ...
+    @overload
+    def __add__(self, x: int64, /) -> int64: ...
+    @overload
+    def __add__(self: int64, x: signedinteger, /) -> int64: ...
+    @overload
+    def __add__(self: int32, x: int8 | int16 | int32, /) -> int32: ...
+    @overload
+    def __add__(self: int16, x: int32, /) -> int32: ...
+    @overload
+    def __add__(self: int16, x: int8 | int16, /) -> int16: ...
+    @overload
+    def __add__(self: int8, x: _SignedIntegerT, /) -> _SignedIntegerT: ...
+    @overload
+    def __add__(self, x: floating[_64Bit], /) -> float64: ...
+    @overload
+    def __add__(self, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __add__(self, x: float, /) -> float64 | Self: ...
+    @overload
+    def __add__(self, x: complex, /) -> complex128 | float64 | Self: ...
 
-    __sub__: _SignedIntOp[_NBitT]
-    __rsub__: _SignedIntOp[_NBitT]
+    #
+    @overload
+    def __radd__(self, x: int, /) -> Self: ...
+    @overload
+    def __radd__(self, x: float, /) -> float64 | Self: ...
+    @overload
+    def __radd__(self, x: complex, /) -> complex128 | float64 | Self: ...
 
-    __mul__: _SignedIntOp[_NBitT]
-    __rmul__: _SignedIntOp[_NBitT]
+    #  keep in sync with __add__
+    @overload
+    def __sub__(self, x: int | Self | int8 | bool_, /) -> Self: ...
+    @overload
+    def __sub__(self, x: int64, /) -> int64: ...
+    @overload
+    def __sub__(self: int64, x: signedinteger, /) -> int64: ...
+    @overload
+    def __sub__(self: int32, x: int8 | int16 | int32, /) -> int32: ...
+    @overload
+    def __sub__(self: int16, x: int32, /) -> int32: ...
+    @overload
+    def __sub__(self: int16, x: int8 | int16, /) -> int16: ...
+    @overload
+    def __sub__(self: int8, x: _SignedIntegerT, /) -> _SignedIntegerT: ...
+    @overload
+    def __sub__(self, x: floating[_64Bit], /) -> float64: ...
+    @overload
+    def __sub__(self, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __sub__(self, x: float, /) -> float64 | Self: ...
+    @overload
+    def __sub__(self, x: complex, /) -> complex128 | float64 | Self: ...
 
-    __floordiv__: _SignedIntOp[_NBitT]
-    __rfloordiv__: _SignedIntOp[_NBitT]
+    # keep in sync with __radd__
+    @overload
+    def __rsub__(self, x: int, /) -> Self: ...
+    @overload
+    def __rsub__(self, x: float, /) -> float64 | Self: ...
+    @overload
+    def __rsub__(self, x: complex, /) -> complex128 | float64 | Self: ...
 
-    __pow__: _SignedIntOp[_NBitT]
-    __rpow__: _SignedIntOp[_NBitT]
+    #  keep in sync with __add__
+    @overload
+    def __mul__(self, x: int | Self | int8 | bool_, /) -> Self: ...
+    @overload
+    def __mul__(self, x: int64, /) -> int64: ...
+    @overload
+    def __mul__(self: int64, x: signedinteger, /) -> int64: ...
+    @overload
+    def __mul__(self: int32, x: int8 | int16 | int32, /) -> int32: ...
+    @overload
+    def __mul__(self: int16, x: int32, /) -> int32: ...
+    @overload
+    def __mul__(self: int16, x: int8 | int16, /) -> int16: ...
+    @overload
+    def __mul__(self: int8, x: _SignedIntegerT, /) -> _SignedIntegerT: ...
+    @overload
+    def __mul__(self, x: floating[_64Bit], /) -> float64: ...
+    @overload
+    def __mul__(self, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __mul__(self, x: float, /) -> float64 | Self: ...
+    @overload
+    def __mul__(self, x: complex, /) -> complex128 | float64 | Self: ...
 
+    # keep in sync with __radd__
+    @overload
+    def __rmul__(self, x: int, /) -> Self: ...
+    @overload
+    def __rmul__(self, x: float, /) -> float64 | Self: ...
+    @overload
+    def __rmul__(self, x: complex, /) -> complex128 | float64 | Self: ...
+
+    #  keep in sync with __add__ (minus complex)
+    @overload
+    def __floordiv__(self, x: int | Self | int8 | bool_, /) -> Self: ...
+    @overload
+    def __floordiv__(self, x: int64, /) -> int64: ...
+    @overload
+    def __floordiv__(self: int64, x: signedinteger, /) -> int64: ...
+    @overload
+    def __floordiv__(self: int32, x: int8 | int16 | int32, /) -> int32: ...
+    @overload
+    def __floordiv__(self: int16, x: int32, /) -> int32: ...
+    @overload
+    def __floordiv__(self: int16, x: int8 | int16, /) -> int16: ...
+    @overload
+    def __floordiv__(self: int8, x: _SignedIntegerT, /) -> _SignedIntegerT: ...
+    @overload
+    def __floordiv__(self, x: floating[_64Bit], /) -> float64: ...
+    @overload
+    def __floordiv__(self, x: float, /) -> float64 | Self: ...
+
+    # keep in sync with __radd__ (minus complex)
+    @overload
+    def __rfloordiv__(self, x: int, /) -> Self: ...
+    @overload
+    def __rfloordiv__(self, x: float, /) -> float64 | Self: ...
+
+    #  keep in sync with __add__
+    @overload
+    def __pow__(self, x: int | Self | int8 | bool_, /) -> Self: ...
+    @overload
+    def __pow__(self, x: int64, /) -> int64: ...
+    @overload
+    def __pow__(self: int64, x: signedinteger, /) -> int64: ...
+    @overload
+    def __pow__(self: int32, x: int8 | int16 | int32, /) -> int32: ...
+    @overload
+    def __pow__(self: int16, x: int32, /) -> int32: ...
+    @overload
+    def __pow__(self: int16, x: int8 | int16, /) -> int16: ...
+    @overload
+    def __pow__(self: int8, x: _SignedIntegerT, /) -> _SignedIntegerT: ...
+    @overload
+    def __pow__(self, x: floating[_64Bit], /) -> float64: ...
+    @overload
+    def __pow__(self, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __pow__(self, x: float, /) -> float64 | Self: ...
+    @overload
+    def __pow__(self, x: complex, /) -> complex128 | float64 | Self: ...
+
+    # keep in sync with __radd__
+    @overload
+    def __rpow__(self, x: int, /) -> Self: ...
+    @overload
+    def __rpow__(self, x: float, /) -> float64 | Self: ...
+    @overload
+    def __rpow__(self, x: complex, /) -> complex128 | float64 | Self: ...
+
+    #
     @overload  # type: ignore[override]
     def __mod__(self, x: int | Self | int8 | bool_, /) -> Self: ...
     @overload
@@ -4420,14 +4580,13 @@ int8: TypeAlias = signedinteger[_8Bit]
 int16: TypeAlias = signedinteger[_16Bit]
 int32: TypeAlias = signedinteger[_32Bit]
 int64: TypeAlias = signedinteger[_64Bit]
-
-byte: TypeAlias = signedinteger[_NBitByte]
-short: TypeAlias = signedinteger[_NBitShort]
-intc: TypeAlias = signedinteger[_NBitIntC]
 intp: TypeAlias = signedinteger[_NBitIntP]
-int_ = intp
 long: TypeAlias = signedinteger[_NBitLong]
 longlong: TypeAlias = signedinteger[_NBitLongLong]
+byte = int8
+short = int16
+intc = int32
+int_ = intp
 
 class unsignedinteger(integer[_NBitT1]):
     # NOTE: `uint64 + signedinteger -> float64`
@@ -4443,6 +4602,11 @@ class unsignedinteger(integer[_NBitT1]):
     __rfloordiv__: _UnsignedIntOp[_NBitT1]
     __pow__: _UnsignedIntOp[_NBitT1]
     __rpow__: _UnsignedIntOp[_NBitT1]
+    __mod__: _UnsignedIntMod[_NBitT1]
+    __rmod__: _UnsignedIntMod[_NBitT1]
+    __divmod__: _UnsignedIntDivMod[_NBitT1]
+    __rdivmod__: _UnsignedIntDivMod[_NBitT1]
+
     __lshift__: _UnsignedIntBitOp[_NBitT1]
     __rlshift__: _UnsignedIntBitOp[_NBitT1]
     __rshift__: _UnsignedIntBitOp[_NBitT1]
@@ -4453,23 +4617,18 @@ class unsignedinteger(integer[_NBitT1]):
     __rxor__: _UnsignedIntBitOp[_NBitT1]
     __or__: _UnsignedIntBitOp[_NBitT1]
     __ror__: _UnsignedIntBitOp[_NBitT1]
-    __mod__: _UnsignedIntMod[_NBitT1]
-    __rmod__: _UnsignedIntMod[_NBitT1]
-    __divmod__: _UnsignedIntDivMod[_NBitT1]
-    __rdivmod__: _UnsignedIntDivMod[_NBitT1]
 
 uint8: TypeAlias = unsignedinteger[_8Bit]
 uint16: TypeAlias = unsignedinteger[_16Bit]
 uint32: TypeAlias = unsignedinteger[_32Bit]
 uint64: TypeAlias = unsignedinteger[_64Bit]
-
-ubyte: TypeAlias = unsignedinteger[_NBitByte]
-ushort: TypeAlias = unsignedinteger[_NBitShort]
-uintc: TypeAlias = unsignedinteger[_NBitIntC]
 uintp: TypeAlias = unsignedinteger[_NBitIntP]
-uint: TypeAlias = uintp
 ulong: TypeAlias = unsignedinteger[_NBitLong]
 ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
+ubyte = uint8
+ushort = uint16
+uintc = uint32
+uint: TypeAlias = uintp
 
 class inexact(number[_NBitT, _InexactItemT_co], Generic[_NBitT, _InexactItemT_co]):
     @abc.abstractmethod
