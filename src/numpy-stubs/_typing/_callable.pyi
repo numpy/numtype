@@ -3,19 +3,13 @@ from typing_extensions import TypeVar
 
 import numpy as np
 
-from . import NBitBase
 from ._array_like import NDArray
-from ._nbit import _NBitLongDouble
-from ._nbit_base import _16Bit, _32Bit
 from ._nested_sequence import _NestedSequence
 from ._scalars import _BoolLike_co, _IntLike_co
 
 _T = TypeVar("_T")
 _T1_contra = TypeVar("_T1_contra", contravariant=True)
 _T2_contra = TypeVar("_T2_contra", contravariant=True)
-
-_NBitT = TypeVar("_NBitT", bound=NBitBase)
-_NBitT1 = TypeVar("_NBitT1", bound=NBitBase)
 
 _RealT = TypeVar("_RealT", bound=np.integer | np.floating)
 _InexactT = TypeVar("_InexactT", bound=np.inexact)
@@ -83,74 +77,6 @@ class _BoolDivMod(Protocol):
     def __call__(self, x: int, /) -> _2Tuple[np.int8] | _2Tuple[np.int_]: ...
     @overload
     def __call__(self, x: int | float, /) -> _2Tuple[np.int8] | _2Tuple[np.int_] | _2Tuple[np.float64]: ...
-
-###
-
-@type_check_only
-class _FloatOp(Protocol[_NBitT]):
-    @overload
-    def __call__(self, x: np.bool | np.uint8 | int, /) -> np.floating[_NBitT]: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(self: _FloatOp[_16Bit] | _FloatOp[_32Bit], x: np.uint16 | np.int32 | np.float32, /) -> np.float32: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(
-        self: _FloatOp[_16Bit] | _FloatOp[_32Bit],
-        x: np.uint32 | np.uint64 | np.uint | np.int64 | np.float64,
-        /,
-    ) -> np.float64: ...
-    @overload
-    def __call__(self: _FloatOp[_16Bit] | _FloatOp[_32Bit], x: np.complex64, /) -> np.complex64: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(self: _FloatOp[_16Bit] | _FloatOp[_32Bit], x: np.complex128, /) -> np.complex128: ...
-    @overload
-    def __call__(self: _FloatOp[_NBitLongDouble], x: np.integer | np.floating, /) -> np.longdouble: ...
-    @overload
-    def __call__(self, x: np.longdouble, /) -> np.longdouble: ...
-    @overload
-    def __call__(self: _FloatOp[_NBitLongDouble], x: np.complexfloating, /) -> np.clongdouble: ...
-    @overload
-    def __call__(self, x: np.signedinteger[_NBitT1] | np.floating[_NBitT1], /) -> np.floating[_NBitT | _NBitT1]: ...
-    @overload
-    def __call__(self, x: int | float, /) -> np.floating[_NBitT]: ...
-    @overload
-    def __call__(self, x: int | float | complex, /) -> np.floating[_NBitT] | np.complexfloating[_NBitT]: ...
-
-@type_check_only
-class _FloatMod(Protocol[_NBitT]):
-    @overload
-    def __call__(self, x: np.bool | np.uint8 | int | float, /) -> np.floating[_NBitT]: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(self: _FloatMod[_16Bit] | _FloatMod[_32Bit], x: np.uint16 | np.int32 | np.float32, /) -> np.float32: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(
-        self: _FloatMod[_16Bit] | _FloatMod[_32Bit],
-        x: np.uint32 | np.uint64 | np.uint | np.int64 | np.float64,
-        /,
-    ) -> np.float64: ...
-    @overload
-    def __call__(self: _FloatMod[_NBitLongDouble], x: np.integer | np.floating, /) -> np.longdouble: ...
-    @overload
-    def __call__(self, x: np.signedinteger[_NBitT1] | np.floating[_NBitT1], /) -> np.floating[_NBitT | _NBitT1]: ...
-
-class _FloatDivMod(Protocol[_NBitT]):
-    @overload
-    def __call__(self, x: np.bool | np.uint8 | int | float, /) -> _2Tuple[np.floating[_NBitT]]: ...  # type: ignore[overload-overlap]
-    @overload
-    def __call__(  # type: ignore[overload-overlap]
-        self: _FloatDivMod[_16Bit] | _FloatDivMod[_32Bit],
-        x: np.uint16 | np.int32 | np.float32,
-        /,
-    ) -> _2Tuple[np.float32]: ...
-    @overload
-    def __call__(
-        self: _FloatDivMod[_16Bit] | _FloatDivMod[_32Bit],
-        x: np.uint32 | np.uint64 | np.uint | np.int64 | np.float64,
-        /,
-    ) -> _2Tuple[np.float64]: ...
-    @overload
-    def __call__(self: _FloatDivMod[_NBitLongDouble], x: np.integer | np.floating, /) -> _2Tuple[np.longdouble]: ...
-    @overload
-    def __call__(self, x: np.signedinteger[_NBitT1] | np.floating[_NBitT1], /) -> _2Tuple[np.floating[_NBitT | _NBitT1]]: ...
 
 ###
 

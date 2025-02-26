@@ -282,9 +282,6 @@ from ._typing._callable import (
     _ComparisonOpGT,
     _ComparisonOpLE,
     _ComparisonOpLT,
-    _FloatDivMod,
-    _FloatMod,
-    _FloatOp,
 )
 from ._typing._char_codes import (
     _BoolCodes,
@@ -4203,9 +4200,6 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __or__(self, x: int, /) -> bool_ | intp: ...
     __ror__ = __or__
 
-# NOTE: This should NOT be `Final` or a `TypeAlias`!
-bool_ = bool
-
 # NOTE: The `object_` constructor returns the passed object, so instances with type
 # `object_` cannot exists (at runtime).
 # NOTE: Because mypy has some long-standing bugs related to `__new__`, `object_` can't
@@ -4575,18 +4569,6 @@ class signedinteger(integer[_NBitT]):
     def __or__(self, x: signedinteger[_NBitT1], /) -> signedinteger[_NBitT | _NBitT1]: ...
     @overload
     def __or__(self, x: _IntLike_co, /) -> signedinteger: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-int8: TypeAlias = signedinteger[_8Bit]
-int16: TypeAlias = signedinteger[_16Bit]
-int32: TypeAlias = signedinteger[_32Bit]
-int64: TypeAlias = signedinteger[_64Bit]
-intp: TypeAlias = signedinteger[_NBitIntP]
-long: TypeAlias = signedinteger[_NBitLong]
-longlong: TypeAlias = signedinteger[_NBitLongLong]
-byte = int8
-short = int16
-intc = int32
-int_ = intp
 
 class unsignedinteger(integer[_NBitT]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
@@ -5323,48 +5305,411 @@ class unsignedinteger(integer[_NBitT]):
     @overload
     def __ror__(self: uint32 | uint16 | uint8, x: integer, /) -> integer: ...
 
-uint8: TypeAlias = unsignedinteger[_8Bit]
-uint16: TypeAlias = unsignedinteger[_16Bit]
-uint32: TypeAlias = unsignedinteger[_32Bit]
-uint64: TypeAlias = unsignedinteger[_64Bit]
-uintp: TypeAlias = unsignedinteger[_NBitIntP]
-ulong: TypeAlias = unsignedinteger[_NBitLong]
-ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
-ubyte = uint8
-ushort = uint16
-uintc = uint32
-uint: TypeAlias = uintp
-
 class inexact(number[_NBitT, _InexactItemT_co], Generic[_NBitT, _InexactItemT_co]):
     @abc.abstractmethod
     def __init__(self, value: _InexactItemT_co | None = ..., /) -> None: ...
 
-class floating(_RealMixin, _RoundMixin, inexact[_NBitT1, float]):
+class floating(_RealMixin, _RoundMixin, inexact[_NBitT, float]):
     def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
 
-    __add__: _FloatOp[_NBitT1]
-    __radd__: _FloatOp[_NBitT1]
-    __sub__: _FloatOp[_NBitT1]
-    __rsub__: _FloatOp[_NBitT1]
-    __mul__: _FloatOp[_NBitT1]
-    __rmul__: _FloatOp[_NBitT1]
-    __truediv__: _FloatOp[_NBitT1]
-    __rtruediv__: _FloatOp[_NBitT1]
-    __floordiv__: _FloatOp[_NBitT1]
-    __rfloordiv__: _FloatOp[_NBitT1]
-    __pow__: _FloatOp[_NBitT1]
-    __rpow__: _FloatOp[_NBitT1]
-    __mod__: _FloatMod[_NBitT1]
-    __rmod__: _FloatMod[_NBitT1]
-    __divmod__: _FloatDivMod[_NBitT1]
-    __rdivmod__: _FloatDivMod[_NBitT1]
+    #
+    @overload
+    def __add__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __add__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __add__(self, x: longdouble, /) -> longdouble: ...  # type: ignore[overload-overlap]
+    @overload
+    def __add__(self, x: clongdouble, /) -> clongdouble: ...
+    @overload
+    def __add__(self: longdouble, x: floating | integer | bool_, /) -> longdouble: ...
+    @overload
+    def __add__(self: longdouble, x: complexfloating, /) -> clongdouble: ...
+    @overload
+    def __add__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __add__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> float64: ...
+    @overload
+    def __add__(self: floating[_64Bit], x: complexfloating[_64Bit] | complexfloating[_32Bit], /) -> complex128: ...
+    @overload
+    def __add__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __add__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> float32: ...
+    @overload
+    def __add__(self: float32 | float16, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __add__(self: float32 | float16, x: complexfloating[_32Bit], /) -> complex64: ...
+    @overload
+    def __add__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __add__(self, x: floating | integer | bool_, /) -> floating: ...
+    @overload
+    def __add__(self, x: number | bool_, /) -> inexact: ...
 
-    # NOTE: `is_integer` and `as_integer_ratio` are technically defined in the concrete subtypes
+    #
+    @overload
+    def __radd__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __radd__(self, x: longdouble, /) -> longdouble: ...
+    @overload
+    def __radd__(self: longdouble, x: integer, /) -> longdouble: ...
+    @overload
+    def __radd__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __radd__(self: floating[_64Bit], x: integer, /) -> float64: ...
+    @overload
+    def __radd__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __radd__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __radd__(self: float32 | float16, x: integer[_16Bit], /) -> float32: ...
+    @overload
+    def __radd__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __radd__(self, x: integer, /) -> floating: ...
+    @overload
+    def __radd__(self, x: number, /) -> inexact: ...
+
+    # keep in sync with `__add__`
+    @overload
+    def __sub__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __sub__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __sub__(self, x: longdouble, /) -> longdouble: ...  # type: ignore[overload-overlap]
+    @overload
+    def __sub__(self, x: clongdouble, /) -> clongdouble: ...
+    @overload
+    def __sub__(self: longdouble, x: floating | integer | bool_, /) -> longdouble: ...
+    @overload
+    def __sub__(self: longdouble, x: complexfloating, /) -> clongdouble: ...
+    @overload
+    def __sub__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __sub__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> float64: ...
+    @overload
+    def __sub__(self: floating[_64Bit], x: complexfloating[_64Bit] | complexfloating[_32Bit], /) -> complex128: ...
+    @overload
+    def __sub__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __sub__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> float32: ...
+    @overload
+    def __sub__(self: float32 | float16, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __sub__(self: float32 | float16, x: complexfloating[_32Bit], /) -> complex64: ...
+    @overload
+    def __sub__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __sub__(self, x: floating | integer | bool_, /) -> floating: ...
+    @overload
+    def __sub__(self, x: number | bool_, /) -> inexact: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rsub__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __rsub__(self, x: longdouble, /) -> longdouble: ...
+    @overload
+    def __rsub__(self: longdouble, x: integer, /) -> longdouble: ...
+    @overload
+    def __rsub__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __rsub__(self: floating[_64Bit], x: integer, /) -> float64: ...
+    @overload
+    def __rsub__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __rsub__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __rsub__(self: float32 | float16, x: integer[_16Bit], /) -> float32: ...
+    @overload
+    def __rsub__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __rsub__(self, x: integer, /) -> floating: ...
+    @overload
+    def __rsub__(self, x: number, /) -> inexact: ...
+
+    # keep in sync with `__add__` (plus a `timedelta64` overload)
+    @overload
+    def __mul__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __mul__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __mul__(self, x: longdouble, /) -> longdouble: ...  # type: ignore[overload-overlap]
+    @overload
+    def __mul__(self, x: clongdouble, /) -> clongdouble: ...
+    @overload
+    def __mul__(self: longdouble, x: floating | integer | bool_, /) -> longdouble: ...
+    @overload
+    def __mul__(self: longdouble, x: complexfloating, /) -> clongdouble: ...
+    @overload
+    def __mul__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __mul__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> float64: ...
+    @overload
+    def __mul__(self: floating[_64Bit], x: complexfloating[_64Bit] | complexfloating[_32Bit], /) -> complex128: ...
+    @overload
+    def __mul__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __mul__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> float32: ...
+    @overload
+    def __mul__(self: float32 | float16, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __mul__(self: float32 | float16, x: complexfloating[_32Bit], /) -> complex64: ...
+    @overload
+    def __mul__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __mul__(self, x: timedelta64[_TD64ItemT], /) -> timedelta64[_TD64ItemT]: ...
+    @overload
+    def __mul__(self, x: floating | integer | bool_, /) -> floating: ...
+    @overload
+    def __mul__(self, x: number | bool_, /) -> inexact: ...
+
+    # keep in sync with `__radd__` (minus the `datetime64` overloads, plus a `timedelta64` overload)
+    @overload
+    def __rmul__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __rmul__(self, x: longdouble, /) -> longdouble: ...
+    @overload
+    def __rmul__(self: longdouble, x: integer, /) -> longdouble: ...
+    @overload
+    def __rmul__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __rmul__(self: floating[_64Bit], x: integer, /) -> float64: ...
+    @overload
+    def __rmul__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __rmul__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __rmul__(self: float32 | float16, x: integer[_16Bit], /) -> float32: ...
+    @overload
+    def __rmul__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __rmul__(self, x: timedelta64[_TD64ItemT], /) -> timedelta64[_TD64ItemT]: ...
+    @overload
+    def __rmul__(self, x: integer, /) -> floating: ...
+    @overload
+    def __rmul__(self, x: number, /) -> inexact: ...
+
+    # keep in sync with `__mul__` (minus the `timedelta64` overloads)
+    @overload
+    def __pow__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __pow__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __pow__(self, x: longdouble, /) -> longdouble: ...  # type: ignore[overload-overlap]
+    @overload
+    def __pow__(self, x: clongdouble, /) -> clongdouble: ...
+    @overload
+    def __pow__(self: longdouble, x: floating | integer | bool_, /) -> longdouble: ...
+    @overload
+    def __pow__(self: longdouble, x: complexfloating, /) -> clongdouble: ...
+    @overload
+    def __pow__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __pow__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> float64: ...
+    @overload
+    def __pow__(self: floating[_64Bit], x: complexfloating[_64Bit] | complexfloating[_32Bit], /) -> complex128: ...
+    @overload
+    def __pow__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __pow__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> float32: ...
+    @overload
+    def __pow__(self: float32 | float16, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __pow__(self: float32 | float16, x: complexfloating[_32Bit], /) -> complex64: ...
+    @overload
+    def __pow__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __pow__(self, x: floating | integer | bool_, /) -> floating: ...
+    @overload
+    def __pow__(self, x: number | bool_, /) -> inexact: ...
+
+    # keep in sync with `__rmul__` (minus the `timedelta64` overloads)
+    @overload
+    def __rpow__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __rpow__(self, x: longdouble, /) -> longdouble: ...
+    @overload
+    def __rpow__(self: longdouble, x: integer, /) -> longdouble: ...
+    @overload
+    def __rpow__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __rpow__(self: floating[_64Bit], x: integer, /) -> float64: ...
+    @overload
+    def __rpow__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __rpow__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __rpow__(self: float32 | float16, x: integer[_16Bit], /) -> float32: ...
+    @overload
+    def __rpow__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __rpow__(self, x: integer, /) -> floating: ...
+    @overload
+    def __rpow__(self, x: number, /) -> inexact: ...
+
+    # keep in sync with `__pow__`
+    @overload
+    def __truediv__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __truediv__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __truediv__(self, x: longdouble, /) -> longdouble: ...  # type: ignore[overload-overlap]
+    @overload
+    def __truediv__(self, x: clongdouble, /) -> clongdouble: ...
+    @overload
+    def __truediv__(self: longdouble, x: floating | integer | bool_, /) -> longdouble: ...
+    @overload
+    def __truediv__(self: longdouble, x: complexfloating, /) -> clongdouble: ...
+    @overload
+    def __truediv__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __truediv__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> float64: ...
+    @overload
+    def __truediv__(self: floating[_64Bit], x: complexfloating[_64Bit] | complexfloating[_32Bit], /) -> complex128: ...
+    @overload
+    def __truediv__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __truediv__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> float32: ...
+    @overload
+    def __truediv__(self: float32 | float16, x: complexfloating[_64Bit], /) -> complex128: ...
+    @overload
+    def __truediv__(self: float32 | float16, x: complexfloating[_32Bit], /) -> complex64: ...
+    @overload
+    def __truediv__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __truediv__(self, x: floating | integer | bool_, /) -> floating: ...
+    @overload
+    def __truediv__(self, x: number | bool_, /) -> inexact: ...
+
+    # keep in sync with `__rpow__` (plus a `timedelta64` overload)
+    @overload
+    def __rtruediv__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __rtruediv__(self, x: longdouble, /) -> longdouble: ...
+    @overload
+    def __rtruediv__(self: longdouble, x: integer, /) -> longdouble: ...
+    @overload
+    def __rtruediv__(self: longdouble, x: complex, /) -> clongdouble | longdouble: ...
+    @overload
+    def __rtruediv__(self: floating[_64Bit], x: integer, /) -> float64: ...
+    @overload
+    def __rtruediv__(self: floating[_64Bit], x: complex, /) -> complex128 | float64: ...
+    @overload
+    def __rtruediv__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __rtruediv__(self: float32 | float16, x: integer[_16Bit], /) -> float32: ...
+    @overload
+    def __rtruediv__(self: float32 | float16, x: complex, /) -> complex64 | floating[_NBitT]: ...
+    @overload
+    def __rtruediv__(self, x: timedelta64[_TD64ItemT], /) -> timedelta64[_TD64ItemT]: ...
+    @overload
+    def __rtruediv__(self, x: integer, /) -> floating: ...
+    @overload
+    def __rtruediv__(self, x: number, /) -> inexact: ...
+
+    # keep in sync with `__truediv__` (minus the complex overloads)
+    @overload
+    def __floordiv__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __floordiv__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __floordiv__(self, x: longdouble, /) -> longdouble: ...  # type: ignore[overload-overlap]
+    @overload
+    def __floordiv__(self: longdouble, x: floating | integer | bool_, /) -> longdouble: ...
+    @overload
+    def __floordiv__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> float64: ...
+    @overload
+    def __floordiv__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> float32: ...
+    @overload
+    def __floordiv__(self, x: floating | integer | bool_, /) -> floating: ...
+
+    # keep in sync with `__rtruediv__` (minus the complex overloads)
+    @overload
+    def __rfloordiv__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __rfloordiv__(self, x: longdouble, /) -> longdouble: ...
+    @overload
+    def __rfloordiv__(self: longdouble, x: integer, /) -> longdouble: ...
+    @overload
+    def __rfloordiv__(self: floating[_64Bit], x: integer, /) -> float64: ...
+    @overload
+    def __rfloordiv__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __rfloordiv__(self: float32 | float16, x: integer[_16Bit], /) -> float32: ...
+    @overload
+    def __rfloordiv__(self, x: timedelta64[_TD64ItemT], /) -> timedelta64[_TD64ItemT]: ...
+    @overload
+    def __rfloordiv__(self, x: integer, /) -> floating: ...
+
+    # keep in sync with `__floordiv__`
+    @overload
+    def __mod__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __mod__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __mod__(self, x: longdouble, /) -> longdouble: ...  # type: ignore[overload-overlap]
+    @overload
+    def __mod__(self: longdouble, x: floating | integer | bool_, /) -> longdouble: ...
+    @overload
+    def __mod__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> float64: ...
+    @overload
+    def __mod__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> float32: ...
+    @overload
+    def __mod__(self, x: floating | integer | bool_, /) -> floating: ...
+
+    # keep in sync with `__rfloordiv__` (minus the `md->m` overload for `timedelta64`)
+    @overload
+    def __rmod__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> Self: ...  # type: ignore[overload-overlap]
+    @overload
+    def __rmod__(self, x: longdouble, /) -> longdouble: ...
+    @overload
+    def __rmod__(self: longdouble, x: integer, /) -> longdouble: ...
+    @overload
+    def __rmod__(self: floating[_64Bit], x: integer, /) -> float64: ...
+    @overload
+    def __rmod__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> float64: ...
+    @overload
+    def __rmod__(self: float32 | float16, x: integer[_16Bit], /) -> float32: ...
+    @overload
+    def __rmod__(self, x: integer, /) -> floating: ...
+
+    # keep in sync with `__mod__`
+    @overload
+    def __divmod__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> _2Tuple[float64]: ...
+    @overload
+    def __divmod__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __divmod__(self, x: longdouble, /) -> _2Tuple[longdouble]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __divmod__(self: longdouble, x: floating | integer | bool_, /) -> _2Tuple[longdouble]: ...
+    @overload
+    def __divmod__(self: floating[_64Bit], x: floating[_64Bit] | float32 | float16 | integer, /) -> _2Tuple[float64]: ...
+    @overload
+    def __divmod__(self: float32 | float16, x: float32 | integer[_16Bit], /) -> _2Tuple[float32]: ...
+    @overload
+    def __divmod__(self, x: floating | integer | bool_, /) -> _2Tuple[floating]: ...
+
+    # keep in sync with `__rmod__`
+    @overload
+    def __rdivmod__(self, x: float | Self | float16 | integer[_8Bit] | bool_, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
+    @overload
+    def __rdivmod__(self, x: longdouble, /) -> _2Tuple[longdouble]: ...
+    @overload
+    def __rdivmod__(self: longdouble, x: integer, /) -> _2Tuple[longdouble]: ...
+    @overload
+    def __rdivmod__(self: floating[_64Bit], x: integer, /) -> _2Tuple[float64]: ...
+    @overload
+    def __rdivmod__(self: float32 | float16, x: integer[_64Bit] | integer[_32Bit], /) -> _2Tuple[float64]: ...
+    @overload
+    def __rdivmod__(self: float32 | float16, x: integer[_16Bit], /) -> _2Tuple[float32]: ...
+    @overload
+    def __rdivmod__(self, x: integer, /) -> _2Tuple[floating]: ...
+
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
+    # https://github.com/numpy/numtype/issues/136
     def is_integer(self, /) -> py_bool: ...
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
-float16: TypeAlias = floating[_16Bit]
-float32: TypeAlias = floating[_32Bit]
 
 # either a C `double`, `float`, or `longdouble`
 class float64(floating[_64Bit], float):  # type: ignore[misc]
@@ -5522,11 +5867,6 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
     #
     def __divmod__(self, other: _Float64_co, /) -> _2Tuple[float64]: ...  # type: ignore[override]
     def __rdivmod__(self, other: _Float64_co, /) -> _2Tuple[float64]: ...  # type: ignore[override]
-
-half: TypeAlias = floating[_NBitHalf]
-single: TypeAlias = floating[_NBitSingle]
-double: TypeAlias = floating[_NBitDouble]
-longdouble: TypeAlias = floating[_NBitLongDouble]
 
 # The main reason for `complexfloating` having two typevars is cosmetic.
 # It is used to clarify why `complex128`s precision is `_64Bit`, the latter
@@ -5751,11 +6091,6 @@ class complex128(complexfloating[_64Bit], complex):  # type: ignore[misc]
     def __rmul__(self, lhs: _Complex128_co, /) -> complex128: ...
     def __rtruediv__(self, lhs: _Complex128_co, /) -> complex128: ...
     def __rpow__(self, lhs: _Complex128_co, /) -> complex128: ...
-
-complex64: TypeAlias = complexfloating[_32Bit]
-csingle: TypeAlias = complexfloating[_NBitSingle]
-cdouble: TypeAlias = complexfloating[_NBitDouble]
-clongdouble: TypeAlias = complexfloating[_NBitLongDouble]
 
 class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]):
     @property
@@ -6055,7 +6390,9 @@ class datetime64(_RealMixin, generic[_DT64ItemT_co], Generic[_DT64ItemT_co]):
     __gt__: _ComparisonOpGT[datetime64, _ArrayLikeDT64_co]
     __ge__: _ComparisonOpGE[datetime64, _ArrayLikeDT64_co]
 
-class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]): ...
+class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):
+    @abc.abstractmethod
+    def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
 
 class void(flexible[bytes | tuple[Any, ...]]):
     @overload
@@ -6078,8 +6415,6 @@ class void(flexible[bytes | tuple[Any, ...]]):
 class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):
     @abc.abstractmethod
     def __init__(self, value: _CharacterItemT_co = ..., /) -> None: ...
-
-# NOTE: Most `bytes_` / `str_` methods return their builtin `bytes` / `str` counterpart
 
 class bytes_(character[bytes], bytes):
     @overload
@@ -6108,7 +6443,50 @@ class str_(character[str], str):
     @overload
     def __init__(self, value: bytes, /, encoding: str = ..., errors: str = ...) -> None: ...
 
-# See `numpy._typing._ufunc` for more concrete nin-/nout-specific stubs
+# TODO(jorenham): concrete subtyping
+# https://github.com/numpy/numtype/issues/136
+int8: TypeAlias = signedinteger[_8Bit]
+int16: TypeAlias = signedinteger[_16Bit]
+int32: TypeAlias = signedinteger[_32Bit]
+int64: TypeAlias = signedinteger[_64Bit]
+intp: TypeAlias = signedinteger[_NBitIntP]
+long: TypeAlias = signedinteger[_NBitLong]
+longlong: TypeAlias = signedinteger[_NBitLongLong]
+
+uint8: TypeAlias = unsignedinteger[_8Bit]
+uint16: TypeAlias = unsignedinteger[_16Bit]
+uint32: TypeAlias = unsignedinteger[_32Bit]
+uint64: TypeAlias = unsignedinteger[_64Bit]
+uintp: TypeAlias = unsignedinteger[_NBitIntP]
+ulong: TypeAlias = unsignedinteger[_NBitLong]
+ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
+
+float16: TypeAlias = floating[_16Bit]
+float32: TypeAlias = floating[_32Bit]
+double: TypeAlias = floating[_64Bit]  # TODO(jorenham): alias to `float64`
+longdouble: TypeAlias = floating[_NBitLongDouble]
+
+complex64: TypeAlias = complexfloating[_32Bit]
+cdouble: TypeAlias = complexfloating[_NBitDouble]  # TODO(jorenham): alias to `complex128`
+clongdouble: TypeAlias = complexfloating[_NBitLongDouble]
+
+# NOTE: These should NOT be `Final` or a `TypeAlias`!
+bool_ = bool
+byte = int8
+ubyte = uint8
+short = int16
+ushort = uint16
+intc = int32
+uintc = uint32
+int_ = intp
+uint = uintp
+half = float16
+single = float32
+csingle = complex64
+
+###
+# ufuncs (s See `numpy._typing._ufunc` for more concrete nin-/nout-specific stubs)
+
 @final
 class ufunc:
     @property
