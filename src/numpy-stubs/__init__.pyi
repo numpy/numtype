@@ -1465,7 +1465,7 @@ class dtype(Generic[_ScalarT_co]):
     @overload  # handle strings that can't be expressed as literals; i.e. "S9", "m8[3s]", ...
     def __new__(
         cls,
-        dtype: str,
+        dtype: bytes | str,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
