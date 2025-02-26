@@ -142,7 +142,7 @@ def _union(*types: str) -> str:
 
 
 def _gen_names() -> Generator[str, None, dict[str, str]]:
-    yield f"# @generated {np.datetime64('now')}"
+    yield f"# @generated {np.datetime64('now')}Z"
     yield "from typing_extensions import assert_type"
     yield ""
     yield "import numpy as np"
