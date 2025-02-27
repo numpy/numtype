@@ -99,6 +99,9 @@ disallow_any_expr = false
 disallow_any_decorated = false
 warn_incomplete_stub = true
 warn_unreachable = false
+# needed for stubtest, see https://github.com/python/mypy/issues/18744
+disable_bytearray_promotion = true
+disable_memoryview_promotion = true
 # basedmypy/mypy compat
 # bare_literals = false
 # default_return = false
