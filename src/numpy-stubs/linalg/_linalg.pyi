@@ -772,7 +772,7 @@ def matrix_rank(
 
 #
 @overload  # 2d float64 | complex128
-def cond(x: _ToInexact64_2ds, p: _Ord | None = None) -> np.float64: ...  # type: ignore[overload-overlap]
+def cond(x: _ToInexact64_2ds, p: _Ord | None = None) -> np.float64: ...
 @overload  # 2d float32 | complex64
 def cond(x: _ToInexact32_2ds, p: _Ord | None = None) -> np.float32: ...
 @overload  # 2d +complex128
@@ -868,7 +868,7 @@ def lstsq(
 @overload  # float64 | complex128 | character, axis=None, keepdims=False
 def norm(x: _ToUnsafe64_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.float64: ...
 @overload  # float64 | complex128 | character, keepdims=True (keyword)
-def norm(x: _ToUnsafe64_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, *, keepdims: _True) -> _Array_2nd[np.float64]: ...  # type: ignore[overload-overlap]
+def norm(x: _ToUnsafe64_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, *, keepdims: _True) -> _Array_2nd[np.float64]: ...
 @overload  # float64 | complex128 | character, axis=<given> (positional)
 def norm(x: _ToUnsafe64_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
 @overload  # float64 | complex128 | character, axis=<given> (keyword)
@@ -890,9 +890,9 @@ def norm(
     keepdims: _True,
 ) -> _Array_2nd[np.float32]: ...
 @overload  # float32 | complex64, axis=<given> (positional)
-def norm(x: _ToInexact32_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.float32]: ...  # type: ignore[overload-overlap]
+def norm(x: _ToInexact32_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.float32]: ...
 @overload  # float32 | complex64, axis=<given> (keyword)
-def norm(x: _ToInexact32_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.float32]: ...  # type: ignore[overload-overlap]
+def norm(x: _ToInexact32_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.float32]: ...
 @overload  # longdouble | clongdouble, axis=None, keepdims=False
 def norm(x: _ToInexactLD_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.longdouble: ...
 @overload  # longdouble | clongdouble, keepdims=True (keyword)
@@ -936,7 +936,7 @@ def matrix_norm(x: _ToInexact32_2ds, /, *, keepdims: bool = False, ord: _Ord = "
 @overload  # nd float32 | complex64, keepdims=True
 def matrix_norm(x: _ToInexact32_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array_2nd[np.float32]: ...
 @overload  # >2d float32 | complex64
-def matrix_norm(x: _ToInexact32_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float32]: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _ToInexact32_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float32]: ...
 @overload  # 2d longdouble | clongdouble
 def matrix_norm(x: _ToInexactLD_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.longdouble: ...  # type: ignore[overload-overlap]
 @overload  # nd longdouble | clongdouble, keepdims=True
@@ -956,9 +956,9 @@ def matrix_norm(x: CoComplex_1nd | ToCharacter_1nd, /, *, keepdims: bool = False
 @overload  # float64 | complex128 | character, axis=None, keepdims=False
 def vector_norm(x: _ToUnsafe64_1nd, /, *, axis: None = None, keepdims: _False = False, ord: float = 2) -> np.float64: ...
 @overload  # float64 | complex128 | character, keepdims=True
-def vector_norm(x: _ToUnsafe64_1nd, /, *, axis: _Ax2 | None = None, keepdims: _True, ord: float = 2) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
+def vector_norm(x: _ToUnsafe64_1nd, /, *, axis: _Ax2 | None = None, keepdims: _True, ord: float = 2) -> Array[np.float64]: ...
 @overload  # float64 | complex128 | character, axis=<given>
-def vector_norm(x: _ToUnsafe64_1nd, /, *, axis: _Ax2, keepdims: bool = False, ord: float = 2) -> Array[np.float64]: ...  # type: ignore[overload-overlap]
+def vector_norm(x: _ToUnsafe64_1nd, /, *, axis: _Ax2, keepdims: bool = False, ord: float = 2) -> Array[np.float64]: ...
 @overload  # float16, axis=None, keepdims=False
 def vector_norm(x: ToFloat16_1nd, /, *, axis: None = None, keepdims: _False = False, ord: float = 2) -> np.float16: ...
 @overload  # float16, keepdims=True
