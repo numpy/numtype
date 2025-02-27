@@ -4,7 +4,6 @@ from typing_extensions import assert_type
 
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _64Bit
 
 b: bool
 i: int
@@ -440,7 +439,7 @@ assert_type(c8 + AR_f, npt.NDArray[np.complexfloating])
 assert_type(f16 + c8, np.clongdouble)
 assert_type(c16 + c8, np.complex128)
 # https://github.com/microsoft/pyright/issues/9684
-assert_type(f8 + c8, np.complexfloating[_64Bit])  # pyright: ignore[reportAssertTypeFailure]
+assert_type(f8 + c8, np.complex128)
 assert_type(i8 + c8, np.complex128)
 assert_type(c8 + c8, np.complex64)
 assert_type(f4 + c8, np.complex64)
