@@ -71,6 +71,8 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def __pow__(self, other: ArrayLike, /) -> Matrix: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
+    def __rpow__(self, other: ArrayLike, /) -> Matrix: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __ipow__(self, other: ArrayLike, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #

@@ -151,8 +151,6 @@ numpy(\..+)?\.ndarray\.itemset
 numpy(\..+)?\.ndarray\.newbyteorder
 numpy(\..+)?\.ndarray\.ptp
 numpy(\..+)?\.ndarray\.tostring
-numpy(\..+)?\.ndarray\.__pow__
-numpy(\..+)?\.ndarray\.__rpow__
 
 numpy.matrix.__new__
 numpy.memmap.__new__
