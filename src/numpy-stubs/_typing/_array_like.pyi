@@ -1,7 +1,7 @@
 import sys
 from collections.abc import Callable, Collection, Sequence
 from typing import Any, Protocol, TypeAlias, runtime_checkable
-from typing_extensions import Never, TypeVar
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy.dtypes import StringDType
@@ -23,7 +23,6 @@ _DType = TypeVar("_DType", bound=np.dtype[Any])
 _DType_co = TypeVar("_DType_co", covariant=True, bound=np.dtype[Any])
 
 NDArray: TypeAlias = np.ndarray[_Shape, np.dtype[_ScalarType_co]]
-_UnknownType: TypeAlias = Never
 
 # The `_SupportsArray` protocol only cares about the default dtype
 # (i.e. `dtype=None` or no `dtype` parameter at all) of the to-be returned
@@ -82,10 +81,3 @@ _ArrayLikeComplex128_co: TypeAlias = _DualArrayLike[np.dtype[__Complex128_co], c
 
 # NOTE: This includes `builtins.bool`, but not `numpy.bool`.
 _ArrayLikeInt: TypeAlias = _DualArrayLike[np.dtype[np.integer], int]
-
-# Extra ArrayLike type so that pyright can deal with NDArray[Any]
-# Used as the first overload, should only match NDArray[Any],
-# not any actual types.
-# https://github.com/numpy/numpy/pull/22193
-
-_ArrayLikeUnknown: TypeAlias = _DualArrayLike[np.dtype[_UnknownType], _UnknownType]
