@@ -1,4 +1,4 @@
-# @generated 2025-02-27T00:56:29Z
+# @generated 2025-02-27T01:00:34Z
 from typing_extensions import assert_type
 
 import numpy as np
@@ -6,7 +6,6 @@ import numpy as np
 ###
 # scalars
 
-b1: np.bool
 u1: np.uint8
 u2: np.uint16
 u4: np.uint32
@@ -25,23 +24,6 @@ M8: np.datetime64
 ###
 # __[r]add__
 
-assert_type(b1 + b1, np.bool)
-assert_type(b1 + u1, np.uint8)
-assert_type(b1 + u2, np.uint16)
-assert_type(b1 + u4, np.uint32)
-assert_type(b1 + u8, np.uint64)
-assert_type(b1 + i1, np.int8)
-assert_type(b1 + i2, np.int16)
-assert_type(b1 + i4, np.int32)
-assert_type(b1 + i8, np.int64)
-assert_type(b1 + f2, np.float16)
-assert_type(b1 + f4, np.float32)
-assert_type(b1 + f8, np.float64)
-assert_type(b1 + ld, np.longdouble)
-assert_type(b1 + m8, np.timedelta64)
-assert_type(b1 + M8, np.datetime64)
-
-assert_type(u1 + b1, np.uint8)
 assert_type(u1 + u1, np.uint8)
 assert_type(u1 + u2, np.uint16)
 assert_type(u1 + u4, np.uint32)
@@ -57,7 +39,6 @@ assert_type(u1 + ld, np.longdouble)
 assert_type(u1 + m8, np.timedelta64)
 assert_type(u1 + M8, np.datetime64)
 
-assert_type(u2 + b1, np.uint16)
 assert_type(u2 + u1, np.uint16)
 assert_type(u2 + u2, np.uint16)
 assert_type(u2 + u4, np.uint32)
@@ -73,7 +54,6 @@ assert_type(u2 + ld, np.longdouble)
 assert_type(u2 + m8, np.timedelta64)
 assert_type(u2 + M8, np.datetime64)
 
-assert_type(u4 + b1, np.uint32)
 assert_type(u4 + u1, np.uint32)
 assert_type(u4 + u2, np.uint32)
 assert_type(u4 + u4, np.uint32)
@@ -89,7 +69,6 @@ assert_type(u4 + ld, np.longdouble)
 assert_type(u4 + m8, np.timedelta64)
 assert_type(u4 + M8, np.datetime64)
 
-assert_type(u8 + b1, np.uint64)
 assert_type(u8 + u1, np.uint64)
 assert_type(u8 + u2, np.uint64)
 assert_type(u8 + u4, np.uint64)
@@ -105,7 +84,6 @@ assert_type(u8 + ld, np.longdouble)
 assert_type(u8 + m8, np.timedelta64)
 assert_type(u8 + M8, np.datetime64)
 
-assert_type(i1 + b1, np.int8)
 assert_type(i1 + u1, np.int16)
 assert_type(i1 + u2, np.int32)
 assert_type(i1 + u4, np.int64)
@@ -121,7 +99,6 @@ assert_type(i1 + ld, np.longdouble)
 assert_type(i1 + m8, np.timedelta64)
 assert_type(i1 + M8, np.datetime64)
 
-assert_type(i2 + b1, np.int16)
 assert_type(i2 + u1, np.int16)
 assert_type(i2 + u2, np.int32)
 assert_type(i2 + u4, np.int64)
@@ -137,7 +114,6 @@ assert_type(i2 + ld, np.longdouble)
 assert_type(i2 + m8, np.timedelta64)
 assert_type(i2 + M8, np.datetime64)
 
-assert_type(i4 + b1, np.int32)
 assert_type(i4 + u1, np.int32)
 assert_type(i4 + u2, np.int32)
 assert_type(i4 + u4, np.int64)
@@ -153,7 +129,6 @@ assert_type(i4 + ld, np.longdouble)
 assert_type(i4 + m8, np.timedelta64)
 assert_type(i4 + M8, np.datetime64)
 
-assert_type(i8 + b1, np.int64)
 assert_type(i8 + u1, np.int64)
 assert_type(i8 + u2, np.int64)
 assert_type(i8 + u4, np.int64)
@@ -169,7 +144,6 @@ assert_type(i8 + ld, np.longdouble)
 assert_type(i8 + m8, np.timedelta64)
 assert_type(i8 + M8, np.datetime64)
 
-assert_type(f2 + b1, np.float16)
 assert_type(f2 + u1, np.float16)
 assert_type(f2 + u2, np.float32)
 assert_type(f2 + u4, np.float64)
@@ -185,7 +159,6 @@ assert_type(f2 + ld, np.longdouble)
 f2 + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f2 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f4 + b1, np.float32)
 assert_type(f4 + u1, np.float32)
 assert_type(f4 + u2, np.float32)
 assert_type(f4 + u4, np.float64)
@@ -201,7 +174,6 @@ assert_type(f4 + ld, np.longdouble)
 f4 + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f4 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f8 + b1, np.float64)
 assert_type(f8 + u1, np.float64)
 assert_type(f8 + u2, np.float64)
 assert_type(f8 + u4, np.float64)
@@ -217,7 +189,6 @@ assert_type(f8 + ld, np.longdouble)
 f8 + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f8 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(ld + b1, np.longdouble)
 assert_type(ld + u1, np.longdouble)
 assert_type(ld + u2, np.longdouble)
 assert_type(ld + u4, np.longdouble)
@@ -233,7 +204,6 @@ assert_type(ld + ld, np.longdouble)
 ld + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 ld + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(m8 + b1, np.timedelta64)
 assert_type(m8 + u1, np.timedelta64)
 assert_type(m8 + u2, np.timedelta64)
 assert_type(m8 + u4, np.timedelta64)
@@ -249,7 +219,6 @@ m8 + ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(m8 + m8, np.timedelta64)
 assert_type(m8 + M8, np.datetime64)
 
-assert_type(M8 + b1, np.datetime64)
 assert_type(M8 + u1, np.datetime64)
 assert_type(M8 + u2, np.datetime64)
 assert_type(M8 + u4, np.datetime64)
@@ -268,23 +237,6 @@ M8 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 ###
 # __[r]sub__
 
-b1 - b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(b1 - u1, np.uint8)
-assert_type(b1 - u2, np.uint16)
-assert_type(b1 - u4, np.uint32)
-assert_type(b1 - u8, np.uint64)
-assert_type(b1 - i1, np.int8)
-assert_type(b1 - i2, np.int16)
-assert_type(b1 - i4, np.int32)
-assert_type(b1 - i8, np.int64)
-assert_type(b1 - f2, np.float16)
-assert_type(b1 - f4, np.float32)
-assert_type(b1 - f8, np.float64)
-assert_type(b1 - ld, np.longdouble)
-assert_type(b1 - m8, np.timedelta64)
-b1 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-assert_type(u1 - b1, np.uint8)
 assert_type(u1 - u1, np.uint8)
 assert_type(u1 - u2, np.uint16)
 assert_type(u1 - u4, np.uint32)
@@ -300,7 +252,6 @@ assert_type(u1 - ld, np.longdouble)
 assert_type(u1 - m8, np.timedelta64)
 u1 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 - b1, np.uint16)
 assert_type(u2 - u1, np.uint16)
 assert_type(u2 - u2, np.uint16)
 assert_type(u2 - u4, np.uint32)
@@ -316,7 +267,6 @@ assert_type(u2 - ld, np.longdouble)
 assert_type(u2 - m8, np.timedelta64)
 u2 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 - b1, np.uint32)
 assert_type(u4 - u1, np.uint32)
 assert_type(u4 - u2, np.uint32)
 assert_type(u4 - u4, np.uint32)
@@ -332,7 +282,6 @@ assert_type(u4 - ld, np.longdouble)
 assert_type(u4 - m8, np.timedelta64)
 u4 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 - b1, np.uint64)
 assert_type(u8 - u1, np.uint64)
 assert_type(u8 - u2, np.uint64)
 assert_type(u8 - u4, np.uint64)
@@ -348,7 +297,6 @@ assert_type(u8 - ld, np.longdouble)
 assert_type(u8 - m8, np.timedelta64)
 u8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 - b1, np.int8)
 assert_type(i1 - u1, np.int16)
 assert_type(i1 - u2, np.int32)
 assert_type(i1 - u4, np.int64)
@@ -364,7 +312,6 @@ assert_type(i1 - ld, np.longdouble)
 assert_type(i1 - m8, np.timedelta64)
 i1 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 - b1, np.int16)
 assert_type(i2 - u1, np.int16)
 assert_type(i2 - u2, np.int32)
 assert_type(i2 - u4, np.int64)
@@ -380,7 +327,6 @@ assert_type(i2 - ld, np.longdouble)
 assert_type(i2 - m8, np.timedelta64)
 i2 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 - b1, np.int32)
 assert_type(i4 - u1, np.int32)
 assert_type(i4 - u2, np.int32)
 assert_type(i4 - u4, np.int64)
@@ -396,7 +342,6 @@ assert_type(i4 - ld, np.longdouble)
 assert_type(i4 - m8, np.timedelta64)
 i4 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 - b1, np.int64)
 assert_type(i8 - u1, np.int64)
 assert_type(i8 - u2, np.int64)
 assert_type(i8 - u4, np.int64)
@@ -412,7 +357,6 @@ assert_type(i8 - ld, np.longdouble)
 assert_type(i8 - m8, np.timedelta64)
 i8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f2 - b1, np.float16)
 assert_type(f2 - u1, np.float16)
 assert_type(f2 - u2, np.float32)
 assert_type(f2 - u4, np.float64)
@@ -428,7 +372,6 @@ assert_type(f2 - ld, np.longdouble)
 f2 - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f2 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f4 - b1, np.float32)
 assert_type(f4 - u1, np.float32)
 assert_type(f4 - u2, np.float32)
 assert_type(f4 - u4, np.float64)
@@ -444,7 +387,6 @@ assert_type(f4 - ld, np.longdouble)
 f4 - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f4 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f8 - b1, np.float64)
 assert_type(f8 - u1, np.float64)
 assert_type(f8 - u2, np.float64)
 assert_type(f8 - u4, np.float64)
@@ -460,7 +402,6 @@ assert_type(f8 - ld, np.longdouble)
 f8 - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(ld - b1, np.longdouble)
 assert_type(ld - u1, np.longdouble)
 assert_type(ld - u2, np.longdouble)
 assert_type(ld - u4, np.longdouble)
@@ -476,7 +417,6 @@ assert_type(ld - ld, np.longdouble)
 ld - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 ld - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(m8 - b1, np.timedelta64)
 assert_type(m8 - u1, np.timedelta64)
 assert_type(m8 - u2, np.timedelta64)
 assert_type(m8 - u4, np.timedelta64)
@@ -492,7 +432,6 @@ m8 - ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(m8 - m8, np.timedelta64)
 m8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(M8 - b1, np.datetime64)
 assert_type(M8 - u1, np.datetime64)
 assert_type(M8 - u2, np.datetime64)
 assert_type(M8 - u4, np.datetime64)
@@ -511,22 +450,6 @@ assert_type(M8 - M8, np.timedelta64)
 ###
 # __[r]mul__
 
-assert_type(b1 * b1, np.bool)
-assert_type(b1 * u1, np.uint8)
-assert_type(b1 * u2, np.uint16)
-assert_type(b1 * u4, np.uint32)
-assert_type(b1 * u8, np.uint64)
-assert_type(b1 * i1, np.int8)
-assert_type(b1 * i2, np.int16)
-assert_type(b1 * i4, np.int32)
-assert_type(b1 * i8, np.int64)
-assert_type(b1 * f2, np.float16)
-assert_type(b1 * f4, np.float32)
-assert_type(b1 * f8, np.float64)
-assert_type(b1 * ld, np.longdouble)
-assert_type(b1 * m8, np.timedelta64)
-
-assert_type(u1 * b1, np.uint8)
 assert_type(u1 * u1, np.uint8)
 assert_type(u1 * u2, np.uint16)
 assert_type(u1 * u4, np.uint32)
@@ -541,7 +464,6 @@ assert_type(u1 * f8, np.float64)
 assert_type(u1 * ld, np.longdouble)
 assert_type(u1 * m8, np.timedelta64)
 
-assert_type(u2 * b1, np.uint16)
 assert_type(u2 * u1, np.uint16)
 assert_type(u2 * u2, np.uint16)
 assert_type(u2 * u4, np.uint32)
@@ -556,7 +478,6 @@ assert_type(u2 * f8, np.float64)
 assert_type(u2 * ld, np.longdouble)
 assert_type(u2 * m8, np.timedelta64)
 
-assert_type(u4 * b1, np.uint32)
 assert_type(u4 * u1, np.uint32)
 assert_type(u4 * u2, np.uint32)
 assert_type(u4 * u4, np.uint32)
@@ -571,7 +492,6 @@ assert_type(u4 * f8, np.float64)
 assert_type(u4 * ld, np.longdouble)
 assert_type(u4 * m8, np.timedelta64)
 
-assert_type(u8 * b1, np.uint64)
 assert_type(u8 * u1, np.uint64)
 assert_type(u8 * u2, np.uint64)
 assert_type(u8 * u4, np.uint64)
@@ -586,7 +506,6 @@ assert_type(u8 * f8, np.float64)
 assert_type(u8 * ld, np.longdouble)
 assert_type(u8 * m8, np.timedelta64)
 
-assert_type(i1 * b1, np.int8)
 assert_type(i1 * u1, np.int16)
 assert_type(i1 * u2, np.int32)
 assert_type(i1 * u4, np.int64)
@@ -601,7 +520,6 @@ assert_type(i1 * f8, np.float64)
 assert_type(i1 * ld, np.longdouble)
 assert_type(i1 * m8, np.timedelta64)
 
-assert_type(i2 * b1, np.int16)
 assert_type(i2 * u1, np.int16)
 assert_type(i2 * u2, np.int32)
 assert_type(i2 * u4, np.int64)
@@ -616,7 +534,6 @@ assert_type(i2 * f8, np.float64)
 assert_type(i2 * ld, np.longdouble)
 assert_type(i2 * m8, np.timedelta64)
 
-assert_type(i4 * b1, np.int32)
 assert_type(i4 * u1, np.int32)
 assert_type(i4 * u2, np.int32)
 assert_type(i4 * u4, np.int64)
@@ -631,7 +548,6 @@ assert_type(i4 * f8, np.float64)
 assert_type(i4 * ld, np.longdouble)
 assert_type(i4 * m8, np.timedelta64)
 
-assert_type(i8 * b1, np.int64)
 assert_type(i8 * u1, np.int64)
 assert_type(i8 * u2, np.int64)
 assert_type(i8 * u4, np.int64)
@@ -646,7 +562,6 @@ assert_type(i8 * f8, np.float64)
 assert_type(i8 * ld, np.longdouble)
 assert_type(i8 * m8, np.timedelta64)
 
-assert_type(f2 * b1, np.float16)
 assert_type(f2 * u1, np.float16)
 assert_type(f2 * u2, np.float32)
 assert_type(f2 * u4, np.float64)
@@ -661,7 +576,6 @@ assert_type(f2 * f8, np.float64)
 assert_type(f2 * ld, np.longdouble)
 assert_type(f2 * m8, np.timedelta64)
 
-assert_type(f4 * b1, np.float32)
 assert_type(f4 * u1, np.float32)
 assert_type(f4 * u2, np.float32)
 assert_type(f4 * u4, np.float64)
@@ -676,7 +590,6 @@ assert_type(f4 * f8, np.float64)
 assert_type(f4 * ld, np.longdouble)
 assert_type(f4 * m8, np.timedelta64)
 
-assert_type(f8 * b1, np.float64)
 assert_type(f8 * u1, np.float64)
 assert_type(f8 * u2, np.float64)
 assert_type(f8 * u4, np.float64)
@@ -691,7 +604,6 @@ assert_type(f8 * f8, np.float64)
 assert_type(f8 * ld, np.longdouble)
 assert_type(f8 * m8, np.timedelta64)
 
-assert_type(ld * b1, np.longdouble)
 assert_type(ld * u1, np.longdouble)
 assert_type(ld * u2, np.longdouble)
 assert_type(ld * u4, np.longdouble)
@@ -706,7 +618,6 @@ assert_type(ld * f8, np.longdouble)
 assert_type(ld * ld, np.longdouble)
 assert_type(ld * m8, np.timedelta64)
 
-assert_type(m8 * b1, np.timedelta64)
 assert_type(m8 * u1, np.timedelta64)
 assert_type(m8 * u2, np.timedelta64)
 assert_type(m8 * u4, np.timedelta64)
@@ -724,21 +635,6 @@ m8 * m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 ###
 # __[r]pow__
 
-assert_type(b1**b1, np.int8)
-assert_type(b1**u1, np.uint8)
-assert_type(b1**u2, np.uint16)
-assert_type(b1**u4, np.uint32)
-assert_type(b1**u8, np.uint64)
-assert_type(b1**i1, np.int8)
-assert_type(b1**i2, np.int16)
-assert_type(b1**i4, np.int32)
-assert_type(b1**i8, np.int64)
-assert_type(b1**f2, np.float16)
-assert_type(b1**f4, np.float32)
-assert_type(b1**f8, np.float64)
-assert_type(b1**ld, np.longdouble)
-
-assert_type(u1**b1, np.uint8)
 assert_type(u1**u1, np.uint8)
 assert_type(u1**u2, np.uint16)
 assert_type(u1**u4, np.uint32)
@@ -752,7 +648,6 @@ assert_type(u1**f4, np.float32)
 assert_type(u1**f8, np.float64)
 assert_type(u1**ld, np.longdouble)
 
-assert_type(u2**b1, np.uint16)
 assert_type(u2**u1, np.uint16)
 assert_type(u2**u2, np.uint16)
 assert_type(u2**u4, np.uint32)
@@ -766,7 +661,6 @@ assert_type(u2**f4, np.float32)
 assert_type(u2**f8, np.float64)
 assert_type(u2**ld, np.longdouble)
 
-assert_type(u4**b1, np.uint32)
 assert_type(u4**u1, np.uint32)
 assert_type(u4**u2, np.uint32)
 assert_type(u4**u4, np.uint32)
@@ -780,7 +674,6 @@ assert_type(u4**f4, np.float64)
 assert_type(u4**f8, np.float64)
 assert_type(u4**ld, np.longdouble)
 
-assert_type(u8**b1, np.uint64)
 assert_type(u8**u1, np.uint64)
 assert_type(u8**u2, np.uint64)
 assert_type(u8**u4, np.uint64)
@@ -794,7 +687,6 @@ assert_type(u8**f4, np.float64)
 assert_type(u8**f8, np.float64)
 assert_type(u8**ld, np.longdouble)
 
-assert_type(i1**b1, np.int8)
 assert_type(i1**u1, np.int16)
 assert_type(i1**u2, np.int32)
 assert_type(i1**u4, np.int64)
@@ -808,7 +700,6 @@ assert_type(i1**f4, np.float32)
 assert_type(i1**f8, np.float64)
 assert_type(i1**ld, np.longdouble)
 
-assert_type(i2**b1, np.int16)
 assert_type(i2**u1, np.int16)
 assert_type(i2**u2, np.int32)
 assert_type(i2**u4, np.int64)
@@ -822,7 +713,6 @@ assert_type(i2**f4, np.float32)
 assert_type(i2**f8, np.float64)
 assert_type(i2**ld, np.longdouble)
 
-assert_type(i4**b1, np.int32)
 assert_type(i4**u1, np.int32)
 assert_type(i4**u2, np.int32)
 assert_type(i4**u4, np.int64)
@@ -836,7 +726,6 @@ assert_type(i4**f4, np.float64)
 assert_type(i4**f8, np.float64)
 assert_type(i4**ld, np.longdouble)
 
-assert_type(i8**b1, np.int64)
 assert_type(i8**u1, np.int64)
 assert_type(i8**u2, np.int64)
 assert_type(i8**u4, np.int64)
@@ -850,7 +739,6 @@ assert_type(i8**f4, np.float64)
 assert_type(i8**f8, np.float64)
 assert_type(i8**ld, np.longdouble)
 
-assert_type(f2**b1, np.float16)
 assert_type(f2**u1, np.float16)
 assert_type(f2**u2, np.float32)
 assert_type(f2**u4, np.float64)
@@ -864,7 +752,6 @@ assert_type(f2**f4, np.float32)
 assert_type(f2**f8, np.float64)
 assert_type(f2**ld, np.longdouble)
 
-assert_type(f4**b1, np.float32)
 assert_type(f4**u1, np.float32)
 assert_type(f4**u2, np.float32)
 assert_type(f4**u4, np.float64)
@@ -878,7 +765,6 @@ assert_type(f4**f4, np.float32)
 assert_type(f4**f8, np.float64)
 assert_type(f4**ld, np.longdouble)
 
-assert_type(f8**b1, np.float64)
 assert_type(f8**u1, np.float64)
 assert_type(f8**u2, np.float64)
 assert_type(f8**u4, np.float64)
@@ -892,7 +778,6 @@ assert_type(f8**f4, np.float64)
 assert_type(f8**f8, np.float64)
 assert_type(f8**ld, np.longdouble)
 
-assert_type(ld**b1, np.longdouble)
 assert_type(ld**u1, np.longdouble)
 assert_type(ld**u2, np.longdouble)
 assert_type(ld**u4, np.longdouble)
@@ -909,22 +794,6 @@ assert_type(ld**ld, np.longdouble)
 ###
 # __[r]truediv__
 
-assert_type(b1 / b1, np.float64)
-assert_type(b1 / u1, np.float64)
-assert_type(b1 / u2, np.float64)
-assert_type(b1 / u4, np.float64)
-assert_type(b1 / u8, np.float64)
-assert_type(b1 / i1, np.float64)
-assert_type(b1 / i2, np.float64)
-assert_type(b1 / i4, np.float64)
-assert_type(b1 / i8, np.float64)
-assert_type(b1 / f2, np.float16)
-assert_type(b1 / f4, np.float32)
-assert_type(b1 / f8, np.float64)
-assert_type(b1 / ld, np.longdouble)
-b1 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-assert_type(u1 / b1, np.float64)
 assert_type(u1 / u1, np.float64)
 assert_type(u1 / u2, np.float64)
 assert_type(u1 / u4, np.float64)
@@ -939,7 +808,6 @@ assert_type(u1 / f8, np.float64)
 assert_type(u1 / ld, np.longdouble)
 u1 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 / b1, np.float64)
 assert_type(u2 / u1, np.float64)
 assert_type(u2 / u2, np.float64)
 assert_type(u2 / u4, np.float64)
@@ -954,7 +822,6 @@ assert_type(u2 / f8, np.float64)
 assert_type(u2 / ld, np.longdouble)
 u2 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 / b1, np.float64)
 assert_type(u4 / u1, np.float64)
 assert_type(u4 / u2, np.float64)
 assert_type(u4 / u4, np.float64)
@@ -969,7 +836,6 @@ assert_type(u4 / f8, np.float64)
 assert_type(u4 / ld, np.longdouble)
 u4 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 / b1, np.float64)
 assert_type(u8 / u1, np.float64)
 assert_type(u8 / u2, np.float64)
 assert_type(u8 / u4, np.float64)
@@ -984,7 +850,6 @@ assert_type(u8 / f8, np.float64)
 assert_type(u8 / ld, np.longdouble)
 u8 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 / b1, np.float64)
 assert_type(i1 / u1, np.float64)
 assert_type(i1 / u2, np.float64)
 assert_type(i1 / u4, np.float64)
@@ -999,7 +864,6 @@ assert_type(i1 / f8, np.float64)
 assert_type(i1 / ld, np.longdouble)
 i1 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 / b1, np.float64)
 assert_type(i2 / u1, np.float64)
 assert_type(i2 / u2, np.float64)
 assert_type(i2 / u4, np.float64)
@@ -1014,7 +878,6 @@ assert_type(i2 / f8, np.float64)
 assert_type(i2 / ld, np.longdouble)
 i2 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 / b1, np.float64)
 assert_type(i4 / u1, np.float64)
 assert_type(i4 / u2, np.float64)
 assert_type(i4 / u4, np.float64)
@@ -1029,7 +892,6 @@ assert_type(i4 / f8, np.float64)
 assert_type(i4 / ld, np.longdouble)
 i4 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 / b1, np.float64)
 assert_type(i8 / u1, np.float64)
 assert_type(i8 / u2, np.float64)
 assert_type(i8 / u4, np.float64)
@@ -1044,7 +906,6 @@ assert_type(i8 / f8, np.float64)
 assert_type(i8 / ld, np.longdouble)
 i8 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f2 / b1, np.float16)
 assert_type(f2 / u1, np.float16)
 assert_type(f2 / u2, np.float32)
 assert_type(f2 / u4, np.float64)
@@ -1059,7 +920,6 @@ assert_type(f2 / f8, np.float64)
 assert_type(f2 / ld, np.longdouble)
 f2 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f4 / b1, np.float32)
 assert_type(f4 / u1, np.float32)
 assert_type(f4 / u2, np.float32)
 assert_type(f4 / u4, np.float64)
@@ -1074,7 +934,6 @@ assert_type(f4 / f8, np.float64)
 assert_type(f4 / ld, np.longdouble)
 f4 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f8 / b1, np.float64)
 assert_type(f8 / u1, np.float64)
 assert_type(f8 / u2, np.float64)
 assert_type(f8 / u4, np.float64)
@@ -1089,7 +948,6 @@ assert_type(f8 / f8, np.float64)
 assert_type(f8 / ld, np.longdouble)
 f8 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(ld / b1, np.longdouble)
 assert_type(ld / u1, np.longdouble)
 assert_type(ld / u2, np.longdouble)
 assert_type(ld / u4, np.longdouble)
@@ -1104,7 +962,6 @@ assert_type(ld / f8, np.longdouble)
 assert_type(ld / ld, np.longdouble)
 ld / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-m8 / b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(m8 / u1, np.timedelta64)
 assert_type(m8 / u2, np.timedelta64)
 assert_type(m8 / u4, np.timedelta64)
@@ -1122,22 +979,6 @@ assert_type(m8 / m8, np.float64)
 ###
 # __[r]floordiv__
 
-assert_type(b1 // b1, np.int8)
-assert_type(b1 // u1, np.uint8)
-assert_type(b1 // u2, np.uint16)
-assert_type(b1 // u4, np.uint32)
-assert_type(b1 // u8, np.uint64)
-assert_type(b1 // i1, np.int8)
-assert_type(b1 // i2, np.int16)
-assert_type(b1 // i4, np.int32)
-assert_type(b1 // i8, np.int64)
-assert_type(b1 // f2, np.float16)
-assert_type(b1 // f4, np.float32)
-assert_type(b1 // f8, np.float64)
-assert_type(b1 // ld, np.longdouble)
-b1 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-assert_type(u1 // b1, np.uint8)
 assert_type(u1 // u1, np.uint8)
 assert_type(u1 // u2, np.uint16)
 assert_type(u1 // u4, np.uint32)
@@ -1152,7 +993,6 @@ assert_type(u1 // f8, np.float64)
 assert_type(u1 // ld, np.longdouble)
 u1 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 // b1, np.uint16)
 assert_type(u2 // u1, np.uint16)
 assert_type(u2 // u2, np.uint16)
 assert_type(u2 // u4, np.uint32)
@@ -1167,7 +1007,6 @@ assert_type(u2 // f8, np.float64)
 assert_type(u2 // ld, np.longdouble)
 u2 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 // b1, np.uint32)
 assert_type(u4 // u1, np.uint32)
 assert_type(u4 // u2, np.uint32)
 assert_type(u4 // u4, np.uint32)
@@ -1182,7 +1021,6 @@ assert_type(u4 // f8, np.float64)
 assert_type(u4 // ld, np.longdouble)
 u4 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 // b1, np.uint64)
 assert_type(u8 // u1, np.uint64)
 assert_type(u8 // u2, np.uint64)
 assert_type(u8 // u4, np.uint64)
@@ -1197,7 +1035,6 @@ assert_type(u8 // f8, np.float64)
 assert_type(u8 // ld, np.longdouble)
 u8 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 // b1, np.int8)
 assert_type(i1 // u1, np.int16)
 assert_type(i1 // u2, np.int32)
 assert_type(i1 // u4, np.int64)
@@ -1212,7 +1049,6 @@ assert_type(i1 // f8, np.float64)
 assert_type(i1 // ld, np.longdouble)
 i1 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 // b1, np.int16)
 assert_type(i2 // u1, np.int16)
 assert_type(i2 // u2, np.int32)
 assert_type(i2 // u4, np.int64)
@@ -1227,7 +1063,6 @@ assert_type(i2 // f8, np.float64)
 assert_type(i2 // ld, np.longdouble)
 i2 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 // b1, np.int32)
 assert_type(i4 // u1, np.int32)
 assert_type(i4 // u2, np.int32)
 assert_type(i4 // u4, np.int64)
@@ -1242,7 +1077,6 @@ assert_type(i4 // f8, np.float64)
 assert_type(i4 // ld, np.longdouble)
 i4 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 // b1, np.int64)
 assert_type(i8 // u1, np.int64)
 assert_type(i8 // u2, np.int64)
 assert_type(i8 // u4, np.int64)
@@ -1257,7 +1091,6 @@ assert_type(i8 // f8, np.float64)
 assert_type(i8 // ld, np.longdouble)
 i8 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f2 // b1, np.float16)
 assert_type(f2 // u1, np.float16)
 assert_type(f2 // u2, np.float32)
 assert_type(f2 // u4, np.float64)
@@ -1272,7 +1105,6 @@ assert_type(f2 // f8, np.float64)
 assert_type(f2 // ld, np.longdouble)
 f2 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f4 // b1, np.float32)
 assert_type(f4 // u1, np.float32)
 assert_type(f4 // u2, np.float32)
 assert_type(f4 // u4, np.float64)
@@ -1287,7 +1119,6 @@ assert_type(f4 // f8, np.float64)
 assert_type(f4 // ld, np.longdouble)
 f4 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f8 // b1, np.float64)
 assert_type(f8 // u1, np.float64)
 assert_type(f8 // u2, np.float64)
 assert_type(f8 // u4, np.float64)
@@ -1302,7 +1133,6 @@ assert_type(f8 // f8, np.float64)
 assert_type(f8 // ld, np.longdouble)
 f8 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(ld // b1, np.longdouble)
 assert_type(ld // u1, np.longdouble)
 assert_type(ld // u2, np.longdouble)
 assert_type(ld // u4, np.longdouble)
@@ -1317,7 +1147,6 @@ assert_type(ld // f8, np.longdouble)
 assert_type(ld // ld, np.longdouble)
 ld // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-m8 // b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(m8 // u1, np.timedelta64)
 assert_type(m8 // u2, np.timedelta64)
 assert_type(m8 // u4, np.timedelta64)
@@ -1335,22 +1164,6 @@ assert_type(m8 // m8, np.longlong)
 ###
 # __[r]mod__
 
-assert_type(b1 % b1, np.int8)
-assert_type(b1 % u1, np.uint8)
-assert_type(b1 % u2, np.uint16)
-assert_type(b1 % u4, np.uint32)
-assert_type(b1 % u8, np.uint64)
-assert_type(b1 % i1, np.int8)
-assert_type(b1 % i2, np.int16)
-assert_type(b1 % i4, np.int32)
-assert_type(b1 % i8, np.int64)
-assert_type(b1 % f2, np.float16)
-assert_type(b1 % f4, np.float32)
-assert_type(b1 % f8, np.float64)
-assert_type(b1 % ld, np.longdouble)
-b1 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-assert_type(u1 % b1, np.uint8)
 assert_type(u1 % u1, np.uint8)
 assert_type(u1 % u2, np.uint16)
 assert_type(u1 % u4, np.uint32)
@@ -1365,7 +1178,6 @@ assert_type(u1 % f8, np.float64)
 assert_type(u1 % ld, np.longdouble)
 u1 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 % b1, np.uint16)
 assert_type(u2 % u1, np.uint16)
 assert_type(u2 % u2, np.uint16)
 assert_type(u2 % u4, np.uint32)
@@ -1380,7 +1192,6 @@ assert_type(u2 % f8, np.float64)
 assert_type(u2 % ld, np.longdouble)
 u2 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 % b1, np.uint32)
 assert_type(u4 % u1, np.uint32)
 assert_type(u4 % u2, np.uint32)
 assert_type(u4 % u4, np.uint32)
@@ -1395,7 +1206,6 @@ assert_type(u4 % f8, np.float64)
 assert_type(u4 % ld, np.longdouble)
 u4 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 % b1, np.uint64)
 assert_type(u8 % u1, np.uint64)
 assert_type(u8 % u2, np.uint64)
 assert_type(u8 % u4, np.uint64)
@@ -1410,7 +1220,6 @@ assert_type(u8 % f8, np.float64)
 assert_type(u8 % ld, np.longdouble)
 u8 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 % b1, np.int8)
 assert_type(i1 % u1, np.int16)
 assert_type(i1 % u2, np.int32)
 assert_type(i1 % u4, np.int64)
@@ -1425,7 +1234,6 @@ assert_type(i1 % f8, np.float64)
 assert_type(i1 % ld, np.longdouble)
 i1 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 % b1, np.int16)
 assert_type(i2 % u1, np.int16)
 assert_type(i2 % u2, np.int32)
 assert_type(i2 % u4, np.int64)
@@ -1440,7 +1248,6 @@ assert_type(i2 % f8, np.float64)
 assert_type(i2 % ld, np.longdouble)
 i2 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 % b1, np.int32)
 assert_type(i4 % u1, np.int32)
 assert_type(i4 % u2, np.int32)
 assert_type(i4 % u4, np.int64)
@@ -1455,7 +1262,6 @@ assert_type(i4 % f8, np.float64)
 assert_type(i4 % ld, np.longdouble)
 i4 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 % b1, np.int64)
 assert_type(i8 % u1, np.int64)
 assert_type(i8 % u2, np.int64)
 assert_type(i8 % u4, np.int64)
@@ -1470,7 +1276,6 @@ assert_type(i8 % f8, np.float64)
 assert_type(i8 % ld, np.longdouble)
 i8 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f2 % b1, np.float16)
 assert_type(f2 % u1, np.float16)
 assert_type(f2 % u2, np.float32)
 assert_type(f2 % u4, np.float64)
@@ -1485,7 +1290,6 @@ assert_type(f2 % f8, np.float64)
 assert_type(f2 % ld, np.longdouble)
 f2 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f4 % b1, np.float32)
 assert_type(f4 % u1, np.float32)
 assert_type(f4 % u2, np.float32)
 assert_type(f4 % u4, np.float64)
@@ -1500,7 +1304,6 @@ assert_type(f4 % f8, np.float64)
 assert_type(f4 % ld, np.longdouble)
 f4 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f8 % b1, np.float64)
 assert_type(f8 % u1, np.float64)
 assert_type(f8 % u2, np.float64)
 assert_type(f8 % u4, np.float64)
@@ -1515,7 +1318,6 @@ assert_type(f8 % f8, np.float64)
 assert_type(f8 % ld, np.longdouble)
 f8 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(ld % b1, np.longdouble)
 assert_type(ld % u1, np.longdouble)
 assert_type(ld % u2, np.longdouble)
 assert_type(ld % u4, np.longdouble)
@@ -1530,7 +1332,6 @@ assert_type(ld % f8, np.longdouble)
 assert_type(ld % ld, np.longdouble)
 ld % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-m8 % b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 m8 % u1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 m8 % u2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 m8 % u4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -1548,17 +1349,6 @@ assert_type(m8 % m8, np.timedelta64)
 ###
 # __[r]lshift__
 
-assert_type(b1 << b1, np.int8)
-assert_type(b1 << u1, np.uint8)
-assert_type(b1 << u2, np.uint16)
-assert_type(b1 << u4, np.uint32)
-assert_type(b1 << u8, np.uint64)
-assert_type(b1 << i1, np.int8)
-assert_type(b1 << i2, np.int16)
-assert_type(b1 << i4, np.int32)
-assert_type(b1 << i8, np.int64)
-
-assert_type(u1 << b1, np.uint8)
 assert_type(u1 << u1, np.uint8)
 assert_type(u1 << u2, np.uint16)
 assert_type(u1 << u4, np.uint32)
@@ -1568,7 +1358,6 @@ assert_type(u1 << i2, np.int16)
 assert_type(u1 << i4, np.int32)
 assert_type(u1 << i8, np.int64)
 
-assert_type(u2 << b1, np.uint16)
 assert_type(u2 << u1, np.uint16)
 assert_type(u2 << u2, np.uint16)
 assert_type(u2 << u4, np.uint32)
@@ -1578,7 +1367,6 @@ assert_type(u2 << i2, np.int32)
 assert_type(u2 << i4, np.int32)
 assert_type(u2 << i8, np.int64)
 
-assert_type(u4 << b1, np.uint32)
 assert_type(u4 << u1, np.uint32)
 assert_type(u4 << u2, np.uint32)
 assert_type(u4 << u4, np.uint32)
@@ -1588,7 +1376,6 @@ assert_type(u4 << i2, np.int64)
 assert_type(u4 << i4, np.int64)
 assert_type(u4 << i8, np.int64)
 
-assert_type(u8 << b1, np.uint64)
 assert_type(u8 << u1, np.uint64)
 assert_type(u8 << u2, np.uint64)
 assert_type(u8 << u4, np.uint64)
@@ -1598,7 +1385,6 @@ u8 << i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 << i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 << b1, np.int8)
 assert_type(i1 << u1, np.int16)
 assert_type(i1 << u2, np.int32)
 assert_type(i1 << u4, np.int64)
@@ -1608,7 +1394,6 @@ assert_type(i1 << i2, np.int16)
 assert_type(i1 << i4, np.int32)
 assert_type(i1 << i8, np.int64)
 
-assert_type(i2 << b1, np.int16)
 assert_type(i2 << u1, np.int16)
 assert_type(i2 << u2, np.int32)
 assert_type(i2 << u4, np.int64)
@@ -1618,7 +1403,6 @@ assert_type(i2 << i2, np.int16)
 assert_type(i2 << i4, np.int32)
 assert_type(i2 << i8, np.int64)
 
-assert_type(i4 << b1, np.int32)
 assert_type(i4 << u1, np.int32)
 assert_type(i4 << u2, np.int32)
 assert_type(i4 << u4, np.int64)
@@ -1628,7 +1412,6 @@ assert_type(i4 << i2, np.int32)
 assert_type(i4 << i4, np.int32)
 assert_type(i4 << i8, np.int64)
 
-assert_type(i8 << b1, np.int64)
 assert_type(i8 << u1, np.int64)
 assert_type(i8 << u2, np.int64)
 assert_type(i8 << u4, np.int64)
@@ -1641,17 +1424,6 @@ assert_type(i8 << i8, np.int64)
 ###
 # __[r]rshift__
 
-assert_type(b1 >> b1, np.int8)
-assert_type(b1 >> u1, np.uint8)
-assert_type(b1 >> u2, np.uint16)
-assert_type(b1 >> u4, np.uint32)
-assert_type(b1 >> u8, np.uint64)
-assert_type(b1 >> i1, np.int8)
-assert_type(b1 >> i2, np.int16)
-assert_type(b1 >> i4, np.int32)
-assert_type(b1 >> i8, np.int64)
-
-assert_type(u1 >> b1, np.uint8)
 assert_type(u1 >> u1, np.uint8)
 assert_type(u1 >> u2, np.uint16)
 assert_type(u1 >> u4, np.uint32)
@@ -1661,7 +1433,6 @@ assert_type(u1 >> i2, np.int16)
 assert_type(u1 >> i4, np.int32)
 assert_type(u1 >> i8, np.int64)
 
-assert_type(u2 >> b1, np.uint16)
 assert_type(u2 >> u1, np.uint16)
 assert_type(u2 >> u2, np.uint16)
 assert_type(u2 >> u4, np.uint32)
@@ -1671,7 +1442,6 @@ assert_type(u2 >> i2, np.int32)
 assert_type(u2 >> i4, np.int32)
 assert_type(u2 >> i8, np.int64)
 
-assert_type(u4 >> b1, np.uint32)
 assert_type(u4 >> u1, np.uint32)
 assert_type(u4 >> u2, np.uint32)
 assert_type(u4 >> u4, np.uint32)
@@ -1681,7 +1451,6 @@ assert_type(u4 >> i2, np.int64)
 assert_type(u4 >> i4, np.int64)
 assert_type(u4 >> i8, np.int64)
 
-assert_type(u8 >> b1, np.uint64)
 assert_type(u8 >> u1, np.uint64)
 assert_type(u8 >> u2, np.uint64)
 assert_type(u8 >> u4, np.uint64)
@@ -1691,7 +1460,6 @@ u8 >> i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 >> i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 >> b1, np.int8)
 assert_type(i1 >> u1, np.int16)
 assert_type(i1 >> u2, np.int32)
 assert_type(i1 >> u4, np.int64)
@@ -1701,7 +1469,6 @@ assert_type(i1 >> i2, np.int16)
 assert_type(i1 >> i4, np.int32)
 assert_type(i1 >> i8, np.int64)
 
-assert_type(i2 >> b1, np.int16)
 assert_type(i2 >> u1, np.int16)
 assert_type(i2 >> u2, np.int32)
 assert_type(i2 >> u4, np.int64)
@@ -1711,7 +1478,6 @@ assert_type(i2 >> i2, np.int16)
 assert_type(i2 >> i4, np.int32)
 assert_type(i2 >> i8, np.int64)
 
-assert_type(i4 >> b1, np.int32)
 assert_type(i4 >> u1, np.int32)
 assert_type(i4 >> u2, np.int32)
 assert_type(i4 >> u4, np.int64)
@@ -1721,7 +1487,6 @@ assert_type(i4 >> i2, np.int32)
 assert_type(i4 >> i4, np.int32)
 assert_type(i4 >> i8, np.int64)
 
-assert_type(i8 >> b1, np.int64)
 assert_type(i8 >> u1, np.int64)
 assert_type(i8 >> u2, np.int64)
 assert_type(i8 >> u4, np.int64)
@@ -1734,17 +1499,6 @@ assert_type(i8 >> i8, np.int64)
 ###
 # __[r]and__
 
-assert_type(b1 & b1, np.bool)
-assert_type(b1 & u1, np.uint8)
-assert_type(b1 & u2, np.uint16)
-assert_type(b1 & u4, np.uint32)
-assert_type(b1 & u8, np.uint64)
-assert_type(b1 & i1, np.int8)
-assert_type(b1 & i2, np.int16)
-assert_type(b1 & i4, np.int32)
-assert_type(b1 & i8, np.int64)
-
-assert_type(u1 & b1, np.uint8)
 assert_type(u1 & u1, np.uint8)
 assert_type(u1 & u2, np.uint16)
 assert_type(u1 & u4, np.uint32)
@@ -1754,7 +1508,6 @@ assert_type(u1 & i2, np.int16)
 assert_type(u1 & i4, np.int32)
 assert_type(u1 & i8, np.int64)
 
-assert_type(u2 & b1, np.uint16)
 assert_type(u2 & u1, np.uint16)
 assert_type(u2 & u2, np.uint16)
 assert_type(u2 & u4, np.uint32)
@@ -1764,7 +1517,6 @@ assert_type(u2 & i2, np.int32)
 assert_type(u2 & i4, np.int32)
 assert_type(u2 & i8, np.int64)
 
-assert_type(u4 & b1, np.uint32)
 assert_type(u4 & u1, np.uint32)
 assert_type(u4 & u2, np.uint32)
 assert_type(u4 & u4, np.uint32)
@@ -1774,7 +1526,6 @@ assert_type(u4 & i2, np.int64)
 assert_type(u4 & i4, np.int64)
 assert_type(u4 & i8, np.int64)
 
-assert_type(u8 & b1, np.uint64)
 assert_type(u8 & u1, np.uint64)
 assert_type(u8 & u2, np.uint64)
 assert_type(u8 & u4, np.uint64)
@@ -1784,7 +1535,6 @@ u8 & i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 & i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 & b1, np.int8)
 assert_type(i1 & u1, np.int16)
 assert_type(i1 & u2, np.int32)
 assert_type(i1 & u4, np.int64)
@@ -1794,7 +1544,6 @@ assert_type(i1 & i2, np.int16)
 assert_type(i1 & i4, np.int32)
 assert_type(i1 & i8, np.int64)
 
-assert_type(i2 & b1, np.int16)
 assert_type(i2 & u1, np.int16)
 assert_type(i2 & u2, np.int32)
 assert_type(i2 & u4, np.int64)
@@ -1804,7 +1553,6 @@ assert_type(i2 & i2, np.int16)
 assert_type(i2 & i4, np.int32)
 assert_type(i2 & i8, np.int64)
 
-assert_type(i4 & b1, np.int32)
 assert_type(i4 & u1, np.int32)
 assert_type(i4 & u2, np.int32)
 assert_type(i4 & u4, np.int64)
@@ -1814,7 +1562,6 @@ assert_type(i4 & i2, np.int32)
 assert_type(i4 & i4, np.int32)
 assert_type(i4 & i8, np.int64)
 
-assert_type(i8 & b1, np.int64)
 assert_type(i8 & u1, np.int64)
 assert_type(i8 & u2, np.int64)
 assert_type(i8 & u4, np.int64)
@@ -1827,17 +1574,6 @@ assert_type(i8 & i8, np.int64)
 ###
 # __[r]xor__
 
-assert_type(b1 ^ b1, np.bool)
-assert_type(b1 ^ u1, np.uint8)
-assert_type(b1 ^ u2, np.uint16)
-assert_type(b1 ^ u4, np.uint32)
-assert_type(b1 ^ u8, np.uint64)
-assert_type(b1 ^ i1, np.int8)
-assert_type(b1 ^ i2, np.int16)
-assert_type(b1 ^ i4, np.int32)
-assert_type(b1 ^ i8, np.int64)
-
-assert_type(u1 ^ b1, np.uint8)
 assert_type(u1 ^ u1, np.uint8)
 assert_type(u1 ^ u2, np.uint16)
 assert_type(u1 ^ u4, np.uint32)
@@ -1847,7 +1583,6 @@ assert_type(u1 ^ i2, np.int16)
 assert_type(u1 ^ i4, np.int32)
 assert_type(u1 ^ i8, np.int64)
 
-assert_type(u2 ^ b1, np.uint16)
 assert_type(u2 ^ u1, np.uint16)
 assert_type(u2 ^ u2, np.uint16)
 assert_type(u2 ^ u4, np.uint32)
@@ -1857,7 +1592,6 @@ assert_type(u2 ^ i2, np.int32)
 assert_type(u2 ^ i4, np.int32)
 assert_type(u2 ^ i8, np.int64)
 
-assert_type(u4 ^ b1, np.uint32)
 assert_type(u4 ^ u1, np.uint32)
 assert_type(u4 ^ u2, np.uint32)
 assert_type(u4 ^ u4, np.uint32)
@@ -1867,7 +1601,6 @@ assert_type(u4 ^ i2, np.int64)
 assert_type(u4 ^ i4, np.int64)
 assert_type(u4 ^ i8, np.int64)
 
-assert_type(u8 ^ b1, np.uint64)
 assert_type(u8 ^ u1, np.uint64)
 assert_type(u8 ^ u2, np.uint64)
 assert_type(u8 ^ u4, np.uint64)
@@ -1877,7 +1610,6 @@ u8 ^ i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 ^ i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 ^ b1, np.int8)
 assert_type(i1 ^ u1, np.int16)
 assert_type(i1 ^ u2, np.int32)
 assert_type(i1 ^ u4, np.int64)
@@ -1887,7 +1619,6 @@ assert_type(i1 ^ i2, np.int16)
 assert_type(i1 ^ i4, np.int32)
 assert_type(i1 ^ i8, np.int64)
 
-assert_type(i2 ^ b1, np.int16)
 assert_type(i2 ^ u1, np.int16)
 assert_type(i2 ^ u2, np.int32)
 assert_type(i2 ^ u4, np.int64)
@@ -1897,7 +1628,6 @@ assert_type(i2 ^ i2, np.int16)
 assert_type(i2 ^ i4, np.int32)
 assert_type(i2 ^ i8, np.int64)
 
-assert_type(i4 ^ b1, np.int32)
 assert_type(i4 ^ u1, np.int32)
 assert_type(i4 ^ u2, np.int32)
 assert_type(i4 ^ u4, np.int64)
@@ -1907,7 +1637,6 @@ assert_type(i4 ^ i2, np.int32)
 assert_type(i4 ^ i4, np.int32)
 assert_type(i4 ^ i8, np.int64)
 
-assert_type(i8 ^ b1, np.int64)
 assert_type(i8 ^ u1, np.int64)
 assert_type(i8 ^ u2, np.int64)
 assert_type(i8 ^ u4, np.int64)
@@ -1920,17 +1649,6 @@ assert_type(i8 ^ i8, np.int64)
 ###
 # __[r]or__
 
-assert_type(b1 | b1, np.bool)
-assert_type(b1 | u1, np.uint8)
-assert_type(b1 | u2, np.uint16)
-assert_type(b1 | u4, np.uint32)
-assert_type(b1 | u8, np.uint64)
-assert_type(b1 | i1, np.int8)
-assert_type(b1 | i2, np.int16)
-assert_type(b1 | i4, np.int32)
-assert_type(b1 | i8, np.int64)
-
-assert_type(u1 | b1, np.uint8)
 assert_type(u1 | u1, np.uint8)
 assert_type(u1 | u2, np.uint16)
 assert_type(u1 | u4, np.uint32)
@@ -1940,7 +1658,6 @@ assert_type(u1 | i2, np.int16)
 assert_type(u1 | i4, np.int32)
 assert_type(u1 | i8, np.int64)
 
-assert_type(u2 | b1, np.uint16)
 assert_type(u2 | u1, np.uint16)
 assert_type(u2 | u2, np.uint16)
 assert_type(u2 | u4, np.uint32)
@@ -1950,7 +1667,6 @@ assert_type(u2 | i2, np.int32)
 assert_type(u2 | i4, np.int32)
 assert_type(u2 | i8, np.int64)
 
-assert_type(u4 | b1, np.uint32)
 assert_type(u4 | u1, np.uint32)
 assert_type(u4 | u2, np.uint32)
 assert_type(u4 | u4, np.uint32)
@@ -1960,7 +1676,6 @@ assert_type(u4 | i2, np.int64)
 assert_type(u4 | i4, np.int64)
 assert_type(u4 | i8, np.int64)
 
-assert_type(u8 | b1, np.uint64)
 assert_type(u8 | u1, np.uint64)
 assert_type(u8 | u2, np.uint64)
 assert_type(u8 | u4, np.uint64)
@@ -1970,7 +1685,6 @@ u8 | i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 | i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8 | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 | b1, np.int8)
 assert_type(i1 | u1, np.int16)
 assert_type(i1 | u2, np.int32)
 assert_type(i1 | u4, np.int64)
@@ -1980,7 +1694,6 @@ assert_type(i1 | i2, np.int16)
 assert_type(i1 | i4, np.int32)
 assert_type(i1 | i8, np.int64)
 
-assert_type(i2 | b1, np.int16)
 assert_type(i2 | u1, np.int16)
 assert_type(i2 | u2, np.int32)
 assert_type(i2 | u4, np.int64)
@@ -1990,7 +1703,6 @@ assert_type(i2 | i2, np.int16)
 assert_type(i2 | i4, np.int32)
 assert_type(i2 | i8, np.int64)
 
-assert_type(i4 | b1, np.int32)
 assert_type(i4 | u1, np.int32)
 assert_type(i4 | u2, np.int32)
 assert_type(i4 | u4, np.int64)
@@ -2000,7 +1712,6 @@ assert_type(i4 | i2, np.int32)
 assert_type(i4 | i4, np.int32)
 assert_type(i4 | i8, np.int64)
 
-assert_type(i8 | b1, np.int64)
 assert_type(i8 | u1, np.int64)
 assert_type(i8 | u2, np.int64)
 assert_type(i8 | u4, np.int64)

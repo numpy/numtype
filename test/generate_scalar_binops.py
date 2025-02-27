@@ -38,23 +38,25 @@ NAMES = {
     # "float": "f_",
     # "complex": "c_",
     #
-    # numpy (key length == 1)
-    "?": "b1",
+    # TODO(jorenham): fix `bool` binops
+    # "?": "b1",
+    # unsigned integers
     "B": "u1",
     "H": "u2",
     "I": "u4",
     "L": "u8",
-    # "Q": "Q",
+    # signed integers
     "b": "i1",
     "h": "i2",
     "i": "i4",
     "l": "i8",
-    # "q": "q",
+    # real floating
     "e": "f2",
     "f": "f4",
     "d": "f8",
     "g": "ld",
-    # TODO(jorenham): Re-enable the complexes once their binops are fixed
+    # complexes
+    # TODO(jorenham): fix `complexfloating` binops
     # "F": "c8",
     # "D": "c16",
     # "G": "cld",
