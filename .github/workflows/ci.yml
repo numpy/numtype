@@ -39,6 +39,9 @@ jobs:
       - name: ruff format --check
         run: uv run ruff format --check
 
+      - name: pytest
+        run: uv run pytest
+
       - name: basedpyright
         run: uv run basedpyright
 
@@ -48,5 +51,5 @@ jobs:
       - name: mypy (test)
         run: uv run test/mypy.py
 
-      - name: pytest
-        run: uv run pytest
+      - name: stubtest
+        run: uv run tool/stubtest.py

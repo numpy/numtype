@@ -1,0 +1,12 @@
+numpy\.__numtype__
+numpy\.polynomial\._polytypes
+numpy\._typing.*
+numpy\.typing\.mypy_plugin
+
+numpy\.conftest
+numpy\.tests.*
+numpy\.(\w+)\.tests.*
+
+numpy\.u?int(128|256)
+numpy\.float(80|256)
+numpy\.complex(160|512)
