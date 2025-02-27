@@ -100,7 +100,8 @@ def _sctype_expr(dtype: np.dtype[Any]) -> str:
 
 
 def _assert_stmt(op: str, lhs: str, rhs: str, /) -> str | None:
-    expr_eval = f"{NAMES[lhs]} {op} {NAMES[rhs]}"
+    pad = " " * (op != "**")  # ruff doesn't like whitespace around `**` for some reason
+    expr_eval = f"{NAMES[lhs]}{pad}{op}{pad}{NAMES[rhs]}"
 
     try:
         val_out: np.generic = OPS[op](_scalar(lhs), _scalar(rhs))
