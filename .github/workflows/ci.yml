@@ -40,79 +40,13 @@ jobs:
         run: uv run ruff format --check
 
       - name: basedpyright
-        run: >
-          uv run basedpyright
-          test/
-          tool/
-          src/_numtype/
-          src/numtype/
-          src/numpy-stubs/_core/
-          src/numpy-stubs/_typing/
-          src/numpy-stubs/char/
-          src/numpy-stubs/core/
-          src/numpy-stubs/ctypeslib/
-          src/numpy-stubs/distutils/
-          src/numpy-stubs/f2py/
-          src/numpy-stubs/fft/
-          src/numpy-stubs/lib/
-          src/numpy-stubs/linalg/
-          src/numpy-stubs/ma/
-          src/numpy-stubs/matrixlib/
-          src/numpy-stubs/polynomial/
-          src/numpy-stubs/random/
-          src/numpy-stubs/rec/
-          src/numpy-stubs/strings/
-          src/numpy-stubs/testing/
-          src/numpy-stubs/typing/
-          src/numpy-stubs/__config__.pyi
-          src/numpy-stubs/_array_api_info.pyi
-          src/numpy-stubs/_configtool.pyi
-          src/numpy-stubs/_distributor_init.pyi
-          src/numpy-stubs/_expired_attrs_2_0.pyi
-          src/numpy-stubs/_globals.pyi
-          src/numpy-stubs/_pytesttester.pyi
-          src/numpy-stubs/dtypes.pyi
-          src/numpy-stubs/exceptions.pyi
-          src/numpy-stubs/matlib.pyi
-          src/numpy-stubs/version.pyi
+        run: uv run basedpyright
 
       - name: mypy (src)
-        run: >
-          uv run test/mypy.py
-          src/_numtype/
-          src/numtype/
-          src/numpy-stubs/_core/
-          src/numpy-stubs/_typing/
-          src/numpy-stubs/char/
-          src/numpy-stubs/core/
-          src/numpy-stubs/ctypeslib/
-          src/numpy-stubs/distutils/
-          src/numpy-stubs/f2py/
-          src/numpy-stubs/fft/
-          src/numpy-stubs/lib/
-          src/numpy-stubs/linalg/
-          src/numpy-stubs/ma/
-          src/numpy-stubs/matrixlib/
-          src/numpy-stubs/polynomial/
-          src/numpy-stubs/random/
-          src/numpy-stubs/rec/
-          src/numpy-stubs/strings/
-          src/numpy-stubs/testing/
-          src/numpy-stubs/typing/
-          src/numpy-stubs/__config__.pyi
-          src/numpy-stubs/_array_api_info.pyi
-          src/numpy-stubs/_configtool.pyi
-          src/numpy-stubs/_distributor_init.pyi
-          src/numpy-stubs/_expired_attrs_2_0.pyi
-          src/numpy-stubs/_globals.pyi
-          src/numpy-stubs/_pytesttester.pyi
-          src/numpy-stubs/dtypes.pyi
-          src/numpy-stubs/exceptions.pyi
-          src/numpy-stubs/matlib.pyi
-          src/numpy-stubs/version.pyi
+        run: uv run test/mypy.py src
 
       - name: mypy (test)
-        run: uv run test/mypy.py
+        run: uv run test/mypy.py test
 
       - name: pytest
         run: uv run pytest
