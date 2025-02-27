@@ -46,7 +46,7 @@ jobs:
         run: uv run test/mypy.py src
 
       - name: mypy (test)
-        run: uv run test/mypy.py test
+        run: uv run test/mypy.py
 
       - name: pytest
         run: uv run pytest
