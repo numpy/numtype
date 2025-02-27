@@ -256,13 +256,10 @@ from ._typing import (
     _DTypeLikeVoid,
     _GUFunc_Nin2_Nout1,
     _IntLike_co,
-    _NBitDouble,
-    _NBitHalf,
     _NBitIntP,
     _NBitLong,
     _NBitLongDouble,
     _NBitLongLong,
-    _NBitSingle,
     _NestedSequence,
     _NumberLike_co,
     _ScalarLike_co,
@@ -331,7 +328,6 @@ from ._typing._char_codes import (
 )
 
 # TODO(jorenham): remove these: https://github.com/numpy/numtype/issues/120
-from ._typing._extended_precision import complex160, complex512, float80, float256, int128, int256, uint128, uint256
 from .lib import scimath as emath
 from .lib._arraypad_impl import pad
 from .lib._arraysetops_impl import (
@@ -502,31 +498,30 @@ __all__ = [  # noqa: RUF022
     "atleast_1d", "atleast_2d", "atleast_3d", "base_repr", "binary_repr", "bitwise_and", "bitwise_count", "bitwise_invert",
     "bitwise_left_shift", "bitwise_not", "bitwise_or", "bitwise_right_shift", "bitwise_xor", "block", "bool", "bool_",
     "broadcast", "busday_count", "busday_offset", "busdaycalendar", "byte", "bytes_", "can_cast", "cbrt", "cdouble", "ceil",
-    "character", "choose", "clip", "clongdouble", "complex128", "complex160", "complex192", "complex256", "complex512",
-    "complex64", "complexfloating", "compress", "concat", "concatenate", "conj", "conjugate", "convolve", "copysign", "copyto",
-    "correlate", "cos", "cosh", "count_nonzero", "cross", "csingle", "cumprod", "cumsum", "cumulative_prod", "cumulative_sum",
-    "datetime64", "datetime_as_string", "datetime_data", "deg2rad", "degrees", "diagonal", "divide", "divmod", "dot", "double",
-    "dtype", "e", "einsum", "einsum_path", "empty", "empty_like", "equal", "errstate", "euler_gamma", "exp", "exp2", "expm1",
-    "fabs", "finfo", "flatiter", "flatnonzero", "flexible", "float128", "float16", "float256", "float32", "float64", "float80",
-    "float96", "float_power", "floating", "floor", "floor_divide", "fmax", "fmin", "fmod", "format_float_positional",
-    "format_float_scientific", "frexp", "from_dlpack", "frombuffer", "fromfile", "fromfunction", "fromiter", "frompyfunc",
-    "fromstring", "full", "full_like", "gcd", "generic", "geomspace", "get_printoptions", "getbufsize", "geterr", "geterrcall",
-    "greater", "greater_equal", "half", "heaviside", "hstack", "hypot", "identity", "iinfo", "indices", "inexact", "inf", "inner",
-    "int128", "int16", "int256", "int32", "int64", "int8", "int_", "intc", "integer", "intp", "invert", "is_busday", "isclose",
-    "isdtype", "isfinite", "isfortran", "isinf", "isnan", "isnat", "isscalar", "issubdtype", "lcm", "ldexp", "left_shift", "less",
-    "less_equal", "lexsort", "linspace", "little_endian", "log", "log10", "log1p", "log2", "logaddexp", "logaddexp2",
-    "logical_and", "logical_not", "logical_or", "logical_xor", "logspace", "long", "longdouble", "longlong", "matmul",
-    "matrix_transpose", "matvec", "max", "maximum", "may_share_memory", "mean", "memmap", "min", "min_scalar_type", "minimum",
-    "mod", "modf", "moveaxis", "multiply", "nan", "ndarray", "ndim", "nditer", "negative", "nested_iters", "newaxis", "nextafter",
-    "nonzero", "not_equal", "number", "object_", "ones", "ones_like", "outer", "partition", "permute_dims", "pi", "positive",
-    "pow", "power", "printoptions", "prod", "promote_types", "ptp", "put", "putmask", "rad2deg", "radians", "ravel", "recarray",
-    "reciprocal", "record", "remainder", "repeat", "require", "reshape", "resize", "result_type", "right_shift", "rint", "roll",
-    "rollaxis", "round", "sctypeDict", "searchsorted", "set_printoptions", "setbufsize", "seterr", "seterrcall", "shape",
-    "shares_memory", "short", "sign", "signbit", "signedinteger", "sin", "single", "sinh", "size", "sort", "spacing", "sqrt",
-    "square", "squeeze", "stack", "std", "str_", "subtract", "sum", "swapaxes", "take", "tan", "tanh", "tensordot", "timedelta64",
-    "trace", "transpose", "true_divide", "trunc", "typecodes", "ubyte", "ufunc", "uint", "uint128", "uint16", "uint256", "uint32",
-    "uint64", "uint64", "uint8", "uintc", "uintp", "ulong", "ulonglong", "unsignedinteger", "unstack", "ushort", "var", "vdot",
-    "vecdot", "vecmat", "void", "vstack", "where", "zeros", "zeros_like",
+    "character", "choose", "clip", "clongdouble", "complex128", "complex192", "complex256", "complex64", "complexfloating",
+    "compress", "concat", "concatenate", "conj", "conjugate", "convolve", "copysign", "copyto", "correlate", "cos", "cosh",
+    "count_nonzero", "cross", "csingle", "cumprod", "cumsum", "cumulative_prod", "cumulative_sum", "datetime64",
+    "datetime_as_string", "datetime_data", "deg2rad", "degrees", "diagonal", "divide", "divmod", "dot", "double", "dtype", "e",
+    "einsum", "einsum_path", "empty", "empty_like", "equal", "errstate", "euler_gamma", "exp", "exp2", "expm1", "fabs", "finfo",
+    "flatiter", "flatnonzero", "flexible", "float128", "float16", "float32", "float64", "float96", "float_power", "floating",
+    "floor", "floor_divide", "fmax", "fmin", "fmod", "format_float_positional", "format_float_scientific", "frexp", "from_dlpack",
+    "frombuffer", "fromfile", "fromfunction", "fromiter", "frompyfunc", "fromstring", "full", "full_like", "gcd", "generic",
+    "geomspace", "get_printoptions", "getbufsize", "geterr", "geterrcall", "greater", "greater_equal", "half", "heaviside",
+    "hstack", "hypot", "identity", "iinfo", "indices", "inexact", "inf", "inner", "int8", "int16", "int32", "int64", "int_",
+    "intc", "integer", "intp", "invert", "is_busday", "isclose", "isdtype", "isfinite", "isfortran", "isinf", "isnan", "isnat",
+    "isscalar", "issubdtype", "lcm", "ldexp", "left_shift", "less", "less_equal", "lexsort", "linspace", "little_endian", "log",
+    "log10", "log1p", "log2", "logaddexp", "logaddexp2", "logical_and", "logical_not", "logical_or", "logical_xor", "logspace",
+    "long", "longdouble", "longlong", "matmul", "matrix_transpose", "matvec", "max", "maximum", "may_share_memory", "mean",
+    "memmap", "min", "min_scalar_type", "minimum", "mod", "modf", "moveaxis", "multiply", "nan", "ndarray", "ndim", "nditer",
+    "negative", "nested_iters", "newaxis", "nextafter", "nonzero", "not_equal", "number", "object_", "ones", "ones_like", "outer",
+    "partition", "permute_dims", "pi", "positive", "pow", "power", "printoptions", "prod", "promote_types", "ptp", "put",
+    "putmask", "rad2deg", "radians", "ravel", "recarray", "reciprocal", "record", "remainder", "repeat", "require", "reshape",
+    "resize", "result_type", "right_shift", "rint", "roll", "rollaxis", "round", "sctypeDict", "searchsorted", "set_printoptions",
+    "setbufsize", "seterr", "seterrcall", "shape", "shares_memory", "short", "sign", "signbit", "signedinteger", "sin", "single",
+    "sinh", "size", "sort", "spacing", "sqrt", "square", "squeeze", "stack", "std", "str_", "subtract", "sum", "swapaxes", "take",
+    "tan", "tanh", "tensordot", "timedelta64", "trace", "transpose", "true_divide", "trunc", "typecodes", "ubyte", "ufunc",
+    "uint", "uint16", "uint32", "uint64", "uint64", "uint8", "uintc", "uintp", "ulong", "ulonglong", "unsignedinteger", "unstack",
+    "ushort", "var", "vdot", "vecdot", "vecmat", "void", "vstack", "where", "zeros", "zeros_like",
     # matrixlib.*
     "matrix", "bmat", "asmatrix",
     # lib._arraypad_impl.*
@@ -592,7 +587,7 @@ _AnyShapeT = TypeVar(
     tuple[int, int, int, int, int, int, int, int],  # 8-d
     tuple[int, ...],  # N-d
 )
-_AnyNBitInexact = TypeVar("_AnyNBitInexact", _NBitHalf, _NBitSingle, _NBitDouble, _NBitLongDouble)
+_AnyNBitInexact = TypeVar("_AnyNBitInexact", _16Bit, _32Bit, _64Bit, _NBitLongDouble)
 _AnyTD64Item = TypeVar("_AnyTD64Item", dt.timedelta, int, None, dt.timedelta | int | None)
 _AnyDT64Arg = TypeVar("_AnyDT64Arg", dt.datetime, dt.date, None)
 _AnyDate = TypeVar("_AnyDate", dt.date, dt.datetime)
@@ -6391,11 +6386,9 @@ ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
 
 float16: TypeAlias = floating[_16Bit]
 float32: TypeAlias = floating[_32Bit]
-double: TypeAlias = floating[_64Bit]  # TODO(jorenham): alias to `float64`
 longdouble: TypeAlias = floating[_NBitLongDouble]
 
 complex64: TypeAlias = complexfloating[_32Bit]
-cdouble: TypeAlias = complexfloating[_NBitDouble]  # TODO(jorenham): alias to `complex128`
 clongdouble: TypeAlias = complexfloating[_NBitLongDouble]
 
 # NOTE: These should NOT be `Final` or a `TypeAlias`!
@@ -6410,7 +6403,9 @@ int_ = intp
 uint = uintp
 half = float16
 single = float32
+double = float64
 csingle = complex64
+cdouble = complex128
 
 ###
 # ufuncs (s See `numpy._typing._ufunc` for more concrete nin-/nout-specific stubs)

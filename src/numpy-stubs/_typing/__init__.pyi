@@ -18,12 +18,10 @@ from ._array_like import (
     _ArrayLikeString_co as _ArrayLikeString_co,
     _ArrayLikeTD64_co as _ArrayLikeTD64_co,
     _ArrayLikeUInt_co as _ArrayLikeUInt_co,
-    _ArrayLikeUnknown as _ArrayLikeUnknown,
     _ArrayLikeVoid_co as _ArrayLikeVoid_co,
     _FiniteNestedSequence as _FiniteNestedSequence,
     _SupportsArray as _SupportsArray,
     _SupportsArrayFunc as _SupportsArrayFunc,
-    _UnknownType as _UnknownType,
 )
 from ._char_codes import (
     _BoolCodes as _BoolCodes,
@@ -98,17 +96,10 @@ from ._dtype_like import (
     _VoidDTypeLike as _VoidDTypeLike,
 )
 from ._nbit import (
-    _NBitByte as _NBitByte,
-    _NBitDouble as _NBitDouble,
-    _NBitHalf as _NBitHalf,
-    _NBitInt as _NBitInt,
-    _NBitIntC as _NBitIntC,
     _NBitIntP as _NBitIntP,
     _NBitLong as _NBitLong,
     _NBitLongDouble as _NBitLongDouble,
     _NBitLongLong as _NBitLongLong,
-    _NBitShort as _NBitShort,
-    _NBitSingle as _NBitSingle,
 )
 from ._nbit_base import (
     NBitBase as NBitBase,
@@ -116,14 +107,10 @@ from ._nbit_base import (
     _16Bit as _16Bit,
     _32Bit as _32Bit,
     _64Bit as _64Bit,
-    _80Bit as _80Bit,
     _96Bit as _96Bit,
     _128Bit as _128Bit,
-    _256Bit as _256Bit,
 )
-from ._nested_sequence import (
-    _NestedSequence as _NestedSequence,
-)
+from ._nested_sequence import _NestedSequence as _NestedSequence
 from ._scalars import (
     _BoolLike_co as _BoolLike_co,
     _CharLike_co as _CharLike_co,
@@ -136,10 +123,7 @@ from ._scalars import (
     _UIntLike_co as _UIntLike_co,
     _VoidLike_co as _VoidLike_co,
 )
-from ._shape import (
-    _Shape as _Shape,
-    _ShapeLike as _ShapeLike,
-)
+from ._shape import _Shape as _Shape, _ShapeLike as _ShapeLike
 from ._ufunc import (
     _GUFunc_Nin2_Nout1 as _GUFunc_Nin2_Nout1,
     _UFunc_Nin1_Nout1 as _UFunc_Nin1_Nout1,

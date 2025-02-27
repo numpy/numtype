@@ -4,9 +4,8 @@ numpy\._typing.*
 numpy\.typing\.mypy_plugin
 
 numpy\.conftest
-numpy\.tests.*
-numpy\.(\w+)\.tests.*
+numpy(\.\w+)?\.tests.*
 
-numpy\.u?int(128|256)
-numpy\.float(80|256)
-numpy\.complex(160|512)
+# system-dependent extended precision types
+numpy(\..+)?\.float(96|128)
+numpy(\..+)?\.complex(192|256)
