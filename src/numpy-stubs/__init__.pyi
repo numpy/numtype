@@ -4521,7 +4521,7 @@ class signedinteger(integer[_NBitT]):
     @overload
     def __divmod__(self, x: floating[_64Bit], /) -> _2Tuple[float64]: ...
     @overload
-    def __divmod__(self, x: float, /) -> _2Tuple[Self | float64]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __divmod__(self, x: float, /) -> _2Tuple[Self] | _2Tuple[float64]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @overload  # type: ignore[override]
