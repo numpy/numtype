@@ -28,5 +28,5 @@ i0 | f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f8 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i8 ^ f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-f8 & u8  # type: ignore[call-overload]  # pyright: ignore[reportOperatorIssue]
-u8 & f8  # type: ignore[call-overload]  # pyright: ignore[reportOperatorIssue]
+f8 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]

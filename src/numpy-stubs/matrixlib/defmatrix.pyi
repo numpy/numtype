@@ -210,7 +210,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def ptp(self, /, axis: _ToAxis | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
     #
-    def tolist(self: _CanItem[_T]) -> list[list[_T]]: ...
+    def tolist(self: _CanItem[_T], /) -> list[list[_T]]: ...  # type: ignore[override]
 
     #
     def squeeze(self, /, axis: _ToAxis | None = None) -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]

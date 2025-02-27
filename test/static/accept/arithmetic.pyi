@@ -4,7 +4,6 @@ from typing_extensions import assert_type
 
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _64Bit
 
 b: bool
 i: int
@@ -430,25 +429,24 @@ assert_type(c8 + f8, np.complex128)
 assert_type(c8 + i8, np.complex128)
 assert_type(c8 + c8, np.complex64)
 assert_type(c8 + f4, np.complex64)
-assert_type(c8 + i4, np.complex64)
+assert_type(c8 + i4, np.complex128)
 assert_type(c8 + b_, np.complex64)
 assert_type(c8 + b, np.complex64)
-assert_type(c8 + c, np.complex128)
-assert_type(c8 + f, np.complex128)
+assert_type(c8 + c, np.complex64)
+assert_type(c8 + f, np.complex64)
 assert_type(c8 + AR_f, npt.NDArray[np.complexfloating])
 
 assert_type(f16 + c8, np.clongdouble)
 assert_type(c16 + c8, np.complex128)
-# https://github.com/microsoft/pyright/issues/9684
-assert_type(f8 + c8, np.complexfloating[_64Bit])  # pyright: ignore[reportAssertTypeFailure]
+assert_type(f8 + c8, np.complex128)
 assert_type(i8 + c8, np.complex128)
 assert_type(c8 + c8, np.complex64)
 assert_type(f4 + c8, np.complex64)
-assert_type(i4 + c8, np.complex64)
+assert_type(i4 + c8, np.complex128)
 assert_type(b_ + c8, np.complex64)
 assert_type(b + c8, np.complex64)
-assert_type(c + c8, np.complex128)
-assert_type(f + c8, np.complex128)
+assert_type(c + c8, np.complex64)
+assert_type(f + c8, np.complex64)
 assert_type(AR_f + c8, npt.NDArray[np.complexfloating])
 
 # Float
@@ -483,7 +481,7 @@ assert_type(f4 + f16, np.longdouble)
 assert_type(f4 + f8, np.float64)
 assert_type(f4 + i8, np.float64)
 assert_type(f4 + f4, np.float32)
-assert_type(f4 + i4, np.float32)
+assert_type(f4 + i4, np.float64)
 assert_type(f4 + b_, np.float32)
 assert_type(f4 + AR_f, npt.NDArray[np.float64])
 
@@ -494,7 +492,7 @@ assert_type(f16 + f4, np.longdouble)
 assert_type(f8 + f4, np.float64)
 assert_type(i8 + f4, np.float64)
 assert_type(f4 + f4, np.float32)
-assert_type(i4 + f4, np.float32)
+assert_type(i4 + f4, np.float64)
 assert_type(b_ + f4, np.float32)
 assert_type(AR_f + f4, npt.NDArray[np.float64])
 

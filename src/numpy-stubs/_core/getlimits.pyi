@@ -113,12 +113,9 @@ class finfo(Generic[_FloatingT_co]):
     @overload
     def __new__(cls, dtype: type[complex | float] | complex | float) -> finfo[np.float64]: ...
     @overload
-    def __new__(  # type: ignore[overload-overlap]
-        cls,
-        dtype: np.inexact[_16Bit] | _DTypeLike[np.inexact[_16Bit]] | _Float16Codes,
-    ) -> finfo[np.float16]: ...
+    def __new__(cls, dtype: np.inexact[_16Bit] | _DTypeLike[np.inexact[_16Bit]] | _Float16Codes) -> finfo[np.float16]: ...
     @overload
-    def __new__(  # type: ignore[overload-overlap]
+    def __new__(
         cls,
         dtype: np.inexact[_32Bit] | _DTypeLike[np.inexact[_32Bit]] | _Float32Codes | _Complex64Codes,
     ) -> finfo[np.float32]: ...
