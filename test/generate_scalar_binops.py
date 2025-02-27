@@ -39,6 +39,7 @@ NAMES = {
     # "complex": "c_",
     #
     # TODO(jorenham): fix `bool` binops
+    # https://github.com/numpy/numtype/issues/205
     # "?": "b1",
     # unsigned integers
     "B": "u1",
@@ -56,10 +57,9 @@ NAMES = {
     "d": "f8",
     "g": "ld",
     # complexes
-    # TODO(jorenham): fix `complexfloating` binops
-    # "F": "c8",
-    # "D": "c16",
-    # "G": "cld",
+    "F": "c8",
+    "D": "c16",
+    "G": "cld",
     "m": "m8",
     "M": "M8",
 }
