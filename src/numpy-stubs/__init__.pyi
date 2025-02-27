@@ -256,13 +256,10 @@ from ._typing import (
     _DTypeLikeVoid,
     _GUFunc_Nin2_Nout1,
     _IntLike_co,
-    _NBitDouble,
-    _NBitHalf,
     _NBitIntP,
     _NBitLong,
     _NBitLongDouble,
     _NBitLongLong,
-    _NBitSingle,
     _NestedSequence,
     _NumberLike_co,
     _ScalarLike_co,
@@ -590,7 +587,7 @@ _AnyShapeT = TypeVar(
     tuple[int, int, int, int, int, int, int, int],  # 8-d
     tuple[int, ...],  # N-d
 )
-_AnyNBitInexact = TypeVar("_AnyNBitInexact", _NBitHalf, _NBitSingle, _NBitDouble, _NBitLongDouble)
+_AnyNBitInexact = TypeVar("_AnyNBitInexact", _16Bit, _32Bit, _64Bit, _NBitLongDouble)
 _AnyTD64Item = TypeVar("_AnyTD64Item", dt.timedelta, int, None, dt.timedelta | int | None)
 _AnyDT64Arg = TypeVar("_AnyDT64Arg", dt.datetime, dt.date, None)
 _AnyDate = TypeVar("_AnyDate", dt.date, dt.datetime)
@@ -6389,11 +6386,9 @@ ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
 
 float16: TypeAlias = floating[_16Bit]
 float32: TypeAlias = floating[_32Bit]
-double: TypeAlias = floating[_64Bit]  # TODO(jorenham): alias to `float64`
 longdouble: TypeAlias = floating[_NBitLongDouble]
 
 complex64: TypeAlias = complexfloating[_32Bit]
-cdouble: TypeAlias = complexfloating[_NBitDouble]  # TODO(jorenham): alias to `complex128`
 clongdouble: TypeAlias = complexfloating[_NBitLongDouble]
 
 # NOTE: These should NOT be `Final` or a `TypeAlias`!
@@ -6408,7 +6403,9 @@ int_ = intp
 uint = uintp
 half = float16
 single = float32
+double = float64
 csingle = complex64
+cdouble = complex128
 
 ###
 # ufuncs (s See `numpy._typing._ufunc` for more concrete nin-/nout-specific stubs)

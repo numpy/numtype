@@ -209,8 +209,6 @@ numpy(\..+)?\.half.__pow__
 numpy(\..+)?\.half.__rpow__
 numpy(\..+)?\.c?single.__pow__
 numpy(\..+)?\.c?single.__rpow__
-numpy(\..+)?\.c?double.__pow__
-numpy(\..+)?\.c?double.__rpow__
 numpy(\..+)?\.c?longdouble.__pow__
 numpy(\..+)?\.c?longdouble.__rpow__
 numpy(\..+)?\.float16.__pow__

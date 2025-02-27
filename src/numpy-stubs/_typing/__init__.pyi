@@ -96,17 +96,10 @@ from ._dtype_like import (
     _VoidDTypeLike as _VoidDTypeLike,
 )
 from ._nbit import (
-    _NBitByte as _NBitByte,
-    _NBitDouble as _NBitDouble,
-    _NBitHalf as _NBitHalf,
-    _NBitInt as _NBitInt,
-    _NBitIntC as _NBitIntC,
     _NBitIntP as _NBitIntP,
     _NBitLong as _NBitLong,
     _NBitLongDouble as _NBitLongDouble,
     _NBitLongLong as _NBitLongLong,
-    _NBitShort as _NBitShort,
-    _NBitSingle as _NBitSingle,
 )
 from ._nbit_base import (
     NBitBase as NBitBase,
