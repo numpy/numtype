@@ -1925,6 +1925,40 @@ class _ArrayOrScalarCommon:
         correction: float = ...,
     ) -> _ArrayT: ...
 
+    # NOTE: always raises when called on `generic`.
+    @overload
+    def diagonal(  # type: ignore[misc]
+        self: ndarray[tuple[int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int], _DTypeT]: ...
+    @overload
+    def diagonal(  # type: ignore[misc]
+        self: ndarray[tuple[int, int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, int], _DTypeT]: ...
+    @overload
+    def diagonal(  # type: ignore[misc]
+        self: ndarray[tuple[int, int, int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, int, int], _DTypeT]: ...
+    @overload
+    def diagonal(  # type: ignore[misc]
+        self: ndarray[tuple[int, ...], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, ...], _DTypeT]: ...
+
 #
 class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     __hash__: ClassVar[None]  # type: ignore[assignment]  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -3318,14 +3352,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         kind: _PartitionKind = ...,
         order: str | Sequence[str] | None = ...,
     ) -> NDArray[intp]: ...
-
-    #
-    def diagonal(
-        self,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
 
     # 1D + 1D returns a scalar; # all other with at least 1 non-0D array return an ndarray.
     @overload
