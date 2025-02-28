@@ -275,8 +275,8 @@ class _DomainedBinaryOperation(_MaskedUFunc[_UFuncT_co], Generic[_UFuncT_co]):
 
 class _extrema_operation(_MaskedUFunc[_UFuncT_co], Generic[_UFuncT_co]):
     __doc__: str
-    compare: Any
-    fill_value_func: Any
+    compare: Incomplete
+    fill_value_func: Incomplete
     def __init__(self, ufunc: _UFuncT_co, compare: Incomplete, fill_value: Incomplete) -> None: ...
     def __call__(self, /, a: Incomplete, b: Incomplete) -> Incomplete: ...
     def reduce(self, /, target: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
@@ -292,9 +292,9 @@ class _MaskedPrintOption:
     def enable(self, /, shrink: Incomplete = 1) -> None: ...
 
 class MaskedIterator:
-    ma: Any
-    dataiter: Any
-    maskiter: Any
+    ma: Incomplete
+    dataiter: Incomplete
+    maskiter: Incomplete
     def __init__(self, /, ma: Incomplete) -> None: ...
     def __iter__(self) -> Incomplete: ...
     def __getitem__(self, indx: Incomplete, /) -> Incomplete: ...
@@ -419,15 +419,15 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __rtruediv__(self, other: Incomplete, /) -> Incomplete: ...
     def __floordiv__(self, other: Incomplete, /) -> Incomplete: ...
     def __rfloordiv__(self, other: Incomplete, /) -> Incomplete: ...
-    def __pow__(self, other: Incomplete, /) -> Incomplete: ...
-    def __rpow__(self, other: Incomplete, /) -> Incomplete: ...
+    def __pow__(self, other: Incomplete, /) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rpow__(self, other: Incomplete, /) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     def __iadd__(self, other: Incomplete, /) -> Self: ...
     def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __imul__(self, other: Incomplete, /) -> Self: ...
     def __idiv__(self, other: Incomplete, /) -> Self: ...
     def __ifloordiv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __itruediv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
-    def __ipow__(self, other: Incomplete, /) -> Self: ...
+    def __ipow__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 
     #
     def __int__(self) -> int: ...
@@ -512,7 +512,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         out: Incomplete = ...,
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
-    product: Any
+    product = prod
     def cumprod(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -632,13 +632,13 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def copy(self, /, order: _OrderKACF = "C") -> Self: ...
 
     #
-    diagonal: Any
-    flatten: Any
-    repeat: Any
-    squeeze: Any
-    swapaxes: Any
-    T: Any
-    transpose: Any
+    diagonal: Incomplete
+    flatten: Incomplete
+    repeat: Incomplete
+    squeeze: Incomplete
+    swapaxes: Incomplete
+    T: Incomplete
+    transpose: Incomplete
 
     #
     def toflex(self) -> Incomplete: ...
@@ -697,10 +697,10 @@ class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
 class _frommethod:
     __name__: str
     __doc__: str
-    reversed: Any
+    reversed: Incomplete
     def __init__(self, methodname: Incomplete, reversed: Incomplete = ...) -> None: ...
-    def getdoc(self) -> Incomplete: ...
     def __call__(self, a: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
+    def getdoc(self) -> Incomplete: ...
 
 class _convert2ma:
     __doc__: str
@@ -908,7 +908,7 @@ greater: _MaskedBinaryOperation
 logical_and: _MaskedBinaryOperation
 alltrue: _MaskedBinaryOperation
 logical_or: _MaskedBinaryOperation
-sometrue: Callable[..., Any]
+sometrue: Callable[..., Incomplete]
 logical_xor: _MaskedBinaryOperation
 bitwise_and: _MaskedBinaryOperation
 bitwise_or: _MaskedBinaryOperation
