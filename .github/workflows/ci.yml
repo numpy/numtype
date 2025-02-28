@@ -38,13 +38,21 @@ jobs:
         run: uv run pytest
 
       - name: basedpyright
-        run: uv run basedpyright --threads 3
+        run: uv run basedpyright --threads 2
 
-      - name: mypy (src)
-        run: uv run test/mypy.py src
+      - name: unstub numpy
+        run: uv run tool/unstub.py
 
-      - name: mypy (test)
-        run: uv run test/mypy.py
+      - name: mypy
+        run: >
+          uv run --no-editable
+          mypy --explicit-package-bases .
 
       - name: stubtest
-        run: uv run tool/stubtest.py
+        run: >
+          uv run --no-editable
+          stubtest
+          --mypy-config-file=pyproject.toml
+          --allowlist=.mypyignore
+          --allowlist=.mypyignore-todo
+          numpy
