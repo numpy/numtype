@@ -156,16 +156,14 @@ numpy.ndindex.ndincr
 numpy.ndenumerate.iter
 numpy.poly1d.integ
 
-numpy(\..+)?\.generic\.fill
-numpy(\..+)?\.generic\.nonzero
-numpy(\..+)?\.generic\.put
 numpy(\..+)?\.generic\.resize
 numpy(\..+)?\.generic\.swapaxes
-numpy(\..+)?\.generic\.sort
-numpy(\..+)?\.generic\.searchsorted
 numpy(\..+)?\.generic\.setfield
 numpy(\..+)?\.generic\.setflags
+numpy(\..+)?\.generic\.sort
 numpy(\..+)?\.generic\.trace
+numpy(\..+)?\.generic\.searchsorted
+numpy(\..+)?\.generic\.nonzero
 
 numpy(\..+)?\.object_.__call__
 numpy(\..+)?\.timedelta64.__class_getitem__
