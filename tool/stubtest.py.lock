@@ -213,7 +213,6 @@ provides-extras = ["numpy"]
 [package.metadata.requires-dev]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.0" },
-    { name = "libcst", specifier = ">=1.6.0" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.4" },

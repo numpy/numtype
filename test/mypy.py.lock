@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.10"
 
 [manifest]
@@ -89,20 +90,20 @@ wheels = [
 
 [[package]]
 name = "numtype"
-version = "2.2.2.0.dev0"
+version = "2.2.3.0.dev0"
 source = { directory = "../" }
 
 [package.metadata]
-requires-dist = [{ name = "numpy", marker = "extra == 'numpy'", specifier = ">=2.2.2,<2.3" }]
+requires-dist = [{ name = "numpy", marker = "extra == 'numpy'", specifier = ">=2.2.3,<2.3" }]
+provides-extras = ["numpy"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "basedpyright", specifier = ">=1.26.0" },
-    { name = "libcst", specifier = ">=1.6.0" },
+    { name = "basedpyright", specifier = ">=1.28.0" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.4" },
-    { name = "ruff", specifier = ">=0.9.4" },
+    { name = "ruff", specifier = ">=0.9.8" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
 

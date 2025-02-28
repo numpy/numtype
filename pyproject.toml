@@ -48,11 +48,10 @@ dependencies = []
 numpy = ["numtype[numpy]"]
 dev = [
     {include-group = "numpy"},
-    "libcst>=1.6.0",
-    "ruff>=0.9.8",
-    "mypy[faster-cache]>=1.15.0",
     "basedpyright>=1.28.0",
+    "mypy[faster-cache]>=1.15.0",
     "pytest>=8.3.4",
+    "ruff>=0.9.8",
 ]
 
 
@@ -71,7 +70,8 @@ packages = [
         "/doc",
         "/test",
         "/tool",
-        ".libcst.codemod.yaml",
+        ".mypyignore",
+        ".mypyignore-todo",
         ".pre-commit-config.yaml",
         "CONTRIBUTING.md",
         "uv.lock",
