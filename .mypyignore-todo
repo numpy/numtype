@@ -52,7 +52,6 @@ numpy.exp2
 numpy.expm1
 numpy.fabs
 numpy.fft.helper
-numpy.flexible
 numpy.float_power
 numpy.floor
 numpy.floor_divide
@@ -60,8 +59,6 @@ numpy.fmax
 numpy.fmin
 numpy.fmod
 numpy.frexp
-numpy.full
-numpy.full_like
 numpy.gcd
 numpy.genfromtxt
 numpy.greater
@@ -79,7 +76,6 @@ numpy.ldexp
 numpy.left_shift
 numpy.less
 numpy.less_equal
-numpy.linspace
 numpy.log
 numpy.log10
 numpy.log1p
@@ -108,8 +104,6 @@ numpy.ndindex.ndincr
 numpy.negative
 numpy.nextafter
 numpy.not_equal
-numpy.ones
-numpy.ones_like
 numpy.poly1d.integ
 numpy.positive
 numpy.pow
@@ -143,14 +137,15 @@ numpy.unique_inverse
 numpy.unique_values
 numpy.vecdot
 numpy.vecmat
+
+numpy.linspace
+numpy.full
+numpy.full_like
+numpy.ones
+numpy.ones_like
 numpy.zeros_like
 
 numpy.ufunc.resolve_dtypes
-
-numpy(\..+)?\.ndarray\.itemset
-numpy(\..+)?\.ndarray\.newbyteorder
-numpy(\..+)?\.ndarray\.ptp
-numpy(\..+)?\.ndarray\.tostring
 
 numpy.matrix.__new__
 numpy.memmap.__new__
@@ -159,10 +154,7 @@ numpy(\..+)?\.generic\.__array_wrap__
 numpy(\..+)?\.generic\.__hash__
 numpy(\..+)?\.generic\.diagonal
 numpy(\..+)?\.generic\.fill
-numpy(\..+)?\.generic\.itemset
-numpy(\..+)?\.generic\.newbyteorder
 numpy(\..+)?\.generic\.nonzero
-numpy(\..+)?\.generic\.ptp
 numpy(\..+)?\.generic\.put
 numpy(\..+)?\.generic\.resize
 numpy(\..+)?\.generic\.searchsorted
@@ -170,8 +162,10 @@ numpy(\..+)?\.generic\.setfield
 numpy(\..+)?\.generic\.setflags
 numpy(\..+)?\.generic\.sort
 numpy(\..+)?\.generic\.swapaxes
-numpy(\..+)?\.generic\.tostring
 numpy(\..+)?\.generic\.trace
+
+numpy(\..+)?\.object_.__call__
+numpy(\..+)?\.timedelta64.__class_getitem__
 
 # https://github.com/numpy/numtype/issues/136
 numpy(\..+)?\.integer.__index__
@@ -179,9 +173,6 @@ numpy(\..+)?\.integer.bit_count
 numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.floating.is_integer
 numpy(\..+)?\.complexfloating.__complex__
-
-numpy(\..+)?\.object_.__call__
-numpy(\..+)?\.timedelta64.__class_getitem__
 
 numpy._core.__all__
 numpy._core.abs
@@ -233,7 +224,6 @@ numpy._core.exp
 numpy._core.exp2
 numpy._core.expm1
 numpy._core.fabs
-numpy._core.flexible
 numpy._core.float_power
 numpy._core.floor
 numpy._core.floor_divide
@@ -789,7 +779,6 @@ numpy._core.numeric.void
 numpy._core.numeric.zeros_like
 
 numpy._core.numerictypes.__all__
-numpy._core.numerictypes.flexible
 numpy._core.numerictypes.uint
 
 numpy._core.records.array
@@ -1144,7 +1133,6 @@ numpy.matlib.expm1
 numpy.matlib.f2py
 numpy.matlib.fabs
 numpy.matlib.float_power
-numpy.matlib.flexible
 numpy.matlib.floor
 numpy.matlib.floor_divide
 numpy.matlib.fmax

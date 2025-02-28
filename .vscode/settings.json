@@ -11,7 +11,7 @@
   "evenBetterToml.formatter.indentString": "    ",
   "evenBetterToml.formatter.indentTables": true,
   "evenBetterToml.formatter.trailingNewline": true,
-  "mypy-type-checker.path": ["uv", "run", "mypy", "--ide"],
+  "mypy-type-checker.path": ["uv", "run", "mypy"],
   "files.readonlyInclude": {
     "**/generated/*.pyi": true
   }

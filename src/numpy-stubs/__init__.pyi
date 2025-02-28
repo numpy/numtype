@@ -7,7 +7,7 @@ from builtins import bool as py_bool
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from decimal import Decimal
 from fractions import Fraction
-from types import EllipsisType, GenericAlias, MappingProxyType, ModuleType
+from types import EllipsisType, GenericAlias, GetSetDescriptorType, MappingProxyType, ModuleType
 from typing import (
     Any,
     ClassVar,
@@ -1526,6 +1526,11 @@ class dtype(Generic[_ScalarT_co]):
 
 @type_check_only
 class _ArrayOrScalarCommon:
+    # remnants of numpy<2 methods
+    itemset: ClassVar[GetSetDescriptorType]
+    newbyteorder: ClassVar[GetSetDescriptorType]
+    ptp: ClassVar[GetSetDescriptorType]
+
     @property
     def real(self, /) -> Any: ...
     @property
@@ -1579,7 +1584,9 @@ class _ArrayOrScalarCommon:
     #
     def dump(self, file: StrOrBytesPath | SupportsWrite[bytes]) -> None: ...
     def dumps(self) -> bytes: ...
-    def tobytes(self, order: _OrderKACF = ...) -> bytes: ...
+    @deprecated("tostring() is deprecated. Use tobytes() instead.")
+    def tostring(self, order: _OrderKACF = "C") -> bytes: ...
+    def tobytes(self, order: _OrderKACF = "C") -> bytes: ...
     def tofile(self, fid: StrOrBytesPath | _CanSeekTellFileNo, sep: str = ..., format: str = ...) -> None: ...
     def tolist(self) -> Any: ...
     def to_device(self, device: _Device, /, *, stream: int | Any | None = ...) -> Self: ...
@@ -6405,11 +6412,12 @@ class datetime64(_RealMixin, generic[_DT64ItemT_co], Generic[_DT64ItemT_co]):
     __gt__: _ComparisonOpGT[datetime64, _ArrayLikeDT64_co]
     __ge__: _ComparisonOpGE[datetime64, _ArrayLikeDT64_co]
 
-class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):
+@final
+class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):  # type: ignore[misc]
     @abc.abstractmethod
     def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
 
-class void(flexible[bytes | tuple[Any, ...]]):
+class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @overload
     def __init__(self, value: _IntLike_co | bytes, /, dtype: None = None) -> None: ...
     @overload
@@ -6427,11 +6435,11 @@ class void(flexible[bytes | tuple[Any, ...]]):
     #
     def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
 
-class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):
+class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @abc.abstractmethod
     def __init__(self, value: _CharacterItemT_co = ..., /) -> None: ...
 
-class bytes_(character[bytes], bytes):
+class bytes_(character[bytes], bytes):  # type: ignore[misc]
     @overload
     def __new__(cls, o: object = ..., /) -> Self: ...
     @overload
@@ -6446,7 +6454,7 @@ class bytes_(character[bytes], bytes):
     #
     def __bytes__(self, /) -> bytes: ...
 
-class str_(character[str], str):
+class str_(character[str], str):  # type: ignore[misc]
     @overload
     def __new__(cls, value: object = ..., /) -> Self: ...
     @overload
