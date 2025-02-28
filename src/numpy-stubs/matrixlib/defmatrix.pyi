@@ -202,14 +202,14 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def argmin(self, /, axis: _ToAxis | None = None, *, out: _ArrayT) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def ptp(self: Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
     @overload
     def ptp(self, /, axis: _ToAxis, out: None = None) -> matrix[_2D, _DTypeT_co]: ...
     @overload
     def ptp(self, /, axis: _ToAxis | None, out: _ArrayT) -> _ArrayT: ...
     @overload
-    def ptp(self, /, axis: _ToAxis | None = None, *, out: _ArrayT) -> _ArrayT: ...
+    def ptp(self, /, axis: _ToAxis | None = None, *, out: _ArrayT) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleVariableOverride]
 
     #
     def tolist(self: _CanItem[_T], /) -> list[list[_T]]: ...  # type: ignore[override]
