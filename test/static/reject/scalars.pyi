@@ -63,9 +63,9 @@ def func(a: np.float32) -> None: ...
 func(f2)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 func(f8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-c8.__getnewargs__()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
-f2.__getnewargs__()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
-f2.hex()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
-np.float16.fromhex("0x0.0p+0")  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
-f2.__trunc__()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]  # noqa: PLC2801
-f2.__getformat__("float")  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
+c8.__getnewargs__()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
+f2.__getnewargs__()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
+f2.hex()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
+np.float16.fromhex("0x0.0p+0")  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
+f2.__trunc__()  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]  # noqa: PLC2801
+f2.__getformat__("float")  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]

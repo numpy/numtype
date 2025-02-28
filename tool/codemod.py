@@ -169,7 +169,7 @@ class FixTypingImports310(VisitorBasedCodemodCommand):
             aliases = updated_node.names
             assert isinstance(aliases, Sequence)
 
-            aliases_out = []
+            aliases_out: list[cst.ImportAlias] = []
             for alias in aliases:
                 name = alias.name
                 assert isinstance(name, cst.Name)

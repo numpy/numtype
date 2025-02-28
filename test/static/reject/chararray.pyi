@@ -5,8 +5,8 @@ AR_S: np.char.chararray[tuple[int, ...], np.dtype[np.bytes_]]
 
 ###
 
-AR_S.encode()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue]
-AR_U.decode()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue]
+AR_S.encode()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
+AR_U.decode()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
 
 AR_U.join(b"_")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 AR_S.join("_")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
