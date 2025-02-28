@@ -612,6 +612,7 @@ _NumericArrayT = TypeVar("_NumericArrayT", bound=NDArray[number | timedelta64 | 
 
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
+_ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=tuple[int, Unpack[tuple[int, ...]]])
 _1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], Unpack[tuple[L[1], ...]]])  # (1,) | (1, 1) | (1, 1, 1) | ...
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
@@ -1481,7 +1482,7 @@ class dtype(Generic[_ScalarT_co]):
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
-    def __hash__(self) -> int: ...
+    def __hash__(self, /) -> int: ...
 
     # Explicitly defined `__eq__` and `__ne__` to get around mypy's `strict_equality` option; even though their signatures are
     # identical to their `object`-based counterpart
@@ -3801,13 +3802,44 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         def __buffer__(self, flags: int, /) -> memoryview: ...
 
     #
-    def __hash__(self) -> int: ...
-
-    #
     @overload
     def __array__(self, dtype: None = None, /) -> ndarray[tuple[()], dtype[Self]]: ...
     @overload
     def __array__(self, dtype: _DTypeT, /) -> ndarray[tuple[()], _DTypeT]: ...
+
+    #
+    @overload
+    def __array_wrap__(
+        self,
+        array: ndarray[tuple[()], dtype[_ScalarT]],
+        context: tuple[ufunc, tuple[object, ...], int] | None = None,
+        return_scalar: L[True] = True,
+        /,
+    ) -> _ScalarT: ...
+    @overload
+    def __array_wrap__(
+        self,
+        array: ndarray[_ShapeT_1nd, _DTypeT],
+        context: tuple[ufunc, tuple[object, ...], int] | None = None,
+        return_scalar: py_bool = True,
+        /,
+    ) -> ndarray[_ShapeT_1nd, _DTypeT]: ...
+    @overload
+    def __array_wrap__(
+        self,
+        array: ndarray[_ShapeT, _DTypeT],
+        context: tuple[ufunc, tuple[object, ...], int] | None,
+        return_scalar: L[False],
+        /,
+    ) -> ndarray[_ShapeT, _DTypeT]: ...
+    @overload
+    def __array_wrap__(
+        self,
+        array: ndarray[_ShapeT, dtype[_ScalarT]],
+        context: tuple[ufunc, tuple[object, ...], int] | None = None,
+        return_scalar: py_bool = True,
+        /,
+    ) -> _ScalarT | ndarray[_ShapeT, dtype[_ScalarT]]: ...
 
     #
     @overload
@@ -4124,6 +4156,9 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __init__(self: bool_[py_bool], value: object, /) -> None: ...
 
     #
+    def __hash__(self, /) -> int: ...
+
+    #
     def __bool__(self, /) -> _BoolItemT_co: ...
 
     #
@@ -4273,6 +4308,7 @@ class object_(_RealMixin, generic):
 
     #
     def __init__(self, value: object = ..., /) -> None: ...
+    def __hash__(self, /) -> int: ...
 
     if sys.version_info >= (3, 12):
         def __release_buffer__(self, buffer: memoryview, /) -> None: ...
@@ -4280,10 +4316,6 @@ class object_(_RealMixin, generic):
 class integer(_IntegralMixin, _RoundMixin, number[_NBitT, int]):
     @abc.abstractmethod
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
-
-    # NOTE: `bit_count` and `__index__` are technically defined in the concrete subtypes
-    def bit_count(self, /) -> int: ...
-    def __index__(self, /) -> int: ...
 
     #
     def __abs__(self, /) -> Self: ...
@@ -4438,6 +4470,12 @@ class integer(_IntegralMixin, _RoundMixin, number[_NBitT, int]):
 
 class signedinteger(integer[_NBitT]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
+    # https://github.com/numpy/numtype/issues/136
+    def __index__(self, /) -> int: ...
+    def __hash__(self, /) -> int: ...
+    def bit_count(self, /) -> int: ...
 
     #
     @overload
@@ -4695,6 +4733,12 @@ class signedinteger(integer[_NBitT]):
 
 class unsignedinteger(integer[_NBitT]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
+    # https://github.com/numpy/numtype/issues/136
+    def __index__(self, /) -> int: ...
+    def __hash__(self, /) -> int: ...
+    def bit_count(self, /) -> int: ...
 
     #
     @overload
@@ -5447,6 +5491,12 @@ class inexact(number[_NBitT, _InexactItemT_co], Generic[_NBitT, _InexactItemT_co
 class floating(_RealMixin, _RoundMixin, inexact[_NBitT, float]):
     def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
 
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
+    # https://github.com/numpy/numtype/issues/136
+    def __hash__(self, /) -> int: ...
+    def is_integer(self, /) -> py_bool: ...
+    def as_integer_ratio(self, /) -> tuple[int, int]: ...
+
     #
     @overload
     def __add__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
@@ -5847,11 +5897,6 @@ class floating(_RealMixin, _RoundMixin, inexact[_NBitT, float]):
     @overload
     def __rdivmod__(self: float32 | float16, x: integer[_16Bit], /) -> _2Tuple[float32]: ...  # type: ignore[misc]
 
-    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
-    # https://github.com/numpy/numtype/issues/136
-    def is_integer(self, /) -> py_bool: ...
-    def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
 class float64(floating[_64Bit], float):  # type: ignore[misc]
     @property
     @override
@@ -5899,8 +5944,9 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
     @overload
     def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
 
-    # TODO(jorenham): This method should be moved to the concrete subtypes once we have them
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
     # https://github.com/numpy/numtype/issues/136
+    def __hash__(self, /) -> int: ...
     def __complex__(self, /) -> complex: ...
 
     #
