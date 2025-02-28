@@ -70,7 +70,7 @@ AR_f: npt.NDArray[np.float64] = np.array([1.0])
 AR_c: npt.NDArray[np.complex128] = np.array([1j])
 AR_m: npt.NDArray[np.timedelta64] = np.array([np.timedelta64(1, "D")])
 AR_M: npt.NDArray[np.datetime64] = np.array([np.datetime64(1, "D")])
-AR_O: npt.NDArray[np.object_] = np.array([Object()])
+AR_o: npt.NDArray[np.object_] = np.array([Object()])
 
 AR_LIKE_b = [True]
 AR_LIKE_u = [np.uint32(1)]
@@ -179,19 +179,19 @@ AR_M - AR_LIKE_M
 
 AR_LIKE_M - AR_M
 
-AR_O - AR_LIKE_b
-AR_O - AR_LIKE_u
-AR_O - AR_LIKE_i
-AR_O - AR_LIKE_f
-AR_O - AR_LIKE_c
-AR_O - AR_LIKE_O
+AR_o - AR_LIKE_b
+AR_o - AR_LIKE_u
+AR_o - AR_LIKE_i
+AR_o - AR_LIKE_f
+AR_o - AR_LIKE_c
+AR_o - AR_LIKE_O
 
-AR_LIKE_b - AR_O
-AR_LIKE_u - AR_O
-AR_LIKE_i - AR_O
-AR_LIKE_f - AR_O
-AR_LIKE_c - AR_O
-AR_LIKE_O - AR_O
+AR_LIKE_b - AR_o
+AR_LIKE_u - AR_o
+AR_LIKE_i - AR_o
+AR_LIKE_f - AR_o
+AR_LIKE_c - AR_o
+AR_LIKE_O - AR_o
 
 AR_u += AR_b
 AR_u += AR_u
@@ -257,17 +257,17 @@ AR_m // AR_LIKE_m
 
 AR_LIKE_m // AR_m
 
-AR_O // AR_LIKE_b
-AR_O // AR_LIKE_u
-AR_O // AR_LIKE_i
-AR_O // AR_LIKE_f
-AR_O // AR_LIKE_O
+AR_o // AR_LIKE_b
+AR_o // AR_LIKE_u
+AR_o // AR_LIKE_i
+AR_o // AR_LIKE_f
+AR_o // AR_LIKE_O
 
-AR_LIKE_b // AR_O
-AR_LIKE_u // AR_O
-AR_LIKE_i // AR_O
-AR_LIKE_f // AR_O
-AR_LIKE_O // AR_O
+AR_LIKE_b // AR_o
+AR_LIKE_u // AR_o
+AR_LIKE_i // AR_o
+AR_LIKE_f // AR_o
+AR_LIKE_O // AR_o
 
 # Inplace multiplication
 
@@ -296,12 +296,12 @@ AR_m *= AR_LIKE_u
 AR_m *= AR_LIKE_i
 AR_m *= AR_LIKE_f
 
-AR_O *= AR_LIKE_b
-AR_O *= AR_LIKE_u
-AR_O *= AR_LIKE_i
-AR_O *= AR_LIKE_f
-AR_O *= AR_LIKE_c
-AR_O *= AR_LIKE_O
+AR_o *= AR_LIKE_b
+AR_o *= AR_LIKE_u
+AR_o *= AR_LIKE_i
+AR_o *= AR_LIKE_f
+AR_o *= AR_LIKE_c
+AR_o *= AR_LIKE_O
 
 # Inplace power
 
@@ -323,12 +323,12 @@ AR_c **= AR_LIKE_i
 AR_c **= AR_LIKE_f
 AR_c **= AR_LIKE_c
 
-AR_O **= AR_LIKE_b
-AR_O **= AR_LIKE_u
-AR_O **= AR_LIKE_i
-AR_O **= AR_LIKE_f
-AR_O **= AR_LIKE_c
-AR_O **= AR_LIKE_O
+AR_o **= AR_LIKE_b
+AR_o **= AR_LIKE_u
+AR_o **= AR_LIKE_i
+AR_o **= AR_LIKE_f
+AR_o **= AR_LIKE_c
+AR_o **= AR_LIKE_O
 
 # unary ops
 

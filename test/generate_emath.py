@@ -110,11 +110,11 @@ TYPES_IUFC: Final = TYPES_IU | TYPES_FC
 
 
 def _union(*types: str) -> str:
-    ints = set()
-    uints = set()
-    floats = set()
-    cfloats = set()
-    others = set()
+    ints: set[str] = set()
+    uints: set[str] = set()
+    floats: set[str] = set()
+    cfloats: set[str] = set()
+    others: set[str] = set()
 
     for tp in types:
         kind = np.dtype(tp.removeprefix("np.")).kind
@@ -184,7 +184,8 @@ def _gen_unary(fname: str, names: dict[str, str]) -> Generator[str]:
 
     results: dict[str, list[str]] = {}
     for sct_arg, vals in VALS_EMATH.items():
-        types_out_seen = set()
+        types_out_seen: set[str] = set()
+        types_out: list[str]
         results[sct_arg] = types_out = []
         for arg in vals:
             tp = type(out) if isinstance(out := fn(arg), np.generic) else np.object_
@@ -200,13 +201,14 @@ def _gen_unary(fname: str, names: dict[str, str]) -> Generator[str]:
     print()
 
 
-def _gen_binary(fname: str, names: dict[str, str]) -> Generator[str]:
+def _gen_binary(fname: str, names: dict[str, str]) -> Generator[str]:  # pyright: ignore[reportUnusedFunction]
     fn: Callable[[Any, Any], Any] = getattr(np.emath, fname)
 
     results: dict[tuple[str, str], list[str]] = {}
     for sct_lhs, vals_lhs in VALS_EMATH.items():
         for sct_rhs, vals_rhs in VALS_EMATH.items():
-            types_out_seen = set()
+            types_out_seen: set[str] = set()
+            types_out: list[str]
             results[sct_lhs, sct_rhs] = types_out = []
             for lhs, rhs in itertools.product(vals_lhs, vals_rhs):
                 val = fn(lhs, rhs)

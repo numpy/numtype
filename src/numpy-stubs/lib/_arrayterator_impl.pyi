@@ -34,6 +34,6 @@ class Arrayterator(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTyp
     def flat(self: Arrayterator[Any, np.dtype[_ScalarT]]) -> Generator[_ScalarT]: ...  # type: ignore[override]
 
     #
-    def __init__(self, /, var: np.ndarray[_ShapeT_co, _DTypeT_co], buf_size: int | None = None) -> None: ...
+    def __init__(self, /, var: np.ndarray[_ShapeT_co, _DTypeT_co], buf_size: int | None = None) -> None: ...  # pyright: ignore[reportInconsistentConstructor]
     def __getitem__(self, index: _AnyIndex, /) -> Arrayterator[tuple[int, ...], _DTypeT_co]: ...  # type: ignore[override]
     def __iter__(self) -> Generator[np.ndarray[tuple[int, ...], _DTypeT_co]]: ...
