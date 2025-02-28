@@ -115,13 +115,13 @@ include = [
     "test",
     "tool",
 ]
-ignore = [".venv", "test/.venv"]
-stubPath = "."
+ignore = [".venv"]
+stubPath = "src"
 venvPath = "."
 venv = ".venv"
 pythonPlatform = "All"
 pythonVersion = "3.10"
-typeCheckingMode = "standard" # TODO(jorenham): set to "all"
+typeCheckingMode = "strict"
 
 deprecateTypingAliases = true
 disableBytesTypePromotions = true
@@ -130,16 +130,17 @@ enableReachabilityAnalysis = false
 reportCallInDefaultInitializer = true
 reportImportCycles = true
 reportImplicitOverride = false             # TODO
+reportInvalidStubStatement = false         # see execution environments
 reportMissingSuperCall = false
 reportPrivateUsage = false
 reportPropertyTypeMismatch = false
 reportSelfClsParameterName = false
 reportShadowedImports = true
 reportUninitializedInstanceVariable = true
-
 reportUnnecessaryTypeIgnoreComment = true
 reportUnusedExpression = false
 reportUnusedParameter = false
+reportUnusedVariable = false
 # basedpyright only
 failOnWarnings = true
 reportIgnoreCommentWithoutRule = true
@@ -150,6 +151,27 @@ reportInvalidCast = true
 reportPrivateLocalImportUsage = true
 reportUnannotatedClassAttribute = false   # TODO
 strictGenericNarrowing = true
+
+[[executionEnvironments]]
+root = "src"
+reportInvalidStubStatement = true
+reportUnusedCallResult = true
+reportUnusedVariable = true
+
+[[executionEnvironments]]
+root = "test"
+reportAny = true
+reportPrivateUsage = true
+reportUnreachable = true
+# basedpyright only
+reportExplicitAny = true
+reportUnsafeMultipleInheritance = true
+
+[[executionEnvironments]]
+root = "tool"
+reportImplicitOverride = true
+reportInvalidStubStatement = true
+reportUnusedCallResult = true
 
 
 [tool.ruff]
