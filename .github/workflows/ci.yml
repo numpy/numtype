@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
   workflow_dispatch:
 
@@ -22,28 +22,23 @@ jobs:
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
 
-      - name: typos
-        uses: crate-ci/typos@master
+      - uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: --all-files
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v5.3.0
         with:
           enable-cache: true
           python-version: "3.13"
           version: latest
 
-      - name: ruff check
-        run: uv run ruff check --output-format=github
-
-      - name: ruff format --check
-        run: uv run ruff format --check
-
       - name: pytest
         run: uv run pytest
 
       - name: basedpyright
-        run: uv run basedpyright
+        run: uv run basedpyright --threads 3
 
       - name: mypy (src)
         run: uv run test/mypy.py src
