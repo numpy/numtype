@@ -2,8 +2,7 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -17,36 +16,70 @@ env:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    strategy:
-      fail-fast: false
+    timeout-minutes: 1
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
 
       - uses: pre-commit/action@v3.0.1
         with:
           extra_args: --all-files
 
-      - uses: astral-sh/setup-uv@v5.3.0
+      - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-          python-version: "3.13"
-          version: latest
+          python-version: 3.13t
 
       - name: pytest
-        run: uv run pytest
+        run: uv run --no-group=orjson pytest
+
+  basedpyright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: 3.13t
 
       - name: basedpyright
-        run: uv run basedpyright --threads 2
+        run: >
+          uv run --no-group=orjson
+          basedpyright --threads=3
 
-      - name: unstub numpy
-        run: uv run tool/unstub.py
+  mypy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: 3.13
 
       - name: mypy
         run: >
+          uv run --no-group=numpy
+          mypy --no-incremental test
+
+  stubtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: 3.13
+
+      - name: unstub numpy
+        run: >
           uv run --no-editable
-          mypy --explicit-package-bases .
+          tool/unstub.py
 
       - name: stubtest
         run: >
@@ -55,4 +88,5 @@ jobs:
           --mypy-config-file=pyproject.toml
           --allowlist=.mypyignore
           --allowlist=.mypyignore-todo
+          --concise
           numpy
