@@ -95,8 +95,6 @@ from ._core import (
     can_cast,
     choose,
     clip,
-    complex192,
-    complex256,
     compress,
     concatenate,
     convolve,
@@ -121,8 +119,6 @@ from ._core import (
     finfo,
     flatiter,
     flatnonzero,
-    float96,
-    float128,
     format_float_positional,
     format_float_scientific,
     from_dlpack,
@@ -6577,9 +6573,13 @@ ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
 
 float16: TypeAlias = floating[_16Bit]
 float32: TypeAlias = floating[_32Bit]
+float96: TypeAlias = floating[_96Bit]
+float128: TypeAlias = floating[_128Bit]
 longdouble: TypeAlias = floating[_NBitLongDouble]
 
 complex64: TypeAlias = complexfloating[_32Bit]
+complex192: TypeAlias = complexfloating[_96Bit]
+complex256: TypeAlias = complexfloating[_128Bit]
 clongdouble: TypeAlias = complexfloating[_NBitLongDouble]
 
 # NOTE: These should NOT be `Final` or a `TypeAlias`!

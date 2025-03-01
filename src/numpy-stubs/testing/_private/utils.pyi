@@ -8,6 +8,7 @@ import warnings
 from _typeshed import ConvertibleToFloat, GenericPath, StrOrBytesPath, StrPath
 from collections.abc import Callable, Iterable, Sequence
 from contextlib import _GeneratorContextManager
+from pathlib import Path
 from re import Pattern
 from typing import (
     Any,
@@ -39,11 +40,13 @@ __all__ = [
     "HAS_LAPACK64",
     "HAS_REFCOUNT",
     "IS_EDITABLE",
+    "IS_INSTALLED",
     "IS_MUSL",
     "IS_PYPY",
     "IS_PYSTON",
     "IS_WASM",
     "NOGIL_BUILD",
+    "NUMPY_ROOT",
     "IgnoreException",
     "KnownFailureException",
     "SkipTest",
@@ -82,6 +85,8 @@ __all__ = [
     "verbose",
 ]
 
+###
+
 _WarnLog: TypeAlias = list[warnings.WarningMessage]
 _ToModules: TypeAlias = Iterable[types.ModuleType]
 _ComparisonFunc: TypeAlias = Callable[
@@ -98,6 +103,8 @@ _W_co = TypeVar("_W_co", bound=_WarnLog | None, default=_WarnLog | None, covaria
 ###
 
 verbose: int = 0
+NUMPY_ROOT: Final[Path] = ...
+IS_INSTALLED: Final[bool] = ...
 IS_EDITABLE: Final[bool] = ...
 IS_MUSL: Final[bool] = ...
 IS_PYPY: Final[bool] = ...

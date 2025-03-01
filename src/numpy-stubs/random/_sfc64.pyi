@@ -4,6 +4,10 @@ import numpy as np
 from numpy._typing import NDArray
 from numpy.random.bit_generator import BitGenerator
 
+__all__ = ["SFC64"]
+
+###
+
 @type_check_only
 class _SFC64Internal(TypedDict):
     state: NDArray[np.uint64]
@@ -14,5 +18,7 @@ class _SFC64State(TypedDict):
     state: _SFC64Internal
     has_uint32: int
     uinteger: int
+
+###
 
 class SFC64(BitGenerator[_SFC64State]): ...

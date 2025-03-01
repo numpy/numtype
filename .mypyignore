@@ -9,3 +9,10 @@ numpy(\.\w+)?\.tests.*
 # system-dependent extended precision types
 numpy(\..+)?\.float(96|128)
 numpy(\..+)?\.complex(192|256)
+
+# these are always either missing float96/complex192 or float128/complex256
+numpy.__all__
+numpy\._core\.__all__
+numpy\._core\.numeric\.__all__
+numpy\._core\.numerictypes\.__all__
+numpy\.matlib\.__all__
