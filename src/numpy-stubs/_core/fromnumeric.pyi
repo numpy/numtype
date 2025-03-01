@@ -289,9 +289,9 @@ def transpose(a: ArrayLike, axes: _ShapeLike | None = ...) -> Array: ...
 
 #
 @overload
-def matrix_transpose(x: _ToArray1_nd[_ScalarT]) -> Array[_ScalarT]: ...
+def matrix_transpose(x: _ToArray1_nd[_ScalarT], /) -> Array[_ScalarT]: ...
 @overload
-def matrix_transpose(x: ArrayLike) -> Array: ...
+def matrix_transpose(x: ArrayLike, /) -> Array: ...
 
 #
 @overload
@@ -315,7 +315,7 @@ def partition(
 def argpartition(
     a: ArrayLike,
     kth: ToInteger_nd,
-    axis: CanIndex | None = None,
+    axis: CanIndex | None = -1,
     kind: _PartitionKind = "introselect",
     order: _Order | None = None,
 ) -> Array[np.intp]: ...
@@ -752,30 +752,57 @@ def sum(
 #
 @overload
 def all(
+    a: ToGeneric_1ds,
+    axis: int | tuple[int, ...] | None = None,
+    out: None = None,
+    keepdims: L[False, 0] | _NoValueType = ...,
+    *,
+    where: ToBool_nd | _NoValueType = ...,
+) -> np.bool: ...
+@overload
+def all(
     a: ArrayLike,
     axis: None = None,
     out: None = None,
-    keepdims: L[False, 0] = False,
+    keepdims: L[False, 0] | _NoValueType = ...,
     *,
-    where: ToBool_nd = True,
+    where: ToBool_nd | _NoValueType = ...,
 ) -> np.bool: ...
+@overload
+def all(
+    a: ArrayLike,
+    axis: int | tuple[int, ...] | None,
+    out: None,
+    keepdims: L[True, 1],
+    *,
+    where: ToBool_nd | _NoValueType = ...,
+) -> Array[np.bool]: ...
 @overload
 def all(
     a: ArrayLike,
     axis: int | tuple[int, ...] | None = None,
     out: None = None,
-    keepdims: CanIndex = False,
     *,
-    where: ToBool_nd = True,
+    keepdims: L[True, 1],
+    where: ToBool_nd | _NoValueType = ...,
+) -> Array[np.bool]: ...
+@overload
+def all(
+    a: ArrayLike,
+    axis: int | tuple[int, ...] | None = None,
+    out: None = None,
+    keepdims: ToBool_0d | _NoValueType = ...,
+    *,
+    where: ToBool_nd | _NoValueType = ...,
 ) -> np.bool | Array[np.bool]: ...
 @overload
 def all(
     a: ArrayLike,
     axis: int | tuple[int, ...] | None,
     out: _ArrayT,
-    keepdims: CanIndex = False,
+    keepdims: ToBool_0d | _NoValueType = ...,
     *,
-    where: ToBool_nd = True,
+    where: ToBool_nd | _NoValueType = ...,
 ) -> _ArrayT: ...
 @overload
 def all(
@@ -783,37 +810,64 @@ def all(
     axis: int | tuple[int, ...] | None = None,
     *,
     out: _ArrayT,
-    keepdims: CanIndex = False,
-    where: ToBool_nd = True,
+    keepdims: ToBool_0d | _NoValueType = ...,
+    where: ToBool_nd | _NoValueType = ...,
 ) -> _ArrayT: ...
 
-#
+# keep in sync with `all`
+@overload
+def any(
+    a: ToGeneric_1ds,
+    axis: int | tuple[int, ...] | None = None,
+    out: None = None,
+    keepdims: L[False, 0] | _NoValueType = ...,
+    *,
+    where: ToBool_nd | _NoValueType = ...,
+) -> np.bool: ...
 @overload
 def any(
     a: ArrayLike,
     axis: None = None,
     out: None = None,
-    keepdims: L[False, 0] = False,
+    keepdims: L[False, 0] | _NoValueType = ...,
     *,
-    where: ToBool_nd = True,
+    where: ToBool_nd | _NoValueType = ...,
 ) -> np.bool: ...
+@overload
+def any(
+    a: ArrayLike,
+    axis: int | tuple[int, ...] | None,
+    out: None,
+    keepdims: L[True, 1],
+    *,
+    where: ToBool_nd | _NoValueType = ...,
+) -> Array[np.bool]: ...
 @overload
 def any(
     a: ArrayLike,
     axis: int | tuple[int, ...] | None = None,
     out: None = None,
-    keepdims: CanIndex = False,
     *,
-    where: ToBool_nd = True,
+    keepdims: L[True, 1],
+    where: ToBool_nd | _NoValueType = ...,
+) -> Array[np.bool]: ...
+@overload
+def any(
+    a: ArrayLike,
+    axis: int | tuple[int, ...] | None = None,
+    out: None = None,
+    keepdims: ToBool_0d | _NoValueType = ...,
+    *,
+    where: ToBool_nd | _NoValueType = ...,
 ) -> np.bool | Array[np.bool]: ...
 @overload
 def any(
     a: ArrayLike,
     axis: int | tuple[int, ...] | None,
     out: _ArrayT,
-    keepdims: CanIndex = False,
+    keepdims: ToBool_0d | _NoValueType = ...,
     *,
-    where: ToBool_nd = True,
+    where: ToBool_nd | _NoValueType = ...,
 ) -> _ArrayT: ...
 @overload
 def any(
@@ -821,8 +875,8 @@ def any(
     axis: int | tuple[int, ...] | None = None,
     *,
     out: _ArrayT,
-    keepdims: CanIndex = False,
-    where: ToBool_nd = True,
+    keepdims: ToBool_0d | _NoValueType = ...,
+    where: ToBool_nd | _NoValueType = ...,
 ) -> _ArrayT: ...
 
 #
@@ -1348,6 +1402,7 @@ def mean(
     dtype: DTypeLike | None,
     out: _ArrayT,
     keepdims: bool | _NoValueType = ...,
+    *,
     where: ToBool_nd | _NoValueType = ...,
 ) -> _ArrayT: ...
 @overload

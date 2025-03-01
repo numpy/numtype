@@ -55,6 +55,13 @@ from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLi
 
 from ._multiarray_umath import _KwargsD, _KwargsDL
 from ._type_aliases import sctypes as sctypes
+from .fromnumeric import (
+    all as all,
+    any as any,
+    argpartition as argpartition,
+    matrix_transpose as matrix_transpose,
+    mean as mean,
+)
 from .multiarray import (
     ALLOW_THREADS as ALLOW_THREADS,
     BUFSIZE as BUFSIZE,
