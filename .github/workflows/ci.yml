@@ -31,7 +31,7 @@ jobs:
           python-version: 3.13t
 
       - name: pytest
-        run: uv run pytest
+        run: uv run --no-group=orjson pytest
 
   basedpyright:
     runs-on: ubuntu-latest
@@ -45,7 +45,9 @@ jobs:
           python-version: 3.13t
 
       - name: basedpyright
-        run: uv run basedpyright
+        run: >
+          uv run --no-group=orjson
+          basedpyright
 
   mypy:
     runs-on: ubuntu-latest
@@ -58,13 +60,10 @@ jobs:
           enable-cache: true
           python-version: 3.13t
 
-      - name: unstub numpy
-        run: uv run tool/unstub.py
-
       - name: mypy
         run: >
-          uv run --no-editable
-          mypy --explicit-package-bases test
+          uv run --no-group=orjson --no-group=numpy
+          mypy --no-incremental test
 
   stubtest:
     runs-on: ubuntu-latest
@@ -78,11 +77,13 @@ jobs:
           python-version: 3.13t
 
       - name: unstub numpy
-        run: uv run tool/unstub.py
+        run: >
+          uv run --no-group=orjson
+          tool/unstub.py
 
       - name: stubtest
         run: >
-          uv run --no-editable
+          uv run --no-group=orjson
           stubtest
           --mypy-config-file=pyproject.toml
           --allowlist=.mypyignore
