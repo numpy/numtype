@@ -1,7 +1,18 @@
 # TODO: check, then move to .mypyignore if only the extended precision types are missing
 numpy.__all__
 
+# TODO: https://github.com/numpy/numtype/issues/136
+numpy(\..+)?\.(un)?signedinteger.__hash__
+numpy(\..+)?\.(un)?signedinteger.__index__
+numpy(\..+)?\.(un)?signedinteger.bit_count
+numpy(\..+)?\.floating.__hash__
+numpy(\..+)?\.floating.is_integer
+numpy(\..+)?\.floating.as_integer_ratio
+numpy(\..+)?\.complexfloating.__hash__
+numpy(\..+)?\.complexfloating.__complex__
+
 # ufuncs
+# TODO: https://github.com/numpy/numtype/issues/88
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.abs(olute)?
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.add
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.(a(rc)?)?cosh?
@@ -85,30 +96,25 @@ numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.trunc
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.vecdot
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.vecmat
 
-numpy(\._core(\.function_base)?)?\.linspace
-
-numpy(\.(_core(\.(arrayprint|numeric))?|matlib))?\.array2string
-
-numpy.average
-numpy.corrcoef
-numpy.einsum_path
-numpy.(nan)?median
-numpy.nanpercentile
-numpy.row_stack
-numpy.save
-numpy.tri(l|u)
-numpy.union1d
-numpy.unique_all
-numpy.unique_counts
-numpy.unique_inverse
-numpy.unique_values
-numpy.genfromtxt
-
+numpy(\._core(\.arrayprint|\.numeric)?|\.matlib)?\.array2string
+numpy(\._core(\.einsumfunc)?)?\.einsum_path
+numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
 numpy(\._core(\.multiarray)?)?\.dtype
 numpy(\._core(\.multiarray)?)?\.dtype.type
 
+numpy(\.lib\._arraysetops_impl)?\.union1d
+numpy(\.lib\._arraysetops_impl)?\.unique_(all|counts|inverse|values)
+numpy(\.lib\._function_base_impl)?\.average
+numpy(\.lib\._function_base_impl)?\.corrcoef
+numpy(\.lib\._function_base_impl)?\.median
+numpy(\.lib\._npyio_impl)?\.genfromtxt
+numpy(\.lib\._npyio_impl)?\.save
+numpy(\.lib\._nanfunctions_impl)?\.nan(median|percentile)
+numpy(\.lib\._twodim_base_impl)?\.tri(l|u)
+
+numpy(\.matlib)?\.row_stack
+
 numpy.matrix.__new__
-numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
 
 numpy.ndindex.ndincr
 numpy.ndenumerate.iter
@@ -116,16 +122,6 @@ numpy.poly1d.integ
 
 numpy(\..+)?\.object_.__call__
 numpy(\..+)?\.timedelta64.__class_getitem__
-
-# https://github.com/numpy/numtype/issues/136
-numpy(\..+)?\.(un)?signedinteger.__hash__
-numpy(\..+)?\.(un)?signedinteger.__index__
-numpy(\..+)?\.(un)?signedinteger.bit_count
-numpy(\..+)?\.floating.__hash__
-numpy(\..+)?\.floating.is_integer
-numpy(\..+)?\.floating.as_integer_ratio
-numpy(\..+)?\.complexfloating.__hash__
-numpy(\..+)?\.complexfloating.__complex__
 
 numpy._core.__all__
 numpy._core.cversions
@@ -167,8 +163,6 @@ numpy._core.defchararray.startswith
 numpy._core.defchararray.str_len
 numpy._core.defchararray.chararray.__new__
 numpy._core.defchararray.chararray.argsort
-
-numpy._core(.einsumfunc)?.einsum_path
 
 numpy._core.numeric.__all__
 numpy._core.numeric.ScalarType
@@ -352,23 +346,14 @@ numpy.fft.helper
 numpy.lib.Arrayterator.__array__
 numpy.lib._arraysetops_impl.Unique(All|Counts|Inverse)Result.__replace__
 numpy.lib._array_utils_impl.normalize_axis_tuple
-numpy.lib._arraysetops_impl.union1d
-numpy.lib._arraysetops_impl.unique_(all|counts|inverse|values)
 numpy.lib._arrayterator_impl.Arrayterator.__array__
-numpy.lib._function_base_impl.average
-numpy.lib._function_base_impl.corrcoef
-numpy.lib._function_base_impl.median
 numpy.lib._index_tricks_impl.AxisConcatenator.makemat
 numpy.lib._index_tricks_impl.ndenumerate.iter
 numpy.lib._index_tricks_impl.ndindex.ndincr
 numpy.lib._iotools.NameValidator.defaultdeletechars
-numpy.lib._nanfunctions_impl.nan(mean|median|percentile)
 numpy.lib.(_npyio_impl|npyio).NpzFile.get
-numpy.lib._npyio_impl.genfromtxt
-numpy.lib._npyio_impl.save
 numpy.lib._polynomial_impl.__all__
 numpy.lib._polynomial_impl.poly1d.integ
-numpy.lib._twodim_base_impl.tri(l|u)
 numpy.lib.array_utils.normalize_axis_tuple
 numpy.lib.format.open_memmap
 numpy.lib.format.read_array
@@ -422,7 +407,6 @@ numpy.matlib.f2py
 numpy.matlib.genfromtxt
 numpy.matlib.hanning
 numpy.matlib.in1d
-numpy.matlib.linspace
 numpy.matlib.matrix.__new__
 numpy.matlib.(nan)?median
 numpy.matlib.nanpercentile
@@ -432,7 +416,6 @@ numpy.matlib.poly1d.integ
 numpy.matlib.recarray.__getattr__
 numpy.matlib.recarray.__new__
 numpy.matlib.record.__name__
-numpy.matlib.row_stack
 numpy.matlib.save
 numpy.matlib.split
 numpy.matlib.stack
