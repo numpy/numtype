@@ -143,9 +143,6 @@ numpy.unique_inverse
 numpy.unique_values
 numpy.genfromtxt
 
-numpy(\._core)?\.ufunc.resolve_dtypes
-numpy._core.numeric.ufunc.resolve_dtypes
-
 numpy(\._core(\.multiarray)?)?\.dtype
 numpy(\._core(\.multiarray)?)?\.dtype.type
 
@@ -523,7 +520,6 @@ numpy.matlib.stack
 numpy.matlib.tril
 numpy.matlib.triu
 numpy.matlib.typing
-numpy.matlib.ufunc.resolve_dtypes
 numpy.matlib.union1d
 numpy.matlib.unique_all
 numpy.matlib.unique_counts
