@@ -46,10 +46,10 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-    "basedpyright>=1.28.0",
+    "basedpyright>=1.28.1",
     "mypy>=1.15.0",
     "pytest>=8.3.4",
-    "ruff>=0.9.8",
+    "ruff>=0.9.9",
 ]
 numpy = ["numtype[numpy]"]
 orjson = ["orjson>=3.10.15"]  # speeds up mypy cache, but is missing 3.13t wheels

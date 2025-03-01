@@ -33,7 +33,7 @@ repos:
         args: [--markdown-linebreak-ext=md]
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.29.10
+    rev: v1.30.0
     hooks:
       - id: typos
 
@@ -43,7 +43,7 @@ repos:
       - id: uv-lock
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.8
+    rev: v0.9.9
     hooks:
       - id: ruff
         args: [--fix, --show-fixes]
