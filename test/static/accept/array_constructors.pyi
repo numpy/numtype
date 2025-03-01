@@ -196,9 +196,9 @@ assert_type(np.indices([1, 2, 3], sparse=True), tuple[npt.NDArray[np.int_], ...]
 
 assert_type(np.fromfunction(func, (3, 5)), MyArray[np.float64])
 
-assert_type(np.identity(10), npt.NDArray[np.float64])
-assert_type(np.identity(10, dtype=np.int64), npt.NDArray[np.int64])
-assert_type(np.identity(10, dtype=int), npt.NDArray[Any])
+assert_type(np.identity(10), np.ndarray[tuple[int, int], np.dtype[np.float64]])
+assert_type(np.identity(10, dtype=np.int64), np.ndarray[tuple[int, int], np.dtype[np.int64]])
+assert_type(np.identity(10, dtype=int), np.ndarray[tuple[int, int], np.dtype[Any]])
 
 assert_type(np.atleast_1d(A), npt.NDArray[np.float64])
 assert_type(np.atleast_1d(C), npt.NDArray[Any])
