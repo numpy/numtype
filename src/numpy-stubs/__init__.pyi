@@ -14,7 +14,6 @@ from typing import (
     Final,
     Generic,
     Literal as L,
-    NoReturn,
     SupportsComplex as CanComplex,
     SupportsFloat as CanFloat,
     SupportsIndex as CanIndex,
@@ -1592,9 +1591,12 @@ class _ArrayOrScalarCommon:
     def tolist(self) -> Any: ...
     def to_device(self, device: _Device, /, *, stream: int | Any | None = ...) -> Self: ...
 
-    # NOTE: for `generic`, these won't raise, but won't do anything either
+    # NOTE: for `generic`, these two methods don't do anything
     def fill(self, value: _ScalarLike_co, /) -> None: ...
-    def put(self, indices: _ArrayLikeInt_co, values: ArrayLike, mode: _ModeKind = "raise") -> None: ...
+    def put(self, /, indices: _ArrayLikeInt_co, values: ArrayLike, mode: _ModeKind = "raise") -> None: ...
+
+    # NOTE: even on `generic` this seems to work
+    def setflags(self, /, write: py_bool | None = None, align: py_bool | None = None, uic: py_bool | None = None) -> None: ...
 
     #
     def conj(self) -> Self: ...
@@ -1928,40 +1930,6 @@ class _ArrayOrScalarCommon:
         mean: _ArrayLikeNumber_co = ...,
         correction: float = ...,
     ) -> _ArrayT: ...
-
-    # NOTE: always raises when called on `generic`.
-    @overload
-    def diagonal(  # type: ignore[misc]
-        self: ndarray[tuple[int, int], _DTypeT],
-        /,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int], _DTypeT]: ...
-    @overload
-    def diagonal(  # type: ignore[misc]
-        self: ndarray[tuple[int, int, int], _DTypeT],
-        /,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int, int], _DTypeT]: ...
-    @overload
-    def diagonal(  # type: ignore[misc]
-        self: ndarray[tuple[int, int, int, int], _DTypeT],
-        /,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int, int, int], _DTypeT]: ...
-    @overload
-    def diagonal(  # type: ignore[misc]
-        self: ndarray[tuple[int, ...], _DTypeT],
-        /,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int, ...], _DTypeT]: ...
 
 #
 class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
@@ -2320,7 +2288,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __sub__(self: NDArray[bool_], rhs: _ArrayLike[_NumberT], /) -> NDArray[_NumberT]: ...
     @overload
-    def __sub__(self: NDArray[bool_], rhs: _ArrayLikeBool_co, /) -> NoReturn: ...
+    def __sub__(self: NDArray[bool_], rhs: _ArrayLikeBool_co, /) -> Never: ...
     @overload
     def __sub__(self: NDArray[floating[_64Bit]], rhs: _ArrayLikeFloat64_co, /) -> NDArray[float64]: ...
     @overload
@@ -2370,7 +2338,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rsub__(self: NDArray[bool_], lhs: _ArrayLike[_NumberT], /) -> NDArray[_NumberT]: ...
     @overload
-    def __rsub__(self: NDArray[bool_], lhs: _ArrayLikeBool_co, /) -> NoReturn: ...
+    def __rsub__(self: NDArray[bool_], lhs: _ArrayLikeBool_co, /) -> Never: ...
     @overload
     def __rsub__(self: NDArray[floating[_64Bit]], lhs: _ArrayLikeFloat64_co, /) -> NDArray[float64]: ...
     @overload
@@ -2637,7 +2605,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __truediv__(self: NDArray[timedelta64], rhs: _ArrayLike[timedelta64], /) -> NDArray[float64]: ...
     @overload
-    def __truediv__(self: NDArray[timedelta64], rhs: _ArrayLikeBool_co, /) -> NoReturn: ...
+    def __truediv__(self: NDArray[timedelta64], rhs: _ArrayLikeBool_co, /) -> Never: ...
     @overload
     def __truediv__(self: NDArray[timedelta64], rhs: _ArrayLikeFloat_co, /) -> NDArray[timedelta64]: ...
     @overload
@@ -2715,7 +2683,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __floordiv__(self: NDArray[timedelta64], rhs: _ArrayLike[timedelta64], /) -> NDArray[int64]: ...
     @overload
-    def __floordiv__(self: NDArray[timedelta64], rhs: _ArrayLikeBool_co, /) -> NoReturn: ...
+    def __floordiv__(self: NDArray[timedelta64], rhs: _ArrayLikeBool_co, /) -> Never: ...
     @overload
     def __floordiv__(self: NDArray[timedelta64], rhs: _ArrayLikeFloat_co, /) -> NDArray[timedelta64]: ...
     @overload
@@ -3256,16 +3224,49 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> None: ...
 
     #
+    def swapaxes(self: ndarray[_AnyShapeT, _DTypeT], /, axis1: CanIndex, axis2: CanIndex) -> ndarray[_AnyShapeT, _DTypeT]: ...
     def squeeze(self, /, axis: CanIndex | tuple[CanIndex, ...] | None = None) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
-    def swapaxes(self, /, axis1: CanIndex, axis2: CanIndex) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
     def byteswap(self, /, inplace: py_bool = False) -> Self: ...
-    def setflags(self, /, write: py_bool | None = None, align: py_bool | None = None, uic: py_bool | None = None) -> None: ...
 
     #
     @overload
     def transpose(self, axes: _ShapeLike | None, /) -> Self: ...
     @overload
     def transpose(self, /, *axes: CanIndex) -> Self: ...
+
+    # NOTE: always raises when called on `generic`.
+    @overload
+    def diagonal(
+        self: ndarray[tuple[int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int], _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: ndarray[tuple[int, int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, int], _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: ndarray[tuple[int, int, int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, int, int], _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: ndarray[tuple[int, ...], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, ...], _DTypeT]: ...
 
     #
     @overload
@@ -3872,9 +3873,27 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def item(self, /) -> _ItemT_co: ...
     @overload
     def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> _ItemT_co: ...
-
-    #
     def tolist(self, /) -> _ItemT_co: ...
+
+    # NOTE: these technically exist, but will always raise when called
+    def trace(  # type: ignore[misc]
+        self: Never,
+        /,
+        offset: Never = ...,
+        axis1: Never = ...,
+        axis2: Never = ...,
+        dtype: Never = ...,
+        out: Never = ...,
+    ) -> Never: ...
+    def diagonal(self: Never, /, offset: Never = ..., axis1: Never = ..., axis2: Never = ...) -> Never: ...  # type: ignore[misc]
+    def swapaxes(self: Never, /, axis1: Never, axis2: Never) -> Never: ...  # type: ignore[misc]
+    def sort(self: Never, /, axis: Never = ..., kind: Never = ..., order: Never = ...) -> Never: ...  # type: ignore[misc]
+    def nonzero(self: Never, /) -> Never: ...  # type: ignore[misc]
+    def setfield(self: Never, /, val: Never, dtype: Never, offset: Never = ...) -> None: ...  # type: ignore[misc]
+    def searchsorted(self: Never, /, v: Never, side: Never = ..., sorter: Never = ...) -> Never: ...  # type: ignore[misc]
+
+    # NOTE: this wont't raise, but won't do anything either
+    def resize(self, new_shape: L[0, -1] | tuple[L[0, -1]] | tuple[()], /, *, refcheck: py_bool = False) -> None: ...
 
     #
     def byteswap(self, /, inplace: L[False] = False) -> Self: ...
@@ -6186,9 +6205,9 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
     # NOTE: Without these, mypy will use the `misc` error code instead of `opererator`
     # when attempting to floordiv a complex
     @override
-    def __floordiv__(self, x: Never, /) -> NoReturn: ...
+    def __floordiv__(self, x: Never, /) -> Never: ...
     @override
-    def __rfloordiv__(self, x: Never, /) -> NoReturn: ...
+    def __rfloordiv__(self, x: Never, /) -> Never: ...
 
 class complex128(complexfloating[_64Bit], complex):
     @property
