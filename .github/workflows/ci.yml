@@ -2,8 +2,7 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -18,27 +17,46 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    strategy:
-      fail-fast: false
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
 
       - uses: pre-commit/action@v3.0.1
         with:
           extra_args: --all-files
 
-      - uses: astral-sh/setup-uv@v5.3.0
+      - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-          python-version: "3.13"
-          version: latest
+          python-version: 3.13t
 
       - name: pytest
         run: uv run pytest
 
+  basedpyright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: 3.13t
+
       - name: basedpyright
-        run: uv run basedpyright --threads 2
+        run: uv run basedpyright
+
+  mypy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: 3.13t
 
       - name: unstub numpy
         run: uv run tool/unstub.py
@@ -46,7 +64,21 @@ jobs:
       - name: mypy
         run: >
           uv run --no-editable
-          mypy --explicit-package-bases .
+          mypy --explicit-package-bases test
+
+  stubtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: 3.13t
+
+      - name: unstub numpy
+        run: uv run tool/unstub.py
 
       - name: stubtest
         run: >
