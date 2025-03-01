@@ -1,6 +1,6 @@
 from collections.abc import Callable, Sequence
 from typing import Any, Final, Literal as L, NoReturn, SupportsAbs, SupportsIndex, TypeAlias, overload
-from typing_extensions import TypeIs, TypeVar, Unpack
+from typing_extensions import TypeIs, TypeVar
 
 import numpy as np
 import numpy.typing as npt
@@ -53,7 +53,6 @@ from _numtype import (
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc
 
-from ._multiarray_umath import _KwargsD, _KwargsDL
 from ._type_aliases import sctypes as sctypes
 from .fromnumeric import (
     all as all,
@@ -185,6 +184,7 @@ __all__ = [
     "zeros",
     "zeros_like",
 ]
+###
 
 _T = TypeVar("_T")
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
@@ -192,6 +192,7 @@ _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 
 _PyScalar: TypeAlias = complex | str | bytes
+_Device: TypeAlias = L["cpu"]
 _Mode: TypeAlias = L["valid", "same", "full"]
 _Axes: TypeAlias = int | tuple[_ShapeLike, _ShapeLike]
 
@@ -215,63 +216,81 @@ def ones(
     shape: int | tuple[int],
     dtype: type[Is[float]] | None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array_1d[np.float64]: ...
 @overload
 def ones(
     shape: int | tuple[int],
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array_1d[_ScalarT]: ...
 @overload
 def ones(
     shape: int | tuple[int],
     dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array_1d: ...
 @overload  # known shape
 def ones(
     shape: _AnyShapeT,
     dtype: type[Is[float]] | None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[np.float64, _AnyShapeT]: ...
 @overload
 def ones(
     shape: _AnyShapeT,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT, _AnyShapeT]: ...
 @overload
 def ones(
     shape: _AnyShapeT,
     dtype: npt.DTypeLike = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[Any, _AnyShapeT]: ...
 @overload  # unknown shape
 def ones(
     shape: _ShapeLike,
     dtype: type[Is[float]] | None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[np.float64]: ...
 @overload
 def ones(
     shape: _ShapeLike,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def ones(
     shape: _ShapeLike,
     dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array: ...
 
 # keep in sync with `ones`
@@ -281,7 +300,9 @@ def full(
     fill_value: _ScalarT,
     dtype: None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array_1d[_ScalarT]: ...
 @overload
 def full(
@@ -289,7 +310,9 @@ def full(
     fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array_1d[_ScalarT]: ...
 @overload
 def full(
@@ -297,7 +320,9 @@ def full(
     fill_value: object,
     dtype: DTypeLike | None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array_1d: ...
 @overload
 def full(
@@ -305,7 +330,9 @@ def full(
     fill_value: _ScalarT,
     dtype: None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT, _ShapeT]: ...
 @overload
 def full(
@@ -313,7 +340,9 @@ def full(
     fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT, _ShapeT]: ...
 @overload
 def full(
@@ -321,7 +350,9 @@ def full(
     fill_value: object,
     dtype: DTypeLike | None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[Any, _ShapeT]: ...
 @overload
 def full(
@@ -329,7 +360,9 @@ def full(
     fill_value: _ScalarT,
     dtype: None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def full(
@@ -337,7 +370,9 @@ def full(
     fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def full(
@@ -345,7 +380,9 @@ def full(
     fill_value: object,
     dtype: DTypeLike | None = None,
     order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
 ) -> Array: ...
 
 #
@@ -356,7 +393,8 @@ def zeros_like(
     order: _OrderKACF = "K",
     subok: L[True] = True,
     shape: None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> _ArrayT: ...
 @overload
 def zeros_like(
@@ -365,7 +403,8 @@ def zeros_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def zeros_like(
@@ -374,7 +413,8 @@ def zeros_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array: ...
 @overload
 def zeros_like(
@@ -383,7 +423,8 @@ def zeros_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def zeros_like(
@@ -392,7 +433,8 @@ def zeros_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array: ...
 
 #
@@ -403,7 +445,8 @@ def ones_like(
     order: _OrderKACF = "K",
     subok: L[True] = True,
     shape: None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> _ArrayT: ...
 @overload
 def ones_like(
@@ -412,7 +455,8 @@ def ones_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def ones_like(
@@ -421,7 +465,8 @@ def ones_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array: ...
 @overload
 def ones_like(
@@ -430,7 +475,8 @@ def ones_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def ones_like(
@@ -439,7 +485,8 @@ def ones_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array: ...
 
 #
@@ -451,7 +498,8 @@ def full_like(
     order: _OrderKACF = "K",
     subok: L[True] = True,
     shape: None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> _ArrayT: ...
 @overload
 def full_like(
@@ -461,7 +509,8 @@ def full_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def full_like(
@@ -471,7 +520,8 @@ def full_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array: ...
 @overload
 def full_like(
@@ -481,7 +531,8 @@ def full_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
 @overload
 def full_like(
@@ -491,7 +542,8 @@ def full_like(
     order: _OrderKACF = "K",
     subok: bool = True,
     shape: _ShapeLike | None = None,
-    **kwargs: Unpack[_KwargsD],
+    *,
+    device: _Device | None = None,
 ) -> Array: ...
 
 #
@@ -502,8 +554,6 @@ def count_nonzero(a: ArrayLike, axis: _ShapeLike | None = None, *, keepdims: boo
 
 #
 def flatnonzero(a: ArrayLike) -> Array_1d[np.intp]: ...
-
-#
 def argwhere(a: ArrayLike) -> Array[np.intp]: ...
 
 #
@@ -650,8 +700,8 @@ def moveaxis(a: Array[_ScalarT], source: _ShapeLike, destination: _ShapeLike) ->
 #
 @overload
 def cross(
-    x1: ToBool_1nd,
-    x2: ToBool_1nd,
+    a: ToBool_1nd,
+    b: ToBool_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -659,8 +709,8 @@ def cross(
 ) -> NoReturn: ...
 @overload
 def cross(
-    x1: ToUInteger_1nd,
-    x2: CoUInteger_1nd,
+    a: ToUInteger_1nd,
+    b: CoUInteger_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -668,8 +718,8 @@ def cross(
 ) -> Array[np.unsignedinteger]: ...
 @overload
 def cross(
-    x1: CoUInteger_1nd,
-    x2: ToUInteger_1nd,
+    a: CoUInteger_1nd,
+    b: ToUInteger_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -677,8 +727,8 @@ def cross(
 ) -> Array[np.unsignedinteger]: ...
 @overload
 def cross(
-    x1: ToSInteger_1nd,
-    x2: CoSInteger_1nd,
+    a: ToSInteger_1nd,
+    b: CoSInteger_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -686,8 +736,8 @@ def cross(
 ) -> Array[np.signedinteger]: ...
 @overload
 def cross(
-    x1: CoSInteger_1nd,
-    x2: ToSInteger_1nd,
+    a: CoSInteger_1nd,
+    b: ToSInteger_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -695,8 +745,8 @@ def cross(
 ) -> Array[np.signedinteger]: ...
 @overload
 def cross(
-    x1: ToFloating_1nd,
-    x2: CoFloating_1nd,
+    a: ToFloating_1nd,
+    b: CoFloating_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -704,8 +754,8 @@ def cross(
 ) -> Array[np.floating]: ...
 @overload
 def cross(
-    x1: CoFloating_1nd,
-    x2: ToFloating_1nd,
+    a: CoFloating_1nd,
+    b: ToFloating_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -713,8 +763,8 @@ def cross(
 ) -> Array[np.floating]: ...
 @overload
 def cross(
-    x1: ToComplex_1nd,
-    x2: CoComplex_1nd,
+    a: ToComplex_1nd,
+    b: CoComplex_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -722,8 +772,8 @@ def cross(
 ) -> Array[np.complexfloating]: ...
 @overload
 def cross(
-    x1: CoComplex_1nd,
-    x2: ToComplex_1nd,
+    a: CoComplex_1nd,
+    b: ToComplex_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -731,8 +781,8 @@ def cross(
 ) -> Array[np.complexfloating]: ...
 @overload
 def cross(
-    x1: CoComplex_1nd,
-    x2: CoComplex_1nd,
+    a: CoComplex_1nd,
+    b: CoComplex_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -776,11 +826,11 @@ def base_repr(number: SupportsAbs[float], base: float = 2, padding: SupportsInde
 
 #
 @overload
-def identity(n: int, dtype: None = None, *, like: _SupportsArrayFunc = ...) -> Array[np.float64]: ...
+def identity(n: int, dtype: None = None, *, like: _SupportsArrayFunc | None = None) -> Array_2d[np.float64]: ...
 @overload
-def identity(n: int, dtype: _DTypeLike[_ScalarT], *, like: _SupportsArrayFunc = ...) -> Array[_ScalarT]: ...
+def identity(n: int, dtype: _DTypeLike[_ScalarT], *, like: _SupportsArrayFunc | None = None) -> Array_2d[_ScalarT]: ...
 @overload
-def identity(n: int, dtype: DTypeLike, *, like: _SupportsArrayFunc = ...) -> Array: ...
+def identity(n: int, dtype: DTypeLike, *, like: _SupportsArrayFunc | None = None) -> Array_2d: ...
 
 #
 def allclose(a: ArrayLike, b: ArrayLike, rtol: ArrayLike = ..., atol: ArrayLike = ..., equal_nan: bool = ...) -> bool: ...
@@ -823,7 +873,7 @@ def astype(
     /,
     *,
     copy: bool = True,
-    **kwargs: Unpack[_KwargsD],
+    device: _Device | None = None,
 ) -> ndarray[_ShapeT, dtype[_ScalarT]]: ...
 @overload
 def astype(
@@ -832,5 +882,5 @@ def astype(
     /,
     *,
     copy: bool = True,
-    **kwargs: Unpack[_KwargsD],
+    device: _Device | None = None,
 ) -> ndarray[_ShapeT, dtype[Any]]: ...

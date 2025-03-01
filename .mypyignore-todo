@@ -85,14 +85,6 @@ numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.trunc
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.vecdot
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.vecmat
 
-numpy(\._core(\.numeric)?)?\.astype
-numpy(\._core(\.numeric)?)?\.cross
-numpy(\._core(\.numeric)?)?\.identity
-numpy(\._core(\.numeric)?)?\.full
-numpy(\._core(\.numeric)?)?\.full_like
-numpy(\._core(\.numeric)?)?\.ones
-numpy(\._core(\.numeric)?)?\.ones_like
-numpy(\._core(\.numeric)?)?\.zeros_like
 numpy(\._core(\.function_base)?)?\.linspace
 
 numpy(\.(_core(\.(arrayprint|numeric))?|matlib))?\.array2string
@@ -177,7 +169,6 @@ numpy._core.defchararray.chararray.__new__
 numpy._core.defchararray.chararray.argsort
 
 numpy._core(.einsumfunc)?.einsum_path
-
 
 numpy._core.numeric.__all__
 numpy._core.numeric.ScalarType
@@ -421,17 +412,13 @@ numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile
 
 numpy.matlib.__all__
-numpy.matlib.astype
 numpy.matlib.average
 numpy.matlib.cdouble
 numpy.matlib.corrcoef
-numpy.matlib.cross
 numpy.matlib.dtype
 numpy.matlib.dtype.type
 numpy.matlib.einsum_path
 numpy.matlib.f2py
-numpy.matlib.full
-numpy.matlib.full_like
 numpy.matlib.genfromtxt
 numpy.matlib.hanning
 numpy.matlib.in1d
@@ -441,7 +428,6 @@ numpy.matlib.(nan)?median
 numpy.matlib.nanpercentile
 numpy.matlib.ndenumerate.iter
 numpy.matlib.ndindex.ndincr
-numpy.matlib.ones_like
 numpy.matlib.poly1d.integ
 numpy.matlib.recarray.__getattr__
 numpy.matlib.recarray.__new__
@@ -458,8 +444,6 @@ numpy.matlib.unique_all
 numpy.matlib.unique_counts
 numpy.matlib.unique_inverse
 numpy.matlib.unique_values
-numpy.matlib.zeros_like
-
 
 numpy.matrixlib.defmatrix.mat
 numpy.matrixlib.defmatrix.matrix.__new__
