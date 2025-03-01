@@ -47,7 +47,7 @@ jobs:
       - name: basedpyright
         run: >
           uv run --no-group=orjson
-          basedpyright
+          basedpyright --threads=2
 
   mypy:
     runs-on: ubuntu-latest
