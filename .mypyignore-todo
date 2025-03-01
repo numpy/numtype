@@ -156,28 +156,17 @@ numpy.ndindex.ndincr
 numpy.ndenumerate.iter
 numpy.poly1d.integ
 
-numpy(\..+)?\.generic\.__array_wrap__
-numpy(\..+)?\.generic\.__hash__
-numpy(\..+)?\.generic\.diagonal
-numpy(\..+)?\.generic\.fill
-numpy(\..+)?\.generic\.nonzero
-numpy(\..+)?\.generic\.put
-numpy(\..+)?\.generic\.resize
-numpy(\..+)?\.generic\.swapaxes
-numpy(\..+)?\.generic\.sort
-numpy(\..+)?\.generic\.searchsorted
-numpy(\..+)?\.generic\.setfield
-numpy(\..+)?\.generic\.setflags
-numpy(\..+)?\.generic\.trace
-
 numpy(\..+)?\.object_.__call__
 numpy(\..+)?\.timedelta64.__class_getitem__
 
 # https://github.com/numpy/numtype/issues/136
-numpy(\..+)?\.integer.__index__
-numpy(\..+)?\.integer.bit_count
-numpy(\..+)?\.floating.as_integer_ratio
+numpy(\..+)?\.(un)?signedinteger.__hash__
+numpy(\..+)?\.(un)?signedinteger.__index__
+numpy(\..+)?\.(un)?signedinteger.bit_count
+numpy(\..+)?\.floating.__hash__
 numpy(\..+)?\.floating.is_integer
+numpy(\..+)?\.floating.as_integer_ratio
+numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
 numpy._core.__all__

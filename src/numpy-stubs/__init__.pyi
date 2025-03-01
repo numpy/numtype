@@ -14,7 +14,6 @@ from typing import (
     Final,
     Generic,
     Literal as L,
-    NoReturn,
     SupportsComplex as CanComplex,
     SupportsFloat as CanFloat,
     SupportsIndex as CanIndex,
@@ -612,6 +611,7 @@ _NumericArrayT = TypeVar("_NumericArrayT", bound=NDArray[number | timedelta64 | 
 
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
+_ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=tuple[int, Unpack[tuple[int, ...]]])
 _1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], Unpack[tuple[L[1], ...]]])  # (1,) | (1, 1) | (1, 1, 1) | ...
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
@@ -1481,7 +1481,7 @@ class dtype(Generic[_ScalarT_co]):
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
-    def __hash__(self) -> int: ...
+    def __hash__(self, /) -> int: ...
 
     # Explicitly defined `__eq__` and `__ne__` to get around mypy's `strict_equality` option; even though their signatures are
     # identical to their `object`-based counterpart
@@ -1590,6 +1590,13 @@ class _ArrayOrScalarCommon:
     def tofile(self, fid: StrOrBytesPath | _CanSeekTellFileNo, sep: str = ..., format: str = ...) -> None: ...
     def tolist(self) -> Any: ...
     def to_device(self, device: _Device, /, *, stream: int | Any | None = ...) -> Self: ...
+
+    # NOTE: for `generic`, these two methods don't do anything
+    def fill(self, value: _ScalarLike_co, /) -> None: ...
+    def put(self, /, indices: _ArrayLikeInt_co, values: ArrayLike, mode: _ModeKind = "raise") -> None: ...
+
+    # NOTE: even on `generic` this seems to work
+    def setflags(self, /, write: py_bool | None = None, align: py_bool | None = None, uic: py_bool | None = None) -> None: ...
 
     #
     def conj(self) -> Self: ...
@@ -2281,7 +2288,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __sub__(self: NDArray[bool_], rhs: _ArrayLike[_NumberT], /) -> NDArray[_NumberT]: ...
     @overload
-    def __sub__(self: NDArray[bool_], rhs: _ArrayLikeBool_co, /) -> NoReturn: ...
+    def __sub__(self: NDArray[bool_], rhs: _ArrayLikeBool_co, /) -> Never: ...
     @overload
     def __sub__(self: NDArray[floating[_64Bit]], rhs: _ArrayLikeFloat64_co, /) -> NDArray[float64]: ...
     @overload
@@ -2331,7 +2338,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rsub__(self: NDArray[bool_], lhs: _ArrayLike[_NumberT], /) -> NDArray[_NumberT]: ...
     @overload
-    def __rsub__(self: NDArray[bool_], lhs: _ArrayLikeBool_co, /) -> NoReturn: ...
+    def __rsub__(self: NDArray[bool_], lhs: _ArrayLikeBool_co, /) -> Never: ...
     @overload
     def __rsub__(self: NDArray[floating[_64Bit]], lhs: _ArrayLikeFloat64_co, /) -> NDArray[float64]: ...
     @overload
@@ -2598,7 +2605,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __truediv__(self: NDArray[timedelta64], rhs: _ArrayLike[timedelta64], /) -> NDArray[float64]: ...
     @overload
-    def __truediv__(self: NDArray[timedelta64], rhs: _ArrayLikeBool_co, /) -> NoReturn: ...
+    def __truediv__(self: NDArray[timedelta64], rhs: _ArrayLikeBool_co, /) -> Never: ...
     @overload
     def __truediv__(self: NDArray[timedelta64], rhs: _ArrayLikeFloat_co, /) -> NDArray[timedelta64]: ...
     @overload
@@ -2676,7 +2683,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __floordiv__(self: NDArray[timedelta64], rhs: _ArrayLike[timedelta64], /) -> NDArray[int64]: ...
     @overload
-    def __floordiv__(self: NDArray[timedelta64], rhs: _ArrayLikeBool_co, /) -> NoReturn: ...
+    def __floordiv__(self: NDArray[timedelta64], rhs: _ArrayLikeBool_co, /) -> Never: ...
     @overload
     def __floordiv__(self: NDArray[timedelta64], rhs: _ArrayLikeFloat_co, /) -> NDArray[timedelta64]: ...
     @overload
@@ -3217,17 +3224,49 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> None: ...
 
     #
+    def swapaxes(self: ndarray[_AnyShapeT, _DTypeT], /, axis1: CanIndex, axis2: CanIndex) -> ndarray[_AnyShapeT, _DTypeT]: ...
     def squeeze(self, /, axis: CanIndex | tuple[CanIndex, ...] | None = None) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
-    def swapaxes(self, /, axis1: CanIndex, axis2: CanIndex) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
     def byteswap(self, /, inplace: py_bool = False) -> Self: ...
-    def setflags(self, /, write: py_bool | None = None, align: py_bool | None = None, uic: py_bool | None = None) -> None: ...
-    def fill(self, value: _ScalarLike_co, /) -> None: ...
 
     #
     @overload
     def transpose(self, axes: _ShapeLike | None, /) -> Self: ...
     @overload
     def transpose(self, /, *axes: CanIndex) -> Self: ...
+
+    # NOTE: always raises when called on `generic`.
+    @overload
+    def diagonal(
+        self: ndarray[tuple[int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int], _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: ndarray[tuple[int, int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, int], _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: ndarray[tuple[int, int, int, int], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, int, int], _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: ndarray[tuple[int, ...], _DTypeT],
+        /,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+    ) -> ndarray[tuple[int, ...], _DTypeT]: ...
 
     #
     @overload
@@ -3317,14 +3356,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         kind: _PartitionKind = ...,
         order: str | Sequence[str] | None = ...,
     ) -> NDArray[intp]: ...
-
-    #
-    def diagonal(
-        self,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
 
     # 1D + 1D returns a scalar; # all other with at least 1 non-0D array return an ndarray.
     @overload
@@ -3557,9 +3588,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         out: _ArrayT,
         mode: _ModeKind = "raise",
     ) -> _ArrayT: ...
-
-    #
-    def put(self, indices: _ArrayLikeInt_co, values: ArrayLike, mode: _ModeKind = "raise") -> None: ...
 
     #
     @overload
@@ -3801,9 +3829,6 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         def __buffer__(self, flags: int, /) -> memoryview: ...
 
     #
-    def __hash__(self) -> int: ...
-
-    #
     @overload
     def __array__(self, dtype: None = None, /) -> ndarray[tuple[()], dtype[Self]]: ...
     @overload
@@ -3811,12 +3836,64 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
     #
     @overload
+    def __array_wrap__(
+        self,
+        array: ndarray[tuple[()], dtype[_ScalarT]],
+        context: tuple[ufunc, tuple[object, ...], int] | None = None,
+        return_scalar: L[True] = True,
+        /,
+    ) -> _ScalarT: ...
+    @overload
+    def __array_wrap__(
+        self,
+        array: ndarray[_ShapeT_1nd, _DTypeT],
+        context: tuple[ufunc, tuple[object, ...], int] | None = None,
+        return_scalar: py_bool = True,
+        /,
+    ) -> ndarray[_ShapeT_1nd, _DTypeT]: ...
+    @overload
+    def __array_wrap__(
+        self,
+        array: ndarray[_ShapeT, _DTypeT],
+        context: tuple[ufunc, tuple[object, ...], int] | None,
+        return_scalar: L[False],
+        /,
+    ) -> ndarray[_ShapeT, _DTypeT]: ...
+    @overload
+    def __array_wrap__(
+        self,
+        array: ndarray[_ShapeT, dtype[_ScalarT]],
+        context: tuple[ufunc, tuple[object, ...], int] | None = None,
+        return_scalar: py_bool = True,
+        /,
+    ) -> _ScalarT | ndarray[_ShapeT, dtype[_ScalarT]]: ...
+
+    #
+    @overload
     def item(self, /) -> _ItemT_co: ...
     @overload
     def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> _ItemT_co: ...
-
-    #
     def tolist(self, /) -> _ItemT_co: ...
+
+    # NOTE: these technically exist, but will always raise when called
+    def trace(  # type: ignore[misc]
+        self: Never,
+        /,
+        offset: Never = ...,
+        axis1: Never = ...,
+        axis2: Never = ...,
+        dtype: Never = ...,
+        out: Never = ...,
+    ) -> Never: ...
+    def diagonal(self: Never, /, offset: Never = ..., axis1: Never = ..., axis2: Never = ...) -> Never: ...  # type: ignore[misc]
+    def swapaxes(self: Never, /, axis1: Never, axis2: Never) -> Never: ...  # type: ignore[misc]
+    def sort(self: Never, /, axis: Never = ..., kind: Never = ..., order: Never = ...) -> Never: ...  # type: ignore[misc]
+    def nonzero(self: Never, /) -> Never: ...  # type: ignore[misc]
+    def setfield(self: Never, /, val: Never, dtype: Never, offset: Never = ...) -> None: ...  # type: ignore[misc]
+    def searchsorted(self: Never, /, v: Never, side: Never = ..., sorter: Never = ...) -> Never: ...  # type: ignore[misc]
+
+    # NOTE: this wont't raise, but won't do anything either
+    def resize(self, new_shape: L[0, -1] | tuple[L[0, -1]] | tuple[()], /, *, refcheck: py_bool = False) -> None: ...
 
     #
     def byteswap(self, /, inplace: L[False] = False) -> Self: ...
@@ -4124,6 +4201,9 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __init__(self: bool_[py_bool], value: object, /) -> None: ...
 
     #
+    def __hash__(self, /) -> int: ...
+
+    #
     def __bool__(self, /) -> _BoolItemT_co: ...
 
     #
@@ -4273,6 +4353,7 @@ class object_(_RealMixin, generic):
 
     #
     def __init__(self, value: object = ..., /) -> None: ...
+    def __hash__(self, /) -> int: ...
 
     if sys.version_info >= (3, 12):
         def __release_buffer__(self, buffer: memoryview, /) -> None: ...
@@ -4280,10 +4361,6 @@ class object_(_RealMixin, generic):
 class integer(_IntegralMixin, _RoundMixin, number[_NBitT, int]):
     @abc.abstractmethod
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
-
-    # NOTE: `bit_count` and `__index__` are technically defined in the concrete subtypes
-    def bit_count(self, /) -> int: ...
-    def __index__(self, /) -> int: ...
 
     #
     def __abs__(self, /) -> Self: ...
@@ -4438,6 +4515,12 @@ class integer(_IntegralMixin, _RoundMixin, number[_NBitT, int]):
 
 class signedinteger(integer[_NBitT]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
+    # https://github.com/numpy/numtype/issues/136
+    def __index__(self, /) -> int: ...
+    def __hash__(self, /) -> int: ...
+    def bit_count(self, /) -> int: ...
 
     #
     @overload
@@ -4695,6 +4778,12 @@ class signedinteger(integer[_NBitT]):
 
 class unsignedinteger(integer[_NBitT]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
+    # https://github.com/numpy/numtype/issues/136
+    def __index__(self, /) -> int: ...
+    def __hash__(self, /) -> int: ...
+    def bit_count(self, /) -> int: ...
 
     #
     @overload
@@ -5447,6 +5536,12 @@ class inexact(number[_NBitT, _InexactItemT_co], Generic[_NBitT, _InexactItemT_co
 class floating(_RealMixin, _RoundMixin, inexact[_NBitT, float]):
     def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
 
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
+    # https://github.com/numpy/numtype/issues/136
+    def __hash__(self, /) -> int: ...
+    def is_integer(self, /) -> py_bool: ...
+    def as_integer_ratio(self, /) -> tuple[int, int]: ...
+
     #
     @overload
     def __add__(self: float32 | float16, x: floating[_64Bit] | integer[_64Bit] | integer[_32Bit], /) -> float64: ...
@@ -5847,11 +5942,6 @@ class floating(_RealMixin, _RoundMixin, inexact[_NBitT, float]):
     @overload
     def __rdivmod__(self: float32 | float16, x: integer[_16Bit], /) -> _2Tuple[float32]: ...  # type: ignore[misc]
 
-    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
-    # https://github.com/numpy/numtype/issues/136
-    def is_integer(self, /) -> py_bool: ...
-    def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
 class float64(floating[_64Bit], float):  # type: ignore[misc]
     @property
     @override
@@ -5899,8 +5989,9 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
     @overload
     def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
 
-    # TODO(jorenham): This method should be moved to the concrete subtypes once we have them
+    # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
     # https://github.com/numpy/numtype/issues/136
+    def __hash__(self, /) -> int: ...
     def __complex__(self, /) -> complex: ...
 
     #
@@ -6114,9 +6205,9 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
     # NOTE: Without these, mypy will use the `misc` error code instead of `opererator`
     # when attempting to floordiv a complex
     @override
-    def __floordiv__(self, x: Never, /) -> NoReturn: ...
+    def __floordiv__(self, x: Never, /) -> Never: ...
     @override
-    def __rfloordiv__(self, x: Never, /) -> NoReturn: ...
+    def __rfloordiv__(self, x: Never, /) -> Never: ...
 
 class complex128(complexfloating[_64Bit], complex):
     @property
