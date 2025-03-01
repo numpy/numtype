@@ -79,11 +79,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/09/4e/a7d65c7322c510de2c409ff3828b03354a7c43f5a8ed458a7a131b41c7b9/mypy-1.15.0-py3-none-any.whl", hash = "sha256:5469affef548bd1895d86d3bf10ce2b44e33d86923c29e4d675b3e323437ea3e", size = 2221777 },
 ]
 
-[package.optional-dependencies]
-faster-cache = [
-    { name = "orjson" },
-]
-
 [[package]]
 name = "mypy-extensions"
 version = "1.0.0"
@@ -184,13 +179,15 @@ numpy = [
 [package.dev-dependencies]
 dev = [
     { name = "basedpyright" },
-    { name = "mypy", extra = ["faster-cache"] },
-    { name = "numtype", extra = ["numpy"] },
+    { name = "mypy" },
     { name = "pytest" },
     { name = "ruff" },
 ]
 numpy = [
     { name = "numtype", extra = ["numpy"] },
+]
+orjson = [
+    { name = "orjson" },
 ]
 
 [package.metadata]
@@ -200,12 +197,12 @@ provides-extras = ["numpy"]
 [package.metadata.requires-dev]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.0" },
-    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
-    { name = "numtype", extras = ["numpy"] },
+    { name = "mypy", specifier = ">=1.15.0" },
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "ruff", specifier = ">=0.9.8" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
+orjson = [{ name = "orjson", specifier = ">=3.10.15" }]
 
 [[package]]
 name = "orjson"
