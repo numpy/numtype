@@ -1,5 +1,5 @@
-from typing import Any, Literal as L, SupportsIndex, TypedDict, overload, type_check_only
-from typing_extensions import TypeVar, Unpack
+from typing import Any, Literal as L, SupportsIndex, TypeAlias, overload
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import DTypeLike, NDArray, _ArrayLikeFloat_co, _ArrayLikeNumber_co, _DTypeLike
@@ -10,9 +10,7 @@ __all__ = ["geomspace", "linspace", "logspace"]
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
-@type_check_only
-class _DeviceKwargs(TypedDict, total=False):
-    device: L["cpu"] | None
+_Device: TypeAlias = L["cpu"]
 
 ###
 
@@ -25,7 +23,8 @@ def linspace(
     retstep: L[False] = False,
     dtype: None = None,
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    *,
+    device: _Device | None = None,
 ) -> NDArray[np.floating]: ...
 @overload
 def linspace(
@@ -36,7 +35,8 @@ def linspace(
     retstep: L[False] = False,
     dtype: None = None,
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    *,
+    device: _Device | None = None,
 ) -> NDArray[np.inexact]: ...
 @overload
 def linspace(
@@ -47,7 +47,8 @@ def linspace(
     retstep: L[False],
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    *,
+    device: _Device | None = None,
 ) -> NDArray[_ScalarT]: ...
 @overload
 def linspace(
@@ -59,7 +60,7 @@ def linspace(
     *,
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    device: _Device | None = None,
 ) -> NDArray[_ScalarT]: ...
 @overload
 def linspace(
@@ -70,7 +71,8 @@ def linspace(
     retstep: L[False] = False,
     dtype: DTypeLike = ...,
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    *,
+    device: _Device | None = None,
 ) -> NDArray[Any]: ...
 @overload
 def linspace(
@@ -82,7 +84,7 @@ def linspace(
     retstep: L[True],
     dtype: None = None,
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    device: _Device | None = None,
 ) -> tuple[NDArray[np.floating], np.floating]: ...
 @overload
 def linspace(
@@ -94,7 +96,7 @@ def linspace(
     retstep: L[True],
     dtype: None = None,
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    device: _Device | None = None,
 ) -> tuple[NDArray[np.inexact], np.inexact]: ...
 @overload
 def linspace(
@@ -106,7 +108,7 @@ def linspace(
     retstep: L[True],
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    device: _Device | None = None,
 ) -> tuple[NDArray[_ScalarT], _ScalarT]: ...
 @overload
 def linspace(
@@ -118,7 +120,7 @@ def linspace(
     retstep: L[True],
     dtype: DTypeLike = ...,
     axis: SupportsIndex = 0,
-    **kwargs: Unpack[_DeviceKwargs],
+    device: _Device | None = None,
 ) -> tuple[NDArray[Any], Any]: ...
 
 #
