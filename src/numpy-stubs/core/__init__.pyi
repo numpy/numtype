@@ -3,8 +3,8 @@
 
 from numpy import _core as _core  # noqa: ICN003
 from numpy._core import (
-    # _dtype,
-    # _dtype_ctypes,
+    _dtype,
+    _dtype_ctypes,
     _internal,
     _multiarray_umath,
     arrayprint,
@@ -23,8 +23,8 @@ from numpy._core import (
 )
 
 __all__ = [
-    # "_dtype",
-    # "_dtype_ctypes",
+    "_dtype",
+    "_dtype_ctypes",
     "_internal",
     "_multiarray_umath",
     "arrayprint",
