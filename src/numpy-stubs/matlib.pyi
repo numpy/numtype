@@ -394,6 +394,7 @@ from numpy import (  # noqa: ICN003
     roots,
     rot90,
     round,
+    row_stack,
     # row_stack,
     s_,
     save,

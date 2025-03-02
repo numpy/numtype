@@ -63,8 +63,6 @@ numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.sqrt
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.cbrt
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.vec(dot|mat)
 
-numpy(\.matlib)?\.row_stack
-
 numpy(\..+)?\.object_.__call__
 numpy(\..+)?\.timedelta64.__class_getitem__
 
