@@ -424,6 +424,7 @@ from .lib._shape_base_impl import (
     hsplit,
     kron,
     put_along_axis,
+    row_stack,
     split,
     take_along_axis,
     tile,
@@ -544,8 +545,8 @@ __all__ = [  # noqa: RUF022
     # lib._scimath_impl
     "emath",
     # lib._shape_base_impl
-    "apply_along_axis", "apply_over_axes", "array_split", "column_stack", "dsplit", "dstack", "expand_dims", "hsplit", "kron",
-    "put_along_axis", "split", "take_along_axis", "tile", "vsplit",
+    "apply_along_axis", "apply_over_axes", "array_split", "row_stack", "column_stack", "dsplit", "dstack", "expand_dims",
+    "hsplit", "kron", "put_along_axis", "split", "take_along_axis", "tile", "vsplit",
     # lib._stride_tricks_impl.*
     "broadcast_arrays", "broadcast_shapes", "broadcast_to",
     # lib._twodim_base_impl

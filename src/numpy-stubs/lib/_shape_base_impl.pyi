@@ -1,6 +1,6 @@
 from collections.abc import Callable, Sequence
 from typing import Any, Concatenate, Protocol, SupportsIndex, overload, type_check_only
-from typing_extensions import ParamSpec, TypeVar
+from typing_extensions import ParamSpec, TypeVar, deprecated
 
 import numpy as np
 from _numtype import (
@@ -15,8 +15,8 @@ from _numtype import (
     ToSInteger_nd,
     ToUInteger_nd,
 )
-from numpy._core.shape_base import vstack as row_stack
-from numpy._typing import ArrayLike, NDArray, _ArrayLike, _ShapeLike
+from numpy import _CastingKind  # noqa: ICN003
+from numpy._typing import ArrayLike, DTypeLike, NDArray, _ArrayLike, _ShapeLike
 
 __all__ = [
     "apply_along_axis",
@@ -93,6 +93,15 @@ def apply_over_axes(
 def expand_dims(a: _ArrayLike[_ScalarT], axis: _ShapeLike) -> NDArray[_ScalarT]: ...
 @overload
 def expand_dims(a: ArrayLike, axis: _ShapeLike) -> NDArray[Any]: ...
+
+# Deprecated in NumPy 2.0, 2023-08-1
+@deprecated("`row_stack` alias is deprecated. Use `np.vstack` directly.")
+def row_stack(
+    tup: Sequence[ArrayLike],
+    *,
+    dtype: DTypeLike | None = None,
+    casting: _CastingKind = "same_kind",
+) -> NDArray[Any]: ...
 
 #
 @overload
