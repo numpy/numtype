@@ -194,7 +194,6 @@ numpy.f2py.((cb|common|f90mod|use)_)?rules
 numpy.fft.helper
 
 numpy.lib.Arrayterator.__array__
-numpy.lib._arraysetops_impl.Unique(All|Counts|Inverse)Result.__replace__
 numpy.lib._array_utils_impl.normalize_axis_tuple
 numpy.lib._arrayterator_impl.Arrayterator.__array__
 numpy.lib._index_tricks_impl.AxisConcatenator.makemat
@@ -209,7 +208,6 @@ numpy.lib.format.read_array(_header_(1|2)_0)?
 numpy.lib.mixins.NDArrayOperatorsMixin.__array_ufunc__
 numpy.lib.recfunctions.unstructured_to_structured
 
-numpy.linalg._linalg.(Eig|Eigh|QR|SVD|Slogdet)Result.__replace__
 numpy.linalg(._linalg)?.cholesky
 numpy.linalg(._linalg)?.pinv
 numpy.linalg(._linalg)?.tensordot
