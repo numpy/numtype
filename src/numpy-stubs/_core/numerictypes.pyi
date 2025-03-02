@@ -1,135 +1,44 @@
-import builtins
+from builtins import bool as py_bool  # noqa: I001
 from typing import Any, Final, Literal as L, TypedDict, type_check_only
 
 import numpy as np
 from numpy import (  # noqa: ICN003
-    bool,
-    bool_,
-    byte,
-    bytes_,
-    cdouble,
-    character,
-    clongdouble,
-    complex64,
-    complex128,
-    complexfloating,
-    csingle,
-    datetime64,
-    double,
     dtype,
-    flexible,
-    float16,
-    float32,
-    float64,
-    floating,
-    generic,
-    half,
-    inexact,
-    int8,
-    int16,
-    int32,
-    int64,
-    int_,
-    intc,
-    integer,
-    intp,
-    long,
-    longdouble,
-    longlong,
-    number,
+
+    generic, number, integer, inexact, flexible,
+    signedinteger, unsignedinteger, floating, complexfloating, character,
+    bool, bool_,
+    int8, int16, int32, int64, byte, short, intc, intp, int_, long, longlong,
+    uint8, uint16, uint32, uint64, ubyte, ushort, uintc, uintp, uint, ulong, ulonglong,
+    float16, float32, float64, float96, float128, half, single, double, longdouble,
+    complex64, complex128, complex192, complex256, csingle, cdouble, clongdouble,
     object_,
-    short,
-    signedinteger,
-    single,
-    str_,
-    timedelta64,
-    ubyte,
-    uint8,
-    uint16,
-    uint32,
-    uint64,
-    uintc,
-    uintp,
-    ulong,
-    ulonglong,
-    unsignedinteger,
-    ushort,
-    void,
-)
+    bytes_, str_, void,
+    datetime64, timedelta64,
+)  # fmt: skip
 from numpy._typing import DTypeLike
-from numpy._typing._extended_precision import complex192, complex256, float96, float128
 
 from ._type_aliases import sctypeDict as sctypeDict
 from .multiarray import busday_count, busday_offset, busdaycalendar, datetime_as_string, datetime_data, is_busday
 
-__all__ = [
-    "ScalarType",
-    "bool",
-    "bool_",
-    "busday_count",
-    "busday_offset",
-    "busdaycalendar",
-    "byte",
-    "bytes_",
-    "cdouble",
-    "character",
-    "clongdouble",
-    "complex64",
-    "complex128",
-    "complex192",
-    "complex256",
-    "complexfloating",
-    "csingle",
-    "datetime64",
-    "datetime_as_string",
-    "datetime_data",
-    "double",
-    "flexible",
-    "float16",
-    "float32",
-    "float64",
-    "float96",
-    "float128",
-    "floating",
-    "generic",
-    "half",
-    "inexact",
-    "int8",
-    "int16",
-    "int32",
-    "int64",
-    "int_",
-    "intc",
-    "integer",
-    "intp",
-    "is_busday",
-    "isdtype",
-    "issubdtype",
-    "long",
-    "longdouble",
-    "longlong",
-    "number",
+__all__ = [  # noqa: RUF022
+    "ScalarType", "typecodes",
+    "isdtype", "issubdtype",
+    "datetime_data", "datetime_as_string",
+    "busday_offset", "busday_count", "is_busday", "busdaycalendar",
+    "generic", "number", "integer", "inexact", "flexible",
+    "signedinteger", "unsignedinteger", "floating", "complexfloating", "character",
+    "bool", "bool_",
+    "int8", "int16", "int32", "int64", "byte", "short", "intc", "intp", "int_", "long", "longlong",
+    "uint8", "uint16", "uint32", "uint64", "ubyte", "ushort", "uintc", "uintp", "uint", "ulong", "ulonglong",
+    "float16", "float32", "float64", "float96", "float128", "half", "single", "double", "longdouble",
+    "complex64", "complex128", "complex192", "complex256", "csingle", "cdouble", "clongdouble",
     "object_",
-    "short",
-    "signedinteger",
-    "single",
-    "str_",
-    "timedelta64",
-    "typecodes",
-    "ubyte",
-    "uint8",
-    "uint16",
-    "uint32",
-    "uint64",
-    "uint64",
-    "uintc",
-    "uintp",
-    "ulong",
-    "ulonglong",
-    "unsignedinteger",
-    "ushort",
-    "void",
-]
+    "bytes_", "str_", "void",
+    "datetime64", "timedelta64",
+]  # fmt: skip
+
+###
 
 @type_check_only
 class _TypeCodes(TypedDict):
@@ -143,8 +52,7 @@ class _TypeCodes(TypedDict):
     Datetime: L["Mm"]
     All: L["?bhilqnpBHILQNPefdgFDGSUVOMm"]
 
-def isdtype(dtype: dtype[Any] | type, kind: DTypeLike | tuple[DTypeLike, ...]) -> builtins.bool: ...
-def issubdtype(arg1: DTypeLike, arg2: DTypeLike) -> builtins.bool: ...
+###
 
 typecodes: Final[_TypeCodes] = ...
 ScalarType: Final[
@@ -152,7 +60,7 @@ ScalarType: Final[
         type[int],
         type[float],
         type[complex],
-        type[builtins.bool],
+        type[py_bool],
         type[bytes],
         type[str],
         type[memoryview],
@@ -182,3 +90,7 @@ ScalarType: Final[
         type[void],
     ]
 ] = ...
+typeDict: Final = sctypeDict
+
+def isdtype(dtype: dtype[Any] | type, kind: DTypeLike | tuple[DTypeLike, ...]) -> py_bool: ...
+def issubdtype(arg1: DTypeLike, arg2: DTypeLike) -> py_bool: ...

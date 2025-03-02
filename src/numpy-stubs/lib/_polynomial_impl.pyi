@@ -78,7 +78,20 @@ from _numtype import (
 )
 from numpy._typing import ArrayLike
 
-__all__ = ["poly", "poly1d", "polyder", "polydiv", "polyfit", "polyint", "polymul", "polymul", "polysub", "polyval", "roots"]
+__all__ = [
+    "poly",
+    "poly1d",
+    "polyadd",
+    "polyder",
+    "polydiv",
+    "polyfit",
+    "polyint",
+    "polymul",
+    "polymul",
+    "polysub",
+    "polyval",
+    "roots",
+]
 
 ###
 
