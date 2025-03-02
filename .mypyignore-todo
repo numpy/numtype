@@ -144,9 +144,6 @@ numpy._pyinstaller.hook-numpy
 numpy.compat
 numpy.compat.py3k
 
-numpy.core.__all__
-numpy.core._dtype
-numpy.core._dtype_ctypes
 numpy.core.arrayprint
 numpy.core.defchararray
 numpy.core.einsumfunc
