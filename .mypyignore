@@ -16,3 +16,8 @@ numpy\._core\.__all__
 numpy\._core\.numeric\.__all__
 numpy\._core\.numerictypes\.__all__
 numpy\.matlib\.__all__
+
+# workaround mypy's lack of Python 3.13 support for `NamedTuple` types (mypy <= 1.15.0)
+numpy\._utils\._pep440\._Version\.__replace__
+numpy\.lib\._arraysetops_impl\.Unique(All|Counts|Inverse)Result\.__replace__
+numpy\.linalg\._linalg\.(Eig|Eigh|QR|SVD|Slogdet)Result\.__replace__
