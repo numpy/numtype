@@ -63,9 +63,6 @@ numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.sqrt
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.cbrt
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.vec(dot|mat)
 
-numpy(\..+)?\.object_.__call__
-numpy(\..+)?\.timedelta64.__class_getitem__
-
 numpy(\._core(\.arrayprint|\.numeric)?|\.matlib)?\.array2string
 numpy(\._core(\.einsumfunc)?)?\.einsum_path
 numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
