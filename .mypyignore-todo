@@ -1,4 +1,4 @@
-# TODO: https://github.com/numpy/numtype/issues/136
+# https://github.com/numpy/numtype/issues/136
 numpy(\..+)?\.(un)?signedinteger.__hash__
 numpy(\..+)?\.(un)?signedinteger.__index__
 numpy(\..+)?\.(un)?signedinteger.bit_count
@@ -8,8 +8,7 @@ numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
-# ufuncs
-# TODO: https://github.com/numpy/numtype/issues/88
+# https://github.com/numpy/numtype/issues/88
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.f?abs(olute)?
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.ceil
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.trunc
@@ -64,25 +63,23 @@ numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.cbrt
 numpy(\._core(\.(_multiarray_umath|multiarray|numeric|umath))?|\.matlib)?\.vec(dot|mat)
 
 numpy(\._core(\.arrayprint|\.numeric)?|\.matlib)?\.array2string
-numpy(\._core(\.einsumfunc)?)?\.einsum_path
+numpy(\._core(\.einsumfunc)?|\.matlib)?\.einsum_path
 numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
-numpy(\._core(\.multiarray|\.numeric)?)?\.dtype
-numpy(\._core(\.multiarray|\.numeric)?)?\.dtype.type
 
-numpy(\.lib\._arraysetops_impl)?\.union1d
-numpy(\.lib\._arraysetops_impl)?\.unique_(all|counts|inverse|values)
-numpy(\.lib\._function_base_impl)?\.average
-numpy(\.lib\._function_base_impl)?\.corrcoef
-numpy(\.lib\._function_base_impl)?\.median
-numpy(\.lib\._npyio_impl)?\.genfromtxt
-numpy(\.lib\._npyio_impl)?\.save
+numpy(\.lib\._arraysetops_impl|\.matlib)?\.union1d
+numpy(\.lib\._arraysetops_impl|\.matlib)?\.unique_(all|counts|inverse|values)
+numpy(\.lib\._function_base_impl|\.matlib)?\.average
+numpy(\.lib\._function_base_impl|\.matlib)?\.corrcoef
+numpy(\.lib\._function_base_impl|\.matlib)?\.median
+numpy(\.lib\._npyio_impl|\.matlib)?\.genfromtxt
+numpy(\.lib\._npyio_impl|\.matlib)?\.save
 numpy(\.lib\._nanfunctions_impl)?\.nan(median|percentile)
 numpy(\.lib\._twodim_base_impl)?\.tri(l|u)
 
-numpy.matrix.__new__
-numpy.ndindex.ndincr
-numpy.ndenumerate.iter
-numpy.poly1d.integ
+numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
+numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
+numpy(\.lib\._index_tricks_impl|\.matlib)?\.ndindex\.ndincr
+numpy(\.lib\._index_tricks_impl|\.matlib)?\.ndenumerate\.iter
 
 numpy._core.cversions
 numpy._core.printoptions
@@ -119,10 +116,10 @@ numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.isupper
 numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.startswith
 numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.str_len
 
-numpy._core.records.array
-numpy._core(.records)?.recarray.__getattr__
-numpy._core(.records)?.recarray.__new__
-numpy._core(.records)?.record.__name__
+numpy(\._core(\.records)?|\.matlib|\.rec)?\.recarray\.__getattr__
+numpy(\._core(\.records)?|\.matlib|\.rec)?\.recarray\.__new__
+numpy(\._core(\.records)?|\.matlib|\.rec)?\.record\.__name__
+numpy(\._core\.records|\.rec)\.array
 
 numpy(\._core\.defchararray|\.char)\.chararray\.__new__
 numpy(\._core\.defchararray|\.char)\.chararray\.argsort
@@ -158,19 +155,6 @@ numpy.ctypeslib._ctypeslib
 
 numpy.distutils
 
-numpy.dtypes.BoolDType
-numpy.dtypes.U?Int(8|16|32|64)?DType
-numpy.dtypes.U?Long(Long)?DType
-numpy.dtypes.Float(16|32|64)DType
-numpy.dtypes.Complex(64|128)DType
-numpy.dtypes.C?LongDoubleDType
-numpy.dtypes.ObjectDType
-numpy.dtypes.(Bytes|Str|Void)DType
-numpy.dtypes.(DateTime|TimeDelta)64DType
-numpy.dtypes.StringDType
-numpy.dtypes.StringDType.coerce
-numpy.dtypes.StringDType.na_object
-
 numpy.f2py.__main__
 numpy.f2py.__version__
 numpy.f2py.(aux|c)funcs
@@ -185,16 +169,11 @@ numpy.f2py.((cb|common|f90mod|use)_)?rules
 
 numpy.fft.helper
 
-numpy.lib.Arrayterator.__array__
-numpy.lib._array_utils_impl.normalize_axis_tuple
-numpy.lib._arrayterator_impl.Arrayterator.__array__
-numpy.lib._index_tricks_impl.AxisConcatenator.makemat
-numpy.lib._index_tricks_impl.ndenumerate.iter
-numpy.lib._index_tricks_impl.ndindex.ndincr
-numpy.lib._iotools.NameValidator.defaultdeletechars
+numpy.lib(._arrayterator_impl)?.Arrayterator.__array__
+numpy.lib.(_array_utils_impl|array_utils).normalize_axis_tuple
 numpy.lib.(_npyio_impl|npyio).NpzFile.get
-numpy.lib._polynomial_impl.poly1d.integ
-numpy.lib.array_utils.normalize_axis_tuple
+numpy.lib._index_tricks_impl.AxisConcatenator.makemat
+numpy.lib._iotools.NameValidator.defaultdeletechars
 numpy.lib.format.open_memmap
 numpy.lib.format.read_array(_header_(1|2)_0)?
 numpy.lib.mixins.NDArrayOperatorsMixin.__array_ufunc__
@@ -234,40 +213,18 @@ numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile
 
-numpy.matlib.average
-numpy.matlib.cdouble
-numpy.matlib.corrcoef
-numpy.matlib.dtype
-numpy.matlib.dtype.type
-numpy.matlib.einsum_path
 numpy.matlib.f2py
-numpy.matlib.genfromtxt
+numpy.matlib.typing
+numpy.matlib.cdouble
 numpy.matlib.hanning
 numpy.matlib.in1d
-numpy.matlib.matrix.__new__
-numpy.matlib.(nan)?median
+numpy.matlib.nanmedian
 numpy.matlib.nanpercentile
-numpy.matlib.ndenumerate.iter
-numpy.matlib.ndindex.ndincr
-numpy.matlib.poly1d.integ
-numpy.matlib.recarray.__getattr__
-numpy.matlib.recarray.__new__
-numpy.matlib.record.__name__
-numpy.matlib.save
 numpy.matlib.split
 numpy.matlib.stack
-numpy.matlib.tril
-numpy.matlib.triu
-numpy.matlib.typing
-numpy.matlib.union1d
-numpy.matlib.unique_all
-numpy.matlib.unique_counts
-numpy.matlib.unique_inverse
-numpy.matlib.unique_values
+numpy.matlib.tri(l|u)
 
 numpy.matrixlib.defmatrix.mat
-numpy.matrixlib.defmatrix.matrix.__new__
-numpy.matrixlib.matrix.__new__
 
 numpy.polynomial.Chebyshev.basis_name
 numpy.polynomial.Hermite.basis_name
@@ -444,14 +401,8 @@ numpy.polynomial.polynomial.polyvander
 numpy.polynomial.polynomial.polyvander2d
 numpy.polynomial.polynomial.polyvander3d
 
-numpy.random._generator.__test__
 numpy\.random(\.bit_generator)?\.BitGenerator\.capsule
 numpy\.random\.((_mt19937\.)?MT19937|(_pcg64\.)?PCG64(DXSM)?|(_philox\.)?Philox|(_sfc64\.)?SFC64|(bit_generator\.)?(Seedless)?SeedSequence)\.__(reduce|setstate)_cython__
-
-numpy.rec.array
-numpy(.rec)?.recarray.__getattr__
-numpy(.rec)?.recarray.__new__
-numpy(.rec)?.record.__name__
 
 numpy\.testing(\._private.utils)?\.assert_array_equal
 numpy\.testing(\._private.utils)?\.assert_array_almost_equal

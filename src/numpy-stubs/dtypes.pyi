@@ -1,6 +1,7 @@
+from types import MemberDescriptorType
 from typing import (
     Any,
-    Final,
+    ClassVar,
     Generic,
     Literal as L,
     NoReturn,
@@ -8,7 +9,7 @@ from typing import (
     final,
     type_check_only,
 )
-from typing_extensions import LiteralString, Self, TypeVar
+from typing_extensions import LiteralString, Self, TypeVar, override
 
 import numpy as np
 
@@ -50,15 +51,15 @@ __all__ = [
 
 # Helper base classes (typing-only)
 
-_SCT_co = TypeVar("_SCT_co", bound=np.generic, covariant=True)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 
 @type_check_only
-class _SimpleDType(np.dtype[_SCT_co], Generic[_SCT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
+class _SimpleDType(np.dtype[_ScalarT_co], Generic[_ScalarT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     names: None  # pyright: ignore[reportIncompatibleVariableOverride]
     def __new__(cls, /) -> Self: ...
     def __getitem__(self, key: Any, /) -> NoReturn: ...
     @property
-    def base(self) -> np.dtype[_SCT_co]: ...
+    def base(self) -> np.dtype[_ScalarT_co]: ...
     @property
     def fields(self) -> None: ...
     @property
@@ -73,7 +74,7 @@ class _SimpleDType(np.dtype[_SCT_co], Generic[_SCT_co]):  # type: ignore[misc]  
     def subdtype(self) -> None: ...
 
 @type_check_only
-class _LiteralDType(_SimpleDType[_SCT_co], Generic[_SCT_co]):  # type: ignore[misc]
+class _LiteralDType(_SimpleDType[_ScalarT_co], Generic[_ScalarT_co]):  # type: ignore[misc]
     @property
     def flags(self) -> L[0]: ...
     @property
@@ -233,11 +234,11 @@ class UInt64DType(  # type: ignore[misc]
     @property
     def str(self) -> L["<u8", ">u8"]: ...
 
-# Standard C-named version/alias:
-ByteDType: Final = Int8DType
-UByteDType: Final = UInt8DType
-ShortDType: Final = Int16DType
-UShortDType: Final = UInt16DType
+# NOTE: Don't make these `Final`: it will break stubtest
+ByteDType = Int8DType
+UByteDType = UInt8DType
+ShortDType = Int16DType
+UShortDType = UInt16DType
 
 @final
 class IntDType(  # type: ignore[misc]
@@ -353,13 +354,13 @@ class Float64DType(  # type: ignore[misc]
 class LongDoubleDType(  # type: ignore[misc]
     _TypeCodes[L["f"], L["g"], L[13]],
     _NativeOrder,
-    _NBit[L[8, 12, 16], L[8, 12, 16]],
+    _NBit[L[12, 16], L[12, 16]],
     _LiteralDType[np.longdouble],
 ):
     @property
-    def name(self) -> L["float64", "float96", "float128"]: ...
+    def name(self) -> L["float96", "float128"]: ...
     @property
-    def str(self) -> L["<f8", ">f8", "<f12", ">f12", "<f16", ">f16"]: ...
+    def str(self) -> L["<f12", ">f12", "<f16", ">f16"]: ...
 
 # Complex:
 
@@ -391,13 +392,13 @@ class Complex128DType(  # type: ignore[misc]
 class CLongDoubleDType(  # type: ignore[misc]
     _TypeCodes[L["c"], L["G"], L[16]],
     _NativeOrder,
-    _NBit[L[8, 12, 16], L[16, 24, 32]],
+    _NBit[L[12, 16], L[24, 32]],
     _LiteralDType[np.clongdouble],
 ):
     @property
-    def name(self) -> L["complex128", "complex192", "complex256"]: ...
+    def name(self) -> L["complex192", "complex256"]: ...
     @property
-    def str(self) -> L["<c16", ">c16", "<c24", ">c24", "<c32", ">c32"]: ...
+    def str(self) -> L["<c24", ">c24", "<c32", ">c32"]: ...
 
 # Python objects:
 
@@ -617,27 +618,45 @@ class StringDType(  # type: ignore[misc]
     # https://github.com/numpy/numpy/pull/28196
     np.dtype[str],  # type: ignore[type-var]  # pyright: ignore[reportGeneralTypeIssues,reportInvalidTypeArguments]
 ):
+    @property
+    def coerce(self) -> L[True]: ...
+    na_object: ClassVar[MemberDescriptorType]  # does not get instantiated
+
+    #
+    @override
     def __new__(cls, /) -> StringDType: ...
+    @override
     def __getitem__(self, key: Any, /) -> NoReturn: ...
     @property
+    @override
     def base(self) -> StringDType: ...
     @property
+    @override
     def fields(self) -> None: ...
     @property
+    @override
     def hasobject(self) -> L[True]: ...
     @property
+    @override
     def isalignedstruct(self) -> L[False]: ...
     @property
+    @override
     def isnative(self) -> L[True]: ...
     @property
+    @override
     def name(self) -> L["StringDType64", "StringDType128"]: ...
     @property
+    @override
     def ndim(self) -> L[0]: ...
     @property
+    @override
     def shape(self) -> tuple[()]: ...
     @property
-    def str(self) -> L["|T8", "|T16"]: ...
-    @property
+    @override
     def subdtype(self) -> None: ...
     @property
-    def type(self) -> type[str]: ...  # type: ignore[valid-type]
+    @override
+    def type(self) -> type[str]: ...
+    @property
+    @override
+    def str(self) -> L["|T8", "|T16"]: ...

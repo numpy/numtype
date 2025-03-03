@@ -991,8 +991,21 @@ test: Final[PytestTester] = ...
 ###
 # Public API
 
+@type_check_only
+class _DTypeMeta(type):
+    @property
+    def type(cls, /) -> type[generic] | None: ...
+    @property
+    def _abstract(cls, /) -> bool: ...
+    @property
+    def _is_numeric(cls, /) -> bool: ...
+    @property
+    def _parametric(cls, /) -> bool: ...
+    @property
+    def _legacy(cls, /) -> bool: ...
+
 @final
-class dtype(Generic[_ScalarT_co]):
+class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     names: tuple[str, ...] | None
 
     @property
@@ -1515,11 +1528,11 @@ class dtype(Generic[_ScalarT_co]):
     #
     def newbyteorder(self, new_order: _ByteOrder = ..., /) -> Self: ...
 
-    # avoid shadowing `type` and `str`
-    @property
-    def type(self) -> type[_ScalarT_co]: ...
+    # place these at the bottom to avoid shadowing the `type` and `str` builtins
     @property
     def str(self) -> LiteralString: ...
+    @property
+    def type(self) -> type[_ScalarT_co]: ...
 
 @type_check_only
 class _ArrayOrScalarCommon:
