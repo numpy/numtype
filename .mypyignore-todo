@@ -11,7 +11,7 @@ numpy(\..+)?\.complexfloating.__complex__
 numpy(\.lib\._nanfunctions_impl|\.matlib)?\.nan(median|percentile)
 numpy(\.lib\._twodim_base_impl)?\.tri(l|u)
 
-numpy\._core(\._multiarray_umath|\.multiarray)\.error
+numpy\._?core(\._multiarray_umath|\.multiarray)\.error
 numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
 numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
 numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
@@ -25,10 +25,10 @@ numpy._core._type_aliases.type_info
 numpy._core._type_aliases.k
 numpy._core._type_aliases.v
 
-numpy(\._core(\.records)?|\.matlib|\.rec)?\.recarray\.__getattr__
-numpy(\._core(\.records)?|\.matlib|\.rec)?\.recarray\.__new__
-numpy(\._core(\.records)?|\.matlib|\.rec)?\.record\.__name__
-numpy(\._core\.records|\.rec)\.array
+numpy(\._?core(\.records)?|\.matlib|\.rec)?\.recarray\.__getattr__
+numpy(\._?core(\.records)?|\.matlib|\.rec)?\.recarray\.__new__
+numpy(\._?core(\.records)?|\.matlib|\.rec)?\.record\.__name__
+numpy(\._?core\.records|\.rec)\.array
 
 numpy._globals._CopyMode.IF_NEEDED
 numpy._globals._CopyMode.__bool__
@@ -37,19 +37,6 @@ numpy._pyinstaller.hook-numpy
 
 numpy.compat
 numpy.compat.py3k
-
-numpy.core.arrayprint
-numpy.core.defchararray
-numpy.core.einsumfunc
-numpy.core.fromnumeric
-numpy.core.function_base
-numpy.core.getlimits
-numpy.core.multiarray
-numpy.core.numeric
-numpy.core.numerictypes
-numpy.core.records
-numpy.core.shape_base
-numpy.core.umath
 
 numpy.ctypeslib._ctypeslib
 

@@ -1,6 +1,3 @@
-# TODO(jorenham):
-# add mirror modules of `_core` in the `core` namespace
-
 from numpy import _core as _core  # noqa: ICN003
 from numpy._core import (
     _dtype,
@@ -41,9 +38,3 @@ __all__ = [
     "shape_base",
     "umath",
 ]
-
-# TODO(jorenham): stub `_core._dtype_ctypes`
-# https://github.com/numpy/numtype/issues/54
-
-# TODO(jorenham): stub `_core._dtype`
-# https://github.com/numpy/numtype/issues/55
