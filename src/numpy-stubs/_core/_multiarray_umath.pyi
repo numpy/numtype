@@ -143,11 +143,13 @@ from numpy._typing import (
     _SupportsArrayFunc,
 )
 from numpy._typing._ufunc import (
-    _PyFunc_Nin1P_Nout2 as _PyFunc1P2,
-    _PyFunc_Nin1P_Nout2P as _PyFunc1P2P,
-    _PyFunc_Nin1_Nout1 as _PyFunc11,
-    _PyFunc_Nin2_Nout1 as _PyFunc21,
-    _PyFunc_Nin3P_Nout1 as _PyFunc3P1,
+    _pyfunc_1_1,
+    _pyfunc_1n_2,
+    _pyfunc_1n_2n,
+    _pyfunc_2_1,
+    _pyfunc_3n_1,
+    _ufunc_1_1,
+    _ufunc_2_1,
 )
 
 ###
@@ -156,7 +158,6 @@ _T = TypeVar("_T")
 _T_contra = TypeVar("_T_contra", default=None, contravariant=True)
 _T1 = TypeVar("_T1")
 _T2 = TypeVar("_T2")
-_IdT = TypeVar("_IdT", default=None)
 
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ShapeT0 = TypeVar("_ShapeT0", bound=tuple[int, ...], default=tuple[int, ...])
@@ -398,44 +399,52 @@ e: Final[float] = ...
 euler_gamma: Final[float] = ...
 pi: Final[float] = ...
 
+# 1->1
+isalnum: _ufunc_1_1
+isalpha: _ufunc_1_1
+isdecimal: _ufunc_1_1
+isdigit: _ufunc_1_1
+islower: _ufunc_1_1
+isnumeric: _ufunc_1_1
+isspace: _ufunc_1_1
+istitle: _ufunc_1_1
+isupper: _ufunc_1_1
+str_len: _ufunc_1_1
+_arg: _ufunc_1_1
+_ones_like: _ufunc_1_1
+_lstrip_whitespace: _ufunc_1_1
+_rstrip_whitespace: _ufunc_1_1
+_strip_whitespace: _ufunc_1_1
+
+# 2->1
+_expandtabs: _ufunc_2_1
+_expandtabs_length: _ufunc_2_1
+_lstrip_chars: _ufunc_2_1
+_rstrip_chars: _ufunc_2_1
+_strip_chars: _ufunc_2_1
+_zfill: _ufunc_2_1
+
+# 3->1
 clip: np.ufunc
+_center: np.ufunc
+_ljust: np.ufunc
+_rjust: np.ufunc
+
+# 3->3
+_partition_index: np.ufunc
+_rpartition_index: np.ufunc
+
+# 4->1
 count: np.ufunc
 endswith: np.ufunc
-find: np.ufunc
-index: np.ufunc
-isalnum: np.ufunc
-isalpha: np.ufunc
-isdecimal: np.ufunc
-isdigit: np.ufunc
-islower: np.ufunc
-isnumeric: np.ufunc
-isspace: np.ufunc
-istitle: np.ufunc
-isupper: np.ufunc
-rfind: np.ufunc
-rindex: np.ufunc
 startswith: np.ufunc
-str_len: np.ufunc
-
-_arg: np.ufunc
-_center: np.ufunc
-_expandtabs: np.ufunc
-_expandtabs_length: np.ufunc
-_ljust: np.ufunc
-_lstrip_chars: np.ufunc
-_lstrip_whitespace: np.ufunc
-_ones_like: np.ufunc
+find: np.ufunc
+rfind: np.ufunc
+index: np.ufunc
+rindex: np.ufunc
 _partition: np.ufunc
-_partition_index: np.ufunc
-_replace: np.ufunc
-_rjust: np.ufunc
 _rpartition: np.ufunc
-_rpartition_index: np.ufunc
-_rstrip_chars: np.ufunc
-_rstrip_whitespace: np.ufunc
-_strip_chars: np.ufunc
-_strip_whitespace: np.ufunc
-_zfill: np.ufunc
+_replace: np.ufunc
 
 @final
 class flagsobj:
@@ -1757,19 +1766,11 @@ def format_longfloat(*args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
 
 # NOTE: We can't use e.g. `Concatenate[Any, ...]`, as that causes mypy to reject every function...
 @overload  # (a) -> T
-def frompyfunc(f: Callable[[Any], _T], /, nin: _1, nout: _1, *, identity: _IdT | None = None) -> _PyFunc11[_T, _IdT]: ...
+def frompyfunc(f: Callable[[Any], _T], /, nin: _1, nout: _1, *, identity: object = None) -> _pyfunc_1_1[_T]: ...
 @overload  # (a, b) -> T
-def frompyfunc(f: Callable[[Any, Any], _T], /, nin: _2, nout: _1, *, identity: _IdT | None = None) -> _PyFunc21[_T, _IdT]: ...
+def frompyfunc(f: Callable[[Any, Any], _T], /, nin: _2, nout: _1, *, identity: object = None) -> _pyfunc_2_1[_T]: ...
 @overload  # (a, b, c, ...) -> T
-def frompyfunc(
-    # f: Callable[Concatenate[Any, Any, Any, ...], _T],
-    f: Callable[..., _T],
-    /,
-    nin: _3P,
-    nout: _1,
-    *,
-    identity: _IdT | None = None,
-) -> _PyFunc3P1[_T, _IdT]: ...
+def frompyfunc(f: Callable[..., _T], /, nin: _3P, nout: _1, *, identity: object = None) -> _pyfunc_3n_1[_T]: ...
 @overload  # (a, ...) -> (T1, T2)
 def frompyfunc(  # type: ignore[overload-overlap]  # mypy-only false positive
     f: Callable[..., tuple[_T1, _T2]],
@@ -1777,8 +1778,8 @@ def frompyfunc(  # type: ignore[overload-overlap]  # mypy-only false positive
     nin: _1P,
     nout: _2,
     *,
-    identity: _IdT | None = None,
-) -> _PyFunc1P2[_T1, _T2, _IdT]: ...
+    identity: object = None,
+) -> _pyfunc_1n_2[_T1, _T2]: ...
 @overload  # (a, ...) -> (T1, T2, *(T, ...))
 def frompyfunc(
     f: Callable[..., tuple[_T1, _T2, Unpack[tuple[_T, ...]]]],
@@ -1786,8 +1787,8 @@ def frompyfunc(
     nin: _1P,
     nout: _2P,
     *,
-    identity: _IdT | None = None,
-) -> _PyFunc1P2P[_T1 | _T2 | _T, _IdT]: ...
+    identity: object = None,
+) -> _pyfunc_1n_2n[_T1 | _T2 | _T]: ...
 @overload
 def frompyfunc(f: Callable[..., Any], /, nin: SupportsIndex, nout: SupportsIndex, *, identity: object = None) -> np.ufunc: ...
 

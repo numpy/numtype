@@ -70,6 +70,7 @@ from numpy import (  # noqa: ICN003
     bitwise_invert,
     bitwise_left_shift,
     bitwise_not,
+    bitwise_or,
     bitwise_right_shift,
     bitwise_xor,
     blackman,
