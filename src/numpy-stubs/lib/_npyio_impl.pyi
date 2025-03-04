@@ -8,32 +8,26 @@ from typing_extensions import Self, TypeVar, deprecated, override
 
 import numpy as np
 from numpy._core.multiarray import packbits, unpackbits
+from numpy._globals import _NoValueType
 from numpy._typing import ArrayLike, DTypeLike, NDArray, _DTypeLike, _SupportsArrayFunc
 from numpy.ma.mrecords import MaskedRecords
 
 from ._datasource import DataSource as DataSource
 
-__all__ = [
-    "fromregex",
-    "genfromtxt",
-    "load",
-    "loadtxt",
-    "packbits",
-    "save",
-    "savetxt",
-    "savez",
-    "savez_compressed",
-    "unpackbits",
-]
+__all__ = ["fromregex", "genfromtxt", "load", "loadtxt", "packbits", "save", "savetxt", "savez", "savez_compressed", "unpackbits"]
 
+###
+
+_T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
-_SCT = TypeVar("_SCT", bound=np.generic)
-_SCT_co = TypeVar("_SCT_co", bound=np.generic, default=Any, covariant=True)
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, default=Any, covariant=True)
 
 _FName: TypeAlias = StrPath | Iterable[str] | Iterable[bytes]
 _FNameRead: TypeAlias = StrPath | SupportsRead[str] | SupportsRead[bytes]
-_FNameWriteBytes: TypeAlias = StrPath | SupportsWrite[bytes]
-_FNameWrite: TypeAlias = _FNameWriteBytes | SupportsWrite[bytes]
+_FNameWrite: TypeAlias = StrPath | SupportsWrite[bytes]
+
+_Converter: TypeAlias = Callable[[str], Any]
 
 @type_check_only
 class _SupportsReadSeek(SupportsRead[_T_co], Protocol[_T_co]):
@@ -48,7 +42,7 @@ class BagObj(Generic[_T_co]):
     def __dir__(self) -> list[str]: ...
 
 # exported in numpy.lib.nppyio
-class NpzFile(Mapping[str, NDArray[_SCT_co]]):
+class NpzFile(Mapping[str, NDArray[_ScalarT_co]]):
     _MAX_REPR_ARRAY_COUNT: ClassVar[int] = 5
 
     zip: zipfile.ZipFile | None
@@ -56,7 +50,7 @@ class NpzFile(Mapping[str, NDArray[_SCT_co]]):
     files: list[str]
     allow_pickle: bool
     pickle_kwargs: Mapping[str, Any] | None
-    f: BagObj[NpzFile[_SCT_co]] | None
+    f: BagObj[NpzFile[_ScalarT_co]] | None
 
     #
     def __init__(
@@ -69,15 +63,29 @@ class NpzFile(Mapping[str, NDArray[_SCT_co]]):
         *,
         max_header_size: int = 10_000,
     ) -> None: ...
+
+    #
     def __del__(self) -> None: ...
+
+    #
     def __enter__(self) -> Self: ...
     def __exit__(self, cls: type[BaseException] | None, e: BaseException | None, tb: types.TracebackType | None, /) -> None: ...
+
+    #
     @override
     def __len__(self) -> int: ...
     @override
     def __iter__(self) -> Iterator[str]: ...
     @override
-    def __getitem__(self, key: str, /) -> NDArray[_SCT_co]: ...
+    def __getitem__(self, key: str, /) -> NDArray[_ScalarT_co]: ...
+
+    #
+    @overload
+    def get(self, key: str, default: None = None, /) -> NDArray[_ScalarT_co] | None: ...
+    @overload
+    def get(self, key: str, default: NDArray[_ScalarT_co] | _T, /) -> NDArray[_ScalarT_co] | _T: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
     def close(self) -> None: ...
 
 # NOTE: Returns `NpzFile` if file is a zip file; returns `ndarray`/`memmap` otherwise
@@ -93,19 +101,19 @@ def load(
 
 #
 @overload
-def save(file: _FNameWriteBytes, arr: ArrayLike, allow_pickle: bool = True) -> None: ...
+def save(file: _FNameWrite, arr: ArrayLike, allow_pickle: bool = True, fix_imports: _NoValueType = ...) -> None: ...
 @overload
 @deprecated("The 'fix_imports' flag is deprecated in NumPy 2.1.")
-def save(file: _FNameWriteBytes, arr: ArrayLike, allow_pickle: bool, fix_imports: bool) -> None: ...
+def save(file: _FNameWrite, arr: ArrayLike, allow_pickle: bool, fix_imports: bool) -> None: ...
 @overload
 @deprecated("The 'fix_imports' flag is deprecated in NumPy 2.1.")
-def save(file: _FNameWriteBytes, arr: ArrayLike, allow_pickle: bool = True, *, fix_imports: bool) -> None: ...
+def save(file: _FNameWrite, arr: ArrayLike, allow_pickle: bool = True, *, fix_imports: bool) -> None: ...
 
 #
-def savez(file: _FNameWriteBytes, *args: ArrayLike, allow_pickle: bool = True, **kwds: ArrayLike) -> None: ...
+def savez(file: _FNameWrite, *args: ArrayLike, allow_pickle: bool = True, **kwds: ArrayLike) -> None: ...
 
 #
-def savez_compressed(file: _FNameWriteBytes, *args: ArrayLike, allow_pickle: bool = True, **kwds: ArrayLike) -> None: ...
+def savez_compressed(file: _FNameWrite, *args: ArrayLike, allow_pickle: bool = True, **kwds: ArrayLike) -> None: ...
 
 # File-like objects only have to implement `__iter__` and,
 # optionally, `encoding`
@@ -115,7 +123,7 @@ def loadtxt(
     dtype: None = None,
     comments: str | Sequence[str] | None = "#",
     delimiter: str | None = None,
-    converters: Mapping[int | str, Callable[[str], Any]] | Callable[[str], Any] | None = None,
+    converters: Mapping[int | str, _Converter] | _Converter | None = None,
     skiprows: int = 0,
     usecols: int | Sequence[int] | None = None,
     unpack: bool = False,
@@ -129,10 +137,10 @@ def loadtxt(
 @overload
 def loadtxt(
     fname: _FName,
-    dtype: _DTypeLike[_SCT],
+    dtype: _DTypeLike[_ScalarT],
     comments: str | Sequence[str] | None = "#",
     delimiter: str | None = None,
-    converters: Mapping[int | str, Callable[[str], Any]] | Callable[[str], Any] | None = None,
+    converters: Mapping[int | str, _Converter] | _Converter | None = None,
     skiprows: int = 0,
     usecols: int | Sequence[int] | None = None,
     unpack: bool = False,
@@ -142,14 +150,14 @@ def loadtxt(
     *,
     quotechar: str | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> NDArray[_SCT]: ...
+) -> NDArray[_ScalarT]: ...
 @overload
 def loadtxt(
     fname: _FName,
     dtype: DTypeLike,
     comments: str | Sequence[str] | None = "#",
     delimiter: str | None = None,
-    converters: Mapping[int | str, Callable[[str], Any]] | Callable[[str], Any] | None = None,
+    converters: Mapping[int | str, _Converter] | _Converter | None = None,
     skiprows: int = 0,
     usecols: int | Sequence[int] | None = None,
     unpack: bool = False,
@@ -179,9 +187,9 @@ def savetxt(
 def fromregex(
     file: _FNameRead,
     regexp: str | bytes | Pattern[Any],
-    dtype: _DTypeLike[_SCT],
+    dtype: _DTypeLike[_ScalarT],
     encoding: str | None = None,
-) -> NDArray[_SCT]: ...
+) -> NDArray[_ScalarT]: ...
 @overload
 def fromregex(
     file: _FNameRead,
@@ -194,89 +202,89 @@ def fromregex(
 @overload
 def genfromtxt(
     fname: _FName,
-    dtype: None = None,
-    comments: str = ...,
-    delimiter: str | int | Iterable[int] | None = ...,
-    skip_header: int = ...,
-    skip_footer: int = ...,
-    converters: Mapping[int | str, Callable[[str], Any]] | None = ...,
-    missing_values: Any = ...,
-    filling_values: Any = ...,
-    usecols: Sequence[int] | None = ...,
-    names: L[True] | str | Collection[str] | None = ...,
-    excludelist: Sequence[str] | None = ...,
-    deletechars: str = ...,
-    replace_space: str = ...,
-    autostrip: bool = ...,
-    case_sensitive: bool | L["upper", "lower"] = ...,
-    defaultfmt: str = ...,
-    unpack: bool | None = ...,
-    usemask: bool = ...,
-    loose: bool = ...,
-    invalid_raise: bool = ...,
-    max_rows: int | None = ...,
-    encoding: str = ...,
+    dtype: type[float] = ...,
+    comments: str = "#",
+    delimiter: str | int | Iterable[int] | None = None,
+    skip_header: int = 0,
+    skip_footer: int = 0,
+    converters: Mapping[int | str, _Converter] | None = None,
+    missing_values: Collection[str] | None = None,
+    filling_values: Collection[object] | None = None,
+    usecols: Sequence[int] | None = None,
+    names: L[True] | str | Collection[str] | None = None,
+    excludelist: Sequence[str] | None = None,
+    deletechars: str = " !#$%&'()*+,-./:;<=>?@[\\]^{|}~",
+    replace_space: str = "_",
+    autostrip: bool = False,
+    case_sensitive: bool | L["upper", "lower"] = True,
+    defaultfmt: str = "f%i",
+    unpack: bool | None = None,
+    usemask: bool = False,
+    loose: bool = True,
+    invalid_raise: bool = True,
+    max_rows: int | None = None,
+    encoding: str | None = None,
     *,
-    ndmin: L[0, 1, 2] = ...,
-    like: _SupportsArrayFunc | None = ...,
-) -> NDArray[Any]: ...
+    ndmin: L[0, 1, 2] = 0,
+    like: _SupportsArrayFunc | None = None,
+) -> NDArray[np.float64]: ...
 @overload
 def genfromtxt(
     fname: _FName,
-    dtype: _DTypeLike[_SCT],
-    comments: str = ...,
-    delimiter: str | int | Iterable[int] | None = ...,
-    skip_header: int = ...,
-    skip_footer: int = ...,
-    converters: Mapping[int | str, Callable[[str], Any]] | None = ...,
-    missing_values: Any = ...,
-    filling_values: Any = ...,
-    usecols: Sequence[int] | None = ...,
-    names: L[True] | str | Collection[str] | None = ...,
-    excludelist: Sequence[str] | None = ...,
-    deletechars: str = ...,
-    replace_space: str = ...,
-    autostrip: bool = ...,
-    case_sensitive: bool | L["upper", "lower"] = ...,
-    defaultfmt: str = ...,
-    unpack: bool | None = ...,
-    usemask: bool = ...,
-    loose: bool = ...,
-    invalid_raise: bool = ...,
-    max_rows: int | None = ...,
-    encoding: str = ...,
+    dtype: _DTypeLike[_ScalarT],
+    comments: str = "#",
+    delimiter: str | int | Iterable[int] | None = None,
+    skip_header: int = 0,
+    skip_footer: int = 0,
+    converters: Mapping[int | str, _Converter] | None = None,
+    missing_values: Collection[str] | None = None,
+    filling_values: Collection[object] | None = None,
+    usecols: Sequence[int] | None = None,
+    names: L[True] | str | Collection[str] | None = None,
+    excludelist: Sequence[str] | None = None,
+    deletechars: str = " !#$%&'()*+,-./:;<=>?@[\\]^{|}~",
+    replace_space: str = "_",
+    autostrip: bool = False,
+    case_sensitive: bool | L["upper", "lower"] = True,
+    defaultfmt: str = "f%i",
+    unpack: bool | None = None,
+    usemask: bool = False,
+    loose: bool = True,
+    invalid_raise: bool = True,
+    max_rows: int | None = None,
+    encoding: str | None = None,
     *,
-    ndmin: L[0, 1, 2] = ...,
-    like: _SupportsArrayFunc | None = ...,
-) -> NDArray[_SCT]: ...
+    ndmin: L[0, 1, 2] = 0,
+    like: _SupportsArrayFunc | None = None,
+) -> NDArray[_ScalarT]: ...
 @overload
 def genfromtxt(
     fname: _FName,
-    dtype: DTypeLike,
-    comments: str = ...,
-    delimiter: str | int | Iterable[int] | None = ...,
-    skip_header: int = ...,
-    skip_footer: int = ...,
-    converters: Mapping[int | str, Callable[[str], Any]] | None = ...,
-    missing_values: Any = ...,
-    filling_values: Any = ...,
-    usecols: Sequence[int] | None = ...,
-    names: L[True] | str | Collection[str] | None = ...,
-    excludelist: Sequence[str] | None = ...,
-    deletechars: str = ...,
-    replace_space: str = ...,
-    autostrip: bool = ...,
-    case_sensitive: bool | L["upper", "lower"] = ...,
-    defaultfmt: str = ...,
-    unpack: bool | None = ...,
-    usemask: bool = ...,
-    loose: bool = ...,
-    invalid_raise: bool = ...,
-    max_rows: int | None = ...,
-    encoding: str = ...,
+    dtype: DTypeLike | None = ...,
+    comments: str = "#",
+    delimiter: str | int | Iterable[int] | None = None,
+    skip_header: int = 0,
+    skip_footer: int = 0,
+    converters: Mapping[int | str, _Converter] | None = None,
+    missing_values: Collection[str] | None = None,
+    filling_values: Collection[object] | None = None,
+    usecols: Sequence[int] | None = None,
+    names: L[True] | str | Collection[str] | None = None,
+    excludelist: Sequence[str] | None = None,
+    deletechars: str = " !#$%&'()*+,-./:;<=>?@[\\]^{|}~",
+    replace_space: str = "_",
+    autostrip: bool = False,
+    case_sensitive: bool | L["upper", "lower"] = True,
+    defaultfmt: str = "f%i",
+    unpack: bool | None = None,
+    usemask: bool = False,
+    loose: bool = True,
+    invalid_raise: bool = True,
+    max_rows: int | None = None,
+    encoding: str | None = None,
     *,
-    ndmin: L[0, 1, 2] = ...,
-    like: _SupportsArrayFunc | None = ...,
+    ndmin: L[0, 1, 2] = 0,
+    like: _SupportsArrayFunc | None = None,
 ) -> NDArray[Any]: ...
 
 #
