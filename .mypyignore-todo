@@ -8,7 +8,6 @@ numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
-numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
 numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
 
 numpy._globals._CopyMode.IF_NEEDED
@@ -77,16 +76,6 @@ numpy.ma(.core)?.squeeze
 numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile
-
-numpy.matlib.f2py
-numpy.matlib.typing
-numpy.matlib.cdouble
-numpy.matlib.hanning
-numpy.matlib.in1d
-numpy.matlib.split
-numpy.matlib.stack
-
-numpy.matrixlib.defmatrix.mat
 
 numpy.polynomial.Chebyshev.basis_name
 numpy.polynomial.Hermite.basis_name
