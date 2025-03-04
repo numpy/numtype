@@ -8,8 +8,6 @@ numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
-numpy(\.lib\._arraysetops_impl|\.matlib)?\.union1d
-numpy(\.lib\._arraysetops_impl|\.matlib)?\.unique_(all|counts|inverse|values)
 numpy(\.lib\._npyio_impl|\.matlib)?\.genfromtxt
 numpy(\.lib\._npyio_impl|\.matlib)?\.save
 numpy(\.lib\._nanfunctions_impl|\.matlib)?\.nan(median|percentile)
