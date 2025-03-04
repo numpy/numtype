@@ -14,6 +14,7 @@ from typing_extensions import Never, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
+from numpy._typing import _NestedSequence
 
 from ._array_like import ArrayLike, NDArray, _ArrayLikeBool_co, _ArrayLikeInt_co
 from ._dtype_like import DTypeLike, _DTypeLike
@@ -101,7 +102,7 @@ class _Call11(Protocol):
     @overload  # (scalar, dtype: dtype[T]) -> T
     def __call__(
         self,
-        x1: _ScalarLike_co,
+        x: _ScalarLike_co,
         /,
         out: None = None,
         *,
@@ -111,7 +112,7 @@ class _Call11(Protocol):
     @overload  # (scalar) -> ?
     def __call__(
         self,
-        x1: _ScalarLike_co,
+        x: _ScalarLike_co,
         /,
         out: None = None,
         *,
@@ -121,7 +122,7 @@ class _Call11(Protocol):
     @overload  # (array, dtype: dtype[T]) -> Array[T]
     def __call__(
         self,
-        x1: _AnyArray,
+        x: _AnyArray,
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
@@ -131,7 +132,7 @@ class _Call11(Protocol):
     @overload  # (array-like, out: T) -> T
     def __call__(
         self,
-        x1: ArrayLike,
+        x: ArrayLike,
         /,
         out: _Out1[_ArrayT],
         *,
@@ -141,7 +142,7 @@ class _Call11(Protocol):
     @overload  # (array) -> Array[?] | ?
     def __call__(
         self,
-        x1: _AnyArray,
+        x: _AnyArray,
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
@@ -151,7 +152,7 @@ class _Call11(Protocol):
     @overload  # (array-like) -> Array[?] | ?
     def __call__(
         self,
-        x1: ArrayLike,
+        x: ArrayLike,
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
@@ -161,7 +162,7 @@ class _Call11(Protocol):
     @overload  # (?) -> ?
     def __call__(
         self,
-        x1: _CanArrayUFunc,
+        x: _CanArrayUFunc,
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
@@ -279,6 +280,54 @@ class _Call12(Protocol):
         dtype: DTypeLike | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> _Tuple2[Any]: ...
+
+@type_check_only
+class _Call21Bool(Protocol):
+    @overload  # (scalar, scalar) -> bool
+    def __call__(
+        self,
+        x1: _ScalarLike_co,
+        x2: _ScalarLike_co,
+        /,
+        out: None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> np.bool: ...
+    @overload  # (array-like, array) -> Array[bool]
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: _AnyArray | _NestedSequence[_ScalarLike_co],
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> NDArray[np.bool]: ...
+    @overload  # (array, array-like) -> Array[bool]
+    def __call__(
+        self,
+        x1: _AnyArray | _NestedSequence[_ScalarLike_co],
+        x2: ArrayLike,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> NDArray[np.bool]: ...
+    @overload  # (array-like, array-like, out: T) -> T
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        /,
+        out: _ArrayT | tuple[_ArrayT],
+        **kwds: Unpack[_Kwargs3],
+    ) -> _ArrayT: ...
+    @overload  # (array-like, array-like) -> Array[bool] | bool
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> np.bool | NDArray[np.bool]: ...
 
 @type_check_only
 class _Call21(Protocol):

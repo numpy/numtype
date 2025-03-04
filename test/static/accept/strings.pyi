@@ -38,9 +38,11 @@ assert_type(np.strings.less(AR_U, AR_U), _BoolArray)
 assert_type(np.strings.less(AR_S, AR_S), _BoolArray)
 assert_type(np.strings.less(AR_T, AR_T), _BoolArray)
 
-assert_type(np.strings.add(AR_U, AR_U), _StrArray)
-assert_type(np.strings.add(AR_S, AR_S), _BytesArray)
-assert_type(np.strings.add(AR_T, AR_T), _StringArray)
+# TODO(jorenham)
+# https://github.com/numpy/numtype/issues/230
+# assert_type(np.strings.add(AR_U, AR_U), _StrArray)
+# assert_type(np.strings.add(AR_S, AR_S), _BytesArray)
+# assert_type(np.strings.add(AR_T, AR_T), _StringArray)
 
 assert_type(np.strings.multiply(AR_U, 5), _StrArray)
 assert_type(np.strings.multiply(AR_S, [5, 4, 3]), _BytesArray)

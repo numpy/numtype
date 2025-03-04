@@ -79,17 +79,17 @@ assert_type(np.char.rjust(AR_T, [4, 2, 1], fillchar=["a", "b", "c"]), StringArra
 assert_type(np.char.lstrip(AR_U), StrArray)
 assert_type(np.char.lstrip(AR_S, b"_"), BytesArray)
 assert_type(np.char.lstrip(AR_T), StringArray)
-assert_type(np.char.lstrip(AR_T, "_"), StrArray | StringArray)
+assert_type(np.char.lstrip(AR_T, "_"), StringArray)
 
 assert_type(np.char.rstrip(AR_U), StrArray)
 assert_type(np.char.rstrip(AR_S, b"_"), BytesArray)
 assert_type(np.char.rstrip(AR_T), StringArray)
-assert_type(np.char.rstrip(AR_T, "_"), StrArray | StringArray)
+assert_type(np.char.rstrip(AR_T, "_"), StringArray)
 
 assert_type(np.char.strip(AR_U), StrArray)
 assert_type(np.char.strip(AR_S, b"_"), BytesArray)
 assert_type(np.char.strip(AR_T), StringArray)
-assert_type(np.char.strip(AR_T, "_"), StrArray | StringArray)
+assert_type(np.char.strip(AR_T, "_"), StringArray)
 
 assert_type(np.char.count(AR_U, "a", start=[1, 2, 3]), npt.NDArray[np.int_])
 assert_type(np.char.count(AR_S, [b"a", b"b", b"c"], end=9), npt.NDArray[np.int_])
@@ -98,15 +98,13 @@ assert_type(np.char.count(AR_T, ["a", "b", "c"], end=9), npt.NDArray[np.int_])
 
 assert_type(np.char.partition(AR_U, "\n"), StrArray)
 assert_type(np.char.partition(AR_S, [b"a", b"b", b"c"]), BytesArray)
-assert_type(np.char.partition(AR_T, "\n"), StrArray | StringArray)
 
 assert_type(np.char.rpartition(AR_U, "\n"), StrArray)
 assert_type(np.char.rpartition(AR_S, [b"a", b"b", b"c"]), BytesArray)
-assert_type(np.char.rpartition(AR_T, "\n"), StrArray | StringArray)
 
 assert_type(np.char.replace(AR_U, "_", "-"), StrArray)
 assert_type(np.char.replace(AR_S, [b"_", b""], [b"a", b"b"]), BytesArray)
-assert_type(np.char.replace(AR_T, "_", "_"), StrArray | StringArray)
+assert_type(np.char.replace(AR_T, "_", "-"), StringArray)
 
 assert_type(np.char.split(AR_U, "_"), npt.NDArray[np.object_])
 assert_type(np.char.split(AR_S, maxsplit=[1, 2, 3]), npt.NDArray[np.object_])

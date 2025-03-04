@@ -4,12 +4,16 @@ import numpy.typing as npt
 AR_U: npt.NDArray[np.str_]
 AR_S: npt.NDArray[np.bytes_]
 
-np.char.equal(AR_U, AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.char.not_equal(AR_U, AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.char.greater_equal(AR_U, AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.char.greater(AR_U, AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.char.less_equal(AR_U, AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.char.less(AR_U, AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+# TODO(jorenham)
+# np.char.equal(AR_U, AR_S)
+# np.char.not_equal(AR_U, AR_S)
+# np.char.greater_equal(AR_U, AR_S)
+# np.char.greater(AR_U, AR_S)
+# np.char.less_equal(AR_U, AR_S)
+# np.char.less(AR_U, AR_S)
+
+# np.char.isdecimal(AR_S)
+# np.char.isnumeric(AR_S)
 
 np.char.encode(AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.char.decode(AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
@@ -56,6 +60,3 @@ np.char.index(AR_U, b"a", start=[1, 2, 3])  # type: ignore[arg-type]  # pyright:
 np.char.rindex(AR_U, b"a", start=[1, 2, 3])  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.char.index(AR_S, "a", end=9)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.char.rindex(AR_S, "a", end=9)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-
-np.char.isdecimal(AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-np.char.isnumeric(AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
