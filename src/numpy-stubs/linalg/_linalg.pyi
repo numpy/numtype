@@ -32,7 +32,10 @@ from _numtype import (
     CoInteger_1d,
     CoInteger_1ds,
     CoInteger_1nd,
+    CoSInteger_1nd,
     CoTimeDelta_1d,
+    CoTimeDelta_1nd,
+    CoUInteger_1nd,
     Is,
     Sequence_2d,
     Sequence_2nd,
@@ -84,6 +87,7 @@ from _numtype import (
     ToObject_1d,
     ToObject_1nd,
     ToObject_2nd,
+    ToSInteger_1nd,
     ToTimeDelta_1d,
     ToTimeDelta_1nd,
     ToUInteger_1nd,
@@ -101,7 +105,8 @@ from _numtype import (
     _ToArray_3nd,
 )
 from numpy._core.fromnumeric import matrix_transpose
-from numpy._core.numeric import tensordot, vecdot
+from numpy._core.numeric import vecdot
+from numpy._globals import _NoValueType
 from numpy._typing import DTypeLike, _32Bit, _64Bit, _DTypeLike as _ToDType
 
 __all__ = [
@@ -222,6 +227,8 @@ _LstSqResult: TypeAlias = tuple[Array[_ScalarT], Array[_FloatingT], np.int32, Ar
 
 ###
 
+fortran_int = np.intc
+
 class EigResult(NamedTuple, Generic[_InexactT_co]):
     eigenvalues: Array[_InexactT_co]
     eigenvectors: _Array_2nd[_InexactT_co]
@@ -244,6 +251,40 @@ class SlogdetResult(NamedTuple, Generic[_FloatingNDT_co, _InexactNDT_co]):
     logabsdet: _FloatingNDT_co
 
 class LinAlgError(ValueError): ...
+
+# keep in sync with `numpy._core.numeric.tensordot`
+@overload
+def tensordot(x1: ToBool_1nd, x2: ToBool_1nd, /, *, axes: _Ax2 = 2) -> Array[np.bool]: ...
+@overload
+def tensordot(x1: ToUInteger_1nd, x2: CoUInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.unsignedinteger]: ...
+@overload
+def tensordot(x1: CoUInteger_1nd, x2: ToUInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.unsignedinteger]: ...
+@overload
+def tensordot(x1: ToSInteger_1nd, x2: CoSInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.signedinteger]: ...
+@overload
+def tensordot(x1: CoSInteger_1nd, x2: ToSInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.signedinteger]: ...
+@overload
+def tensordot(x1: ToFloating_1nd, x2: CoFloating_1nd, /, *, axes: _Ax2 = 2) -> Array[np.floating]: ...
+@overload
+def tensordot(x1: CoFloating_1nd, x2: ToFloating_1nd, /, *, axes: _Ax2 = 2) -> Array[np.floating]: ...
+@overload
+def tensordot(x1: ToComplex_1nd, x2: CoComplex_1nd, /, *, axes: _Ax2 = 2) -> Array[np.complexfloating]: ...
+@overload
+def tensordot(x1: CoComplex_1nd, x2: ToComplex_1nd, /, *, axes: _Ax2 = 2) -> Array[np.complexfloating]: ...
+@overload
+def tensordot(x1: ToTimeDelta_1nd, x2: CoTimeDelta_1nd, /, *, axes: _Ax2 = 2) -> Array[np.timedelta64]: ...
+@overload
+def tensordot(x1: CoTimeDelta_1nd, x2: ToTimeDelta_1nd, /, *, axes: _Ax2 = 2) -> Array[np.timedelta64]: ...
+@overload
+def tensordot(x1: ToObject_1nd, x2: ToObject_1nd, /, *, axes: _Ax2 = 2) -> Array[np.object_]: ...
+@overload
+def tensordot(
+    x1: CoComplex_1nd | CoTimeDelta_1nd | ToObject_1nd,
+    x2: CoComplex_1nd | CoTimeDelta_1nd | ToObject_1nd,
+    /,
+    *,
+    axes: _Ax2 = 2,
+) -> Array[Any]: ...
 
 # keep in sync with `solve`
 @overload
@@ -316,7 +357,7 @@ def pinv(
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
     *,
-    rtol: ToFloating_nd | None = None,
+    rtol: ToFloating_nd | _NoValueType = ...,
 ) -> _Array_2nd[np.float64]: ...
 @overload
 def pinv(
@@ -324,7 +365,7 @@ def pinv(
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
     *,
-    rtol: ToFloating_nd | None = None,
+    rtol: ToFloating_nd | _NoValueType = ...,
 ) -> _Array_2nd[np.complex128]: ...
 @overload
 def pinv(
@@ -332,7 +373,7 @@ def pinv(
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
     *,
-    rtol: ToFloating_nd | None = None,
+    rtol: ToFloating_nd | _NoValueType = ...,
 ) -> _Array_2nd[np.float32]: ...
 @overload
 def pinv(
@@ -340,7 +381,7 @@ def pinv(
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
     *,
-    rtol: ToFloating_nd | None = None,
+    rtol: ToFloating_nd | _NoValueType = ...,
 ) -> _Array_2nd[np.complex64]: ...
 @overload
 def pinv(
@@ -348,7 +389,7 @@ def pinv(
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
     *,
-    rtol: ToFloating_nd | None = None,
+    rtol: ToFloating_nd | _NoValueType = ...,
 ) -> _Array_2nd[np.floating]: ...
 @overload
 def pinv(
@@ -356,7 +397,7 @@ def pinv(
     rcond: ToFloating_nd | None = None,
     hermitian: bool = False,
     *,
-    rtol: ToFloating_nd | None = None,
+    rtol: ToFloating_nd | _NoValueType = ...,
 ) -> _Array_2nd[np.inexact]: ...
 
 _PosInt: TypeAlias = L[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
@@ -392,17 +433,17 @@ def matrix_power(a: CoComplex_1nd | ToObject_1nd, n: CanIndex) -> _Array_2nd[Any
 
 #
 @overload
-def cholesky(a: _ToFloat64_1nd) -> _Array_2nd[np.float64]: ...
+def cholesky(a: _ToFloat64_1nd, /, *, upper: bool = False) -> _Array_2nd[np.float64]: ...
 @overload
-def cholesky(a: ToComplex128_1nd) -> _Array_2nd[np.complex128]: ...
+def cholesky(a: ToComplex128_1nd, /, *, upper: bool = False) -> _Array_2nd[np.complex128]: ...
 @overload
-def cholesky(a: ToFloat32_1nd) -> _Array_2nd[np.float32]: ...
+def cholesky(a: ToFloat32_1nd, /, *, upper: bool = False) -> _Array_2nd[np.float32]: ...
 @overload
-def cholesky(a: ToComplex64_1nd) -> _Array_2nd[np.complex64]: ...
+def cholesky(a: ToComplex64_1nd, /, *, upper: bool = False) -> _Array_2nd[np.complex64]: ...
 @overload
-def cholesky(a: CoFloat64_1nd) -> _Array_2nd[np.floating]: ...
+def cholesky(a: CoFloat64_1nd, /, *, upper: bool = False) -> _Array_2nd[np.floating]: ...
 @overload
-def cholesky(a: CoComplex128_1nd) -> _Array_2nd[np.inexact]: ...
+def cholesky(a: CoComplex128_1nd, /, *, upper: bool = False) -> _Array_2nd[np.inexact]: ...
 
 #
 @overload
