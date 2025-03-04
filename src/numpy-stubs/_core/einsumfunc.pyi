@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import Any, Literal, TypeAlias, overload
+from typing import Any, Literal, Literal as L, TypeAlias, overload
 from typing_extensions import TypeVar
 
 import numpy as np
@@ -175,5 +175,6 @@ def einsum_path(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeComplex_co | _DTypeLikeObject,
-    optimize: _OptimizeKind = ...,
+    optimize: _OptimizeKind = "greedy",
+    einsum_call: L[False] = False,
 ) -> tuple[list[Any], str]: ...
