@@ -44,9 +44,6 @@ numpy.lib.format.read_array(_header_(1|2)_0)?
 numpy.lib.mixins.NDArrayOperatorsMixin.__array_ufunc__
 numpy.lib.recfunctions.unstructured_to_structured
 
-numpy.linalg(._linalg)?.cholesky
-numpy.linalg(._linalg)?.pinv
-numpy.linalg(._linalg)?.tensordot
 numpy.linalg.lapack_lite
 numpy.linalg.linalg
 
