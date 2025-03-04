@@ -385,7 +385,8 @@ NAN: Final[float] = ...
 
 ###
 
-error: Final = Exception
+# using `Final` or `TypeAlias` will break stubtest
+error = Exception
 
 tracemalloc_domain: Final[int] = ...
 _extobj_contextvar: _contextvars.ContextVar[CapsuleType]
