@@ -41,32 +41,10 @@ numpy._core._type_aliases.type_info
 numpy._core._type_aliases.k
 numpy._core._type_aliases.v
 
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.add
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.isdecimal
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.isnumeric
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.isalnum
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.isalpha
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.isdigit
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.isspace
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.istitle
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.islower
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.isupper
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.startswith
-numpy(\._core\.defchararray|(\._core)?\.strings|\.char)\.str_len
-
 numpy(\._core(\.records)?|\.matlib|\.rec)?\.recarray\.__getattr__
 numpy(\._core(\.records)?|\.matlib|\.rec)?\.recarray\.__new__
 numpy(\._core(\.records)?|\.matlib|\.rec)?\.record\.__name__
 numpy(\._core\.records|\.rec)\.array
-
-numpy(\._core\.defchararray|\.char)\.chararray\.__new__
-numpy(\._core\.defchararray|\.char)\.chararray\.argsort
-numpy(\._core\.defchararray|\.char)\.mod
-
-numpy(\._core)?\.strings\.(not_)?equal
-numpy(\._core)?\.strings\.(greater|less)(_equal)?
-numpy(\._core)?\.strings\.rstrip
-numpy._core.strings.join
 
 numpy._globals._CopyMode.IF_NEEDED
 numpy._globals._CopyMode.__bool__
