@@ -36,7 +36,7 @@ class memmap(np.ndarray[_ShapeT_co, _DType_co], Generic[_ShapeT_co, _DType_co]):
 
     @overload
     def __new__(
-        cls,
+        subtype,
         filename: _ToFileName,
         dtype: type[np.uint8] = ...,
         mode: _ToMode = "r+",
@@ -46,7 +46,7 @@ class memmap(np.ndarray[_ShapeT_co, _DType_co], Generic[_ShapeT_co, _DType_co]):
     ) -> memmap[Incomplete, np.dtype[np.uint8]]: ...
     @overload
     def __new__(
-        cls,
+        subtype,
         filename: _ToFileName,
         dtype: _DType_co,
         mode: _ToMode = "r+",
@@ -56,7 +56,7 @@ class memmap(np.ndarray[_ShapeT_co, _DType_co], Generic[_ShapeT_co, _DType_co]):
     ) -> memmap[Incomplete, _DType_co]: ...
     @overload
     def __new__(
-        cls,
+        subtype,
         filename: _ToFileName,
         dtype: _DTypeLike[_ScalarT],
         mode: _ToMode = "r+",
@@ -66,7 +66,7 @@ class memmap(np.ndarray[_ShapeT_co, _DType_co], Generic[_ShapeT_co, _DType_co]):
     ) -> memmap[Incomplete, np.dtype[_ScalarT]]: ...
     @overload
     def __new__(
-        cls,
+        subtype,
         filename: _ToFileName,
         dtype: npt.DTypeLike,
         mode: _ToMode = "r+",

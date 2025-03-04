@@ -8,15 +8,8 @@ numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
-numpy\._?core(\._multiarray_umath|\.multiarray)\.error
-numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
 numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
 numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
-
-numpy(\._?core(\.records)?|\.matlib|\.rec)?\.recarray\.__getattr__
-numpy(\._?core(\.records)?|\.matlib|\.rec)?\.recarray\.__new__
-numpy(\._?core(\.records)?|\.matlib|\.rec)?\.record\.__name__
-numpy(\._?core\.records|\.rec)\.array
 
 numpy._globals._CopyMode.IF_NEEDED
 numpy._globals._CopyMode.__bool__
