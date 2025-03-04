@@ -1,5 +1,5 @@
 from collections.abc import Collection
-from typing import Final, Literal as L, TypeAlias, TypedDict, type_check_only
+from typing import Any, Final, Literal as L, TypeAlias, TypedDict, type_check_only
 
 import numpy as np
 
@@ -86,9 +86,18 @@ _abstract_type_names: Final[set[_AbstractTypeName]] = ...
 _aliases: Final[_AliasesType] = ...
 _extra_aliases: Final[_ExtraAliasesType] = ...
 
-concrete_type: type[np.generic]  # undocumented
-longdouble_type: type[np.longdouble | np.clongdouble]  # undocumented
-bits: int  # undocumented
-base_name: L["float", "complex"]  # undocumented
-extended_prec_name: L["float96", "float128", "complex192", "complex256"]  # undocumented
-sctype_list: list[type[np.generic]]  # undocumented
+# namespace pollution
+k: str
+v: str
+is_complex: bool
+full_name: str
+longdouble_type: type[np.longdouble | np.clongdouble]
+bits: int
+base_name: str
+extended_prec_name: str
+type_info: np.dtype[Any]
+type_group: str
+concrete_type: type[np.generic]
+abstract_type: type[np.generic]
+sctype_key: str
+sctype_list: list[type[np.generic]]

@@ -16,15 +16,6 @@ numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
 numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
 numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
 
-numpy._core._type_aliases.is_complex
-numpy._core._type_aliases.full_name
-numpy._core._type_aliases.abstract_type
-numpy._core._type_aliases.sctype_key
-numpy._core._type_aliases.type_group
-numpy._core._type_aliases.type_info
-numpy._core._type_aliases.k
-numpy._core._type_aliases.v
-
 numpy(\._?core(\.records)?|\.matlib|\.rec)?\.recarray\.__getattr__
 numpy(\._?core(\.records)?|\.matlib|\.rec)?\.recarray\.__new__
 numpy(\._?core(\.records)?|\.matlib|\.rec)?\.record\.__name__
