@@ -6637,13 +6637,13 @@ _ReduceT_co = TypeVar(
 _ReduceAtT_co = TypeVar(
     "_ReduceAtT_co",
     bound=Callable[Concatenate[Never, Never, ...], object],
-    default=Callable[Concatenate[Any, Any, ...], NDArray[Any]],
+    default=Callable[Concatenate[Any, Any, ...], ndarray[Any, dtype[Any]]],
     covariant=True,
 )
 _AccumulateT_co = TypeVar(
     "_AccumulateT_co",
     bound=Callable[Concatenate[Never, ...], object],
-    default=Callable[Concatenate[Any, ...], NDArray[Any]],
+    default=Callable[Concatenate[Any, ...], ndarray[Any, dtype[Any]]],
     covariant=True,
 )
 _OuterT_co = TypeVar(
@@ -6696,7 +6696,8 @@ class ufunc(Generic[_CallT_co, _AtT_co, _ReduceT_co, _ReduceAtT_co, _AccumulateT
         reduction: py_bool = False,
     ) -> tuple[dtype[Any], ...]: ...
 
-# TODO(jorenham): individually annotate each of the ufunc signatures
+# TODO(jorenham): individual ufunc signature annotations
+# https://github.com/numpy/numtype/issues/230
 
 absolute: Final[_ufunc_1_1] = ...
 arccos: Final[_ufunc_1_1] = ...

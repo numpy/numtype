@@ -808,24 +808,14 @@ _At2: TypeAlias = Callable[[_CanArrayUFunc, _ArrayLikeInt_co, ArrayLike], None]
 
 @type_check_only
 class _ReduceE(Protocol):
-    def __call__(
-        self,
-        /,
-        array: Never,
-        axis: L[0] = 0,
-        dtype: None = None,
-        out: None = None,
-        keepdims: L[False] = False,
-        initial: Never = ...,
-        where: L[True] = True,
-    ) -> Any: ...
+    def __call__(self, array: Never, /) -> Any: ...
 
 @type_check_only
 class _Reduce2(Protocol):
     def __call__(
         self,
-        /,
         array: ArrayLike,
+        /,
         axis: _ShapeLike | None = 0,
         dtype: DTypeLike | None = None,
         out: _AnyArray | None = None,
@@ -836,19 +826,19 @@ class _Reduce2(Protocol):
 
 @type_check_only
 class _AccumulateE(Protocol):
-    def __call__(self, /, array: Never, axis: L[0] = 0, dtype: None = None, out: None = None) -> Any: ...
+    def __call__(self, array: Never, /) -> Any: ...
 
 @type_check_only
 class _Accumulate2(Protocol):
     @overload
-    def __call__(self, /, array: ArrayLike, axis: SupportsIndex, dtype: None, out: _ArrayT) -> _ArrayT: ...
+    def __call__(self, array: ArrayLike, /, axis: SupportsIndex, dtype: None, out: _ArrayT) -> _ArrayT: ...
     @overload
-    def __call__(self, /, array: ArrayLike, axis: SupportsIndex = 0, dtype: None = None, *, out: _ArrayT) -> _ArrayT: ...
+    def __call__(self, array: ArrayLike, /, axis: SupportsIndex = 0, dtype: None = None, *, out: _ArrayT) -> _ArrayT: ...
     @overload
     def __call__(
         self,
-        /,
         array: ArrayLike,
+        /,
         axis: SupportsIndex,
         dtype: _DTypeLike[_ScalarT],
         out: NDArray[_ScalarT] | None = None,
@@ -856,8 +846,8 @@ class _Accumulate2(Protocol):
     @overload
     def __call__(
         self,
-        /,
         array: ArrayLike,
+        /,
         axis: SupportsIndex = 0,
         *,
         dtype: _DTypeLike[_ScalarT],
@@ -866,8 +856,8 @@ class _Accumulate2(Protocol):
     @overload
     def __call__(
         self,
-        /,
         array: ArrayLike,
+        /,
         axis: SupportsIndex = 0,
         dtype: DTypeLike | None = None,
         out: _AnyArray | None = None,
@@ -875,16 +865,16 @@ class _Accumulate2(Protocol):
 
 @type_check_only
 class _ReduceAtE(Protocol):
-    def __call__(self, /, array: Never, indices: Never, axis: L[0] = 0, dtype: None = None, out: None = None) -> Any: ...
+    def __call__(self, array: Never, indices: Never, /) -> Any: ...
 
 @type_check_only
 class _ReduceAt2(Protocol):
     @overload
     def __call__(
         self,
-        /,
         array: ArrayLike,
         indices: _ArrayLikeInt_co,
+        /,
         axis: SupportsIndex,
         dtype: None,
         out: _ArrayT,
@@ -892,9 +882,9 @@ class _ReduceAt2(Protocol):
     @overload
     def __call__(
         self,
-        /,
         array: ArrayLike,
         indices: _ArrayLikeInt_co,
+        /,
         axis: SupportsIndex = 0,
         dtype: None = None,
         *,
@@ -903,8 +893,8 @@ class _ReduceAt2(Protocol):
     @overload
     def __call__(
         self,
-        /,
         array: ArrayLike,
+        /,
         indices: _ArrayLikeInt_co,
         axis: SupportsIndex,
         dtype: _DTypeLike[_ScalarT],
@@ -913,9 +903,9 @@ class _ReduceAt2(Protocol):
     @overload
     def __call__(
         self,
-        /,
         array: ArrayLike,
         indices: _ArrayLikeInt_co,
+        /,
         axis: SupportsIndex = 0,
         *,
         dtype: _DTypeLike[_ScalarT],
@@ -924,9 +914,9 @@ class _ReduceAt2(Protocol):
     @overload
     def __call__(
         self,
-        /,
         array: ArrayLike,
         indices: _ArrayLikeInt_co,
+        /,
         axis: SupportsIndex = 0,
         dtype: DTypeLike | None = None,
         out: _AnyArray | None = None,
