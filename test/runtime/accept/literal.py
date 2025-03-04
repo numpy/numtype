@@ -34,7 +34,8 @@ order_list: list[tuple[frozenset[str | None], Callable[..., Any]]] = [
     (KACF, partial(np.ones_like, AR)),
     (KACF, partial(np.empty_like, AR)),
     (KACF, partial(np.full_like, AR, 1)),
-    (KACF, partial(np.add.__call__, 1, 1)),  # i.e. np.ufunc.__call__
+    # NOTE: this false false positive caused by a bug in the `functools` mypy plugin
+    (KACF, partial(np.add, 1, 1)),  # type: ignore[misc]
     (ACF, partial(np.reshape, AR, 1)),
     (KACF, partial(np.ravel, AR)),
     (KACF, partial(np.asarray, 1)),

@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 import numpy as np
 
 np.sin(1)
@@ -22,3 +24,17 @@ u12: np.ufunc = np.modf
 u21: np.ufunc = np.gcd
 u22: np.ufunc = np.divmod
 gu21: np.ufunc = np.matmul
+
+f11: Callable[..., object] = np.log
+f11_alias: Callable[..., object] = np.abs
+f12: Callable[..., object] = np.modf
+f21: Callable[..., object] = np.gcd
+f22: Callable[..., object] = np.divmod
+gf21: Callable[..., object] = np.matmul
+
+c11: Callable[..., object] = np.log.__call__
+c11_alias: Callable[..., object] = np.abs.__call__
+c12: Callable[..., object] = np.modf.__call__
+c21: Callable[..., object] = np.gcd.__call__
+c22: Callable[..., object] = np.divmod.__call__
+gc21: Callable[..., object] = np.matmul.__call__
