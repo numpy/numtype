@@ -227,6 +227,8 @@ _LstSqResult: TypeAlias = tuple[Array[_ScalarT], Array[_FloatingT], np.int32, Ar
 
 ###
 
+fortran_int = np.intc
+
 class EigResult(NamedTuple, Generic[_InexactT_co]):
     eigenvalues: Array[_InexactT_co]
     eigenvectors: _Array_2nd[_InexactT_co]
