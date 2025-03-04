@@ -8,20 +8,16 @@ numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
+numpy(\.lib\._arraysetops_impl|\.matlib)?\.union1d
+numpy(\.lib\._arraysetops_impl|\.matlib)?\.unique_(all|counts|inverse|values)
+numpy(\.lib\._npyio_impl|\.matlib)?\.genfromtxt
+numpy(\.lib\._npyio_impl|\.matlib)?\.save
+numpy(\.lib\._nanfunctions_impl|\.matlib)?\.nan(median|percentile)
+numpy(\.lib\._twodim_base_impl)?\.tri(l|u)
+
 numpy(\._core(\.arrayprint|\.numeric)?|\.matlib)?\.array2string
 numpy(\._core(\.einsumfunc)?|\.matlib)?\.einsum_path
 numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
-
-numpy(\.lib\._arraysetops_impl|\.matlib)?\.union1d
-numpy(\.lib\._arraysetops_impl|\.matlib)?\.unique_(all|counts|inverse|values)
-numpy(\.lib\._function_base_impl|\.matlib)?\.average
-numpy(\.lib\._function_base_impl|\.matlib)?\.corrcoef
-numpy(\.lib\._function_base_impl|\.matlib)?\.median
-numpy(\.lib\._npyio_impl|\.matlib)?\.genfromtxt
-numpy(\.lib\._npyio_impl|\.matlib)?\.save
-numpy(\.lib\._nanfunctions_impl)?\.nan(median|percentile)
-numpy(\.lib\._twodim_base_impl)?\.tri(l|u)
-
 numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
 numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
 numpy(\.lib\._index_tricks_impl|\.matlib)?\.ndindex\.ndincr
@@ -154,7 +150,6 @@ numpy.ma(.core)?.f?mod
 numpy.ma(.core)?.indices
 numpy.ma(.core)?.remainder
 numpy.ma(.core)?.squeeze
-numpy.ma(.extras)?.average
 numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile
@@ -164,8 +159,6 @@ numpy.matlib.typing
 numpy.matlib.cdouble
 numpy.matlib.hanning
 numpy.matlib.in1d
-numpy.matlib.nanmedian
-numpy.matlib.nanpercentile
 numpy.matlib.split
 numpy.matlib.stack
 numpy.matlib.tri(l|u)
