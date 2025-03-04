@@ -1,8 +1,8 @@
+from collections.abc import Callable, Sequence
 from typing import (
     Any,
-    Generic,
-    Literal,
-    NoReturn,
+    Concatenate,
+    Literal as L,
     Protocol,
     SupportsIndex,
     TypeAlias,
@@ -10,152 +10,290 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import LiteralString, TypeVar, Unpack
+from typing_extensions import Never, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
-import numpy.typing as npt
+from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
 
-from ._array_like import ArrayLike, _ArrayLikeBool_co, _ArrayLikeInt_co
-from ._dtype_like import DTypeLike
+from ._array_like import ArrayLike, NDArray, _ArrayLikeBool_co, _ArrayLikeInt_co
+from ._dtype_like import DTypeLike, _DTypeLike
 from ._scalars import _ScalarLike_co
 from ._shape import _ShapeLike
 
+###
+# type parameters
+
 _T = TypeVar("_T")
-_2Tuple: TypeAlias = tuple[_T, _T]
-_3Tuple: TypeAlias = tuple[_T, _T, _T]
-_4Tuple: TypeAlias = tuple[_T, _T, _T, _T]
-
-_2PTuple: TypeAlias = tuple[_T, _T, Unpack[tuple[_T, ...]]]
-_3PTuple: TypeAlias = tuple[_T, _T, _T, Unpack[tuple[_T, ...]]]
-_4PTuple: TypeAlias = tuple[_T, _T, _T, _T, Unpack[tuple[_T, ...]]]
-
-_NTypesT_co = TypeVar("_NTypesT_co", bound=int, covariant=True)
-_IdentityT_co = TypeVar("_IdentityT_co", default=None, covariant=True)
-_NameT_co = TypeVar("_NameT_co", bound=LiteralString, covariant=True)
-_SignatureT_co = TypeVar("_SignatureT_co", bound=LiteralString, covariant=True)
-_OutT_co = TypeVar("_OutT_co", covariant=True)
+_ArrayT = TypeVar("_ArrayT", bound=_AnyArray)
+_ArrayT1 = TypeVar("_ArrayT1", bound=_AnyArray)
+_ArrayT2 = TypeVar("_ArrayT2", bound=_AnyArray)
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_OutT = TypeVar("_OutT")
+_OutT_co = TypeVar("_OutT_co", default=Any, covariant=True)
+_OutT1 = TypeVar("_OutT1", default=Any)
 _OutT1_co = TypeVar("_OutT1_co", covariant=True)
+_OutT2 = TypeVar("_OutT2", default=Any)
 _OutT2_co = TypeVar("_OutT2_co", covariant=True)
-_ArrayT = TypeVar("_ArrayT", bound=npt.NDArray[Any])
-_ArrayT1 = TypeVar("_ArrayT1", bound=npt.NDArray[Any])
-_ArrayT2 = TypeVar("_ArrayT2", bound=npt.NDArray[Any])
+
+###
+# helper types
+
+_Tuple2: TypeAlias = tuple[_T, _T]
+_Tuple3: TypeAlias = tuple[_T, _T, _T]
+_Tuple4: TypeAlias = tuple[_T, _T, _T, _T]
+_Tuple2_: TypeAlias = tuple[_T, _T, Unpack[tuple[_T, ...]]]
+_Tuple3_: TypeAlias = tuple[_T, _T, _T, Unpack[tuple[_T, ...]]]
+_Tuple4_: TypeAlias = tuple[_T, _T, _T, _T, Unpack[tuple[_T, ...]]]
+_Out1: TypeAlias = _T | tuple[_T]
+_AnyArray: TypeAlias = NDArray[Any]
+_UFuncMethod: TypeAlias = L["__call__", "reduce", "reduceat", "accumulate", "outer", "at"]
+
+###
+# helper protocols
 
 @type_check_only
-class _SupportsArrayUFunc(Protocol):
-    def __array_ufunc__(
-        self,
-        ufunc: np.ufunc,
-        method: Literal["__call__", "reduce", "reduceat", "accumulate", "outer", "at"],
-        /,
-        *inputs: Any,
-        **kwargs: Any,
-    ) -> Any: ...
+class _CanArrayUFunc(Protocol[_OutT_co]):
+    def __array_ufunc__(self, ufunc: np.ufunc, method: _UFuncMethod, /, *args: Any, **kwds: Any) -> _OutT_co: ...
+
+###
+# typeddicts for kwargs
 
 @type_check_only
-class _UFunc3Kwargs(TypedDict, total=False):
-    where: _ArrayLikeBool_co | None
-    casting: np._CastingKind
-    order: np._OrderKACF
+class _KwargsCommon(TypedDict, total=False):
+    casting: _CastingKind
+    order: _OrderKACF
     subok: bool
-    signature: _3Tuple[str | None] | str | None
-
-# NOTE: `reduce`, `accumulate`, `reduceat` and `outer` raise a ValueError for
-# ufuncs that don't accept two input arguments and return one output argument.
-# In such cases the respective methods return `NoReturn`
-
-# NOTE: Similarly, `at` won't be defined for ufuncs that return
-# multiple outputs; in such cases `at` is typed to return `NoReturn`
-
-# NOTE: If 2 output types are returned then `out` must be a
-# 2-tuple of arrays. Otherwise `None` or a plain array are also acceptable
-
-# pyright: reportIncompatibleMethodOverride=false
 
 @type_check_only
-class _UFunc_Nin1_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def __name__(self) -> _NameT_co: ...
-    @property
-    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
-    @property
-    def ntypes(self) -> _NTypesT_co: ...
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> Literal[1]: ...
-    @property
-    def nout(self) -> Literal[1]: ...
-    @property
-    def nargs(self) -> Literal[2]: ...
-    @property
-    def signature(self) -> None: ...
-    @overload
+class _Kwargs2(_KwargsCommon, total=False):
+    where: _ArrayLikeBool_co | None
+    signature: _Tuple2[DTypeLike] | str | None
+
+@type_check_only
+class _Kwargs3(_KwargsCommon, total=False):
+    where: _ArrayLikeBool_co | None
+    signature: _Tuple3[DTypeLike] | str | None
+
+@type_check_only
+class _Kwargs3_g(_KwargsCommon, total=False):
+    signature: _Tuple3[DTypeLike] | str | None
+
+@type_check_only
+class _Kwargs4(_KwargsCommon, total=False):
+    where: _ArrayLikeBool_co | None
+    signature: _Tuple4[DTypeLike] | str | None
+
+@type_check_only
+class _Kwargs3_(_KwargsCommon, total=False):
+    where: _ArrayLikeBool_co | None
+    signature: _Tuple3_[DTypeLike] | str | None
+
+@type_check_only
+class _Kwargs4_(_KwargsCommon, total=False):
+    where: _ArrayLikeBool_co | None
+    signature: _Tuple4_[DTypeLike] | str | None
+
+###
+# ufunc method signatures
+
+@type_check_only
+class _Call11(Protocol):
+    @overload  # (scalar, dtype: dtype[T]) -> T
     def __call__(
         self,
         x1: _ScalarLike_co,
         /,
         out: None = None,
         *,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _2Tuple[str | None] = ...,
+        dtype: _DTypeLike[_ScalarT],
+        **kwds: Unpack[_Kwargs2],
+    ) -> _ScalarT: ...
+    @overload  # (scalar) -> ?
+    def __call__(
+        self,
+        x1: _ScalarLike_co,
+        /,
+        out: None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
     ) -> Any: ...
-    @overload
+    @overload  # (array, dtype: dtype[T]) -> Array[T]
+    def __call__(
+        self,
+        x1: _AnyArray,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: _DTypeLike[_ScalarT],
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[_ScalarT]: ...
+    @overload  # (array-like, out: T) -> T
     def __call__(
         self,
         x1: ArrayLike,
         /,
-        out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
+        out: _Out1[_ArrayT],
         *,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _2Tuple[str | None] = ...,
-    ) -> npt.NDArray[Any]: ...
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _ArrayT: ...
+    @overload  # (array) -> Array[?] | ?
+    def __call__(
+        self,
+        x1: _AnyArray,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _AnyArray: ...
+    @overload  # (array-like) -> Array[?] | ?
+    def __call__(
+        self,
+        x1: ArrayLike,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _AnyArray | Any: ...
+    @overload  # (?) -> ?
+    def __call__(
+        self,
+        x1: _CanArrayUFunc,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> Any: ...
+
+@type_check_only
+class _Call12(Protocol):
     @overload
     def __call__(
         self,
-        x1: _SupportsArrayUFunc,
+        x: _ScalarLike_co,
+        out1: None = None,
+        out2: None = None,
         /,
-        out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
         *,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _2Tuple[str | None] = ...,
-    ) -> Any: ...
-    def at(self, a: _SupportsArrayUFunc, indices: _ArrayLikeInt_co, /) -> None: ...
-    def reduce(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def accumulate(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduceat(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def outer(self, *args: Any, **kwargs: Any) -> NoReturn: ...
+        out: _Tuple2[None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> _Tuple2[Any]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None,
+        out2: _ArrayT2,
+        /,
+        *,
+        out: tuple[None, None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> tuple[None, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: _ArrayT1,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[None, None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> tuple[_ArrayT1, None]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: _ArrayT1,
+        out2: _ArrayT2,
+        /,
+        *,
+        out: tuple[None, None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> tuple[_ArrayT1, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[None, _ArrayT2],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> tuple[_AnyArray, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[_ArrayT1, None],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> tuple[_ArrayT1, _AnyArray]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[_ArrayT1, _ArrayT2],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> tuple[_ArrayT1, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x: _AnyArray,
+        out1: _AnyArray | None = None,
+        out2: _AnyArray | None = None,
+        /,
+        *,
+        out: _Tuple2[_AnyArray | None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> _Tuple2[_AnyArray]: ...
+    @overload
+    def __call__(
+        self,
+        x: _CanArrayUFunc,
+        out1: _AnyArray | None = None,
+        out2: _AnyArray | None = None,
+        /,
+        *,
+        out: _Tuple2[_AnyArray | None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> _Tuple2[Any]: ...
 
 @type_check_only
-class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def __name__(self) -> _NameT_co: ...
-    @property
-    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
-    @property
-    def ntypes(self) -> _NTypesT_co: ...
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> Literal[2]: ...
-    @property
-    def nout(self) -> Literal[1]: ...
-    @property
-    def nargs(self) -> Literal[3]: ...
-    @property
-    def signature(self) -> None: ...
-    @overload  # (scalar, scalar) -> scalar
+class _Call21(Protocol):
+    @overload  # (scalar, scalar, dtype: type[T]) -> T
+    def __call__(
+        self,
+        x1: _ScalarLike_co,
+        x2: _ScalarLike_co,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLike[_ScalarT],
+        **kwds: Unpack[_Kwargs3],
+    ) -> _ScalarT: ...
+    @overload  # (scalar, scalar) -> ?
     def __call__(
         self,
         x1: _ScalarLike_co,
@@ -164,281 +302,249 @@ class _UFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]
         out: None = None,
         *,
         dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
+        **kwds: Unpack[_Kwargs3],
     ) -> Any: ...
-    @overload  # (array-like, array) -> array
+    @overload  # (array-like, array, dtype: dtype[T]) -> Array[T]
     def __call__(
         self,
         x1: ArrayLike,
-        x2: npt.NDArray[np.generic],
+        x2: _AnyArray,
         /,
-        out: npt.NDArray[np.generic] | tuple[npt.NDArray[np.generic]] | None = None,
-        *,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> npt.NDArray[Any]: ...
-    @overload  # (array, array-like) -> array
-    def __call__(
-        self,
-        x1: npt.NDArray[np.generic],
-        x2: ArrayLike,
-        /,
-        out: npt.NDArray[np.generic] | tuple[npt.NDArray[np.generic]] | None = None,
-        *,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> npt.NDArray[Any]: ...
-    @overload  # (array-like, array-like, out=array) -> array
-    def __call__(
-        self,
-        x1: ArrayLike,
-        x2: ArrayLike,
-        /,
-        out: npt.NDArray[np.generic] | tuple[npt.NDArray[np.generic]],
-        *,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> npt.NDArray[Any]: ...
-    @overload  # (array-like, array-like) -> array | scalar
-    def __call__(
-        self,
-        x1: ArrayLike,
-        x2: ArrayLike,
-        /,
-        out: npt.NDArray[np.generic] | tuple[npt.NDArray[np.generic]] | None = None,
-        *,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> npt.NDArray[Any] | Any: ...
-    def at(self, a: npt.NDArray[Any], indices: _ArrayLikeInt_co, b: ArrayLike, /) -> None: ...
-    def reduce(
-        self,
-        array: ArrayLike,
-        axis: _ShapeLike | None = ...,
-        dtype: DTypeLike = ...,
-        out: npt.NDArray[Any] | None = ...,
-        keepdims: bool = ...,
-        initial: Any = ...,
-        where: _ArrayLikeBool_co = ...,
-    ) -> Any: ...
-    def accumulate(
-        self,
-        array: ArrayLike,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        out: npt.NDArray[Any] | None = ...,
-    ) -> npt.NDArray[Any]: ...
-    def reduceat(
-        self,
-        array: ArrayLike,
-        indices: _ArrayLikeInt_co,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        out: npt.NDArray[Any] | None = ...,
-    ) -> npt.NDArray[Any]: ...
-    @overload  # (scalar, scalar) -> scalar
-    def outer(
-        self,
-        A: _ScalarLike_co,
-        B: _ScalarLike_co,
-        /,
-        *,
         out: None = None,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> Any: ...
-    @overload  # (array-like, array) -> array
-    def outer(
-        self,
-        A: ArrayLike,
-        B: npt.NDArray[np.generic],
-        /,
         *,
-        out: npt.NDArray[np.generic] | tuple[npt.NDArray[np.generic]] | None = None,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> npt.NDArray[Any]: ...
-    @overload  # (array, array-like) -> array
-    def outer(
-        self,
-        A: npt.NDArray[np.generic],
-        B: ArrayLike,
-        /,
-        *,
-        out: npt.NDArray[np.generic] | tuple[npt.NDArray[np.generic]] | None = None,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> npt.NDArray[Any]: ...
-    @overload  # (array-like, array-like, out=array) -> array
-    def outer(
-        self,
-        A: ArrayLike,
-        B: ArrayLike,
-        /,
-        *,
-        out: npt.NDArray[np.generic] | tuple[npt.NDArray[np.generic]],
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> npt.NDArray[Any]: ...
-    @overload  # (array-like, array-like) -> array | scalar
-    def outer(
-        self,
-        A: ArrayLike,
-        B: ArrayLike,
-        /,
-        *,
-        out: npt.NDArray[np.generic] | tuple[npt.NDArray[np.generic]] | None = None,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_UFunc3Kwargs],
-    ) -> npt.NDArray[Any] | Any: ...
-
-@type_check_only
-class _UFunc_Nin1_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def __name__(self) -> _NameT_co: ...
-    @property
-    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
-    @property
-    def ntypes(self) -> _NTypesT_co: ...
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> Literal[1]: ...
-    @property
-    def nout(self) -> Literal[2]: ...
-    @property
-    def nargs(self) -> Literal[3]: ...
-    @property
-    def signature(self) -> None: ...
-    @overload
+        dtype: _DTypeLike[_ScalarT],
+        **kwds: Unpack[_Kwargs3],
+    ) -> NDArray[_ScalarT]: ...
+    @overload  # (array, array-like, dtype: dtype[T]) -> Array[T]
     def __call__(
         self,
-        x1: _ScalarLike_co,
-        out1: None = ...,
-        out2: None = ...,
+        x1: _AnyArray,
+        x2: ArrayLike,
         /,
+        out: None = None,
         *,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _3Tuple[str | None] = ...,
-    ) -> _2Tuple[Any]: ...
-    @overload
+        dtype: _DTypeLike[_ScalarT],
+        **kwds: Unpack[_Kwargs3],
+    ) -> NDArray[_ScalarT]: ...
+    @overload  # (array-like, array) -> Array[?]
     def __call__(
         self,
         x1: ArrayLike,
-        out1: npt.NDArray[Any] | None = ...,
-        out2: npt.NDArray[Any] | None = ...,
+        x2: _AnyArray,
         /,
+        out: _Out1[_AnyArray] | None = None,
         *,
-        out: _2Tuple[npt.NDArray[Any]] = ...,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _3Tuple[str | None] = ...,
-    ) -> _2Tuple[npt.NDArray[Any]]: ...
-    @overload
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> _AnyArray: ...
+    @overload  # (array, array-like) -> Array[?]
     def __call__(
         self,
-        x1: _SupportsArrayUFunc,
-        out1: npt.NDArray[Any] | None = ...,
-        out2: npt.NDArray[Any] | None = ...,
+        x1: _AnyArray,
+        x2: ArrayLike,
         /,
+        out: _Out1[_AnyArray] | None = None,
         *,
-        out: _2Tuple[npt.NDArray[Any]] = ...,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _3Tuple[str | None] = ...,
-    ) -> _2Tuple[Any]: ...
-    def at(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduce(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def accumulate(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduceat(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def outer(self, *args: Any, **kwargs: Any) -> NoReturn: ...
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> _AnyArray: ...
+    @overload  # (array-like, array-like, out: T) -> T
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        /,
+        out: _ArrayT | tuple[_ArrayT],
+        *,
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> _ArrayT: ...
+    @overload  # (array-like, array-like) -> Array[?] | ?
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> _AnyArray | Any: ...
 
 @type_check_only
-class _UFunc_Nin2_Nout2(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def __name__(self) -> _NameT_co: ...
-    @property
-    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
-    @property
-    def ntypes(self) -> _NTypesT_co: ...
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> Literal[2]: ...
-    @property
-    def nout(self) -> Literal[2]: ...
-    @property
-    def nargs(self) -> Literal[4]: ...
-    @property
-    def signature(self) -> None: ...
+class _Call22(Protocol):
     @overload
     def __call__(
         self,
         x1: _ScalarLike_co,
         x2: _ScalarLike_co,
-        out1: None = ...,
-        out2: None = ...,
+        out1: None = None,
+        out2: None = None,
         /,
         *,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _4Tuple[str | None] = ...,
-    ) -> _2Tuple[Any]: ...
+        out: _Tuple2[None] = (None, None),
+        dtype: _DTypeLike[_ScalarT],
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[_ScalarT]: ...
+    @overload
+    def __call__(
+        self,
+        x1: _ScalarLike_co,
+        x2: _ScalarLike_co,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: _Tuple2[None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[Any]: ...
+    @overload
+    def __call__(
+        self,
+        x1: _AnyArray,
+        x2: ArrayLike,
+        out1: NDArray[_ScalarT] | None = None,
+        out2: NDArray[_ScalarT] | None = None,
+        /,
+        *,
+        out: _Tuple2[NDArray[_ScalarT] | None] = (None, None),
+        dtype: _DTypeLike[_ScalarT],
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[NDArray[_ScalarT]]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: _AnyArray,
+        out1: NDArray[_ScalarT] | None = None,
+        out2: NDArray[_ScalarT] | None = None,
+        /,
+        *,
+        out: _Tuple2[NDArray[_ScalarT] | None] = (None, None),
+        dtype: _DTypeLike[_ScalarT],
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[NDArray[_ScalarT]]: ...
+    @overload
+    def __call__(
+        self,
+        x1: _AnyArray,
+        x2: ArrayLike,
+        out1: _AnyArray | None = None,
+        out2: _AnyArray | None = None,
+        /,
+        *,
+        out: _Tuple2[_AnyArray | None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[_AnyArray]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: _AnyArray,
+        out1: _AnyArray | None = None,
+        out2: _AnyArray | None = None,
+        /,
+        *,
+        out: _Tuple2[_AnyArray | None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[_AnyArray]: ...
     @overload
     def __call__(
         self,
         x1: ArrayLike,
         x2: ArrayLike,
-        out1: npt.NDArray[Any] | None = ...,
-        out2: npt.NDArray[Any] | None = ...,
+        out1: _ArrayT1,
+        out2: None = None,
         /,
         *,
-        out: _2Tuple[npt.NDArray[Any]] = ...,
-        where: _ArrayLikeBool_co | None = ...,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _4Tuple[str | None] = ...,
-    ) -> _2Tuple[npt.NDArray[Any]]: ...
-    def at(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduce(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def accumulate(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduceat(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def outer(self, *args: Any, **kwargs: Any) -> NoReturn: ...
+        out: _Tuple2[None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[_ArrayT1, Any]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        out1: None,
+        out2: _ArrayT2,
+        /,
+        *,
+        out: _Tuple2[None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[Any, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        out1: _ArrayT1,
+        out2: _ArrayT2,
+        /,
+        *,
+        out: _Tuple2[None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[_ArrayT1, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[_ArrayT1, None],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[_ArrayT1, Any]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[None, _ArrayT2],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[Any, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[_ArrayT1, _ArrayT2],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[_ArrayT1, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x1: ArrayLike | _CanArrayUFunc,
+        x2: ArrayLike | _CanArrayUFunc,
+        out1: _AnyArray | None = None,
+        out2: _AnyArray | None = None,
+        /,
+        *,
+        out: _Tuple2[_AnyArray | None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[Any]: ...
 
 @type_check_only
-class _GUFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co, _SignatureT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def __name__(self) -> _NameT_co: ...
-    @property
-    def __qualname__(self) -> _NameT_co: ...  # pyright: ignore[reportIncompatibleVariableOverride]
-    @property
-    def ntypes(self) -> _NTypesT_co: ...
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> Literal[2]: ...
-    @property
-    def nout(self) -> Literal[1]: ...
-    @property
-    def nargs(self) -> Literal[3]: ...
-    @property
-    def signature(self) -> _SignatureT_co: ...
-
+class _Call21_g(Protocol):
     # Scalar for 1D array-likes; ndarray otherwise
     @overload
     def __call__(
@@ -446,138 +552,68 @@ class _GUFunc_Nin2_Nout1(np.ufunc, Generic[_NameT_co, _NTypesT_co, _IdentityT_co
         x1: ArrayLike,
         x2: ArrayLike,
         /,
-        out: None = None,
+        out: _Out1[_ArrayT],
         *,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _3Tuple[str | None] = ...,
-        axes: list[_2Tuple[SupportsIndex]] = ...,
-    ) -> Any: ...
+        dtype: None = None,
+        axis: SupportsIndex = ...,
+        axes: Sequence[_Tuple2[SupportsIndex]] = ...,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> _ArrayT: ...
     @overload
     def __call__(
         self,
         x1: ArrayLike,
         x2: ArrayLike,
         /,
-        out: npt.NDArray[Any] | tuple[npt.NDArray[Any]],
+        out: _Out1[_AnyArray | None] = None,
         *,
-        casting: np._CastingKind = ...,
-        order: np._OrderKACF = ...,
-        dtype: DTypeLike = ...,
-        subok: bool = ...,
-        signature: str | _3Tuple[str | None] = ...,
-        axes: list[_2Tuple[SupportsIndex]] = ...,
-    ) -> npt.NDArray[Any]: ...
-    def at(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduce(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def accumulate(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduceat(self, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def outer(self, *args: Any, **kwargs: Any) -> NoReturn: ...
+        dtype: DTypeLike | None = None,
+        axis: SupportsIndex = ...,
+        axes: Sequence[_Tuple2[SupportsIndex]] = ...,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> Any: ...
 
 @type_check_only
-class _PyFunc_Kwargs_Nargs2(TypedDict, total=False):
-    where: _ArrayLikeBool_co | None
-    casting: np._CastingKind
-    order: np._OrderKACF
-    dtype: DTypeLike
-    subok: bool
-    signature: str | tuple[DTypeLike, DTypeLike]
-
-@type_check_only
-class _PyFunc_Kwargs_Nargs3(TypedDict, total=False):
-    where: _ArrayLikeBool_co | None
-    casting: np._CastingKind
-    order: np._OrderKACF
-    dtype: DTypeLike
-    subok: bool
-    signature: str | tuple[DTypeLike, DTypeLike, DTypeLike]
-
-@type_check_only
-class _PyFunc_Kwargs_Nargs3P(TypedDict, total=False):
-    where: _ArrayLikeBool_co | None
-    casting: np._CastingKind
-    order: np._OrderKACF
-    dtype: DTypeLike
-    subok: bool
-    signature: str | _3PTuple[DTypeLike]
-
-@type_check_only
-class _PyFunc_Kwargs_Nargs4P(TypedDict, total=False):
-    where: _ArrayLikeBool_co | None
-    casting: np._CastingKind
-    order: np._OrderKACF
-    dtype: DTypeLike
-    subok: bool
-    signature: str | _4PTuple[DTypeLike]
-
-@type_check_only
-class _PyFunc_Nin1_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> Literal[1]: ...
-    @property
-    def nout(self) -> Literal[1]: ...
-    @property
-    def nargs(self) -> Literal[2]: ...
-    @property
-    def ntypes(self) -> Literal[1]: ...
-    @property
-    def signature(self) -> None: ...
+class _Call11_py(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
-        x1: _ScalarLike_co,
+        x: _ScalarLike_co,
         /,
         out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs2],
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs2],
     ) -> _OutT_co: ...
     @overload
     def __call__(
         self,
-        x1: ArrayLike,
+        x: ArrayLike,
         /,
         out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs2],
-    ) -> _OutT_co | npt.NDArray[np.object_]: ...
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs2],
+    ) -> _OutT_co | NDArray[np.object_]: ...
     @overload
     def __call__(
         self,
-        x1: ArrayLike,
+        x: ArrayLike,
         /,
         out: _ArrayT | tuple[_ArrayT],
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs2],
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs2],
     ) -> _ArrayT: ...
     @overload
     def __call__(
         self,
-        x1: _SupportsArrayUFunc,
+        x: _CanArrayUFunc,
         /,
-        out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs2],
+        out: _Out1[_AnyArray] | None = None,
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs2],
     ) -> Any: ...
-    def at(self, a: _SupportsArrayUFunc, ixs: _ArrayLikeInt_co, /) -> None: ...
-    def reduce(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def accumulate(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduceat(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def outer(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> Literal[2]: ...
-    @property
-    def nout(self) -> Literal[1]: ...
-    @property
-    def nargs(self) -> Literal[3]: ...
-    @property
-    def ntypes(self) -> Literal[1]: ...
-    @property
-    def signature(self) -> None: ...
+class _Call21_py(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
@@ -585,7 +621,8 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         x2: _ScalarLike_co,
         /,
         out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3],
     ) -> _OutT_co: ...
     @overload
     def __call__(
@@ -594,8 +631,9 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         x2: ArrayLike,
         /,
         out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
-    ) -> _OutT_co | npt.NDArray[np.object_]: ...
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3],
+    ) -> _OutT_co | NDArray[np.object_]: ...
     @overload
     def __call__(
         self,
@@ -603,208 +641,32 @@ class _PyFunc_Nin2_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: i
         x2: ArrayLike,
         /,
         out: _ArrayT | tuple[_ArrayT],
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3],
     ) -> _ArrayT: ...
     @overload
     def __call__(
         self,
-        x1: _SupportsArrayUFunc,
-        x2: _SupportsArrayUFunc | ArrayLike,
+        x1: _CanArrayUFunc,
+        x2: _CanArrayUFunc | ArrayLike,
         /,
-        out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
+        out: _Out1[_AnyArray] | None = None,
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3],
     ) -> Any: ...
     @overload
     def __call__(
         self,
         x1: ArrayLike,
-        x2: _SupportsArrayUFunc,
+        x2: _CanArrayUFunc,
         /,
-        out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
-    ) -> Any: ...
-    def at(self, a: _SupportsArrayUFunc, ixs: _ArrayLikeInt_co, b: ArrayLike, /) -> None: ...
-    @overload
-    def reduce(
-        self,
-        array: ArrayLike,
-        axis: _ShapeLike | None,
-        dtype: DTypeLike,
-        out: _ArrayT,
-        /,
-        keepdims: bool = ...,
-        initial: _ScalarLike_co = ...,
-        where: _ArrayLikeBool_co = ...,
-    ) -> _ArrayT: ...
-    @overload
-    def reduce(
-        self,
-        /,
-        array: ArrayLike,
-        axis: _ShapeLike | None = ...,
-        dtype: DTypeLike = ...,
-        *,
-        out: _ArrayT | tuple[_ArrayT],
-        keepdims: bool = ...,
-        initial: _ScalarLike_co = ...,
-        where: _ArrayLikeBool_co = ...,
-    ) -> _ArrayT: ...
-    @overload
-    def reduce(
-        self,
-        /,
-        array: ArrayLike,
-        axis: _ShapeLike | None = ...,
-        dtype: DTypeLike = ...,
-        out: None = None,
-        *,
-        keepdims: Literal[True],
-        initial: _ScalarLike_co = ...,
-        where: _ArrayLikeBool_co = ...,
-    ) -> npt.NDArray[np.object_]: ...
-    @overload
-    def reduce(
-        self,
-        /,
-        array: ArrayLike,
-        axis: _ShapeLike | None = ...,
-        dtype: DTypeLike = ...,
-        out: None = None,
-        keepdims: bool = ...,
-        initial: _ScalarLike_co = ...,
-        where: _ArrayLikeBool_co = ...,
-    ) -> _OutT_co | npt.NDArray[np.object_]: ...
-    @overload
-    def reduceat(
-        self,
-        array: ArrayLike,
-        indices: _ArrayLikeInt_co,
-        axis: SupportsIndex,
-        dtype: DTypeLike,
-        out: _ArrayT,
-        /,
-    ) -> _ArrayT: ...
-    @overload
-    def reduceat(
-        self,
-        /,
-        array: ArrayLike,
-        indices: _ArrayLikeInt_co,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        *,
-        out: _ArrayT | tuple[_ArrayT],
-    ) -> _ArrayT: ...
-    @overload
-    def reduceat(
-        self,
-        /,
-        array: ArrayLike,
-        indices: _ArrayLikeInt_co,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        out: None = None,
-    ) -> npt.NDArray[np.object_]: ...
-    @overload
-    def reduceat(
-        self,
-        /,
-        array: _SupportsArrayUFunc,
-        indices: _ArrayLikeInt_co,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
-    ) -> Any: ...
-    @overload
-    def accumulate(
-        self,
-        array: ArrayLike,
-        axis: SupportsIndex,
-        dtype: DTypeLike,
-        out: _ArrayT,
-        /,
-    ) -> _ArrayT: ...
-    @overload
-    def accumulate(
-        self,
-        array: ArrayLike,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        *,
-        out: _ArrayT | tuple[_ArrayT],
-    ) -> _ArrayT: ...
-    @overload
-    def accumulate(
-        self,
-        /,
-        array: ArrayLike,
-        axis: SupportsIndex = ...,
-        dtype: DTypeLike = ...,
-        out: None = None,
-    ) -> npt.NDArray[np.object_]: ...
-    @overload
-    def outer(
-        self,
-        A: _ScalarLike_co,
-        B: _ScalarLike_co,
-        /,
-        *,
-        out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
-    ) -> _OutT_co: ...
-    @overload
-    def outer(
-        self,
-        A: ArrayLike,
-        B: ArrayLike,
-        /,
-        *,
-        out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
-    ) -> _OutT_co | npt.NDArray[np.object_]: ...
-    @overload
-    def outer(
-        self,
-        A: ArrayLike,
-        B: ArrayLike,
-        /,
-        *,
-        out: _ArrayT,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
-    ) -> _ArrayT: ...
-    @overload
-    def outer(
-        self,
-        A: _SupportsArrayUFunc,
-        B: _SupportsArrayUFunc | ArrayLike,
-        /,
-        *,
-        out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
-    ) -> Any: ...
-    @overload
-    def outer(
-        self,
-        A: _ScalarLike_co,
-        B: _SupportsArrayUFunc | ArrayLike,
-        /,
-        *,
-        out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3],
+        out: _Out1[_AnyArray] | None = None,
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3],
     ) -> Any: ...
 
 @type_check_only
-class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> int: ...
-    @property
-    def nout(self) -> Literal[1]: ...
-    @property
-    def ntypes(self) -> Literal[1]: ...
-    @property
-    def signature(self) -> None: ...
+class _Call3n1_py(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
@@ -814,7 +676,8 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: 
         /,
         *xs: _ScalarLike_co,
         out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs4P],
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs4_],
     ) -> _OutT_co: ...
     @overload
     def __call__(
@@ -825,8 +688,9 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: 
         /,
         *xs: ArrayLike,
         out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs4P],
-    ) -> _OutT_co | npt.NDArray[np.object_]: ...
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs4_],
+    ) -> _OutT_co | NDArray[np.object_]: ...
     @overload
     def __call__(
         self,
@@ -836,45 +700,33 @@ class _PyFunc_Nin3P_Nout1(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: 
         /,
         *xs: ArrayLike,
         out: _ArrayT | tuple[_ArrayT],
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs4P],
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs4_],
     ) -> _ArrayT: ...
     @overload
     def __call__(
         self,
-        x1: _SupportsArrayUFunc | ArrayLike,
-        x2: _SupportsArrayUFunc | ArrayLike,
-        x3: _SupportsArrayUFunc | ArrayLike,
+        x1: _CanArrayUFunc | ArrayLike,
+        x2: _CanArrayUFunc | ArrayLike,
+        x3: _CanArrayUFunc | ArrayLike,
         /,
-        *xs: _SupportsArrayUFunc | ArrayLike,
-        out: npt.NDArray[Any] | tuple[npt.NDArray[Any]] | None = ...,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs4P],
+        *xs: _CanArrayUFunc | ArrayLike,
+        out: _Out1[_AnyArray] | None = None,
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs4_],
     ) -> Any: ...
-    def at(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduce(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def accumulate(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduceat(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def outer(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _PyFunc_Nin1P_Nout2(np.ufunc, Generic[_OutT1_co, _OutT2_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> int: ...
-    @property
-    def nout(self) -> Literal[2]: ...
-    @property
-    def ntypes(self) -> Literal[1]: ...
-    @property
-    def signature(self) -> None: ...
+class _Call1n2_py(Protocol[_OutT1_co, _OutT2_co]):
     @overload
     def __call__(
         self,
         x1: _ScalarLike_co,
         /,
         *xs: _ScalarLike_co,
-        out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
+        out: tuple[None, None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3_],
     ) -> tuple[_OutT1_co, _OutT2_co]: ...
     @overload
     def __call__(
@@ -882,9 +734,10 @@ class _PyFunc_Nin1P_Nout2(np.ufunc, Generic[_OutT1_co, _OutT2_co, _IdentityT_co]
         x1: ArrayLike,
         /,
         *xs: ArrayLike,
-        out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
-    ) -> tuple[_OutT1_co | npt.NDArray[np.object_], _OutT2_co | npt.NDArray[np.object_]]: ...
+        out: tuple[None, None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3_],
+    ) -> tuple[_OutT1_co | NDArray[np.object_], _OutT2_co | NDArray[np.object_]]: ...
     @overload
     def __call__(
         self,
@@ -892,73 +745,337 @@ class _PyFunc_Nin1P_Nout2(np.ufunc, Generic[_OutT1_co, _OutT2_co, _IdentityT_co]
         /,
         *xs: ArrayLike,
         out: tuple[_ArrayT1, _ArrayT2],
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3_],
     ) -> tuple[_ArrayT1, _ArrayT2]: ...
     @overload
     def __call__(
         self,
-        x1: _SupportsArrayUFunc | ArrayLike,
+        x1: _CanArrayUFunc | ArrayLike,
         /,
-        *xs: _SupportsArrayUFunc | ArrayLike,
-        out: _2PTuple[npt.NDArray[Any]] | None = ...,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
+        *xs: _CanArrayUFunc | ArrayLike,
+        out: _Tuple2[_AnyArray | None] = (None, None),
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3_],
     ) -> Any: ...
-    def at(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduce(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def accumulate(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduceat(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def outer(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
 
 @type_check_only
-class _PyFunc_Nin1P_Nout2P(np.ufunc, Generic[_OutT_co, _IdentityT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @property
-    def identity(self) -> _IdentityT_co: ...
-    @property
-    def nin(self) -> int: ...
-    @property
-    def nout(self) -> int: ...
-    @property
-    def ntypes(self) -> Literal[1]: ...
-    @property
-    def signature(self) -> None: ...
+class _Call1n2n_py(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
         x1: _ScalarLike_co,
         /,
         *xs: _ScalarLike_co,
-        out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
-    ) -> _2PTuple[_OutT_co]: ...
+        out: _Tuple2_[None] = ...,
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3_],
+    ) -> _Tuple2_[_OutT_co]: ...
     @overload
     def __call__(
         self,
         x1: ArrayLike,
         /,
         *xs: ArrayLike,
-        out: None = None,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
-    ) -> _2PTuple[_OutT_co | npt.NDArray[np.object_]]: ...
+        out: _Tuple2_[None] = ...,
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3_],
+    ) -> _Tuple2_[_OutT_co | NDArray[np.object_]]: ...
     @overload
     def __call__(
         self,
         x1: ArrayLike,
         /,
         *xs: ArrayLike,
-        out: _2PTuple[_ArrayT],
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
-    ) -> _2PTuple[_ArrayT]: ...
+        out: _Tuple2_[_ArrayT],
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3_],
+    ) -> _Tuple2_[_ArrayT]: ...
     @overload
     def __call__(
         self,
-        x1: _SupportsArrayUFunc | ArrayLike,
+        x1: _CanArrayUFunc | ArrayLike,
         /,
-        *xs: _SupportsArrayUFunc | ArrayLike,
-        out: _2PTuple[npt.NDArray[Any]] | None = ...,
-        **kwargs: Unpack[_PyFunc_Kwargs_Nargs3P],
+        *xs: _CanArrayUFunc | ArrayLike,
+        out: _Tuple2_[_AnyArray | None] = ...,
+        dtype: DTypeLike | None = None,
+        **kwargs: Unpack[_Kwargs3_],
     ) -> Any: ...
-    def at(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduce(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def accumulate(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def reduceat(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
-    def outer(self, /, *args: Any, **kwargs: Any) -> NoReturn: ...
+
+_AtE: TypeAlias = Callable[Concatenate[Never, Never, ...], None]
+_At1: TypeAlias = Callable[[_CanArrayUFunc, _ArrayLikeInt_co], None]
+_At2: TypeAlias = Callable[[_CanArrayUFunc, _ArrayLikeInt_co, ArrayLike], None]
+
+@type_check_only
+class _ReduceE(Protocol):
+    def __call__(self, array: Never, /) -> Any: ...
+
+@type_check_only
+class _Reduce2(Protocol):
+    def __call__(
+        self,
+        array: ArrayLike,
+        /,
+        axis: _ShapeLike | None = 0,
+        dtype: DTypeLike | None = None,
+        out: _AnyArray | None = None,
+        keepdims: bool = False,
+        initial: _ScalarLike_co | None = ...,
+        where: _ArrayLikeBool_co = True,
+    ) -> Any: ...
+
+@type_check_only
+class _AccumulateE(Protocol):
+    def __call__(self, array: Never, /) -> Any: ...
+
+@type_check_only
+class _Accumulate2(Protocol):
+    @overload
+    def __call__(self, array: ArrayLike, /, axis: SupportsIndex, dtype: None, out: _ArrayT) -> _ArrayT: ...
+    @overload
+    def __call__(self, array: ArrayLike, /, axis: SupportsIndex = 0, dtype: None = None, *, out: _ArrayT) -> _ArrayT: ...
+    @overload
+    def __call__(
+        self,
+        array: ArrayLike,
+        /,
+        axis: SupportsIndex,
+        dtype: _DTypeLike[_ScalarT],
+        out: NDArray[_ScalarT] | None = None,
+    ) -> NDArray[_ScalarT]: ...
+    @overload
+    def __call__(
+        self,
+        array: ArrayLike,
+        /,
+        axis: SupportsIndex = 0,
+        *,
+        dtype: _DTypeLike[_ScalarT],
+        out: None = None,
+    ) -> NDArray[_ScalarT]: ...
+    @overload
+    def __call__(
+        self,
+        array: ArrayLike,
+        /,
+        axis: SupportsIndex = 0,
+        dtype: DTypeLike | None = None,
+        out: _AnyArray | None = None,
+    ) -> _AnyArray: ...
+
+@type_check_only
+class _ReduceAtE(Protocol):
+    def __call__(self, array: Never, indices: Never, /) -> Any: ...
+
+@type_check_only
+class _ReduceAt2(Protocol):
+    @overload
+    def __call__(
+        self,
+        array: ArrayLike,
+        indices: _ArrayLikeInt_co,
+        /,
+        axis: SupportsIndex,
+        dtype: None,
+        out: _ArrayT,
+    ) -> _ArrayT: ...
+    @overload
+    def __call__(
+        self,
+        array: ArrayLike,
+        indices: _ArrayLikeInt_co,
+        /,
+        axis: SupportsIndex = 0,
+        dtype: None = None,
+        *,
+        out: _ArrayT,
+    ) -> _ArrayT: ...
+    @overload
+    def __call__(
+        self,
+        array: ArrayLike,
+        /,
+        indices: _ArrayLikeInt_co,
+        axis: SupportsIndex,
+        dtype: _DTypeLike[_ScalarT],
+        out: NDArray[_ScalarT] | None = None,
+    ) -> NDArray[_ScalarT]: ...
+    @overload
+    def __call__(
+        self,
+        array: ArrayLike,
+        indices: _ArrayLikeInt_co,
+        /,
+        axis: SupportsIndex = 0,
+        *,
+        dtype: _DTypeLike[_ScalarT],
+        out: NDArray[_ScalarT] | None = None,
+    ) -> NDArray[_ScalarT]: ...
+    @overload
+    def __call__(
+        self,
+        array: ArrayLike,
+        indices: _ArrayLikeInt_co,
+        /,
+        axis: SupportsIndex = 0,
+        dtype: DTypeLike | None = None,
+        out: _AnyArray | None = None,
+    ) -> _AnyArray: ...
+
+_OuterE: TypeAlias = Callable[[Never, Never], Any]
+
+@type_check_only
+class _Outer1(Protocol):
+    @overload  # (array-like, array-like, out: T) -> T
+    def __call__(
+        self,
+        A: ArrayLike,
+        B: ArrayLike,
+        /,
+        *,
+        dtype: None = None,
+        out: _Out1[_ArrayT],
+        **kwds: Unpack[_Kwargs3],
+    ) -> _ArrayT: ...
+    @overload  # (array, array-like, dtype: dtype[T]) -> Array[T]
+    def __call__(
+        self,
+        A: ArrayLike,
+        B: ArrayLike,
+        /,
+        *,
+        dtype: _DTypeLike[_ScalarT],
+        out: _Out1[NDArray[_ScalarT]] | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> NDArray[_ScalarT]: ...
+    @overload  # (array-like, array-like) -> array | scalar
+    def __call__(
+        self,
+        A: ArrayLike,
+        B: ArrayLike,
+        /,
+        *,
+        dtype: DTypeLike | None = None,
+        out: _Out1[_AnyArray] | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> _AnyArray: ...
+
+@type_check_only
+class _Outer2(Protocol):
+    @overload  # (array-like, array-like, out: (T1, None)) -> (T1, Array[?])
+    def __call__(
+        self,
+        A: ArrayLike,
+        B: ArrayLike,
+        /,
+        *,
+        dtype: None = None,
+        out: tuple[_ArrayT1, None],
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[_ArrayT1, _AnyArray]: ...
+    @overload  # (array-like, array-like, out: (None, T2)) -> (Array[?], T2)
+    def __call__(
+        self,
+        A: ArrayLike,
+        B: ArrayLike,
+        /,
+        *,
+        dtype: None = None,
+        out: tuple[None, _ArrayT2],
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[_AnyArray, _ArrayT2]: ...
+    @overload  # (array-like, array-like, out: (T1, T2)) -> (T1, T2)
+    def __call__(
+        self,
+        A: ArrayLike,
+        B: ArrayLike,
+        /,
+        *,
+        dtype: None = None,
+        out: tuple[_ArrayT1, _ArrayT2],
+        **kwds: Unpack[_Kwargs4],
+    ) -> tuple[_ArrayT1, _ArrayT2]: ...
+    @overload  # (array, array-like, dtype: dtype[T]) -> Array[T]
+    def __call__(
+        self,
+        A: ArrayLike,
+        B: ArrayLike,
+        /,
+        *,
+        dtype: _DTypeLike[_ScalarT],
+        out: _Tuple2[NDArray[_ScalarT] | None] = (None, None),
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[NDArray[_ScalarT]]: ...
+    @overload  # (array-like, array-like) -> array | scalar
+    def __call__(
+        self,
+        A: ArrayLike,
+        B: ArrayLike,
+        /,
+        *,
+        dtype: DTypeLike | None = None,
+        out: _Tuple2[_AnyArray | None] = (None, None),
+        **kwds: Unpack[_Kwargs4],
+    ) -> _Tuple2[_AnyArray]: ...
+
+###
+# specific ufunc aliases
+
+_CallT11 = TypeVar("_CallT11", bound=Callable[Concatenate[Any, ...], object], default=_Call11)
+_CallT12 = TypeVar("_CallT12", bound=Callable[Concatenate[Any, ...], tuple[object, object]], default=_Call12)
+_CallT21 = TypeVar("_CallT21", bound=Callable[Concatenate[Any, Any, ...], object], default=_Call21)
+_CallT22 = TypeVar("_CallT22", bound=Callable[Concatenate[Any, Any, ...], tuple[object, object]], default=_Call22)
+_CallT21G = TypeVar("_CallT21G", bound=Callable[Concatenate[Any, ...], object], default=_Call21_g)
+
+_ufunc_1_1 = TypeAliasType(
+    "_ufunc_1_1",
+    np.ufunc[_CallT11, _At1, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
+    type_params=(_CallT11,),
+)
+_ufunc_1_2 = TypeAliasType(
+    "_ufunc_1_2",
+    np.ufunc[_CallT12, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
+    type_params=(_CallT12,),
+)
+_ufunc_2_1 = TypeAliasType(
+    "_ufunc_2_1",
+    np.ufunc[_CallT21, _At2, _Reduce2, _ReduceAt2, _Accumulate2, _Outer1],
+    type_params=(_CallT21,),
+)
+_ufunc_2_2 = TypeAliasType(
+    "_ufunc_2_2",
+    np.ufunc[_CallT22, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _Outer2],
+    type_params=(_CallT22,),
+)
+
+_gufunc_2_1 = TypeAliasType(
+    "_gufunc_2_1",
+    np.ufunc[_CallT21G, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _Outer2],
+    type_params=(_CallT21G,),
+)
+
+_pyfunc_1_1 = TypeAliasType(
+    "_pyfunc_1_1",
+    np.ufunc[_Call11_py[_OutT], _At1, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
+    type_params=(_OutT,),
+)
+_pyfunc_2_1 = TypeAliasType(
+    "_pyfunc_2_1",
+    np.ufunc[_Call21_py[_OutT], _At2, _Reduce2, _ReduceAt2, _Accumulate2, _Outer1],
+    type_params=(_OutT,),
+)
+_pyfunc_3n_1 = TypeAliasType(
+    "_pyfunc_3n_1",
+    np.ufunc[_Call3n1_py[_OutT], _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
+    type_params=(_OutT,),
+)
+_pyfunc_1n_2 = TypeAliasType(
+    "_pyfunc_1n_2",
+    np.ufunc[_Call1n2_py[_OutT1, _OutT2], _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
+    type_params=(_OutT1, _OutT2),
+)
+_pyfunc_1n_2n = TypeAliasType(
+    "_pyfunc_1n_2n",
+    np.ufunc[_Call1n2n_py[_OutT], _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
+    type_params=(_OutT,),
+)

@@ -124,10 +124,3 @@ from ._scalars import (
     _VoidLike_co as _VoidLike_co,
 )
 from ._shape import _Shape as _Shape, _ShapeLike as _ShapeLike
-from ._ufunc import (
-    _GUFunc_Nin2_Nout1 as _GUFunc_Nin2_Nout1,
-    _UFunc_Nin1_Nout1 as _UFunc_Nin1_Nout1,
-    _UFunc_Nin1_Nout2 as _UFunc_Nin1_Nout2,
-    _UFunc_Nin2_Nout1 as _UFunc_Nin2_Nout1,
-    _UFunc_Nin2_Nout2 as _UFunc_Nin2_Nout2,
-)
