@@ -12,6 +12,26 @@ from numpy._typing import (
     _SupportsArray,
 )
 
+from .umath import (
+    add,
+    equal,
+    greater,
+    greater_equal,
+    isalnum,
+    isalpha,
+    isdecimal,
+    isdigit,
+    islower,
+    isnumeric,
+    isspace,
+    istitle,
+    isupper,
+    less,
+    less_equal,
+    not_equal,
+    str_len,
+)
+
 __all__ = [
     "add",
     "capitalize",
@@ -72,74 +92,13 @@ _StringArray: TypeAlias = np.ndarray[tuple[int, ...], np.dtypes.StringDType]
 
 ###
 
-# TODO(jorenham): Move to `.umath`, rewrite as `ufunc`, and re-export.
-# https://github.com/numpy/numtype/issues/46
-def isdecimal(x: ToStrND | ToStringND) -> _BoolArray: ...
-def isnumeric(x: ToStrND | ToStringND) -> _BoolArray: ...
-def isalnum(a: ToAnyStringND) -> _BoolArray: ...
-def isalpha(x: ToAnyStringND) -> _BoolArray: ...
-def isdigit(x: ToAnyStringND) -> _BoolArray: ...
-def isspace(x: ToAnyStringND) -> _BoolArray: ...
-def islower(a: ToAnyStringND) -> _BoolArray: ...
-def istitle(a: ToAnyStringND) -> _BoolArray: ...
-def isupper(a: ToAnyStringND) -> _BoolArray: ...
-def str_len(x: ToAnyStringND) -> _IntArray: ...
-
-#
-@overload
-def equal(x1: ToStrND, x2: ToStrND) -> _BoolArray: ...
-@overload
-def equal(x1: ToBytesND, x2: ToBytesND) -> _BoolArray: ...
-@overload
-def equal(x1: ToStringND, x2: ToStringND) -> _BoolArray: ...
-
-#
-@overload
-def not_equal(x1: ToStrND, x2: ToStrND) -> _BoolArray: ...
-@overload
-def not_equal(x1: ToBytesND, x2: ToBytesND) -> _BoolArray: ...
-@overload
-def not_equal(x1: ToStringND, x2: ToStringND) -> _BoolArray: ...
-
-#
-@overload
-def greater_equal(x1: ToStrND, x2: ToStrND) -> _BoolArray: ...
-@overload
-def greater_equal(x1: ToBytesND, x2: ToBytesND) -> _BoolArray: ...
-@overload
-def greater_equal(x1: ToStringND, x2: ToStringND) -> _BoolArray: ...
-
-#
-@overload
-def less_equal(x1: ToStrND, x2: ToStrND) -> _BoolArray: ...
-@overload
-def less_equal(x1: ToBytesND, x2: ToBytesND) -> _BoolArray: ...
-@overload
-def less_equal(x1: ToStringND, x2: ToStringND) -> _BoolArray: ...
-
-#
-@overload
-def greater(x1: ToStrND, x2: ToStrND) -> _BoolArray: ...
-@overload
-def greater(x1: ToBytesND, x2: ToBytesND) -> _BoolArray: ...
-@overload
-def greater(x1: ToStringND, x2: ToStringND) -> _BoolArray: ...
-
-#
-@overload
-def less(x1: ToStrND, x2: ToStrND) -> _BoolArray: ...
-@overload
-def less(x1: ToBytesND, x2: ToBytesND) -> _BoolArray: ...
-@overload
-def less(x1: ToStringND, x2: ToStringND) -> _BoolArray: ...
-
 #
 @overload
 def startswith(a: ToStrND, prefix: ToStrND, start: ToIntND = 0, end: ToIntND | None = None) -> _BoolArray: ...
 @overload
 def startswith(a: ToBytesND, prefix: ToBytesND, start: ToIntND = 0, end: ToIntND | None = None) -> _BoolArray: ...
 @overload
-def startswith(a: ToStringND, suffix: ToStringND, start: ToIntND = 0, end: ToIntND | None = None) -> _BoolArray: ...
+def startswith(a: ToStringND, prefix: ToStringND, start: ToIntND = 0, end: ToIntND | None = None) -> _BoolArray: ...
 
 #
 @overload
@@ -199,16 +158,6 @@ def encode(a: ToStrND | ToStringND, encoding: str | None = None, errors: str | N
 
 ###
 # NOTE: The ignored `overload-overlap` mypy errors are false positives
-
-#
-@overload
-def add(x1: ToStrND, x2: ToStrND) -> _StrArray: ...  # type: ignore[overload-overlap]
-@overload
-def add(x1: ToBytesND, x2: ToBytesND) -> _BytesArray: ...
-@overload
-def add(x1: _StringArrayLike, x2: _StringArrayLike) -> _StringArray: ...
-@overload
-def add(x1: ToStringND, x2: ToStringND) -> _StrArray | _StringArray: ...
 
 #
 @overload
@@ -280,11 +229,11 @@ def lstrip(a: _StringArrayLike, chars: ToStringND | None = None) -> _StringArray
 @overload
 def lstrip(a: ToStringND, chars: ToStringND | None = None) -> _StrArray | _StringArray: ...
 
-# Huh; why isn't there a (false positive) mypy error here?
+#
 @overload
-def rstrip(a: ToStrND, char: ToStrND | None = None) -> _StrArray: ...
+def rstrip(a: ToStrND, chars: ToStrND | None = None) -> _StrArray: ...  # type: ignore[overload-overlap]
 @overload
-def rstrip(a: ToBytesND, char: ToBytesND | None = None) -> _BytesArray: ...
+def rstrip(a: ToBytesND, chars: ToBytesND | None = None) -> _BytesArray: ...
 @overload
 def rstrip(a: _StringArrayLike, chars: ToStringND | None = None) -> _StringArray: ...
 @overload
@@ -369,16 +318,6 @@ def replace(a: ToBytesND, old: ToBytesND, new: ToBytesND, count: ToIntND = -1) -
 def replace(a: _StringArrayLike, old: ToStringND, new: ToStringND, count: ToIntND = -1) -> _StringArray: ...
 @overload
 def replace(a: ToStringND, old: ToStringND, new: ToStringND, count: ToIntND = -1) -> _StrArray | _StringArray: ...
-
-#
-@overload
-def join(sep: ToStrND, seq: ToStrND) -> _StrArray: ...  # type: ignore[overload-overlap]
-@overload
-def join(sep: ToBytesND, seq: ToBytesND) -> _BytesArray: ...
-@overload
-def join(sep: _StringArrayLike, seq: _StringArrayLike) -> _StringArray: ...
-@overload
-def join(sep: ToStringND, seq: ToStringND) -> _StrArray | _StringArray: ...
 
 #
 @overload
