@@ -40,10 +40,10 @@ assert_type(np.tri(10, M=20, dtype=np.int64), npt.NDArray[np.int64])
 assert_type(np.tri(10, k=2, dtype=int), npt.NDArray[Any])
 
 assert_type(np.tril(AR_b), npt.NDArray[np.bool])
-assert_type(np.tril(AR_LIKE_b, k=0), npt.NDArray[Any])
+assert_type(np.tril(AR_LIKE_b, k=0), npt.NDArray[np.bool])
 
 assert_type(np.triu(AR_b), npt.NDArray[np.bool])
-assert_type(np.triu(AR_LIKE_b, k=0), npt.NDArray[Any])
+assert_type(np.triu(AR_LIKE_b, k=0), npt.NDArray[np.bool])
 
 assert_type(np.vander(AR_b), npt.NDArray[np.intp])
 assert_type(np.vander(AR_u), npt.NDArray[np.signedinteger])
