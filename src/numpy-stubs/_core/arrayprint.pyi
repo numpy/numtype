@@ -4,6 +4,7 @@ from typing import Any, Final, Literal, SupportsIndex, TypeAlias, TypedDict, ove
 from typing_extensions import deprecated
 
 import numpy as np
+from numpy._globals import _NoValueType
 from numpy._typing import NDArray, _CharLike_co, _FloatLike_co
 
 __all__ = [
@@ -109,13 +110,14 @@ def array2string(
     suppress_small: bool | None = None,
     separator: str = " ",
     prefix: str = "",
-    *,
+    style: _NoValueType = ...,
     formatter: _FormatDict | None = None,
     threshold: int | None = None,
     edgeitems: int | None = None,
     sign: _Sign | None = None,
     floatmode: _FloatMode | None = None,
     suffix: str = "",
+    *,
     legacy: _Legacy | None = None,
 ) -> str: ...
 @overload  # style=<given> (positional), legacy="1.13"
