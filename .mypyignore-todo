@@ -18,8 +18,6 @@ numpy(\._core(\.einsumfunc)?|\.matlib)?\.einsum_path
 numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
 numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
 numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
-numpy(\.lib\._index_tricks_impl|\.matlib)?\.ndindex\.ndincr
-numpy(\.lib\._index_tricks_impl|\.matlib)?\.ndenumerate\.iter
 
 numpy._core.cversions
 numpy._core.printoptions
@@ -112,7 +110,6 @@ numpy.fft.helper
 numpy.lib(._arrayterator_impl)?.Arrayterator.__array__
 numpy.lib.(_array_utils_impl|array_utils).normalize_axis_tuple
 numpy.lib.(_npyio_impl|npyio).NpzFile.get
-numpy.lib._index_tricks_impl.AxisConcatenator.makemat
 numpy.lib._iotools.NameValidator.defaultdeletechars
 numpy.lib.format.open_memmap
 numpy.lib.format.read_array(_header_(1|2)_0)?

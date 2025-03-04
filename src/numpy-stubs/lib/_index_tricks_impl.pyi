@@ -1,13 +1,12 @@
 from _typeshed import Incomplete
 from collections.abc import Sequence
-from typing import Any, Final, Generic, Literal as L, SupportsIndex, TypeAlias, final, overload
-from typing_extensions import Self, TypeVar
+from typing import Any, ClassVar, Final, Generic, Literal as L, SupportsIndex, TypeAlias, final, overload
+from typing_extensions import Self, TypeVar, deprecated
 
 import numpy as np
 from _numtype import (
     Array,
     Is,
-    Matrix,
     Sequence_nd,
     ToBool_nd,
     ToBytes_nd,
@@ -19,7 +18,7 @@ from _numtype import (
     _ToArray1_nd,
 )
 from numpy._core.multiarray import ravel_multi_index, unravel_index
-from numpy._typing import ArrayLike, DTypeLike, _DTypeLike, _SupportsDType as _HasDType
+from numpy._typing import ArrayLike, _SupportsDType as _HasDType
 
 __all__ = [
     "c_",
@@ -57,10 +56,6 @@ _Arrays: TypeAlias = tuple[Array[_ScalarT], ...]
 ###
 
 class ndenumerate(Generic[_ScalarT_co]):
-    @property
-    def iter(self) -> np.flatiter[Array[_ScalarT_co]]: ...
-
-    #
     @overload
     def __init__(self: ndenumerate[_ScalarT], /, arr: _ToArray1_nd[_ScalarT]) -> None: ...
     @overload
@@ -101,6 +96,8 @@ class ndindex:
     #
     def __iter__(self) -> Self: ...
     def __next__(self) -> tuple[int, ...]: ...
+    @deprecated("Deprecated since 1.20.0.")
+    def ndincr(self, /) -> None: ...
 
 class nd_grid(Generic[_BoolT_co]):
     sparse: _BoolT_co
@@ -120,6 +117,8 @@ class OGridClass(nd_grid[L[True]]):
 
 class AxisConcatenator(Generic[_AxisT_co, _MatrixT_co, _NDMinT_co, _Trans1DT_co]):
     __slots__ = "axis", "matrix", "ndmin", "trans1d"
+
+    makemat: ClassVar[type[np.matrix[tuple[int, int], np.dtype[Any]]]]
 
     axis: _AxisT_co
     matrix: _MatrixT_co
@@ -150,17 +149,6 @@ class AxisConcatenator(Generic[_AxisT_co, _MatrixT_co, _NDMinT_co, _Trans1DT_co]
     @staticmethod
     @overload
     def concatenate(*a: ArrayLike, axis: SupportsIndex | None = 0, out: None = None) -> Array: ...
-
-    #
-    @staticmethod
-    @overload
-    def makemat(data: _ToArray1_nd[_ScalarT], dtype: None = None, copy: bool = True) -> Matrix[_ScalarT]: ...
-    @staticmethod
-    @overload
-    def makemat(data: ArrayLike, dtype: _DTypeLike[_ScalarT], copy: bool = True) -> Matrix[_ScalarT]: ...
-    @staticmethod
-    @overload
-    def makemat(data: ArrayLike, dtype: DTypeLike | None = None, copy: bool = True) -> Matrix: ...
 
 @final
 class RClass(AxisConcatenator[L[0], L[False], L[1], L[-1]]):
