@@ -11,11 +11,6 @@ numpy(\..+)?\.complexfloating.__complex__
 numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
 numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
 
-numpy(\._?core(\.records)?|\.matlib|\.rec)?\.recarray\.__getattr__
-numpy(\._?core(\.records)?|\.matlib|\.rec)?\.recarray\.__new__
-numpy(\._?core(\.records)?|\.matlib|\.rec)?\.record\.__name__
-numpy(\._?core\.records|\.rec)\.array
-
 numpy._globals._CopyMode.IF_NEEDED
 numpy._globals._CopyMode.__bool__
 
