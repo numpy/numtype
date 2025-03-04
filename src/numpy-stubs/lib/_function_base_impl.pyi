@@ -700,7 +700,7 @@ def sinc(x: CoFloating_1nd) -> Array[np.floating]: ...
 @overload
 def sinc(x: ToComplex_1nd) -> Array[np.complexfloating]: ...
 
-#
+# keep in sync with `lib._nanfunctions_impl.nanmedian`
 @overload
 def median(
     a: CoFloating_nd,
@@ -759,6 +759,7 @@ def median(
     keepdims: bool = False,
 ) -> _ArrayT: ...
 
+# keep in sync with `lib._nanfunctions_impl.nanpercentile`
 # TODO(jorenham): deprecate interpolation
 # TODO(jorenham): deprecate only allow weights if method="inverted_cdf"
 @overload
