@@ -219,7 +219,7 @@ def average(
     weights: CoFloat64_nd | None = None,
     returned: L[False] = False,
     *,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> np.float64: ...
 @overload
 def average(
@@ -228,7 +228,7 @@ def average(
     weights: CoFloat64_nd | None,
     returned: L[True],
     *,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType = ...,
 ) -> _2Tuple[np.float64]: ...
 @overload
 def average(
@@ -237,7 +237,7 @@ def average(
     weights: CoFloat64_nd | None = None,
     *,
     returned: L[True],
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> _2Tuple[np.float64]: ...
 @overload
 def average(
@@ -246,7 +246,7 @@ def average(
     weights: CoFloating_nd | None = None,
     returned: L[False] = False,
     *,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> np.floating: ...
 @overload
 def average(
@@ -255,7 +255,7 @@ def average(
     weights: CoFloating_nd | None,
     returned: L[True],
     *,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> _2Tuple[np.floating]: ...
 @overload
 def average(
@@ -264,7 +264,7 @@ def average(
     weights: CoFloating_nd | None = None,
     *,
     returned: L[True],
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> _2Tuple[np.floating]: ...
 @overload
 def average(
@@ -273,7 +273,7 @@ def average(
     weights: CoComplex_nd | None = None,
     returned: L[False] = False,
     *,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> np.complexfloating: ...
 @overload
 def average(
@@ -282,7 +282,7 @@ def average(
     weights: ToComplex_nd,
     returned: L[False] = False,
     *,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> np.complexfloating: ...
 @overload
 def average(
@@ -291,7 +291,7 @@ def average(
     *,
     weights: ToComplex_nd,
     returned: L[False] = False,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> np.complexfloating: ...
 @overload
 def average(
@@ -300,7 +300,7 @@ def average(
     weights: CoComplex_nd | None,
     returned: L[True],
     *,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> _2Tuple[np.complexfloating]: ...
 @overload
 def average(
@@ -309,7 +309,7 @@ def average(
     weights: ToComplex_nd,
     returned: L[True],
     *,
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> _2Tuple[np.complexfloating]: ...
 @overload
 def average(
@@ -318,7 +318,7 @@ def average(
     weights: CoComplex_nd | None = None,
     *,
     returned: L[True],
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> _2Tuple[np.complexfloating]: ...
 @overload
 def average(
@@ -327,7 +327,7 @@ def average(
     *,
     weights: ToComplex_nd,
     returned: L[True],
-    keepdims: L[False] = False,
+    keepdims: _NoValueType | L[False] = ...,
 ) -> _2Tuple[np.complexfloating]: ...
 @overload
 def average(
@@ -336,7 +336,7 @@ def average(
     weights: CoComplex_nd | ToObject_nd | None = None,
     returned: L[False] = False,
     *,
-    keepdims: bool = False,
+    keepdims: _NoValueType | bool = ...,
 ) -> Any: ...
 @overload
 def average(
@@ -345,7 +345,7 @@ def average(
     weights: CoComplex_nd | ToObject_nd | None,
     returned: L[True],
     *,
-    keepdims: bool = False,
+    keepdims: _NoValueType | bool = ...,
 ) -> _2Tuple[Any]: ...
 @overload
 def average(
@@ -354,7 +354,7 @@ def average(
     weights: CoComplex_nd | ToObject_nd | None = None,
     *,
     returned: L[True],
-    keepdims: bool = False,
+    keepdims: _NoValueType | bool = ...,
 ) -> _2Tuple[Any]: ...
 
 #
@@ -630,44 +630,54 @@ def cov(
     dtype: DTypeLike,
 ) -> Array: ...
 
-# NOTE `bias` and `ddof` have been deprecated
+# NOTE `bias` and `ddof` are deprecated and ignored
 @overload
 def corrcoef(
-    m: CoFloating_1nd,
+    x: CoFloating_1nd,
     y: CoFloating_1nd | None = None,
     rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
     *,
     dtype: None = None,
 ) -> Array[np.floating]: ...
 @overload
 def corrcoef(
-    m: ToComplex_1nd,
+    x: ToComplex_1nd,
     y: CoComplex_1nd | None = None,
     rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
     *,
     dtype: None = None,
 ) -> Array[np.complexfloating]: ...
 @overload
 def corrcoef(
-    m: CoComplex_1nd,
+    x: CoComplex_1nd,
     y: ToComplex_1nd,
     rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
     *,
     dtype: None = None,
 ) -> Array[np.complexfloating]: ...
 @overload
 def corrcoef(
-    m: CoComplex_1nd,
+    x: CoComplex_1nd,
     y: CoComplex_1nd | None = None,
     rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
     *,
     dtype: _DTypeLike[_ScalarT],
 ) -> Array[_ScalarT]: ...
 @overload
 def corrcoef(
-    m: CoComplex_1nd,
+    x: CoComplex_1nd,
     y: CoComplex_1nd | None = None,
     rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
     *,
     dtype: DTypeLike | None = None,
 ) -> Array: ...
@@ -736,7 +746,6 @@ def median(
     a: CoComplex_nd | CoTimeDelta_nd | ToObject_nd,
     axis: _ShapeLike | None,
     out: _ArrayT,
-    /,
     overwrite_input: bool = False,
     keepdims: bool = False,
 ) -> _ArrayT: ...
@@ -1145,3 +1154,5 @@ def append(arr: ArrayLike, values: ArrayLike, axis: SupportsIndex | None = ...) 
 def digitize(x: CoFloating_0d, bins: CoFloating_1d, right: bool = False) -> np.intp: ...
 @overload
 def digitize(x: CoFloating_1nd, bins: CoFloating_1d, right: bool = False) -> Array[np.intp]: ...
+@overload
+def digitize(x: CoFloating_nd, bins: CoFloating_1d, right: bool = False) -> np.intp | Array[np.intp]: ...

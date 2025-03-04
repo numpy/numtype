@@ -1,6 +1,7 @@
 from _typeshed import Incomplete
 from typing import Final
 
+from numpy.lib._function_base_impl import average
 from numpy.lib._index_tricks_impl import AxisConcatenator
 
 from .core import dot, mask_rowcols
@@ -91,13 +92,6 @@ def apply_along_axis(
     **kwargs: Incomplete,
 ) -> Incomplete: ...
 def apply_over_axes(func: Incomplete, a: Incomplete, axes: Incomplete) -> Incomplete: ...
-def average(
-    a: Incomplete,
-    axis: Incomplete = ...,
-    weights: Incomplete = ...,
-    returned: Incomplete = ...,
-    keepdims: Incomplete = ...,
-) -> Incomplete: ...
 def median(
     a: Incomplete,
     axis: Incomplete = ...,
