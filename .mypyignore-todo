@@ -11,14 +11,10 @@ numpy(\..+)?\.complexfloating.__complex__
 numpy(\.lib\._nanfunctions_impl|\.matlib)?\.nan(median|percentile)
 numpy(\.lib\._twodim_base_impl)?\.tri(l|u)
 
+numpy\._core(\._multiarray_umath|\.multiarray)\.error
 numpy(\._core(\.memmap)?|\.matlib)?\.memmap\.__new__
 numpy(\.matrixlib(\.defmatrix)?|\.matlib)?\.matrix\.__new__
 numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
-
-numpy._core.cversions
-numpy._core.printoptions
-
-numpy\._core(\._multiarray_umath|\.multiarray)\.error
 
 numpy._core._type_aliases.is_complex
 numpy._core._type_aliases.full_name
