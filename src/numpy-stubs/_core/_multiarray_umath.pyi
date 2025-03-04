@@ -136,10 +136,12 @@ from numpy._typing import (
     _ArrayLikeInt_co,
     _ArrayLikeNumber_co,
     _ArrayLikeStr_co,
+    _BoolCodes,
     _DTypeLike,
     _NestedSequence,
     _ScalarLike_co,
     _ShapeLike,
+    _SupportsArray,
     _SupportsArrayFunc,
 )
 from numpy._typing._ufunc import (
@@ -163,6 +165,7 @@ _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ShapeT0 = TypeVar("_ShapeT0", bound=tuple[int, ...], default=tuple[int, ...])
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 _ScalarT0 = TypeVar("_ScalarT0", bound=np.generic, default=Any)
 _NumericT = TypeVar("_NumericT", bound=np.bool | np.number | np.timedelta64 | np.object_)
 _SafeScalarT = TypeVar("_SafeScalarT", bound=np.bool | np.number | np.flexible | np.timedelta64 | np.datetime64)  # not `object_`
@@ -400,16 +403,57 @@ euler_gamma: Final[float] = ...
 pi: Final[float] = ...
 
 # 1->1
-isalnum: _ufunc_1_1
-isalpha: _ufunc_1_1
-isdecimal: _ufunc_1_1
-isdigit: _ufunc_1_1
-islower: _ufunc_1_1
-isnumeric: _ufunc_1_1
-isspace: _ufunc_1_1
-istitle: _ufunc_1_1
-isupper: _ufunc_1_1
-str_len: _ufunc_1_1
+_ToDTypeBool: TypeAlias = type[bool] | _DTypeLike[np.bool] | _BoolCodes
+_ToCharStringND: TypeAlias = (
+    _ArrayLike[np.character]
+    | _SupportsArray[np.dtypes.StringDType]
+    | list[str]
+    | list[bytes]
+    | _NestedSequence[list[str]]
+    | _NestedSequence[list[bytes]]
+)
+
+@type_check_only
+class _UFunc11_SUT(Protocol[_ScalarT_co]):
+    @overload
+    def __call__(
+        self,
+        x: str | bytes,
+        /,
+        out: None = None,
+        *,
+        where: bool = True,
+        casting: _CastingKind = "same_kind",
+        order: _OrderKACF = "K",
+        dtype: _ToDTypeBool | None = None,
+        subok: bool = True,
+        signature: str | tuple[npt.DTypeLike, _ToDTypeBool] | None = None,
+    ) -> _ScalarT_co: ...
+    @overload
+    def __call__(
+        self,
+        x: _ToCharStringND,
+        /,
+        out: None = None,
+        *,
+        where: bool = True,
+        casting: _CastingKind = "same_kind",
+        order: _OrderKACF = "K",
+        dtype: _ToDTypeBool | None = None,
+        subok: bool = True,
+        signature: str | tuple[npt.DTypeLike, _ToDTypeBool] | None = None,
+    ) -> npt.NDArray[_ScalarT_co]: ...
+
+isalnum: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+isalpha: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+isdecimal: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+isdigit: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+islower: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+isnumeric: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+isspace: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+istitle: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+isupper: _ufunc_1_1[_UFunc11_SUT[np.bool]]
+str_len: _ufunc_1_1[_UFunc11_SUT[np.intp]]
 _arg: _ufunc_1_1
 _ones_like: _ufunc_1_1
 _lstrip_whitespace: _ufunc_1_1
