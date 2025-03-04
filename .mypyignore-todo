@@ -20,14 +20,6 @@ numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
 numpy._core.cversions
 numpy._core.printoptions
 
-numpy._core._internal.IS_PYPY
-numpy._core._internal._ctypes.__init__
-numpy._core._internal._ctypes.get_(as_parameter|data|shape|strides)
-numpy._core._internal.array_(function|ufunc)_errmsg_formatter
-numpy._core._internal.dummy_ctype
-numpy._core._internal.npy_ctypes_check
-numpy._core._internal.(format|sep|space)_re
-
 numpy\._core(\._multiarray_umath|\.multiarray)\.error
 
 numpy._core._type_aliases.is_complex
