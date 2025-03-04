@@ -76,10 +76,6 @@ class _Kwargs3(_KwargsCommon, total=False):
     signature: _Tuple3[DTypeLike] | str | None
 
 @type_check_only
-class _Kwargs3_g(_KwargsCommon, total=False):
-    signature: _Tuple3[DTypeLike] | str | None
-
-@type_check_only
 class _Kwargs4(_KwargsCommon, total=False):
     where: _ArrayLikeBool_co | None
     signature: _Tuple4[DTypeLike] | str | None
@@ -93,6 +89,18 @@ class _Kwargs3_(_KwargsCommon, total=False):
 class _Kwargs4_(_KwargsCommon, total=False):
     where: _ArrayLikeBool_co | None
     signature: _Tuple4_[DTypeLike] | str | None
+
+@type_check_only
+class _Kwargs2_g(_KwargsCommon, total=False):
+    signature: _Tuple2[DTypeLike] | str | None
+    axes: Sequence[_Tuple2[SupportsIndex]]
+    axis: SupportsIndex
+
+@type_check_only
+class _Kwargs3_g(_KwargsCommon, total=False):
+    signature: _Tuple3[DTypeLike] | str | None
+    axes: Sequence[_Tuple2[SupportsIndex]]
+    axis: SupportsIndex
 
 ###
 # ufunc method signatures
@@ -593,8 +601,118 @@ class _Call22(Protocol):
     ) -> _Tuple2[Any]: ...
 
 @type_check_only
+class _Call11_g(Protocol):
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        /,
+        out: _Out1[_ArrayT],
+        *,
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs2_g],
+    ) -> _ArrayT: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        /,
+        out: _Out1[_AnyArray | None] = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2_g],
+    ) -> Any: ...
+
+@type_check_only
+class _Call12_g(Protocol):
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        out: _Tuple2[None] = (None, None),
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> tuple[Any, Any]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[None, _ArrayT2],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> tuple[Any, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[_ArrayT1, None],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> tuple[_ArrayT1, Any]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None = None,
+        out2: None = None,
+        /,
+        *,
+        out: tuple[_ArrayT1, _ArrayT2],
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> tuple[_ArrayT1, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: None,
+        out2: _ArrayT2,
+        /,
+        *,
+        out: _Tuple2[None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> tuple[Any, _ArrayT2]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: _ArrayT1,
+        out2: None,
+        /,
+        *,
+        out: _Tuple2[None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> tuple[_ArrayT1, Any]: ...
+    @overload
+    def __call__(
+        self,
+        x: ArrayLike,
+        out1: _ArrayT1,
+        out2: _ArrayT2,
+        /,
+        *,
+        out: _Tuple2[None] = (None, None),
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs3_g],
+    ) -> tuple[_ArrayT1, _ArrayT2]: ...
+
+@type_check_only
 class _Call21_g(Protocol):
-    # Scalar for 1D array-likes; ndarray otherwise
+    # scalar for 1D array-likes; ndarray otherwise
     @overload
     def __call__(
         self,
@@ -604,8 +722,6 @@ class _Call21_g(Protocol):
         out: _Out1[_ArrayT],
         *,
         dtype: None = None,
-        axis: SupportsIndex = ...,
-        axes: Sequence[_Tuple2[SupportsIndex]] = ...,
         **kwds: Unpack[_Kwargs3_g],
     ) -> _ArrayT: ...
     @overload
@@ -617,8 +733,6 @@ class _Call21_g(Protocol):
         out: _Out1[_AnyArray | None] = None,
         *,
         dtype: DTypeLike | None = None,
-        axis: SupportsIndex = ...,
-        axes: Sequence[_Tuple2[SupportsIndex]] = ...,
         **kwds: Unpack[_Kwargs3_g],
     ) -> Any: ...
 
@@ -1074,7 +1188,6 @@ _CallT11 = TypeVar("_CallT11", bound=Callable[Concatenate[Any, ...], object], de
 _CallT12 = TypeVar("_CallT12", bound=Callable[Concatenate[Any, ...], tuple[object, object]], default=_Call12)
 _CallT21 = TypeVar("_CallT21", bound=Callable[Concatenate[Any, Any, ...], object], default=_Call21)
 _CallT22 = TypeVar("_CallT22", bound=Callable[Concatenate[Any, Any, ...], tuple[object, object]], default=_Call22)
-_CallT21G = TypeVar("_CallT21G", bound=Callable[Concatenate[Any, ...], object], default=_Call21_g)
 
 _ufunc_1_1 = TypeAliasType(
     "_ufunc_1_1",
@@ -1097,11 +1210,29 @@ _ufunc_2_2 = TypeAliasType(
     type_params=(_CallT22,),
 )
 
+#
+
+_CallT11G = TypeVar("_CallT11G", bound=Callable[Concatenate[Any, ...], object], default=_Call11_g)
+_CallT12G = TypeVar("_CallT12G", bound=Callable[Concatenate[Any, ...], object], default=_Call12_g)
+_CallT21G = TypeVar("_CallT21G", bound=Callable[Concatenate[Any, ...], object], default=_Call21_g)
+
+_gufunc_1_1 = TypeAliasType(
+    "_gufunc_1_1",
+    np.ufunc[_CallT11G, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
+    type_params=(_CallT11G,),
+)
+_gufunc_1_2 = TypeAliasType(
+    "_gufunc_1_2",
+    np.ufunc[_CallT12G, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
+    type_params=(_CallT12G,),
+)
 _gufunc_2_1 = TypeAliasType(
     "_gufunc_2_1",
-    np.ufunc[_CallT21G, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _Outer2],
+    np.ufunc[_CallT21G, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _Outer1],
     type_params=(_CallT21G,),
 )
+
+#
 
 _pyfunc_1_1 = TypeAliasType(
     "_pyfunc_1_1",
