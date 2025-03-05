@@ -1,18 +1,21 @@
 import abc
+from binascii import Incomplete
 from collections.abc import Callable, Mapping, Sequence
 from threading import Lock
-from typing import Any, Generic, Literal, NamedTuple, TypeAlias, TypedDict, overload, type_check_only
-from typing_extensions import Self, TypeVar
+from typing import Any, ClassVar, Generic, Literal as L, NamedTuple, TypeAlias, TypedDict, overload, type_check_only
+from typing_extensions import CapsuleType, Self, TypeVar
 
 import numpy as np
 from numpy._typing import NDArray, _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes
 
 __all__ = ["BitGenerator", "SeedSequence"]
 
+###
+
 _StateT = TypeVar("_StateT", bound=Mapping[str, object], default=Mapping[str, Any])
 
-_DTypeLikeUint32: TypeAlias = _DTypeLike[np.uint32] | _UInt32Codes
-_DTypeLikeUint64: TypeAlias = _DTypeLike[np.uint64] | _UInt64Codes
+_ToDTypeUInt32: TypeAlias = _DTypeLike[np.uint32] | _UInt32Codes
+_ToDTypeUInt64: TypeAlias = _DTypeLike[np.uint64] | _UInt64Codes
 
 ###
 
@@ -25,93 +28,96 @@ class _SeedSeqState(TypedDict):
 
 @type_check_only
 class _Interface(NamedTuple):
-    state_address: Any
-    state: Any
-    next_uint64: Any
-    next_uint32: Any
-    next_double: Any
-    bit_generator: Any
+    state_address: Incomplete
+    state: Incomplete
+    next_uint64: Incomplete
+    next_uint32: Incomplete
+    next_double: Incomplete
+    bit_generator: Incomplete
 
-class ISeedSequence(abc.ABC):
-    @abc.abstractmethod
-    def generate_state(
-        self,
-        n_words: int,
-        dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...,
-    ) -> NDArray[np.uint32 | np.uint64]: ...
+@type_check_only
+class _CythonMixin:
+    def __setstate_cython__(self, pyx_state: object, /) -> None: ...
+    def __reduce_cython__(self) -> Any: ...
 
-class ISpawnableSeedSequence(ISeedSequence, abc.ABC):
-    @abc.abstractmethod
-    def spawn(self, n_children: int) -> list[Self]: ...
+@type_check_only
+class _GenerateStateMixin(_CythonMixin):
+    @overload
+    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt32 = ...) -> NDArray[np.uint32]: ...
+    @overload
+    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt64) -> NDArray[np.uint64]: ...
+    @overload
+    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt32 | _ToDTypeUInt64 = ...) -> NDArray[np.uint32 | np.uint64]: ...
 
-class SeedlessSeedSequence(ISpawnableSeedSequence):
-    def generate_state(
-        self,
-        n_words: int,
-        dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...,
-    ) -> NDArray[np.uint32 | np.uint64]: ...
-    def spawn(self, n_children: int) -> list[Self]: ...
+###
 
-class SeedSequence(ISpawnableSeedSequence):
-    entropy: int | Sequence[int] | None
-    spawn_key: tuple[int, ...]
-    pool_size: int
-    n_children_spawned: int
-    pool: NDArray[np.uint32]
-
-    @property
-    def state(self) -> _SeedSeqState: ...
-
-    #
-    def __init__(
-        self,
-        entropy: int | Sequence[int] | _ArrayLikeInt_co | None = None,
-        *,
-        spawn_key: Sequence[int] = ...,
-        pool_size: int = ...,
-        n_children_spawned: int = ...,
-    ) -> None: ...
-    def generate_state(
-        self,
-        n_words: int,
-        dtype: _DTypeLikeUint32 | _DTypeLikeUint64 = ...,
-    ) -> NDArray[np.uint32 | np.uint64]: ...
-    def spawn(self, n_children: int) -> list[SeedSequence]: ...
-
-class BitGenerator(abc.ABC, Generic[_StateT]):
+class BitGenerator(_CythonMixin, abc.ABC, Generic[_StateT]):
     lock: Lock
-
-    def __init__(self, /, seed: _ArrayLikeInt_co | SeedSequence | None = None) -> None: ...
-    def __getstate__(self) -> tuple[_StateT, ISeedSequence]: ...
-    def __setstate__(self, state_seed_seq: _StateT | tuple[Mapping[str, Any], ISeedSequence]) -> None: ...
-    def __reduce__(self) -> tuple[Callable[[str], Self], tuple[str], tuple[Mapping[str, Any], ISeedSequence]]: ...
 
     #
     @property
     def state(self, /) -> _StateT: ...
     @state.setter
     def state(self, state: _StateT, /) -> None: ...
-
-    #
     @property
     def seed_seq(self) -> ISeedSequence: ...
     @property
     def ctypes(self) -> _Interface: ...
     @property
     def cffi(self) -> _Interface: ...
+    @property
+    def capsule(self) -> CapsuleType: ...
 
     #
-    def spawn(self, n_children: int) -> list[Self]: ...
+    def __init__(self, /, seed: _ArrayLikeInt_co | SeedSequence | None = None) -> None: ...
+    def __reduce__(self) -> tuple[Callable[[str], Self], tuple[str], tuple[Mapping[str, Any], ISeedSequence]]: ...
+    def spawn(self, /, n_children: int) -> list[Self]: ...
+    def _benchmark(self, /, cnt: int, method: str = "uint64") -> None: ...
 
     #
     @overload
-    def random_raw(self, /, size: None = None, output: Literal[True] = True) -> int: ...
+    def random_raw(self, /, size: None = None, output: L[True] = True) -> int: ...
     @overload
-    def random_raw(self, /, size: _ShapeLike, output: Literal[True] = True) -> NDArray[np.uint64]: ...
+    def random_raw(self, /, size: _ShapeLike, output: L[True] = True) -> NDArray[np.uint64]: ...
     @overload
-    def random_raw(self, /, size: _ShapeLike | None, output: Literal[False]) -> None: ...
+    def random_raw(self, /, size: _ShapeLike | None, output: L[False]) -> None: ...
     @overload
-    def random_raw(self, /, size: _ShapeLike | None = None, *, output: Literal[False]) -> None: ...
+    def random_raw(self, /, size: _ShapeLike | None = None, *, output: L[False]) -> None: ...
+
+###
+
+class ISeedSequence(abc.ABC):
+    @abc.abstractmethod
+    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt32 | _ToDTypeUInt64 = ...) -> NDArray[np.uint32 | np.uint64]: ...
+
+class ISpawnableSeedSequence(ISeedSequence, abc.ABC):
+    @abc.abstractmethod
+    def spawn(self, /, n_children: int) -> list[Self]: ...
+
+class SeedlessSeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
+    def spawn(self, /, n_children: int) -> list[Self]: ...
+
+class SeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
+    __pyx_vtable__: ClassVar[CapsuleType] = ...
+
+    entropy: int | Sequence[int] | None
+    spawn_key: tuple[int, ...]
+    pool_size: int
+    n_children_spawned: int
+    pool: NDArray[np.uint32]
+
+    def __init__(
+        self,
+        /,
+        entropy: _ArrayLikeInt_co | None = None,
+        *,
+        spawn_key: Sequence[int] = (),
+        pool_size: int = 4,
+        n_children_spawned: int = ...,
+    ) -> None: ...
 
     #
-    def _benchmark(self, cnt: int, method: str = ...) -> None: ...
+    def spawn(self, /, n_children: int) -> list[Self]: ...
+    #
+    @property
+    def state(self) -> _SeedSeqState: ...
