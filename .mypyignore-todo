@@ -15,7 +15,6 @@ numpy._pyinstaller.hook-numpy
 numpy.ctypeslib._ctypeslib
 numpy.fft.helper
 
-numpy.lib.mixins.NDArrayOperatorsMixin.__array_ufunc__
 numpy.lib.recfunctions.unstructured_to_structured
 
 numpy.distutils
