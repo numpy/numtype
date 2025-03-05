@@ -15,8 +15,6 @@ numpy._pyinstaller.hook-numpy
 numpy.ctypeslib._ctypeslib
 numpy.fft.helper
 
-numpy.lib.format.open_memmap
-numpy.lib.format.read_array(_header_(1|2)_0)?
 numpy.lib.mixins.NDArrayOperatorsMixin.__array_ufunc__
 numpy.lib.recfunctions.unstructured_to_structured
 

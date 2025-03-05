@@ -876,6 +876,10 @@ _BinOperandComplex128_co: TypeAlias = complex | floating[_64Bit] | integer[_64Bi
 _ToReal: TypeAlias = float | CanComplex | CanFloat | CanIndex
 _ToImag: TypeAlias = float | CanFloat | CanIndex
 
+_DTypeDescr: TypeAlias = (
+    list[tuple[str, str]] | list[tuple[str, str, tuple[int, ...]]] | list[tuple[str, str] | tuple[str, str, tuple[int, ...]]]
+)
+
 ###
 # TypedDict's (for internal use only)
 
@@ -1014,7 +1018,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @property
     def char(self) -> _DTypeChar: ...
     @property
-    def descr(self) -> list[tuple[LiteralString, LiteralString] | tuple[LiteralString, LiteralString, tuple[int, ...]]]: ...
+    def descr(self) -> _DTypeDescr: ...
     @property
     def fields(self) -> MappingProxyType[LiteralString, tuple[dtype[Any], int] | tuple[dtype[Any], int, Any]] | None: ...
     @property
