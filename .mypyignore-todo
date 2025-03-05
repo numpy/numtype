@@ -15,7 +15,6 @@ numpy._pyinstaller.hook-numpy
 numpy.ctypeslib._ctypeslib
 numpy.fft.helper
 
-numpy(\.lib\._polynomial_impl|\.matlib)?\.poly1d\.integ
 numpy.lib(._arrayterator_impl)?.Arrayterator.__array__
 numpy.lib.(_array_utils_impl|array_utils).normalize_axis_tuple
 numpy.lib._iotools.NameValidator.defaultdeletechars
