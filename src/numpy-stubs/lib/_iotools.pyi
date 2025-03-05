@@ -1,5 +1,5 @@
-from collections.abc import Callable, Iterable, Sequence
-from typing import Any, ClassVar, Final, Literal, TypedDict, overload, type_check_only
+from collections.abc import Callable, Iterable
+from typing import Any, ClassVar, Final, Literal as L, TypedDict, overload, type_check_only
 from typing_extensions import TypeVar, Unpack
 
 import numpy as np
@@ -11,7 +11,7 @@ _T = TypeVar("_T")
 class _ValidationKwargs(TypedDict, total=False):
     excludelist: Iterable[str] | None
     deletechars: Iterable[str] | None
-    case_sensitive: Literal["upper", "lower"] | bool | None
+    case_sensitive: L["upper", "lower"] | bool | None
     replace_space: str
 
 ###
@@ -39,8 +39,8 @@ class LineSplitter:
     def autostrip(self, /, method: Callable[[_T], Iterable[str]]) -> Callable[[_T], list[str]]: ...
 
 class NameValidator:
-    defaultexcludelist: ClassVar[Sequence[str]]
-    defaultdeletechars: ClassVar[Sequence[str]]
+    defaultexcludelist: ClassVar[list[L["return", "file", "print"]]]
+    defaultdeletechars: ClassVar[set[str]]
     excludelist: list[str]
     deletechars: set[str]
     case_converter: Callable[[str], str]
@@ -51,7 +51,7 @@ class NameValidator:
         /,
         excludelist: Iterable[str] | None = None,
         deletechars: Iterable[str] | None = None,
-        case_sensitive: Literal["upper", "lower"] | bool | None = None,
+        case_sensitive: L["upper", "lower"] | bool | None = None,
         replace_space: str = "_",
     ) -> None: ...
     def __call__(self, /, names: Iterable[str], defaultfmt: str = "f%i", nbfields: int | None = None) -> tuple[str, ...]: ...
@@ -90,16 +90,20 @@ class StringConverter:
     def upgrade_mapper(cls, func: Callable[[str], Any], default: object | None = None) -> None: ...
 
 @overload
-def str2bool(value: Literal["false", "False", "FALSE"]) -> Literal[False]: ...
+def str2bool(value: L["false", "False", "FALSE"]) -> L[False]: ...
 @overload
-def str2bool(value: Literal["true", "True", "TRUE"]) -> Literal[True]: ...
+def str2bool(value: L["true", "True", "TRUE"]) -> L[True]: ...
 
 #
 def has_nested_fields(ndtype: np.dtype[np.void]) -> bool: ...
+
+#
 def flatten_dtype(
     ndtype: np.dtype[np.void],
     flatten_base: bool = False,
 ) -> type[np.dtype[np.bool | np.number | np.character | np.object_ | np.datetime64 | np.timedelta64]]: ...
+
+#
 def easy_dtype(
     ndtype: npt.DTypeLike,
     names: Iterable[str] | None = None,

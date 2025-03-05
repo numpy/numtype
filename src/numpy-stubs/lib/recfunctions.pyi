@@ -32,6 +32,8 @@ __all__ = [
     "unstructured_to_structured",
 ]
 
+###
+
 _T = TypeVar("_T")
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
@@ -263,6 +265,16 @@ def unstructured_to_structured(
 def unstructured_to_structured(
     arr: npt.NDArray[Any],
     dtype: None,
+    names: _OneOrMany[str],
+    align: bool = False,
+    copy: bool = False,
+    casting: str = "unsafe",
+) -> npt.NDArray[np.void]: ...
+@overload
+def unstructured_to_structured(
+    arr: npt.NDArray[Any],
+    dtype: None = None,
+    *,
     names: _OneOrMany[str],
     align: bool = False,
     copy: bool = False,
