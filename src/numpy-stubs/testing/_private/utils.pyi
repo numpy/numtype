@@ -170,10 +170,12 @@ else:
 
 #
 def print_assert_equal(test_string: str, actual: object, desired: object) -> None: ...
+
+#
 def assert_(val: object, msg: str | Callable[[], str] = "") -> None: ...
 def assert_equal(
-    actual: ArrayLike,
-    desired: ArrayLike,
+    actual: object,
+    desired: object,
     err_msg: str = "",
     verbose: bool = True,
     *,
@@ -216,8 +218,8 @@ def assert_array_compare(
 
 #
 def assert_array_equal(
-    actual: ArrayLike,
-    desired: ArrayLike,
+    actual: object,
+    desired: object,
     err_msg: str = "",
     verbose: bool = True,
     *,
@@ -236,15 +238,6 @@ def assert_array_almost_equal(
 #
 @overload
 def assert_array_less(
-    x: _NumericArrayLike,
-    y: _NumericArrayLike,
-    err_msg: str = "",
-    verbose: bool = True,
-    *,
-    strict: bool = False,
-) -> None: ...
-@overload
-def assert_array_less(
     x: _ArrayLikeTD64_co,
     y: _ArrayLikeTD64_co,
     err_msg: str = "",
@@ -256,6 +249,15 @@ def assert_array_less(
 def assert_array_less(
     x: _ArrayLikeDT64_co,
     y: _ArrayLikeDT64_co,
+    err_msg: str = "",
+    verbose: bool = True,
+    *,
+    strict: bool = False,
+) -> None: ...
+@overload
+def assert_array_less(
+    x: _NumericArrayLike,
+    y: _NumericArrayLike,
     err_msg: str = "",
     verbose: bool = True,
     *,
@@ -302,8 +304,8 @@ def assert_raises_regex(
 #
 @overload
 def assert_allclose(
-    actual: _ArrayLikeNumber_co | _ArrayLikeObject_co,
-    desired: _ArrayLikeNumber_co | _ArrayLikeObject_co,
+    actual: _ArrayLikeTD64_co,
+    desired: _ArrayLikeTD64_co,
     rtol: float = 1e-7,
     atol: float = 0,
     equal_nan: bool = True,
@@ -314,8 +316,8 @@ def assert_allclose(
 ) -> None: ...
 @overload
 def assert_allclose(
-    actual: _ArrayLikeTD64_co,
-    desired: _ArrayLikeTD64_co,
+    actual: _NumericArrayLike,
+    desired: _NumericArrayLike,
     rtol: float = 1e-7,
     atol: float = 0,
     equal_nan: bool = True,

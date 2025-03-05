@@ -231,9 +231,4 @@ numpy.polynomial.polynomial.polyvander
 numpy.polynomial.polynomial.polyvander2d
 numpy.polynomial.polynomial.polyvander3d
 
-numpy.testing.TestCase.__init_subclass__
-numpy.testing.TestCase._addSkip
-numpy.testing.TestCase.assertDictContainsSubset
-numpy.testing.TestCase.enter(Class)?Context
-
 numpy.typing.NBitBase

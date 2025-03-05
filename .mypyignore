@@ -1,7 +1,8 @@
+# intentional type-check-only deviations from runtime
 numpy\.__numtype__
-numpy\.polynomial\._polytypes
 numpy\._typing.*
-numpy\.typing\.mypy_plugin
+numpy\.polynomial\._polytypes
+
 
 # internal testing code
 numpy\.conftest
@@ -25,11 +26,16 @@ numpy\.matlib\.__all__
 # requires numpy/_core/code_generators to be on the PYTHONPATH when running stubtest
 numpy\._core\.cversions
 
+# mypy plugin
+numpy\.typing\.mypy_plugin
+
+
 # workaround mypy's lack of Python 3.13 support for `NamedTuple` types (mypy <= 1.15.0)
-numpy\._core\.overrides\.ArgSpec\.__replace__
-numpy\._utils\._pep440\._Version\.__replace__
-numpy\.lib\._arraysetops_impl\.Unique(All|Counts|Inverse)Result\.__replace__
-numpy\.linalg\._linalg\.(Eig|Eigh|QR|SVD|Slogdet)Result\.__replace__
+numpy(\.\w+)+\.__replace__
 
 # workaround for https://github.com/python/mypy/issues/15302#issuecomment-2701979355
 numpy\.testing(\._private\.utils)?\.check_support_sve
+
+# workaround for stubtest ignoring `if sys.version_info` blocks in `_typeshed` when
+# `python_version`
+numpy\.testing\.TestCase\.[_a-zA-Z]+
