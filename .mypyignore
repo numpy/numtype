@@ -6,7 +6,7 @@ numpy\.typing\.mypy_plugin
 # internal testing code
 numpy\.conftest
 numpy(\.\w+)?\.tests.*
-numpy.random._generator.__test__
+numpy\.random\._generator\.__test__
 
 # workaround for the `dtype.type` generic class-attribute that's `None` unless instantiated
 numpy(\..+)?\.dtype\.type
@@ -30,3 +30,6 @@ numpy\._core\.overrides\.ArgSpec\.__replace__
 numpy\._utils\._pep440\._Version\.__replace__
 numpy\.lib\._arraysetops_impl\.Unique(All|Counts|Inverse)Result\.__replace__
 numpy\.linalg\._linalg\.(Eig|Eigh|QR|SVD|Slogdet)Result\.__replace__
+
+# workaround for https://github.com/python/mypy/issues/15302#issuecomment-2701979355
+numpy\.testing(\._private\.utils)?\.check_support_sve

@@ -231,15 +231,6 @@ numpy.polynomial.polynomial.polyvander
 numpy.polynomial.polynomial.polyvander2d
 numpy.polynomial.polynomial.polyvander3d
 
-numpy\.testing(\._private.utils)?\.assert_array_equal
-numpy\.testing(\._private.utils)?\.assert_array_almost_equal
-numpy\.testing(\._private.utils)?\.assert_array_compare
-numpy\.testing(\._private.utils)?\.assert_raises_regex
-numpy\.testing(\._private.utils)?\.assert_warns
-numpy\.testing(\._private.utils)?\.check_support_sve
-numpy\.testing(\._private.utils)?\.run_threaded
-numpy.testing._private.utils.raises
-numpy.testing.run_threaded
 numpy.testing.TestCase.__init_subclass__
 numpy.testing.TestCase._addSkip
 numpy.testing.TestCase.assertDictContainsSubset
