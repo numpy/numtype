@@ -231,9 +231,6 @@ numpy.polynomial.polynomial.polyvander
 numpy.polynomial.polynomial.polyvander2d
 numpy.polynomial.polynomial.polyvander3d
 
-numpy\.random(\.bit_generator)?\.BitGenerator\.capsule
-numpy\.random\.((_mt19937\.)?MT19937|(_pcg64\.)?PCG64(DXSM)?|(_philox\.)?Philox|(_sfc64\.)?SFC64|(bit_generator\.)?(Seedless)?SeedSequence)\.__(reduce|setstate)_cython__
-
 numpy\.testing(\._private.utils)?\.assert_array_equal
 numpy\.testing(\._private.utils)?\.assert_array_almost_equal
 numpy\.testing(\._private.utils)?\.assert_array_compare
