@@ -15,8 +15,6 @@ numpy._pyinstaller.hook-numpy
 numpy.ctypeslib._ctypeslib
 numpy.fft.helper
 
-numpy.lib.recfunctions.unstructured_to_structured
-
 numpy.distutils
 
 numpy.f2py.__main__
