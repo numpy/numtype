@@ -263,7 +263,6 @@ from ._typing import (
     _TD64Like_co,
     _VoidDTypeLike,
 )
-from ._typing._callable import _ComparisonOpGE, _ComparisonOpGT, _ComparisonOpLE, _ComparisonOpLT
 from ._typing._char_codes import (
     _BoolCodes,
     _BytesCodes,
@@ -924,6 +923,22 @@ class _HasDateAttributes(Protocol):
     @property
     def year(self) -> int: ...
 
+@type_check_only
+class _CanLT(Protocol):
+    def __lt__(self, x: Any, /) -> Any: ...
+
+@type_check_only
+class _CanLE(Protocol):
+    def __le__(self, x: Any, /) -> Any: ...
+
+@type_check_only
+class _CanGT(Protocol):
+    def __gt__(self, x: Any, /) -> Any: ...
+
+@type_check_only
+class _CanGE(Protocol):
+    def __ge__(self, x: Any, /) -> Any: ...
+
 ###
 # Mixins (for internal use only)
 
@@ -948,6 +963,42 @@ class _IntegralMixin(_RealMixin):
     @property
     def denominator(self) -> L[1]: ...
     def is_integer(self, /) -> L[True]: ...
+
+_ScalarLikeT_contra = TypeVar("_ScalarLikeT_contra", contravariant=True)
+_ArrayLikeT_contra = TypeVar("_ArrayLikeT_contra", contravariant=True)
+
+@type_check_only
+class _NumericComparisonMixin(Generic[_ScalarLikeT_contra, _ArrayLikeT_contra]):
+    @overload
+    def __lt__(self, x: _ScalarLikeT_contra, /) -> bool_: ...
+    @overload
+    def __lt__(self, x: _ArrayLikeT_contra | _NestedSequence[_CanGT], /) -> NDArray[bool_]: ...
+    @overload
+    def __lt__(self, x: _CanGT, /) -> bool_: ...
+
+    #
+    @overload
+    def __le__(self, x: _ScalarLikeT_contra, /) -> bool_: ...
+    @overload
+    def __le__(self, x: _ArrayLikeT_contra | _NestedSequence[_CanGE], /) -> NDArray[bool_]: ...
+    @overload
+    def __le__(self, x: _CanGE, /) -> bool_: ...
+
+    #
+    @overload
+    def __gt__(self, x: _ScalarLikeT_contra, /) -> bool_: ...
+    @overload
+    def __gt__(self, x: _ArrayLikeT_contra | _NestedSequence[_CanLT], /) -> NDArray[bool_]: ...
+    @overload
+    def __gt__(self, x: _CanLT, /) -> bool_: ...
+
+    #
+    @overload
+    def __ge__(self, x: _ScalarLikeT_contra, /) -> bool_: ...
+    @overload
+    def __ge__(self, x: _ArrayLikeT_contra | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
+    @overload
+    def __ge__(self, x: _CanLE, /) -> bool_: ...
 
 ###
 # NumType only: Does not exist at runtime!
@@ -4133,7 +4184,11 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     @property
     def dtype(self) -> dtype[Self]: ...
 
-class number(generic[_NumberItemT_co], Generic[_NBitT, _NumberItemT_co]):
+class number(
+    _NumericComparisonMixin[_NumberLike_co, _ArrayLikeNumber_co],
+    generic[_NumberItemT_co],
+    Generic[_NBitT, _NumberItemT_co],
+):
     @abc.abstractmethod
     def __init__(self, value: _NumberItemT_co, /) -> None: ...
 
@@ -4159,12 +4214,11 @@ class number(generic[_NumberItemT_co], Generic[_NBitT, _NumberItemT_co]):
     def __floordiv__(self: number[Any, float], x: Any, /) -> floating | integer: ...
     def __rfloordiv__(self: number[Any, float], x: Any, /) -> floating | integer: ...
 
-    __lt__: _ComparisonOpLT[_NumberLike_co, _ArrayLikeNumber_co]
-    __le__: _ComparisonOpLE[_NumberLike_co, _ArrayLikeNumber_co]
-    __gt__: _ComparisonOpGT[_NumberLike_co, _ArrayLikeNumber_co]
-    __ge__: _ComparisonOpGE[_NumberLike_co, _ArrayLikeNumber_co]
-
-class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
+class bool(
+    _NumericComparisonMixin[_NumberLike_co, _ArrayLikeNumber_co],
+    generic[_BoolItemT_co],
+    Generic[_BoolItemT_co],
+):
     @property
     def itemsize(self) -> L[1]: ...
     @property
@@ -4186,11 +4240,11 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __hash__(self, /) -> int: ...
 
     #
-    def __bool__(self, /) -> _BoolItemT_co: ...
-
-    #
     @deprecated("In future, it will be an error for 'np.bool' scalars to be interpreted as an index")
     def __index__(self, /) -> L[0, 1]: ...
+
+    #
+    def __bool__(self, /) -> _BoolItemT_co: ...
 
     #
     @overload
@@ -4494,12 +4548,6 @@ class bool(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __ror__(self, x: _IntegerT, /) -> _IntegerT: ...
     @overload
     def __ror__(self, x: int, /) -> intp | bool_: ...
-
-    #
-    __lt__: _ComparisonOpLT[_NumberLike_co, _ArrayLikeNumber_co]
-    __le__: _ComparisonOpLE[_NumberLike_co, _ArrayLikeNumber_co]
-    __gt__: _ComparisonOpGT[_NumberLike_co, _ArrayLikeNumber_co]
-    __ge__: _ComparisonOpGE[_NumberLike_co, _ArrayLikeNumber_co]
 
 # NOTE: The `object_` constructor returns the passed object, so instances with type
 # `object_` cannot exists (at runtime).
@@ -6402,7 +6450,12 @@ class complex128(complexfloating[_64Bit], complex):
     @override
     def conjugate(self) -> Self: ...
 
-class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]):
+class timedelta64(
+    _NumericComparisonMixin[_TD64Like_co, _ArrayLikeDT64_co],
+    _IntegralMixin,
+    generic[_TD64ItemT_co],
+    Generic[_TD64ItemT_co],
+):
     @property
     def itemsize(self) -> L[8]: ...
     @property
@@ -6582,12 +6635,12 @@ class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
     @overload
     def __rdivmod__(self: timedelta64[dt.timedelta], x: dt.timedelta, /) -> tuple[int, dt.timedelta]: ...
 
-    __lt__: _ComparisonOpLT[_TD64Like_co, _ArrayLikeTD64_co]
-    __le__: _ComparisonOpLE[_TD64Like_co, _ArrayLikeTD64_co]
-    __gt__: _ComparisonOpGT[_TD64Like_co, _ArrayLikeTD64_co]
-    __ge__: _ComparisonOpGE[_TD64Like_co, _ArrayLikeTD64_co]
-
-class datetime64(_RealMixin, generic[_DT64ItemT_co], Generic[_DT64ItemT_co]):
+class datetime64(
+    _RealMixin,
+    _NumericComparisonMixin[datetime64, _ArrayLikeDT64_co],
+    generic[_DT64ItemT_co],
+    Generic[_DT64ItemT_co],
+):
     @property
     def itemsize(self) -> L[8]: ...
     @property
@@ -6672,11 +6725,6 @@ class datetime64(_RealMixin, generic[_DT64ItemT_co], Generic[_DT64ItemT_co]):
 
     #
     def __rsub__(self: datetime64[_AnyDate], x: _AnyDate, /) -> dt.timedelta: ...
-
-    __lt__: _ComparisonOpLT[datetime64, _ArrayLikeDT64_co]
-    __le__: _ComparisonOpLE[datetime64, _ArrayLikeDT64_co]
-    __gt__: _ComparisonOpGT[datetime64, _ArrayLikeDT64_co]
-    __ge__: _ComparisonOpGE[datetime64, _ArrayLikeDT64_co]
 
 @final
 class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):  # type: ignore[misc]
