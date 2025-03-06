@@ -1561,8 +1561,8 @@ class _ArrayOrScalarCommon:
     @property
     def device(self) -> _Device: ...
 
-    if sys.version_info >= (3, 12):
-        def __buffer__(self, flags: int, /) -> memoryview: ...
+    # typeshed forces us to lie about this on python<3.12
+    def __buffer__(self, flags: int, /) -> memoryview: ...
 
     #
     @property
