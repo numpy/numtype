@@ -1,7 +1,7 @@
 import abc
 from collections.abc import Iterator, Mapping, Sequence
-from typing import Any, ClassVar, Final, Generic, Literal, SupportsIndex, TypeAlias, overload
-from typing_extensions import LiteralString, Self, TypeIs, TypeVar
+from typing import Any, ClassVar, Final, Literal, SupportsIndex, TypeAlias, overload
+from typing_extensions import Self, TypeIs, TypeVar
 
 import numpy as np
 import numpy.typing as npt
@@ -14,7 +14,6 @@ __all__: Final[Sequence[str]] = ("ABCPolyBase",)
 
 ###
 
-_NameT_co = TypeVar("_NameT_co", bound=str | None, default=LiteralString | None, covariant=True)
 _PolyT = TypeVar("_PolyT", bound=ABCPolyBase)
 
 _AnyOther: TypeAlias = ABCPolyBase | _ToNumeric_0d | CoComplex_1d
@@ -22,7 +21,7 @@ _Hundred: TypeAlias = Literal[100]
 
 ###
 
-class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
+class ABCPolyBase(abc.ABC):
     __hash__: ClassVar[None]  # type: ignore[assignment]  # pyright: ignore[reportIncompatibleMethodOverride]
     __array_ufunc__: ClassVar[None]
 
@@ -30,15 +29,23 @@ class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
     _superscript_mapping: ClassVar[Mapping[int, str]]
     _subscript_mapping: ClassVar[Mapping[int, str]]
     _use_unicode: ClassVar[bool]
+    _symbol: str
 
-    basis_name: _NameT_co
     coef: _InexactObject_1d
-    domain: Array_1d[np.inexact]
-    window: Array_1d[np.inexact]
 
-    _symbol: LiteralString
     @property
-    def symbol(self, /) -> LiteralString: ...
+    def symbol(self, /) -> str: ...
+
+    #
+    @property
+    @abc.abstractmethod
+    def basis_name(self, /) -> str | None: ...
+    @property
+    @abc.abstractmethod
+    def domain(self, /) -> Array_1d[np.inexact]: ...
+    @property
+    @abc.abstractmethod
+    def window(self, /) -> Array_1d[np.inexact]: ...
 
     #
     def __init__(
@@ -81,6 +88,7 @@ class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
     def __rmul__(self, x: _AnyOther, /) -> Self: ...
     def __rtruediv__(self, x: _AnyOther, /) -> Self: ...
     def __rfloordiv__(self, x: _AnyOther, /) -> Self: ...
+    def __rdiv__(self, x: _AnyOther, /) -> Self: ...
     def __rmod__(self, x: _AnyOther, /) -> Self: ...
     def __rdivmod__(self, x: _AnyOther, /) -> _Tuple2[Self]: ...
     def __len__(self, /) -> int: ...
@@ -97,7 +105,7 @@ class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
     #
     def copy(self, /) -> Self: ...
     def degree(self, /) -> int: ...
-    def cutdeg(self, /) -> Self: ...
+    def cutdeg(self, /, deg: int) -> Self: ...
     def trim(self, /, tol: _FloatLike_co = 0) -> Self: ...
     def truncate(self, /, size: _ToInt) -> Self: ...
 
@@ -178,12 +186,17 @@ class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
     def fromroots(
         cls,
         roots: _ToNumeric_nd,
-        domain: CoComplex_1d | None = None,
+        domain: CoComplex_1d | None = [],
         window: CoComplex_1d | None = None,
         symbol: str = "x",
     ) -> Self: ...
     @classmethod
-    def identity(cls, domain: CoComplex_1d | None = None, window: CoComplex_1d | None = None, symbol: str = "x") -> Self: ...
+    def identity(
+        cls,
+        domain: CoComplex_1d | None = None,
+        window: CoComplex_1d | None = None,
+        symbol: str = "x",
+    ) -> Self: ...
     @classmethod
     def basis(
         cls,
@@ -193,10 +206,17 @@ class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
         symbol: str = "x",
     ) -> Self: ...
     @classmethod
-    def cast(cls, series: ABCPolyBase, domain: CoComplex_1d | None = None, window: CoComplex_1d | None = None) -> Self: ...
+    def cast(
+        cls,
+        series: ABCPolyBase,
+        domain: CoComplex_1d | None = None,
+        window: CoComplex_1d | None = None,
+    ) -> Self: ...
+
+    #
     @classmethod
     def _str_term_unicode(cls, /, i: str, arg_str: str) -> str: ...
-    @staticmethod
-    def _str_term_ascii(i: str, arg_str: str) -> str: ...
-    @staticmethod
-    def _repr_latex_term(i: str, arg_str: str, needs_parens: bool) -> str: ...
+    @classmethod
+    def _str_term_ascii(cls, i: str, arg_str: str) -> str: ...
+    @classmethod
+    def _repr_latex_term(cls, i: str, arg_str: str, needs_parens: bool) -> str: ...
