@@ -21,14 +21,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pre-commit/action@v3.0.1
-        with:
-          extra_args: --all-files
+      - name: typos
+        uses: crate-ci/typos@master
 
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
           python-version: 3.13t
+
+      - name: ruff
+        run: |
+          uv run --no-group=orjson ruff check --output-format=github
+          uv run --no-group=orjson ruff format --check
 
       - name: pytest
         run: uv run --no-group=orjson pytest

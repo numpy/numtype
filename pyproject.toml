@@ -75,7 +75,6 @@ packages = [
         "/tool",
         ".mypyignore",
         ".mypyignore-todo",
-        ".pre-commit-config.yaml",
         "CONTRIBUTING.md",
         "uv.lock",
     ]
@@ -254,11 +253,6 @@ env_list = ["lint", "test", "pyright", "3.13", "3.12", "3.11", "3.10"]
     commands = [
         ["uv", "run", "-q", "-p={base_python}", "--active", "tool/stubtest.py", "--concise"],
     ]
-
-    [tool.tox.env.pre-commit]
-    description = "pre-commit"
-    skip_install = true
-    commands = [["uvx", "pre-commit", "run", "-a", "--show-diff-on-failure"]]
 
     [tool.tox.env.lint]
     description = "lint"
