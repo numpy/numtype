@@ -30,6 +30,6 @@ numpy\.typing\.mypy_plugin
 # workaround for https://github.com/python/mypy/issues/15302#issuecomment-2701979355
 numpy\.testing(\._private\.utils)?\.check_support_sve
 
-# blame typeshed
+# stdlib re-exports with incorrect typeshed stubs
 numpy\.compat(\.py3k)?\.os_PathLike\.__class_getitem__
 numpy\.testing\.TestCase\.__init_subclass__
