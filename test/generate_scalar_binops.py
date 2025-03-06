@@ -29,6 +29,12 @@ OPS = {
     "&": op.__and__,
     "^": op.__xor__,
     "|": op.__or__,
+    "<": op.__lt__,
+    "<=": op.__le__,
+    ">=": op.__ge__,
+    ">": op.__gt__,
+    # TODO(jorenham): these currently all return `Any`; fix this
+    # "==": op.__eq__,
 }
 NAMES = {
     # builtins (key length > 1)
@@ -70,10 +76,10 @@ BITWISE_OPS = {"<<", ">>", "&", "^", "|"}
 BITWISE_CHARS = "?bhilqBHILQ"
 
 
-def _scalar(key: str, /) -> np.generic | complex:
+def _scalar(key: str, /) -> np.number | np.bool | np.timedelta64 | np.datetime64 | bool:
     if len(key) > 1:
         # must be one of the builtin scalars
-        pytype: type[complex] = getattr(__builtins__, key)
+        pytype: type[bool] = getattr(__builtins__, key)
         return pytype(1)
 
     dtype = np.dtype(key)
@@ -105,7 +111,7 @@ def _assert_stmt(op: str, lhs: str, rhs: str, /) -> str | None:
     expr_eval = f"{NAMES[lhs]}{pad}{op}{pad}{NAMES[rhs]}"
 
     try:
-        val_out: np.generic = OPS[op](_scalar(lhs), _scalar(rhs))
+        val_out = OPS[op](_scalar(lhs), _scalar(rhs))
     except TypeError:
         # generate rejection test, while avoiding trivial cases
         if op not in DATETIME_OPS and (lhs == "M" or rhs == "M"):
@@ -125,9 +131,9 @@ def _assert_stmt(op: str, lhs: str, rhs: str, /) -> str | None:
             "# type: ignore[operator]",
             "# pyright: ignore[reportOperatorIssue]",
         ))
-    else:
-        expr_type = _sctype_expr(val_out.dtype)
-        return f"assert_type({expr_eval}, {expr_type})"
+
+    expr_type = _sctype_expr(val_out.dtype)
+    return f"assert_type({expr_eval}, {expr_type})"
 
 
 def _gen_imports() -> Generator[str]:
