@@ -1,5 +1,6 @@
+from _typeshed import SupportsLenAndGetItem
 from collections.abc import Iterable, Sequence
-from typing import Any, overload
+from typing import Any, TypeAlias, overload
 from typing_extensions import TypeVar
 
 import numpy as np
@@ -18,13 +19,14 @@ from _numtype import (
 )
 from numpy._typing import _FloatLike_co
 
-from ._polytypes import _InexactObject_nd, _ToNumeric_0d, _Tuple2
-
 __all__ = ["as_series", "format_float", "getdomain", "mapdomain", "mapparms", "trimcoef", "trimseq"]
 
 ###
 
-_T_seq = TypeVar("_T_seq", bound=_InexactObject_nd | Sequence[_ToNumeric_0d])
+_T = TypeVar("_T")
+_T_seq = TypeVar("_T_seq", bound=Array[np.number | np.bool | np.object_] | SupportsLenAndGetItem[CoComplex_0d | ToObject_0d])
+
+_Tuple2: TypeAlias = tuple[_T, _T]
 
 ###
 

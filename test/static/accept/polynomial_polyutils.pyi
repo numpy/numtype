@@ -7,16 +7,19 @@ from typing_extensions import TypeVar, assert_type
 import numpy as np
 import numpy.polynomial.polyutils as pu
 import numpy.typing as npt
-from numpy.polynomial._polytypes import _Tuple2
 
 ###
 
+_T = TypeVar("_T")
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+
 _Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
 
 _Floating1D: TypeAlias = _Array1D[np.floating]
 _Complex1D: TypeAlias = _Array1D[np.complexfloating]
 _Object1D: TypeAlias = _Array1D[np.object_]
+
+_Tuple2: TypeAlias = tuple[_T, _T]
 
 ###
 

@@ -1,4 +1,6 @@
-from typing import Any, Final, Literal as L, SupportsIndex as CanIndex, overload
+from collections.abc import Sequence
+from typing import Any, Final, Literal as L, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
+from typing_extensions import Self, TypeVar
 
 import numpy as np
 from _numtype import (
@@ -43,10 +45,11 @@ from _numtype import (
     ToObject_1nd,
     ToObject_nd,
     ToReal_1d,
+    _ToArray_1d,
+    _ToArray_nd,
 )
 
 from ._polybase import ABCPolyBase
-from ._polytypes import _ArrayAndFitResult, _Indices, _ToNumeric_0d, _ToNumeric_1d, _ToNumeric_nd
 from .polyutils import trimcoef as polytrim
 
 __all__ = [
@@ -79,6 +82,32 @@ __all__ = [
     "polyx",
     "polyzero",
 ]
+
+###
+
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+
+_Indices: TypeAlias = Sequence[SupportsIndex]
+_ArrayAndFitResult: TypeAlias = tuple[Array[_ScalarT], Sequence[np.inexact | np.int32]]
+
+_ToNumeric_0d: TypeAlias = ToComplex_0d | ToObject_0d | _SupportsCoefOps
+_ToNumeric_1d: TypeAlias = _ToArray_1d[np.number | np.bool | np.object_, complex | _SupportsCoefOps]
+_ToNumeric_nd: TypeAlias = _ToArray_nd[np.number | np.bool | np.object_, complex | _SupportsCoefOps]
+
+# compatible with e.g. int, float, complex, Decimal, Fraction, and ABCPolyBase
+@type_check_only
+class _SupportsCoefOps(Protocol):
+    def __eq__(self, x: object, /) -> bool: ...
+    def __ne__(self, x: object, /) -> bool: ...
+    def __neg__(self, /) -> Self: ...
+    def __pos__(self, /) -> Self: ...
+    def __add__(self, x: Any, /) -> Self: ...
+    def __sub__(self, x: Any, /) -> Self: ...
+    def __mul__(self, x: Any, /) -> Self: ...
+    def __pow__(self, x: Any, /) -> Self | float: ...
+    def __radd__(self, x: Any, /) -> Self: ...
+    def __rsub__(self, x: Any, /) -> Self: ...
+    def __rmul__(self, x: Any, /) -> Self: ...
 
 ###
 
@@ -264,73 +293,83 @@ def polypow(c: ToObject_1d, pow: CoInteger_0d, maxpower: CoInteger_0d | None = N
 
 #
 @overload
-def polyder(c: ToFloat64_nd | CoInteger_nd, m: CanIndex = 1, scl: CoFloating_0d = 1, axis: CanIndex = 0) -> Array[np.float64]: ...
+def polyder(
+    c: ToFloat64_nd | CoInteger_nd,
+    m: SupportsIndex = 1,
+    scl: CoFloating_0d = 1,
+    axis: SupportsIndex = 0,
+) -> Array[np.float64]: ...
 @overload
-def polyder(c: ToFloating_nd, m: CanIndex = 1, scl: CoFloating_0d = 1, axis: CanIndex = 0) -> Array[np.floating]: ...
+def polyder(c: ToFloating_nd, m: SupportsIndex = 1, scl: CoFloating_0d = 1, axis: SupportsIndex = 0) -> Array[np.floating]: ...
 @overload
-def polyder(c: ToComplex128_nd, m: CanIndex = 1, scl: CoComplex_0d = 1, axis: CanIndex = 0) -> Array[np.complex128]: ...
+def polyder(c: ToComplex128_nd, m: SupportsIndex = 1, scl: CoComplex_0d = 1, axis: SupportsIndex = 0) -> Array[np.complex128]: ...
 @overload
-def polyder(c: ToComplex_nd, m: CanIndex = 1, scl: CoComplex_0d = 1, axis: CanIndex = 0) -> Array[np.complexfloating]: ...
+def polyder(
+    c: ToComplex_nd,
+    m: SupportsIndex = 1,
+    scl: CoComplex_0d = 1,
+    axis: SupportsIndex = 0,
+) -> Array[np.complexfloating]: ...
 @overload
-def polyder(c: CoComplex_nd, m: CanIndex = 1, scl: CoComplex_0d = 1, axis: CanIndex = 0) -> Array[np.inexact]: ...
+def polyder(c: CoComplex_nd, m: SupportsIndex = 1, scl: CoComplex_0d = 1, axis: SupportsIndex = 0) -> Array[np.inexact]: ...
 @overload
-def polyder(c: ToObject_nd, m: CanIndex = 1, scl: _ToNumeric_0d = 1, axis: CanIndex = 0) -> Array[np.object_]: ...
+def polyder(c: ToObject_nd, m: SupportsIndex = 1, scl: _ToNumeric_0d = 1, axis: SupportsIndex = 0) -> Array[np.object_]: ...
 
 #
 @overload
 def polyint(
     c: ToFloat64_nd | CoInteger_nd,
-    m: CanIndex = 1,
+    m: SupportsIndex = 1,
     k: CoFloat64_0d | CoFloat64_1d = [],
     lbnd: CoFloating_0d = 0,
     scl: CoFloating_0d = 1,
-    axis: CanIndex = 0,
+    axis: SupportsIndex = 0,
 ) -> Array[np.float64]: ...
 @overload
 def polyint(
     c: CoFloating_nd,
-    m: CanIndex = 1,
+    m: SupportsIndex = 1,
     k: CoFloating_0d | CoFloating_1d = [],
     lbnd: CoFloating_0d = 0,
     scl: CoFloating_0d = 1,
-    axis: CanIndex = 0,
+    axis: SupportsIndex = 0,
 ) -> Array[np.floating]: ...
 @overload
 def polyint(
     c: ToComplex_nd,
-    m: CanIndex = 1,
+    m: SupportsIndex = 1,
     k: CoComplex_0d | CoComplex_1d = [],
     lbnd: CoComplex_0d = 0,
     scl: CoComplex_0d = 1,
-    axis: CanIndex = 0,
+    axis: SupportsIndex = 0,
 ) -> Array[np.complexfloating]: ...
 @overload
 def polyint(
     c: CoComplex_nd,
-    m: CanIndex,
+    m: SupportsIndex,
     k: ToComplex_0d | ToComplex_1d,
     lbnd: CoComplex_0d = 0,
     scl: CoComplex_0d = 1,
-    axis: CanIndex = 0,
+    axis: SupportsIndex = 0,
 ) -> Array[np.complexfloating]: ...
 @overload
 def polyint(
     c: CoComplex_nd,
-    m: CanIndex = 1,
+    m: SupportsIndex = 1,
     *,
     k: ToComplex_0d | ToComplex_1d,
     lbnd: CoComplex_0d = 0,
     scl: CoComplex_0d = 1,
-    axis: CanIndex = 0,
+    axis: SupportsIndex = 0,
 ) -> Array[np.complexfloating]: ...
 @overload
 def polyint(
     c: ToObject_nd,
-    m: CanIndex = 1,
+    m: SupportsIndex = 1,
     k: _ToNumeric_0d | _ToNumeric_1d = [],
     lbnd: _ToNumeric_0d = 0,
     scl: _ToNumeric_0d = 1,
-    axis: CanIndex = 0,
+    axis: SupportsIndex = 0,
 ) -> Array[np.object_]: ...
 
 #
@@ -563,19 +602,19 @@ def polygrid3d(x: _ToNumeric_nd, y: _ToNumeric_nd, z: _ToNumeric_nd, c: ToObject
 
 #
 @overload
-def polyvander(x: ToFloat64_nd | CoInteger_nd, deg: CanIndex) -> Array[np.float64]: ...
+def polyvander(x: ToFloat64_nd | CoInteger_nd, deg: SupportsIndex) -> Array[np.float64]: ...
 @overload
-def polyvander(x: CoFloating_nd, deg: CanIndex) -> Array[np.floating]: ...
+def polyvander(x: CoFloating_nd, deg: SupportsIndex) -> Array[np.floating]: ...
 @overload
-def polyvander(x: ToComplex128_nd, deg: CanIndex) -> Array[np.complex128]: ...
+def polyvander(x: ToComplex128_nd, deg: SupportsIndex) -> Array[np.complex128]: ...
 @overload
-def polyvander(x: ToComplex_nd, deg: CanIndex) -> Array[np.complexfloating]: ...
+def polyvander(x: ToComplex_nd, deg: SupportsIndex) -> Array[np.complexfloating]: ...
 @overload
-def polyvander(x: CoComplex_nd, deg: CanIndex) -> Array[np.inexact]: ...
+def polyvander(x: CoComplex_nd, deg: SupportsIndex) -> Array[np.inexact]: ...
 @overload
-def polyvander(x: ToObject_nd, deg: CanIndex) -> Array[np.object_]: ...
+def polyvander(x: ToObject_nd, deg: SupportsIndex) -> Array[np.object_]: ...
 @overload
-def polyvander(x: _ToNumeric_nd, deg: CanIndex) -> Array[Any]: ...
+def polyvander(x: _ToNumeric_nd, deg: SupportsIndex) -> Array[Any]: ...
 
 #
 @overload
