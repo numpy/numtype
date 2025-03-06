@@ -1,8 +1,6 @@
 # intentional type-check-only deviations from runtime
 numpy\.__numtype__
 numpy\._typing.*
-numpy\.polynomial\._polytypes
-
 
 # internal testing code
 numpy\.conftest
