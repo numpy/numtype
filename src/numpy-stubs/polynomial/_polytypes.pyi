@@ -4,7 +4,7 @@ from typing import (
     Literal as L,
     Protocol,
     SupportsIndex as CanIndex,
-    SupportsInt,
+    SupportsInt as CanInt,
     TypeAlias,
     overload,
     type_check_only,
@@ -50,27 +50,26 @@ from _numtype import (
 from numpy._typing import _NestedSequence, _NumberLike_co
 
 _T = TypeVar("_T")
-_T_contra = TypeVar("_T_contra", contravariant=True, default=Any)
 _CoefT = TypeVar("_CoefT", bound=np.number | np.bool | np.object_)
 _NameT_co = TypeVar("_NameT_co", bound=str, default=LiteralString, covariant=True)
 
 # compatible with e.g. int, float, complex, Decimal, Fraction, and ABCPolyBase
 @type_check_only
-class _SupportsCoefOps(Protocol[_T_contra]):
+class _SupportsCoefOps(Protocol):
     def __eq__(self, x: object, /) -> bool: ...
     def __ne__(self, x: object, /) -> bool: ...
     def __neg__(self, /) -> Self: ...
     def __pos__(self, /) -> Self: ...
-    def __add__(self, x: _T_contra, /) -> Self: ...
-    def __sub__(self, x: _T_contra, /) -> Self: ...
-    def __mul__(self, x: _T_contra, /) -> Self: ...
-    def __pow__(self, x: _T_contra, /) -> Self | float: ...
-    def __radd__(self, x: _T_contra, /) -> Self: ...
-    def __rsub__(self, x: _T_contra, /) -> Self: ...
-    def __rmul__(self, x: _T_contra, /) -> Self: ...
+    def __add__(self, x: Any, /) -> Self: ...
+    def __sub__(self, x: Any, /) -> Self: ...
+    def __mul__(self, x: Any, /) -> Self: ...
+    def __pow__(self, x: Any, /) -> Self | float: ...
+    def __radd__(self, x: Any, /) -> Self: ...
+    def __rsub__(self, x: Any, /) -> Self: ...
+    def __rmul__(self, x: Any, /) -> Self: ...
 
 _Tuple2: TypeAlias = tuple[_T, _T]
-_ToInt: TypeAlias = SupportsInt | CanIndex
+_ToInt: TypeAlias = CanInt | CanIndex
 
 _InexactObject_1d: TypeAlias = Array_1d[np.inexact | np.object_]
 _InexactObject_nd: TypeAlias = Array[np.inexact | np.object_]
@@ -84,6 +83,11 @@ _ToNumeric_nd: TypeAlias = _ToArray_nd[np.number | np.bool | np.object_, complex
 
 _ToValF: TypeAlias = Callable[[Array[Any], Array[Any], bool], _ToNumeric_nd]
 _ToVanderF: TypeAlias = Callable[[Array[Any], int], _ToNumericObject_nd]
+
+_Indices: TypeAlias = Sequence[CanIndex]
+
+_FullFitResult: TypeAlias = Sequence[np.inexact | np.int32]
+_ArrayAndFitResult: TypeAlias = tuple[Array[_CoefT], _FullFitResult]
 
 @type_check_only
 class _HasName(Protocol[_NameT_co]):
@@ -396,8 +400,6 @@ class _FuncVander(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
     def __call__(self, /, x: npt.ArrayLike, deg: CanIndex) -> Array[Any]: ...
 
-_Indices: TypeAlias = Sequence[CanIndex]
-
 @type_check_only
 class _FuncVander2D(_HasName[_NameT_co], Protocol[_NameT_co]):
     @overload
@@ -468,8 +470,6 @@ class _FuncVanderND(_HasName[_NameT_co], Protocol[_NameT_co]):
         points: Sequence[npt.ArrayLike],
         degrees: Sequence[CanIndex],
     ) -> Array[Any]: ...
-
-_FullFitResult: TypeAlias = Sequence[np.inexact | np.int32]
 
 @type_check_only
 class _FuncFit(_HasName[_NameT_co], Protocol[_NameT_co]):
