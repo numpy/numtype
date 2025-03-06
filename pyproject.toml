@@ -246,21 +246,46 @@ preview = true
 
 [tool.tox]
 min_version = "4"
-env_list = ["3.13", "3.12", "3.11", "3.10"]
+requires = ["tox-uv>=1"]
+env_list = ["lint", "test", "pyright", "3.13", "3.12", "3.11", "3.10"]
 
     [tool.tox.env_run_base]
     description = "Run stubtest under {base_python}"
-    allowlist_externals = ["uv"]
     commands = [
-        [
-            "uv",
-            "run",
-            "--quiet",
-            "--python={base_python}",
-            "tool/stubtest.py",
-            # "--concise",
-        ],
+        ["uv", "run", "-q", "-p={base_python}", "--active", "tool/stubtest.py", "--concise"],
     ]
+
+    [tool.tox.env.pre-commit]
+    description = "pre-commit"
+    skip_install = true
+    commands = [["uvx", "pre-commit", "run", "-a", "--show-diff-on-failure"]]
+
+    [tool.tox.env.lint]
+    description = "lint"
+    runner = "uv-venv-lock-runner"
+    dependency_groups = ["dev"]
+    commands = [
+        ["ruff", "check", "--show-fixes"],
+        ["ruff", "format", "--check"],
+    ]
+
+    [tool.tox.env.test]
+    description = "pytest"
+    runner = "uv-venv-lock-runner"
+    dependency_groups = ["dev", "numpy"]
+    commands = [["pytest"]]
+
+    [tool.tox.env.pyright]
+    description = "basedpyright"
+    runner = "uv-venv-lock-runner"
+    dependency_groups = ["dev"]
+    commands = [["basedpyright", "--threads=3"]]
+
+    [tool.tox.env.mypy]
+    description = "mypy"
+    runner = "uv-venv-lock-runner"
+    dependency_groups = ["dev", "orjson"]
+    commands = [["mypy", {replace = "posargs", default = ["."], extend = true}]]
 
 
 [tool.typos.default]
