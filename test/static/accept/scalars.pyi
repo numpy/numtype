@@ -1,5 +1,5 @@
-from typing import Any, Literal, TypeAlias, Unpack
-from typing_extensions import assert_type
+from typing import Any, Literal, TypeAlias
+from typing_extensions import Unpack, assert_type
 
 import numpy as np
 
