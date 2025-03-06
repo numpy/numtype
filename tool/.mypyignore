@@ -27,7 +27,6 @@ numpy\._core\.cversions
 # mypy plugin
 numpy\.typing\.mypy_plugin
 
-
 # workaround mypy's lack of Python 3.13 support for `NamedTuple` types (mypy <= 1.15.0)
 numpy(\.\w+)+\.__replace__
 
@@ -36,4 +35,5 @@ numpy\.testing(\._private\.utils)?\.check_support_sve
 
 # workaround for stubtest ignoring `if sys.version_info` blocks in `_typeshed` when
 # `python_version`
+numpy\.compat(\.py3k)?\.(Path|os_PathLike|bytes)\.[_a-zA-Z]+
 numpy\.testing\.TestCase\.[_a-zA-Z]+
