@@ -6451,7 +6451,7 @@ class complex128(complexfloating[_64Bit], complex):
     def conjugate(self) -> Self: ...
 
 class timedelta64(
-    _NumericComparisonMixin[_TD64Like_co, _ArrayLikeDT64_co],
+    _NumericComparisonMixin[_TD64Like_co, _ArrayLikeTD64_co],
     _IntegralMixin,
     generic[_TD64ItemT_co],
     Generic[_TD64ItemT_co],
