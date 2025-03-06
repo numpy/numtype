@@ -2,14 +2,7 @@
 # requires-python = ">=3.10"
 # dependencies = [
 #     "numtype[numpy]",
-#
-#     # Keep in sync with pyproject.toml
-#     "mypy[faster-cache]>=1.15.0",
-#
-#     # numpy dev dependencies
-#     "pytest>=8.3.4",
-#     "hypothesis>=6.127.2",
-#     "pyinstaller==6.12.0",
+#     "mypy[faster-cache]>=1.15.0",  # keep in sync with pyproject.toml
 # ]
 #
 # [tool.uv]
@@ -21,8 +14,6 @@
 
 """Usage: `uv run tool/stubtest.py <OPTIONS>`."""
 
-# ruff: noqa: ERA001, TRY003
-
 import os
 import subprocess
 import sys
@@ -32,22 +23,12 @@ from pathlib import Path
 VERBOSE = True
 
 CWD = Path.cwd()
-BASE_DIR = Path(__file__).parent.parent
+TOOL_DIR = Path(__file__).parent
 SITE_DIR = Path(sysconfig.get_paths()["purelib"])
+ROOT_DIR = TOOL_DIR.parent
+ROOT_SITE_DIR = next((ROOT_DIR / ".venv" / "lib").glob("*/site-packages"))
 
-
-def __get_local_site_dir() -> Path:
-    lib = BASE_DIR / ".venv" / "lib"
-    if not lib.is_dir():
-        raise NotADirectoryError(f"{lib} does not exist")
-
-    for out in lib.glob("*/site-packages"):
-        return out
-
-    raise NotADirectoryError(f"Could not find {lib}/**/site-packages")
-
-
-SITE_DIR_LOCAL = __get_local_site_dir()
+ALLOWLISTS = ".mypyignore", ".mypyignore-todo"
 
 
 def __commit_pyi_genocide_for_mypy() -> None:
@@ -61,7 +42,7 @@ def __commit_pyi_genocide_for_mypy() -> None:
     """
     package = SITE_DIR / "numpy"
     if not package.is_dir():
-        raise NotADirectoryError(f"{package} does not exist")
+        raise NotADirectoryError(f"{package} does not exist")  # noqa: TRY003
 
     py_typed = package / "py.typed"
     if py_typed.is_file():
@@ -76,19 +57,18 @@ def __commit_pyi_genocide_for_mypy() -> None:
 
 def _stubtest_command() -> list[str]:
     cmd = ["stubtest"]
+    args_extra = sys.argv[1:]
 
-    if "--mypy-config-file" not in sys.argv:
-        config_path = BASE_DIR / "pyproject.toml"
-        assert config_path.is_file(), config_path
-
+    if not any("--mypy-config-file" in arg for arg in args_extra):
+        config_path = (ROOT_DIR / "pyproject.toml").relative_to(CWD)
         cmd.extend(("--mypy-config-file", str(config_path)))
 
-    if len(sys.argv) > 1:
-        cmd.extend(sys.argv[1:])
-    else:
-        cmd.extend(["--allowlist", str(BASE_DIR / ".mypyignore")])
-        cmd.extend(["--allowlist", str(BASE_DIR / ".mypyignore-todo")])
+    if not any("--allowlist" in arg for arg in args_extra):
+        for allowlist_name in ALLOWLISTS:
+            allowlist_path = (TOOL_DIR / allowlist_name).relative_to(CWD)
+            cmd.extend(["--allowlist", str(allowlist_path)])
 
+    cmd.extend(args_extra)
     cmd.append("numpy")
 
     return cmd
@@ -103,20 +83,20 @@ def _rewrite_mypy_output(line: bytes, /) -> bytes:
     str
     """
     line = line.replace(b"builtins.", b"")
-    line = line.replace(b"typing.Sequence", b"")
+    line = line.replace(b"numpy.", b"np.")
 
     if len(line.strip()) <= len(str(SITE_DIR)):
         return line
 
     for package_name in ("_numtype", "numpy-stubs", "numtype"):
         package_lib = str(SITE_DIR / package_name).encode()
-        package_src = str((BASE_DIR / "src" / package_name).relative_to(CWD)).encode()
+        package_src = str((ROOT_DIR / "src" / package_name).relative_to(CWD)).encode()
         if package_lib in line:
             line = line.replace(package_lib, package_src)
 
     site_dir = str(SITE_DIR).encode()
     if site_dir in line:
-        line = line.replace(site_dir, str(SITE_DIR_LOCAL.relative_to(CWD)).encode())
+        line = line.replace(site_dir, str(ROOT_SITE_DIR.relative_to(CWD)).encode())
 
     return line
 
