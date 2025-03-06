@@ -32,7 +32,7 @@ ROOT_SITE_DIR = next((ROOT_DIR / ".venv" / "lib").glob("*/site-packages"))
 ALLOWLISTS = [
     ".mypyignore.txt",
     ".mypyignore-todo.txt",
-    ".mypyignore-gt312.txt" if sys.version_info >= (3, 12) else ".mypyignore-lt312.txt",
+    ".mypyignore-ge312.txt" if sys.version_info >= (3, 12) else ".mypyignore-lt312.txt",
 ]
 
 
@@ -114,6 +114,9 @@ def main() -> int:
     exit_code : int
     """
     __commit_pyi_genocide_for_mypy()
+
+    if VERBOSE:
+        print(sys.version)
 
     cmd = _stubtest_command()
     if VERBOSE and "--generate-allowlist" not in cmd:
