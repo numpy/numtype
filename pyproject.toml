@@ -52,7 +52,7 @@ dev = [
     "ruff>=0.9.9",
 ]
 numpy = ["numtype[numpy]"]
-orjson = ["orjson>=3.10.15"]  # speeds up mypy cache, but is missing 3.13t wheels
+orjson = ["orjson>=3.10.15"] # speeds up mypy cache, but is missing 3.13t wheels
 
 [tool.uv]
 default-groups = ["dev", "numpy", "orjson"]
@@ -244,6 +244,16 @@ preview = true
 
         [tool.ruff.lint.pylint]
         allow-dunder-method-names = ["__array__", "__array_ufunc__"]
+
+
+[tool.tox]
+min_version = "4"
+env_list = ["3.13", "3.12", "3.11", "3.10"]
+
+    [tool.tox.env_run_base]
+    description = "Run stubtest under {base_python}"
+    allowlist_externals = ["uv"]
+    commands = [["uv", "run", "--python={base_python}", "tool/stubtest.py", "--concise"]]
 
 
 [tool.typos.default]
