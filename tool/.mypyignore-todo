@@ -9,7 +9,6 @@ numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
 numpy._pyinstaller.hook-numpy
-numpy.ctypeslib._ctypeslib
 
 numpy.distutils
 
