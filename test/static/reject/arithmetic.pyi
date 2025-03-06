@@ -110,7 +110,7 @@ AR_f **= AR_LIKE_c  # type: ignore[arg-type]
 
 # Scalars
 
-b_ - b_  # type: ignore[call-overload]  # pyright: ignore[reportOperatorIssue]
+b_ - b_  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 dt + dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 td - dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
