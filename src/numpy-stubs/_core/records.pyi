@@ -1,10 +1,10 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable, Sequence
 from typing import IO, Any, ClassVar, Literal as L, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
-from typing_extensions import TypeVar
+from typing_extensions import Buffer, TypeVar
 
 import numpy as np
-from numpy import _ByteOrder, _OrderKACF, _SupportsBuffer  # noqa: ICN003
+from numpy import _ByteOrder, _OrderKACF  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, NDArray, _ArrayLikeVoid_co, _NestedSequence, _ShapeLike
 
 __all__ = [
@@ -66,7 +66,7 @@ class recarray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         subtype,
         shape: _ShapeLike,
         dtype: None = None,
-        buf: _SupportsBuffer | None = None,
+        buf: Buffer | None = None,
         offset: SupportsIndex = 0,
         strides: _ShapeLike | None = None,
         *,
@@ -82,7 +82,7 @@ class recarray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         subtype,
         shape: _ShapeLike,
         dtype: DTypeLike,
-        buf: _SupportsBuffer | None = None,
+        buf: Buffer | None = None,
         offset: SupportsIndex = ...,
         strides: _ShapeLike | None = None,
         formats: None = None,
@@ -158,7 +158,7 @@ def fromrecords(
 # exported in `numpy.rec`
 @overload
 def fromstring(
-    datastring: _SupportsBuffer,
+    datastring: Buffer,
     dtype: DTypeLike,
     shape: _ShapeLike | None = None,
     offset: int = 0,
@@ -170,7 +170,7 @@ def fromstring(
 ) -> _RecArray[record]: ...
 @overload
 def fromstring(
-    datastring: _SupportsBuffer,
+    datastring: Buffer,
     dtype: None = None,
     shape: _ShapeLike | None = None,
     offset: int = 0,
@@ -214,7 +214,7 @@ def fromfile(
 
 # exported in `numpy.rec`
 @overload
-def array(
+def array(  # type: ignore[overload-overlap]
     obj: _SCT | NDArray[_SCT],
     dtype: None = None,
     shape: _ShapeLike | None = None,

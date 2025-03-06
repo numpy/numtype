@@ -1,7 +1,6 @@
-import sys
 from collections.abc import Callable, Collection, Sequence
 from typing import Any, Protocol, TypeAlias, runtime_checkable
-from typing_extensions import TypeVar
+from typing_extensions import Buffer, TypeVar
 
 import numpy as np
 from numpy.dtypes import StringDType
@@ -9,12 +8,6 @@ from numpy.dtypes import StringDType
 from ._nbit_base import _64Bit
 from ._nested_sequence import _NestedSequence
 from ._shape import _Shape
-
-if sys.version_info >= (3, 12):
-    from collections.abc import Buffer as _Buffer
-else:
-    class _Buffer(Protocol):
-        def __buffer__(self, flags: int, /) -> memoryview: ...
 
 _T = TypeVar("_T")
 _ScalarType = TypeVar("_ScalarType", bound=np.generic)
@@ -55,7 +48,7 @@ _ArrayLike: TypeAlias = _SupportsArray[np.dtype[_ScalarType]] | _NestedSequence[
 # and another one for the rest
 _DualArrayLike: TypeAlias = _SupportsArray[_DType] | _T | _NestedSequence[_T] | _NestedSequence[_SupportsArray[_DType]]
 
-ArrayLike: TypeAlias = _Buffer | _DualArrayLike[np.dtype[Any], complex | str | bytes]
+ArrayLike: TypeAlias = _DualArrayLike[np.dtype[Any], complex | str | bytes] | Buffer
 
 # `ArrayLike<X>_co`: array-like objects that can be coerced into `X`
 # given the casting rules `same_kind`

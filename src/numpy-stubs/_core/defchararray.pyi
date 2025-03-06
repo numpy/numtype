@@ -1,9 +1,9 @@
 from _typeshed import ConvertibleToInt
 from typing import Any, Literal as L, SupportsIndex, TypeAlias, overload
-from typing_extensions import Never, Self, TypeVar, override
+from typing_extensions import Buffer, Never, Self, TypeVar, override
 
 import numpy as np
-from numpy import _OrderKACF as _Order, _SortKind, _SupportsBuffer  # noqa: ICN003
+from numpy import _OrderKACF as _Order, _SortKind  # noqa: ICN003
 from numpy._typing import (
     NDArray,
     _ArrayLikeAnyString_co as _ToAnyCharND,
@@ -158,7 +158,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         shape: _ToShape,
         itemsize: ConvertibleToInt = 1,
         unicode: L[False] = False,
-        buffer: _SupportsBuffer | None = None,
+        buffer: Buffer | None = None,
         offset: SupportsIndex = 0,
         strides: _ToShape | None = None,
         order: _Order = "C",
@@ -169,7 +169,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         shape: _ToShape,
         itemsize: ConvertibleToInt,
         unicode: L[True],
-        buffer: _SupportsBuffer | None = None,
+        buffer: Buffer | None = None,
         offset: SupportsIndex = 0,
         strides: _ToShape | None = None,
         order: _Order = "C",
@@ -181,7 +181,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         itemsize: ConvertibleToInt = 1,
         *,
         unicode: L[True],
-        buffer: _SupportsBuffer | None = None,
+        buffer: Buffer | None = None,
         offset: SupportsIndex = 0,
         strides: _ToShape | None = None,
         order: _Order = "C",

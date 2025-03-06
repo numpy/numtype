@@ -203,7 +203,7 @@ class _Call12(Protocol):
         out: tuple[None, None] = (None, None),
         dtype: None = None,
         **kwds: Unpack[_Kwargs3],
-    ) -> tuple[None, _ArrayT2]: ...
+    ) -> tuple[_AnyArray, _ArrayT2]: ...
     @overload
     def __call__(
         self,
@@ -215,7 +215,7 @@ class _Call12(Protocol):
         out: tuple[None, None] = (None, None),
         dtype: None = None,
         **kwds: Unpack[_Kwargs3],
-    ) -> tuple[_ArrayT1, None]: ...
+    ) -> tuple[_ArrayT1, _AnyArray]: ...
     @overload
     def __call__(
         self,

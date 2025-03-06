@@ -208,7 +208,7 @@ def reshape(
     copy: bool | None = None,
 ) -> np.ndarray[tuple[int], np.dtype[_ScalarT]]: ...
 @overload  # shape: _AnyShape
-def reshape(
+def reshape(  # type: ignore[overload-overlap]
     a: _ToArray1_nd[_ScalarT],
     /,
     shape: _AnyShapeT,
@@ -218,7 +218,7 @@ def reshape(
     copy: bool | None = None,
 ) -> Array[_ScalarT, _AnyShapeT]: ...
 @overload  # shape: Sequence[index]
-def reshape(
+def reshape(  # type: ignore[overload-overlap]
     a: _ToArray1_nd[_ScalarT],
     /,
     shape: Sequence[CanIndex],
@@ -486,9 +486,9 @@ def searchsorted(
 @overload
 def resize(a: _ToArray1_nd[_ScalarT], new_shape: CanIndex) -> Array_1d[_ScalarT]: ...
 @overload
-def resize(a: _ToArray1_nd[_ScalarT], new_shape: _AnyShapeT) -> Array[_ScalarT, _AnyShapeT]: ...
+def resize(a: _ToArray1_nd[_ScalarT], new_shape: _AnyShapeT) -> Array[_ScalarT, _AnyShapeT]: ...  # type: ignore[overload-overlap]
 @overload
-def resize(a: _ToArray1_nd[_ScalarT], new_shape: Sequence[CanIndex]) -> Array[_ScalarT]: ...
+def resize(a: _ToArray1_nd[_ScalarT], new_shape: Sequence[CanIndex]) -> Array[_ScalarT]: ...  # type: ignore[overload-overlap]
 @overload
 def resize(a: ArrayLike, new_shape: CanIndex) -> Array_1d[Any]: ...
 @overload

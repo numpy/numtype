@@ -52,7 +52,7 @@ dev = [
     "ruff>=0.9.9",
 ]
 numpy = ["numtype[numpy]"]
-orjson = ["orjson>=3.10.15"]  # speeds up mypy cache, but is missing 3.13t wheels
+orjson = ["orjson>=3.10.15"] # speeds up mypy cache, but is missing 3.13t wheels
 
 [tool.uv]
 default-groups = ["dev", "numpy", "orjson"]
@@ -82,7 +82,6 @@ packages = [
 
 
 [tool.mypy]
-python_version = "3.10"
 mypy_path = "src"
 explicit_package_bases = true
 
@@ -124,7 +123,6 @@ stubPath = "src"
 venvPath = "."
 venv = ".venv"
 pythonPlatform = "All"
-pythonVersion = "3.10"
 typeCheckingMode = "strict"
 
 deprecateTypingAliases = true
@@ -244,6 +242,50 @@ preview = true
 
         [tool.ruff.lint.pylint]
         allow-dunder-method-names = ["__array__", "__array_ufunc__"]
+
+
+[tool.tox]
+min_version = "4"
+requires = ["tox-uv>=1"]
+env_list = ["lint", "test", "pyright", "3.13", "3.12", "3.11", "3.10"]
+
+    [tool.tox.env_run_base]
+    description = "Run stubtest under {base_python}"
+    commands = [
+        ["uv", "run", "-q", "-p={base_python}", "--active", "tool/stubtest.py", "--concise"],
+    ]
+
+    [tool.tox.env.pre-commit]
+    description = "pre-commit"
+    skip_install = true
+    commands = [["uvx", "pre-commit", "run", "-a", "--show-diff-on-failure"]]
+
+    [tool.tox.env.lint]
+    description = "lint"
+    runner = "uv-venv-lock-runner"
+    dependency_groups = ["dev"]
+    commands = [
+        ["ruff", "check", "--show-fixes"],
+        ["ruff", "format", "--check"],
+    ]
+
+    [tool.tox.env.test]
+    description = "pytest"
+    runner = "uv-venv-lock-runner"
+    dependency_groups = ["dev", "numpy"]
+    commands = [["pytest"]]
+
+    [tool.tox.env.pyright]
+    description = "basedpyright"
+    runner = "uv-venv-lock-runner"
+    dependency_groups = ["dev"]
+    commands = [["basedpyright", "--threads=3"]]
+
+    [tool.tox.env.mypy]
+    description = "mypy"
+    runner = "uv-venv-lock-runner"
+    dependency_groups = ["dev", "orjson"]
+    commands = [["mypy", {replace = "posargs", default = ["."], extend = true}]]
 
 
 [tool.typos.default]

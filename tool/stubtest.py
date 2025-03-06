@@ -29,7 +29,11 @@ SITE_DIR = Path(sysconfig.get_paths()["purelib"])
 ROOT_DIR = TOOL_DIR.parent
 ROOT_SITE_DIR = next((ROOT_DIR / ".venv" / "lib").glob("*/site-packages"))
 
-ALLOWLISTS = ".mypyignore", ".mypyignore-todo"
+ALLOWLISTS = [
+    ".mypyignore.txt",
+    ".mypyignore-todo.txt",
+    ".mypyignore-ge312.txt" if sys.version_info >= (3, 12) else ".mypyignore-lt312.txt",
+]
 
 
 def __commit_pyi_genocide_for_mypy() -> None:
@@ -84,7 +88,6 @@ def _rewrite_mypy_output(line: bytes, /) -> bytes:
     str
     """
     line = line.replace(b"builtins.", b"")
-    line = line.replace(b"numpy.", b"np.")
 
     if len(line.strip()) <= len(str(SITE_DIR)):
         return line
@@ -111,6 +114,9 @@ def main() -> int:
     exit_code : int
     """
     __commit_pyi_genocide_for_mypy()
+
+    if VERBOSE:
+        print(sys.version)
 
     cmd = _stubtest_command()
     if VERBOSE and "--generate-allowlist" not in cmd:
