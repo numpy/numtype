@@ -2205,7 +2205,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with __add__
     @overload
-    def __radd__(self: NDArray[_NumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...  # type: ignore[misc]
+    def __radd__(self: NDArray[_NumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
     def __radd__(self: NDArray[_NumberT], lhs: _ArrayLikeBool_co, /) -> NDArray[_NumberT]: ...
     @overload
@@ -2317,7 +2317,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with __sub__, minus the (datetime64, timedelta64) case
     @overload
-    def __rsub__(self: NDArray[_NumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...  # type: ignore[misc]
+    def __rsub__(self: NDArray[_NumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
     def __rsub__(self: NDArray[_NumberT], lhs: _ArrayLikeBool_co, /) -> NDArray[_NumberT]: ...
     @overload
@@ -2423,7 +2423,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with __mul__
     @overload
-    def __rmul__(self: NDArray[_NumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...  # type: ignore[misc]
+    def __rmul__(self: NDArray[_NumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_NumberT]]: ...
     @overload
     def __rmul__(self: NDArray[_NumberT], lhs: _ArrayLikeBool_co, /) -> NDArray[_NumberT]: ...
     @overload
@@ -2678,7 +2678,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def __rfloordiv__(self: NDArray[_RealNumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_RealNumberT]]: ...  # type: ignore[overload-overlap, misc]  # pyright: ignore[reportOverlappingOverload]
+    def __rfloordiv__(self: NDArray[_RealNumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_RealNumberT]]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
     @overload
     def __rfloordiv__(self: NDArray[_RealNumberT], lhs: _ArrayLikeBool_co, /) -> NDArray[_RealNumberT]: ...  # type: ignore[overload-overlap]
     @overload
@@ -2756,7 +2756,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with __mod__
     @overload
-    def __rmod__(self: NDArray[_RealNumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_RealNumberT]]: ...  # type: ignore[overload-overlap, misc]  # pyright: ignore[reportOverlappingOverload]
+    def __rmod__(self: NDArray[_RealNumberT], lhs: int | bool_, /) -> ndarray[_ShapeT_co, dtype[_RealNumberT]]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
     @overload
     def __rmod__(self: NDArray[_RealNumberT], lhs: _ArrayLikeBool_co, /) -> NDArray[_RealNumberT]: ...  # type: ignore[overload-overlap]
     @overload
@@ -2830,7 +2830,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with __divmod__
     @overload
-    def __rdivmod__(self: NDArray[_RealNumberT], lhs: int | bool_, /) -> _2Tuple[ndarray[_ShapeT_co, dtype[_RealNumberT]]]: ...  # type: ignore[overload-overlap, misc]  # pyright: ignore[reportOverlappingOverload]
+    def __rdivmod__(self: NDArray[_RealNumberT], lhs: int | bool_, /) -> _2Tuple[ndarray[_ShapeT_co, dtype[_RealNumberT]]]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
     @overload
     def __rdivmod__(self: NDArray[_RealNumberT], lhs: _ArrayLikeBool_co, /) -> _2Tuple[NDArray[_RealNumberT]]: ...  # type: ignore[overload-overlap]
     @overload
@@ -6192,7 +6192,7 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
 
     #
     @overload
-    def __radd__(self, x: inexact[_NBitT1] | _Complex64_co, /) -> Self: ...  # type: ignore[misc]
+    def __radd__(self, x: inexact[_NBitT1] | _Complex64_co, /) -> Self: ...
     @overload
     def __radd__(self, x: inexact[_128Bit] | inexact[_96Bit], /) -> clongdouble: ...
     @overload
@@ -6224,7 +6224,7 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
 
     # keep in sync with `__radd__`
     @overload
-    def __rsub__(self, x: inexact[_NBitT1] | _Complex64_co, /) -> Self: ...  # type: ignore[misc]
+    def __rsub__(self, x: inexact[_NBitT1] | _Complex64_co, /) -> Self: ...
     @overload
     def __rsub__(self, x: inexact[_128Bit] | inexact[_96Bit], /) -> clongdouble: ...
     @overload
@@ -6256,7 +6256,7 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
 
     # keep in sync with `__radd__`
     @overload
-    def __rmul__(self, x: inexact[_NBitT1] | _Complex64_co, /) -> Self: ...  # type: ignore[misc]
+    def __rmul__(self, x: inexact[_NBitT1] | _Complex64_co, /) -> Self: ...
     @overload
     def __rmul__(self, x: inexact[_128Bit] | inexact[_96Bit], /) -> clongdouble: ...
     @overload
@@ -6484,7 +6484,7 @@ class timedelta64(_IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
 
     #
     @overload
-    def __rsub__(self, a: _IntLike_co, /) -> Self: ...  # type: ignore[misc]
+    def __rsub__(self, a: _IntLike_co, /) -> Self: ...
     @overload
     def __rsub__(self, a: timedelta64[None], /) -> timedelta64[None]: ...
     @overload
