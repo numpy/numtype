@@ -1,7 +1,7 @@
 import abc
 from collections.abc import Iterator, Mapping, Sequence
-from typing import Any, ClassVar, Final, Generic, Literal, SupportsIndex, TypeAlias, overload
-from typing_extensions import LiteralString, Self, TypeIs, TypeVar
+from typing import Any, ClassVar, Final, Literal, SupportsIndex, TypeAlias, overload
+from typing_extensions import Self, TypeIs, TypeVar
 
 import numpy as np
 import numpy.typing as npt
@@ -14,7 +14,6 @@ __all__: Final[Sequence[str]] = ("ABCPolyBase",)
 
 ###
 
-_NameT_co = TypeVar("_NameT_co", bound=str | None, default=LiteralString | None, covariant=True)
 _PolyT = TypeVar("_PolyT", bound=ABCPolyBase)
 
 _AnyOther: TypeAlias = ABCPolyBase | _ToNumeric_0d | CoComplex_1d
@@ -22,7 +21,7 @@ _Hundred: TypeAlias = Literal[100]
 
 ###
 
-class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
+class ABCPolyBase(abc.ABC):
     __hash__: ClassVar[None]  # type: ignore[assignment]  # pyright: ignore[reportIncompatibleMethodOverride]
     __array_ufunc__: ClassVar[None]
 
@@ -31,14 +30,16 @@ class ABCPolyBase(abc.ABC, Generic[_NameT_co]):
     _subscript_mapping: ClassVar[Mapping[int, str]]
     _use_unicode: ClassVar[bool]
 
-    basis_name: _NameT_co
     coef: _InexactObject_1d
     domain: Array_1d[np.inexact]
     window: Array_1d[np.inexact]
 
-    _symbol: LiteralString
+    _symbol: str
     @property
-    def symbol(self, /) -> LiteralString: ...
+    def symbol(self, /) -> str: ...
+    @property
+    @abc.abstractmethod
+    def basis_name(self, /) -> str | None: ...
 
     #
     def __init__(

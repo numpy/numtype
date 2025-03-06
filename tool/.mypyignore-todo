@@ -56,21 +56,13 @@ numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile
 
-numpy.polynomial.Chebyshev.basis_name
-numpy.polynomial.Hermite.basis_name
-numpy.polynomial.HermiteE.basis_name
-numpy.polynomial.Laguerre.basis_name
-numpy.polynomial.Legendre.basis_name
-numpy.polynomial.Polynomial.basis_name
 numpy.polynomial._polybase.ABCPolyBase.__rdiv__
 numpy.polynomial._polybase.ABCPolyBase._repr_latex_term
 numpy.polynomial._polybase.ABCPolyBase._str_term_ascii
-numpy.polynomial._polybase.ABCPolyBase.basis_name
 numpy.polynomial._polybase.ABCPolyBase.cutdeg
 numpy.polynomial._polybase.ABCPolyBase.domain
 numpy.polynomial._polybase.ABCPolyBase.fromroots
 numpy.polynomial._polybase.ABCPolyBase.window
-numpy.polynomial.chebyshev.Chebyshev.basis_name
 numpy.polynomial.chebyshev.cheb2poly
 numpy.polynomial.chebyshev.chebadd
 numpy.polynomial.chebyshev.chebcompanion
@@ -99,7 +91,6 @@ numpy.polynomial.chebyshev.chebvander2d
 numpy.polynomial.chebyshev.chebvander3d
 numpy.polynomial.chebyshev.chebweight
 numpy.polynomial.chebyshev.poly2cheb
-numpy.polynomial.hermite.Hermite.basis_name
 numpy.polynomial.hermite.herm2poly
 numpy.polynomial.hermite.hermadd
 numpy.polynomial.hermite.hermcompanion
@@ -126,7 +117,6 @@ numpy.polynomial.hermite.hermvander2d
 numpy.polynomial.hermite.hermvander3d
 numpy.polynomial.hermite.hermweight
 numpy.polynomial.hermite.poly2herm
-numpy.polynomial.hermite_e.HermiteE.basis_name
 numpy.polynomial.hermite_e.herme2poly
 numpy.polynomial.hermite_e.hermeadd
 numpy.polynomial.hermite_e.hermecompanion
@@ -153,7 +143,6 @@ numpy.polynomial.hermite_e.hermevander2d
 numpy.polynomial.hermite_e.hermevander3d
 numpy.polynomial.hermite_e.hermeweight
 numpy.polynomial.hermite_e.poly2herme
-numpy.polynomial.laguerre.Laguerre.basis_name
 numpy.polynomial.laguerre.lag2poly
 numpy.polynomial.laguerre.lagadd
 numpy.polynomial.laguerre.lagcompanion
@@ -180,7 +169,6 @@ numpy.polynomial.laguerre.lagvander2d
 numpy.polynomial.laguerre.lagvander3d
 numpy.polynomial.laguerre.lagweight
 numpy.polynomial.laguerre.poly2lag
-numpy.polynomial.legendre.Legendre.basis_name
 numpy.polynomial.legendre.leg2poly
 numpy.polynomial.legendre.legadd
 numpy.polynomial.legendre.legcompanion
@@ -207,7 +195,6 @@ numpy.polynomial.legendre.legvander2d
 numpy.polynomial.legendre.legvander3d
 numpy.polynomial.legendre.legweight
 numpy.polynomial.legendre.poly2leg
-numpy.polynomial.polynomial.Polynomial.basis_name
 numpy.polynomial.polynomial.polyadd
 numpy.polynomial.polynomial.polycompanion
 numpy.polynomial.polynomial.polyder
