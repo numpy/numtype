@@ -23,10 +23,9 @@ from typing import (
     TypedDict,
     final,
     overload,
-    runtime_checkable,
     type_check_only,
 )
-from typing_extensions import CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, Unpack, deprecated, override
+from typing_extensions import Buffer, CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, Unpack, deprecated, override
 
 from . import (
     __config__ as __config__,
@@ -462,22 +461,6 @@ from .lib._ufunclike_impl import fix, isneginf, isposinf
 from .lib._utils_impl import get_include, info, show_runtime
 from .matrixlib import asmatrix, bmat, matrix
 from .version import __version__
-
-@runtime_checkable
-class _Buffer(Protocol):
-    def __buffer__(self, flags: int, /) -> memoryview: ...
-
-if sys.version_info >= (3, 12):
-    _SupportsBuffer: TypeAlias = _Buffer
-else:
-    import array as _array
-    import mmap as _mmap
-
-    from numpy import distutils as distutils  # noqa: ICN003
-
-    _SupportsBuffer: TypeAlias = (
-        _Buffer | bytes | bytearray | memoryview | _array.array[Any] | _mmap.mmap | NDArray[Any] | generic
-    )
 
 __all__ = [  # noqa: RUF022
     # __numpy_submodules__
@@ -1993,7 +1976,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         cls,
         shape: _ShapeLike,
         dtype: DTypeLike = float,  # noqa: PYI011
-        buffer: _SupportsBuffer | None = None,
+        buffer: Buffer | None = None,
         offset: CanIndex = 0,
         strides: _ShapeLike | None = None,
         order: _OrderKACF | None = None,
@@ -3835,9 +3818,6 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     #
     @abc.abstractmethod
     def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
-
-    if sys.version_info >= (3, 12):
-        def __buffer__(self, flags: int, /) -> memoryview: ...
 
     #
     @overload

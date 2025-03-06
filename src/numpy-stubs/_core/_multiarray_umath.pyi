@@ -19,7 +19,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import CapsuleType, Self, TypeAliasType, TypeVar, Unpack, deprecated
+from typing_extensions import Buffer, CapsuleType, Self, TypeAliasType, TypeVar, Unpack, deprecated
 
 import numpy as np
 import numpy.typing as npt
@@ -30,7 +30,6 @@ from numpy import (  # noqa: ICN003
     _ModeKind,
     _OrderCF,
     _OrderKACF,
-    _SupportsBuffer,
     # NOTE: These implicitly re-exported ufuncs are defined in this ext-module at runtime
     absolute as absolute,
     add as add,
@@ -1165,7 +1164,7 @@ def fromiter(
 #
 @overload
 def frombuffer(
-    buffer: _SupportsBuffer,
+    buffer: Buffer,
     *,
     count: SupportsIndex = -1,
     offset: SupportsIndex = 0,
@@ -1173,7 +1172,7 @@ def frombuffer(
 ) -> _Array[np.float64]: ...
 @overload
 def frombuffer(
-    buffer: _SupportsBuffer,
+    buffer: Buffer,
     dtype: _DTypeLike[_ScalarT],
     count: SupportsIndex = -1,
     offset: SupportsIndex = 0,
@@ -1181,7 +1180,7 @@ def frombuffer(
 ) -> _Array[_ScalarT]: ...
 @overload
 def frombuffer(
-    buffer: _SupportsBuffer,
+    buffer: Buffer,
     dtype: npt.DTypeLike,
     count: SupportsIndex = -1,
     offset: SupportsIndex = 0,
