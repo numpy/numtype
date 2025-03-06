@@ -1,16 +1,16 @@
 from collections.abc import Sequence
-from typing import Any, TypeAlias
+from typing import TypeAlias
 from typing_extensions import assert_type
 
 import numpy as np
 import numpy.polynomial as npp
 import numpy.typing as npt
 
-_ArrFloat1D: TypeAlias = np.ndarray[tuple[int], np.dtype[np.floating]]
-_ArrFloat1D64: TypeAlias = np.ndarray[tuple[int], np.dtype[np.float64]]
-_ArrComplex1D: TypeAlias = np.ndarray[tuple[int], np.dtype[np.complexfloating]]
-_ArrComplex1D128: TypeAlias = np.ndarray[tuple[int], np.dtype[np.complex128]]
-_ArrObject1D: TypeAlias = np.ndarray[tuple[int], np.dtype[np.object_]]
+_Floating_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[np.floating]]
+_Float64_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[np.float64]]
+_CFloating_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[np.complexfloating]]
+_Complex128_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[np.complex128]]
+_Object_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[np.object_]]
 
 AR_b: npt.NDArray[np.bool]
 AR_u4: npt.NDArray[np.uint32]
@@ -22,32 +22,32 @@ AR_O: npt.NDArray[np.object_]
 PS_poly: npp.Polynomial
 PS_cheb: npp.Chebyshev
 
-assert_type(npp.polynomial.polyroots(AR_f8), _ArrFloat1D64)
-assert_type(npp.polynomial.polyroots(AR_c16), _ArrComplex1D128)
-assert_type(npp.polynomial.polyroots(AR_O), _ArrObject1D)
+assert_type(npp.polynomial.polyroots(AR_f8), _Float64_1d)
+assert_type(npp.polynomial.polyroots(AR_c16), _Complex128_1d)
+assert_type(npp.polynomial.polyroots(AR_O), _Object_1d)
 
-assert_type(npp.polynomial.polyfromroots(AR_f8), _ArrFloat1D)
-assert_type(npp.polynomial.polyfromroots(AR_c16), _ArrComplex1D)
-assert_type(npp.polynomial.polyfromroots(AR_O), _ArrObject1D)
+assert_type(npp.polynomial.polyfromroots(AR_f8), _Floating_1d)
+assert_type(npp.polynomial.polyfromroots(AR_c16), _CFloating_1d)
+assert_type(npp.polynomial.polyfromroots(AR_O), _Object_1d)
 
 # assert_type(npp.polynomial.polyadd(AR_b, AR_b), NoReturn)
-assert_type(npp.polynomial.polyadd(AR_u4, AR_b), _ArrFloat1D)
-assert_type(npp.polynomial.polyadd(AR_i8, AR_i8), _ArrFloat1D)
-assert_type(npp.polynomial.polyadd(AR_f8, AR_i8), _ArrFloat1D)
-assert_type(npp.polynomial.polyadd(AR_i8, AR_c16), _ArrComplex1D)
-assert_type(npp.polynomial.polyadd(AR_O, AR_O), _ArrObject1D)
+assert_type(npp.polynomial.polyadd(AR_u4, AR_b), _Floating_1d)
+assert_type(npp.polynomial.polyadd(AR_i8, AR_i8), _Floating_1d)
+assert_type(npp.polynomial.polyadd(AR_f8, AR_i8), _Floating_1d)
+assert_type(npp.polynomial.polyadd(AR_i8, AR_c16), _CFloating_1d)
+assert_type(npp.polynomial.polyadd(AR_O, AR_O), _Object_1d)
 
-assert_type(npp.polynomial.polymulx(AR_u4), _ArrFloat1D)
-assert_type(npp.polynomial.polymulx(AR_i8), _ArrFloat1D)
-assert_type(npp.polynomial.polymulx(AR_f8), _ArrFloat1D)
-assert_type(npp.polynomial.polymulx(AR_c16), _ArrComplex1D)
-assert_type(npp.polynomial.polymulx(AR_O), _ArrObject1D)
+assert_type(npp.polynomial.polymulx(AR_u4), _Floating_1d)
+assert_type(npp.polynomial.polymulx(AR_i8), _Floating_1d)
+assert_type(npp.polynomial.polymulx(AR_f8), _Floating_1d)
+assert_type(npp.polynomial.polymulx(AR_c16), _CFloating_1d)
+assert_type(npp.polynomial.polymulx(AR_O), _Object_1d)
 
-assert_type(npp.polynomial.polypow(AR_u4, 2), _ArrFloat1D)
-assert_type(npp.polynomial.polypow(AR_i8, 2), _ArrFloat1D)
-assert_type(npp.polynomial.polypow(AR_f8, 2), _ArrFloat1D)
-assert_type(npp.polynomial.polypow(AR_c16, 2), _ArrComplex1D)
-assert_type(npp.polynomial.polypow(AR_O, 2), _ArrObject1D)
+assert_type(npp.polynomial.polypow(AR_u4, 2), _Floating_1d)
+assert_type(npp.polynomial.polypow(AR_i8, 2), _Floating_1d)
+assert_type(npp.polynomial.polypow(AR_f8, 2), _Floating_1d)
+assert_type(npp.polynomial.polypow(AR_c16, 2), _CFloating_1d)
+assert_type(npp.polynomial.polypow(AR_O, 2), _Object_1d)
 
 # assert_type(npp.polynomial.polyder(PS_poly), npt.NDArray[np.object_])
 assert_type(npp.polynomial.polyder(AR_f8), npt.NDArray[np.float64])
@@ -116,21 +116,21 @@ assert_type(
     npt.NDArray[np.complexfloating],
 )
 
-assert_type(npp.chebyshev.chebgauss(2), tuple[_ArrFloat1D64, _ArrFloat1D64])
+assert_type(npp.chebyshev.chebgauss(2), tuple[_Float64_1d, _Float64_1d])
 
 assert_type(npp.chebyshev.chebweight(AR_f8), npt.NDArray[np.float64])
 assert_type(npp.chebyshev.chebweight(AR_c16), npt.NDArray[np.complex128])
 assert_type(npp.chebyshev.chebweight(AR_O), npt.NDArray[np.object_])
 
-assert_type(npp.chebyshev.poly2cheb(AR_f8), _ArrFloat1D)
-assert_type(npp.chebyshev.poly2cheb(AR_c16), _ArrComplex1D)
-assert_type(npp.chebyshev.poly2cheb(AR_O), _ArrObject1D)
+assert_type(npp.chebyshev.poly2cheb(AR_f8), _Float64_1d)
+assert_type(npp.chebyshev.poly2cheb(AR_c16), _Complex128_1d)
+assert_type(npp.chebyshev.poly2cheb(AR_O), _Object_1d)
 
-assert_type(npp.chebyshev.cheb2poly(AR_f8), _ArrFloat1D)
-assert_type(npp.chebyshev.cheb2poly(AR_c16), _ArrComplex1D)
-assert_type(npp.chebyshev.cheb2poly(AR_O), _ArrObject1D)
+assert_type(npp.chebyshev.cheb2poly(AR_f8), _Float64_1d)
+assert_type(npp.chebyshev.cheb2poly(AR_c16), _Complex128_1d)
+assert_type(npp.chebyshev.cheb2poly(AR_O), _Object_1d)
 
-assert_type(npp.chebyshev.chebpts1(6), _ArrFloat1D64)
-assert_type(npp.chebyshev.chebpts2(6), _ArrFloat1D64)
+assert_type(npp.chebyshev.chebpts1(6), _Float64_1d)
+assert_type(npp.chebyshev.chebpts2(6), _Float64_1d)
 
-assert_type(npp.chebyshev.chebinterpolate(np.tanh, 3), npt.NDArray[Any])
+assert_type(npp.chebyshev.chebinterpolate(np.tanh, 3), npt.NDArray[np.float64])

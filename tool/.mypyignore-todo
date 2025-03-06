@@ -8,6 +8,8 @@ numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
+numpy.typing.NBitBase
+
 numpy.compat
 numpy.compat.py3k
 
@@ -56,34 +58,6 @@ numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile
 
-numpy.polynomial.chebyshev.cheb2poly
-numpy.polynomial.chebyshev.chebadd
-numpy.polynomial.chebyshev.chebcompanion
-numpy.polynomial.chebyshev.chebder
-numpy.polynomial.chebyshev.chebdiv
-numpy.polynomial.chebyshev.chebfit
-numpy.polynomial.chebyshev.chebfromroots
-numpy.polynomial.chebyshev.chebgauss
-numpy.polynomial.chebyshev.chebgrid2d
-numpy.polynomial.chebyshev.chebgrid3d
-numpy.polynomial.chebyshev.chebint
-numpy.polynomial.chebyshev.chebline
-numpy.polynomial.chebyshev.chebmul
-numpy.polynomial.chebyshev.chebmulx
-numpy.polynomial.chebyshev.chebpow
-numpy.polynomial.chebyshev.chebpts1
-numpy.polynomial.chebyshev.chebpts2
-numpy.polynomial.chebyshev.chebroots
-numpy.polynomial.chebyshev.chebsub
-numpy.polynomial.chebyshev.chebval
-numpy.polynomial.chebyshev.chebval2d
-numpy.polynomial.chebyshev.chebval3d
-numpy.polynomial.chebyshev.chebvalfromroots
-numpy.polynomial.chebyshev.chebvander
-numpy.polynomial.chebyshev.chebvander2d
-numpy.polynomial.chebyshev.chebvander3d
-numpy.polynomial.chebyshev.chebweight
-numpy.polynomial.chebyshev.poly2cheb
 numpy.polynomial.hermite.herm2poly
 numpy.polynomial.hermite.hermadd
 numpy.polynomial.hermite.hermcompanion
@@ -110,6 +84,7 @@ numpy.polynomial.hermite.hermvander2d
 numpy.polynomial.hermite.hermvander3d
 numpy.polynomial.hermite.hermweight
 numpy.polynomial.hermite.poly2herm
+
 numpy.polynomial.hermite_e.herme2poly
 numpy.polynomial.hermite_e.hermeadd
 numpy.polynomial.hermite_e.hermecompanion
@@ -136,6 +111,7 @@ numpy.polynomial.hermite_e.hermevander2d
 numpy.polynomial.hermite_e.hermevander3d
 numpy.polynomial.hermite_e.hermeweight
 numpy.polynomial.hermite_e.poly2herme
+
 numpy.polynomial.laguerre.lag2poly
 numpy.polynomial.laguerre.lagadd
 numpy.polynomial.laguerre.lagcompanion
@@ -162,6 +138,7 @@ numpy.polynomial.laguerre.lagvander2d
 numpy.polynomial.laguerre.lagvander3d
 numpy.polynomial.laguerre.lagweight
 numpy.polynomial.laguerre.poly2lag
+
 numpy.polynomial.legendre.leg2poly
 numpy.polynomial.legendre.legadd
 numpy.polynomial.legendre.legcompanion
@@ -188,6 +165,7 @@ numpy.polynomial.legendre.legvander2d
 numpy.polynomial.legendre.legvander3d
 numpy.polynomial.legendre.legweight
 numpy.polynomial.legendre.poly2leg
+
 numpy.polynomial.polynomial.polyadd
 numpy.polynomial.polynomial.polycompanion
 numpy.polynomial.polynomial.polyder
@@ -210,5 +188,3 @@ numpy.polynomial.polynomial.polyvalfromroots
 numpy.polynomial.polynomial.polyvander
 numpy.polynomial.polynomial.polyvander2d
 numpy.polynomial.polynomial.polyvander3d
-
-numpy.typing.NBitBase
