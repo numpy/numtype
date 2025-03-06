@@ -8,12 +8,12 @@ numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
+numpy._pyinstaller.hook-numpy
+
+numpy.ctypeslib._ctypeslib
+
 numpy.compat
 numpy.compat.py3k
-
-numpy._pyinstaller.hook-numpy
-numpy.ctypeslib._ctypeslib
-numpy.fft.helper
 
 numpy.distutils
 
