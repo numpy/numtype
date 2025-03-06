@@ -6557,9 +6557,6 @@ class bytes_(character[bytes], bytes):  # type: ignore[misc]
     @overload
     def __init__(self, s: str, /, encoding: str, errors: str = ...) -> None: ...
 
-    #
-    def __bytes__(self, /) -> bytes: ...
-
 class str_(character[str], str):  # type: ignore[misc]
     @overload
     def __new__(cls, value: object = ..., /) -> Self: ...
