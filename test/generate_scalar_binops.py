@@ -32,15 +32,14 @@ OPS = {
 }
 NAMES = {
     # builtins (key length > 1)
+    "bool": "b0",
     # TODO(jorenham): Re-enable after the binops use `_numtype.Is` (avoid promotions)
-    # "bool": "b_",
-    # "int": "i_",
-    # "float": "f_",
-    # "complex": "c_",
+    # "int": "i0",
+    # "float": "f0",
+    # "complex": "c0",
     #
-    # TODO(jorenham): fix `bool` binops
-    # https://github.com/numpy/numtype/issues/205
-    # "?": "b1",
+    # bool
+    "?": "b1",
     # unsigned integers
     "B": "u1",
     "H": "u2",
@@ -108,12 +107,17 @@ def _assert_stmt(op: str, lhs: str, rhs: str, /) -> str | None:
     try:
         val_out: np.generic = OPS[op](_scalar(lhs), _scalar(rhs))
     except TypeError:
-        # avoid excessive amount of trivial rejection tests
+        # generate rejection test, while avoiding trivial cases
         if op not in DATETIME_OPS and (lhs == "M" or rhs == "M"):
             return None
         if op not in TIMEDELTA_OPS and (lhs == "m" or rhs == "m"):
             return None
         if op in BITWISE_OPS and not (lhs in BITWISE_CHARS and rhs in BITWISE_CHARS):
+            return None
+
+        if len(lhs) > 1 or len(rhs) > 1:
+            # skip rejection tests with builtins for now
+            # TODO(jorenham): Re-enable this once `Is[int]` is used.
             return None
 
         return "  ".join((  # noqa: FLY002
