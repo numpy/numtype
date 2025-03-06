@@ -35,16 +35,20 @@ jobs:
 
   basedpyright:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        py: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-          python-version: 3.13t
+          python-version: ${{ matrix.py }}
 
-      - name: basedpyright
+      - name: basedpyright (python ${{ matrix.py }})
         run: >
           uv run --no-group=orjson
           basedpyright --threads=3
@@ -52,31 +56,39 @@ jobs:
   mypy:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        py: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-          python-version: 3.13
+          python-version: ${{ matrix.py }}
 
-      - name: mypy
+      - name: mypy (python ${{ matrix.py }})
         run: >
           uv run --no-group=numpy
-          mypy --no-incremental test
+          mypy test
 
   stubtest:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        py: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-          python-version: 3.13
+          python-version: ${{ matrix.py }}
 
-      - name: stubtest
+      - name: stubtest (python ${{ matrix.py }})
         run: >
-          uv run --no-project
-          tool/stubtest.py --concise
+          uv run --active -p ${{ matrix.py }}
+          tool/stubtest.py
