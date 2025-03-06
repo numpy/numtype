@@ -134,6 +134,8 @@ def chebinterpolate(
 ) -> Array[_CoNumberT]: ...
 
 class Chebyshev(ABCPolyBase):
+    domain: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    window: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     basis_name: L["T"] = "T"  # pyright: ignore[reportIncompatibleMethodOverride]
 
     @overload

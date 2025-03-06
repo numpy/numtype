@@ -95,4 +95,6 @@ leggauss: Final[_FuncGauss[L["leggauss"]]] = ...
 legweight: Final[_FuncWeight[L["legweight"]]] = ...
 
 class Legendre(ABCPolyBase):
+    domain: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    window: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     basis_name: L["P"] = "P"  # pyright: ignore[reportIncompatibleMethodOverride]

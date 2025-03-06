@@ -85,4 +85,6 @@ polycompanion: Final[_FuncCompanion[L["polycompanion"]]] = ...
 polyroots: Final[_FuncRoots[L["polyroots"]]] = ...
 
 class Polynomial(ABCPolyBase):
+    domain: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    window: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     basis_name: None = None  # pyright: ignore[reportIncompatibleMethodOverride]

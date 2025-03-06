@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from decimal import Decimal
 from fractions import Fraction
 from typing import Any, Literal as L, TypeAlias
-from typing_extensions import LiteralString, TypeVar, assert_type
+from typing_extensions import TypeVar, assert_type
 
 import numpy as np
 import numpy.polynomial as npp
@@ -82,9 +82,9 @@ assert_type(type(PS_herme).cast(PS_leg), npp.HermiteE)
 # attributes / properties
 
 assert_type(PS_all.coef, _Array1D[np.inexact | np.object_])
-assert_type(PS_all.domain, _Array1D[np.inexact])
-assert_type(PS_all.window, _Array1D[np.inexact])
-assert_type(PS_all.symbol, LiteralString)
+assert_type(PS_all.domain, _Array1D[np.float64])
+assert_type(PS_all.window, _Array1D[np.float64])
+assert_type(PS_all.symbol, str)
 
 # instance methods
 
@@ -104,7 +104,7 @@ assert_type(PS_herme.copy(), npp.HermiteE)
 assert_type(PS_lag.copy(), npp.Laguerre)
 assert_type(PS_leg.copy(), npp.Legendre)
 
-assert_type(PS_leg.cutdeg(), npp.Legendre)
+assert_type(PS_leg.cutdeg(1), npp.Legendre)
 assert_type(PS_leg.trim(), npp.Legendre)
 assert_type(PS_leg.trim(tol=SC_f_co), npp.Legendre)
 assert_type(PS_leg.truncate(SC_i_co), npp.Legendre)

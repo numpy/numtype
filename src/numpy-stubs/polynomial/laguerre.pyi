@@ -95,4 +95,6 @@ laggauss: Final[_FuncGauss[L["laggauss"]]] = ...
 lagweight: Final[_FuncWeight[L["lagweight"]]] = ...
 
 class Laguerre(ABCPolyBase):
+    domain: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    window: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     basis_name: L["L"] = "L"  # pyright: ignore[reportIncompatibleMethodOverride]

@@ -100,4 +100,6 @@ hermweight: Final[_FuncWeight[L["hermweight"]]] = ...
 def _normed_hermite_n(x: Array[np.float64, _ShapeT], n: int | np.intp) -> Array[np.float64, _ShapeT]: ...
 
 class Hermite(ABCPolyBase):
+    domain: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    window: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     basis_name: L["H"] = "H"  # pyright: ignore[reportIncompatibleMethodOverride]

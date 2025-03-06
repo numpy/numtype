@@ -56,13 +56,6 @@ numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile
 
-numpy.polynomial._polybase.ABCPolyBase.__rdiv__
-numpy.polynomial._polybase.ABCPolyBase._repr_latex_term
-numpy.polynomial._polybase.ABCPolyBase._str_term_ascii
-numpy.polynomial._polybase.ABCPolyBase.cutdeg
-numpy.polynomial._polybase.ABCPolyBase.domain
-numpy.polynomial._polybase.ABCPolyBase.fromroots
-numpy.polynomial._polybase.ABCPolyBase.window
 numpy.polynomial.chebyshev.cheb2poly
 numpy.polynomial.chebyshev.chebadd
 numpy.polynomial.chebyshev.chebcompanion
