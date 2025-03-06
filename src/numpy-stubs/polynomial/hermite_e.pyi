@@ -5,29 +5,34 @@ import numpy as np
 from _numtype import Array, Array_1d
 
 from ._polybase import ABCPolyBase
-from ._polytypes import (
-    _FuncBinOp,
-    _FuncCompanion,
-    _FuncDer,
-    _FuncFit,
-    _FuncFromRoots,
-    _FuncGauss,
-    _FuncInteg,
-    _FuncLine,
-    _FuncPoly2Ortho,
-    _FuncPow,
-    _FuncRoots,
-    _FuncUnOp,
-    _FuncVal,
-    _FuncVal2D,
-    _FuncVal3D,
-    _FuncValFromRoots,
-    _FuncVander,
-    _FuncVander2D,
-    _FuncVander3D,
-    _FuncWeight,
+from .legendre import (
+    leg2poly as herme2poly,
+    legadd as hermeadd,
+    legcompanion as hermecompanion,
+    legder as hermeder,
+    legdiv as hermediv,
+    legfit as hermefit,
+    legfromroots as hermefromroots,
+    leggauss as hermegauss,
+    leggrid2d as hermegrid2d,
+    leggrid3d as hermegrid3d,
+    legint as hermeint,
+    legline as hermeline,
+    legmul as hermemul,
+    legmulx as hermemulx,
+    legpow as hermepow,
+    legroots as hermeroots,
+    legsub as hermesub,
+    legtrim as hermetrim,
+    legval as hermeval,
+    legval2d as hermeval2d,
+    legval3d as hermeval3d,
+    legvander as hermevander,
+    legvander2d as hermevander2d,
+    legvander3d as hermevander3d,
+    legweight as hermeweight,
+    poly2leg as poly2herme,
 )
-from .polyutils import trimcoef as hermetrim
 
 __all__ = [
     "HermiteE",
@@ -63,6 +68,8 @@ __all__ = [
     "poly2herme",
 ]
 
+###
+
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 
 ###
@@ -72,36 +79,9 @@ hermezero: Final[Array_1d[np.int_]] = ...
 hermeone: Final[Array_1d[np.int_]] = ...
 hermex: Final[Array_1d[np.int_]] = ...
 
-poly2herme: Final[_FuncPoly2Ortho[L["poly2herme"]]] = ...
-herme2poly: Final[_FuncUnOp[L["herme2poly"]]] = ...
-hermeline: Final[_FuncLine[L["hermeline"]]] = ...
-hermefromroots: Final[_FuncFromRoots[L["hermefromroots"]]] = ...
-hermeadd: Final[_FuncBinOp[L["hermeadd"]]] = ...
-hermesub: Final[_FuncBinOp[L["hermesub"]]] = ...
-hermemulx: Final[_FuncUnOp[L["hermemulx"]]] = ...
-hermemul: Final[_FuncBinOp[L["hermemul"]]] = ...
-hermediv: Final[_FuncBinOp[L["hermediv"]]] = ...
-hermepow: Final[_FuncPow[L["hermepow"]]] = ...
-hermeder: Final[_FuncDer[L["hermeder"]]] = ...
-hermeint: Final[_FuncInteg[L["hermeint"]]] = ...
-hermeval: Final[_FuncVal[L["hermeval"]]] = ...
-hermeval2d: Final[_FuncVal2D[L["hermeval2d"]]] = ...
-hermeval3d: Final[_FuncVal3D[L["hermeval3d"]]] = ...
-hermevalfromroots: Final[_FuncValFromRoots[L["hermevalfromroots"]]] = ...
-hermegrid2d: Final[_FuncVal2D[L["hermegrid2d"]]] = ...
-hermegrid3d: Final[_FuncVal3D[L["hermegrid3d"]]] = ...
-hermevander: Final[_FuncVander[L["hermevander"]]] = ...
-hermevander2d: Final[_FuncVander2D[L["hermevander2d"]]] = ...
-hermevander3d: Final[_FuncVander3D[L["hermevander3d"]]] = ...
-hermefit: Final[_FuncFit[L["hermefit"]]] = ...
-hermecompanion: Final[_FuncCompanion[L["hermecompanion"]]] = ...
-hermeroots: Final[_FuncRoots[L["hermeroots"]]] = ...
-hermegauss: Final[_FuncGauss[L["hermegauss"]]] = ...
-hermeweight: Final[_FuncWeight[L["hermeweight"]]] = ...
-
-def _normed_hermite_e_n(x: Array[np.float64, _ShapeT], n: int | np.intp) -> Array[np.float64, _ShapeT]: ...
-
 class HermiteE(ABCPolyBase):
     domain: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     window: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     basis_name: L["He"] = "He"  # pyright: ignore[reportIncompatibleMethodOverride]
+
+def _normed_hermite_e_n(x: Array[np.float64, _ShapeT], n: int | np.intp) -> Array[np.float64, _ShapeT]: ...
