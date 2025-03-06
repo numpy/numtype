@@ -8,8 +8,6 @@ numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
 
-numpy._pyinstaller.hook-numpy
-
 numpy.distutils
 
 numpy.f2py.__main__

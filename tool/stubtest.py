@@ -3,6 +3,7 @@
 # dependencies = [
 #     "numtype[numpy]",
 #     "mypy[faster-cache]>=1.15.0",  # keep in sync with pyproject.toml
+#     "PyInstaller",
 # ]
 #
 # [tool.uv]
