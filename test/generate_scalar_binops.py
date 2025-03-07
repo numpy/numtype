@@ -33,8 +33,7 @@ OPS = {
     "<=": op.__le__,
     ">=": op.__ge__,
     ">": op.__gt__,
-    # TODO(jorenham): these currently all return `Any`; fix this
-    # "==": op.__eq__,
+    "==": op.__eq__,
 }
 NAMES = {
     # builtins (key length > 1)
@@ -132,8 +131,12 @@ def _assert_stmt(op: str, lhs: str, rhs: str, /) -> str | None:
             "# pyright: ignore[reportOperatorIssue]",
         ))
 
-    expr_type = _sctype_expr(val_out.dtype)
-    return f"assert_type({expr_eval}, {expr_type})"
+    expr_type = (
+        _sctype_expr(val_out.dtype)
+        if isinstance(val_out, np.generic)
+        else type(val_out).__qualname__
+    )
+    return f"assert_type({expr_eval}, {expr_type})" if expr_type != "bool" else None
 
 
 def _gen_imports() -> Generator[str]:
