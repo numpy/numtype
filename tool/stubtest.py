@@ -128,6 +128,7 @@ def main() -> int:
         capture_output=True,
         env={"FORCE_COLOR": "1"} | os.environ,
     )
+    sys.stderr.buffer.write(result.stderr)
     output = _rewrite_mypy_output(result.stdout)
     sys.stdout.buffer.write(output)
     sys.stdout.buffer.flush()
