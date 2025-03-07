@@ -1473,7 +1473,12 @@ def vdot(a: _ArrayLikeFloat_co, b: _ArrayLikeFloat_co, /) -> np.floating | np.si
 @overload
 def vdot(a: _ArrayLikeNumber_co, b: _ArrayLikeNumber_co, /) -> np.inexact | np.signedinteger: ...
 
-# TODO(jorenham): https://github.com/numpy/numtype/issues/117
+#
+@overload
+def inner(a: _ScalarT, b: _ScalarT, /) -> _ScalarT: ...
+@overload
+def inner(a: _Array1D[_ScalarT], b: _Array1D[_ScalarT], /) -> _ScalarT: ...
+@overload
 def inner(a: npt.ArrayLike, b: npt.ArrayLike, /) -> Incomplete: ...
 
 #
