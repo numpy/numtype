@@ -10,7 +10,6 @@ numpy(\..+)?\.complexfloating.__complex__
 
 # https://github.com/numpy/numtype/issues/40
 numpy.f2py.__main__
-numpy.f2py.capi_maps
 numpy.f2py.func2subr
 numpy.f2py.f2py2e
 numpy.f2py.diagnose
