@@ -2198,15 +2198,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     # Unary ops
 
     @overload
+    def __abs__(self: ndarray[_ShapeT, dtype[complexfloating[_NBitT]]], /) -> ndarray[_ShapeT, dtype[floating[_NBitT]]]: ...
+    @overload
     def __abs__(self: _RealArrayT, /) -> _RealArrayT: ...
-    @overload
-    def __abs__(self: ndarray[_ShapeT, dtype[complex64]], /) -> ndarray[_ShapeT, dtype[float32]]: ...  # type: ignore[overload-overlap]
-    @overload
-    def __abs__(self: ndarray[_ShapeT, dtype[complex128]], /) -> ndarray[_ShapeT, dtype[float64]]: ...
-    @overload
-    def __abs__(self: ndarray[_ShapeT, dtype[clongdouble]], /) -> ndarray[_ShapeT, dtype[longdouble]]: ...
-    @overload
-    def __abs__(self: ndarray[_ShapeT, dtype[inexact]], /) -> ndarray[_ShapeT, dtype[floating]]: ...
 
     #
     def __invert__(self: _IntegralArrayT, /) -> _IntegralArrayT: ...  # noqa: PYI019
