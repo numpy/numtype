@@ -130,7 +130,7 @@ _Intent: TypeAlias = L[
 
 ###
 
-isintent_dict: dict[Callable[[_Var], bool], _Intent]
+isintent_dict: dict[Callable[[_Var], _Bool], _Intent]
 
 class F2PYError(Exception): ...
 
