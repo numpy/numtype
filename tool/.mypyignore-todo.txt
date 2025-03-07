@@ -12,4 +12,3 @@ numpy(\..+)?\.complexfloating.__complex__
 numpy.f2py.__main__
 numpy.f2py.crackfortran
 numpy.f2py.cb_rules
-numpy.f2py.common_rules
