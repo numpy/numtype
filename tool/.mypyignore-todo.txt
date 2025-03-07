@@ -11,7 +11,6 @@ numpy(\..+)?\.complexfloating.__complex__
 # https://github.com/numpy/numtype/issues/40
 numpy.f2py.__main__
 numpy.f2py.crackfortran
-numpy.f2py.diagnose
 numpy.f2py.func2subr
 numpy.f2py.symbolic
 numpy.f2py.((cb|common|f90mod|use)_)?rules
