@@ -552,7 +552,6 @@ _AnyShapeT = TypeVar(
     tuple[int, int, int, int, int, int, int, int],  # 8-d
     tuple[int, ...],  # N-d
 )
-_AnyNBitInexact = TypeVar("_AnyNBitInexact", _16Bit, _32Bit, _64Bit, _NBitLongDouble)
 _AnyTD64Item = TypeVar("_AnyTD64Item", dt.timedelta, int, None, dt.timedelta | int | None)
 _AnyDT64Arg = TypeVar("_AnyDT64Arg", dt.datetime, dt.date, None)
 _AnyDate = TypeVar("_AnyDate", dt.date, dt.datetime)
@@ -2136,12 +2135,19 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload  # ?-d
     def __iter__(self, /) -> Iterator[Any]: ...
 
-    # The last overload is for catching recursive objects whose
-    # nesting is too deep.
-    # The first overload is for catching `bytes` (as they are a subtype of
-    # `Sequence[int]`) and `str`. As `str` is a recursive sequence of
-    # strings, it will pass through the final overload otherwise
+    #
+    @overload  # type: ignore[override]
+    def __eq__(self, other: _ScalarLike_co | ndarray[_ShapeT_co, dtype[Any]], /) -> ndarray[_ShapeT_co, dtype[bool_]]: ...
+    @overload
+    def __eq__(self, other: object, /) -> NDArray[bool_]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
+    #
+    @overload  # type: ignore[override]
+    def __ne__(self, other: _ScalarLike_co | ndarray[_ShapeT_co, dtype[Any]], /) -> ndarray[_ShapeT_co, dtype[bool_]]: ...
+    @overload
+    def __ne__(self, other: object, /) -> NDArray[bool_]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
     @overload
     def __lt__(self: _ArrayComplex_co, other: _ArrayLikeNumber_co, /) -> NDArray[bool_]: ...
     @overload
@@ -2192,10 +2198,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     # Unary ops
 
     @overload
-    def __abs__(
-        self: ndarray[_ShapeT, dtype[complexfloating[_AnyNBitInexact]]],
-        /,
-    ) -> ndarray[_ShapeT, dtype[floating[_AnyNBitInexact]]]: ...
+    def __abs__(self: ndarray[_ShapeT, dtype[complexfloating[_NBitT]]], /) -> ndarray[_ShapeT, dtype[floating[_NBitT]]]: ...
     @overload
     def __abs__(self: _RealArrayT, /) -> _RealArrayT: ...
 
@@ -3860,6 +3863,26 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     #
     @abc.abstractmethod
     def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
+
+    #
+    @overload
+    def __eq__(self, other: _ScalarLike_co, /) -> bool_: ...
+    @overload
+    def __eq__(self, other: ndarray[_ShapeT, dtype[Any]], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
+    @overload
+    def __eq__(self, other: _NestedSequence[ArrayLike], /) -> NDArray[bool_]: ...
+    @overload
+    def __eq__(self, other: object, /) -> Any: ...
+
+    #
+    @overload
+    def __ne__(self, other: _ScalarLike_co, /) -> bool_: ...
+    @overload
+    def __ne__(self, other: ndarray[_ShapeT, dtype[Any]], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
+    @overload
+    def __ne__(self, other: _NestedSequence[ArrayLike], /) -> NDArray[bool_]: ...
+    @overload
+    def __ne__(self, other: object, /) -> Any: ...
 
     #
     @overload
