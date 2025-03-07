@@ -11,4 +11,3 @@ numpy(\..+)?\.complexfloating.__complex__
 # https://github.com/numpy/numtype/issues/40
 numpy.f2py.__main__
 numpy.f2py.crackfortran
-numpy.f2py.cb_rules
