@@ -15,7 +15,6 @@ numpy.f2py.(aux|c)funcs
 numpy.f2py.capi_maps
 numpy.f2py.func2subr
 numpy.f2py.f2py2e
-numpy.f2py.compile
 numpy.f2py.diagnose
 numpy.f2py.crackfortran
 numpy.f2py.symbolic
