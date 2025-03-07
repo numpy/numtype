@@ -14,4 +14,3 @@ numpy.f2py.crackfortran
 numpy.f2py.cb_rules
 numpy.f2py.common_rules
 numpy.f2py.f90mod_rules
-numpy.f2py.use_rules
