@@ -2,8 +2,6 @@ from _typeshed import Incomplete
 
 import numpy as np
 
-__all__: list[str] = []
-
 pi: float = ...
 
 class ModuleTester:
