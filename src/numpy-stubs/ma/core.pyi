@@ -1,11 +1,11 @@
 from _typeshed import Incomplete
-from collections.abc import Callable
-from typing import Any, ClassVar, Final, Generic, Literal as L, type_check_only
-from typing_extensions import Never, Self, TypeVar, overload
+from typing import Any, ClassVar, Final, Generic, Literal as L, SupportsIndex as CanIndex, TypeAlias, type_check_only
+from typing_extensions import Never, Self, TypeVar, deprecated, overload
 
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
-from numpy import _OrderACF, _OrderKACF, amax, amin, angle, bool_, clip, expand_dims, indices, squeeze  # noqa: ICN003
+from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
+from numpy._typing import _BoolCodes
 
 __all__ = [
     "MAError",
@@ -194,6 +194,8 @@ _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[Any], default=np.dtype[Any], covariant=True)
 
+_DTypeLikeBool: TypeAlias = type[bool | np.bool] | np.dtype[np.bool] | _BoolCodes
+
 ###
 
 MaskType: Final[type[np.bool]] = ...
@@ -241,7 +243,6 @@ class _DomainSafeDivide:
 
 class _MaskedUFunc(Generic[_UFuncT_co]):
     f: _UFuncT_co
-    __doc__: str
     __name__: str
     __qualname__: str
     def __init__(self, /, ufunc: _UFuncT_co) -> None: ...
@@ -344,9 +345,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
-    def data(self) -> Incomplete: ...
-    @data.setter
-    def data(self, value: Incomplete, /) -> Incomplete: ...
+    def data(self) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def get_fill_value(self) -> Incomplete: ...
@@ -369,6 +368,8 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @property
     def mT(self) -> Self: ...
+    @property
+    def T(self) -> Self: ...
 
     #
     def __new__(
@@ -533,42 +534,50 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def anom(self, axis: Incomplete = ..., dtype: Incomplete = ...) -> Incomplete: ...
     def var(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
+        /,
         axis: Incomplete = ...,
         dtype: Incomplete = ...,
         out: Incomplete = ...,
-        ddof: Incomplete = ...,
+        ddof: float = 0,
         keepdims: Incomplete = ...,
+        mean: Incomplete = ...,
     ) -> Incomplete: ...
     def std(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
+        /,
         axis: Incomplete = ...,
         dtype: Incomplete = ...,
         out: Incomplete = ...,
-        ddof: Incomplete = ...,
+        ddof: float = 0,
         keepdims: Incomplete = ...,
+        mean: Incomplete = ...,
     ) -> Incomplete: ...
 
     #
     def round(self, decimals: Incomplete = ..., out: Incomplete = ...) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    def sort(  # pyright: ignore[reportIncompatibleMethodOverride]
+    def sort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
-        axis: Incomplete = ...,
-        kind: Incomplete = ...,
-        order: Incomplete = ...,
-        endwith: Incomplete = ...,
-        fill_value: Incomplete = ...,
-        stable: Incomplete = ...,
+        /,
+        axis: Incomplete = -1,
+        kind: Incomplete | None = None,
+        order: Incomplete | None = None,
+        endwith: bool = True,
+        fill_value: Incomplete | None = None,
+        *,
+        stable: bool = False,
     ) -> Incomplete: ...
-    def argsort(  # pyright: ignore[reportIncompatibleMethodOverride]
+    def argsort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
+        /,
         axis: Incomplete = ...,
-        kind: Incomplete = ...,
-        order: Incomplete = ...,
-        endwith: Incomplete = ...,
-        fill_value: Incomplete = ...,
-        stable: Incomplete = ...,
+        kind: Incomplete | None = None,
+        order: Incomplete | None = None,
+        endwith: bool = True,
+        fill_value: Incomplete | None = None,
+        *,
+        stable: bool = False,
     ) -> Incomplete: ...
 
     #
@@ -637,15 +646,16 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     repeat: Incomplete
     squeeze: Incomplete
     swapaxes: Incomplete
-    T: Incomplete
     transpose: Incomplete
 
     #
     def toflex(self) -> Incomplete: ...
     def torecords(self) -> Incomplete: ...
-    def tolist(self, fill_value: Incomplete = ...) -> Incomplete: ...
-    def tobytes(self, fill_value: Incomplete = ..., order: Incomplete = ...) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-    def tofile(self, fid: Incomplete, sep: Incomplete = ..., format: Incomplete = ...) -> Incomplete: ...
+    def tolist(self, fill_value: Incomplete | None = None) -> Incomplete: ...
+    @deprecated("tostring() is deprecated. Use tobytes() instead.")
+    def tostring(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def tobytes(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def tofile(self, /, fid: Incomplete, sep: str = "", format: str = "%s") -> Incomplete: ...
 
 class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
     def __new__(
@@ -680,7 +690,6 @@ class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
     def __format__(self, format_spec: str, /) -> str: ...
 
     #
-    def __iop__(self, other: Incomplete, /) -> Self: ...
     def __iadd__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
@@ -703,10 +712,9 @@ class _frommethod:
     def getdoc(self) -> Incomplete: ...
 
 class _convert2ma:
-    __doc__: str
-    def __init__(self, funcname: Incomplete, params: Incomplete = ...) -> None: ...
-    def __call__(self, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
-    def getdoc(self) -> Incomplete: ...
+    def __init__(self, /, funcname: str, np_ret: str, np_ma_ret: str, params: dict[str, Any] | None = None) -> None: ...
+    def __call__(self, /, *args: object, **params: object) -> Any: ...
+    def getdoc(self, /, np_ret: str, np_ma_ret: str) -> str | None: ...
 
 #
 def array(
@@ -762,6 +770,7 @@ def argsort(
     order: Incomplete = ...,
     endwith: Incomplete = ...,
     fill_value: Incomplete = ...,
+    *,
     stable: Incomplete = ...,
 ) -> Incomplete: ...
 def sort(
@@ -771,6 +780,7 @@ def sort(
     order: Incomplete = ...,
     endwith: Incomplete = ...,
     fill_value: Incomplete = ...,
+    *,
     stable: Incomplete = ...,
 ) -> Incomplete: ...
 def compressed(x: Incomplete) -> Incomplete: ...
@@ -842,7 +852,6 @@ def masked_invalid(a: Incomplete, copy: Incomplete = ...) -> Incomplete: ...
 def flatten_structured_array(a: Incomplete) -> Incomplete: ...
 def append(a: Incomplete, b: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
 def dot(a: Incomplete, b: Incomplete, strict: Incomplete = ..., out: Incomplete = ...) -> Incomplete: ...
-def mask_rowcols(a: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
 def default_fill_value(obj: Incomplete) -> Incomplete: ...
 def minimum_fill_value(obj: Incomplete) -> Incomplete: ...
 def maximum_fill_value(obj: Incomplete) -> Incomplete: ...
@@ -879,6 +888,7 @@ cosh: _MaskedUnaryOperation
 tanh: _MaskedUnaryOperation
 abs: _MaskedUnaryOperation
 absolute: _MaskedUnaryOperation
+angle: _MaskedUnaryOperation
 fabs: _MaskedUnaryOperation
 negative: _MaskedUnaryOperation
 floor: _MaskedUnaryOperation
@@ -906,29 +916,37 @@ greater_equal: _MaskedBinaryOperation
 less: _MaskedBinaryOperation
 greater: _MaskedBinaryOperation
 logical_and: _MaskedBinaryOperation
-alltrue: _MaskedBinaryOperation
+
+def alltrue(target: ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
+
 logical_or: _MaskedBinaryOperation
-sometrue: Callable[..., Incomplete]
+
+def sometrue(target: ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
+
 logical_xor: _MaskedBinaryOperation
 bitwise_and: _MaskedBinaryOperation
 bitwise_or: _MaskedBinaryOperation
 bitwise_xor: _MaskedBinaryOperation
 hypot: _MaskedBinaryOperation
-divide: _MaskedBinaryOperation
-true_divide: _MaskedBinaryOperation
-floor_divide: _MaskedBinaryOperation
-remainder: _MaskedBinaryOperation
-fmod: _MaskedBinaryOperation
-mod: _MaskedBinaryOperation
+
+divide: _DomainedBinaryOperation
+true_divide: _DomainedBinaryOperation
+floor_divide: _DomainedBinaryOperation
+remainder: _DomainedBinaryOperation
+fmod: _DomainedBinaryOperation
+mod: _DomainedBinaryOperation
 
 arange: _convert2ma
+clip: _convert2ma
 empty: _convert2ma
 empty_like: _convert2ma
 frombuffer: _convert2ma
 fromfunction: _convert2ma
 identity: _convert2ma
+indices: _convert2ma
 ones: _convert2ma
 ones_like: _convert2ma
+squeeze: _convert2ma
 zeros: _convert2ma
 zeros_like: _convert2ma
 
