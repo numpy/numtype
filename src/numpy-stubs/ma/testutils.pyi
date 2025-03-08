@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase as _TestCase
 
 import numpy as np
 import numpy.typing as npt
@@ -66,3 +66,6 @@ def assert_mask_equal(m1: object, m2: object, err_msg: str = "") -> None: ...
 
 assert_not_equal = fail_if_equal
 assert_close = assert_almost_equal
+
+class TestCase(_TestCase):
+    def __init_subclass__(cls, *args: object, **kwargs: object) -> None: ...

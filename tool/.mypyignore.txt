@@ -32,4 +32,4 @@ numpy\.testing(\._private\.utils)?\.check_support_sve
 
 # stdlib re-exports with incorrect typeshed stubs
 numpy\.compat(\.py3k)?\.os_PathLike\.__class_getitem__
-numpy\.(testing|ma\.testutils)\.TestCase\.__init_subclass__
+numpy\.testing\.TestCase\.__init_subclass__
