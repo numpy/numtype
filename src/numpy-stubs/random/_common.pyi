@@ -1,0 +1,14 @@
+from collections.abc import Callable
+from typing import Any, NamedTuple
+
+import numpy as np
+
+__all__: list[str] = ["interface"]
+
+class interface(NamedTuple):
+    state_address: int
+    state: Any
+    next_uint64: Callable[..., np.uint64]
+    next_uint32: Callable[..., np.uint32]
+    next_double: Callable[..., np.float64]
+    bit_generator: Any
