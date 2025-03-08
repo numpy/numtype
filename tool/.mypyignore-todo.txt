@@ -22,7 +22,6 @@ numpy.f2py.symbolic
 numpy.f2py.((cb|common|f90mod|use)_)?rules
 
 numpy.ma.testutils
-numpy.ma(.core)?.alltrue
 numpy.ma(.core)?.angle
 numpy.ma(.core)?.clip
 numpy.ma(.core)?.(arg)?sort

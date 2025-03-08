@@ -1,11 +1,11 @@
 from _typeshed import Incomplete
-from collections.abc import Callable
-from typing import Any, ClassVar, Final, Generic, Literal as L, type_check_only
+from typing import Any, ClassVar, Final, Generic, Literal as L, SupportsIndex as CanIndex, TypeAlias, type_check_only
 from typing_extensions import Never, Self, TypeVar, deprecated, overload
 
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
 from numpy import _OrderACF, _OrderKACF, amax, amin, angle, bool_, clip, expand_dims, indices, squeeze  # noqa: ICN003
+from numpy._typing import _BoolCodes
 
 __all__ = [
     "MAError",
@@ -193,6 +193,8 @@ _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...], covariant=True)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[Any], default=np.dtype[Any], covariant=True)
+
+_DTypeLikeBool: TypeAlias = type[bool | np.bool] | np.dtype[np.bool] | _BoolCodes
 
 ###
 
@@ -912,9 +914,9 @@ greater_equal: _MaskedBinaryOperation
 less: _MaskedBinaryOperation
 greater: _MaskedBinaryOperation
 logical_and: _MaskedBinaryOperation
-alltrue: _MaskedBinaryOperation
+def alltrue(target: ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
 logical_or: _MaskedBinaryOperation
-sometrue: Callable[..., Incomplete]
+def sometrue(target: ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
 logical_xor: _MaskedBinaryOperation
 bitwise_and: _MaskedBinaryOperation
 bitwise_or: _MaskedBinaryOperation
