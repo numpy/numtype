@@ -76,6 +76,8 @@ class _fromnxfunction_allargs(_fromnxfunction):
     def __call__(self, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
 class MAxisConcatenator(AxisConcatenator):
+    @staticmethod
+    def concatenate(arrays: Incomplete, axis: int = 0) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @classmethod
     def makemat(cls, arr: Incomplete) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleVariableOverride]
 
