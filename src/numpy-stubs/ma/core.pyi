@@ -4,7 +4,7 @@ from typing_extensions import Never, Self, TypeVar, deprecated, overload
 
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
-from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, clip, expand_dims, indices, squeeze  # noqa: ICN003
+from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
 from numpy._typing import _BoolCodes
 
 __all__ = [
@@ -934,13 +934,16 @@ fmod: _DomainedBinaryOperation
 mod: _DomainedBinaryOperation
 
 arange: _convert2ma
+clip: _convert2ma
 empty: _convert2ma
 empty_like: _convert2ma
 frombuffer: _convert2ma
 fromfunction: _convert2ma
 identity: _convert2ma
+indices: _convert2ma
 ones: _convert2ma
 ones_like: _convert2ma
+squeeze: _convert2ma
 zeros: _convert2ma
 zeros_like: _convert2ma
 

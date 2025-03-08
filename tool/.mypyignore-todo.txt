@@ -22,9 +22,6 @@ numpy.f2py.symbolic
 numpy.f2py.((cb|common|f90mod|use)_)?rules
 
 numpy.ma.testutils
-numpy.ma(.core)?.clip
-numpy.ma(.core)?.indices
-numpy.ma(.core)?.squeeze
 numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile
