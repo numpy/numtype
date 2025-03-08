@@ -1,8 +1,6 @@
-from unittest import TestCase as _TestCase
-
 import numpy as np
 import numpy.typing as npt
-from numpy.testing import assert_, assert_allclose, assert_array_almost_equal_nulp, assert_raises
+from numpy.testing import TestCase, assert_, assert_allclose, assert_array_almost_equal_nulp, assert_raises
 from numpy.testing._private.utils import _ComparisonFunc
 
 __all__ = [
@@ -66,6 +64,3 @@ def assert_mask_equal(m1: object, m2: object, err_msg: str = "") -> None: ...
 
 assert_not_equal = fail_if_equal
 assert_close = assert_almost_equal
-
-class TestCase(_TestCase):
-    def __init_subclass__(cls, *args: object, **kwargs: object) -> None: ...
