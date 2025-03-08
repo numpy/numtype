@@ -22,6 +22,5 @@ numpy.f2py.symbolic
 numpy.f2py.((cb|common|f90mod|use)_)?rules
 
 numpy.ma.testutils
-numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
 numpy.ma.mrecords.fromtextfile

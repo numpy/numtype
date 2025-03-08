@@ -1,10 +1,11 @@
 from _typeshed import Incomplete
 from typing import Final
 
+import numpy as np
 from numpy.lib._function_base_impl import average
 from numpy.lib._index_tricks_impl import AxisConcatenator
 
-from .core import dot, mask_rowcols
+from .core import MaskedArray, dot
 
 __all__ = [
     "apply_along_axis",
@@ -167,3 +168,5 @@ stack: _fromnxfunction_seq
 
 hsplit: _fromnxfunction_single
 diagflat: _fromnxfunction_single
+
+def mask_rowcols(a: Incomplete, axis: Incomplete | None = None) -> MaskedArray[tuple[int, ...], np.dtype[Incomplete]]: ...
