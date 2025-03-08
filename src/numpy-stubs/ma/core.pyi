@@ -770,6 +770,7 @@ def argsort(
     order: Incomplete = ...,
     endwith: Incomplete = ...,
     fill_value: Incomplete = ...,
+    *,
     stable: Incomplete = ...,
 ) -> Incomplete: ...
 def sort(
@@ -779,6 +780,7 @@ def sort(
     order: Incomplete = ...,
     endwith: Incomplete = ...,
     fill_value: Incomplete = ...,
+    *,
     stable: Incomplete = ...,
 ) -> Incomplete: ...
 def compressed(x: Incomplete) -> Incomplete: ...
