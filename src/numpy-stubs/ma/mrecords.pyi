@@ -80,6 +80,8 @@ def fromtextfile(
     missingchar: Incomplete = ...,
     varnames: Incomplete = ...,
     vartypes: Incomplete = ...,
+    *,
+    delimitor: Incomplete = ...,
 ) -> Incomplete: ...
 def addfield(mrecord: Incomplete, newfield: Incomplete, newfieldname: Incomplete = ...) -> Incomplete: ...
 
