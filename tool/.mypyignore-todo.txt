@@ -22,9 +22,6 @@ numpy.f2py.symbolic
 numpy.f2py.((cb|common|f90mod|use)_)?rules
 
 numpy.ma.testutils
-numpy.ma.core._convert2ma.__doc__
-numpy.ma.core._convert2ma.__init__
-numpy.ma.core._convert2ma.getdoc
 numpy.ma.core._MaskedUFunc.__doc__
 numpy.ma.core.MaskedConstant.__iop__
 numpy.ma(.core)?.(MaskedArray|masked_array).T
