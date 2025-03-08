@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable
 from typing import Any, ClassVar, Final, Generic, Literal as L, type_check_only
-from typing_extensions import Never, Self, TypeVar, overload
+from typing_extensions import Never, Self, TypeVar, deprecated, overload
 
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
@@ -343,9 +343,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
-    def data(self) -> Incomplete: ...
-    @data.setter
-    def data(self, value: Incomplete, /) -> Incomplete: ...
+    def data(self) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def get_fill_value(self) -> Incomplete: ...
@@ -368,6 +366,8 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @property
     def mT(self) -> Self: ...
+    @property
+    def T(self) -> Self: ...
 
     #
     def __new__(
@@ -532,42 +532,50 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def anom(self, axis: Incomplete = ..., dtype: Incomplete = ...) -> Incomplete: ...
     def var(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
+        /,
         axis: Incomplete = ...,
         dtype: Incomplete = ...,
         out: Incomplete = ...,
-        ddof: Incomplete = ...,
+        ddof: float = 0,
         keepdims: Incomplete = ...,
+        mean: Incomplete = ...,
     ) -> Incomplete: ...
     def std(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
+        /,
         axis: Incomplete = ...,
         dtype: Incomplete = ...,
         out: Incomplete = ...,
-        ddof: Incomplete = ...,
+        ddof: float = 0,
         keepdims: Incomplete = ...,
+        mean: Incomplete = ...,
     ) -> Incomplete: ...
 
     #
     def round(self, decimals: Incomplete = ..., out: Incomplete = ...) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    def sort(  # pyright: ignore[reportIncompatibleMethodOverride]
+    def sort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
-        axis: Incomplete = ...,
-        kind: Incomplete = ...,
-        order: Incomplete = ...,
-        endwith: Incomplete = ...,
-        fill_value: Incomplete = ...,
-        stable: Incomplete = ...,
+        /,
+        axis: Incomplete = -1,
+        kind: Incomplete | None = None,
+        order: Incomplete | None = None,
+        endwith: bool = True,
+        fill_value: Incomplete | None = None,
+        *,
+        stable: bool = False,
     ) -> Incomplete: ...
-    def argsort(  # pyright: ignore[reportIncompatibleMethodOverride]
+    def argsort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
+        /,
         axis: Incomplete = ...,
-        kind: Incomplete = ...,
-        order: Incomplete = ...,
-        endwith: Incomplete = ...,
-        fill_value: Incomplete = ...,
-        stable: Incomplete = ...,
+        kind: Incomplete | None = None,
+        order: Incomplete | None = None,
+        endwith: bool = True,
+        fill_value: Incomplete | None = None,
+        *,
+        stable: bool = False,
     ) -> Incomplete: ...
 
     #
@@ -636,15 +644,16 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     repeat: Incomplete
     squeeze: Incomplete
     swapaxes: Incomplete
-    T: Incomplete
     transpose: Incomplete
 
     #
     def toflex(self) -> Incomplete: ...
     def torecords(self) -> Incomplete: ...
-    def tolist(self, fill_value: Incomplete = ...) -> Incomplete: ...
-    def tobytes(self, fill_value: Incomplete = ..., order: Incomplete = ...) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-    def tofile(self, fid: Incomplete, sep: Incomplete = ..., format: Incomplete = ...) -> Incomplete: ...
+    def tolist(self, fill_value: Incomplete | None = None) -> Incomplete: ...
+    @deprecated("tostring() is deprecated. Use tobytes() instead.")
+    def tostring(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def tobytes(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def tofile(self, /, fid: Incomplete, sep: str = "", format: str = "%s") -> Incomplete: ...
 
 class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
     def __new__(

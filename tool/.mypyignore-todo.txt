@@ -22,13 +22,6 @@ numpy.f2py.symbolic
 numpy.f2py.((cb|common|f90mod|use)_)?rules
 
 numpy.ma.testutils
-numpy.ma(.core)?.(MaskedArray|masked_array).T
-numpy.ma(.core)?.(MaskedArray|masked_array).argsort
-numpy.ma(.core)?.(MaskedArray|masked_array).data
-numpy.ma(.core)?.(MaskedArray|masked_array).sort
-numpy.ma(.core)?.(MaskedArray|masked_array).std
-numpy.ma(.core)?.(MaskedArray|masked_array).tostring
-numpy.ma(.core)?.(MaskedArray|masked_array).var
 numpy.ma(.core)?.alltrue
 numpy.ma(.core)?.angle
 numpy.ma(.core)?.clip
