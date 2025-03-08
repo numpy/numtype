@@ -1,7 +1,8 @@
 import re
 from _typeshed import Incomplete, StrOrBytesPath, StrPath
 from collections.abc import Callable, Iterable, Mapping
-from typing import IO, Any, Concatenate, Final, Literal as L, Never, ParamSpec, TypeAlias, overload
+from typing import IO, Any, Concatenate, Final, Literal as L, ParamSpec, TypeAlias, overload
+from typing_extensions import Never
 
 from .__version__ import version
 from .auxfuncs import isintent_dict as isintent_dict
