@@ -1,7 +1,5 @@
 from _typeshed import Incomplete
 
-import numpy as np
-
 pi: float = ...
 
 class ModuleTester:
