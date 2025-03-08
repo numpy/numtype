@@ -25,10 +25,7 @@ numpy.ma.testutils
 numpy.ma(.core)?.angle
 numpy.ma(.core)?.clip
 numpy.ma(.core)?.(arg)?sort
-numpy.ma(.core)?.((floor|true)_)?divide
-numpy.ma(.core)?.f?mod
 numpy.ma(.core)?.indices
-numpy.ma(.core)?.remainder
 numpy.ma(.core)?.squeeze
 numpy.ma.core.mask_rowcols
 numpy.ma.extras.MAxisConcatenator.concatenate
