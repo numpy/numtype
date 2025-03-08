@@ -4,7 +4,7 @@ from typing_extensions import Never, Self, TypeVar, deprecated, overload
 
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
-from numpy import _OrderACF, _OrderKACF, amax, amin, angle, bool_, clip, expand_dims, indices, squeeze  # noqa: ICN003
+from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, clip, expand_dims, indices, squeeze  # noqa: ICN003
 from numpy._typing import _BoolCodes
 
 __all__ = [
@@ -889,6 +889,7 @@ cosh: _MaskedUnaryOperation
 tanh: _MaskedUnaryOperation
 abs: _MaskedUnaryOperation
 absolute: _MaskedUnaryOperation
+angle: _MaskedUnaryOperation
 fabs: _MaskedUnaryOperation
 negative: _MaskedUnaryOperation
 floor: _MaskedUnaryOperation
