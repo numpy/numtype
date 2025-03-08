@@ -190,5 +190,3 @@ assert_type(np.testing.assert_no_gc_cycles(), contextlib._GeneratorContextManage
 assert_type(np.testing.assert_no_gc_cycles(func3, 5), None)
 
 assert_type(np.testing.break_cycles(), None)
-
-assert_type(np.testing.TestCase(), unittest.case.TestCase)
