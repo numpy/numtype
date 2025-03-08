@@ -241,7 +241,6 @@ class _DomainSafeDivide:
 
 class _MaskedUFunc(Generic[_UFuncT_co]):
     f: _UFuncT_co
-    __doc__: str
     __name__: str
     __qualname__: str
     def __init__(self, /, ufunc: _UFuncT_co) -> None: ...
