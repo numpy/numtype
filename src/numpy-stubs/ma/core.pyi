@@ -916,9 +916,13 @@ greater_equal: _MaskedBinaryOperation
 less: _MaskedBinaryOperation
 greater: _MaskedBinaryOperation
 logical_and: _MaskedBinaryOperation
+
 def alltrue(target: ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
+
 logical_or: _MaskedBinaryOperation
+
 def sometrue(target: ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
+
 logical_xor: _MaskedBinaryOperation
 bitwise_and: _MaskedBinaryOperation
 bitwise_or: _MaskedBinaryOperation
