@@ -679,7 +679,6 @@ class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
     def __format__(self, format_spec: str, /) -> str: ...
 
     #
-    def __iop__(self, other: Incomplete, /) -> Self: ...
     def __iadd__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
