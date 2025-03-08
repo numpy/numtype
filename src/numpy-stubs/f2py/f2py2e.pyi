@@ -3,8 +3,8 @@ import pprint
 from _typeshed import Incomplete
 from collections.abc import Hashable, Iterable, Mapping, MutableMapping, Sequence
 from types import ModuleType
-from typing import Final, NotRequired, TypedDict, type_check_only
-from typing_extensions import TypeVar
+from typing import Final, TypedDict, type_check_only
+from typing_extensions import NotRequired, TypeVar
 
 from .__version__ import version
 from .auxfuncs import _Bool, outmess as outmess
