@@ -115,6 +115,7 @@ Array_0d = TypeAliasType("Array_0d", np.ndarray[tuple[()], np.dtype[_ScalarT0]],
 Array_1d = TypeAliasType("Array_1d", np.ndarray[tuple[int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 Array_2d = TypeAliasType("Array_2d", np.ndarray[tuple[int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 Array_3d = TypeAliasType("Array_3d", np.ndarray[tuple[int, int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
+Array_4d = TypeAliasType("Array_4d", np.ndarray[tuple[int, int, int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 
 MArray = TypeAliasType("MArray", np.ma.MaskedArray[_ShapeT, np.dtype[_ScalarT0]], type_params=(_ScalarT0, _ShapeT))
 MArray_0d = TypeAliasType("MArray_0d", np.ma.MaskedArray[tuple[()], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
