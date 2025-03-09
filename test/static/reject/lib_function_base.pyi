@@ -54,7 +54,7 @@ np.hamming(AR_c16)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentTy
 np.kaiser(1j, 1)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.sinc(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
 
-np.meshgrid(AR_f8, AR_f8, indexing="bob")  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.meshgrid(AR_f8, AR_f8, indexing="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
 
 np.select(1, [AR_f8])  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.delete(AR_f8, AR_f8)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
