@@ -78,11 +78,12 @@ jobs:
           mypy test
 
   stubtest:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, macos-latest]
         py: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
