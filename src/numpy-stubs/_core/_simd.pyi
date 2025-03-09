@@ -11,11 +11,11 @@ AVX512_SKX: ModuleType | None = ...
 
 @type_check_only
 class SimdTargets(TypedDict):
-    sse42: ModuleType | None
-    avx2: ModuleType | None
-    fma3: ModuleType | None
-    avx512f: ModuleType | None
-    avx512_skx: ModuleType | None
+    SSE42: ModuleType | None
+    AVX2: ModuleType | None
+    FMA3: ModuleType | None
+    AVX512F: ModuleType | None
+    AVX512_SKX: ModuleType | None
     baseline: ModuleType | None
 
 targets: SimdTargets = ...
