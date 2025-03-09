@@ -1,15 +1,18 @@
 from collections.abc import Callable
 from fractions import Fraction
-from typing import Any, TypeAlias, TypeVar
-from typing_extensions import LiteralString, assert_type
+from typing import Any, TypeAlias
+from typing_extensions import LiteralString, TypeVar, assert_type
 
 import numpy as np
 import numpy.typing as npt
 
 ###
 
-_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ScalarT = TypeVar("_ScalarT", bound=np.generic, default=Any)
 _Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
+_Array2D: TypeAlias = np.ndarray[tuple[int, int], np.dtype[_ScalarT]]
+_Array3D: TypeAlias = np.ndarray[tuple[int, int, int], np.dtype[_ScalarT]]
+_Array4D: TypeAlias = np.ndarray[tuple[int, int, int, int], np.dtype[_ScalarT]]
 
 ###
 
@@ -197,8 +200,13 @@ assert_type(np.trapezoid(AR_m), np.timedelta64 | npt.NDArray[np.timedelta64])
 assert_type(np.trapezoid(AR_O), Any)
 assert_type(np.trapezoid(AR_O, AR_LIKE_f8), Any)
 
-assert_type(np.meshgrid(AR_f8, AR_i8, copy=False), tuple[npt.NDArray[Any], ...])
-assert_type(np.meshgrid(AR_f8, AR_i8, AR_c16, indexing="ij"), tuple[npt.NDArray[Any], ...])
+assert_type(np.meshgrid(), tuple[()])
+assert_type(np.meshgrid(AR_c16, indexing="ij"), tuple[_Array1D[np.complex128]])
+assert_type(np.meshgrid(AR_i8, AR_f8, copy=False), tuple[_Array2D[np.int64], _Array2D[np.float64]])
+assert_type(np.meshgrid(AR_LIKE_f8, AR_f8), tuple[_Array2D, _Array2D[np.float64]])
+assert_type(np.meshgrid(AR_LIKE_f8, AR_i8, AR_c16), tuple[_Array3D, _Array3D, _Array3D])
+assert_type(np.meshgrid(AR_f8, AR_f8, AR_f8, AR_f8), tuple[_Array4D, _Array4D, _Array4D, _Array4D])
+assert_type(np.meshgrid(*AR_LIKE_f8), tuple[npt.NDArray[Any], ...])
 
 assert_type(np.delete(AR_f8, np.s_[:5]), npt.NDArray[np.float64])
 assert_type(np.delete(AR_LIKE_f8, [0, 4, 9], axis=0), npt.NDArray[Any])
