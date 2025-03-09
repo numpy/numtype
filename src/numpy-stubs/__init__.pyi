@@ -27,8 +27,6 @@ from typing import (
 )
 from typing_extensions import Buffer, CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, Unpack, deprecated, override
 
-import numpy as np
-
 from . import (
     __config__ as __config__,
     _array_api_info as _array_api_info,
@@ -590,6 +588,7 @@ _IntegerT = TypeVar("_IntegerT", bound=integer)
 _SignedIntegerT = TypeVar("_SignedIntegerT", bound=signedinteger)
 _UnsignedIntegerT = TypeVar("_UnsignedIntegerT", bound=unsignedinteger)
 _CharT = TypeVar("_CharT", bound=character)
+_IntegralT = TypeVar("_IntegralT", bound=bool_ | number | object_)
 
 _NBitT = TypeVar("_NBitT", bound=NBitBase, default=Any)
 _NBitT1 = TypeVar("_NBitT1", bound=NBitBase, default=Any)
@@ -613,7 +612,7 @@ _DT64ItemT = TypeVar("_DT64ItemT", bound=dt.date | int | None)
 _DT64ItemT_co = TypeVar("_DT64ItemT_co", bound=dt.date | int | None, default=dt.date | int | None, covariant=True)
 _TD64UnitT = TypeVar("_TD64UnitT", bound=_TD64Unit, default=_TD64Unit)
 
-_Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
+_Array1D: TypeAlias = ndarray[tuple[int], dtype[_ScalarT]]
 
 ###
 # Type Aliases (for internal use only)
@@ -2534,8 +2533,10 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __imul__(self: NDArray[complexfloating], rhs: _ArrayLikeComplex_co, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __imul__(self: NDArray[object_], rhs: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
+
+    #
     @overload
-    def __matmul__(self: _Array1D[_ScalarT], rhs: _Array1D[_ScalarT], /) -> _ScalarT: ...
+    def __matmul__(self: _Array1D[_IntegralT], rhs: _Array1D[_IntegralT], /) -> _IntegralT: ...
     @overload
     def __matmul__(self: NDArray[_NumberT], rhs: _ArrayLikeBool_co, /) -> NDArray[_NumberT]: ...
     @overload
@@ -2569,13 +2570,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __matmul__(self: NDArray[bool_ | number], rhs: _ArrayLikeNumber_co, /) -> NDArray[Incomplete]: ...
     @overload
-    def __matmul__(self: NDArray[object_], rhs: _ArrayLikeObject_co, /) -> NDArray[object_]: ...
+    def __matmul__(self: NDArray[object_], rhs: object, /) -> NDArray[object_]: ...
     @overload
     def __matmul__(self, rhs: _ArrayLikeObject_co, /) -> NDArray[object_]: ...
 
     # keep in sync with __matmul__
-    @overload
-    def __rmatmul__(self: _Array1D[_ScalarT], rhs: _Array1D[_ScalarT], /) -> _ScalarT: ...
     @overload
     def __rmatmul__(self: NDArray[_NumberT], lhs: _ArrayLikeBool_co, /) -> NDArray[_NumberT]: ...
     @overload
@@ -2609,7 +2608,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rmatmul__(self: NDArray[bool_ | number], lhs: _ArrayLikeNumber_co, /) -> NDArray[Incomplete]: ...
     @overload
-    def __rmatmul__(self: NDArray[object_], lhs: _ArrayLikeObject_co, /) -> NDArray[object_]: ...
+    def __rmatmul__(self: NDArray[object_], lhs: object, /) -> NDArray[object_]: ...
     @overload
     def __rmatmul__(self, lhs: _ArrayLikeObject_co, /) -> NDArray[object_]: ...
 
