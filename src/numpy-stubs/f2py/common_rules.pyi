@@ -1,10 +1,9 @@
-from _typeshed import Incomplete
 from collections.abc import Mapping
-from typing import Final
+from typing import Any, Final
 
 from .__version__ import version
 
 f2py_version: Final = version
 
-def findcommonblocks(block: Mapping[str, Incomplete], top: int = 1) -> list[tuple[str, list[str], dict[str, Incomplete]]]: ...
-def buildhooks(m: Mapping[str, Incomplete]) -> tuple[dict[str, Incomplete], str]: ...
+def findcommonblocks(block: Mapping[str, object], top: int = 1) -> list[tuple[str, list[str], dict[str, Any]]]: ...
+def buildhooks(m: Mapping[str, object]) -> tuple[dict[str, Any], str]: ...

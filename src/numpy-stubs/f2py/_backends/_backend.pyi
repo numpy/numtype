@@ -1,44 +1,46 @@
 import abc
-from _typeshed import Incomplete
-from typing import Any
+from pathlib import Path
+from typing import Any, Final
 
 class Backend(abc.ABC):
-    modulename: str
-    sources: list[str]
-    extra_objects: Incomplete
-    build_dir: Incomplete
-    include_dirs: Incomplete
-    library_dirs: Incomplete
-    libraries: Incomplete
-    define_macros: Incomplete
-    undef_macros: Incomplete
-    f2py_flags: Incomplete
-    sysinfo_flags: Incomplete
-    fc_flags: Incomplete
-    flib_flags: Incomplete
-    setup_flags: Incomplete
-    remove_build_dir: Incomplete
-    extra_dat: dict[str, Any]
+    modulename: Final[str]
+    sources: Final[list[str | Path]]
+    extra_objects: Final[list[str]]
+    build_dir: Final[str | Path]
+    include_dirs: Final[list[str | Path]]
+    library_dirs: Final[list[str | Path]]
+    libraries: Final[list[str]]
+    define_macros: Final[list[tuple[str, str | None]]]
+    undef_macros: Final[list[str]]
+    f2py_flags: Final[list[str]]
+    sysinfo_flags: Final[list[str]]
+    fc_flags: Final[list[str]]
+    flib_flags: Final[list[str]]
+    setup_flags: Final[list[str]]
+    remove_build_dir: Final[bool]
+    extra_dat: Final[dict[str, Any]]
 
     def __init__(
         self,
         /,
         modulename: str,
-        sources: list[str],
-        extra_objects: Incomplete,
-        build_dir: Incomplete,
-        include_dirs: Incomplete,
-        library_dirs: Incomplete,
+        sources: list[str | Path],
+        extra_objects: list[str],
+        build_dir: str | Path,
+        include_dirs: list[str | Path],
+        library_dirs: list[str | Path],
         libraries: list[str],
-        define_macros: Incomplete,
-        undef_macros: Incomplete,
-        f2py_flags: Incomplete,
-        sysinfo_flags: Incomplete,
-        fc_flags: Incomplete,
-        flib_flags: Incomplete,
-        setup_flags: Incomplete,
-        remove_build_dir: Incomplete,
-        extra_dat: Incomplete,
+        define_macros: list[tuple[str, str | None]],
+        undef_macros: list[str],
+        f2py_flags: list[str],
+        sysinfo_flags: list[str],
+        fc_flags: list[str],
+        flib_flags: list[str],
+        setup_flags: list[str],
+        remove_build_dir: bool,
+        extra_dat: dict[str, Any],
     ) -> None: ...
+
+    #
     @abc.abstractmethod
     def compile(self) -> None: ...
