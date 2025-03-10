@@ -6,8 +6,10 @@ from typing_extensions import TypeVar, TypedDict, Unpack, deprecated
 import numpy as np
 from _numtype import (
     Array,
-    Array_0d,
-    Array_1d,
+    Array0D,
+    Array1D,
+    CanArray0D,
+    CanLenArray,
     CoComplex_0d,
     CoComplex_1nd,
     CoComplex_nd,
@@ -35,10 +37,8 @@ from _numtype import (
     ToStr_nd,
     ToTimeDelta_nd,
     ToUInteger_nd,
-    _CanArray2_1nd,
-    _ToArray1_0d,
-    _ToArray1_1nd,
-    _ToArray1_nd,
+    _ToArray_1nd,
+    _ToArray_nd,
 )
 from numpy import _CastingKind, _ModeKind, _OrderACF, _OrderKACF, _PartitionKind, _SortKind, _SortSide  # noqa: ICN003
 from numpy._globals import _NoValueType
@@ -143,7 +143,7 @@ class UFuncKwargs(TypedDict, total=False):
 
 @overload
 def take(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     indices: CoInteger_0d,
     axis: None = None,
     out: None = None,
@@ -151,7 +151,7 @@ def take(
 ) -> _ScalarT: ...
 @overload
 def take(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     indices: CoInteger_1nd,
     axis: CanIndex | None = None,
     out: None = None,
@@ -192,14 +192,14 @@ def choose(a: CoInteger_nd, choices: ArrayLike, out: _ArrayT, mode: _ModeKind = 
 @overload
 def choose(a: CoInteger_0d, choices: ArrayLike, out: None = None, mode: _ModeKind = "raise") -> Any: ...
 @overload
-def choose(a: CoInteger_1nd, choices: _ToArray1_nd[_ScalarT], out: None = None, mode: _ModeKind = "raise") -> Array[_ScalarT]: ...
+def choose(a: CoInteger_1nd, choices: _ToArray_nd[_ScalarT], out: None = None, mode: _ModeKind = "raise") -> Array[_ScalarT]: ...
 @overload
 def choose(a: CoInteger_1nd, choices: ArrayLike, out: None = None, mode: _ModeKind = "raise") -> Array: ...
 
 #
 @overload  # shape: index
 def reshape(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     /,
     shape: CanIndex,
     order: _OrderACF = "C",
@@ -209,7 +209,7 @@ def reshape(
 ) -> np.ndarray[tuple[int], np.dtype[_ScalarT]]: ...
 @overload  # shape: _AnyShape
 def reshape(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     /,
     shape: _AnyShapeT,
     order: _OrderACF = "C",
@@ -219,7 +219,7 @@ def reshape(
 ) -> Array[_ScalarT, _AnyShapeT]: ...
 @overload  # shape: Sequence[index]
 def reshape(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     /,
     shape: Sequence[CanIndex],
     order: _OrderACF = "C",
@@ -271,32 +271,32 @@ def reshape(
 
 #
 @overload
-def swapaxes(a: _ToArray1_nd[_ScalarT], axis1: CanIndex, axis2: CanIndex) -> Array[_ScalarT]: ...
+def swapaxes(a: _ToArray_nd[_ScalarT], axis1: CanIndex, axis2: CanIndex) -> Array[_ScalarT]: ...
 @overload
 def swapaxes(a: ArrayLike, axis1: CanIndex, axis2: CanIndex) -> Array: ...
 
 #
 @overload
-def repeat(a: _ToArray1_nd[_ScalarT], repeats: CoInteger_nd, axis: CanIndex | None = None) -> Array[_ScalarT]: ...
+def repeat(a: _ToArray_nd[_ScalarT], repeats: CoInteger_nd, axis: CanIndex | None = None) -> Array[_ScalarT]: ...
 @overload
 def repeat(a: ArrayLike, repeats: CoInteger_nd, axis: CanIndex | None = None) -> Array: ...
 
 #
 @overload
-def transpose(a: _ToArray1_nd[_ScalarT], axes: _ShapeLike | None = ...) -> Array[_ScalarT]: ...
+def transpose(a: _ToArray_nd[_ScalarT], axes: _ShapeLike | None = ...) -> Array[_ScalarT]: ...
 @overload
 def transpose(a: ArrayLike, axes: _ShapeLike | None = ...) -> Array: ...
 
 #
 @overload
-def matrix_transpose(x: _ToArray1_nd[_ScalarT], /) -> Array[_ScalarT]: ...
+def matrix_transpose(x: _ToArray_nd[_ScalarT], /) -> Array[_ScalarT]: ...
 @overload
 def matrix_transpose(x: ArrayLike, /) -> Array: ...
 
 #
 @overload
 def partition(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     kth: ToInteger_nd,
     axis: CanIndex | None = None,
     kind: _PartitionKind = "introselect",
@@ -323,7 +323,7 @@ def argpartition(
 #
 @overload  # known shape, known dtype, axis=<given>
 def sort(
-    a: _CanArray2_1nd[_ScalarT, _ShapeT],
+    a: CanLenArray[_ScalarT, _ShapeT],
     axis: CanIndex = -1,
     kind: _SortKind | None = None,
     order: _Order | None = None,
@@ -332,16 +332,16 @@ def sort(
 ) -> Array[_ScalarT, _ShapeT]: ...
 @overload  # 0d, known dtype, axis=None
 def sort(
-    a: _ToArray1_0d[_ScalarT],
+    a: CanArray0D[_ScalarT],
     axis: None,
     kind: CanIndex | None = -1,
     order: _Order | None = None,
     *,
     stable: bool | None = None,
-) -> Array_1d[_ScalarT]: ...
+) -> Array1D[_ScalarT]: ...
 @overload  # unknown shape, known dtype, axis=<given>
 def sort(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     axis: CanIndex = -1,
     kind: _SortKind | None = None,
     order: _Order | None = None,
@@ -350,13 +350,13 @@ def sort(
 ) -> Array[_ScalarT]: ...
 @overload  # unknown shape, known dtype, axis=None
 def sort(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     axis: None,
     kind: _SortKind | None = None,
     order: _Order | None = None,
     *,
     stable: bool | None = None,
-) -> Array_1d[_ScalarT]: ...
+) -> Array1D[_ScalarT]: ...
 @overload  # unknown shape, unknown dtype, axis=<given>
 def sort(
     a: ArrayLike,
@@ -374,12 +374,12 @@ def sort(
     order: _Order | None = None,
     *,
     stable: bool | None = None,
-) -> Array_1d[Any]: ...
+) -> Array1D[Any]: ...
 
 #
 @overload  # known shape
 def argsort(
-    a: _CanArray2_1nd[Any, _ShapeT],
+    a: CanLenArray[Any, _ShapeT],
     axis: CanIndex = -1,
     kind: _SortKind | None = None,
     order: _Order | None = None,
@@ -394,7 +394,7 @@ def argsort(
     order: _Order | None = None,
     *,
     stable: bool | None = None,
-) -> Array_1d[np.intp]: ...
+) -> Array1D[np.intp]: ...
 @overload  # axis=None
 def argsort(
     a: ArrayLike,
@@ -403,7 +403,7 @@ def argsort(
     order: _Order | None = None,
     *,
     stable: bool | None = None,
-) -> Array_1d[np.intp]: ...
+) -> Array1D[np.intp]: ...
 @overload  # fallback
 def argsort(
     a: ArrayLike,
@@ -484,13 +484,13 @@ def searchsorted(
 
 #
 @overload
-def resize(a: _ToArray1_nd[_ScalarT], new_shape: CanIndex) -> Array_1d[_ScalarT]: ...
+def resize(a: _ToArray_nd[_ScalarT], new_shape: CanIndex) -> Array1D[_ScalarT]: ...
 @overload
-def resize(a: _ToArray1_nd[_ScalarT], new_shape: _AnyShapeT) -> Array[_ScalarT, _AnyShapeT]: ...
+def resize(a: _ToArray_nd[_ScalarT], new_shape: _AnyShapeT) -> Array[_ScalarT, _AnyShapeT]: ...
 @overload
-def resize(a: _ToArray1_nd[_ScalarT], new_shape: Sequence[CanIndex]) -> Array[_ScalarT]: ...
+def resize(a: _ToArray_nd[_ScalarT], new_shape: Sequence[CanIndex]) -> Array[_ScalarT]: ...
 @overload
-def resize(a: ArrayLike, new_shape: CanIndex) -> Array_1d[Any]: ...
+def resize(a: ArrayLike, new_shape: CanIndex) -> Array1D[Any]: ...
 @overload
 def resize(a: ArrayLike, new_shape: _AnyShapeT) -> Array[Any, _AnyShapeT]: ...
 @overload
@@ -498,15 +498,15 @@ def resize(a: ArrayLike, new_shape: Sequence[CanIndex]) -> Array: ...
 
 #
 @overload
-def squeeze(a: _ToArray1_0d[_ScalarT], axis: _ShapeLike | None = None) -> Array_0d[_ScalarT]: ...
+def squeeze(a: CanArray0D[_ScalarT], axis: _ShapeLike | None = None) -> Array0D[_ScalarT]: ...
 @overload
-def squeeze(a: _ToArray1_nd[_ScalarT], axis: _ShapeLike | None = None) -> Array[_ScalarT]: ...
+def squeeze(a: _ToArray_nd[_ScalarT], axis: _ShapeLike | None = None) -> Array[_ScalarT]: ...
 @overload
 def squeeze(a: ArrayLike, axis: _ShapeLike | None = None) -> Array: ...
 
 #
 @overload
-def diagonal(a: _ToArray1_nd[_ScalarT], offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1) -> Array[_ScalarT]: ...
+def diagonal(a: _ToArray_nd[_ScalarT], offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1) -> Array[_ScalarT]: ...
 @overload
 def diagonal(a: ArrayLike, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1) -> Array: ...
 
@@ -542,21 +542,21 @@ def trace(
 
 #
 @overload
-def ravel(a: _ToArray1_nd[_ScalarT], order: _OrderKACF = "C") -> Array_1d[_ScalarT]: ...  # type: ignore[overload-overlap]
+def ravel(a: _ToArray_nd[_ScalarT], order: _OrderKACF = "C") -> Array1D[_ScalarT]: ...  # type: ignore[overload-overlap]
 @overload
-def ravel(a: ToBytes_nd, order: _OrderKACF = "C") -> Array_1d[np.bytes_]: ...
+def ravel(a: ToBytes_nd, order: _OrderKACF = "C") -> Array1D[np.bytes_]: ...
 @overload
-def ravel(a: ToStr_nd, order: _OrderKACF = "C") -> Array_1d[np.str_]: ...
+def ravel(a: ToStr_nd, order: _OrderKACF = "C") -> Array1D[np.str_]: ...
 @overload
-def ravel(a: ToBool_nd, order: _OrderKACF = "C") -> Array_1d[np.bool]: ...
+def ravel(a: ToBool_nd, order: _OrderKACF = "C") -> Array1D[np.bool]: ...
 @overload
-def ravel(a: ToIntP_nd, order: _OrderKACF = "C") -> Array_1d[np.intp]: ...
+def ravel(a: ToIntP_nd, order: _OrderKACF = "C") -> Array1D[np.intp]: ...
 @overload
-def ravel(a: ToFloat64_nd, order: _OrderKACF = "C") -> Array_1d[np.float64]: ...
+def ravel(a: ToFloat64_nd, order: _OrderKACF = "C") -> Array1D[np.float64]: ...
 @overload
-def ravel(a: ToComplex128_nd, order: _OrderKACF = "C") -> Array_1d[np.complex128]: ...
+def ravel(a: ToComplex128_nd, order: _OrderKACF = "C") -> Array1D[np.complex128]: ...
 @overload
-def ravel(a: ArrayLike, order: _OrderKACF = "C") -> Array_1d[Any]: ...
+def ravel(a: ArrayLike, order: _OrderKACF = "C") -> Array1D[Any]: ...
 
 #
 def nonzero(a: ToGeneric_1nd) -> tuple[Array[np.int_], ...]: ...
@@ -579,7 +579,7 @@ def shape(a: ArrayLike) -> tuple[int, ...]: ...
 @overload
 def compress(
     condition: ToBool_nd,
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     axis: CanIndex | None = None,
     out: None = None,
 ) -> Array[_ScalarT]: ...
@@ -605,7 +605,7 @@ def clip(
 ) -> _ScalarT: ...
 @overload
 def clip(
-    a: _ToArray1_1nd[_ScalarT],
+    a: _ToArray_1nd[_ScalarT],
     a_min: CoComplex_nd | _NoValueType | None = ...,
     a_max: CoComplex_nd | _NoValueType | None = ...,
     out: None = None,
@@ -667,7 +667,7 @@ def clip(
 #
 @overload
 def sum(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     axis: None = None,
     dtype: None = None,
     out: None = None,
@@ -677,7 +677,7 @@ def sum(
 ) -> _ScalarT: ...
 @overload
 def sum(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     axis: None = None,
     dtype: None = None,
     out: None = None,
@@ -881,7 +881,7 @@ def any(
 
 #
 @overload
-def cumsum(a: _ToArray1_nd[_ScalarT], axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[_ScalarT]: ...
+def cumsum(a: _ToArray_nd[_ScalarT], axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array[_ScalarT]: ...
 @overload
 def cumsum(a: ArrayLike, axis: CanIndex | None = None, dtype: None = None, out: None = None) -> Array: ...
 @overload
@@ -894,7 +894,7 @@ def cumsum(a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None =
 #
 @overload
 def cumulative_sum(
-    x: _ToArray1_nd[_ScalarT],
+    x: _ToArray_nd[_ScalarT],
     /,
     *,
     axis: CanIndex | None = None,
@@ -945,7 +945,7 @@ def cumulative_sum(
 
 #
 @overload
-def ptp(a: _ToArray1_nd[_ScalarT], axis: None = None, out: None = None, keepdims: L[False] | _NoValueType = ...) -> _ScalarT: ...
+def ptp(a: _ToArray_nd[_ScalarT], axis: None = None, out: None = None, keepdims: L[False] | _NoValueType = ...) -> _ScalarT: ...
 @overload
 def ptp(a: ArrayLike, axis: _ShapeLike | None = None, out: None = None, keepdims: bool | _NoValueType = ...) -> Any: ...
 @overload
@@ -954,7 +954,7 @@ def ptp(a: ArrayLike, axis: _ShapeLike | None = None, *, out: _ArrayT, keepdims:
 #
 @overload
 def amax(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     axis: None = None,
     out: None = None,
     keepdims: L[False] | _NoValueType = ...,
@@ -993,7 +993,7 @@ def amax(
 #
 @overload
 def amin(
-    a: _ToArray1_nd[_ScalarT],
+    a: _ToArray_nd[_ScalarT],
     axis: None = None,
     out: None = None,
     keepdims: L[False] | _NoValueType = ...,
@@ -1298,9 +1298,9 @@ def around(a: ToBool_0d, decimals: CanIndex = 0, out: None = None) -> np.float16
 @overload
 def around(a: ToBool_1nd, decimals: CanIndex = 0, out: None = None) -> Array[np.float16]: ...
 @overload
-def around(a: _ToArray1_0d[_NumberT], decimals: CanIndex = 0, out: None = None) -> _NumberT: ...
+def around(a: CanArray0D[_NumberT], decimals: CanIndex = 0, out: None = None) -> _NumberT: ...
 @overload
-def around(a: _ToArray1_1nd[_NumberT], decimals: CanIndex = 0, out: None = None) -> Array[_NumberT]: ...
+def around(a: _ToArray_1nd[_NumberT], decimals: CanIndex = 0, out: None = None) -> Array[_NumberT]: ...
 @overload
 def around(a: Is[int], decimals: CanIndex = 0, out: None = None) -> np.intp: ...
 @overload

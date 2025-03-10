@@ -5,7 +5,7 @@ from typing_extensions import Self, TypeIs, TypeVar
 
 import numpy as np
 import numpy.typing as npt
-from _numtype import Array_1d, CoComplex_0d, CoComplex_1d, CoComplex_1nd, CoInteger_0d, CoInteger_1d, ToObject_0d, ToObject_1nd
+from _numtype import Array1D, CoComplex_0d, CoComplex_1d, CoComplex_1nd, CoInteger_0d, CoInteger_1d, ToObject_0d, ToObject_1nd
 from numpy._typing import _FloatLike_co
 
 from .polynomial import _ToNumeric_0d, _ToNumeric_nd
@@ -31,7 +31,7 @@ class ABCPolyBase(abc.ABC):
     _use_unicode: ClassVar[bool]
     _symbol: str
 
-    coef: Array_1d[np.inexact | np.object_]
+    coef: Array1D[np.inexact | np.object_]
 
     @property
     def symbol(self, /) -> str: ...
@@ -42,10 +42,10 @@ class ABCPolyBase(abc.ABC):
     def basis_name(self, /) -> str | None: ...
     @property
     @abc.abstractmethod
-    def domain(self, /) -> Array_1d[np.inexact]: ...
+    def domain(self, /) -> Array1D[np.inexact]: ...
     @property
     @abc.abstractmethod
-    def window(self, /) -> Array_1d[np.inexact]: ...
+    def window(self, /) -> Array1D[np.inexact]: ...
 
     #
     def __init__(
@@ -128,13 +128,13 @@ class ABCPolyBase(abc.ABC):
     def mapparms(self, /) -> tuple[Any, Any]: ...
     def integ(self, /, m: SupportsIndex = 1, k: _ToNumeric_0d | CoComplex_1d = [], lbnd: _ToNumeric_0d | None = None) -> Self: ...
     def deriv(self, /, m: SupportsIndex = 1) -> Self: ...
-    def roots(self, /) -> Array_1d[np.float64] | Array_1d[np.complex128]: ...
+    def roots(self, /) -> Array1D[np.float64] | Array1D[np.complex128]: ...
     def linspace(
         self,
         /,
         n: SupportsIndex = 100,
         domain: CoComplex_1d | None = None,
-    ) -> tuple[Array_1d[np.float64 | np.complex128], Array_1d[np.float64 | np.complex128]]: ...
+    ) -> tuple[Array1D[np.float64 | np.complex128], Array1D[np.float64 | np.complex128]]: ...
 
     #
     @overload
