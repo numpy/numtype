@@ -69,7 +69,7 @@ def fix(x: _ToArray1_1nd[_RealT], out: None = None) -> Array[_RealT]: ...
 
 #
 @overload
-def isposinf(x: CoFloating_0d, out: None = None) -> np.bool: ...  # type: ignore[overload-overlap]
+def isposinf(x: CoFloating_0d, out: None = None) -> np.bool: ...
 @overload
 def isposinf(x: _CanArray2_1nd[np.bool | np.integer | np.floating, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...  # type: ignore[overload-overlap]
 @overload
@@ -85,7 +85,7 @@ def isposinf(x: CoFloating_nd, out: _ArrayT) -> _ArrayT: ...
 
 #
 @overload
-def isneginf(x: CoFloating_0d, out: None = None) -> np.bool: ...  # type: ignore[overload-overlap]
+def isneginf(x: CoFloating_0d, out: None = None) -> np.bool: ...
 @overload
 def isneginf(x: _CanArray2_1nd[np.bool | np.integer | np.floating, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...  # type: ignore[overload-overlap]
 @overload

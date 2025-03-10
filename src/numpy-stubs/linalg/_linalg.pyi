@@ -963,15 +963,15 @@ def norm(x: CoComplex_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, ke
 @overload  # 2d float64 | complex128 | character
 def matrix_norm(x: _ToUnsafe64_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float64: ...  # type: ignore[overload-overlap]
 @overload  # nd float64 | complex128 | character, keepdims=True
-def matrix_norm(x: _ToUnsafe64_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array_2nd[np.float64]: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _ToUnsafe64_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array_2nd[np.float64]: ...
 @overload  # >2d float64 | complex128 | character
-def matrix_norm(x: _ToUnsafe64_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float64]: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _ToUnsafe64_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float64]: ...
 @overload  # 2d float16
 def matrix_norm(x: ToFloat16_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float16: ...  # type: ignore[overload-overlap]
 @overload  # nd float16, keepdims=True
 def matrix_norm(x: ToFloat16_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array_2nd[np.float16]: ...
 @overload  # >2d float16
-def matrix_norm(x: ToFloat16_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float16]: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: ToFloat16_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float16]: ...
 @overload  # 2d float32 | complex64, keepdims=True
 def matrix_norm(x: _ToInexact32_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float32: ...  # type: ignore[overload-overlap]
 @overload  # nd float32 | complex64, keepdims=True
