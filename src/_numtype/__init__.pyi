@@ -45,13 +45,8 @@ ItemC = TypeVar(  # noqa: PYI001
 # Protocols
 
 @type_check_only
-class _CanArray2_nd(Protocol[_ScalarT_co, _ShapeT_co]):
-    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
-
-@type_check_only
-class _CanArray2_1nd(_CanArray2_nd[_ScalarT_co, _ShapeT_co], Protocol[_ScalarT_co, _ShapeT_co]):
-    def __len__(self, /) -> int: ...
-    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
+class _CanArray_0d(Protocol[_ScalarT_co]):
+    def __array__(self, /) -> np.ndarray[tuple[()], np.dtype[_ScalarT_co]]: ...
 
 @type_check_only
 class _CanArray_nd(Protocol[_ScalarT_co]):
@@ -61,6 +56,15 @@ class _CanArray_nd(Protocol[_ScalarT_co]):
 class _CanArray_1nd(Protocol[_ScalarT_co]):
     def __len__(self, /) -> int: ...
     def __array__(self, /) -> np.ndarray[tuple[int, ...], np.dtype[_ScalarT_co]]: ...
+
+@type_check_only
+class _CanArray2_nd(Protocol[_ScalarT_co, _ShapeT_co]):
+    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
+
+@type_check_only
+class _CanArray2_1nd(_CanArray2_nd[_ScalarT_co, _ShapeT_co], Protocol[_ScalarT_co, _ShapeT_co]):
+    def __len__(self, /) -> int: ...
+    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
 
 # Type-check-only equivalent of `optype.Just`, see https://github.com/jorenham/optype#just
 @type_check_only
@@ -98,14 +102,13 @@ class Sequence_nd(Protocol[_T_co]):
 
 # we can't use a custom Sequence type due to some mypy bug
 Sequence_2d: TypeAlias = Sequence[Sequence[_T]]
-Sequence_3d: TypeAlias = Sequence[Sequence_2d[_T]]
+Sequence_3d: TypeAlias = Sequence[Sequence[Sequence[_T]]]
 
 # nested sequences with at least k dims, e.g. `2nd` denotes a dimensionality in the interval [2, n]
 # NOTE: The seemingly redundant `Sequence`s are required to work around a pyright bug
-Sequence_4nd: TypeAlias = Sequence_3d[Sequence_nd[_T]]
-Sequence_3nd: TypeAlias = Sequence_3d[_T] | Sequence_4nd[_T]
-Sequence_2nd: TypeAlias = Sequence_2d[_T] | Sequence_3nd[_T]
-Sequence_1nd: TypeAlias = Sequence[_T] | Sequence_2nd[_T]
+Sequence_3nd: TypeAlias = Sequence[Sequence[Sequence[_T]]] | Sequence[Sequence[Sequence[Sequence_nd[_T]]]]
+Sequence_2nd: TypeAlias = Sequence[Sequence[_T]] | Sequence[Sequence[Sequence_nd[_T]]]
+Sequence_1nd: TypeAlias = Sequence[_T] | Sequence[Sequence_nd[_T]]
 
 ###
 # Shape-typed array aliases
@@ -136,9 +139,9 @@ _PyCharacter: TypeAlias = Is[bytes] | Is[str]
 _PyObject: TypeAlias = dt.time | decimal.Decimal | fractions.Fraction
 _PyScalar: TypeAlias = complex | _PyCharacter | _PyObject
 
-_ToArray1_0d: TypeAlias = _ScalarT | _CanArray2_nd[_ScalarT, tuple[()]]
+_ToArray1_0d: TypeAlias = _ScalarT | _CanArray_0d[_ScalarT]
 _ToArray1_nd: TypeAlias = _ScalarT | _CanArray_nd[_ScalarT] | Sequence_1nd[_CanArray_nd[_ScalarT]]
-_ToArray_0d: TypeAlias = _CanArray2_nd[_ScalarT, tuple[()]] | _ToT
+_ToArray_0d: TypeAlias = _CanArray_0d[_ScalarT] | _ToT
 _ToArray_nd: TypeAlias = _CanArray_nd[_ScalarT] | _ToT | Sequence_1nd[_ToT | _CanArray_nd[_ScalarT]]
 
 # don't require matching shape-types by default
