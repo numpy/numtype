@@ -21,6 +21,8 @@ import sys
 import sysconfig
 from pathlib import Path
 
+from numpy._core import _simd  # noqa: PLC2701
+
 VERBOSE = True
 
 CWD = Path.cwd()
@@ -30,10 +32,12 @@ ROOT_DIR = TOOL_DIR.parent
 ROOT_SITE_DIR = next((ROOT_DIR / ".venv" / "lib").glob("*/site-packages"))
 
 ALLOWLISTS = [
-    ".mypyignore.txt",
-    ".mypyignore-todo.txt",
-    ".mypyignore-ge312.txt" if sys.version_info >= (3, 12) else ".mypyignore-lt312.txt",
+    "common.txt",
+    "common-todo.txt",
+    ("ge" if sys.version_info >= (3, 12) else "lt") + "-py312.txt",
 ]
+if not hasattr(_simd, "AVX512F"):
+    ALLOWLISTS.append("simd.txt")
 
 
 def __commit_pyi_genocide_for_mypy() -> None:
@@ -60,6 +64,11 @@ def __commit_pyi_genocide_for_mypy() -> None:
         print(f"deleted {package}/**/*.pyi ({graveyard_size})\n")
 
 
+def _allowlists() -> list[str]:
+    relpath = (TOOL_DIR / "allowlists").relative_to(CWD)
+    return [str(relpath / fname) for fname in ALLOWLISTS]
+
+
 def _stubtest_command() -> list[str]:
     cmd = ["stubtest"]
     args_extra = sys.argv[1:]
@@ -69,9 +78,8 @@ def _stubtest_command() -> list[str]:
         cmd.extend(("--mypy-config-file", str(config_path)))
 
     if not any("--allowlist" in arg for arg in args_extra):
-        for allowlist_name in ALLOWLISTS:
-            allowlist_path = (TOOL_DIR / allowlist_name).relative_to(CWD)
-            cmd.extend(["--allowlist", str(allowlist_path)])
+        for allowlist in _allowlists():
+            cmd.extend(["--allowlist", allowlist])
 
     cmd.extend(args_extra)
     cmd.append("numpy")
