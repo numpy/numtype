@@ -8,7 +8,7 @@ Run as `uv run test/generate_scalar_binops.py` to (re)generate `.pyi` type-tests
 import operator as op
 from collections.abc import Generator
 from pathlib import Path
-from typing import Any, Final
+from typing import Any, Final, cast
 
 import numpy as np
 
@@ -132,7 +132,7 @@ def _assert_stmt(op: str, lhs: str, rhs: str, /) -> str | None:
         ))
 
     expr_type = (
-        _sctype_expr(val_out.dtype)
+        _sctype_expr(cast("np.generic", val_out).dtype)  # type: ignore[redundant-cast]
         if isinstance(val_out, np.generic)
         else type(val_out).__qualname__
     )
