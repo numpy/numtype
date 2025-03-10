@@ -21,8 +21,8 @@ from _numtype import (
     ToInteger_1d,
     ToObject_1d,
     ToStr_1nd,
-    _ToArray1_1d,
-    _ToArray1_1nd,
+    _ToArray_1d,
+    _ToArray_1nd,
 )
 from numpy import _OrderCF  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _SupportsArrayFunc as _CanArrayFunc
@@ -174,7 +174,7 @@ def tri(
 @overload
 def tril(m: ToBool_1nd, k: int = 0) -> Array[np.bool]: ...
 @overload
-def tril(m: _ToArray1_1nd[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
+def tril(m: _ToArray_1nd[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
 @overload
 def tril(m: ToIntP_1nd, k: int = 0) -> Array[np.intp]: ...
 @overload
@@ -192,7 +192,7 @@ def tril(m: ArrayLike, k: int = 0) -> Array: ...
 @overload
 def triu(m: ToBool_1nd, k: int = 0) -> Array[np.bool]: ...
 @overload
-def triu(m: _ToArray1_1nd[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
+def triu(m: _ToArray_1nd[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
 @overload
 def triu(m: ToIntP_1nd, k: int = 0) -> Array[np.intp]: ...
 @overload
@@ -221,8 +221,8 @@ def vander(x: ToObject_1d, N: int | None = None, increasing: bool = False) -> Ar
 #
 @overload
 def histogram2d(
-    x: _ToArray1_1d[_ComplexT],
-    y: _ToArray1_1d[_ComplexT | _CoFloat],
+    x: _ToArray_1d[_ComplexT],
+    y: _ToArray_1d[_ComplexT | _CoFloat],
     bins: int | Sequence[int] = 10,
     range: ToFloat64_2d | None = None,
     density: bool | None = None,
@@ -230,8 +230,8 @@ def histogram2d(
 ) -> tuple[Array[np.float64], Array[_ComplexT], Array[_ComplexT]]: ...
 @overload
 def histogram2d(
-    x: _ToArray1_1d[_ComplexT | _CoFloat],
-    y: _ToArray1_1d[_ComplexT],
+    x: _ToArray_1d[_ComplexT | _CoFloat],
+    y: _ToArray_1d[_ComplexT],
     bins: int | Sequence[int] = 10,
     range: ToFloat64_2d | None = None,
     density: bool | None = None,
@@ -239,8 +239,8 @@ def histogram2d(
 ) -> tuple[Array[np.float64], Array[_ComplexT], Array[_ComplexT]]: ...
 @overload
 def histogram2d(
-    x: _ToArray1_1d[_InexactT],
-    y: _ToArray1_1d[_InexactT | _CoInt],
+    x: _ToArray_1d[_InexactT],
+    y: _ToArray_1d[_InexactT | _CoInt],
     bins: int | Sequence[int] = 10,
     range: ToFloat64_2d | None = None,
     density: bool | None = None,
@@ -248,8 +248,8 @@ def histogram2d(
 ) -> tuple[Array[np.float64], Array[_InexactT], Array[_InexactT]]: ...
 @overload
 def histogram2d(
-    x: _ToArray1_1d[_InexactT | _CoInt],
-    y: _ToArray1_1d[_InexactT],
+    x: _ToArray_1d[_InexactT | _CoInt],
+    y: _ToArray_1d[_InexactT],
     bins: int | Sequence[int] = 10,
     range: ToFloat64_2d | None = None,
     density: bool | None = None,
@@ -277,16 +277,16 @@ def histogram2d(
 def histogram2d(
     x: CoComplex_1d,
     y: CoComplex_1d,
-    bins: _ToArray1_1d[_NumericT] | Sequence[_ToArray1_1d[_NumericT]],
+    bins: _ToArray_1d[_NumericT] | Sequence[_ToArray_1d[_NumericT]],
     range: ToFloat64_2d | None = None,
     density: bool | None = None,
     weights: CoFloat64_1d | None = None,
 ) -> tuple[Array[np.float64], Array[_NumericT], Array[_NumericT]]: ...
 @overload
 def histogram2d(
-    x: _ToArray1_1d[_InexactT],
-    y: _ToArray1_1d[_InexactT],
-    bins: Sequence[_ToArray1_1d[_NumericT] | int],
+    x: _ToArray_1d[_InexactT],
+    y: _ToArray_1d[_InexactT],
+    bins: Sequence[_ToArray_1d[_NumericT] | int],
     range: ToFloat64_2d | None = None,
     density: bool | None = None,
     weights: CoFloat64_1d | None = None,
@@ -295,7 +295,7 @@ def histogram2d(
 def histogram2d(
     x: ToIntP_1d | Sequence[float],
     y: ToIntP_1d | Sequence[float],
-    bins: Sequence[_ToArray1_1d[_NumericT] | int],
+    bins: Sequence[_ToArray_1d[_NumericT] | int],
     range: ToFloat64_2d | None = None,
     density: bool | None = None,
     weights: CoFloat64_1d | None = None,
@@ -304,7 +304,7 @@ def histogram2d(
 def histogram2d(
     x: Sequence[complex],
     y: Sequence[complex],
-    bins: Sequence[_ToArray1_1d[_NumericT] | int],
+    bins: Sequence[_ToArray_1d[_NumericT] | int],
     range: ToFloat64_2d | None = None,
     density: bool | None = None,
     weights: CoFloat64_1d | None = None,

@@ -8,7 +8,7 @@ from _numtype import (
     Array,
     Is,
     Matrix,
-    Sequence_3nd,
+    Sequence3ND,
     ToBool_nd,
     ToBytes_nd,
     ToComplex128_nd,
@@ -19,8 +19,8 @@ from _numtype import (
     ToInteger_1nd,
     ToObject_nd,
     ToStr_nd,
-    _ToArray1_1nd,
-    _ToArray1_nd,
+    _ToArray_1nd,
+    _ToArray_nd,
 )
 from numpy import _CanItem, _OrderKACF  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLikeInt_co, _DTypeLike
@@ -253,43 +253,43 @@ def bmat(
 ) -> Matrix: ...
 @overload
 def bmat(
-    obj: _ToArray1_1nd[_ScalarT],
+    obj: _ToArray_1nd[_ScalarT],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[_ScalarT]: ...
 @overload
 def bmat(
-    obj: Sequence_3nd[bool],
+    obj: Sequence3ND[bool],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.bool]: ...
 @overload
 def bmat(
-    obj: Sequence_3nd[Is[int]],
+    obj: Sequence3ND[Is[int]],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.intp]: ...
 @overload
 def bmat(
-    obj: Sequence_3nd[Is[float]],
+    obj: Sequence3ND[Is[float]],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.float64]: ...
 @overload
 def bmat(
-    obj: Sequence_3nd[Is[complex]],
+    obj: Sequence3ND[Is[complex]],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.complex128]: ...
 @overload
 def bmat(
-    obj: Sequence_3nd[Is[bytes]],
+    obj: Sequence3ND[Is[bytes]],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.bytes_]: ...
 @overload
 def bmat(
-    obj: Sequence_3nd[Is[str]],
+    obj: Sequence3ND[Is[str]],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.str_]: ...
@@ -302,7 +302,7 @@ def bmat(
 
 #
 @overload
-def asmatrix(data: _ToArray1_nd[_ScalarT], dtype: None = None) -> Matrix[_ScalarT]: ...  # type: ignore[overload-overlap]
+def asmatrix(data: _ToArray_nd[_ScalarT], dtype: None = None) -> Matrix[_ScalarT]: ...  # type: ignore[overload-overlap]
 @overload
 def asmatrix(data: ToGeneric_nd, dtype: _DTypeLike[_ScalarT]) -> Matrix[_ScalarT]: ...
 @overload

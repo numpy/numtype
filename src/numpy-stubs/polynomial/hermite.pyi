@@ -2,7 +2,7 @@ from typing import Final, Literal as L
 from typing_extensions import TypeVar
 
 import numpy as np
-from _numtype import Array, Array_1d
+from _numtype import Array, Array1D
 
 from ._polybase import ABCPolyBase
 from .legendre import (
@@ -74,14 +74,14 @@ _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 
 ###
 
-hermdomain: Final[Array_1d[np.float64]] = ...
-hermzero: Final[Array_1d[np.int_]] = ...
-hermone: Final[Array_1d[np.int_]] = ...
-hermx: Final[Array_1d[np.int_]] = ...
+hermdomain: Final[Array1D[np.float64]] = ...
+hermzero: Final[Array1D[np.int_]] = ...
+hermone: Final[Array1D[np.int_]] = ...
+hermx: Final[Array1D[np.int_]] = ...
 
 class Hermite(ABCPolyBase):
-    domain: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    window: Array_1d[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    domain: Array1D[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    window: Array1D[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     basis_name: L["H"] = "H"  # pyright: ignore[reportIncompatibleMethodOverride]
 
 def _normed_hermite_n(x: Array[np.float64, _ShapeT], n: int | np.intp) -> Array[np.float64, _ShapeT]: ...

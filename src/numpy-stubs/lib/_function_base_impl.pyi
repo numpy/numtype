@@ -17,10 +17,11 @@ from typing_extensions import LiteralString, ParamSpec, TypeIs, TypeVar, depreca
 import numpy as np
 from _numtype import (
     Array,
-    Array_1d,
-    Array_2d,
-    Array_3d,
-    Array_4d,
+    Array1D,
+    Array2D,
+    Array3D,
+    Array4D,
+    CanLenArray,
     CoComplex_0d,
     CoComplex_1ds,
     CoComplex_1nd,
@@ -63,11 +64,10 @@ from _numtype import (
     ToTimeDelta_1nd,
     ToTimeDelta_2nd,
     ToTimeDelta_nd,
-    _CanArray2_1nd,
-    _ToArray1_1nd,
-    _ToArray_1ds,
+    _ToArray2_1ds,
+    _ToArray2_1nd,
+    _ToArray2_2nd,
     _ToArray_1nd,
-    _ToArray_2nd,
 )
 from numpy import _OrderKACF  # noqa: ICN003
 from numpy._core.multiarray import bincount
@@ -209,7 +209,7 @@ def flip(m: _ScalarT, axis: None = None) -> _ScalarT: ...
 @overload
 def flip(m: _ScalarLike_co, axis: None = None) -> Any: ...
 @overload
-def flip(m: _ToArray1_1nd[_ScalarT], axis: _ShapeLike | None = None) -> Array[_ScalarT]: ...
+def flip(m: _ToArray_1nd[_ScalarT], axis: _ShapeLike | None = None) -> Array[_ScalarT]: ...
 @overload
 def flip(m: ToGeneric_1nd, axis: _ShapeLike | None = None) -> Array: ...
 
@@ -389,7 +389,7 @@ def asarray_chkfinite(a: object, dtype: DTypeLike, order: _OrderKACF | None = No
 def piecewise(
     x: _ArrayLike[_ScalarT],
     condlist: ToBool_nd,
-    funclist: Sequence[Callable[Concatenate[Array_1d[_ScalarT], _Tss], Array] | _ScalarT | object],
+    funclist: Sequence[Callable[Concatenate[Array1D[_ScalarT], _Tss], Array] | _ScalarT | object],
     *args: _Tss.args,
     **kw: _Tss.kwargs,
 ) -> Array[_ScalarT]: ...
@@ -397,7 +397,7 @@ def piecewise(
 def piecewise(
     x: ArrayLike,
     condlist: ToBool_nd,
-    funclist: Sequence[Callable[Concatenate[Array_1d, _Tss], Array] | object],
+    funclist: Sequence[Callable[Concatenate[Array1D, _Tss], Array] | object],
     *args: _Tss.args,
     **kw: _Tss.kwargs,
 ) -> Array: ...
@@ -418,7 +418,7 @@ def copy(a: _ArrayT, order: _OrderKACF, subok: L[True]) -> _ArrayT: ...
 @overload
 def copy(a: _ArrayT, order: _OrderKACF = "K", *, subok: L[True]) -> _ArrayT: ...
 @overload
-def copy(a: _CanArray2_1nd[_ScalarT, _ShapeT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT, _ShapeT]: ...
+def copy(a: CanLenArray[_ScalarT, _ShapeT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT, _ShapeT]: ...
 @overload
 def copy(a: _ArrayLike[_ScalarT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT]: ...
 @overload
@@ -441,7 +441,7 @@ def diff(  # type: ignore[overload-overlap]
 ) -> _T: ...
 @overload
 def diff(
-    a: _ToArray1_1nd[_NumberT],
+    a: _ToArray_1nd[_NumberT],
     n: int = 1,
     axis: SupportsIndex = -1,
     prepend: _ArrayLike[_NumberT] | _NoValueType = ...,
@@ -688,11 +688,11 @@ def corrcoef(
 ) -> Array: ...
 
 #
-def blackman(M: CoFloating_0d) -> Array_1d[np.floating]: ...
-def bartlett(M: CoFloating_0d) -> Array_1d[np.floating]: ...
-def hanning(M: CoFloating_0d) -> Array_1d[np.floating]: ...
-def hamming(M: CoFloating_0d) -> Array_1d[np.floating]: ...
-def kaiser(M: CoFloating_0d, beta: ToFloating_0d) -> Array_1d[np.floating]: ...
+def blackman(M: CoFloating_0d) -> Array1D[np.floating]: ...
+def bartlett(M: CoFloating_0d) -> Array1D[np.floating]: ...
+def hanning(M: CoFloating_0d) -> Array1D[np.floating]: ...
+def hamming(M: CoFloating_0d) -> Array1D[np.floating]: ...
+def kaiser(M: CoFloating_0d, beta: ToFloating_0d) -> Array1D[np.floating]: ...
 def i0(x: CoFloating_nd) -> Array[np.floating]: ...
 
 #
@@ -942,22 +942,22 @@ quantile = percentile
 
 @overload
 def trapezoid(
-    y: _ToArray_1ds[Floating64 | np.integer | np.bool[Any], float],
-    x: _ToArray_1ds[Floating64 | np.integer | np.bool[Any], float] | None = None,
+    y: _ToArray2_1ds[Floating64 | np.integer | np.bool[Any], float],
+    x: _ToArray2_1ds[Floating64 | np.integer | np.bool[Any], float] | None = None,
     dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.float64: ...
 @overload
 def trapezoid(
-    y: _ToArray_2nd[Floating64 | np.integer | np.bool[Any], float],
-    x: _ToArray_1nd[Floating64 | np.integer | np.bool[Any], float] | None = None,
+    y: _ToArray2_2nd[Floating64 | np.integer | np.bool[Any], float],
+    x: _ToArray2_1nd[Floating64 | np.integer | np.bool[Any], float] | None = None,
     dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.float64]: ...
 @overload
 def trapezoid(
-    y: _ToArray_1nd[Floating64 | np.integer | np.bool[Any], float],
-    x: _ToArray_2nd[Floating64 | np.integer | np.bool[Any], float],
+    y: _ToArray2_1nd[Floating64 | np.integer | np.bool[Any], float],
+    x: _ToArray2_2nd[Floating64 | np.integer | np.bool[Any], float],
     dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.float64]: ...
@@ -1143,7 +1143,7 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[Array_1d[_ScalarT]]: ...
+) -> tuple[Array1D[_ScalarT]]: ...
 @overload
 def meshgrid(
     x0: ArrayLike,
@@ -1152,7 +1152,7 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[Array_1d]: ...
+) -> tuple[Array1D]: ...
 @overload
 def meshgrid(
     x0: _ArrayLike[_ScalarT1],
@@ -1162,7 +1162,7 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[Array_2d[_ScalarT1], Array_2d[_ScalarT2]]: ...
+) -> tuple[Array2D[_ScalarT1], Array2D[_ScalarT2]]: ...
 @overload
 def meshgrid(
     x0: ArrayLike,
@@ -1172,7 +1172,7 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[Array_2d, Array_2d[_ScalarT]]: ...
+) -> tuple[Array2D, Array2D[_ScalarT]]: ...
 @overload
 def meshgrid(
     x0: _ArrayLike[_ScalarT],
@@ -1182,7 +1182,7 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[Array_2d[_ScalarT], Array_2d]: ...
+) -> tuple[Array2D[_ScalarT], Array2D]: ...
 @overload
 def meshgrid(
     x0: ArrayLike,
@@ -1192,7 +1192,7 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[Array_2d, Array_2d]: ...
+) -> tuple[Array2D, Array2D]: ...
 @overload
 def meshgrid(
     x0: ArrayLike,
@@ -1203,7 +1203,7 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[Array_3d, Array_3d, Array_3d]: ...
+) -> tuple[Array3D, Array3D, Array3D]: ...
 @overload
 def meshgrid(
     x0: ArrayLike,
@@ -1215,7 +1215,7 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[Array_4d, Array_4d, Array_4d, Array_4d]: ...
+) -> tuple[Array4D, Array4D, Array4D, Array4D]: ...
 @overload
 def meshgrid(
     *xi: ArrayLike,
