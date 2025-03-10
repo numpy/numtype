@@ -1,0 +1,5 @@
+# numpy.compat.Path is a pathlib.Path subclass, but it's not a complete implementation
+numpy.compat.Path.group
+numpy.compat.Path.owner
+numpy.compat.py3k.Path.group
+numpy.compat.py3k.Path.owner
