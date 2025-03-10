@@ -27,6 +27,7 @@ from _numtype import (
     CoComplex_2nd,
     CoComplex_nd,
     CoDateTime_nd,
+    CoFloat64_0d,
     CoFloat64_nd,
     CoFloating_0d,
     CoFloating_1d,
@@ -34,14 +35,12 @@ from _numtype import (
     CoFloating_1nd,
     CoFloating_2nd,
     CoFloating_nd,
-    CoInteger_1ds,
-    CoInteger_1nd,
-    CoInteger_2nd,
     CoInteger_nd,
     CoTimeDelta_1ds,
     CoTimeDelta_1nd,
     CoTimeDelta_2nd,
     CoTimeDelta_nd,
+    Floating64,
     ToBool_nd,
     ToBytes_nd,
     ToComplex128_nd,
@@ -52,9 +51,6 @@ from _numtype import (
     ToComplex_nd,
     ToDateTime_nd,
     ToFloat64_0d,
-    ToFloat64_1ds,
-    ToFloat64_1nd,
-    ToFloat64_2nd,
     ToFloat64_nd,
     ToFloating_0d,
     ToGeneric_0d,
@@ -69,6 +65,9 @@ from _numtype import (
     ToTimeDelta_nd,
     _CanArray2_1nd,
     _ToArray1_1nd,
+    _ToArray_1ds,
+    _ToArray_1nd,
+    _ToArray_2nd,
 )
 from numpy import _OrderKACF  # noqa: ICN003
 from numpy._core.multiarray import bincount
@@ -943,25 +942,25 @@ quantile = percentile
 
 @overload
 def trapezoid(
-    y: ToFloat64_1ds | CoInteger_1ds,
-    x: ToFloat64_1ds | CoInteger_1ds | None = None,
-    dx: CoFloating_0d = 1.0,
+    y: _ToArray_1ds[Floating64 | np.integer | np.bool[Any], float],
+    x: _ToArray_1ds[Floating64 | np.integer | np.bool[Any], float] | None = None,
+    dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.float64: ...
 @overload
 def trapezoid(
-    y: ToFloat64_2nd | CoInteger_2nd,
-    x: ToFloat64_1nd | CoInteger_1nd | None = None,
-    dx: CoFloating_0d = 1.0,
+    y: _ToArray_2nd[Floating64 | np.integer | np.bool[Any], float],
+    x: _ToArray_1nd[Floating64 | np.integer | np.bool[Any], float] | None = None,
+    dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.float64]: ...
 @overload
-def trapezoid(  # type: ignore[overload-overlap]
-    y: ToFloat64_1nd | CoInteger_1nd,
-    x: ToFloat64_1nd | CoInteger_1nd | None = None,
-    dx: CoFloating_0d = 1.0,
+def trapezoid(
+    y: _ToArray_1nd[Floating64 | np.integer | np.bool[Any], float],
+    x: _ToArray_2nd[Floating64 | np.integer | np.bool[Any], float],
+    dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
-) -> np.float64 | Array[np.float64]: ...
+) -> Array[np.float64]: ...
 @overload
 def trapezoid(
     y: CoFloating_1ds,
@@ -1068,7 +1067,7 @@ def trapezoid(
     axis: SupportsIndex = -1,
 ) -> Array[np.timedelta64]: ...
 @overload
-def trapezoid(
+def trapezoid(  # type: ignore[overload-overlap]
     y: ToTimeDelta_1nd,
     x: CoTimeDelta_1nd | None = None,
     dx: CoFloating_0d = 1.0,
