@@ -29,7 +29,13 @@ CWD = Path.cwd()
 TOOL_DIR = Path(__file__).parent
 SITE_DIR = Path(sysconfig.get_paths()["purelib"])
 ROOT_DIR = TOOL_DIR.parent
-ROOT_SITE_DIR = next((ROOT_DIR / ".venv" / "lib").glob("*/site-packages"))
+
+
+ROOT_SITE_DIR = (
+    ROOT_DIR / ".venv" / "Lib" / "site-packages"
+    if sys.platform == "win32"
+    else next((ROOT_DIR / ".venv" / "lib").glob("*/site-packages"))
+)
 
 ALLOWLISTS = [
     "common.txt",
@@ -38,6 +44,12 @@ ALLOWLISTS = [
 ]
 if not hasattr(_simd, "AVX512F"):
     ALLOWLISTS.append("simd.txt")
+
+if sys.platform == "win32":
+    if sys.version_info[:2] == (3, 12):
+        ALLOWLISTS.append("path-py312.txt")
+    elif sys.version_info[:2] <= (3, 11):
+        ALLOWLISTS.append("path-py311.txt")
 
 
 def __commit_pyi_genocide_for_mypy() -> None:
