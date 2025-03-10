@@ -67,7 +67,7 @@ from _numtype import (
     ToTimeDelta_1nd,
     ToTimeDelta_2nd,
     ToTimeDelta_nd,
-    _CanArray2_nd,
+    _CanArray2_1nd,
     _ToArray1_1nd,
 )
 from numpy import _OrderKACF  # noqa: ICN003
@@ -419,7 +419,7 @@ def copy(a: _ArrayT, order: _OrderKACF, subok: L[True]) -> _ArrayT: ...
 @overload
 def copy(a: _ArrayT, order: _OrderKACF = "K", *, subok: L[True]) -> _ArrayT: ...
 @overload
-def copy(a: _CanArray2_nd[_ScalarT, _ShapeT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT, _ShapeT]: ...
+def copy(a: _CanArray2_1nd[_ScalarT, _ShapeT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT, _ShapeT]: ...
 @overload
 def copy(a: _ArrayLike[_ScalarT], order: _OrderKACF = "K", subok: L[False] = False) -> Array[_ScalarT]: ...
 @overload

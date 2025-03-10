@@ -1,4 +1,3 @@
-from collections.abc import Sequence
 from typing import overload
 from typing_extensions import TypeVar
 
@@ -14,7 +13,6 @@ from _numtype import (
     CoFloating_2ds,
     CoFloating_3ds,
     CoFloating_nd,
-    Is,
     ToBool_0d,
     ToBool_1nd,
     ToFloat64_0d,
@@ -35,7 +33,7 @@ __all__ = ["fix", "isneginf", "isposinf"]
 
 _ArrayT = TypeVar("_ArrayT", bound=Array)
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
-_RealT = TypeVar("_RealT", bound=np.integer | np.floating | np.object_)
+_RealT = TypeVar("_RealT", bound=np.floating | np.integer | np.object_)
 
 ###
 
@@ -62,16 +60,16 @@ def fix(x: _ToArray1_3ds[_RealT], out: None = None) -> Array_3d[_RealT]: ...
 def fix(x: ToBool_1nd, out: None = None) -> Array[np.bool]: ...
 @overload
 def fix(x: ToIntP_1nd, out: None = None) -> Array[np.intp]: ...
-@overload  # the `Sequence` is a workaround for a pyright promotion bug
-def fix(x: ToFloat64_1nd | Sequence[Is[float]], out: None = None) -> Array[np.float64]: ...
+@overload
+def fix(x: ToFloat64_1nd, out: None = None) -> Array[np.float64]: ...
 @overload
 def fix(x: _ToArray1_1nd[_RealT], out: None = None) -> Array[_RealT]: ...
 
 #
 @overload
-def isposinf(x: CoFloating_0d, out: None = None) -> np.bool: ...  # type: ignore[overload-overlap]
+def isposinf(x: CoFloating_0d, out: None = None) -> np.bool: ...
 @overload
-def isposinf(x: _CanArray2_1nd[np.bool | np.integer | np.floating, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...  # type: ignore[overload-overlap]
+def isposinf(x: _CanArray2_1nd[np.floating | np.integer | np.bool, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...
 @overload
 def isposinf(x: CoFloating_1ds, out: None = None) -> Array_1d[np.bool]: ...
 @overload
@@ -85,9 +83,9 @@ def isposinf(x: CoFloating_nd, out: _ArrayT) -> _ArrayT: ...
 
 #
 @overload
-def isneginf(x: CoFloating_0d, out: None = None) -> np.bool: ...  # type: ignore[overload-overlap]
+def isneginf(x: CoFloating_0d, out: None = None) -> np.bool: ...
 @overload
-def isneginf(x: _CanArray2_1nd[np.bool | np.integer | np.floating, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...  # type: ignore[overload-overlap]
+def isneginf(x: _CanArray2_1nd[np.floating | np.integer | np.bool, _ShapeT], out: None = None) -> Array[np.bool, _ShapeT]: ...
 @overload
 def isneginf(x: CoFloating_1ds, out: None = None) -> Array_1d[np.bool]: ...
 @overload

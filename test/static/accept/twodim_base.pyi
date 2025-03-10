@@ -116,7 +116,7 @@ assert_type(
         npt.NDArray[np.uint64],
     ],
 )
-assert_type(  # type: ignore[assert-type]  # mypy fail
+assert_type(
     np.histogram2d(AR_c, AR_c, bins=(AR_u, AR_u)),
     tuple[
         npt.NDArray[np.float64],
