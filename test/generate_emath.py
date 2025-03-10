@@ -8,7 +8,7 @@ When with `uv run test/generate_emath.py`, this will create or overwrite the
 import itertools
 from collections.abc import Callable, Generator
 from pathlib import Path
-from typing import Any, Final
+from typing import Any, Final, cast
 
 import numpy as np
 
@@ -188,7 +188,11 @@ def _gen_unary(fname: str, names: dict[str, str]) -> Generator[str]:
         types_out: list[str]
         results[sct_arg] = types_out = []
         for arg in vals:
-            tp = type(out) if isinstance(out := fn(arg), np.generic) else np.object_
+            tp = (
+                type(cast("np.generic", out))  # type: ignore[redundant-cast]
+                if isinstance(out := fn(arg), np.generic)
+                else np.object_
+            )
 
             if (sct := tp.__name__) not in types_out_seen:
                 types_out_seen.add(sct)
@@ -212,7 +216,11 @@ def _gen_binary(fname: str, names: dict[str, str]) -> Generator[str]:  # pyright
             results[sct_lhs, sct_rhs] = types_out = []
             for lhs, rhs in itertools.product(vals_lhs, vals_rhs):
                 val = fn(lhs, rhs)
-                tp = type(val) if isinstance(val, np.generic) else np.object_
+                tp = (
+                    type(cast("np.generic", val))  # type: ignore[redundant-cast]
+                    if isinstance(val, np.generic)
+                    else np.object_
+                )
 
                 if (sct := tp.__name__) not in types_out_seen:
                     types_out_seen.add(sct)
