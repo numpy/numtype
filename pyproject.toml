@@ -27,9 +27,9 @@ classifiers = [
     "Typing :: Typed",
 ]
 packages = [
+    {include = "src/_numtype"},
     {include = "src/numpy-stubs"},
     {include = "src/numtype"},
-    {include = "src/_numtype"},
 ]
 requires-python = ">=3.10"
 dependencies = []
@@ -48,22 +48,19 @@ dependencies = []
 dev = [
     "basedpyright>=1.28.1",
     "mypy>=1.15.0",
-    "pytest>=8.3.4",
-    "ruff>=0.9.9",
+    "pytest>=8.3.5",
+    "ruff>=0.9.10",
 ]
 numpy = ["numtype[numpy]"]
 orjson = ["orjson>=3.10.15"] # speeds up mypy cache, but is missing 3.13t wheels
+
 
 [tool.uv]
 default-groups = ["dev", "numpy", "orjson"]
 
 
 [tool.hatch.build]
-packages = [
-    "src/_numtype",
-    "src/numtype",
-    "src/numpy-stubs",
-]
+packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
 
     [tool.hatch.build.targets.sdist]
     exclude = [
@@ -110,13 +107,7 @@ disable_memoryview_promotion = true
 
 
 [tool.pyright]
-include = [
-    "src/_numtype",
-    "src/numtype",
-    "src/numpy-stubs",
-    "test",
-    "tool",
-]
+include = ["src", "test", "tool"]
 ignore = [".venv"]
 stubPath = "src"
 venvPath = "."
@@ -250,9 +241,7 @@ env_list = ["lint", "test", "pyright", "3.13", "3.12", "3.11", "3.10"]
 
     [tool.tox.env_run_base]
     description = "Run stubtest under {base_python}"
-    commands = [
-        ["uv", "run", "-q", "-p={base_python}", "--active", "tool/stubtest.py", "--concise"],
-    ]
+    commands = [["uv", "run", "-q", "-p={base_python}", "--active", "tool/stubtest.py"]]
 
     [tool.tox.env.lint]
     description = "lint"

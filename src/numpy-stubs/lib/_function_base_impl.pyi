@@ -18,6 +18,9 @@ import numpy as np
 from _numtype import (
     Array,
     Array_1d,
+    Array_2d,
+    Array_3d,
+    Array_4d,
     CoComplex_0d,
     CoComplex_1ds,
     CoComplex_1nd,
@@ -136,9 +139,12 @@ _T_co = TypeVar("_T_co", covariant=True)
 _ArrayT = TypeVar("_ArrayT", bound=Array)
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ScalarT1 = TypeVar("_ScalarT1", bound=np.generic)
+_ScalarT2 = TypeVar("_ScalarT2", bound=np.generic)
 _NumberT = TypeVar("_NumberT", bound=np.number)
 
 _2Tuple: TypeAlias = tuple[_T, _T]
+_ToInt: TypeAlias = SupportsIndex | SupportsInt
 _PercentileMethod: TypeAlias = L[
     "inverted_cdf",
     "averaged_inverted_cdf",
@@ -154,7 +160,7 @@ _PercentileMethod: TypeAlias = L[
     "midpoint",
     "nearest",
 ]
-_ToInt: TypeAlias = SupportsIndex | SupportsInt
+_Indexing: TypeAlias = L["xy", "ij"]
 
 @type_check_only
 class _CanRMulFloat(Protocol[_T_co]):
@@ -1123,7 +1129,101 @@ def trapezoid(
 def trapz(y: ArrayLike, x: ArrayLike | None = None, dx: float = 1.0, axis: int = -1) -> Any: ...
 
 #
-def meshgrid(*xi: ArrayLike, copy: bool = True, sparse: bool = False, indexing: L["xy", "ij"] = "xy") -> tuple[Array, ...]: ...
+@overload
+def meshgrid(
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[()]: ...
+@overload
+def meshgrid(
+    x0: _ArrayLike[_ScalarT],
+    /,
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array_1d[_ScalarT]]: ...
+@overload
+def meshgrid(
+    x0: ArrayLike,
+    /,
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array_1d]: ...
+@overload
+def meshgrid(
+    x0: _ArrayLike[_ScalarT1],
+    x1: _ArrayLike[_ScalarT2],
+    /,
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array_2d[_ScalarT1], Array_2d[_ScalarT2]]: ...
+@overload
+def meshgrid(
+    x0: ArrayLike,
+    x1: _ArrayLike[_ScalarT],
+    /,
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array_2d, Array_2d[_ScalarT]]: ...
+@overload
+def meshgrid(
+    x0: _ArrayLike[_ScalarT],
+    x1: ArrayLike,
+    /,
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array_2d[_ScalarT], Array_2d]: ...
+@overload
+def meshgrid(
+    x0: ArrayLike,
+    x1: ArrayLike,
+    /,
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array_2d, Array_2d]: ...
+@overload
+def meshgrid(
+    x0: ArrayLike,
+    x1: ArrayLike,
+    x2: ArrayLike,
+    /,
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array_3d, Array_3d, Array_3d]: ...
+@overload
+def meshgrid(
+    x0: ArrayLike,
+    x1: ArrayLike,
+    x2: ArrayLike,
+    x3: ArrayLike,
+    /,
+    *,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array_4d, Array_4d, Array_4d, Array_4d]: ...
+@overload
+def meshgrid(
+    *xi: ArrayLike,
+    copy: bool = True,
+    sparse: bool = False,
+    indexing: _Indexing = "xy",
+) -> tuple[Array, ...]: ...
 
 #
 @overload
