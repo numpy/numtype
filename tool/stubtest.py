@@ -45,10 +45,11 @@ ALLOWLISTS = [
 if not hasattr(_simd, "AVX512F"):
     ALLOWLISTS.append("simd.txt")
 
-if sys.version_info[:2] == (3, 12):
-    ALLOWLISTS.append("path-py312.txt")
-elif sys.version_info[:2] <= (3, 11):
-    ALLOWLISTS.append("path-py311.txt")
+if sys.platform == "win32":
+    if sys.version_info[:2] == (3, 12):
+        ALLOWLISTS.append("path-py312.txt")
+    elif sys.version_info[:2] <= (3, 11):
+        ALLOWLISTS.append("path-py311.txt")
 
 
 def __commit_pyi_genocide_for_mypy() -> None:
