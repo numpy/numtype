@@ -36,6 +36,10 @@ from _numtype import (
     CoTimeDelta_1d,
     CoTimeDelta_1nd,
     CoUInteger_1nd,
+    Floating64,
+    Inexact32,
+    Inexact64,
+    InexactLD,
     Is,
     Sequence_2d,
     Sequence_2nd,
@@ -107,7 +111,7 @@ from _numtype import (
 from numpy._core.fromnumeric import matrix_transpose
 from numpy._core.numeric import vecdot
 from numpy._globals import _NoValueType
-from numpy._typing import DTypeLike, _32Bit, _64Bit, _DTypeLike as _ToDType
+from numpy._typing import DTypeLike, _DTypeLike as _ToDType
 
 __all__ = [
     "LinAlgError",
@@ -167,7 +171,7 @@ _InexactNDT_co = TypeVar("_InexactNDT_co", bound=np.inexact | Array[np.inexact],
 
 _AnyNumberT = TypeVar(
     "_AnyNumberT",
-    np.int_,
+    np.intp,
     np.int8,
     np.int16,
     np.int32,
@@ -201,25 +205,27 @@ _UPLO: TypeAlias = L["L", "U", "l", "u"]
 
 _ToArray_2nd_ish: TypeAlias = _CanArray_1nd[_ScalarT] | Sequence[Sequence_nd[_ScalarT]] | Sequence_nd[_CanArray_1nd[_ScalarT]]
 
-_ToFloat64_1nd: TypeAlias = _ToArray_1nd[np.floating[_64Bit] | np.integer | np.bool, float]
-_ToFloat64_2ds: TypeAlias = _ToArray_2ds[np.floating[_64Bit] | np.integer | np.bool, float]
-_ToFloat64_3nd: TypeAlias = _ToArray_3nd[np.floating[_64Bit] | np.integer | np.bool, float]
+_ToInteger: TypeAlias = np.integer | np.bool[Any]
 
-_ToInexact32_1nd: TypeAlias = _ToArray1_1nd[np.inexact[_32Bit]]
-_ToInexact32_2ds: TypeAlias = _ToArray1_2ds[np.inexact[_32Bit]]
-_ToInexact32_3nd: TypeAlias = _ToArray1_3nd[np.inexact[_32Bit]]
+_ToFloat64_1nd: TypeAlias = _ToArray_1nd[Floating64 | _ToInteger, float]
+_ToFloat64_2ds: TypeAlias = _ToArray_2ds[Floating64 | _ToInteger, float]
+_ToFloat64_3nd: TypeAlias = _ToArray_3nd[Floating64 | _ToInteger, float]
 
-_ToInexact64_1nd: TypeAlias = _ToArray_1nd[np.inexact[_64Bit] | np.integer | np.bool, complex]
-_ToInexact64_2ds: TypeAlias = _ToArray_2ds[np.inexact[_64Bit] | np.integer | np.bool, complex]
-_ToInexact64_3nd: TypeAlias = _ToArray_3nd[np.inexact[_64Bit] | np.integer | np.bool, complex]
+_ToInexact32_1nd: TypeAlias = _ToArray1_1nd[Inexact32]
+_ToInexact32_2ds: TypeAlias = _ToArray1_2ds[Inexact32]
+_ToInexact32_3nd: TypeAlias = _ToArray1_3nd[Inexact32]
 
-_ToInexactLD_1nd: TypeAlias = _ToArray1_1nd[np.longdouble | np.clongdouble]
-_ToInexactLD_2ds: TypeAlias = _ToArray1_2ds[np.longdouble | np.clongdouble]
-_ToInexactLD_3nd: TypeAlias = _ToArray1_3nd[np.longdouble | np.clongdouble]
+_ToInexact64_1nd: TypeAlias = _ToArray_1nd[Inexact64 | _ToInteger, complex]
+_ToInexact64_2ds: TypeAlias = _ToArray_2ds[Inexact64 | _ToInteger, complex]
+_ToInexact64_3nd: TypeAlias = _ToArray_3nd[Inexact64 | _ToInteger, complex]
 
-_ToUnsafe64_1nd: TypeAlias = _ToArray_1nd[np.inexact[_64Bit] | np.integer | np.bool | np.character, complex | _PyCharacter]
-_ToUnsafe64_2ds: TypeAlias = _ToArray_2ds[np.inexact[_64Bit] | np.integer | np.bool | np.character, complex | _PyCharacter]
-_ToUnsafe64_3nd: TypeAlias = _ToArray_3nd[np.inexact[_64Bit] | np.integer | np.bool | np.character, complex | _PyCharacter]
+_ToInexactLD_1nd: TypeAlias = _ToArray1_1nd[InexactLD]
+_ToInexactLD_2ds: TypeAlias = _ToArray1_2ds[InexactLD]
+_ToInexactLD_3nd: TypeAlias = _ToArray1_3nd[InexactLD]
+
+_ToUnsafe64_1nd: TypeAlias = _ToArray_1nd[Inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
+_ToUnsafe64_2ds: TypeAlias = _ToArray_2ds[Inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
+_ToUnsafe64_3nd: TypeAlias = _ToArray_3nd[Inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
 
 _Array_2nd: TypeAlias = Array[_ScalarT, AtLeast2D]
 
@@ -919,7 +925,7 @@ def norm(x: ToFloat16_1nd, ord: _Ord | None = None, axis: None = None, keepdims:
 @overload  # float16, keepdims=True (keyword)
 def norm(x: ToFloat16_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, *, keepdims: _True) -> _Array_2nd[np.float16]: ...
 @overload  # float16, axis=<given> (keyword)
-def norm(x: ToFloat16_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.float16]: ...  # type: ignore[overload-overlap]
+def norm(x: ToFloat16_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.float16]: ...
 @overload  # float32 | complex64, axis=None, keepdims=False
 def norm(x: _ToInexact32_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.float32: ...
 @overload  # float32 | complex64, keepdims=True (keyword)
@@ -1037,7 +1043,7 @@ def diagonal(x: _ToArray_2nd_ish[_NativeScalarT], /, *, offset: CanIndex = 0) ->
 @overload
 def diagonal(x: Sequence_2nd[bool], /, *, offset: CanIndex = 0) -> Array[np.bool]: ...
 @overload
-def diagonal(x: Sequence_2nd[Is[int]], /, *, offset: CanIndex = 0) -> Array[np.int_]: ...
+def diagonal(x: Sequence_2nd[Is[int]], /, *, offset: CanIndex = 0) -> Array[np.intp]: ...
 @overload
 def diagonal(x: Sequence_2nd[Is[float]], /, *, offset: CanIndex = 0) -> Array[np.float64]: ...
 @overload
@@ -1059,9 +1065,9 @@ def trace(x: Sequence_2d[bool], /, *, offset: CanIndex = 0, dtype: None = None) 
 @overload
 def trace(x: Sequence_3nd[bool], /, *, offset: CanIndex = 0, dtype: None = None) -> Array[np.bool]: ...
 @overload
-def trace(x: Sequence_2d[Is[int]], /, *, offset: CanIndex = 0, dtype: None = None) -> np.int_: ...
+def trace(x: Sequence_2d[Is[int]], /, *, offset: CanIndex = 0, dtype: None = None) -> np.intp: ...
 @overload
-def trace(x: Sequence_3nd[Is[int]], /, *, offset: CanIndex = 0, dtype: None = None) -> Array[np.int_]: ...
+def trace(x: Sequence_3nd[Is[int]], /, *, offset: CanIndex = 0, dtype: None = None) -> Array[np.intp]: ...
 @overload
 def trace(x: Sequence_2d[Is[float]], /, *, offset: CanIndex = 0, dtype: None = None) -> np.float64: ...
 @overload

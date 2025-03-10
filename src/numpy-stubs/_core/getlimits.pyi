@@ -3,7 +3,8 @@ from typing import Final, Generic, Literal as L, overload
 from typing_extensions import Self, TypeVar
 
 import numpy as np
-from numpy._typing import _16Bit, _32Bit, _64Bit, _96Bit, _128Bit, _DTypeLike
+from _numtype import Inexact32, Inexact64, InexactLD
+from numpy._typing import _96Bit, _128Bit, _DTypeLike
 from numpy._typing._char_codes import (
     _CLongDoubleCodes,
     _Complex64Codes,
@@ -111,19 +112,13 @@ class finfo(Generic[_FloatingT_co]):
     @overload
     def __new__(cls, dtype: _FloatingT_co | _DTypeLike[_FloatingT_co]) -> Self: ...
     @overload
-    def __new__(cls, dtype: type[complex | float] | complex | float) -> finfo[np.float64]: ...
+    def __new__(cls, dtype: type[complex] | complex) -> finfo[np.float64]: ...
     @overload
-    def __new__(cls, dtype: np.inexact[_16Bit] | _DTypeLike[np.inexact[_16Bit]] | _Float16Codes) -> finfo[np.float16]: ...
+    def __new__(cls, dtype: np.float16 | _DTypeLike[np.float16] | _Float16Codes) -> finfo[np.float16]: ...
     @overload
-    def __new__(
-        cls,
-        dtype: np.inexact[_32Bit] | _DTypeLike[np.inexact[_32Bit]] | _Float32Codes | _Complex64Codes,
-    ) -> finfo[np.float32]: ...
+    def __new__(cls, dtype: Inexact32 | _DTypeLike[Inexact32] | _Float32Codes | _Complex64Codes) -> finfo[np.float32]: ...
     @overload
-    def __new__(
-        cls,
-        dtype: np.inexact[_64Bit] | _DTypeLike[np.inexact[_64Bit]] | _Float64Codes | _Complex128Codes,
-    ) -> finfo[np.float64]: ...
+    def __new__(cls, dtype: Inexact64 | _DTypeLike[Inexact64] | _Float64Codes | _Complex128Codes) -> finfo[np.float64]: ...
     @overload
     def __new__(
         cls,
@@ -135,10 +130,7 @@ class finfo(Generic[_FloatingT_co]):
         dtype: np.inexact[_128Bit] | _DTypeLike[np.inexact[_128Bit]] | _Float128Codes | _Complex256Codes,
     ) -> finfo[np.float128]: ...
     @overload
-    def __new__(
-        cls,
-        dtype: np.longdouble | np.clongdouble | _DTypeLike[np.longdouble | np.clongdouble] | _LongDoubleCodes | _CLongDoubleCodes,
-    ) -> finfo[np.longdouble]: ...
+    def __new__(cls, dtype: InexactLD | _DTypeLike[InexactLD] | _LongDoubleCodes | _CLongDoubleCodes) -> finfo[np.longdouble]: ...
 
     #
     @classmethod

@@ -5,6 +5,12 @@ from typing_extensions import Protocol, TypeVar
 import numpy as np
 from _numtype import (
     Array,
+    ComplexFloating64,
+    Floating64,
+    Inexact32,
+    Number16,
+    Number32,
+    Number64,
     ToBool_nd,
     ToBytes_nd,
     ToCLongDouble_nd,
@@ -17,7 +23,7 @@ from _numtype import (
     ToStr_nd,
     _ToArray1_1nd,
 )
-from numpy._typing import ArrayLike, _32Bit, _64Bit, _ArrayLike
+from numpy._typing import ArrayLike, _ArrayLike
 
 __all__ = [
     "common_type",
@@ -214,155 +220,147 @@ def typename(char: L["O"]) -> L["object"]: ...
 @overload
 def common_type() -> type[np.float16]: ...
 @overload
-def common_type(  # type: ignore[overload-overlap]
-    array0: _HasDType[np.float16],
-    /,
-    *arrays: _HasDType[np.float16],
-) -> type[np.float16]: ...
+def common_type(a0: _HasDType[np.float16], /, *ai: _HasDType[np.float16]) -> type[np.float16]: ...  # type: ignore[overload-overlap]
 @overload
-def common_type(  # type: ignore[overload-overlap]
-    array0: _HasDType[np.float32],
-    /,
-    *arrays: _HasDType[np.float32 | np.float16],
-) -> type[np.float32]: ...
+def common_type(a0: _HasDType[np.float32], /, *ai: _HasDType[np.float32 | np.float16]) -> type[np.float32]: ...  # type: ignore[overload-overlap]
 @overload
 def common_type(
-    array0: _HasDType[np.floating[_64Bit] | np.integer],
+    a0: _HasDType[Floating64 | np.integer],
     /,
-    *arrays: _HasDType[np.floating[_64Bit] | np.float32 | np.float16 | np.integer],
+    *ai: _HasDType[Floating64 | np.float32 | Number16 | np.integer],
 ) -> type[np.float64]: ...
 @overload
 def common_type(  # type: ignore[overload-overlap]
-    array0: _HasDType[np.longdouble],
+    a0: _HasDType[np.longdouble],
     /,
-    *arrays: _HasDType[np.floating | np.integer],
+    *ai: _HasDType[np.floating | np.integer],
 ) -> type[np.longdouble]: ...
 @overload
 def common_type(  # type: ignore[overload-overlap]
-    array0: _HasDType[np.complex64],
+    a0: _HasDType[np.complex64],
     /,
-    *arrays: _HasDType[np.inexact[_32Bit] | np.float16],
+    *ai: _HasDType[Inexact32 | np.float16],
 ) -> type[np.complex64]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.complexfloating[_64Bit]],
+    a0: _HasDType[ComplexFloating64],
     /,
-    *arrays: _HasDType[np.number[_64Bit] | np.number[_32Bit] | np.float16 | np.integer],
+    *ai: _HasDType[Number64 | Number32 | Number16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.clongdouble],
+    a0: _HasDType[np.clongdouble],
     /,
-    *arrays: _HasDType[np.number],
+    *ai: _HasDType[np.number],
 ) -> type[np.clongdouble]: ...
 @overload
 def common_type(  # type: ignore[overload-overlap]
-    array0: _HasDType[np.float32 | np.float16],
+    a0: _HasDType[np.float32 | np.float16],
     array1: _HasDType[np.float32],
     /,
-    *arrays: _HasDType[np.float32 | np.float16],
+    *ai: _HasDType[np.float32 | np.float16],
 ) -> type[np.float32]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.floating[_64Bit] | np.float32 | np.float16 | np.integer],
-    array1: _HasDType[np.floating[_64Bit] | np.integer],
+    a0: _HasDType[Floating64 | np.float32 | Number16 | np.integer],
+    array1: _HasDType[Floating64 | np.integer],
     /,
-    *arrays: _HasDType[np.floating[_64Bit] | np.float32 | np.float16 | np.integer],
+    *ai: _HasDType[Floating64 | np.float32 | Number16 | np.integer],
 ) -> type[np.float64]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.floating | np.integer],
+    a0: _HasDType[np.floating | np.integer],
     array1: _HasDType[np.longdouble],
     /,
-    *arrays: _HasDType[np.floating | np.integer],
+    *ai: _HasDType[np.floating | np.integer],
 ) -> type[np.longdouble]: ...
 @overload
 def common_type(  # type: ignore[overload-overlap]
-    array0: _HasDType[np.inexact[_32Bit] | np.float16],
+    a0: _HasDType[Inexact32 | np.float16],
     array1: _HasDType[np.complex64],
     /,
-    *arrays: _HasDType[np.inexact[_32Bit] | np.float16],
+    *ai: _HasDType[Inexact32 | np.float16],
 ) -> type[np.complex64]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.floating[_64Bit]],
-    array1: _HasDType[np.complexfloating[_64Bit] | np.complex64],
+    a0: _HasDType[Floating64],
+    array1: _HasDType[ComplexFloating64 | np.complex64],
     /,
-    *arrays: _HasDType[np.number[_64Bit] | np.number[_32Bit] | np.float16 | np.integer],
+    *ai: _HasDType[Number64 | Number32 | Number16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.complexfloating[_64Bit] | np.complex128 | np.complex64],
-    array1: _HasDType[np.floating[_64Bit]],
+    a0: _HasDType[ComplexFloating64 | np.complex64],
+    array1: _HasDType[Floating64],
     /,
-    *arrays: _HasDType[np.number[_64Bit] | np.number[_32Bit] | np.float16 | np.integer],
+    *ai: _HasDType[Number64 | Number32 | Number16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.number[_64Bit] | np.number[_32Bit] | np.float16 | np.integer],
-    array1: _HasDType[np.complexfloating[_64Bit]],
+    a0: _HasDType[Number64 | Number32 | Number16 | np.integer],
+    array1: _HasDType[ComplexFloating64],
     /,
-    *arrays: _HasDType[np.number[_64Bit] | np.number[_32Bit] | np.float16 | np.integer],
+    *ai: _HasDType[Number64 | Number32 | Number16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.complexfloating[_64Bit] | np.complex64],
-    array1: _HasDType[np.complexfloating[_64Bit] | np.integer],
+    a0: _HasDType[ComplexFloating64 | np.complex64],
+    array1: _HasDType[ComplexFloating64 | np.integer],
     /,
-    *arrays: _HasDType[np.number[_64Bit] | np.number[_32Bit] | np.float16 | np.integer],
+    *ai: _HasDType[Number64 | Number32 | Number16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.complexfloating[_64Bit] | np.integer],
-    array1: _HasDType[np.complexfloating[_64Bit] | np.complex64],
+    a0: _HasDType[ComplexFloating64 | np.integer],
+    array1: _HasDType[ComplexFloating64 | np.complex64],
     /,
-    *arrays: _HasDType[np.number[_64Bit] | np.number[_32Bit] | np.float16 | np.integer],
+    *ai: _HasDType[Number64 | Number32 | Number16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.floating | np.integer],
+    a0: _HasDType[np.floating | np.integer],
     /,
-    *arrays: _HasDType[np.floating | np.integer],
+    *ai: _HasDType[np.floating | np.integer],
 ) -> type[np.floating]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.number],
+    a0: _HasDType[np.number],
     array1: _HasDType[np.clongdouble],
     /,
-    *arrays: _HasDType[np.number],
+    *ai: _HasDType[np.number],
 ) -> type[np.clongdouble]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.longdouble],
+    a0: _HasDType[np.longdouble],
     array1: _HasDType[np.complexfloating],
     /,
-    *arrays: _HasDType[np.number],
+    *ai: _HasDType[np.number],
 ) -> type[np.clongdouble]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.complexfloating],
+    a0: _HasDType[np.complexfloating],
     array1: _HasDType[np.longdouble],
     /,
-    *arrays: _HasDType[np.number],
+    *ai: _HasDType[np.number],
 ) -> type[np.clongdouble]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.complexfloating],
+    a0: _HasDType[np.complexfloating],
     array1: _HasDType[np.number],
     /,
-    *arrays: _HasDType[np.number],
+    *ai: _HasDType[np.number],
 ) -> type[np.complexfloating]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.number],
+    a0: _HasDType[np.number],
     array1: _HasDType[np.complexfloating],
     /,
-    *arrays: _HasDType[np.number],
+    *ai: _HasDType[np.number],
 ) -> type[np.complexfloating]: ...
 @overload
 def common_type(
-    array0: _HasDType[np.number],
+    a0: _HasDType[np.number],
     array1: _HasDType[np.number],
     /,
-    *arrays: _HasDType[np.number],
+    *ai: _HasDType[np.number],
 ) -> type[np.inexact]: ...

@@ -542,7 +542,7 @@ def trace(
 
 #
 @overload
-def ravel(a: _ToArray1_nd[_ScalarT], order: _OrderKACF = "C") -> Array_1d[_ScalarT]: ...
+def ravel(a: _ToArray1_nd[_ScalarT], order: _OrderKACF = "C") -> Array_1d[_ScalarT]: ...  # type: ignore[overload-overlap]
 @overload
 def ravel(a: ToBytes_nd, order: _OrderKACF = "C") -> Array_1d[np.bytes_]: ...
 @overload
