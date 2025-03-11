@@ -7,16 +7,3 @@ numpy(\..+)?\.floating.is_integer
 numpy(\..+)?\.floating.as_integer_ratio
 numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
-
-
-numpy.f2py.__main__
-numpy.f2py.__version__
-numpy.f2py.(aux|c)funcs
-numpy.f2py.capi_maps
-numpy.f2py.func2subr
-numpy.f2py.f2py2e
-numpy.f2py.compile
-numpy.f2py.diagnose
-numpy.f2py.crackfortran
-numpy.f2py.symbolic
-numpy.f2py.((cb|common|f90mod|use)_)?rules

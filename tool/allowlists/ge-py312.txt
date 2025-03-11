@@ -1,3 +1,4 @@
 # python >= 3.12
 
 numpy\.distutils
+numpy\.f2py\._backends\._distutils
