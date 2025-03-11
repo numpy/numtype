@@ -1,4 +1,4 @@
-# @generated 2025-03-06T21:57:19Z
+# @generated 2025-03-11T03:12:57Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
