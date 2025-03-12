@@ -57,27 +57,37 @@ _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 class _SimpleDType(np.dtype[_ScalarT_co], Generic[_ScalarT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     names: None  # pyright: ignore[reportIncompatibleVariableOverride]
     def __new__(cls, /) -> Self: ...
+    @override
     def __getitem__(self, key: Any, /) -> NoReturn: ...
     @property
+    @override
     def base(self) -> np.dtype[_ScalarT_co]: ...
     @property
+    @override
     def fields(self) -> None: ...
     @property
+    @override
     def isalignedstruct(self) -> L[False]: ...
     @property
+    @override
     def isnative(self) -> L[True]: ...
     @property
+    @override
     def ndim(self) -> L[0]: ...
     @property
+    @override
     def shape(self) -> tuple[()]: ...
     @property
+    @override
     def subdtype(self) -> None: ...
 
 @type_check_only
 class _LiteralDType(_SimpleDType[_ScalarT_co], Generic[_ScalarT_co]):  # type: ignore[misc]
     @property
+    @override
     def flags(self) -> L[0]: ...
     @property
+    @override
     def hasobject(self) -> L[False]: ...
 
 # Helper mixins (typing-only):
@@ -134,8 +144,10 @@ class BoolDType(  # type: ignore[misc]
     _LiteralDType[np.bool],
 ):
     @property
+    @override
     def name(self) -> L["bool"]: ...
     @property
+    @override
     def str(self) -> L["|b1"]: ...
 
 # Sized integers:
@@ -147,8 +159,10 @@ class Int8DType(  # type: ignore[misc]
     _LiteralDType[np.int8],
 ):
     @property
+    @override
     def name(self) -> L["int8"]: ...
     @property
+    @override
     def str(self) -> L["|i1"]: ...
 
 @final
@@ -158,8 +172,10 @@ class UInt8DType(  # type: ignore[misc]
     _LiteralDType[np.uint8],
 ):
     @property
+    @override
     def name(self) -> L["uint8"]: ...
     @property
+    @override
     def str(self) -> L["|u1"]: ...
 
 @final
@@ -170,8 +186,10 @@ class Int16DType(  # type: ignore[misc]
     _LiteralDType[np.int16],
 ):
     @property
+    @override
     def name(self) -> L["int16"]: ...
     @property
+    @override
     def str(self) -> L["<i2", ">i2"]: ...
 
 @final
@@ -182,8 +200,10 @@ class UInt16DType(  # type: ignore[misc]
     _LiteralDType[np.uint16],
 ):
     @property
+    @override
     def name(self) -> L["uint16"]: ...
     @property
+    @override
     def str(self) -> L["<u2", ">u2"]: ...
 
 @final
@@ -194,8 +214,10 @@ class Int32DType(  # type: ignore[misc]
     _LiteralDType[np.int32],
 ):
     @property
+    @override
     def name(self) -> L["int32"]: ...
     @property
+    @override
     def str(self) -> L["<i4", ">i4"]: ...
 
 @final
@@ -206,8 +228,10 @@ class UInt32DType(  # type: ignore[misc]
     _LiteralDType[np.uint32],
 ):
     @property
+    @override
     def name(self) -> L["uint32"]: ...
     @property
+    @override
     def str(self) -> L["<u4", ">u4"]: ...
 
 @final
@@ -218,8 +242,10 @@ class Int64DType(  # type: ignore[misc]
     _LiteralDType[np.int64],
 ):
     @property
+    @override
     def name(self) -> L["int64"]: ...
     @property
+    @override
     def str(self) -> L["<i8", ">i8"]: ...
 
 @final
@@ -230,8 +256,10 @@ class UInt64DType(  # type: ignore[misc]
     _LiteralDType[np.uint64],
 ):
     @property
+    @override
     def name(self) -> L["uint64"]: ...
     @property
+    @override
     def str(self) -> L["<u8", ">u8"]: ...
 
 # NOTE: Don't make these `Final`: it will break stubtest
@@ -248,8 +276,10 @@ class IntDType(  # type: ignore[misc]
     _LiteralDType[np.intc],
 ):
     @property
+    @override
     def name(self) -> L["int32"]: ...
     @property
+    @override
     def str(self) -> L["<i4", ">i4"]: ...
 
 @final
@@ -260,8 +290,10 @@ class UIntDType(  # type: ignore[misc]
     _LiteralDType[np.uintc],
 ):
     @property
+    @override
     def name(self) -> L["uint32"]: ...
     @property
+    @override
     def str(self) -> L["<u4", ">u4"]: ...
 
 @final
@@ -272,8 +304,10 @@ class LongDType(  # type: ignore[misc]
     _LiteralDType[np.long],
 ):
     @property
+    @override
     def name(self) -> L["int32", "int64"]: ...
     @property
+    @override
     def str(self) -> L["<i4", ">i4", "<i8", ">i8"]: ...
 
 @final
@@ -284,8 +318,10 @@ class ULongDType(  # type: ignore[misc]
     _LiteralDType[np.ulong],
 ):
     @property
+    @override
     def name(self) -> L["uint32", "uint64"]: ...
     @property
+    @override
     def str(self) -> L["<u4", ">u4", "<u8", ">u8"]: ...
 
 @final
@@ -296,8 +332,10 @@ class LongLongDType(  # type: ignore[misc]
     _LiteralDType[np.longlong],
 ):
     @property
+    @override
     def name(self) -> L["int64"]: ...
     @property
+    @override
     def str(self) -> L["<i8", ">i8"]: ...
 
 @final
@@ -308,8 +346,10 @@ class ULongLongDType(  # type: ignore[misc]
     _LiteralDType[np.ulonglong],
 ):
     @property
+    @override
     def name(self) -> L["uint64"]: ...
     @property
+    @override
     def str(self) -> L["<u8", ">u8"]: ...
 
 # Floats:
@@ -322,8 +362,10 @@ class Float16DType(  # type: ignore[misc]
     _LiteralDType[np.float16],
 ):
     @property
+    @override
     def name(self) -> L["float16"]: ...
     @property
+    @override
     def str(self) -> L["<f2", ">f2"]: ...
 
 @final
@@ -334,8 +376,10 @@ class Float32DType(  # type: ignore[misc]
     _LiteralDType[np.float32],
 ):
     @property
+    @override
     def name(self) -> L["float32"]: ...
     @property
+    @override
     def str(self) -> L["<f4", ">f4"]: ...
 
 @final
@@ -346,8 +390,10 @@ class Float64DType(  # type: ignore[misc]
     _LiteralDType[np.float64],
 ):
     @property
+    @override
     def name(self) -> L["float64"]: ...
     @property
+    @override
     def str(self) -> L["<f8", ">f8"]: ...
 
 @final
@@ -358,8 +404,10 @@ class LongDoubleDType(  # type: ignore[misc]
     _LiteralDType[np.longdouble],
 ):
     @property
+    @override
     def name(self) -> L["float96", "float128"]: ...
     @property
+    @override
     def str(self) -> L["<f12", ">f12", "<f16", ">f16"]: ...
 
 # Complex:
@@ -372,8 +420,10 @@ class Complex64DType(  # type: ignore[misc]
     _LiteralDType[np.complex64],
 ):
     @property
+    @override
     def name(self) -> L["complex64"]: ...
     @property
+    @override
     def str(self) -> L["<c8", ">c8"]: ...
 
 @final
@@ -384,8 +434,10 @@ class Complex128DType(  # type: ignore[misc]
     _LiteralDType[np.complex128],
 ):
     @property
+    @override
     def name(self) -> L["complex128"]: ...
     @property
+    @override
     def str(self) -> L["<c16", ">c16"]: ...
 
 @final
@@ -396,8 +448,10 @@ class CLongDoubleDType(  # type: ignore[misc]
     _LiteralDType[np.clongdouble],
 ):
     @property
+    @override
     def name(self) -> L["complex192", "complex256"]: ...
     @property
+    @override
     def str(self) -> L["<c24", ">c24", "<c32", ">c32"]: ...
 
 # Python objects:
@@ -410,10 +464,13 @@ class ObjectDType(  # type: ignore[misc]
     _SimpleDType[np.object_],
 ):
     @property
+    @override
     def hasobject(self) -> L[True]: ...
     @property
+    @override
     def name(self) -> L["object"]: ...
     @property
+    @override
     def str(self) -> L["|O"]: ...
 
 # Flexible:
@@ -428,10 +485,13 @@ class BytesDType(  # type: ignore[misc]
 ):
     def __new__(cls, size: _ItemSize_co, /) -> BytesDType[_ItemSize_co]: ...
     @property
+    @override
     def hasobject(self) -> L[False]: ...
     @property
+    @override
     def name(self) -> LiteralString: ...
     @property
+    @override
     def str(self) -> LiteralString: ...
 
 @final
@@ -444,10 +504,13 @@ class StrDType(  # type: ignore[misc]
 ):
     def __new__(cls, size: _ItemSize_co, /) -> StrDType[_ItemSize_co]: ...
     @property
+    @override
     def hasobject(self) -> L[False]: ...
     @property
+    @override
     def name(self) -> LiteralString: ...
     @property
+    @override
     def str(self) -> LiteralString: ...
 
 @final
@@ -461,20 +524,28 @@ class VoidDType(  # type: ignore[misc]
     # NOTE: `VoidDType(...)` raises a `TypeError` at the moment
     def __new__(cls, length: _ItemSize_co, /) -> NoReturn: ...
     @property
+    @override
     def base(self) -> Self: ...
     @property
+    @override
     def isalignedstruct(self) -> L[False]: ...
     @property
+    @override
     def isnative(self) -> L[True]: ...
     @property
+    @override
     def ndim(self) -> L[0]: ...
     @property
+    @override
     def shape(self) -> tuple[()]: ...
     @property
+    @override
     def subdtype(self) -> None: ...
     @property
+    @override
     def name(self) -> LiteralString: ...
     @property
+    @override
     def str(self) -> LiteralString: ...
 
 # Other:
@@ -494,6 +565,7 @@ class DateTime64DType(  # type: ignore[misc]
     # TODO: Once implemented, don't forget the`unit: L["μs"]` overload.
     def __new__(cls, unit: _DateTimeUnit, /) -> NoReturn: ...
     @property
+    @override
     def name(
         self,
     ) -> L[
@@ -513,6 +585,7 @@ class DateTime64DType(  # type: ignore[misc]
         "datetime64[as]",
     ]: ...
     @property
+    @override
     def str(
         self,
     ) -> L[
@@ -557,6 +630,7 @@ class TimeDelta64DType(  # type: ignore[misc]
     # TODO: Once implemented, don't forget to overload on `unit: L["μs"]`.
     def __new__(cls, unit: _DateTimeUnit, /) -> NoReturn: ...
     @property
+    @override
     def name(
         self,
     ) -> L[
@@ -576,6 +650,7 @@ class TimeDelta64DType(  # type: ignore[misc]
         "timedelta64[as]",
     ]: ...
     @property
+    @override
     def str(
         self,
     ) -> L[

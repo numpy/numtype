@@ -3,7 +3,7 @@
 
 import datetime as dt
 from typing import Protocol, SupportsFloat, SupportsIndex, TypeAlias, final, type_check_only
-from typing_extensions import Self, TypeVar
+from typing_extensions import Self, TypeVar, override
 
 __all__ = ["Just", "JustBytes", "JustComplex", "JustFloat", "JustInt", "JustObject", "JustStr"]
 
@@ -24,6 +24,7 @@ _CanFloatOrIndex: TypeAlias = SupportsFloat | SupportsIndex
 @type_check_only
 class Just(Protocol[_T]):
     @property
+    @override
     def __class__(self, /) -> type[_T]: ...
     @__class__.setter
     def __class__(self, t: type[_T], /) -> None: ...
@@ -32,6 +33,7 @@ class Just(Protocol[_T]):
 @type_check_only
 class JustInt(Protocol):
     @property
+    @override
     def __class__(self, /) -> type[int]: ...
     @__class__.setter
     def __class__(self, t: type[int], /) -> None: ...
@@ -43,6 +45,7 @@ class JustInt(Protocol):
 @type_check_only
 class JustFloat(Protocol):
     @property
+    @override
     def __class__(self, /) -> type[float]: ...
     @__class__.setter
     def __class__(self, t: type[float], /) -> None: ...
@@ -54,6 +57,7 @@ class JustFloat(Protocol):
 @type_check_only
 class JustComplex(Protocol):
     @property
+    @override
     def __class__(self, /) -> type[complex]: ...
     @__class__.setter
     def __class__(self, t: type[complex], /) -> None: ...
@@ -65,6 +69,7 @@ class JustComplex(Protocol):
 @type_check_only
 class JustBytes(Protocol):
     @property
+    @override
     def __class__(self, /) -> type[bytes]: ...
     @__class__.setter
     def __class__(self, t: type[bytes], /) -> None: ...
@@ -73,6 +78,7 @@ class JustBytes(Protocol):
 @type_check_only
 class JustStr(Protocol):
     @property
+    @override
     def __class__(self, /) -> type[str]: ...
     @__class__.setter
     def __class__(self, t: type[str], /) -> None: ...
@@ -81,6 +87,7 @@ class JustStr(Protocol):
 @type_check_only
 class JustDate(Protocol):
     @property
+    @override
     def __class__(self, /) -> type[dt.date]: ...
     @__class__.setter
     def __class__(self, t: type[dt.date], /) -> None: ...
@@ -89,6 +96,7 @@ class JustDate(Protocol):
 @type_check_only
 class JustObject(Protocol):
     @property
+    @override
     def __class__(self, /) -> type[object]: ...
     @__class__.setter
     def __class__(self, t: type[object], /) -> None: ...
