@@ -11,7 +11,7 @@ __all__ = ["Just", "JustBytes", "JustComplex", "JustFloat", "JustInt", "JustObje
 
 _T = TypeVar("_T")
 
-_ToFloat: TypeAlias = SupportsFloat | SupportsIndex
+_CanFloatOrIndex: TypeAlias = SupportsFloat | SupportsIndex
 
 ###
 
@@ -59,7 +59,7 @@ class JustComplex(Protocol):
     def __class__(self, t: type[complex], /) -> None: ...
 
     # workaround for `pyright<1.1.390` and `basedpyright<1.22.1`
-    def __new__(cls, /, real: _ToFloat, imag: _ToFloat) -> Self: ...
+    def __new__(cls, /, real: _CanFloatOrIndex, imag: _CanFloatOrIndex) -> Self: ...
 
 @final
 @type_check_only

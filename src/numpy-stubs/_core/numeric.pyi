@@ -24,7 +24,8 @@ from _numtype import (
     CoUInteger_1d,
     CoUInteger_1nd,
     CoUInteger_nd,
-    Just,
+    JustFloat,
+    JustInt,
     ToBool_1d,
     ToBool_1nd,
     ToBool_nd,
@@ -651,7 +652,7 @@ True_: Final[np.bool[L[True]]] = ...
 @overload  # 1d
 def ones(
     shape: int | tuple[int],
-    dtype: type[Just[float]] | None = None,
+    dtype: type[JustFloat] | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -678,7 +679,7 @@ def ones(
 @overload  # known shape
 def ones(
     shape: _AnyShapeT,
-    dtype: type[Just[float]] | None = None,
+    dtype: type[JustFloat] | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -705,7 +706,7 @@ def ones(
 @overload  # unknown shape
 def ones(
     shape: _ShapeLike,
-    dtype: type[Just[float]] | None = None,
+    dtype: type[JustFloat] | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -1228,11 +1229,11 @@ def cross(
 
 #
 @overload
-def indices(dimensions: ToInteger_1d, dtype: type[Just[int]] = ..., sparse: L[False] = False) -> Array[np.intp]: ...
+def indices(dimensions: ToInteger_1d, dtype: type[JustInt] = ..., sparse: L[False] = False) -> Array[np.intp]: ...
 @overload
-def indices(dimensions: ToInteger_1d, dtype: type[Just[int]], sparse: L[True]) -> tuple[Array[np.intp], ...]: ...
+def indices(dimensions: ToInteger_1d, dtype: type[JustInt], sparse: L[True]) -> tuple[Array[np.intp], ...]: ...
 @overload
-def indices(dimensions: ToInteger_1d, dtype: type[Just[int]] = ..., *, sparse: L[True]) -> tuple[Array[np.intp], ...]: ...
+def indices(dimensions: ToInteger_1d, dtype: type[JustInt] = ..., *, sparse: L[True]) -> tuple[Array[np.intp], ...]: ...
 @overload
 def indices(dimensions: ToInteger_1d, dtype: _DTypeLike[_ScalarT], sparse: L[False] = False) -> Array[_ScalarT]: ...
 @overload
