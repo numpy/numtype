@@ -719,7 +719,6 @@ class StringDType(  # type: ignore[misc]
     def isnative(self) -> L[True]: ...
     @property
     @override
-    @override
     def name(self) -> L["StringDType64", "StringDType128"]: ...
     @property
     @override
@@ -734,6 +733,5 @@ class StringDType(  # type: ignore[misc]
     @override
     def type(self) -> type[str]: ...
     @property
-    @override
     @override
     def str(self) -> L["|T8", "|T16"]: ...
