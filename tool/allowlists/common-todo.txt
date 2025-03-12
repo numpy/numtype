@@ -1,9 +1,6 @@
 # https://github.com/numpy/numtype/issues/136
-numpy(\..+)?\.(un)?signedinteger.__hash__
 numpy(\..+)?\.(un)?signedinteger.__index__
 numpy(\..+)?\.(un)?signedinteger.bit_count
-numpy(\..+)?\.floating.__hash__
 numpy(\..+)?\.floating.is_integer
 numpy(\..+)?\.floating.as_integer_ratio
-numpy(\..+)?\.complexfloating.__hash__
 numpy(\..+)?\.complexfloating.__complex__
