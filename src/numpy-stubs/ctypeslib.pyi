@@ -6,7 +6,7 @@ from typing import Any, ClassVar, Generic, Literal as L, TypeAlias, overload
 from typing_extensions import TypeVar
 
 import numpy as np
-from _numtype import Is
+from _numtype import JustInt
 from numpy._core._internal import _ctypes
 from numpy._core.multiarray import flagsobj
 from numpy._typing import NDArray, _ArrayLike, _BoolCodes, _DTypeLike, _Shape, _ShapeLike, _VoidDTypeLike
@@ -200,7 +200,7 @@ def as_ctypes_type(dtype: _DTypeLike[np.int16] | type[ct.c_int16 | ct.c_short] |
 @overload
 def as_ctypes_type(dtype: _DTypeLike[np.int32] | type[ct.c_int32 | ct.c_int] | _Int32Codes) -> type[ct.c_int]: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.intp] | type[Is[int] | ct.c_ssize_t] | _IntPCodes) -> type[ct.c_ssize_t]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def as_ctypes_type(dtype: _DTypeLike[np.intp] | type[JustInt | ct.c_ssize_t] | _IntPCodes) -> type[ct.c_ssize_t]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
 @overload
 def as_ctypes_type(dtype: _DTypeLike[np.long] | type[ct.c_long] | _LongCodes) -> type[ct.c_long]: ...  # type: ignore[overload-overlap]
 @overload

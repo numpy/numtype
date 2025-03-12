@@ -6,7 +6,11 @@ from typing_extensions import Self, TypeVar, override
 import numpy as np
 from _numtype import (
     Array,
-    Is,
+    JustBytes,
+    JustComplex,
+    JustFloat,
+    JustInt,
+    JustStr,
     Matrix,
     Sequence3ND,
     ToBool_nd,
@@ -265,31 +269,31 @@ def bmat(
 ) -> Matrix[np.bool]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[Is[int]],
+    obj: Sequence3ND[JustInt],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.intp]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[Is[float]],
+    obj: Sequence3ND[JustFloat],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.float64]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[Is[complex]],
+    obj: Sequence3ND[JustComplex],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.complex128]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[Is[bytes]],
+    obj: Sequence3ND[JustBytes],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.bytes_]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[Is[str]],
+    obj: Sequence3ND[JustStr],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
 ) -> Matrix[np.str_]: ...
