@@ -12,6 +12,6 @@ body:
 
 - type: textarea
   attributes:
-    label: "Proposed new feature or change:"
+    label: "Please describe the feature or change you would like to see:"
   validations:
     required: true

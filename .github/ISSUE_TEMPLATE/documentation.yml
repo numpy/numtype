@@ -15,6 +15,4 @@ body:
 - type: textarea
   attributes:
     label: "Idea or request for content:"
-    description: >
-      Please describe as clearly as possible what topics you think are missing
-      from the current documentation.
+    description: Please describe as clearly as possible what topics you think are missing from the current documentation.
