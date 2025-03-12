@@ -6933,7 +6933,7 @@ class ufunc(Generic[_CallT_co, _AtT_co, _ReduceT_co, _ReduceAtT_co, _AccumulateT
     def __name__(self) -> str: ...
     @property
     @override
-    def __qualname__(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride] # type: ignore[misc]
+    def __qualname__(self) -> str: ...  # type: ignore[misc]  # pyright: ignore[reportIncompatibleVariableOverride]
     @property
     @override
     def __doc__(self) -> str: ...  # type: ignore[override] # pyright: ignore[reportIncompatibleVariableOverride]
