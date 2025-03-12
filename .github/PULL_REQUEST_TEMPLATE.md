@@ -1,1 +1,1 @@
-Fixes #ISSUE_NUMBER
+Closes #ISSUE_NUMBER
