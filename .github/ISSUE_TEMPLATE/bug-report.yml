@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a bug. For security vulnerabilities see Report a security vulnerability in the templates.
+title: "BUG: <Please write a comprehensive title after the 'BUG: ' prefix>"
+labels: [Bug]
+
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Thank you for taking the time to file a bug report. Before creating a new
+        issue, please make sure to take a few minutes to check the issue tracker
+        for existing issues about the bug.
+
+  - type: textarea
+    attributes:
+      label: "Describe the issue:"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Reproduce the code example:"
+      description: >
+        A short code example that reproduces the error in your type-checker.
+        It should be self-contained, i.e., can be run as-is via e.g. mypy myproblem.py or pyright myproblem.py.
+      placeholder: |
+        import numpy as np
+        << your code here >>
+      render: python
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Error message:"
+      description: >
+        Please include all relevant error messages from your type-checker or IDE.
+      placeholder: |
+        << Full traceback starting from `Traceback: ...` or type checker output >>
+      render: shell
+
+  - type: textarea
+    attributes:
+      label: "Python and NumPy versions:"
+      description: >
+        Output from `import sys, numpy; print(numpy.__version__); print(sys.version)`.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Type-checker version and configuration:"
+      description: >
+        Please include the exact version of the type-checker you are using. 
+        Popular (static) type checkers include Mypy, Pyright / Pylance, Pytype, Pyre, PyCharm, etc.
+        Also include the full CLI command used to run the type-checker, and all of the relevant configuration options.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Additional type packages:"
+      description: >
+        If you are using typing-extensions or typing-stub packages, please list their versions here.
+    validations:
+      required: false

@@ -1,0 +1,17 @@
+name: Feature request
+description: Check instructions for submitting your idea on the mailing list first.
+title: "FEATURE: <Please write a comprehensive title after the 'FEATURE: ' prefix>"
+labels: [Feature]
+body:
+- type: markdown
+  attributes:
+    value: >
+      If you're looking to request a new feature or change in functionality,
+      including adding or changing the meaning of arguments to an existing
+      function.
+
+- type: textarea
+  attributes:
+    label: "Proposed new feature or change:"
+  validations:
+    required: true
