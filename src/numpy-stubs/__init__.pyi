@@ -1516,11 +1516,14 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
+    @override
     def __hash__(self, /) -> int: ...
 
     # Explicitly defined `__eq__` and `__ne__` to get around mypy's `strict_equality` option; even though their signatures are
     # identical to their `object`-based counterpart
+    @override
     def __eq__(self, other: object, /) -> py_bool: ...
+    @override
     def __ne__(self, other: object, /) -> py_bool: ...
 
     #
@@ -1602,7 +1605,9 @@ class _ArrayOrScalarCommon:
     def __float__(self, /) -> float: ...
 
     #
+    @override
     def __eq__(self, other: object, /) -> Any: ...
+    @override
     def __ne__(self, other: object, /) -> Any: ...
 
     #
@@ -1994,12 +1999,15 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
+    @override
     def real(self: _HasDTypeWithReal[_ScalarT], /) -> ndarray[_ShapeT_co, dtype[_ScalarT]]: ...
     @real.setter
+    @override
     def real(self, value: ArrayLike, /) -> None: ...
 
     #
     @property
+    @override
     def imag(self: _HasDTypeWithImag[_ScalarT], /) -> ndarray[_ShapeT_co, dtype[_ScalarT]]: ...
     @imag.setter
     def imag(self, value: ArrayLike, /) -> None: ...
@@ -3929,6 +3937,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def item(self, /) -> _ItemT_co: ...
     @overload
     def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> _ItemT_co: ...
+    @override
     def tolist(self, /) -> _ItemT_co: ...
 
     # NOTE: these technically exist, but will always raise when called
@@ -4243,12 +4252,16 @@ class bool(
     Generic[_BoolItemT_co],
 ):
     @property
+    @override
     def itemsize(self) -> L[1]: ...
     @property
+    @override
     def nbytes(self) -> L[1]: ...
     @property
+    @override
     def real(self) -> Self: ...
     @property
+    @override
     def imag(self) -> bool_[L[False]]: ...
 
     #
@@ -4260,6 +4273,7 @@ class bool(
     def __init__(self: bool_[py_bool], value: object, /) -> None: ...
 
     #
+    @override
     def __hash__(self, /) -> int: ...
 
     #
@@ -4267,6 +4281,7 @@ class bool(
     def __index__(self, /) -> L[0, 1]: ...
 
     #
+    @override
     def __bool__(self, /) -> _BoolItemT_co: ...
 
     #
@@ -4595,6 +4610,7 @@ class object_(_RealMixin, generic[Any]):
 
     #
     def __init__(self, value: object = ..., /) -> None: ...
+    @override
     def __hash__(self, /) -> int: ...
     def __call__(self, /, *args: object, **kwargs: object) -> Any: ...
 
@@ -4606,6 +4622,7 @@ class integer(_IntegralMixin, _RoundMixin, number[_NBitT, int]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
 
     #
+    @override
     def __abs__(self, /) -> Self: ...
     def __invert__(self, /) -> Self: ...
 
@@ -4762,6 +4779,7 @@ class signedinteger(integer[_NBitT]):
     # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
     # https://github.com/numpy/numtype/issues/136
     def __index__(self, /) -> int: ...
+    @override
     def __hash__(self, /) -> int: ...
     def bit_count(self, /) -> int: ...
 
@@ -5025,6 +5043,7 @@ class unsignedinteger(integer[_NBitT]):
     # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
     # https://github.com/numpy/numtype/issues/136
     def __index__(self, /) -> int: ...
+    @override
     def __hash__(self, /) -> int: ...
     def bit_count(self, /) -> int: ...
 
@@ -5781,6 +5800,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_NBitT, float]):
 
     # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
     # https://github.com/numpy/numtype/issues/136
+    @override
     def __hash__(self, /) -> int: ...
     def is_integer(self, /) -> py_bool: ...
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
@@ -6211,6 +6231,7 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
     def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
     @classmethod
     def __getformat__(cls, typestr: L["double", "float"], /) -> str: ...
+    @override
     def __getnewargs__(self, /) -> tuple[float]: ...
 
     #
@@ -6222,8 +6243,10 @@ class float64(floating[_64Bit], float):  # type: ignore[misc]
 # describing the two 64 bit floats representing its real and imaginary component
 class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
     @property
+    @override
     def real(self) -> floating[_NBitT1]: ...
     @property
+    @override
     def imag(self) -> floating[_NBitT2]: ...
 
     #
@@ -6234,6 +6257,7 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
 
     # TODO(jorenham): These don't exist here; move to concrete subtypes once we have them
     # https://github.com/numpy/numtype/issues/136
+    @override
     def __hash__(self, /) -> int: ...
     def __complex__(self, /) -> complex: ...
 
@@ -6454,12 +6478,16 @@ class complexfloating(inexact[_NBitT1, complex], Generic[_NBitT1, _NBitT2]):
 
 class complex128(complexfloating[_64Bit], complex):
     @property
+    @override
     def itemsize(self) -> L[16]: ...
     @property
+    @override
     def nbytes(self) -> L[16]: ...
     @property
+    @override
     def real(self) -> float64: ...
     @property
+    @override
     def imag(self) -> float64: ...
 
     #
@@ -6480,8 +6508,10 @@ class timedelta64(
     Generic[_TD64ItemT_co],
 ):
     @property
+    @override
     def itemsize(self) -> L[8]: ...
     @property
+    @override
     def nbytes(self) -> L[8]: ...
 
     #
@@ -6512,7 +6542,9 @@ class timedelta64(
 
     # NOTE: Only a limited number of units support conversion
     # to builtin scalar types: `Y`, `M`, `ns`, `ps`, `fs`, `as`
+    @override
     def __int__(self: timedelta64[int], /) -> int: ...
+    @override
     def __float__(self: timedelta64[int], /) -> float: ...
 
     #
@@ -6665,8 +6697,10 @@ class datetime64(
     Generic[_DT64ItemT_co],
 ):
     @property
+    @override
     def itemsize(self) -> L[8]: ...
     @property
+    @override
     def nbytes(self) -> L[8]: ...
 
     #
@@ -6770,6 +6804,7 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
     def __setitem__(self, key: str | list[str] | CanIndex, value: ArrayLike, /) -> None: ...
 
     #
+    @override
     def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
 
 class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
@@ -6897,8 +6932,10 @@ class ufunc(Generic[_CallT_co, _AtT_co, _ReduceT_co, _ReduceAtT_co, _AccumulateT
     @property
     def __name__(self) -> str: ...
     @property
-    def __qualname__(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride]
+    @override
+    def __qualname__(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride] # type: ignore[misc]
     @property
+    @override
     def __doc__(self) -> str: ...  # type: ignore[override] # pyright: ignore[reportIncompatibleVariableOverride]
 
     #
