@@ -24,6 +24,7 @@ from _numtype import (
     CoUInteger_1d,
     CoUInteger_1nd,
     CoUInteger_nd,
+    Floating64,
     JustFloat,
     JustInt,
     ToBool_1d,
@@ -52,8 +53,10 @@ from _numtype import (
     ToUInteger_1nd,
     ToUInteger_nd,
 )
+from _numtype._just import JustComplex
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc, _SupportsDType
+from numpy._typing._char_codes import _Float64Codes
 
 from ._asarray import require
 from ._ufunc_config import errstate, getbufsize, geterr, geterrcall, setbufsize, seterr, seterrcall
@@ -625,9 +628,13 @@ __all__ = [
 ###
 
 _T = TypeVar("_T")
-_ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+
+_ShapeLike1D: TypeAlias = SupportsIndex | tuple[SupportsIndex]
+_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[Floating64] | _Float64Codes | None
 
 _PyScalar: TypeAlias = complex | str | bytes
 _Device: TypeAlias = L["cpu"]
@@ -648,44 +655,62 @@ True_: Final[np.bool[L[True]]] = ...
 
 ###
 
-# keep in sync with `empty` and `zeros` in `._multiarray_umath.ones`
-@overload  # 1d
+# NOTE: Keep in sync with `empty` and `zeros` in `._multiarray_umath.ones`
+@overload  # 1d shape, default dtype (float64)
 def ones(
-    shape: int | tuple[int],
-    dtype: type[JustFloat] | None = None,
+    shape: _ShapeLike1D,
+    dtype: _DTypeLikeFloat64 = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D[np.float64]: ...
-@overload
+@overload  # 1d shape, known dtype
 def ones(
-    shape: int | tuple[int],
+    shape: _ShapeLike1D,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[tuple[int], _DTypeT]: ...
+@overload  # 1d shape, known scalar-type
+def ones(
+    shape: _ShapeLike1D,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D[_ScalarT]: ...
-@overload
+@overload  # 1d shape, unknown dtype
 def ones(
-    shape: int | tuple[int],
-    dtype: npt.DTypeLike | None = None,
+    shape: _ShapeLike1D,
+    dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D: ...
-@overload  # known shape
+@overload  # known shape, default dtype (float64)
 def ones(
     shape: _AnyShapeT,
-    dtype: type[JustFloat] | None = None,
+    dtype: _DTypeLikeFloat64 = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[np.float64, _AnyShapeT]: ...
-@overload
+@overload  # known shape, known dtype
+def ones(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+@overload  # known shape, known scalar-type
 def ones(
     shape: _AnyShapeT,
     dtype: _DTypeLike[_ScalarT],
@@ -694,25 +719,34 @@ def ones(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT, _AnyShapeT]: ...
-@overload
+@overload  # known shape, unknown scalar-type
 def ones(
     shape: _AnyShapeT,
-    dtype: npt.DTypeLike = None,
+    dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[Any, _AnyShapeT]: ...
-@overload  # unknown shape
+@overload  # unknown shape, default dtype
 def ones(
     shape: _ShapeLike,
-    dtype: type[JustFloat] | None = None,
+    dtype: _DTypeLikeFloat64 = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[np.float64]: ...
-@overload
+@overload  # unknown shape, known dtype
+def ones(
+    shape: _ShapeLike,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+@overload  # unknown shape, known scalar-type
 def ones(
     shape: _ShapeLike,
     dtype: _DTypeLike[_ScalarT],
@@ -721,20 +755,22 @@ def ones(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # unknown shape, unknown dtype
 def ones(
     shape: _ShapeLike,
-    dtype: npt.DTypeLike | None = None,
+    dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array: ...
 
-# keep in sync with `ones`
-@overload
-def full(
-    shape: int | tuple[int],
+# NOTE: keep in sync with `ones` (but note that `full` has 18 additional overloads)
+# NOTE: The mypy [overload-overlap] errors are false-positives that are caused by a
+#   bug that's related to constrained type-vars.
+@overload  # 1d shape, known fill scalar-type
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
     fill_value: _ScalarT,
     dtype: None = None,
     order: _OrderCF = "C",
@@ -742,9 +778,59 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D[_ScalarT]: ...
-@overload
+@overload  # 1d shape, bool fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
+    fill_value: py_bool,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.bool]: ...
+@overload  # 1d shape, int fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
+    fill_value: JustInt,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.intp]: ...
+@overload  # 1d shape, float fill
 def full(
-    shape: int | tuple[int],
+    shape: _ShapeLike1D,
+    fill_value: JustFloat,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.float64]: ...
+@overload  # 1d shape, complex fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
+    fill_value: JustComplex,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.complex128]: ...
+@overload  # 1d shape, known dtype
+def full(
+    shape: _ShapeLike1D,
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[tuple[int], _DTypeT]: ...
+@overload  # 1d shape, known scalar-type
+def full(
+    shape: _ShapeLike1D,
     fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
@@ -752,9 +838,19 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D[_ScalarT]: ...
-@overload
+@overload  # 1d shape, float64 dtype
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.float64]: ...
+@overload  # 1d shape, unknown dtype
 def full(
-    shape: int | tuple[int],
+    shape: _ShapeLike1D,
     fill_value: object,
     dtype: DTypeLike | None = None,
     order: _OrderCF = "C",
@@ -762,38 +858,98 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D: ...
-@overload
-def full(
-    shape: _ShapeT,
+@overload  # known shape, known fill scalar-type
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
     fill_value: _ScalarT,
     dtype: None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> Array[_ScalarT, _ShapeT]: ...
-@overload
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # known shape, bool fill
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: py_bool,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.bool, _AnyShapeT]: ...
+@overload  # known shape, int fill
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: JustInt,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.intp, _AnyShapeT]: ...
+@overload  # known shape, float fill
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: JustFloat,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.float64, _AnyShapeT]: ...
+@overload  # known shape, complex fill
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: JustComplex,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.complex128, _AnyShapeT]: ...
+@overload  # known shape, known scalar-type
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+@overload  # known shape, known dtype
 def full(
-    shape: _ShapeT,
+    shape: _AnyShapeT,
     fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> Array[_ScalarT, _ShapeT]: ...
-@overload
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # known shape, float64
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.float64, _AnyShapeT]: ...
+@overload  # known shape, unknown dtype
 def full(
-    shape: _ShapeT,
+    shape: _AnyShapeT,
     fill_value: object,
     dtype: DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> Array[Any, _ShapeT]: ...
-@overload
-def full(
+) -> Array[Any, _AnyShapeT]: ...
+@overload  # unknown shape, known fill scalar-type
+def full(  # type: ignore[overload-overlap]
     shape: _ShapeLike,
     fill_value: _ScalarT,
     dtype: None = None,
@@ -802,7 +958,57 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # unknown shape, bool fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike,
+    fill_value: py_bool,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.bool]: ...
+@overload  # unknown shape, int fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike,
+    fill_value: JustInt,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.intp]: ...
+@overload  # unknown shape, float fill
+def full(
+    shape: _ShapeLike,
+    fill_value: JustFloat,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.float64]: ...
+@overload  # unknown shape, complex fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike,
+    fill_value: JustComplex,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.complex128]: ...
+@overload  # unknown shape, known dtype
+def full(
+    shape: _ShapeLike,
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+@overload  # unknown shape, known scalar-type
 def full(
     shape: _ShapeLike,
     fill_value: object,
@@ -812,7 +1018,17 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # unknown shape, float64
+def full(
+    shape: _ShapeLike,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.float64]: ...
+@overload  # unknown shape, unknown dtype
 def full(
     shape: _ShapeLike,
     fill_value: object,
