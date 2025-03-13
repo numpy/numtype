@@ -52,10 +52,8 @@ jobs:
           enable-cache: true
           python-version: ${{ matrix.py }}
 
-      - name: basedpyright (python ${{ matrix.py }})
-        run: >
-          uv run --no-group=orjson
-          basedpyright --threads=3
+      - name: basedpyright
+        run: uv run --no-group=orjson basedpyright
 
   mypy:
     runs-on: ubuntu-latest
@@ -72,10 +70,10 @@ jobs:
           enable-cache: true
           python-version: ${{ matrix.py }}
 
-      - name: mypy (python ${{ matrix.py }})
+      - name: mypy
         run: >
           uv run --no-group=numpy
-          mypy test
+          mypy --no-incremental --cache-dir=/dev/null --soft-error-limit=-1 .
 
   stubtest:
     runs-on: ${{ matrix.os }}
@@ -93,7 +91,7 @@ jobs:
           enable-cache: true
           python-version: ${{ matrix.py }}
 
-      - name: stubtest (python ${{ matrix.py }})
+      - name: stubtest
         run: >
           uv run --active -p ${{ matrix.py }}
           tool/stubtest.py
