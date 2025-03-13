@@ -1,5 +1,6 @@
 from _typeshed import Incomplete
 from typing import Final
+from typing_extensions import override
 
 import numpy as np
 from numpy.lib._function_base_impl import average
@@ -65,20 +66,25 @@ class _fromnxfunction:
 
 class _fromnxfunction_single(_fromnxfunction):
     __doc__: str
+    @override
     def __call__(self, x: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
 class _fromnxfunction_seq(_fromnxfunction):
     __doc__: str
+    @override
     def __call__(self, x: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
 class _fromnxfunction_allargs(_fromnxfunction):
     __doc__: str
+    @override
     def __call__(self, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
 class MAxisConcatenator(AxisConcatenator):
     @staticmethod
+    @override
     def concatenate(arrays: Incomplete, axis: int = 0) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @classmethod
+    @override
     def makemat(cls, arr: Incomplete) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleVariableOverride]
 
 class mr_class(MAxisConcatenator):

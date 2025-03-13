@@ -1,6 +1,6 @@
 from _typeshed import Incomplete
 from typing import Any, ClassVar, Final, Generic, Literal as L, SupportsIndex as CanIndex, TypeAlias, type_check_only
-from typing_extensions import Never, Self, TypeVar, deprecated, overload
+from typing_extensions import Never, Self, TypeVar, deprecated, overload, override
 
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
@@ -307,12 +307,14 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
+    @override
     def shape(self) -> _ShapeT_co: ...
     @shape.setter
     def shape(self: MaskedArray[_ShapeT], shape: _ShapeT, /) -> None: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @property
+    @override
     def dtype(self) -> _DTypeT_co: ...
     @dtype.setter
     def dtype(self: MaskedArray[Any, _DTypeT], dtype: _DTypeT, /) -> None: ...
@@ -339,12 +341,14 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
+    @override
     def flat(self) -> Incomplete: ...
     @flat.setter
     def flat(self, value: Incomplete) -> Incomplete: ...
 
     #
     @property
+    @override
     def data(self) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
@@ -357,18 +361,22 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property  # type: ignore[misc]
+    @override
     def imag(self) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def get_imag(self) -> Incomplete: ...
 
     #
     @property  # type: ignore[misc]
+    @override
     def real(self) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def get_real(self) -> Incomplete: ...
 
     #
     @property
+    @override
     def mT(self) -> Self: ...
     @property
+    @override
     def T(self) -> Self: ...
 
     #
@@ -388,7 +396,9 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Self: ...
 
     #
+    @override
     def __array_finalize__(self, /, obj: Incomplete) -> None: ...
+    @override
     def __array_wrap__(
         self,
         /,
@@ -399,46 +409,77 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __setmask__(self, /, mask: Incomplete, copy: bool = False) -> None: ...
 
     #
+    @override
     def __getitem__(self, indx: Incomplete, /) -> Incomplete: ...
+    @override
     def __setitem__(self, indx: Incomplete, value: Incomplete, /) -> None: ...
 
     #
+    @override
     def __eq__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __ne__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __ge__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __gt__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __le__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __lt__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __add__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __radd__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __sub__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __rsub__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __mul__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __rmul__(self, other: Incomplete, /) -> Incomplete: ...
     def __div__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __truediv__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __rtruediv__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __floordiv__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __rfloordiv__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
     def __pow__(self, other: Incomplete, /) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __rpow__(self, other: Incomplete, /) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __iadd__(self, other: Incomplete, /) -> Self: ...
+    @override
     def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    @override
     def __imul__(self, other: Incomplete, /) -> Self: ...
     def __idiv__(self, other: Incomplete, /) -> Self: ...
+    @override
     def __ifloordiv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    @override
     def __itruediv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    @override
     def __ipow__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 
     #
+    @override
     def __int__(self) -> int: ...
+    @override
     def __float__(self) -> float: ...
 
     #
+    @override
     def __reduce__(self) -> Incomplete: ...
+    @override
     def __deepcopy__(self, /, memo: Incomplete = ...) -> Self: ...
 
     #
+    @override
     def view(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
@@ -452,34 +493,43 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def shrink_mask(self) -> Incomplete: ...
     def filled(self, /, fill_value: Incomplete = None) -> Incomplete: ...
     def compressed(self) -> Incomplete: ...
+    @override
     def compress(self, /, condition: Incomplete, axis: Incomplete = None, out: Incomplete = None) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def count(self, axis: Incomplete = None, keepdims: Incomplete = ...) -> Incomplete: ...
+    @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
+    @override
     def reshape(self, *s: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
-    def resize(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def resize(# type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         newshape: Incomplete,
         refcheck: Incomplete = ...,
         order: Incomplete = ...,
     ) -> Incomplete: ...
+    @override
     def put(self, indices: Incomplete, values: Incomplete, mode: Incomplete = ...) -> Incomplete: ...
     def ids(self) -> Incomplete: ...
     def iscontiguous(self) -> Incomplete: ...
+    @override
     def all(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
         out: Incomplete = ...,
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
+    @override
     def any(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
         out: Incomplete = ...,
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
+    @override
     def nonzero(self) -> Incomplete: ...
+    @override
     def trace(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         offset: Incomplete = ...,
@@ -488,9 +538,11 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         dtype: Incomplete = ...,
         out: Incomplete = ...,
     ) -> Incomplete: ...
+    @override
     def dot(self, b: Incomplete, out: Incomplete = ..., strict: Incomplete = ...) -> Incomplete: ...
 
     #
+    @override
     def sum(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -498,6 +550,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         out: Incomplete = ...,
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
+    @override
     def cumsum(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -506,6 +559,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Incomplete: ...
 
     #
+    @override
     def prod(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -514,6 +568,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
     product = prod
+    @override
     def cumprod(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -522,6 +577,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Incomplete: ...
 
     #
+    @override
     def mean(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -532,6 +588,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     def anom(self, axis: Incomplete = ..., dtype: Incomplete = ...) -> Incomplete: ...
+    @override
     def var(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
@@ -542,6 +599,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         keepdims: Incomplete = ...,
         mean: Incomplete = ...,
     ) -> Incomplete: ...
+    @override
     def std(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
@@ -554,9 +612,11 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Incomplete: ...
 
     #
+    @override
     def round(self, decimals: Incomplete = ..., out: Incomplete = ...) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
+    @override
     def sort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
@@ -568,6 +628,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         *,
         stable: bool = False,
     ) -> Incomplete: ...
+    @override
     def argsort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
@@ -581,6 +642,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Incomplete: ...
 
     #
+    @override
     def min(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -588,6 +650,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         fill_value: Incomplete = ...,
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
+    @override
     def argmin(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -598,6 +661,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Incomplete: ...
 
     #
+    @override
     def max(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -605,6 +669,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         fill_value: Incomplete = ...,
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
+    @override
     def argmax(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: Incomplete = ...,
@@ -615,6 +680,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Incomplete: ...
 
     #
+    @override
     def ptp(  # type: ignore[override]  # pyright: ignore[reportIncompatibleVariableOverride]
         self,
         axis: Incomplete = ...,
@@ -624,10 +690,13 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Incomplete: ...
 
     #
+    @override
     def partition(self, *args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
+    @override
     def argpartition(self, *args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
 
     #
+    @override
     def take(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
@@ -638,6 +707,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> Incomplete: ...
 
     #
+    @override
     def copy(self, /, order: _OrderKACF = "C") -> Self: ...
 
     #
@@ -651,10 +721,14 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     def toflex(self) -> Incomplete: ...
     def torecords(self) -> Incomplete: ...
+    @override
     def tolist(self, fill_value: Incomplete | None = None) -> Incomplete: ...
     @deprecated("tostring() is deprecated. Use tobytes() instead.")
+    @override
     def tostring(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def tobytes(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def tofile(self, /, fid: Incomplete, sep: str = "", format: str = "%s") -> Incomplete: ...
 
 class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
@@ -668,18 +742,25 @@ class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
         copy: bool = ...,
         subok: bool = ...,
     ) -> Self: ...
+    @override
     def __getitem__(self, indx: Incomplete, /) -> Incomplete: ...
+    @override
     def __setitem__(self, indx: Incomplete, value: Incomplete, /) -> None: ...
+    @override
     def __iter__(self) -> Incomplete: ...
+    @override
     def __len__(self) -> int: ...
 
     #
+    @override
     def filled(self, fill_value: Incomplete = ...) -> Incomplete: ...
+    @override
     def tolist(self) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 # 0D float64 array
 class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
     def __new__(cls) -> Self: ...
+    @override
     def __array_wrap__(  # type: ignore[override]
         self,
         /,
@@ -687,20 +768,31 @@ class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
         context: Incomplete | None = None,
         return_scalar: bool = False,
     ) -> MaskedArray[tuple[()], np.dtype[np.float64]]: ...
+    @override
     def __format__(self, format_spec: str, /) -> str: ...
 
     #
+    @override
     def __iadd__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    @override
     def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    @override
     def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    @override
     def __ifloordiv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    @override
     def __itruediv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    @override
     def __ipow__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 
     #
+    @override
     def __reduce__(self) -> tuple[type[Self], tuple[()]]: ...
+    @override
     def __copy__(self) -> Self: ...
+    @override
     def __deepcopy__(self, /, memo: object) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def copy(self, /, *args: object, **kwargs: object) -> Incomplete: ...
 
 class _frommethod:
