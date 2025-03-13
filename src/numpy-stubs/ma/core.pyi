@@ -503,7 +503,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def reshape(self, *s: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
     @override
-    def resize(# type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def resize(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         newshape: Incomplete,
         refcheck: Incomplete = ...,
