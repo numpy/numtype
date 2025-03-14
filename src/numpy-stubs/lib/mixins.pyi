@@ -1,6 +1,6 @@
 import abc
 from typing import Any, Generic, Literal as L, TypeAlias, type_check_only
-from typing_extensions import Self, TypeVar
+from typing_extensions import Self, TypeVar, override
 
 import numpy as np
 
@@ -34,8 +34,10 @@ class NDArrayOperatorsMixin(Generic[_T_contra, _T_co]):
     ) -> Self | _T_co | _AnyArray: ...
 
     #
-    def __eq__(self, x: _T_contra, /) -> _T_co: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-    def __ne__(self, x: _T_contra, /) -> _T_co: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __eq__(self, x: _T_contra, /) -> _T_co: ...  # type: ignore[override]# pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __ne__(self, x: _T_contra, /) -> _T_co: ...  # type: ignore[override] # pyright: ignore[reportIncompatibleMethodOverride]
     def __lt__(self, x: _T_contra, /) -> _T_co: ...
     def __le__(self, x: _T_contra, /) -> _T_co: ...
     def __gt__(self, x: _T_contra, /) -> _T_co: ...

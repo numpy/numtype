@@ -1,7 +1,7 @@
 import builtins
 from collections.abc import Callable
 from typing import Any, Final, Literal, TypeAlias, overload
-from typing_extensions import TypeVar
+from typing_extensions import TypeVar, override
 
 import numpy as np
 import numpy.typing as npt
@@ -94,8 +94,10 @@ class RandomState:
     _bit_generator: Final[BitGenerator]
 
     def __init__(self, /, seed: _ArrayLikeInt_co | BitGenerator[Any] | None = ...) -> None: ...
-    def __getstate__(self) -> dict[str, Any]: ...
+    @override
+    def __getstate__(self) -> dict[str, Any]: ...  # type: ignore[misc]
     def __setstate__(self, /, state: dict[str, Any]) -> None: ...
+    @override
     def __reduce__(self) -> tuple[Callable[[BitGenerator], RandomState], tuple[BitGenerator], dict[str, Any]]: ...
     @overload
     def get_state(self, /, legacy: Literal[False]) -> dict[str, Any]: ...

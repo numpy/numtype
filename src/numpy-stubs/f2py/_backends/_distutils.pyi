@@ -1,4 +1,4 @@
-from typing_extensions import deprecated
+from typing_extensions import deprecated, override
 
 from ._backend import Backend
 
@@ -9,4 +9,5 @@ class DistutilsBackend(Backend):
     )
     # NOTE: the `sef` typo matches runtime
     def __init__(sef, *args: object, **kwargs: object) -> None: ...
+    @override
     def compile(self) -> None: ...

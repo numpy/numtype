@@ -38,7 +38,9 @@ class _SupportsReadSeek(SupportsRead[_T_co], Protocol[_T_co]):
 # undocumented
 class BagObj(Generic[_T_co]):
     def __init__(self, /, obj: SupportsKeysAndGetItem[str, _T_co]) -> None: ...
+    @override
     def __getattribute__(self, key: str, /) -> _T_co: ...
+    @override
     def __dir__(self) -> list[str]: ...
 
 # exported in numpy.lib.nppyio

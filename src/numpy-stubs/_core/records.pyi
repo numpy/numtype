@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable, Sequence
 from typing import IO, Any, ClassVar, Literal as L, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
-from typing_extensions import Buffer, TypeVar
+from typing_extensions import Buffer, TypeVar, override
 
 import numpy as np
 from numpy import _ByteOrder, _OrderKACF  # noqa: ICN003
@@ -52,7 +52,9 @@ class record(np.void):  # type: ignore[misc]
     __module__: L["numpy"] = "numpy"
 
     def pprint(self) -> str: ...
+    @override
     def __getattribute__(self, attr: str, /) -> Any: ...
+    @override
     def __setattr__(self, attr: str, val: ArrayLike, /) -> None: ...
     @overload
     def __getitem__(self, key: str | SupportsIndex, /) -> Any: ...
@@ -92,8 +94,11 @@ class recarray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         aligned: L[False] = False,
         order: _OrderKACF = "C",
     ) -> _RecArray[Any]: ...
+    @override
     def __getattribute__(self, attr: str, /) -> Any: ...
+    @override
     def __setattr__(self, attr: str, val: ArrayLike, /) -> None: ...
+    @override
     def __array_finalize__(self, /, obj: object) -> None: ...
 
     #

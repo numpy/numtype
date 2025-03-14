@@ -302,6 +302,7 @@ class EMathTestGen(TestGen):
         self._binary = binary
         super().__init__()
 
+    @override
     def get_names(self) -> Iterable[tuple[str, str]]:
         for sct in self.VALUES:
             if sct.startswith("np."):
@@ -375,6 +376,7 @@ class EMathTestGen(TestGen):
 
             sct_lhs_prev = sct_lhs
 
+    @override
     def get_testcases(self) -> Iterable[str | None]:
         # yield None to indicate a section break
         binary_fns = {"logn", "power"}

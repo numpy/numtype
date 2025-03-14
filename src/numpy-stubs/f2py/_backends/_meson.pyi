@@ -1,6 +1,7 @@
 from collections.abc import Callable
 from pathlib import Path
 from typing import Final, Literal as L
+from typing_extensions import override
 
 from ._backend import Backend
 
@@ -56,4 +57,5 @@ class MesonBackend(Backend):
     def __init__(self, /, *args: object, **kwargs: object) -> None: ...
     def write_meson_build(self, /, build_dir: Path) -> None: ...
     def run_meson(self, /, build_dir: Path) -> None: ...
+    @override
     def compile(self) -> None: ...

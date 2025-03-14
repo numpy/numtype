@@ -1,7 +1,7 @@
 import builtins
 from collections.abc import Callable
 from typing import Any, Literal, TypeAlias, overload
-from typing_extensions import TypeVar
+from typing_extensions import TypeVar, override
 
 import numpy as np
 import numpy.typing as npt
@@ -61,8 +61,10 @@ _ToRNG: TypeAlias = (
 
 class Generator:
     def __init__(self, /, bit_generator: BitGenerator[Any]) -> None: ...
+    @override
     def __getstate__(self) -> None: ...
     def __setstate__(self, state: dict[str, Any] | None) -> None: ...
+    @override
     def __reduce__(self) -> tuple[Callable[[BitGenerator], Generator], tuple[BitGenerator], None]: ...
     @property
     def bit_generator(self) -> BitGenerator: ...

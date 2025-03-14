@@ -3,7 +3,7 @@ import pprint
 from collections.abc import Hashable, Iterable, Mapping, MutableMapping, Sequence
 from types import ModuleType
 from typing import Any, Final, TypedDict, type_check_only
-from typing_extensions import NotRequired, TypeVar
+from typing_extensions import NotRequired, TypeVar, override
 
 from .__version__ import version
 from .auxfuncs import _Bool, outmess as outmess
@@ -36,6 +36,7 @@ __usage__: Final[str]
 show = pprint.pprint
 
 class CombineIncludePaths(argparse.Action):
+    @override
     def __call__(
         self,
         /,
