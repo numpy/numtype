@@ -336,9 +336,10 @@ class _HasDoc(Protocol):
 @final
 class _HasClass(Protocol[_T]):
     @property
-    @override  # type: ignore[override]
+    @override
     def __class__(self, /) -> type[_T]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @__class__.setter
+    @override
     def __class__(self, t: type[_T], /) -> None: ...
 
 ###
