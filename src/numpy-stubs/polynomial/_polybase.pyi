@@ -1,7 +1,7 @@
 import abc
 from collections.abc import Iterator, Mapping, Sequence
 from typing import Any, ClassVar, Final, Literal, SupportsIndex, TypeAlias, overload
-from typing_extensions import Self, TypeIs, TypeVar
+from typing_extensions import Self, TypeIs, TypeVar, override
 
 import numpy as np
 import numpy.typing as npt
@@ -70,8 +70,11 @@ class ABCPolyBase(abc.ABC):
     def __call__(self, /, arg: ToObject_1nd) -> npt.NDArray[np.object_]: ...
 
     #
+    @override
     def __format__(self, fmt_str: str, /) -> str: ...
+    @override
     def __eq__(self, x: object, /) -> bool: ...
+    @override
     def __ne__(self, x: object, /) -> bool: ...
     def __neg__(self, /) -> Self: ...
     def __pos__(self, /) -> Self: ...

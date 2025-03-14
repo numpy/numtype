@@ -3,7 +3,7 @@ from binascii import Incomplete
 from collections.abc import Callable, Mapping, Sequence
 from threading import Lock
 from typing import Any, ClassVar, Generic, Literal as L, NamedTuple, TypeAlias, TypedDict, overload, type_check_only
-from typing_extensions import CapsuleType, Self, TypeVar
+from typing_extensions import CapsuleType, Self, TypeVar, override
 
 import numpy as np
 from numpy._typing import NDArray, _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes
@@ -70,6 +70,7 @@ class BitGenerator(_CythonMixin, abc.ABC, Generic[_StateT]):
 
     #
     def __init__(self, /, seed: _ArrayLikeInt_co | SeedSequence | None = None) -> None: ...
+    @override
     def __reduce__(self) -> tuple[Callable[[str], Self], tuple[str], tuple[Mapping[str, Any], ISeedSequence]]: ...
     def spawn(self, /, n_children: int) -> list[Self]: ...
     def _benchmark(self, /, cnt: int, method: str = "uint64") -> None: ...
@@ -95,6 +96,7 @@ class ISpawnableSeedSequence(ISeedSequence, abc.ABC):
     def spawn(self, /, n_children: int) -> list[Self]: ...
 
 class SeedlessSeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
+    @override
     def spawn(self, /, n_children: int) -> list[Self]: ...
 
 class SeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
@@ -117,6 +119,7 @@ class SeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
     ) -> None: ...
 
     #
+    @override
     def spawn(self, /, n_children: int) -> list[Self]: ...
     #
     @property

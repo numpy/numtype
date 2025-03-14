@@ -2,7 +2,7 @@ import ctypes as ct
 import re
 from collections.abc import Callable, Iterable
 from typing import Any, Final, Generic, overload
-from typing_extensions import Self, TypeVar, deprecated
+from typing_extensions import Self, TypeVar, deprecated, override
 
 import numpy as np
 import numpy.typing as npt
@@ -63,7 +63,9 @@ class dummy_ctype(Generic[_T_co]):
     _cls: type[_T_co]
 
     def __init__(self, /, cls: type[_T_co]) -> None: ...
+    @override
     def __eq__(self, other: Self, /) -> bool: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __ne__(self, other: Self, /) -> bool: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     def __mul__(self, other: object, /) -> Self: ...
     def __call__(self, /, *other: object) -> _T_co: ...

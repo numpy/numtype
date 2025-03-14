@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, Final, Literal as L, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
-from typing_extensions import Self, TypeVar
+from typing_extensions import Self, TypeVar, override
 
 import numpy as np
 from _numtype import (
@@ -97,7 +97,9 @@ _ToNumeric_nd: TypeAlias = _ToArray2_nd[np.number | np.bool | np.object_, comple
 # compatible with e.g. int, float, complex, Decimal, Fraction, and ABCPolyBase
 @type_check_only
 class _SupportsCoefOps(Protocol):
+    @override
     def __eq__(self, x: object, /) -> bool: ...
+    @override
     def __ne__(self, x: object, /) -> bool: ...
     def __neg__(self, /) -> Self: ...
     def __pos__(self, /) -> Self: ...

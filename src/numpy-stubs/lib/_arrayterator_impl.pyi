@@ -3,7 +3,7 @@
 from collections.abc import Generator
 from types import EllipsisType
 from typing import Any, Final, Generic, TypeAlias, overload
-from typing_extensions import TypeVar
+from typing_extensions import TypeVar, override
 
 import numpy as np
 
@@ -30,13 +30,17 @@ class Arrayterator(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTyp
     step: Final[list[int]]
 
     @property  # type: ignore[misc]
+    @override
     def shape(self) -> _ShapeT_co: ...
     @property
+    @override
     def flat(self: Arrayterator[Any, np.dtype[_ScalarT]]) -> Generator[_ScalarT]: ...  # type: ignore[override]
 
     #
     def __init__(self, /, var: np.ndarray[_ShapeT_co, _DTypeT_co], buf_size: int | None = None) -> None: ...  # pyright: ignore[reportInconsistentConstructor]
+    @override
     def __getitem__(self, index: _AnyIndex, /) -> Arrayterator[tuple[int, ...], _DTypeT_co]: ...  # type: ignore[override]
+    @override
     def __iter__(self) -> Generator[np.ndarray[tuple[int, ...], _DTypeT_co]]: ...
 
     #

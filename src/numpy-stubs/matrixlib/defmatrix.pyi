@@ -69,6 +69,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __mul__(self, other: ArrayLike, /) -> Matrix: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
     def __rmul__(self, other: ArrayLike, /) -> Matrix: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __imul__(self, other: ArrayLike, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
@@ -216,15 +217,20 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def ptp(self, /, axis: _ToAxis | None = None, *, out: _ArrayT) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleVariableOverride]
 
     #
+    @override
     def tolist(self: _CanItem[_T], /) -> list[list[_T]]: ...  # type: ignore[override]
 
     #
+    @override
     def squeeze(self, /, axis: _ToAxis | None = None) -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def ravel(self, /, order: _OrderKACF = "C") -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def flatten(self, /, order: _OrderKACF = "C") -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @property
+    @override
     def T(self) -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     def getT(self) -> matrix[_2D, _DTypeT_co]: ...
 
