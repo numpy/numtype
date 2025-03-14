@@ -2,7 +2,7 @@
   "[python]": {
     "editor.rulers": [88, 130]
   },
-  "[markdown|python]": {
+  "[markdown]": {
     "editor.rulers": [130]
   },
   "evenBetterToml.formatter.alignComments": true,
