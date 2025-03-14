@@ -4,7 +4,8 @@
     "detachhead.basedpyright",
     "ms-python.mypy-type-checker",
     "ms-python.python",
-    "tamasfe.even-better-toml"
+    "tamasfe.even-better-toml",
+    "davidanson.vscode-markdownlint"
   ],
   "unwantedRecommendations": ["ms-pyright.pyright", "ms-python.vscode-pylance"]
 }
