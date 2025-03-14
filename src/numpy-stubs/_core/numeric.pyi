@@ -1,14 +1,17 @@
 from builtins import bool as py_bool
 from collections.abc import Callable, Sequence
-from typing import Any, Final, Literal as L, NoReturn, SupportsAbs, SupportsIndex, TypeAlias, overload
+from typing import Any, Final, Literal as L, NoReturn, Protocol, SupportsAbs, SupportsIndex, TypeAlias, overload, type_check_only
 from typing_extensions import TypeIs, TypeVar
 
 import numpy as np
 import numpy.typing as npt
 from _numtype import (
     Array,
+    Array0D,
     Array1D,
     Array2D,
+    Array3D,
+    CFloating64,
     CoComplex_1d,
     CoComplex_1nd,
     CoComplex_nd,
@@ -24,20 +27,40 @@ from _numtype import (
     CoUInteger_1d,
     CoUInteger_1nd,
     CoUInteger_nd,
+    Floating64,
     JustFloat,
     JustInt,
+    ToBool_0d,
     ToBool_1d,
+    ToBool_1ds,
     ToBool_1nd,
+    ToBool_2ds,
+    ToBool_3ds,
     ToBool_nd,
+    ToComplex128_0d,
+    ToComplex128_1ds,
+    ToComplex128_2ds,
+    ToComplex128_3ds,
+    ToComplex128_nd,
     ToComplex_1d,
     ToComplex_1nd,
     ToComplex_nd,
+    ToFloat64_0d,
+    ToFloat64_1ds,
+    ToFloat64_2ds,
+    ToFloat64_3ds,
+    ToFloat64_nd,
     ToFloating_1d,
     ToFloating_1nd,
     ToFloating_nd,
     ToGeneric_0d,
     ToGeneric_1nd,
     ToGeneric_nd,
+    ToIntP_0d,
+    ToIntP_1ds,
+    ToIntP_2ds,
+    ToIntP_3ds,
+    ToIntP_nd,
     ToInteger_1d,
     ToObject_1d,
     ToObject_1nd,
@@ -52,8 +75,10 @@ from _numtype import (
     ToUInteger_1nd,
     ToUInteger_nd,
 )
+from _numtype._just import JustComplex
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc, _SupportsDType
+from numpy._typing._char_codes import _BoolCodes, _Complex128Codes, _Float64Codes, _IntPCodes
 
 from ._asarray import require
 from ._ufunc_config import errstate, getbufsize, geterr, geterrcall, setbufsize, seterr, seterrcall
@@ -625,14 +650,29 @@ __all__ = [
 ###
 
 _T = TypeVar("_T")
-_ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
+_ArrayT_co = TypeVar("_ArrayT_co", bound=np.ndarray[Any, Any], covariant=True)
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+
+_ShapeLike1D: TypeAlias = SupportsIndex | tuple[SupportsIndex]
+_ShapeLike2D: TypeAlias = tuple[SupportsIndex, SupportsIndex]
+_ShapeLike3D: TypeAlias = tuple[SupportsIndex, SupportsIndex, SupportsIndex]
+
+_DTypeLikeBool: TypeAlias = type[bool] | _DTypeLike[np.bool] | _BoolCodes
+_DTypeLikeIntP: TypeAlias = type[JustInt] | _IntPCodes
+_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[Floating64] | _Float64Codes | None
+_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[CFloating64] | _Complex128Codes
 
 _PyScalar: TypeAlias = complex | str | bytes
 _Device: TypeAlias = L["cpu"]
 _Mode: TypeAlias = L["valid", "same", "full"]
 _Axes: TypeAlias = int | tuple[_ShapeLike, _ShapeLike]
+
+@type_check_only
+class _CanArray(Protocol[_ArrayT_co]):
+    def __array__(self, /) -> _ArrayT_co: ...
 
 ###
 
@@ -648,44 +688,62 @@ True_: Final[np.bool[L[True]]] = ...
 
 ###
 
-# keep in sync with `empty` and `zeros` in `._multiarray_umath.ones`
-@overload  # 1d
+# NOTE: Keep in sync with `empty` and `zeros` in `._multiarray_umath.ones`
+@overload  # 1d shape, default dtype (float64)
 def ones(
-    shape: int | tuple[int],
-    dtype: type[JustFloat] | None = None,
+    shape: _ShapeLike1D,
+    dtype: _DTypeLikeFloat64 = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D[np.float64]: ...
-@overload
+@overload  # 1d shape, known dtype
 def ones(
-    shape: int | tuple[int],
+    shape: _ShapeLike1D,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[tuple[int], _DTypeT]: ...
+@overload  # 1d shape, known scalar-type
+def ones(
+    shape: _ShapeLike1D,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D[_ScalarT]: ...
-@overload
+@overload  # 1d shape, unknown dtype
 def ones(
-    shape: int | tuple[int],
-    dtype: npt.DTypeLike | None = None,
+    shape: _ShapeLike1D,
+    dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D: ...
-@overload  # known shape
+@overload  # known shape, default dtype (float64)
 def ones(
     shape: _AnyShapeT,
-    dtype: type[JustFloat] | None = None,
+    dtype: _DTypeLikeFloat64 = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[np.float64, _AnyShapeT]: ...
-@overload
+@overload  # known shape, known dtype
+def ones(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+@overload  # known shape, known scalar-type
 def ones(
     shape: _AnyShapeT,
     dtype: _DTypeLike[_ScalarT],
@@ -694,25 +752,34 @@ def ones(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT, _AnyShapeT]: ...
-@overload
+@overload  # known shape, unknown scalar-type
 def ones(
     shape: _AnyShapeT,
-    dtype: npt.DTypeLike = None,
+    dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[Any, _AnyShapeT]: ...
-@overload  # unknown shape
+@overload  # unknown shape, default dtype
 def ones(
     shape: _ShapeLike,
-    dtype: type[JustFloat] | None = None,
+    dtype: _DTypeLikeFloat64 = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[np.float64]: ...
-@overload
+@overload  # unknown shape, known dtype
+def ones(
+    shape: _ShapeLike,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+@overload  # unknown shape, known scalar-type
 def ones(
     shape: _ShapeLike,
     dtype: _DTypeLike[_ScalarT],
@@ -721,20 +788,22 @@ def ones(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # unknown shape, unknown dtype
 def ones(
     shape: _ShapeLike,
-    dtype: npt.DTypeLike | None = None,
+    dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array: ...
 
-# keep in sync with `ones`
-@overload
-def full(
-    shape: int | tuple[int],
+# NOTE: keep in sync with `ones` (but note that `full` has 18 additional overloads)
+# NOTE: The mypy [overload-overlap] errors are false-positives that are caused by a
+#   bug that's related to constrained type-vars.
+@overload  # 1d shape, known fill scalar-type
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
     fill_value: _ScalarT,
     dtype: None = None,
     order: _OrderCF = "C",
@@ -742,9 +811,59 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D[_ScalarT]: ...
-@overload
+@overload  # 1d shape, bool fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
+    fill_value: py_bool,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.bool]: ...
+@overload  # 1d shape, int fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
+    fill_value: JustInt,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.intp]: ...
+@overload  # 1d shape, float fill
 def full(
-    shape: int | tuple[int],
+    shape: _ShapeLike1D,
+    fill_value: JustFloat,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.float64]: ...
+@overload  # 1d shape, complex fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
+    fill_value: JustComplex,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.complex128]: ...
+@overload  # 1d shape, known dtype
+def full(
+    shape: _ShapeLike1D,
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[tuple[int], _DTypeT]: ...
+@overload  # 1d shape, known scalar-type
+def full(
+    shape: _ShapeLike1D,
     fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
@@ -752,9 +871,19 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D[_ScalarT]: ...
-@overload
+@overload  # 1d shape, float64 dtype
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike1D,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array1D[np.float64]: ...
+@overload  # 1d shape, unknown dtype
 def full(
-    shape: int | tuple[int],
+    shape: _ShapeLike1D,
     fill_value: object,
     dtype: DTypeLike | None = None,
     order: _OrderCF = "C",
@@ -762,38 +891,98 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array1D: ...
-@overload
-def full(
-    shape: _ShapeT,
+@overload  # known shape, known fill scalar-type
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
     fill_value: _ScalarT,
     dtype: None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> Array[_ScalarT, _ShapeT]: ...
-@overload
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # known shape, bool fill
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: py_bool,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.bool, _AnyShapeT]: ...
+@overload  # known shape, int fill
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: JustInt,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.intp, _AnyShapeT]: ...
+@overload  # known shape, float fill
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: JustFloat,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.float64, _AnyShapeT]: ...
+@overload  # known shape, complex fill
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: JustComplex,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.complex128, _AnyShapeT]: ...
+@overload  # known shape, known scalar-type
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+@overload  # known shape, known dtype
 def full(
-    shape: _ShapeT,
+    shape: _AnyShapeT,
     fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> Array[_ScalarT, _ShapeT]: ...
-@overload
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # known shape, float64
+def full(  # type: ignore[overload-overlap]
+    shape: _AnyShapeT,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.float64, _AnyShapeT]: ...
+@overload  # known shape, unknown dtype
 def full(
-    shape: _ShapeT,
+    shape: _AnyShapeT,
     fill_value: object,
     dtype: DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> Array[Any, _ShapeT]: ...
-@overload
-def full(
+) -> Array[Any, _AnyShapeT]: ...
+@overload  # unknown shape, known fill scalar-type
+def full(  # type: ignore[overload-overlap]
     shape: _ShapeLike,
     fill_value: _ScalarT,
     dtype: None = None,
@@ -802,7 +991,57 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # unknown shape, bool fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike,
+    fill_value: py_bool,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.bool]: ...
+@overload  # unknown shape, int fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike,
+    fill_value: JustInt,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.intp]: ...
+@overload  # unknown shape, float fill
+def full(
+    shape: _ShapeLike,
+    fill_value: JustFloat,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.float64]: ...
+@overload  # unknown shape, complex fill
+def full(  # type: ignore[overload-overlap]
+    shape: _ShapeLike,
+    fill_value: JustComplex,
+    dtype: None = None,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.complex128]: ...
+@overload  # unknown shape, known dtype
+def full(
+    shape: _ShapeLike,
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+@overload  # unknown shape, known scalar-type
 def full(
     shape: _ShapeLike,
     fill_value: object,
@@ -812,7 +1051,17 @@ def full(
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # unknown shape, float64
+def full(
+    shape: _ShapeLike,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+) -> Array[np.float64]: ...
+@overload  # unknown shape, unknown dtype
 def full(
     shape: _ShapeLike,
     fill_value: object,
@@ -823,8 +1072,8 @@ def full(
     like: _SupportsArrayFunc | None = None,
 ) -> Array: ...
 
-#
-@overload
+# NOTE: Keep in sync with `ones_like` and `._multiarray_umath.empty_like`
+@overload  # known array, subok=True
 def zeros_like(
     a: _ArrayT,
     dtype: None = None,
@@ -834,29 +1083,229 @@ def zeros_like(
     *,
     device: _Device | None = None,
 ) -> _ArrayT: ...
-@overload
+@overload  # array-like with known shape and type
 def zeros_like(
+    a: _CanArray[np.ndarray[_ShapeT, _DTypeT]],
+    dtype: _DTypeT | _SupportsDType[_DTypeT] | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: None = None,
+    *,
+    device: _Device | None = None,
+) -> np.ndarray[_ShapeT, _DTypeT]: ...
+@overload  # bool 0d array-like
+def zeros_like(
+    a: ToBool_0d,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.bool_]: ...
+@overload  # bool 1d array-like
+def zeros_like(
+    a: ToBool_1ds,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.bool_]: ...
+@overload  # bool 2d array-like
+def zeros_like(
+    a: ToBool_2ds,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.bool_]: ...
+@overload  # bool 3d array-like
+def zeros_like(
+    a: ToBool_3ds,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.bool_]: ...
+@overload  # int 0d array-like
+def zeros_like(
+    a: ToIntP_0d,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.intp]: ...
+@overload  # int 1d array-like
+def zeros_like(
+    a: ToIntP_1ds,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.intp]: ...
+@overload  # int 2d array-like
+def zeros_like(
+    a: ToIntP_2ds,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.intp]: ...
+@overload  # int 3d array-like
+def zeros_like(
+    a: ToIntP_3ds,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.intp]: ...
+@overload  # float 0d array-like
+def zeros_like(
+    a: ToFloat64_0d,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.float64]: ...
+@overload  # float 1d array-like
+def zeros_like(
+    a: ToFloat64_1ds,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.float64]: ...
+@overload  # float 2d array-like
+def zeros_like(
+    a: ToFloat64_2ds,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.float64]: ...
+@overload  # float 3d array-like
+def zeros_like(
+    a: ToFloat64_3ds,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.float64]: ...
+@overload  # complex 0d array-like
+def zeros_like(
+    a: ToComplex128_0d,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.complex128]: ...
+@overload  # complex 1d array-like
+def zeros_like(
+    a: ToComplex128_1ds,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.complex128]: ...
+@overload  # complex 2d array-like
+def zeros_like(
+    a: ToComplex128_2ds,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.complex128]: ...
+@overload  # complex 3d array-like
+def zeros_like(
+    a: ToComplex128_3ds,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.complex128]: ...
+@overload  # array-like with known scalar-type, given shape
+def zeros_like(  # type: ignore[overload-overlap]
     a: _ArrayLike[_ScalarT],
-    dtype: None = None,
+    dtype: np.dtype[_ScalarT] | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # array-like with known scalar-type, unknown shape
+def zeros_like(  # type: ignore[overload-overlap]
+    a: _ArrayLike[_ScalarT],
+    dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
-def zeros_like(
+@overload  # given shape, given dtype
+def zeros_like(  # type: ignore[overload-overlap]
     a: object,
-    dtype: None = None,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+@overload  # unknown shape, given dtype
+def zeros_like(  # type: ignore[overload-overlap]
+    a: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> Array: ...
-@overload
+) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+@overload  # given shape, given scalar-type
 def zeros_like(
-    a: Any,
+    a: object,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # unknown shape, given scalar-type
+def zeros_like(
+    a: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -864,10 +1313,60 @@ def zeros_like(
     *,
     device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # bool array-like
+def zeros_like(  # type: ignore[overload-overlap]
+    a: ToBool_nd,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.bool_]: ...
+@overload  # int array-like
+def zeros_like(  # type: ignore[overload-overlap]
+    a: ToIntP_nd,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.intp]: ...
+@overload  # float array-like
+def zeros_like(  # type: ignore[overload-overlap]
+    a: ToFloat64_nd,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.float64]: ...
+@overload  # complex array-like
+def zeros_like(  # type: ignore[overload-overlap]
+    a: ToComplex128_nd,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.complex128]: ...
+@overload  # given shape, unknown scalar-type
 def zeros_like(
-    a: Any,
-    dtype: DTypeLike,
+    a: object,
+    dtype: npt.DTypeLike | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[Any, _AnyShapeT]: ...
+@overload  # unknown shape, unknown scalar-type
+def zeros_like(
+    a: object,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
@@ -875,8 +1374,8 @@ def zeros_like(
     device: _Device | None = None,
 ) -> Array: ...
 
-#
-@overload
+# NOTE: Keep in sync with `zeros_like` and `._multiarray_umath.empty_like`
+@overload  # known array, subok=True
 def ones_like(
     a: _ArrayT,
     dtype: None = None,
@@ -886,29 +1385,229 @@ def ones_like(
     *,
     device: _Device | None = None,
 ) -> _ArrayT: ...
-@overload
+@overload  # array-like with known shape and type
 def ones_like(
+    a: _CanArray[np.ndarray[_ShapeT, _DTypeT]],
+    dtype: _DTypeT | _SupportsDType[_DTypeT] | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: None = None,
+    *,
+    device: _Device | None = None,
+) -> np.ndarray[_ShapeT, _DTypeT]: ...
+@overload  # bool 0d array-like
+def ones_like(
+    a: ToBool_0d,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.bool_]: ...
+@overload  # bool 1d array-like
+def ones_like(
+    a: ToBool_1ds,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.bool_]: ...
+@overload  # bool 2d array-like
+def ones_like(
+    a: ToBool_2ds,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.bool_]: ...
+@overload  # bool 3d array-like
+def ones_like(
+    a: ToBool_3ds,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.bool_]: ...
+@overload  # int 0d array-like
+def ones_like(
+    a: ToIntP_0d,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.intp]: ...
+@overload  # int 1d array-like
+def ones_like(
+    a: ToIntP_1ds,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.intp]: ...
+@overload  # int 2d array-like
+def ones_like(
+    a: ToIntP_2ds,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.intp]: ...
+@overload  # int 3d array-like
+def ones_like(
+    a: ToIntP_3ds,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.intp]: ...
+@overload  # float 0d array-like
+def ones_like(
+    a: ToFloat64_0d,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.float64]: ...
+@overload  # float 1d array-like
+def ones_like(
+    a: ToFloat64_1ds,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.float64]: ...
+@overload  # float 2d array-like
+def ones_like(
+    a: ToFloat64_2ds,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.float64]: ...
+@overload  # float 3d array-like
+def ones_like(
+    a: ToFloat64_3ds,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.float64]: ...
+@overload  # complex 0d array-like
+def ones_like(
+    a: ToComplex128_0d,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.complex128]: ...
+@overload  # complex 1d array-like
+def ones_like(
+    a: ToComplex128_1ds,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.complex128]: ...
+@overload  # complex 2d array-like
+def ones_like(
+    a: ToComplex128_2ds,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.complex128]: ...
+@overload  # complex 3d array-like
+def ones_like(
+    a: ToComplex128_3ds,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.complex128]: ...
+@overload  # array-like with known scalar-type, given shape
+def ones_like(  # type: ignore[overload-overlap]
     a: _ArrayLike[_ScalarT],
-    dtype: None = None,
+    dtype: np.dtype[_ScalarT] | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # array-like with known scalar-type, unknown shape
+def ones_like(  # type: ignore[overload-overlap]
+    a: _ArrayLike[_ScalarT],
+    dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
-def ones_like(
+@overload  # given shape, given dtype
+def ones_like(  # type: ignore[overload-overlap]
     a: object,
-    dtype: None = None,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+@overload  # unknown shape, given dtype
+def ones_like(  # type: ignore[overload-overlap]
+    a: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> Array: ...
-@overload
+) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+@overload  # given shape, given scalar-type
 def ones_like(
-    a: Any,
+    a: object,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # unknown shape, given scalar-type
+def ones_like(
+    a: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -916,10 +1615,60 @@ def ones_like(
     *,
     device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # bool array-like
+def ones_like(  # type: ignore[overload-overlap]
+    a: ToBool_nd,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.bool_]: ...
+@overload  # int array-like
+def ones_like(  # type: ignore[overload-overlap]
+    a: ToIntP_nd,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.intp]: ...
+@overload  # float array-like
+def ones_like(  # type: ignore[overload-overlap]
+    a: ToFloat64_nd,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.float64]: ...
+@overload  # complex array-like
+def ones_like(  # type: ignore[overload-overlap]
+    a: ToComplex128_nd,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.complex128]: ...
+@overload  # given shape, unknown scalar-type
 def ones_like(
-    a: Any,
-    dtype: DTypeLike,
+    a: object,
+    dtype: npt.DTypeLike | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[Any, _AnyShapeT]: ...
+@overload  # unknown shape, unknown scalar-type
+def ones_like(
+    a: object,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
@@ -927,11 +1676,11 @@ def ones_like(
     device: _Device | None = None,
 ) -> Array: ...
 
-#
-@overload
+# NOTE: Keep in sync with `{zeros,ones}_like` and `._multiarray_umath.empty_like`
+@overload  # known array, subok=True
 def full_like(
     a: _ArrayT,
-    fill_value: Any,
+    fill_value: object,
     dtype: None = None,
     order: _OrderKACF = "K",
     subok: L[True] = True,
@@ -939,32 +1688,252 @@ def full_like(
     *,
     device: _Device | None = None,
 ) -> _ArrayT: ...
-@overload
+@overload  # array-like with known shape and type
 def full_like(
+    a: _CanArray[np.ndarray[_ShapeT, _DTypeT]],
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT] | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: None = None,
+    *,
+    device: _Device | None = None,
+) -> np.ndarray[_ShapeT, _DTypeT]: ...
+@overload  # bool 0d array-like
+def full_like(
+    a: ToBool_0d,
+    fill_value: object,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.bool_]: ...
+@overload  # bool 1d array-like
+def full_like(
+    a: ToBool_1ds,
+    fill_value: object,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.bool_]: ...
+@overload  # bool 2d array-like
+def full_like(
+    a: ToBool_2ds,
+    fill_value: object,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.bool_]: ...
+@overload  # bool 3d array-like
+def full_like(
+    a: ToBool_3ds,
+    fill_value: object,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.bool_]: ...
+@overload  # int 0d array-like
+def full_like(
+    a: ToIntP_0d,
+    fill_value: object,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.intp]: ...
+@overload  # int 1d array-like
+def full_like(
+    a: ToIntP_1ds,
+    fill_value: object,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.intp]: ...
+@overload  # int 2d array-like
+def full_like(
+    a: ToIntP_2ds,
+    fill_value: object,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.intp]: ...
+@overload  # int 3d array-like
+def full_like(
+    a: ToIntP_3ds,
+    fill_value: object,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.intp]: ...
+@overload  # float 0d array-like
+def full_like(
+    a: ToFloat64_0d,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.float64]: ...
+@overload  # float 1d array-like
+def full_like(
+    a: ToFloat64_1ds,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.float64]: ...
+@overload  # float 2d array-like
+def full_like(
+    a: ToFloat64_2ds,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.float64]: ...
+@overload  # float 3d array-like
+def full_like(
+    a: ToFloat64_3ds,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.float64]: ...
+@overload  # complex 0d array-like
+def full_like(
+    a: ToComplex128_0d,
+    fill_value: object,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array0D[np.complex128]: ...
+@overload  # complex 1d array-like
+def full_like(
+    a: ToComplex128_1ds,
+    fill_value: object,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array1D[np.complex128]: ...
+@overload  # complex 2d array-like
+def full_like(
+    a: ToComplex128_2ds,
+    fill_value: object,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array2D[np.complex128]: ...
+@overload  # complex 3d array-like
+def full_like(
+    a: ToComplex128_3ds,
+    fill_value: object,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array3D[np.complex128]: ...
+@overload  # array-like with known scalar-type, given shape
+def full_like(  # type: ignore[overload-overlap]
     a: _ArrayLike[_ScalarT],
-    fill_value: Any,
-    dtype: None = None,
+    fill_value: object,
+    dtype: np.dtype[_ScalarT] | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # array-like with known scalar-type, unknown shape
+def full_like(  # type: ignore[overload-overlap]
+    a: _ArrayLike[_ScalarT],
+    fill_value: object,
+    dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
-def full_like(
+@overload  # given shape, given dtype
+def full_like(  # type: ignore[overload-overlap]
     a: object,
-    fill_value: Any,
-    dtype: None = None,
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+@overload  # unknown shape, given dtype
+def full_like(  # type: ignore[overload-overlap]
+    a: object,
+    fill_value: object,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> Array: ...
-@overload
+) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+@overload  # given shape, given scalar-type
 def full_like(
-    a: Any,
-    fill_value: Any,
+    a: object,
+    fill_value: object,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[_ScalarT, _AnyShapeT]: ...
+@overload  # unknown shape, given scalar-type
+def full_like(
+    a: object,
+    fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -972,11 +1941,66 @@ def full_like(
     *,
     device: _Device | None = None,
 ) -> Array[_ScalarT]: ...
-@overload
+@overload  # bool array-like
+def full_like(  # type: ignore[overload-overlap]
+    a: ToBool_nd,
+    fill_value: object,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.bool_]: ...
+@overload  # int array-like
+def full_like(  # type: ignore[overload-overlap]
+    a: ToIntP_nd,
+    fill_value: object,
+    dtype: _DTypeLikeIntP | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.intp]: ...
+@overload  # float array-like
+def full_like(  # type: ignore[overload-overlap]
+    a: ToFloat64_nd,
+    fill_value: object,
+    dtype: _DTypeLikeFloat64 = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.float64]: ...
+@overload  # complex array-like
+def full_like(  # type: ignore[overload-overlap]
+    a: ToComplex128_nd,
+    fill_value: object,
+    dtype: _DTypeLikeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> Array[np.complex128]: ...
+@overload  # given shape, unknown scalar-type
 def full_like(
-    a: Any,
-    fill_value: Any,
-    dtype: DTypeLike,
+    a: object,
+    fill_value: object,
+    dtype: npt.DTypeLike | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    *,
+    shape: _AnyShapeT,
+    device: _Device | None = None,
+) -> Array[Any, _AnyShapeT]: ...
+@overload  # unknown shape, unknown scalar-type
+def full_like(
+    a: object,
+    fill_value: object,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
     shape: _ShapeLike | None = None,
