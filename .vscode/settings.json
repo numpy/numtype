@@ -2,6 +2,9 @@
   "[python]": {
     "editor.rulers": [88, 130]
   },
+  "[markdown|python]": {
+    "editor.rulers": [130]
+  },
   "evenBetterToml.formatter.alignComments": true,
   "evenBetterToml.formatter.allowedBlankLines": 2,
   "evenBetterToml.formatter.arrayTrailingComma": true,
