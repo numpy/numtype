@@ -8,6 +8,7 @@ i8: np.int64
 f8: np.float64
 AR_f8: npt.NDArray[np.float64]
 AR_i8: npt.NDArray[np.int64]
+AR_bool: npt.NDArray[np.bool_]
 
 assert_type(np.absolute.types, list[str])
 
@@ -36,3 +37,19 @@ assert_type(np.vecdot(AR_f8, AR_f8), Any)
 
 assert_type(np.bitwise_count(i8), Any)
 assert_type(np.bitwise_count(AR_i8), npt.NDArray[Any])
+
+assert_type(np.isnan(f8), np.bool_)
+assert_type(np.isnan(AR_f8), npt.NDArray[np.bool_])
+assert_type(np.isnan(AR_f8, out=AR_bool), npt.NDArray[np.bool_])
+
+assert_type(np.isnat(f8), np.bool_)
+assert_type(np.isnat(AR_f8), npt.NDArray[np.bool_])
+assert_type(np.isnat(AR_f8, out=AR_bool), npt.NDArray[np.bool_])
+
+assert_type(np.isinf(f8), np.bool_)
+assert_type(np.isinf(AR_f8), npt.NDArray[np.bool_])
+assert_type(np.isinf(AR_f8, out=AR_bool), npt.NDArray[np.bool_])
+
+assert_type(np.isfinite(f8), np.bool_)
+assert_type(np.isfinite(AR_f8), npt.NDArray[np.bool_])
+assert_type(np.isfinite(AR_f8, out=AR_bool), npt.NDArray[np.bool_])
