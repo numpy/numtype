@@ -14,7 +14,7 @@ from typing_extensions import Never, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
-from numpy._typing import _NestedSequence
+from numpy._typing import _DTypeLikeBool, _NestedSequence
 
 from ._array_like import ArrayLike, NDArray, _ArrayLikeBool_co, _ArrayLikeInt_co
 from ._dtype_like import DTypeLike, _DTypeLike
@@ -187,7 +187,7 @@ class _Call11Bool(Protocol):
         /,
         out: None = None,
         *,
-        dtype: DTypeLike | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> np.bool: ...
     @overload  # (array-like, out: T) -> T
@@ -197,7 +197,7 @@ class _Call11Bool(Protocol):
         /,
         out: _Out1[_ArrayT],
         *,
-        dtype: DTypeLike | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> _ArrayT: ...
     @overload  # (array) -> Array[bool] | bool
@@ -207,7 +207,7 @@ class _Call11Bool(Protocol):
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
-        dtype: DTypeLike | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> NDArray[np.bool]: ...
     @overload  # (array-like) -> Array[bool] | bool
@@ -217,7 +217,7 @@ class _Call11Bool(Protocol):
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
-        dtype: DTypeLike | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> NDArray[np.bool] | np.bool: ...
 

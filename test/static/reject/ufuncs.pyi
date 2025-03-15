@@ -1,6 +1,7 @@
 import numpy as np
 import numpy.typing as npt
 
+i8: np.int64
 AR_f8: npt.NDArray[np.float64]
 
 np.sin.nin + "foo"  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -40,3 +41,8 @@ np.matmul.accumulate()  # type: ignore[call-arg]  # pyright: ignore[reportCallIs
 np.frexp.at()  # type: ignore[call-arg, misc]  # pyright: ignore[reportCallIssue]
 np.divmod.at()  # type: ignore[call-arg, misc]  # pyright: ignore[reportCallIssue]
 np.matmul.at()  # type: ignore[call-arg, misc]  # pyright: ignore[reportCallIssue]
+
+np.isnan(i8, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.isnat(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.isinf(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.isfinite(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
