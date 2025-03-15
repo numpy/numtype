@@ -209,7 +209,7 @@ class _Call11Bool(Protocol):
         *,
         dtype: DTypeLike | None = None,
         **kwds: Unpack[_Kwargs2],
-    ) -> NDArray[np.bool] | np.bool: ...
+    ) -> NDArray[np.bool]: ...
     @overload  # (array-like) -> Array[bool] | bool
     def __call__(
         self,
