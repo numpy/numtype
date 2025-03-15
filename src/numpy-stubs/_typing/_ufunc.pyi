@@ -179,6 +179,49 @@ class _Call11(Protocol):
     ) -> Any: ...
 
 @type_check_only
+class _Call11Bool(Protocol):
+    @overload  # (scalar) -> bool
+    def __call__(
+        self,
+        x: _ScalarLike_co,
+        /,
+        out: None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.bool: ...
+    @overload  # (array-like, out: T) -> T
+    def __call__(
+        self,
+        x: ArrayLike,
+        /,
+        out: _Out1[_ArrayT],
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _ArrayT: ...
+    @overload  # (array) -> Array[bool] | bool
+    def __call__(
+        self,
+        x: _AnyArray,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.bool] | np.bool: ...
+    @overload  # (array-like) -> Array[bool] | bool
+    def __call__(
+        self,
+        x: ArrayLike,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.bool] | np.bool: ...
+
+@type_check_only
 class _Call12(Protocol):
     @overload
     def __call__(
