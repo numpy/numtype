@@ -1,5 +1,5 @@
 import abc
-from binascii import Incomplete
+from _typeshed import Incomplete
 from collections.abc import Callable, Mapping, Sequence
 from threading import Lock
 from typing import Any, ClassVar, Generic, Literal as L, NamedTuple, TypeAlias, TypedDict, overload, type_check_only
