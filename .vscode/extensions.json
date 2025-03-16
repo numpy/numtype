@@ -5,7 +5,8 @@
     "ms-python.mypy-type-checker",
     "ms-python.python",
     "tamasfe.even-better-toml",
-    "davidanson.vscode-markdownlint"
+    "davidanson.vscode-markdownlint",
+    "seatonjiang.gitmoji-vscode"
   ],
   "unwantedRecommendations": ["ms-pyright.pyright", "ms-python.vscode-pylance"]
 }
