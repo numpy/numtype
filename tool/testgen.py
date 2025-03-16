@@ -33,8 +33,8 @@ BITWISE_OPS = {"<<", ">>", "&", "^", "|"}
 BITWISE_CHARS = "?bhilqBHILQ"
 
 
-def _expr_assert_type(val_expr: str, typ_expr: str, /) -> str:
-    return f"assert_type({val_expr}, {typ_expr})"
+def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
+    return f"assert_type({val_expr}, {type_expr})"
 
 
 def _scalar(key: str, /) -> np.number | np.bool | np.timedelta64 | np.datetime64 | bool:
@@ -496,7 +496,7 @@ class ScalarBinOpTestGen(TestGen):
                 "# pyright: ignore[reportOperatorIssue]",
             ))
 
-        expr_type = (  # redunant cast is needed for pyright compat
+        expr_type = (  # redundant cast is needed for pyright compat
             _sctype_expr(cast("np.generic", val_out).dtype)  # type: ignore[redundant-cast]
             if isinstance(val_out, np.generic)
             else type(val_out).__qualname__
@@ -569,11 +569,11 @@ class BoolBitOpTestGen(TestGen):
 
     @staticmethod
     def values(name: str) -> Generator[bool | np.bool]:
-        typ = {"py": bool, "np": np.bool}[name[:2]]
+        tp = {"py": bool, "np": np.bool}[name[:2]]
         if name[-1] in "_0":
-            yield typ(0)
+            yield tp(0)
         if name[-1] in "_1":
-            yield typ(1)
+            yield tp(1)
 
     @staticmethod
     def _eval_results_to_str(results: Iterable[bool | np.bool]) -> str:
