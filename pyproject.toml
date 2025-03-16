@@ -234,17 +234,19 @@ preview = true
         allow-dunder-method-names = ["__array__", "__array_ufunc__"]
 
 
+# install tox with `uv tool install tox --with tox-uv --upgrade`
+# and run with `uvx tox p`
 [tool.tox]
 min_version = "4"
 requires = ["tox-uv>=1"]
-env_list = ["lint", "test", "pyright", "3.13", "3.12", "3.11", "3.10"]
+env_list = ["ruff", "pytest", "basedpyright", "basedmypy", "3.13", "3.12", "3.11", "3.10"]
 
     [tool.tox.env_run_base]
-    description = "Run stubtest under {base_python}"
+    description = "stubtest ({base_python})"
     commands = [["uv", "run", "-q", "-p={base_python}", "--active", "tool/stubtest.py"]]
 
-    [tool.tox.env.lint]
-    description = "lint"
+    [tool.tox.env.ruff]
+    description = "ruff"
     runner = "uv-venv-lock-runner"
     dependency_groups = ["dev"]
     commands = [
@@ -252,20 +254,20 @@ env_list = ["lint", "test", "pyright", "3.13", "3.12", "3.11", "3.10"]
         ["ruff", "format", "--check"],
     ]
 
-    [tool.tox.env.test]
+    [tool.tox.env.pytest]
     description = "pytest"
     runner = "uv-venv-lock-runner"
     dependency_groups = ["dev", "numpy"]
     commands = [["pytest"]]
 
-    [tool.tox.env.pyright]
+    [tool.tox.env.basedpyright]
     description = "basedpyright"
     runner = "uv-venv-lock-runner"
     dependency_groups = ["dev"]
-    commands = [["basedpyright", "--threads=3"]]
+    commands = [["basedpyright"]]
 
-    [tool.tox.env.mypy]
-    description = "mypy"
+    [tool.tox.env.basedmypy]
+    description = "basedmypy"
     runner = "uv-venv-lock-runner"
     dependency_groups = ["dev", "orjson"]
     commands = [["mypy", {replace = "posargs", default = ["."], extend = true}]]
