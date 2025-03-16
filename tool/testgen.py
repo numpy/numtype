@@ -27,11 +27,14 @@ TYPES_IU: Final = TYPES_I | TYPES_U
 TYPES_FC: Final = TYPES_F | TYPES_C
 TYPES_IUFC: Final = TYPES_IU | TYPES_FC
 
-
 DATETIME_OPS = {"+", "-"}
 TIMEDELTA_OPS = DATETIME_OPS | {"*", "/", "//", "%"}
 BITWISE_OPS = {"<<", ">>", "&", "^", "|"}
 BITWISE_CHARS = "?bhilqBHILQ"
+
+
+def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
+    return f"assert_type({val_expr}, {type_expr})"
 
 
 def _scalar(key: str, /) -> np.number | np.bool | np.timedelta64 | np.datetime64 | bool:
@@ -110,7 +113,6 @@ class TestGen(abc.ABC):
     def output_file(self) -> Path:
         return OUTPUT_DIR / f"{self.testname}.pyi"
 
-    @abc.abstractmethod
     def get_names(self) -> Iterable[tuple[str, str]]:
         return ()
 
@@ -154,7 +156,7 @@ class TestGen(abc.ABC):
     def _generate_names(self) -> Generator[str]:
         yield from self._generate_names_section()
         for name, annotation in self.get_names():
-            yield f"{name}: {annotation}"
+            yield f"{name}: {annotation}" if name else ""
 
     def _generate_testcases(self) -> Generator[str]:
         # yield from self._generate_section()
@@ -389,7 +391,7 @@ class EMathTestGen(TestGen):
 
             yield from self._generate_section(qualname)
             for arg, expect in self._gen_unary(func1):
-                yield f"assert_type({qualname}({arg}), {expect})"
+                yield _expr_assert_type(f"{qualname}({arg})", expect)
 
         if self._binary:
             for fname in binary_fns:
@@ -402,13 +404,13 @@ class EMathTestGen(TestGen):
                         yield ""
                     else:
                         lhs, rhs, expect = item
-                        yield f"assert_type({qualname}({lhs}, {rhs}), {expect})"
+                        yield _expr_assert_type(f"{qualname}({lhs}, {rhs})", expect)
 
         yield ""
 
 
 @final
-class ScalarBinopTestGen(TestGen):
+class ScalarBinOpTestGen(TestGen):
     testname = "scalar_binops"
 
     OPS: ClassVar = {
@@ -494,12 +496,12 @@ class ScalarBinopTestGen(TestGen):
                 "# pyright: ignore[reportOperatorIssue]",
             ))
 
-        expr_type = (
+        expr_type = (  # redundant cast is needed for pyright compat
             _sctype_expr(cast("np.generic", val_out).dtype)  # type: ignore[redundant-cast]
             if isinstance(val_out, np.generic)
             else type(val_out).__qualname__
         )
-        return f"assert_type({expr_eval}, {expr_type})" if expr_type != "bool" else None
+        return None if expr_type == "bool" else _expr_assert_type(expr_eval, expr_type)
 
     @override
     def _generate_names_section(self) -> Generator[str]:
@@ -537,9 +539,160 @@ class ScalarBinopTestGen(TestGen):
                     yield ""
 
 
+@final
+class BoolBitOpTestGen(TestGen):
+    testname = "bool_bitops"
+
+    UNOPS: ClassVar = {
+        "{}.__bool__()": bool,
+        "abs({})": abs,
+        "~{}": op.__invert__,
+    }
+    CMPOPS: ClassVar = {
+        "{} == {}": op.__eq__,
+        "{} != {}": op.__ne__,
+        "{} < {}": op.__lt__,
+        "{} <= {}": op.__le__,
+        "{} > {}": op.__gt__,
+        "{} >= {}": op.__ge__,
+    }
+    BINOPS: ClassVar = {
+        "{} + {}": op.__add__,
+        "{} * {}": op.__mul__,
+        "{} & {}": op.__and__,
+        "{} ^ {}": op.__xor__,
+        "{} | {}": op.__or__,
+    }
+
+    NAMES_NP: ClassVar = [f"np{v}" for v in "01_"]
+    NAMES_PY: ClassVar = [f"py{v}" for v in "01_"]
+
+    @staticmethod
+    def values(name: str) -> Generator[bool | np.bool]:
+        tp = {"py": bool, "np": np.bool}[name[:2]]
+        if name[-1] in "_0":
+            yield tp(0)
+        if name[-1] in "_1":
+            yield tp(1)
+
+    @staticmethod
+    def _eval_results_to_str(results: Iterable[bool | np.bool]) -> str:
+        results = set(results)
+        if len(results) == 1:
+            val = results.pop()
+            return f"Literal[{val}]" if isinstance(val, bool) else f"Bool{int(val)}"
+
+        assert len(results) == 2, results  # noqa: PLR2004
+        return "bool" if isinstance(results.pop(), bool) else "Bool_"
+
+    @classmethod
+    def eval1(cls, fn: Callable[[Any], bool | np.bool], arg: str) -> str:
+        return cls._eval_results_to_str({fn(a) for a in cls.values(arg)})
+
+    @classmethod
+    def eval2(cls, fn: Callable[[Any, Any], np.bool], lhs: str, rhs: str) -> str:
+        results: set[np.bool] = set()
+        for a in cls.values(lhs):
+            for b in cls.values(rhs):
+                out = fn(a, b)
+                assert isinstance(out, np.bool), out
+                results.add(out)
+        return cls._eval_results_to_str(results)
+
+    @override
+    def _generate_imports(self) -> Generator[str]:
+        # NOTE: The trailing newlines are required for ruff compatibility
+        yield "from typing import Literal, TypeAlias"
+        yield from super()._generate_imports()
+
+    @override
+    def _generate_names(self) -> Generator[str]:
+        yield from self._generate_section()
+        yield "Bool_: TypeAlias = np.bool"
+        yield "Bool0: TypeAlias = np.bool[Literal[False]]"
+        yield "Bool1: TypeAlias = np.bool[Literal[True]]"
+
+        yield from self._generate_section()
+        yield "py_: bool"
+        yield "py0: Literal[False]"
+        yield "py1: Literal[True]"
+        yield ""
+        yield "np_: Bool_"
+        yield "np0: Bool0"
+        yield "np1: Bool1"
+
+    def _gen_unary(self) -> Generator[str]:
+        for tmpl, fn in self.UNOPS.items():
+            yield from self._generate_section(f"__{fn.__name__.removesuffix('_')}__")
+
+            for a in self.NAMES_NP:
+                yield _expr_assert_type(tmpl.format(a), self.eval1(fn, a))
+
+    def _gen_comparison(self) -> Generator[str]:
+        for tmpl, fn in self.CMPOPS.items():
+            yield from self._generate_section(f"__{fn.__name__.removesuffix('_')}__")
+
+            # np, np
+            deferred: list[str] = []
+            seen_a: set[str] = set()
+            for a, b in itertools.product(self.NAMES_NP, self.NAMES_NP):
+                # if b in seen_a:
+                #     continue
+                line = _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+                if "_" in {a[-1], b[-1]}:
+                    deferred.append(line)
+                else:
+                    yield line
+                seen_a.add(a)
+
+            # np, np (mixed)
+            yield ""
+            yield from iter(deferred)
+
+            # np, py
+            yield ""
+            for a, b in itertools.product(self.NAMES_NP, self.NAMES_PY):
+                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+
+    def _gen_binary(self) -> Generator[str]:
+        for tmpl, fn in self.BINOPS.items():
+            opname = fn.__name__.removesuffix("_")
+            yield from self._generate_section(f"__[r]{opname}__")
+
+            # np, np (literals)
+            deferred: list[str] = []
+            for a, b in itertools.product(self.NAMES_NP, self.NAMES_NP):
+                line = _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+                if "_" in {a[-1], b[-1]}:
+                    deferred.append(line)
+                else:
+                    yield line
+
+            # np, np (mixed)
+            yield ""
+            yield from iter(deferred)
+
+            # np, py
+            yield ""
+            for a, b in itertools.product(self.NAMES_NP, self.NAMES_PY):
+                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+
+            # py, np
+            yield ""
+            for a, b in itertools.product(self.NAMES_PY, self.NAMES_NP):
+                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+
+    @override
+    def get_testcases(self) -> Iterable[str | None]:
+        yield from self._gen_unary()
+        yield from self._gen_comparison()
+        yield from self._gen_binary()
+
+
 TESTGENS: Final[Sequence[TestGen]] = [
     EMathTestGen(binary=False),
-    ScalarBinopTestGen(),
+    ScalarBinOpTestGen(),
+    BoolBitOpTestGen(),
 ]
 
 
