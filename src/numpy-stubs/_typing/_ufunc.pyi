@@ -371,7 +371,6 @@ class _Call21Bool(Protocol):
         x2: ArrayLike,
         /,
         out: _ArrayT | tuple[_ArrayT],
-        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> _ArrayT: ...
     @overload  # (array-like, array-like) -> Array[bool] | bool
