@@ -17,26 +17,32 @@ AR_T: _StringArray
 assert_type(np.strings.equal(AR_U, AR_U), _BoolArray)
 assert_type(np.strings.equal(AR_S, AR_S), _BoolArray)
 assert_type(np.strings.equal(AR_T, AR_T), _BoolArray)
+assert_type(np.strings.equal(AR_S, AR_U, dtype=np.bool_), _BoolArray)
 
 assert_type(np.strings.not_equal(AR_U, AR_U), _BoolArray)
 assert_type(np.strings.not_equal(AR_S, AR_S), _BoolArray)
 assert_type(np.strings.not_equal(AR_T, AR_T), _BoolArray)
+assert_type(np.strings.not_equal(AR_S, AR_U, dtype=np.bool_), _BoolArray)
 
 assert_type(np.strings.greater_equal(AR_U, AR_U), _BoolArray)
 assert_type(np.strings.greater_equal(AR_S, AR_S), _BoolArray)
 assert_type(np.strings.greater_equal(AR_T, AR_T), _BoolArray)
+assert_type(np.strings.greater_equal(AR_S, AR_U, dtype=np.bool_), _BoolArray)
 
 assert_type(np.strings.less_equal(AR_U, AR_U), _BoolArray)
 assert_type(np.strings.less_equal(AR_S, AR_S), _BoolArray)
 assert_type(np.strings.less_equal(AR_T, AR_T), _BoolArray)
+assert_type(np.strings.less_equal(AR_S, AR_U, dtype=np.bool_), _BoolArray)
 
 assert_type(np.strings.greater(AR_U, AR_U), _BoolArray)
 assert_type(np.strings.greater(AR_S, AR_S), _BoolArray)
 assert_type(np.strings.greater(AR_T, AR_T), _BoolArray)
+assert_type(np.strings.greater(AR_S, AR_U, dtype=np.bool_), _BoolArray)
 
 assert_type(np.strings.less(AR_U, AR_U), _BoolArray)
 assert_type(np.strings.less(AR_S, AR_S), _BoolArray)
 assert_type(np.strings.less(AR_T, AR_T), _BoolArray)
+assert_type(np.strings.less(AR_S, AR_U, dtype=np.bool_), _BoolArray)
 
 # TODO(jorenham)
 # https://github.com/numpy/numtype/issues/230
