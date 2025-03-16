@@ -8,4 +8,5 @@ extend-ignore = [
     "PYI017",  # flake8-pyi:     complex-assignment-in-stub
     "SLF001",  # flake8-self:    private-member-access
     "PLR0124", # pylint/R:       comparison-with-itself
+    "PLC2801", # pylint/C:       unnecessary-dunder-call
 ]
