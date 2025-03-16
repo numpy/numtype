@@ -341,6 +341,7 @@ class _Call21Bool(Protocol):
         x2: _ScalarLike_co,
         /,
         out: None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> np.bool: ...
     @overload  # (array-like, array) -> Array[bool]
@@ -350,6 +351,7 @@ class _Call21Bool(Protocol):
         x2: _AnyArray | _NestedSequence[_ScalarLike_co],
         /,
         out: _Out1[_AnyArray] | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.bool]: ...
     @overload  # (array, array-like) -> Array[bool]
@@ -359,6 +361,7 @@ class _Call21Bool(Protocol):
         x2: ArrayLike,
         /,
         out: _Out1[_AnyArray] | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.bool]: ...
     @overload  # (array-like, array-like, out: T) -> T
@@ -368,6 +371,7 @@ class _Call21Bool(Protocol):
         x2: ArrayLike,
         /,
         out: _ArrayT | tuple[_ArrayT],
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> _ArrayT: ...
     @overload  # (array-like, array-like) -> Array[bool] | bool
@@ -377,6 +381,7 @@ class _Call21Bool(Protocol):
         x2: ArrayLike,
         /,
         out: _Out1[_AnyArray] | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> np.bool | NDArray[np.bool]: ...
 

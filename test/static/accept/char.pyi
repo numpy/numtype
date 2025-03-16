@@ -16,26 +16,32 @@ AR_SUT: BytesArray | StrArray | StringArray
 assert_type(np.char.equal(AR_U, AR_U), npt.NDArray[np.bool])
 assert_type(np.char.equal(AR_S, AR_S), npt.NDArray[np.bool])
 assert_type(np.char.equal(AR_T, AR_T), npt.NDArray[np.bool])
+assert_type(np.char.equal(AR_S, AR_U, dtype=np.bool_), npt.NDArray[np.bool])
 
 assert_type(np.char.not_equal(AR_U, AR_U), npt.NDArray[np.bool])
 assert_type(np.char.not_equal(AR_S, AR_S), npt.NDArray[np.bool])
 assert_type(np.char.not_equal(AR_T, AR_T), npt.NDArray[np.bool])
+assert_type(np.char.not_equal(AR_S, AR_U, dtype=np.bool_), npt.NDArray[np.bool])
 
 assert_type(np.char.greater_equal(AR_U, AR_U), npt.NDArray[np.bool])
 assert_type(np.char.greater_equal(AR_S, AR_S), npt.NDArray[np.bool])
 assert_type(np.char.greater_equal(AR_T, AR_T), npt.NDArray[np.bool])
+assert_type(np.char.greater_equal(AR_S, AR_U, dtype=np.bool_), npt.NDArray[np.bool])
 
 assert_type(np.char.less_equal(AR_U, AR_U), npt.NDArray[np.bool])
 assert_type(np.char.less_equal(AR_S, AR_S), npt.NDArray[np.bool])
 assert_type(np.char.less_equal(AR_T, AR_T), npt.NDArray[np.bool])
+assert_type(np.char.less_equal(AR_S, AR_U, dtype=np.bool_), npt.NDArray[np.bool])
 
 assert_type(np.char.greater(AR_U, AR_U), npt.NDArray[np.bool])
 assert_type(np.char.greater(AR_S, AR_S), npt.NDArray[np.bool])
 assert_type(np.char.greater(AR_T, AR_T), npt.NDArray[np.bool])
+assert_type(np.char.greater(AR_S, AR_U, dtype=np.bool_), npt.NDArray[np.bool])
 
 assert_type(np.char.less(AR_U, AR_U), npt.NDArray[np.bool])
 assert_type(np.char.less(AR_S, AR_S), npt.NDArray[np.bool])
 assert_type(np.char.less(AR_T, AR_T), npt.NDArray[np.bool])
+assert_type(np.char.less(AR_S, AR_U, dtype=np.bool_), npt.NDArray[np.bool])
 
 assert_type(np.char.multiply(AR_U, 5), StrArray)
 assert_type(np.char.multiply(AR_U, 5), StrArray)

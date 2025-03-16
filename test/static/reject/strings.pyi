@@ -16,6 +16,13 @@ AR_S: npt.NDArray[np.bytes_]
 # np.strings.isdecimal(AR_S)
 # np.strings.isnumeric(AR_S)
 
+np.strings.equal(AR_S, AR_U, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.strings.not_equal(AR_S, AR_U, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.strings.greater_equal(AR_S, AR_U, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.strings.less_equal(AR_S, AR_U, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.strings.greater(AR_S, AR_U, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.strings.less(AR_S, AR_U, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
 np.strings.encode(AR_S)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.strings.decode(AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
