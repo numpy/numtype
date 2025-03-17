@@ -43,6 +43,7 @@ np.divmod.at()  # type: ignore[call-arg, misc]  # pyright: ignore[reportCallIssu
 np.matmul.at()  # type: ignore[call-arg, misc]  # pyright: ignore[reportCallIssue]
 
 np.isnan(i8, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
-np.isnat(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.isnat(i8, dtype=np.int64)  # type: ignore[arg-type, call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.isnat(i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.isinf(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.isfinite(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]

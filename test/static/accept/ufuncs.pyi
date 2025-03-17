@@ -6,9 +6,13 @@ import numpy.typing as npt
 
 i8: np.int64
 f8: np.float64
+dt64: np.datetime64
+td64: np.timedelta64
 AR_f8: npt.NDArray[np.float64]
 AR_i8: npt.NDArray[np.int64]
 AR_bool: npt.NDArray[np.bool_]
+AR_dt64: npt.NDArray[np.datetime64]
+AR_td64: npt.NDArray[np.timedelta64]
 
 assert_type(np.absolute.types, list[str])
 
@@ -42,9 +46,14 @@ assert_type(np.isnan(f8), np.bool_)
 assert_type(np.isnan(AR_f8), npt.NDArray[np.bool_])
 assert_type(np.isnan(AR_f8, out=AR_bool), npt.NDArray[np.bool_])
 
-assert_type(np.isnat(f8), np.bool_)
-assert_type(np.isnat(AR_f8), npt.NDArray[np.bool_])
-assert_type(np.isnat(AR_f8, out=AR_bool), npt.NDArray[np.bool_])
+assert_type(np.isnat(dt64), np.bool_)
+assert_type(np.isnat(td64), np.bool_)
+assert_type(np.isnat([td64, td64]), npt.NDArray[np.bool_])
+assert_type(np.isnat([td64, td64], out=AR_bool), npt.NDArray[np.bool_])
+assert_type(np.isnat(AR_dt64), npt.NDArray[np.bool_])
+assert_type(np.isnat(AR_dt64, out=AR_bool), npt.NDArray[np.bool_])
+assert_type(np.isnat(AR_td64), npt.NDArray[np.bool_])
+assert_type(np.isnat(AR_td64, out=AR_bool), npt.NDArray[np.bool_])
 
 assert_type(np.isinf(f8), np.bool_)
 assert_type(np.isinf(AR_f8), npt.NDArray[np.bool_])
