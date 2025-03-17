@@ -3,7 +3,11 @@
 # dependencies = [
 #     "numtype[numpy]",
 #     "mypy[faster-cache]>=1.15.0",  # keep in sync with pyproject.toml
+#
 #     "PyInstaller",
+#     "hypothesis",
+#     "pytest",
+#     "types-setuptools",
 # ]
 #
 # [tool.uv]
@@ -20,8 +24,6 @@ import subprocess
 import sys
 import sysconfig
 from pathlib import Path
-
-from numpy._core import _simd  # noqa: PLC2701
 
 VERBOSE = True
 
@@ -42,14 +44,25 @@ ALLOWLISTS = [
     "common-todo.txt",
     ("ge" if sys.version_info >= (3, 12) else "lt") + "-py312.txt",
 ]
-if not hasattr(_simd, "AVX512F"):
-    ALLOWLISTS.append("simd.txt")
 
 if sys.platform == "win32":
     if sys.version_info[:2] == (3, 12):
         ALLOWLISTS.append("path-py312.txt")
     elif sys.version_info[:2] <= (3, 11):
         ALLOWLISTS.append("path-py311.txt")
+
+
+def __check_simd() -> None:
+    try:
+        from numpy._core import _simd  # noqa: PLC0415, PLC2701
+    except ImportError:
+        return
+
+    if not hasattr(_simd, "AVX512F"):
+        ALLOWLISTS.append("simd.txt")
+
+
+__check_simd()
 
 
 def __commit_pyi_genocide_for_mypy() -> None:
@@ -136,7 +149,12 @@ def main() -> int:
     __commit_pyi_genocide_for_mypy()
 
     if VERBOSE:
-        print(sys.version)
+        import numpy as np  # noqa: PLC0415
+        import numtype as nt  # noqa: PLC0415
+
+        print(f"python {sys.version}")
+        print(f"numtype {nt.__version__} (numpy {np.__version__})")
+        print()
 
     cmd = _stubtest_command()
     if VERBOSE and "--generate-allowlist" not in cmd:

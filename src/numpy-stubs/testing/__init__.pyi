@@ -4,6 +4,7 @@ from . import overrides
 from ._private.utils import (
     HAS_LAPACK64,
     HAS_REFCOUNT,
+    IS_64BIT,
     IS_EDITABLE,
     IS_INSTALLED,
     IS_MUSL,
@@ -53,6 +54,7 @@ from ._private.utils import (
 __all__ = [
     "HAS_LAPACK64",
     "HAS_REFCOUNT",
+    "IS_64BIT",
     "IS_EDITABLE",
     "IS_INSTALLED",
     "IS_MUSL",
