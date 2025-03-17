@@ -1,7 +1,4 @@
 # python < 3.12
 
-# TODO(jorenham): https://github.com/numpy/numtype/issues/41
-numpy\.distutils\..+
-
 # blame typeshed
 numpy\.compat(\.py3k)?\.bytes\.__buffer__
