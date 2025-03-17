@@ -2,3 +2,7 @@
 
 # blame typeshed
 numpy\.compat(\.py3k)?\.bytes\.__buffer__
+
+# result in import errors on numpy>=2.2.4
+numpy\.distutils
+numpy\.f2py\._backends\._distutils
