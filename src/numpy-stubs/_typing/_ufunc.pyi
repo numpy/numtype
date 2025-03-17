@@ -16,7 +16,7 @@ import numpy as np
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
 from numpy._typing import _DTypeLikeBool, _NestedSequence
 
-from ._array_like import ArrayLike, NDArray, _ArrayLikeBool_co, _ArrayLikeInt_co
+from ._array_like import ArrayLike, NDArray, _ArrayLikeBool_co, _ArrayLikeDT64_co, _ArrayLikeInt_co, _ArrayLikeTD64
 from ._dtype_like import DTypeLike, _DTypeLike
 from ._scalars import _ScalarLike_co
 from ._shape import _ShapeLike
@@ -220,6 +220,39 @@ class _Call11Bool(Protocol):
         dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> NDArray[np.bool] | np.bool: ...
+
+@type_check_only
+class _Call11Isnat(Protocol):
+    @overload  # (scalar) -> bool
+    def __call__(
+        self,
+        x: np.datetime64 | np.timedelta64,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeBool | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.bool: ...
+    @overload  # (array-like, out: T) -> T
+    def __call__(
+        self,
+        x: _ArrayLikeDT64_co | _ArrayLikeTD64,
+        /,
+        out: _Out1[_ArrayT],
+        *,
+        dtype: _DTypeLikeBool | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _ArrayT: ...
+    @overload  # (array) -> Array[bool]
+    def __call__(
+        self,
+        x: NDArray[np.datetime64 | np.timedelta64] | _NestedSequence[np.datetime64 | np.timedelta64],
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: _DTypeLikeBool | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.bool]: ...
 
 @type_check_only
 class _Call12(Protocol):
