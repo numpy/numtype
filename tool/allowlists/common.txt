@@ -30,6 +30,9 @@ numpy\.typing\.mypy_plugin
 # raises SystemExit on import
 numpy\.f2py\.__main__
 
+# does not exist
+numpy\.distutils\.\w+
+
 # workaround for https://github.com/python/mypy/issues/15302#issuecomment-2701979355
 numpy\.testing(\._private\.utils)?\.check_support_sve
 
