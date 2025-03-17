@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "numtype"
-version = "2.2.3.0.dev0"
+version = "2.2.4.0.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
 authors = [{name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com"}]

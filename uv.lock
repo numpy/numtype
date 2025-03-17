@@ -168,7 +168,7 @@ wheels = [
 
 [[package]]
 name = "numtype"
-version = "2.2.3.0.dev0"
+version = "2.2.4.0.dev0"
 source = { editable = "." }
 
 [package.optional-dependencies]
