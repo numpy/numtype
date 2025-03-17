@@ -7,6 +7,7 @@
 #     "PyInstaller",
 #     "hypothesis",
 #     "pytest",
+#     "types-setuptools",
 # ]
 #
 # [tool.uv]
