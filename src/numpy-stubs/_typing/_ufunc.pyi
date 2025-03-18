@@ -270,9 +270,9 @@ class _Call11Logical(Protocol):
         self,
         x: _ScalarLike_co,
         /,
-        dtype: _DTypeLike[np.object_],
-        *,
         out: None = None,
+        *,
+        dtype: _DTypeLike[np.object_],
         **kwargs: Unpack[_Kwargs2],
     ) -> bool: ...
     @overload
@@ -280,9 +280,9 @@ class _Call11Logical(Protocol):
         self,
         x: _NumberLike_co,
         /,
-        out: None = None,
-        *,
         dtype: _DTypeLikeBool | None = None,
+        *,
+        out: None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> np.bool: ...
     @overload
@@ -290,9 +290,9 @@ class _Call11Logical(Protocol):
         self,
         x: _ArrayLikeNumber_co | _ArrayLikeObject_co,
         /,
-        dtype: _DTypeLike[np.object_],
-        *,
         out: None = None,
+        *,
+        dtype: _DTypeLike[np.object_],
         **kwargs: Unpack[_Kwargs2],
     ) -> NDArray[np.object_] | bool: ...
     @overload
@@ -507,9 +507,9 @@ class _Call21Logical(Protocol):
         x1: _ScalarLike_co,
         x2: _ScalarLike_co,
         /,
-        dtype: _DTypeLike[np.object_],
-        *,
         out: None = None,
+        *,
+        dtype: _DTypeLike[np.object_],
         **kwds: Unpack[_Kwargs3],
     ) -> bool: ...
     @overload  # (scalar, scalar) -> bool
@@ -529,9 +529,9 @@ class _Call21Logical(Protocol):
         x1: _ArrayLikeNumber_co | _ArrayLikeObject_co,
         x2: _AnyArray,
         /,
-        dtype: _DTypeLike[np.object_],
-        *,
         out: None = None,
+        *,
+        dtype: _DTypeLike[np.object_],
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.object_]: ...
     @overload  # (array, array-like, dtype: object_) -> Array[object_]
@@ -540,9 +540,9 @@ class _Call21Logical(Protocol):
         x1: _AnyArray,
         x2: _ArrayLikeNumber_co | _ArrayLikeObject_co,
         /,
-        dtype: _DTypeLike[np.object_],
-        *,
         out: None = None,
+        *,
+        dtype: _DTypeLike[np.object_],
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.object_]: ...
     @overload  # (array-like, array, dtype: dtype[T]) -> Array[T]
