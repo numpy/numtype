@@ -16,7 +16,7 @@ import numpy as np
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
 from numpy._typing import _DTypeLikeBool, _NestedSequence
 
-from ._array_like import ArrayLike, NDArray, _ArrayLikeBool_co, _ArrayLikeDT64_co, _ArrayLikeInt_co, _ArrayLikeTD64
+from ._array_like import ArrayLike, NDArray, _ArrayLike, _ArrayLikeBool_co, _ArrayLikeInt_co
 from ._dtype_like import DTypeLike, _DTypeLike
 from ._scalars import _ScalarLike_co
 from ._shape import _ShapeLike

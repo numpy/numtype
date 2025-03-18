@@ -59,7 +59,6 @@ _ArrayLikeFloat_co: TypeAlias = _DualArrayLike[np.dtype[np.floating | np.integer
 _ArrayLikeComplex_co: TypeAlias = _DualArrayLike[np.dtype[np.bool | np.number], complex]
 _ArrayLikeNumber_co: TypeAlias = _ArrayLikeComplex_co
 _ArrayLikeTD64_co: TypeAlias = _DualArrayLike[np.dtype[np.timedelta64 | np.integer | np.bool], int]
-_ArrayLikeTD64: TypeAlias = _DualArrayLike[np.dtype[np.timedelta64], np.timedelta64]
 _ArrayLikeDT64_co: TypeAlias = _ArrayLike[np.datetime64]
 _ArrayLikeObject_co: TypeAlias = _ArrayLike[np.object_]
 _ArrayLikeVoid_co: TypeAlias = _ArrayLike[np.void]
