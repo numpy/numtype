@@ -564,7 +564,7 @@ class _Call21Logical(Protocol):
         /,
         out: None = None,
         *,
-        dtype: DTypeLike | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.bool]: ...
     @overload  # (array-like, array-like, out: T) -> T
