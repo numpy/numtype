@@ -271,6 +271,7 @@ class _Call11Logical(Protocol):
         x: _ScalarLike_co,
         /,
         dtype: _DTypeLike[np.object_],
+        *,
         out: None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> bool: ...
@@ -280,6 +281,7 @@ class _Call11Logical(Protocol):
         x: _NumberLike_co,
         /,
         out: None = None,
+        *,
         dtype: _DTypeLikeBool | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> np.bool: ...
@@ -289,15 +291,17 @@ class _Call11Logical(Protocol):
         x: _ArrayLikeNumber_co | _ArrayLikeObject_co,
         /,
         dtype: _DTypeLike[np.object_],
+        *,
         out: None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> NDArray[np.object_] | bool: ...
     @overload
     def __call__(  # (array-like, out: T) -> T
         self,
-        x: _ArrayLikeNumber_co,
+        x: _ArrayLikeNumber_co | _ArrayLikeObject_co,
         /,
         out: _Out1[_ArrayT],
+        *,
         dtype: DTypeLike | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> _ArrayT: ...
@@ -306,7 +310,7 @@ class _Call11Logical(Protocol):
         self,
         x: NDArray[np.bool | np.number] | _NestedSequence[np.bool | np.number],
         /,
-        out: _Out1[_AnyArray] | None = None,
+        out: _Out1[NDArray[np.bool | np.number]] | None = None,
         *,
         dtype: DTypeLike | None = None,
         **kwds: Unpack[_Kwargs2],
@@ -317,6 +321,7 @@ class _Call11Logical(Protocol):
         x: _ArrayLikeNumber_co,
         /,
         out: None = None,
+        *,
         dtype: _DTypeLikeBool | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> NDArray[np.bool] | np.bool: ...
@@ -326,9 +331,11 @@ class _Call11Logical(Protocol):
         x: _CanArrayUFunc,
         /,
         out: _Out1[_AnyArray] | None = None,
+        *,
         dtype: DTypeLike | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> Any: ...
+
 @type_check_only
 class _Call12(Protocol):
     @overload
@@ -501,6 +508,7 @@ class _Call21Logical(Protocol):
         x2: _ScalarLike_co,
         /,
         dtype: _DTypeLike[np.object_],
+        *,
         out: None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> bool: ...
@@ -511,6 +519,7 @@ class _Call21Logical(Protocol):
         x2: _NumberLike_co,
         /,
         out: None = None,
+        *,
         dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> np.bool: ...
@@ -521,19 +530,10 @@ class _Call21Logical(Protocol):
         x2: _AnyArray,
         /,
         dtype: _DTypeLike[np.object_],
+        *,
         out: None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.object_]: ...
-    @overload  # (array-like, array, dtype: dtype[T]) -> Array[T]
-    def __call__(
-        self,
-        x1: _ArrayLikeNumber_co,
-        x2: NDArray[np.bool | np.number],
-        /,
-        out: None = None,
-        dtype: _DTypeLikeBool | None = None,
-        **kwds: Unpack[_Kwargs3],
-    ) -> NDArray[np.bool]: ...
     @overload  # (array, array-like, dtype: object_) -> Array[object_]
     def __call__(
         self,
@@ -541,9 +541,21 @@ class _Call21Logical(Protocol):
         x2: _ArrayLikeNumber_co | _ArrayLikeObject_co,
         /,
         dtype: _DTypeLike[np.object_],
+        *,
         out: None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.object_]: ...
+    @overload  # (array-like, array, dtype: dtype[T]) -> Array[T]
+    def __call__(
+        self,
+        x1: _ArrayLikeNumber_co,
+        x2: NDArray[np.bool | np.number] | _NestedSequence[np.bool | np.number],
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeBool | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> NDArray[np.bool]: ...
     @overload  # (array, array-like, dtype: dtype[T]) -> Array[T]
     def __call__(
         self,
@@ -551,14 +563,15 @@ class _Call21Logical(Protocol):
         x2: _ArrayLikeNumber_co,
         /,
         out: None = None,
+        *,
         dtype: DTypeLike | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.bool]: ...
     @overload  # (array-like, array-like, out: T) -> T
     def __call__(
         self,
-        x1: _ArrayLikeNumber_co,
-        x2: _ArrayLikeNumber_co,
+        x1: _ArrayLikeNumber_co | _ArrayLikeObject_co,
+        x2: _ArrayLikeNumber_co | _ArrayLikeObject_co,
         /,
         out: _Out1[_ArrayT],
         *,
@@ -569,7 +582,7 @@ class _Call21Logical(Protocol):
     def __call__(
         self,
         x1: _ArrayLikeNumber_co,
-        x2: _AnyArray,
+        x2: NDArray[np.bool | np.number] | _NestedSequence[np.bool | np.number | complex],
         /,
         out: _Out1[NDArray[np.bool]] | None = None,
         *,
@@ -579,7 +592,7 @@ class _Call21Logical(Protocol):
     @overload  # (array, array-like) -> Array[?]
     def __call__(
         self,
-        x1: _AnyArray,
+        x1: NDArray[np.bool | np.number] | _NestedSequence[np.bool | np.number | complex],
         x2: _ArrayLikeNumber_co,
         /,
         out: _Out1[NDArray[np.bool]] | None = None,
@@ -598,6 +611,7 @@ class _Call21Logical(Protocol):
         dtype: DTypeLike | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> Any: ...
+
 @type_check_only
 class _Call21(Protocol):
     @overload  # (scalar, scalar, dtype: type[T]) -> T
