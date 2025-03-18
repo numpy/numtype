@@ -49,7 +49,14 @@ np.isnat(i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,r
 np.isinf(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.isfinite(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.logical_not(dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.logical_not(i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.logical_not(dt64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.logical_and(dt64, dt64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.logical_and(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.logical_or(dt64, dt64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.logical_or(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.logical_xor(dt64, dt64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.logical_xor(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
