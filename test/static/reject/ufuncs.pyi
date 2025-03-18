@@ -3,6 +3,7 @@ import numpy.typing as npt
 
 i8: np.int64
 AR_f8: npt.NDArray[np.float64]
+dt64: np.datetime64
 
 np.sin.nin + "foo"  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
@@ -47,3 +48,8 @@ np.isnat(i8, dtype=np.int64)  # type: ignore[call-overload]  # pyright: ignore[r
 np.isnat(i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.isinf(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.isfinite(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.logical_not(dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.logical_and(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.logical_or(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.logical_xor(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
