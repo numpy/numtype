@@ -236,7 +236,7 @@ class _Call11Isnat(Protocol):
     @overload  # (array-like, out: T) -> T
     def __call__(
         self,
-        x: _ArrayLikeDT64_co | _ArrayLikeTD64,
+        x: _ArrayLike[np.datetime64 | np.timedelta64],
         /,
         out: _Out1[_ArrayT],
         *,
