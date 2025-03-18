@@ -280,9 +280,9 @@ class _Call11Logical(Protocol):
         self,
         x: _NumberLike_co,
         /,
-        dtype: _DTypeLikeBool | None = None,
-        *,
         out: None = None,
+        *,
+        dtype: _DTypeLikeBool | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> np.bool: ...
     @overload
@@ -310,9 +310,9 @@ class _Call11Logical(Protocol):
         self,
         x: NDArray[np.bool | np.number] | _NestedSequence[np.bool | np.number],
         /,
-        out: _Out1[NDArray[np.bool | np.number]] | None = None,
+        out: _Out1[NDArray[np.bool]] | None = None,
         *,
-        dtype: DTypeLike | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> NDArray[np.bool]: ...
     @overload
@@ -586,7 +586,7 @@ class _Call21Logical(Protocol):
         /,
         out: _Out1[NDArray[np.bool]] | None = None,
         *,
-        dtype: DTypeLike | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.bool]: ...
     @overload  # (array, array-like) -> Array[?]
@@ -597,7 +597,7 @@ class _Call21Logical(Protocol):
         /,
         out: _Out1[NDArray[np.bool]] | None = None,
         *,
-        dtype: DTypeLike | None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.bool]: ...
     @overload  # (array-like, array-like) -> Array[?] | ?
