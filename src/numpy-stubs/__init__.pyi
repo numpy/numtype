@@ -27,6 +27,8 @@ from typing import (
 )
 from typing_extensions import Buffer, CapsuleType, LiteralString, Never, Protocol, Self, TypeVar, Unpack, deprecated, override
 
+from _numtype import CoComplex_1nd
+
 from . import (
     __config__ as __config__,
     _array_api_info as _array_api_info,
@@ -4249,10 +4251,7 @@ _Bool0: TypeAlias = bool_[L[False]]
 _Bool1: TypeAlias = bool_[L[True]]
 
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
-class bool_(
-    generic[_BoolItemT_co],
-    Generic[_BoolItemT_co],
-):
+class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @property
     @override
     def itemsize(self) -> L[1]: ...
@@ -4316,18 +4315,17 @@ class bool_(
     @overload
     def __ne__(self, other: object, /) -> Any: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
-    # TODO(jorenham): fix overlapping overloads
     #
     @overload
     def __lt__(self: _Bool0, x: L[True] | _Bool1, /) -> _Bool1: ...
     @overload
     def __lt__(self: _Bool1, x: py_bool | bool_, /) -> _Bool0: ...
     @overload
-    def __lt__(self, x: L[False] | _Bool0, /) -> _Bool0: ...  # pyright: ignore[reportOverlappingOverload]
+    def __lt__(self, x: L[False] | _Bool0, /) -> _Bool0: ...
     @overload
-    def __lt__(self, x: complex | bool_ | number, /) -> bool_: ...  # type: ignore[overload-overlap]
+    def __lt__(self, x: complex | bool_ | number, /) -> bool_: ...
     @overload
-    def __lt__(self, x: _ArrayLikeNumber_co | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
+    def __lt__(self, x: CoComplex_1nd | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
     @overload
     def __lt__(self, x: _CanLE, /) -> bool_: ...
 
@@ -4337,11 +4335,11 @@ class bool_(
     @overload
     def __le__(self: _Bool1, x: L[False] | _Bool0, /) -> _Bool0: ...
     @overload
-    def __le__(self, x: L[True] | _Bool1, /) -> _Bool1: ...  # pyright: ignore[reportOverlappingOverload]
+    def __le__(self, x: L[True] | _Bool1, /) -> _Bool1: ...
     @overload
-    def __le__(self, x: complex | bool_ | number, /) -> bool_: ...  # type: ignore[overload-overlap]
+    def __le__(self, x: complex | bool_ | number, /) -> bool_: ...
     @overload
-    def __le__(self, x: _ArrayLikeNumber_co | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
+    def __le__(self, x: CoComplex_1nd | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
     @overload
     def __le__(self, x: _CanLE, /) -> bool_: ...
 
@@ -4349,13 +4347,13 @@ class bool_(
     @overload
     def __gt__(self: _Bool0, x: py_bool | bool_, /) -> _Bool0: ...
     @overload
-    def __gt__(self, x: L[True] | _Bool1, /) -> _Bool0: ...  # pyright: ignore[reportOverlappingOverload]
+    def __gt__(self, x: L[True] | _Bool1, /) -> _Bool0: ...
     @overload
     def __gt__(self, x: L[False] | _Bool0, /) -> Self: ...
     @overload
-    def __gt__(self, x: complex | bool_ | number, /) -> bool_: ...  # type: ignore[overload-overlap]
+    def __gt__(self, x: complex | bool_ | number, /) -> bool_: ...
     @overload
-    def __gt__(self, x: _ArrayLikeNumber_co | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
+    def __gt__(self, x: CoComplex_1nd | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
     @overload
     def __gt__(self, x: _CanLE, /) -> bool_: ...
 
@@ -4365,11 +4363,11 @@ class bool_(
     @overload
     def __ge__(self: _Bool1, x: py_bool | bool_, /) -> _Bool1: ...
     @overload
-    def __ge__(self, x: L[False] | _Bool0, /) -> _Bool1: ...  # pyright: ignore[reportOverlappingOverload]
+    def __ge__(self, x: L[False] | _Bool0, /) -> _Bool1: ...
     @overload
-    def __ge__(self, x: complex | bool_ | number, /) -> bool_: ...  # type: ignore[overload-overlap]
+    def __ge__(self, x: complex | bool_ | number, /) -> bool_: ...
     @overload
-    def __ge__(self, x: _ArrayLikeNumber_co | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
+    def __ge__(self, x: CoComplex_1nd | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
     @overload
     def __ge__(self, x: _CanLE, /) -> bool_: ...
 
