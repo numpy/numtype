@@ -48,6 +48,7 @@ _Tuple4_: TypeAlias = tuple[_T, _T, _T, _T, Unpack[tuple[_T, ...]]]
 _Out1: TypeAlias = _T | tuple[_T]
 _AnyArray: TypeAlias = NDArray[Any]
 _UFuncMethod: TypeAlias = L["__call__", "reduce", "reduceat", "accumulate", "outer", "at"]
+_TimeLike: TypeAlias = np.datetime64 | np.timedelta64
 
 ###
 # helper protocols
@@ -226,7 +227,7 @@ class _Call11Isnat(Protocol):
     @overload  # (scalar) -> bool
     def __call__(
         self,
-        x: np.datetime64 | np.timedelta64,
+        x: _TimeLike,
         /,
         out: None = None,
         *,
@@ -236,7 +237,7 @@ class _Call11Isnat(Protocol):
     @overload  # (array-like, out: T) -> T
     def __call__(
         self,
-        x: _ArrayLike[np.datetime64 | np.timedelta64],
+        x: _ArrayLike[_TimeLike],
         /,
         out: _Out1[_ArrayT],
         *,
@@ -246,7 +247,7 @@ class _Call11Isnat(Protocol):
     @overload  # (array) -> Array[bool]
     def __call__(
         self,
-        x: NDArray[np.datetime64 | np.timedelta64] | _NestedSequence[np.datetime64 | np.timedelta64],
+        x: NDArray[_TimeLike] | _NestedSequence[_TimeLike],
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
