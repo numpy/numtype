@@ -1,15 +1,5 @@
-from types import MemberDescriptorType
-from typing import (
-    Any,
-    ClassVar,
-    Generic,
-    Literal as L,
-    NoReturn,
-    TypeAlias,
-    final,
-    type_check_only,
-)
-from typing_extensions import LiteralString, Self, TypeVar, override
+from typing import Any, Generic, Literal as L, NoReturn, TypeAlias, final, overload, type_check_only
+from typing_extensions import LiteralString, Never, Self, TypeVar, override
 
 import numpy as np
 
@@ -684,6 +674,8 @@ class TimeDelta64DType(  # type: ignore[misc]
         ">m8[as]",
     ]: ...
 
+_NaObjectT_co = TypeVar("_NaObjectT_co", default=Never, covariant=True)
+
 @final
 class StringDType(  # type: ignore[misc]
     _TypeCodes[L["T"], L["T"], L[2056]],
@@ -692,40 +684,40 @@ class StringDType(  # type: ignore[misc]
     # TODO(jorenham): change once we have a string scalar type:
     # https://github.com/numpy/numpy/pull/28196
     np.dtype[str],  # type: ignore[type-var]  # pyright: ignore[reportGeneralTypeIssues,reportInvalidTypeArguments]
+    Generic[_NaObjectT_co],
 ):
+    #
     @property
-    def coerce(self) -> L[True]: ...
-    na_object: ClassVar[MemberDescriptorType]  # does not get instantiated
+    def na_object(self) -> _NaObjectT_co: ...
+    @property
+    def coerce(self) -> bool: ...
+
+    #
+    @overload
+    def __new__(cls, /, *, coerce: bool = True) -> Self: ...
+    @overload
+    def __new__(cls, /, *, na_object: _NaObjectT_co, coerce: bool = True) -> Self: ...
 
     #
     @override
-    def __new__(cls, /) -> StringDType: ...
-    @override
-    def __getitem__(self, key: Any, /) -> NoReturn: ...
-    @property
-    @override
-    def base(self) -> StringDType: ...
+    def __getitem__(self, key: Never, /) -> NoReturn: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @property
     @override
     def fields(self) -> None: ...
     @property
     @override
-    def hasobject(self) -> L[True]: ...
-    @property
-    @override
-    def isalignedstruct(self) -> L[False]: ...
-    @property
-    @override
-    def isnative(self) -> L[True]: ...
-    @property
-    @override
-    def name(self) -> L["StringDType64", "StringDType128"]: ...
+    def base(self) -> Self: ...
     @property
     @override
     def ndim(self) -> L[0]: ...
     @property
     @override
     def shape(self) -> tuple[()]: ...
+
+    #
+    @property
+    @override
+    def name(self) -> L["StringDType64", "StringDType128"]: ...
     @property
     @override
     def subdtype(self) -> None: ...
@@ -735,3 +727,14 @@ class StringDType(  # type: ignore[misc]
     @property
     @override
     def str(self) -> L["|T8", "|T16"]: ...
+
+    #
+    @property
+    @override
+    def hasobject(self) -> L[True]: ...
+    @property
+    @override
+    def isalignedstruct(self) -> L[False]: ...
+    @property
+    @override
+    def isnative(self) -> L[True]: ...
