@@ -9,6 +9,7 @@ extend-ignore = [
     "PYI046",  # flake8-pyi:    unused-private-protocol     # TODO
     "PYI047",  # flake8-pyi:    unused-private-type-alias   # TODO
     "PYI064",  # flake8-pyi:    redundant-final-literal
+    "SLF001",  # flake8-self:   private-member-access
     "E741",    # pycodestyle/E: ambiguous-variable-name
     "E742",    # pycodestyle/E: ambiguous-class-name
     "E743",    # pycodestyle/E: ambiguous-function-name
