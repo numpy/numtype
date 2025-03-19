@@ -1,3 +1,4 @@
+# ruff: noqa: F811
 import _contextvars
 import datetime as dt
 from _typeshed import Incomplete, StrOrBytesPath, SupportsLenAndGetItem
@@ -56,107 +57,7 @@ from _numtype import (
     ToIntP_nd,
 )
 from _numtype._just import JustComplex, JustInt
-from numpy import (  # noqa: ICN003
-    _AnyShapeT,
-    _CanSeekTellFileNo,
-    _CastingKind,
-    _ModeKind,
-    _OrderCF,
-    _OrderKACF,
-    # NOTE: These implicitly re-exported ufuncs are defined in this ext-module at runtime
-    absolute as absolute,
-    add as add,
-    arccos as arccos,
-    arccosh as arccosh,
-    arcsin as arcsin,
-    arcsinh as arcsinh,
-    arctan as arctan,
-    arctan2 as arctan2,
-    arctanh as arctanh,
-    bitwise_and as bitwise_and,
-    bitwise_count as bitwise_count,
-    bitwise_or as bitwise_or,
-    bitwise_xor as bitwise_xor,
-    cbrt as cbrt,
-    ceil as ceil,
-    conj as conj,
-    conjugate as conjugate,
-    copysign as copysign,
-    cos as cos,
-    cosh as cosh,
-    deg2rad as deg2rad,
-    degrees as degrees,
-    divide as divide,
-    divmod as divmod,
-    equal as equal,
-    exp as exp,
-    exp2 as exp2,
-    expm1 as expm1,
-    fabs as fabs,
-    float_power as float_power,
-    floor as floor,
-    floor_divide as floor_divide,
-    fmax as fmax,
-    fmin as fmin,
-    fmod as fmod,
-    frexp as frexp,
-    gcd as gcd,
-    greater as greater,
-    greater_equal as greater_equal,
-    heaviside as heaviside,
-    hypot as hypot,
-    invert as invert,
-    isfinite as isfinite,
-    isinf as isinf,
-    isnan as isnan,
-    isnat as isnat,
-    lcm as lcm,
-    ldexp as ldexp,
-    left_shift as left_shift,
-    less as less,
-    less_equal as less_equal,
-    log as log,
-    log1p as log1p,
-    log2 as log2,
-    log10 as log10,
-    logaddexp as logaddexp,
-    logaddexp2 as logaddexp2,
-    logical_and as logical_and,
-    logical_not as logical_not,
-    logical_or as logical_or,
-    logical_xor as logical_xor,
-    matvec as matvec,
-    maximum as maximum,
-    minimum as minimum,
-    mod as mod,
-    modf as modf,
-    multiply as multiply,
-    negative as negative,
-    nextafter as nextafter,
-    not_equal as not_equal,
-    positive as positive,
-    power as power,
-    rad2deg as rad2deg,
-    radians as radians,
-    reciprocal as reciprocal,
-    remainder as remainder,
-    right_shift as right_shift,
-    rint as rint,
-    sign as sign,
-    signbit as signbit,
-    sin as sin,
-    sinh as sinh,
-    spacing as spacing,
-    sqrt as sqrt,
-    square as square,
-    subtract as subtract,
-    tan as tan,
-    tanh as tanh,
-    true_divide as true_divide,
-    trunc as trunc,
-    vecdot as vecdot,
-    vecmat as vecmat,
-)
+from numpy import _AnyShapeT, _CanSeekTellFileNo, _CastingKind, _ModeKind, _OrderCF, _OrderKACF  # noqa: ICN003
 from numpy._globals import _CopyMode
 from numpy._typing import (
     _ArrayLike,
@@ -172,24 +73,31 @@ from numpy._typing import (
     _NestedSequence,
     _ScalarLike_co,
     _ShapeLike,
-    _SupportsArray,
     _SupportsArrayFunc,
     _SupportsDType,
 )
 from numpy._typing._char_codes import _BoolCodes, _Complex128Codes, _Float64Codes, _IntPCodes
-from numpy._typing._ufunc import _pyfunc_1_1, _pyfunc_1n_2, _pyfunc_1n_2n, _pyfunc_2_1, _pyfunc_3n_1, _ufunc_1_1, _ufunc_2_1
+
+# needed for stubtest
+from .umath import (
+    clip as clip,
+    count as count,
+    endswith as endswith,
+    find as find,
+    index as index,
+    rfind as rfind,
+    rindex as rindex,
+    startswith as startswith,
+)
 
 ###
 
 _T = TypeVar("_T")
 _T_contra = TypeVar("_T_contra", default=None, contravariant=True)
-_T1 = TypeVar("_T1")
-_T2 = TypeVar("_T2")
 
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 _NumericT = TypeVar("_NumericT", bound=np.bool | np.number | np.timedelta64 | np.object_)
 _SafeScalarT = TypeVar("_SafeScalarT", bound=np.bool | np.number | np.flexible | np.timedelta64 | np.datetime64)  # no `object_`
 
@@ -299,21 +207,6 @@ _ToDeltaArray = TypeAliasType(
 
 _ToFile: TypeAlias = StrOrBytesPath | _CanSeekTellFileNo
 
-_3P = TypeAliasType("_3P", L[3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
-_2: TypeAlias = L[2]
-_2P: TypeAlias = _2 | _3P
-_1: TypeAlias = L[True, 1]
-_1P: TypeAlias = _1 | _2P
-
-_ToCharStringND: TypeAlias = (
-    _ArrayLike[np.character]
-    | _SupportsArray[np.dtypes.StringDType]
-    | list[str]
-    | list[bytes]
-    | _NestedSequence[list[str]]
-    | _NestedSequence[list[bytes]]
-)
-
 ###
 
 @type_check_only
@@ -376,37 +269,6 @@ class _ExtObjDict(TypedDict):
     invalid: _ExtObjValue
     call: Callable[[str, int], _Ignored] | _CanWriteErr | None
     bufsize: int
-
-@type_check_only
-class _UFunc11_SUT(Protocol[_ScalarT_co]):
-    @overload
-    def __call__(
-        self,
-        x: bytes | str,
-        /,
-        out: None = None,
-        *,
-        where: bool = True,
-        casting: _CastingKind = "same_kind",
-        order: _OrderKACF = "K",
-        dtype: _DTypeLikeBool | None = None,
-        subok: bool = True,
-        signature: str | tuple[npt.DTypeLike, _DTypeLikeBool] | None = None,
-    ) -> _ScalarT_co: ...
-    @overload
-    def __call__(
-        self,
-        x: _ToCharStringND,
-        /,
-        out: None = None,
-        *,
-        where: bool = True,
-        casting: _CastingKind = "same_kind",
-        order: _OrderKACF = "K",
-        dtype: _DTypeLikeBool | None = None,
-        subok: bool = True,
-        signature: str | tuple[npt.DTypeLike, _DTypeLikeBool] | None = None,
-    ) -> npt.NDArray[_ScalarT_co]: ...
 
 ###
 
@@ -471,52 +333,6 @@ _flagdict: Final[dict[str, int]] = ...
 e: Final[float] = ...
 euler_gamma: Final[float] = ...
 pi: Final[float] = ...
-
-isalnum: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-isalpha: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-isdecimal: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-isdigit: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-islower: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-isnumeric: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-isspace: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-istitle: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-isupper: _ufunc_1_1[_UFunc11_SUT[np.bool]]
-str_len: _ufunc_1_1[_UFunc11_SUT[np.intp]]
-_arg: _ufunc_1_1
-_ones_like: _ufunc_1_1
-_lstrip_whitespace: _ufunc_1_1
-_rstrip_whitespace: _ufunc_1_1
-_strip_whitespace: _ufunc_1_1
-
-# 2->1
-_expandtabs: _ufunc_2_1
-_expandtabs_length: _ufunc_2_1
-_lstrip_chars: _ufunc_2_1
-_rstrip_chars: _ufunc_2_1
-_strip_chars: _ufunc_2_1
-_zfill: _ufunc_2_1
-
-# 3->1
-clip: np.ufunc
-_center: np.ufunc
-_ljust: np.ufunc
-_rjust: np.ufunc
-
-# 3->3
-_partition_index: np.ufunc
-_rpartition_index: np.ufunc
-
-# 4->1
-count: np.ufunc
-endswith: np.ufunc
-startswith: np.ufunc
-find: np.ufunc
-rfind: np.ufunc
-index: np.ufunc
-rindex: np.ufunc
-_partition: np.ufunc
-_rpartition: np.ufunc
-_replace: np.ufunc
 
 @final
 class flagsobj:
@@ -2135,36 +1951,6 @@ def _add_newdoc_ufunc(ufunc: np.ufunc, new_docstring: str, /) -> None: ...
 def dragon4_positional(*args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
 def dragon4_scientific(*args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
 def format_longfloat(*args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
-
-###
-
-# NOTE: We can't use e.g. `Concatenate[Any, ...]`, as that causes mypy to reject every function...
-@overload  # (a) -> T
-def frompyfunc(f: Callable[[Any], _T], /, nin: _1, nout: _1, *, identity: object = None) -> _pyfunc_1_1[_T]: ...
-@overload  # (a, b) -> T
-def frompyfunc(f: Callable[[Any, Any], _T], /, nin: _2, nout: _1, *, identity: object = None) -> _pyfunc_2_1[_T]: ...
-@overload  # (a, b, c, ...) -> T
-def frompyfunc(f: Callable[..., _T], /, nin: _3P, nout: _1, *, identity: object = None) -> _pyfunc_3n_1[_T]: ...
-@overload  # (a, ...) -> (T1, T2)
-def frompyfunc(  # type: ignore[overload-overlap]  # mypy-only false positive
-    f: Callable[..., tuple[_T1, _T2]],
-    /,
-    nin: _1P,
-    nout: _2,
-    *,
-    identity: object = None,
-) -> _pyfunc_1n_2[_T1, _T2]: ...
-@overload  # (a, ...) -> (T1, T2, *(T, ...))
-def frompyfunc(
-    f: Callable[..., tuple[_T1, _T2, Unpack[tuple[_T, ...]]]],
-    /,
-    nin: _1P,
-    nout: _2P,
-    *,
-    identity: object = None,
-) -> _pyfunc_1n_2n[_T1 | _T2 | _T]: ...
-@overload
-def frompyfunc(f: Callable[..., Any], /, nin: SupportsIndex, nout: SupportsIndex, *, identity: object = None) -> np.ufunc: ...
 
 ###
 

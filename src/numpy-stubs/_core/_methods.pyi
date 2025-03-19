@@ -1,5 +1,5 @@
 import numpy as np
-from numpy._typing._ufunc import _Reduce2
+from numpy._core.umath import _Reduce2
 
 from . import _exceptions as _exceptions, umath as um
 

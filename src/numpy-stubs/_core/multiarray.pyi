@@ -155,7 +155,6 @@ from ._multiarray_umath import (
     frombuffer,
     fromfile,
     fromiter,
-    frompyfunc as frompyfunc,
     fromstring,
     get_handler_name,
     get_handler_version,
@@ -185,6 +184,7 @@ from ._multiarray_umath import (
     where,
     zeros,
 )
+from .umath import frompyfunc as frompyfunc
 
 __all__ = [
     "ALLOW_THREADS",
