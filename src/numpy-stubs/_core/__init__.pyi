@@ -1,47 +1,4 @@
 from ._asarray import require  # noqa: I001
-from ._multiarray_umath import (
-    e, euler_gamma, pi,
-
-    cos, cosh, arccos, arccos as acos, arccosh, arccosh as acosh,
-    sin, sinh, arcsin, arcsin as asin, arcsinh, arcsinh as asinh,
-    tan, tanh, arctan, arctan as atan, arctanh, arctanh as atanh,
-    arctan2, arctan2 as atan2,
-
-    equal, not_equal,
-    greater, greater_equal,
-    less, less_equal,
-
-    add, subtract,
-    multiply,
-    divide, true_divide, floor_divide,
-    power, power as pow, float_power,
-
-    bitwise_and, bitwise_or, bitwise_xor,
-    logical_not, logical_and, logical_or, logical_xor,
-    invert, invert as bitwise_invert,
-    left_shift, left_shift as bitwise_left_shift,
-    right_shift, right_shift as bitwise_right_shift,
-    mod, modf, fmod, divmod,
-    square, sqrt, cbrt,
-    absolute, absolute as abs, fabs,
-    conj, conjugate,
-    floor, ceil, trunc, rint,
-    positive, negative, heaviside,
-    reciprocal, remainder,
-    log, log2, log10, log1p, frexp,
-    exp, exp2, expm1, ldexp,
-    gcd, lcm,
-    hypot, logaddexp, logaddexp2,
-    isfinite, isinf, isnan, isnat,
-    deg2rad, rad2deg, degrees, radians,
-    fmin, fmax,
-    minimum, maximum,
-    sign, signbit, copysign,
-    nextafter, spacing,
-    matvec, vecmat,
-    bitwise_count,
-    frompyfunc,
-)  # fmt: skip
 from ._ufunc_config import (
     errstate,
     geterr, seterr,
@@ -177,6 +134,49 @@ from .shape_base import (
     block,
     stack, unstack,
     vstack, hstack,
+)  # fmt: skip
+from .umath import (
+    e, euler_gamma, pi,
+
+    cos, cosh, arccos, arccos as acos, arccosh, arccosh as acosh,
+    sin, sinh, arcsin, arcsin as asin, arcsinh, arcsinh as asinh,
+    tan, tanh, arctan, arctan as atan, arctanh, arctanh as atanh,
+    arctan2, arctan2 as atan2,
+
+    equal, not_equal,
+    greater, greater_equal,
+    less, less_equal,
+
+    add, subtract,
+    multiply,
+    divide, true_divide, floor_divide,
+    power, power as pow, float_power,
+
+    bitwise_and, bitwise_or, bitwise_xor,
+    logical_not, logical_and, logical_or, logical_xor,
+    invert, invert as bitwise_invert,
+    left_shift, left_shift as bitwise_left_shift,
+    right_shift, right_shift as bitwise_right_shift,
+    mod, modf, fmod, divmod,
+    square, sqrt, cbrt,
+    absolute, absolute as abs, fabs,
+    conj, conjugate,
+    floor, ceil, trunc, rint,
+    positive, negative, heaviside,
+    reciprocal, remainder,
+    log, log2, log10, log1p, frexp,
+    exp, exp2, expm1, ldexp,
+    gcd, lcm,
+    hypot, logaddexp, logaddexp2,
+    isfinite, isinf, isnan, isnat,
+    deg2rad, rad2deg, degrees, radians,
+    fmin, fmax,
+    minimum, maximum,
+    sign, signbit, copysign,
+    nextafter, spacing,
+    matvec, vecmat,
+    bitwise_count,
+    frompyfunc,
 )  # fmt: skip
 
 __all__ = [
