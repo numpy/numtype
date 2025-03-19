@@ -46,7 +46,7 @@ def _qualname(u: np.ufunc, /) -> str:
         return f"numpy.{name}"
     if hasattr(np.strings, name) and isinstance(getattr(np.strings, name), np.ufunc):
         return f"numpy.strings.{name}"
-    if hasattr(np.linalg._umath_linalg, name):  # type: ignore[attr-defined]  # pyright: ignore[reportUnknownMemberType,reportUnknownArgumentType,reportAttributeAccessIssue]  # noqa: SLF001
+    if hasattr(np.linalg._umath_linalg, name):  # pyright: ignore[reportUnknownMemberType,reportUnknownArgumentType,reportAttributeAccessIssue]  # noqa: SLF001
         return f"numpy.linalg._umath_linalg.{name}"
     if hasattr(um, name):
         return f"numpy._core.umath.{name}"
