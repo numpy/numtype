@@ -130,7 +130,10 @@ class finfo(Generic[_FloatingT_co]):
         dtype: np.inexact[_128Bit] | _DTypeLike[np.inexact[_128Bit]] | _Float128Codes | _Complex256Codes,
     ) -> finfo[np.float128]: ...
     @overload
-    def __new__(cls, dtype: InexactLD | _DTypeLike[InexactLD] | _LongDoubleCodes | _CLongDoubleCodes) -> finfo[np.longdouble]: ...
+    def __new__(
+        cls,
+        dtype: InexactLD | _DTypeLike[InexactLD] | _LongDoubleCodes | _CLongDoubleCodes,
+    ) -> finfo[np.float96 | np.float128]: ...
 
     #
     @classmethod

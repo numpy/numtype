@@ -10,7 +10,7 @@ from typing import Any, ClassVar, TypeAlias, type_check_only
 from typing_extensions import Protocol, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
-from numpy._typing import _8Bit, _16Bit, _32Bit, _64Bit, _NBitLongDouble
+from numpy._typing import _8Bit, _16Bit, _32Bit, _64Bit, _96Bit, _128Bit
 
 from ._just import (
     Just as Just,
@@ -128,23 +128,41 @@ Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT0]]
 ###
 # sized abstract scalar type aliases
 
-Floating64: TypeAlias = np.floating[_64Bit]  # accepts `float64` and `double`
-CFloating64: TypeAlias = np.complexfloating[_64Bit, _64Bit]  # accepts `complex128` and `cdouble`
+Integer8: TypeAlias = np.integer[_8Bit]  # `[u]int8` and `[u]byte`
+Integer16: TypeAlias = np.integer[_16Bit]  # `[u]int16` and `[u]short`
+Integer32: TypeAlias = np.integer[_32Bit]  # `[u]int32`, `[u]intc`, maybe `[u]long`, and sometimes `[u]intp`
+Integer64: TypeAlias = np.integer[_64Bit]  # `[u]int64` and `[u]longlong`, maybe `u[long]`, and usually `[u]intp`
+Integer_: TypeAlias = Integer32 | Integer64  # `Integer32`, `Integer64`, always `[u]long`, and always `[u]intp``
 
-Integer8: TypeAlias = np.integer[_8Bit]  # accepts `int8`, `byte`, `uint8`, and `ubyte`
-Integer16: TypeAlias = np.integer[_16Bit]  # accepts `int16`, `short`, `uint16`, and `ushort`
-Integer32: TypeAlias = np.integer[_32Bit]  # accepts `int32`, `intc`, `uint32`, and `uintc`
-Integer64: TypeAlias = np.integer[_64Bit]  # accepts `int64`, `longlong`, `uint64`, and `ulonglong`
+Floating16: TypeAlias = np.floating[_16Bit]  # `float16` and `half`
+Floating32: TypeAlias = np.floating[_32Bit]  # `float32` and `single`
+Floating64: TypeAlias = np.floating[_64Bit]  # `float64` and `double`
+Floating96: TypeAlias = np.floating[_96Bit]  # `float96`
+Floating128: TypeAlias = np.floating[_128Bit]  # `float128`
+FloatingLD: TypeAlias = Floating96 | Floating128  # `longdouble`, `float96`, and `float128`
 
-Inexact16: TypeAlias = np.inexact[_16Bit]  # accepts `float16` and `half`
-Inexact32: TypeAlias = np.inexact[_32Bit]  # accepts `float32`, `single`, `complex64`, and `csingle`
-Inexact64: TypeAlias = np.inexact[_64Bit]  # accepts `float64`, `double`, `complex128`, and `cdouble`
-InexactLD: TypeAlias = np.inexact[_NBitLongDouble]  # accepts `longdouble` and `clongdouble`
+CFloating32: TypeAlias = np.complexfloating[_32Bit]  # `complex64` and `csingle`
+CFloating64: TypeAlias = np.complexfloating[_64Bit]  # `complex128` and `cdouble`
+CFloating96: TypeAlias = np.complexfloating[_96Bit]  # `complex192`
+CFloating128: TypeAlias = np.complexfloating[_128Bit]  # `complex256`
+CFloatingLD: TypeAlias = CFloating96 | CFloating128  # `clongdouble`, `complex192`, and `complex256`
 
-Number8: TypeAlias = np.number[_8Bit]  # accepts `Integer8`
-Number16: TypeAlias = np.number[_16Bit]  # accepts `Integer16` and `float16`
-Number32: TypeAlias = np.number[_32Bit]  # accepts `Integer32` and `Inexact32`
-Number64: TypeAlias = np.number[_64Bit]  # accepts `Integer64` and `Inexact64`
+Inexact16: TypeAlias = np.inexact[_16Bit]  # `Floating16`
+Inexact32: TypeAlias = np.inexact[_32Bit]  # `Floating32` and `CFloating32`
+Inexact64: TypeAlias = np.inexact[_64Bit]  # `Floating64` and `CFloating64`
+Inexact96: TypeAlias = np.inexact[_96Bit]  # `[C]Floating96`
+Inexact128: TypeAlias = np.inexact[_128Bit]  # `[C]Floating128`
+InexactLD: TypeAlias = Inexact96 | Inexact128  # `[C]FloatingLD`
+
+Number8: TypeAlias = np.number[_8Bit]  # `Integer8`
+Number16: TypeAlias = np.number[_16Bit]  # `Integer16` and `float16`
+Number32: TypeAlias = np.number[_32Bit]  # `Integer32` and `Inexact32`
+Number64: TypeAlias = np.number[_64Bit]  # `Integer64` and `Inexact64`
+Number96: TypeAlias = np.number[_96Bit]  # `Inexact96`
+Number128: TypeAlias = np.number[_128Bit]  # `Inexact128`
+NumberLD: TypeAlias = Number96 | Number128  # `InexactLD`
+
+Scalar8: TypeAlias = Number8 | np.bool_
 
 ###
 # helper aliases
@@ -410,29 +428,29 @@ ToInteger_2nd = TypeAliasType("ToInteger_2nd", _ToArray2_2nd[np.integer, JustInt
 ToInteger_3nd = TypeAliasType("ToInteger_3nd", _ToArray2_3nd[np.integer, JustInt])
 
 # real floats
-ToFloat16_nd = TypeAliasType("ToFloat16_nd", _ToArray_nd[np.float16])
-ToFloat16_0d = TypeAliasType("ToFloat16_0d", CanArray0D[np.float16])
-ToFloat16_1d = TypeAliasType("ToFloat16_1d", _ToArray_1d[np.float16])
-ToFloat16_2d = TypeAliasType("ToFloat16_2d", _ToArray_2d[np.float16])
-ToFloat16_3d = TypeAliasType("ToFloat16_3d", _ToArray_3d[np.float16])
-ToFloat16_1ds = TypeAliasType("ToFloat16_1ds", _ToArray_1ds[np.float16])
-ToFloat16_2ds = TypeAliasType("ToFloat16_2ds", _ToArray_2ds[np.float16])
-ToFloat16_3ds = TypeAliasType("ToFloat16_3ds", _ToArray_3ds[np.float16])
-ToFloat16_1nd = TypeAliasType("ToFloat16_1nd", _ToArray_1nd[np.float16])
-ToFloat16_2nd = TypeAliasType("ToFloat16_2nd", _ToArray_2nd[np.float16])
-ToFloat16_3nd = TypeAliasType("ToFloat16_3nd", _ToArray_3nd[np.float16])
+ToFloat16_nd = TypeAliasType("ToFloat16_nd", _ToArray_nd[Floating16])
+ToFloat16_0d = TypeAliasType("ToFloat16_0d", CanArray0D[Floating16])
+ToFloat16_1d = TypeAliasType("ToFloat16_1d", _ToArray_1d[Floating16])
+ToFloat16_2d = TypeAliasType("ToFloat16_2d", _ToArray_2d[Floating16])
+ToFloat16_3d = TypeAliasType("ToFloat16_3d", _ToArray_3d[Floating16])
+ToFloat16_1ds = TypeAliasType("ToFloat16_1ds", _ToArray_1ds[Floating16])
+ToFloat16_2ds = TypeAliasType("ToFloat16_2ds", _ToArray_2ds[Floating16])
+ToFloat16_3ds = TypeAliasType("ToFloat16_3ds", _ToArray_3ds[Floating16])
+ToFloat16_1nd = TypeAliasType("ToFloat16_1nd", _ToArray_1nd[Floating16])
+ToFloat16_2nd = TypeAliasType("ToFloat16_2nd", _ToArray_2nd[Floating16])
+ToFloat16_3nd = TypeAliasType("ToFloat16_3nd", _ToArray_3nd[Floating16])
 
-ToFloat32_nd = TypeAliasType("ToFloat32_nd", _ToArray_nd[np.float32])
-ToFloat32_0d = TypeAliasType("ToFloat32_0d", CanArray0D[np.float32])
-ToFloat32_1d = TypeAliasType("ToFloat32_1d", _ToArray_1d[np.float32])
-ToFloat32_2d = TypeAliasType("ToFloat32_2d", _ToArray_2d[np.float32])
-ToFloat32_3d = TypeAliasType("ToFloat32_3d", _ToArray_3d[np.float32])
-ToFloat32_1ds = TypeAliasType("ToFloat32_1ds", _ToArray_1ds[np.float32])
-ToFloat32_2ds = TypeAliasType("ToFloat32_2ds", _ToArray_2ds[np.float32])
-ToFloat32_3ds = TypeAliasType("ToFloat32_3ds", _ToArray_3ds[np.float32])
-ToFloat32_1nd = TypeAliasType("ToFloat32_1nd", _ToArray_1nd[np.float32])
-ToFloat32_2nd = TypeAliasType("ToFloat32_2nd", _ToArray_2nd[np.float32])
-ToFloat32_3nd = TypeAliasType("ToFloat32_3nd", _ToArray_3nd[np.float32])
+ToFloat32_nd = TypeAliasType("ToFloat32_nd", _ToArray_nd[Floating32])
+ToFloat32_0d = TypeAliasType("ToFloat32_0d", CanArray0D[Floating32])
+ToFloat32_1d = TypeAliasType("ToFloat32_1d", _ToArray_1d[Floating32])
+ToFloat32_2d = TypeAliasType("ToFloat32_2d", _ToArray_2d[Floating32])
+ToFloat32_3d = TypeAliasType("ToFloat32_3d", _ToArray_3d[Floating32])
+ToFloat32_1ds = TypeAliasType("ToFloat32_1ds", _ToArray_1ds[Floating32])
+ToFloat32_2ds = TypeAliasType("ToFloat32_2ds", _ToArray_2ds[Floating32])
+ToFloat32_3ds = TypeAliasType("ToFloat32_3ds", _ToArray_3ds[Floating32])
+ToFloat32_1nd = TypeAliasType("ToFloat32_1nd", _ToArray_1nd[Floating32])
+ToFloat32_2nd = TypeAliasType("ToFloat32_2nd", _ToArray_2nd[Floating32])
+ToFloat32_3nd = TypeAliasType("ToFloat32_3nd", _ToArray_3nd[Floating32])
 
 ToFloat64_nd = TypeAliasType("ToFloat64_nd", _ToArray2_nd[Floating64, JustFloat])
 ToFloat64_0d = TypeAliasType("ToFloat64_0d", _ToArray2_0d[Floating64, JustFloat])
@@ -446,17 +464,17 @@ ToFloat64_1nd = TypeAliasType("ToFloat64_1nd", _ToArray2_1nd[Floating64, JustFlo
 ToFloat64_2nd = TypeAliasType("ToFloat64_2nd", _ToArray2_2nd[Floating64, JustFloat])
 ToFloat64_3nd = TypeAliasType("ToFloat64_3nd", _ToArray2_3nd[Floating64, JustFloat])
 
-ToLongDouble_nd = TypeAliasType("ToLongDouble_nd", _ToArray_nd[np.longdouble])
-ToLongDouble_0d = TypeAliasType("ToLongDouble_0d", CanArray0D[np.longdouble])
-ToLongDouble_1d = TypeAliasType("ToLongDouble_1d", _ToArray_1d[np.longdouble])
-ToLongDouble_2d = TypeAliasType("ToLongDouble_2d", _ToArray_2d[np.longdouble])
-ToLongDouble_3d = TypeAliasType("ToLongDouble_3d", _ToArray_3d[np.longdouble])
-ToLongDouble_1ds = TypeAliasType("ToLongDouble_1ds", _ToArray_1ds[np.longdouble])
-ToLongDouble_2ds = TypeAliasType("ToLongDouble_2ds", _ToArray_2ds[np.longdouble])
-ToLongDouble_3ds = TypeAliasType("ToLongDouble_3ds", _ToArray_3ds[np.longdouble])
-ToLongDouble_1nd = TypeAliasType("ToLongDouble_1nd", _ToArray_1nd[np.longdouble])
-ToLongDouble_2nd = TypeAliasType("ToLongDouble_2nd", _ToArray_2nd[np.longdouble])
-ToLongDouble_3nd = TypeAliasType("ToLongDouble_3nd", _ToArray_3nd[np.longdouble])
+ToLongDouble_nd = TypeAliasType("ToLongDouble_nd", _ToArray_nd[FloatingLD])
+ToLongDouble_0d = TypeAliasType("ToLongDouble_0d", CanArray0D[FloatingLD])
+ToLongDouble_1d = TypeAliasType("ToLongDouble_1d", _ToArray_1d[FloatingLD])
+ToLongDouble_2d = TypeAliasType("ToLongDouble_2d", _ToArray_2d[FloatingLD])
+ToLongDouble_3d = TypeAliasType("ToLongDouble_3d", _ToArray_3d[FloatingLD])
+ToLongDouble_1ds = TypeAliasType("ToLongDouble_1ds", _ToArray_1ds[FloatingLD])
+ToLongDouble_2ds = TypeAliasType("ToLongDouble_2ds", _ToArray_2ds[FloatingLD])
+ToLongDouble_3ds = TypeAliasType("ToLongDouble_3ds", _ToArray_3ds[FloatingLD])
+ToLongDouble_1nd = TypeAliasType("ToLongDouble_1nd", _ToArray_1nd[FloatingLD])
+ToLongDouble_2nd = TypeAliasType("ToLongDouble_2nd", _ToArray_2nd[FloatingLD])
+ToLongDouble_3nd = TypeAliasType("ToLongDouble_3nd", _ToArray_3nd[FloatingLD])
 
 ToFloating_nd = TypeAliasType("ToFloating_nd", _ToArray2_nd[np.floating, JustFloat])
 ToFloating_0d = TypeAliasType("ToFloating_0d", _ToArray2_0d[np.floating, JustFloat])
@@ -471,17 +489,17 @@ ToFloating_2nd = TypeAliasType("ToFloating_2nd", _ToArray2_2nd[np.floating, Just
 ToFloating_3nd = TypeAliasType("ToFloating_3nd", _ToArray2_3nd[np.floating, JustFloat])
 
 # complex floats
-ToComplex64_nd = TypeAliasType("ToComplex64_nd", _ToArray_nd[np.complex64])
-ToComplex64_0d = TypeAliasType("ToComplex64_0d", CanArray0D[np.complex64])
-ToComplex64_1d = TypeAliasType("ToComplex64_1d", _ToArray_1d[np.complex64])
-ToComplex64_2d = TypeAliasType("ToComplex64_2d", _ToArray_2d[np.complex64])
-ToComplex64_3d = TypeAliasType("ToComplex64_3d", _ToArray_3d[np.complex64])
-ToComplex64_1ds = TypeAliasType("ToComplex64_1ds", _ToArray_1ds[np.complex64])
-ToComplex64_2ds = TypeAliasType("ToComplex64_2ds", _ToArray_2ds[np.complex64])
-ToComplex64_3ds = TypeAliasType("ToComplex64_3ds", _ToArray_3ds[np.complex64])
-ToComplex64_1nd = TypeAliasType("ToComplex64_1nd", _ToArray_1nd[np.complex64])
-ToComplex64_2nd = TypeAliasType("ToComplex64_2nd", _ToArray_2nd[np.complex64])
-ToComplex64_3nd = TypeAliasType("ToComplex64_3nd", _ToArray_3nd[np.complex64])
+ToComplex64_nd = TypeAliasType("ToComplex64_nd", _ToArray_nd[CFloating32])
+ToComplex64_0d = TypeAliasType("ToComplex64_0d", CanArray0D[CFloating32])
+ToComplex64_1d = TypeAliasType("ToComplex64_1d", _ToArray_1d[CFloating32])
+ToComplex64_2d = TypeAliasType("ToComplex64_2d", _ToArray_2d[CFloating32])
+ToComplex64_3d = TypeAliasType("ToComplex64_3d", _ToArray_3d[CFloating32])
+ToComplex64_1ds = TypeAliasType("ToComplex64_1ds", _ToArray_1ds[CFloating32])
+ToComplex64_2ds = TypeAliasType("ToComplex64_2ds", _ToArray_2ds[CFloating32])
+ToComplex64_3ds = TypeAliasType("ToComplex64_3ds", _ToArray_3ds[CFloating32])
+ToComplex64_1nd = TypeAliasType("ToComplex64_1nd", _ToArray_1nd[CFloating32])
+ToComplex64_2nd = TypeAliasType("ToComplex64_2nd", _ToArray_2nd[CFloating32])
+ToComplex64_3nd = TypeAliasType("ToComplex64_3nd", _ToArray_3nd[CFloating32])
 
 ToComplex128_nd = TypeAliasType("ToComplex128_nd", _ToArray2_nd[CFloating64, JustComplex])
 ToComplex128_0d = TypeAliasType("ToComplex128_0d", _ToArray2_0d[CFloating64, JustComplex])
@@ -495,17 +513,17 @@ ToComplex128_1nd = TypeAliasType("ToComplex128_1nd", _ToArray2_1nd[CFloating64, 
 ToComplex128_2nd = TypeAliasType("ToComplex128_2nd", _ToArray2_2nd[CFloating64, JustComplex])
 ToComplex128_3nd = TypeAliasType("ToComplex128_3nd", _ToArray2_3nd[CFloating64, JustComplex])
 
-ToCLongDouble_nd = TypeAliasType("ToCLongDouble_nd", _ToArray_nd[np.clongdouble])
-ToCLongDouble_0d = TypeAliasType("ToCLongDouble_0d", CanArray0D[np.clongdouble])
-ToCLongDouble_1d = TypeAliasType("ToCLongDouble_1d", _ToArray_1d[np.clongdouble])
-ToCLongDouble_2d = TypeAliasType("ToCLongDouble_2d", _ToArray_2d[np.clongdouble])
-ToCLongDouble_3d = TypeAliasType("ToCLongDouble_3d", _ToArray_3d[np.clongdouble])
-ToCLongDouble_1ds = TypeAliasType("ToCLongDouble_1ds", _ToArray_1ds[np.clongdouble])
-ToCLongDouble_2ds = TypeAliasType("ToCLongDouble_2ds", _ToArray_2ds[np.clongdouble])
-ToCLongDouble_3ds = TypeAliasType("ToCLongDouble_3ds", _ToArray_3ds[np.clongdouble])
-ToCLongDouble_1nd = TypeAliasType("ToCLongDouble_1nd", _ToArray_1nd[np.clongdouble])
-ToCLongDouble_2nd = TypeAliasType("ToCLongDouble_2nd", _ToArray_2nd[np.clongdouble])
-ToCLongDouble_3nd = TypeAliasType("ToCLongDouble_3nd", _ToArray_3nd[np.clongdouble])
+ToCLongDouble_nd = TypeAliasType("ToCLongDouble_nd", _ToArray_nd[CFloatingLD])
+ToCLongDouble_0d = TypeAliasType("ToCLongDouble_0d", CanArray0D[CFloatingLD])
+ToCLongDouble_1d = TypeAliasType("ToCLongDouble_1d", _ToArray_1d[CFloatingLD])
+ToCLongDouble_2d = TypeAliasType("ToCLongDouble_2d", _ToArray_2d[CFloatingLD])
+ToCLongDouble_3d = TypeAliasType("ToCLongDouble_3d", _ToArray_3d[CFloatingLD])
+ToCLongDouble_1ds = TypeAliasType("ToCLongDouble_1ds", _ToArray_1ds[CFloatingLD])
+ToCLongDouble_2ds = TypeAliasType("ToCLongDouble_2ds", _ToArray_2ds[CFloatingLD])
+ToCLongDouble_3ds = TypeAliasType("ToCLongDouble_3ds", _ToArray_3ds[CFloatingLD])
+ToCLongDouble_1nd = TypeAliasType("ToCLongDouble_1nd", _ToArray_1nd[CFloatingLD])
+ToCLongDouble_2nd = TypeAliasType("ToCLongDouble_2nd", _ToArray_2nd[CFloatingLD])
+ToCLongDouble_3nd = TypeAliasType("ToCLongDouble_3nd", _ToArray_3nd[CFloatingLD])
 
 ToComplex_nd = TypeAliasType("ToComplex_nd", _ToArray2_nd[np.complexfloating, JustComplex])
 ToComplex_0d = TypeAliasType("ToComplex_0d", _ToArray2_0d[np.complexfloating, JustComplex])
@@ -675,9 +693,9 @@ _CoSInteger: TypeAlias = np.signedinteger | _CoInteger32
 _CoUInteger: TypeAlias = np.unsignedinteger | _ToBool
 _CoInteger: TypeAlias = np.integer | _ToBool
 
-_CoFloat16: TypeAlias = np.float16 | _CoInteger8
-_CoFloat32: TypeAlias = np.float32 | _CoNumber16
-_CoFloat64: TypeAlias = Floating64 | np.float32 | Number16 | _CoInteger
+_CoFloat16: TypeAlias = Floating16 | _CoInteger8
+_CoFloat32: TypeAlias = Floating32 | _CoNumber16
+_CoFloat64: TypeAlias = Floating64 | Floating32 | Number16 | _CoInteger
 _CoFloating: TypeAlias = np.floating | _CoInteger
 
 _CoComplex64: TypeAlias = Number32 | _CoNumber16
