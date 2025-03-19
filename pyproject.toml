@@ -278,7 +278,7 @@ env_list = ["ruff", "pytest", "basedpyright", "basedmypy", "3.13", "3.12", "3.11
 
 
 [tool.typos.default]
-extend-ignore-identifiers-re = ['ND|nd']
+extend-ignore-identifiers-re = ['ND|nd|nin|NIN']
 
 [tool.typos.files]
 extend-exclude = ["*.pyi", ".mypyignore"]
