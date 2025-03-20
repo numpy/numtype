@@ -28,6 +28,12 @@ jobs:
       - name: typos
         uses: crate-ci/typos@master
 
+      - name: markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          config: "doc/.markdownlint.yaml"
+          globs: "**/*.md"
+
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
