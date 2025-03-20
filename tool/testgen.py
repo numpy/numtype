@@ -19,10 +19,17 @@ OUTPUT_DIR: Final = TEST_DIR / "generated"
 TAB: Final = " " * 4
 LINEBREAK: Final = "\n"
 
-TYPES_I: Final = frozenset({"np.int8", "np.int16", "np.int32", "np.int64"})
-TYPES_U: Final = frozenset({"np.uint8", "np.uint16", "np.uint32", "np.uint64"})
-TYPES_F: Final = frozenset({"np.float32", "np.float64", "np.longdouble"})
-TYPES_C: Final = frozenset({"np.complex64", "np.complex128", "np.clongdouble"})
+NP = "np"
+
+TYPES_I: Final = frozenset({f"{NP}.int8", f"{NP}.int16", f"{NP}.int32", f"{NP}.int64"})
+TYPES_U: Final = frozenset({
+    f"{NP}.uint8",
+    f"{NP}.uint16",
+    f"{NP}.uint32",
+    f"{NP}.uint64",
+})
+TYPES_F: Final = frozenset({f"{NP}.float32", f"{NP}.float64", f"{NP}.longdouble"})
+TYPES_C: Final = frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"})
 TYPES_IU: Final = TYPES_I | TYPES_U
 TYPES_FC: Final = TYPES_F | TYPES_C
 TYPES_IUFC: Final = TYPES_IU | TYPES_FC
@@ -54,17 +61,17 @@ def _scalar(key: str, /) -> np.number | np.bool | np.timedelta64 | np.datetime64
 
 def _sctype_expr(dtype: np.dtype[Any]) -> str:
     if dtype.char == "q":
-        return "np.longlong"
+        return f"{NP}.longlong"
     if dtype.char == "Q":
-        return "np.ulonglong"
+        return f"{NP}.ulonglong"
     if dtype.char == "g":
-        return "np.longdouble"
+        return f"{NP}.longdouble"
     if dtype.char == "G":
-        return "np.clongdouble"
+        return f"{NP}.clongdouble"
 
     name = dtype.name
     assert "[" not in name, "units not supported yet"
-    return f"np.{name}"
+    return f"{NP}.{name}"
 
 
 def _union(*types: str) -> str:
@@ -75,7 +82,7 @@ def _union(*types: str) -> str:
     others: set[str] = set()
 
     for tp in types:
-        kind = np.dtype(tp.removeprefix("np.")).kind
+        kind = np.dtype(tp.removeprefix(f"{NP}.")).kind
         if kind == "i":
             ints.add(tp)
         elif kind == "u":
@@ -216,44 +223,62 @@ class EMathTestGen(TestGen):
     testname = "emath"
 
     VALUES: Final[dict[str, list[Any]]] = {
-        # "np.bool": [np.True_],  # same as int8
-        "np.uint8": [np.uint8(0), np.uint8(1), np.uint8(9)],
-        "np.uint16": [np.uint16(0), np.uint16(1), np.uint16(9)],
-        "np.uint32": [np.uint32(0), np.uint32(1), np.uint32(9)],
-        "np.uint64": [np.uint64(0), np.uint64(1), np.uint64(9)],
-        "np.int8": [np.int8(0), np.int8(1), np.int8(9), np.int8(-9), np.int8(-1)],
-        "np.int16": [np.int16(0), np.int16(1), np.int16(9), np.int16(-9), np.int16(-1)],
-        "np.int32": [np.int32(0), np.int32(1), np.int32(9), np.int32(-9), np.int32(-1)],
-        "np.int64": [np.int64(0), np.int64(1), np.int64(9), np.int64(-9), np.int64(-1)],
-        "np.float16": [
+        # f"{NP}.bool": [np.True_],  # same as int8
+        f"{NP}.uint8": [np.uint8(0), np.uint8(1), np.uint8(9)],
+        f"{NP}.uint16": [np.uint16(0), np.uint16(1), np.uint16(9)],
+        f"{NP}.uint32": [np.uint32(0), np.uint32(1), np.uint32(9)],
+        f"{NP}.uint64": [np.uint64(0), np.uint64(1), np.uint64(9)],
+        f"{NP}.int8": [np.int8(0), np.int8(1), np.int8(9), np.int8(-9), np.int8(-1)],
+        f"{NP}.int16": [
+            np.int16(0),
+            np.int16(1),
+            np.int16(9),
+            np.int16(-9),
+            np.int16(-1),
+        ],
+        f"{NP}.int32": [
+            np.int32(0),
+            np.int32(1),
+            np.int32(9),
+            np.int32(-9),
+            np.int32(-1),
+        ],
+        f"{NP}.int64": [
+            np.int64(0),
+            np.int64(1),
+            np.int64(9),
+            np.int64(-9),
+            np.int64(-1),
+        ],
+        f"{NP}.float16": [
             np.float16(0),
             np.float16(1),
             np.float16(9),
             np.float16(-9),
             np.float16(-1),
         ],
-        "np.float32": [
+        f"{NP}.float32": [
             np.float32(0),
             np.float32(1),
             np.float32(9),
             np.float32(-9),
             np.float32(-1),
         ],
-        "np.float64": [
+        f"{NP}.float64": [
             np.float64(0),
             np.float64(1),
             np.float64(9),
             np.float64(-9),
             np.float64(-1),
         ],
-        "np.longdouble": [
+        f"{NP}.longdouble": [
             np.longdouble(0),
             np.longdouble(1),
             np.longdouble(9),
             np.longdouble(-9),
             np.longdouble(-1),
         ],
-        "np.complex64": [
+        f"{NP}.complex64": [
             np.complex64(0),
             np.complex64(1),
             np.complex64(9),
@@ -268,7 +293,7 @@ class EMathTestGen(TestGen):
             np.complex64(-9),
             np.complex64(-1),
         ],
-        "np.complex128": [
+        f"{NP}.complex128": [
             np.complex128(0),
             np.complex128(1),
             np.complex128(9),
@@ -283,7 +308,7 @@ class EMathTestGen(TestGen):
             np.complex128(-9),
             np.complex128(-1),
         ],
-        "np.clongdouble": [
+        f"{NP}.clongdouble": [
             np.clongdouble(0),
             np.clongdouble(1),
             np.clongdouble(9),
@@ -307,7 +332,7 @@ class EMathTestGen(TestGen):
     @override
     def get_names(self) -> Iterable[tuple[str, str]]:
         for sct in self.VALUES:
-            if sct.startswith("np."):
+            if sct.startswith(f"{NP}."):
                 if sct.endswith("intp"):
                     char = "N" if sct[3] == "u" else "n"
                 elif sct.endswith("longlong"):
@@ -341,7 +366,7 @@ class EMathTestGen(TestGen):
 
                 if (sct := tp.__name__) not in types_out_seen:
                     types_out_seen.add(sct)
-                    types_out.append(f"np.{sct}")
+                    types_out.append(f"{NP}.{sct}")
 
             yield self._names[sct_arg], _union(*types_out)
 
@@ -366,7 +391,7 @@ class EMathTestGen(TestGen):
 
                     if (sct := tp.__name__) not in types_out_seen:
                         types_out_seen.add(sct)
-                        types_out.append(f"np.{sct}")
+                        types_out.append(f"{NP}.{sct}")
 
         names = self._names
         sct_lhs_prev = None
@@ -386,7 +411,7 @@ class EMathTestGen(TestGen):
             if fname in binary_fns:
                 continue
 
-            qualname = f"np.emath.{fname}"
+            qualname = f"{NP}.emath.{fname}"
             func1 = getattr(np.emath, fname)
 
             yield from self._generate_section(qualname)
@@ -395,7 +420,7 @@ class EMathTestGen(TestGen):
 
         if self._binary:
             for fname in binary_fns:
-                qualname = f"np.emath.{fname}"
+                qualname = f"{NP}.emath.{fname}"
                 func2 = getattr(np.emath, fname)
 
                 yield from self._generate_section(qualname)
@@ -436,12 +461,10 @@ class ScalarBinOpTestGen(TestGen):
     NAMES: ClassVar = {
         # builtins (key length > 1)
         "bool": "b0",
-        # TODO(jorenham): Re-enable after binops use `_numtype.Is` (avoid promotions)
-        # "int": "i0",
-        # "float": "f0",
-        # "complex": "c0",
-        #
-        # bool
+        "int": "i0",
+        "float": "f0",
+        "complex": "c0",
+        # numpy boolean
         "?": "b1",
         # unsigned integers
         "B": "u1",
@@ -465,11 +488,11 @@ class ScalarBinOpTestGen(TestGen):
         "m": "m8",
         "M": "M8",
     }
+    INTP_EXPR: ClassVar = np.intp.__name__
 
     def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
-        pad = " " * (
-            op != "**"
-        )  # ruff doesn't like whitespace around `**` for some reason
+        # ruff doesn't like whitespace around `**` for some reason
+        pad = " " * (op != "**")
         expr_eval = f"{self.NAMES[lhs]}{pad}{op}{pad}{self.NAMES[rhs]}"
 
         try:
@@ -485,11 +508,6 @@ class ScalarBinOpTestGen(TestGen):
             ):
                 return None
 
-            if len(lhs) > 1 or len(rhs) > 1:
-                # skip rejection tests with builtins for now
-                # TODO(jorenham): Re-enable this once `Is[int]` is used.
-                return None
-
             return "  ".join((  # noqa: FLY002
                 expr_eval,
                 "# type: ignore[operator]",
@@ -501,6 +519,14 @@ class ScalarBinOpTestGen(TestGen):
             if isinstance(val_out, np.generic)
             else type(val_out).__qualname__
         )
+
+        # for `builtins.int` input, if the sctype is the alias of `intp`, then assume
+        # that it actually originated from `intp`, and use that instead.
+        if "int" in {lhs, rhs} and lhs not in "lLqQ" and rhs not in "lLqQ":
+            expr_name = expr_type.removeprefix(f"{NP}.")
+            if expr_name == self.INTP_EXPR:
+                expr_type = f"{NP}.int_"
+
         return None if expr_type == "bool" else _expr_assert_type(expr_eval, expr_type)
 
     @override
