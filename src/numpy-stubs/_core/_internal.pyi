@@ -10,9 +10,9 @@ from numpy.ctypeslib import c_intp
 
 ###
 
-_CastT = TypeVar("_CastT", bound=ct._CanCastTo)  # noqa: SLF001
+_CastT = TypeVar("_CastT", bound=ct._CanCastTo)
 _T_co = TypeVar("_T_co", covariant=True)
-_CT = TypeVar("_CT", bound=ct._CData)  # noqa: SLF001
+_CT = TypeVar("_CT", bound=ct._CData)
 _PT_co = TypeVar("_PT_co", bound=int | None, default=None, covariant=True)
 
 ###

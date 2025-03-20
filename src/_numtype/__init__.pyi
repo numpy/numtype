@@ -1,3 +1,5 @@
+# ruff: noqa: SLF001
+
 # Internal type-check-only types, that may be moved to the `numtype` public API in the
 # future.
 
@@ -10,7 +12,7 @@ from typing import Any, ClassVar, TypeAlias, type_check_only
 from typing_extensions import Protocol, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
-from numpy._typing import _8Bit, _16Bit, _32Bit, _64Bit, _96Bit, _128Bit
+from numpy._typing import _nbit_base as bits
 
 from ._just import (
     Just as Just,
@@ -128,39 +130,31 @@ Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT0]]
 ###
 # sized abstract scalar type aliases
 
-Integer8: TypeAlias = np.integer[_8Bit]  # `[u]int8` and `[u]byte`
-Integer16: TypeAlias = np.integer[_16Bit]  # `[u]int16` and `[u]short`
-Integer32: TypeAlias = np.integer[_32Bit]  # `[u]int32`, `[u]intc`, maybe `[u]long`, and sometimes `[u]intp`
-Integer64: TypeAlias = np.integer[_64Bit]  # `[u]int64` and `[u]longlong`, maybe `u[long]`, and usually `[u]intp`
+Integer8: TypeAlias = np.integer[bits._8]  # `[u]int8` and `[u]byte`
+Integer16: TypeAlias = np.integer[bits._16]  # `[u]int16` and `[u]short`
+Integer32: TypeAlias = np.integer[bits._32]  # `[u]int32`, `[u]intc`, maybe `[u]long`, and sometimes `[u]intp`
+Integer64: TypeAlias = np.integer[bits._64]  # `[u]int64` and `[u]longlong`, maybe `u[long]`, and usually `[u]intp`
 Integer_: TypeAlias = Integer32 | Integer64  # `Integer32`, `Integer64`, always `[u]long`, and always `[u]intp``
 
-Floating16: TypeAlias = np.floating[_16Bit]  # `float16` and `half`
-Floating32: TypeAlias = np.floating[_32Bit]  # `float32` and `single`
-Floating64: TypeAlias = np.floating[_64Bit]  # `float64` and `double`
-Floating96: TypeAlias = np.floating[_96Bit]  # `float96`
-Floating128: TypeAlias = np.floating[_128Bit]  # `float128`
-FloatingLD: TypeAlias = Floating96 | Floating128  # `longdouble`, `float96`, and `float128`
+Floating16: TypeAlias = np.floating[bits._16]  # `float16` and `half`
+Floating32: TypeAlias = np.floating[bits._32]  # `float32` and `single`
+Floating64: TypeAlias = np.floating[bits._64]  # `float64` and `double`
+FloatingLD: TypeAlias = np.floating[bits._LD]  # `longdouble`, `float96`, and `float128`
 
-CFloating32: TypeAlias = np.complexfloating[_32Bit]  # `complex64` and `csingle`
-CFloating64: TypeAlias = np.complexfloating[_64Bit]  # `complex128` and `cdouble`
-CFloating96: TypeAlias = np.complexfloating[_96Bit]  # `complex192`
-CFloating128: TypeAlias = np.complexfloating[_128Bit]  # `complex256`
-CFloatingLD: TypeAlias = CFloating96 | CFloating128  # `clongdouble`, `complex192`, and `complex256`
+CFloating32: TypeAlias = np.complexfloating[bits._32]  # `complex64` and `csingle`
+CFloating64: TypeAlias = np.complexfloating[bits._64]  # `complex128` and `cdouble`
+CFloatingLD: TypeAlias = np.complexfloating[bits._LD]  # `clongdouble`, `complex192`, and `complex256`
 
-Inexact16: TypeAlias = np.inexact[_16Bit]  # `Floating16`
-Inexact32: TypeAlias = np.inexact[_32Bit]  # `Floating32` and `CFloating32`
-Inexact64: TypeAlias = np.inexact[_64Bit]  # `Floating64` and `CFloating64`
-Inexact96: TypeAlias = np.inexact[_96Bit]  # `[C]Floating96`
-Inexact128: TypeAlias = np.inexact[_128Bit]  # `[C]Floating128`
-InexactLD: TypeAlias = Inexact96 | Inexact128  # `[C]FloatingLD`
+Inexact16: TypeAlias = np.inexact[bits._16]  # `Floating16`
+Inexact32: TypeAlias = np.inexact[bits._32]  # `Floating32` and `CFloating32`
+Inexact64: TypeAlias = np.inexact[bits._64]  # `Floating64` and `CFloating64`
+InexactLD: TypeAlias = np.inexact[bits._LD]  # `FloatingLD` and `CFloatingLD`
 
-Number8: TypeAlias = np.number[_8Bit]  # `Integer8`
-Number16: TypeAlias = np.number[_16Bit]  # `Integer16` and `float16`
-Number32: TypeAlias = np.number[_32Bit]  # `Integer32` and `Inexact32`
-Number64: TypeAlias = np.number[_64Bit]  # `Integer64` and `Inexact64`
-Number96: TypeAlias = np.number[_96Bit]  # `Inexact96`
-Number128: TypeAlias = np.number[_128Bit]  # `Inexact128`
-NumberLD: TypeAlias = Number96 | Number128  # `InexactLD`
+Number8: TypeAlias = np.number[bits._8]  # `Integer8`
+Number16: TypeAlias = np.number[bits._16]  # `Integer16` and `float16`
+Number32: TypeAlias = np.number[bits._32]  # `Integer32` and `Inexact32`
+Number64: TypeAlias = np.number[bits._64]  # `Integer64` and `Inexact64`
+NumberLD: TypeAlias = np.number[bits._LD]  # `InexactLD`
 
 Scalar8: TypeAlias = Number8 | np.bool_
 
@@ -675,7 +669,6 @@ ToGeneric_3nd = TypeAliasType("ToGeneric_3nd", _ToArray2_3nd[np.generic, _PyScal
 _CoInteger8: TypeAlias = Integer8 | _ToBool
 _CoInteger16: TypeAlias = Integer16 | _CoInteger8
 _CoInteger32: TypeAlias = Integer32 | _CoInteger16
-_CoNumber16: TypeAlias = Number16 | _CoInteger8
 
 _CoInt8: TypeAlias = np.int8 | _ToBool
 _CoUInt8: TypeAlias = np.uint8 | _ToBool
@@ -694,11 +687,11 @@ _CoUInteger: TypeAlias = np.unsignedinteger | _ToBool
 _CoInteger: TypeAlias = np.integer | _ToBool
 
 _CoFloat16: TypeAlias = Floating16 | _CoInteger8
-_CoFloat32: TypeAlias = Floating32 | _CoNumber16
-_CoFloat64: TypeAlias = Floating64 | Floating32 | Number16 | _CoInteger
+_CoFloat32: TypeAlias = Floating32 | _CoFloat16
+_CoFloat64: TypeAlias = Floating64 | Floating32 | Floating16 | _CoInteger
 _CoFloating: TypeAlias = np.floating | _CoInteger
 
-_CoComplex64: TypeAlias = Number32 | _CoNumber16
+_CoComplex64: TypeAlias = Inexact32 | Number16 | Number8
 _CoComplex128: TypeAlias = Number64 | _CoComplex64
 _CoComplex: TypeAlias = np.number | _ToBool
 
