@@ -665,6 +665,7 @@ ToGeneric_3nd = TypeAliasType("ToGeneric_3nd", _ToArray2_3nd[np.generic, _PyScal
 
 ###
 # Coercible (overlapping) scalar- and array-likes
+# See https://github.com/numpy/numtype/issues/135 for the scalar promotion table
 
 _CoInteger8: TypeAlias = Integer8 | _ToBool
 _CoInteger16: TypeAlias = Integer16 | _CoInteger8
@@ -687,7 +688,7 @@ _CoUInteger: TypeAlias = np.unsignedinteger | _ToBool
 _CoInteger: TypeAlias = np.integer | _ToBool
 
 _CoFloat16: TypeAlias = Floating16 | _CoInteger8
-_CoFloat32: TypeAlias = Floating32 | _CoFloat16
+_CoFloat32: TypeAlias = Floating32 | Floating16 | _CoInteger16
 _CoFloat64: TypeAlias = Floating64 | Floating32 | Floating16 | _CoInteger
 _CoFloating: TypeAlias = np.floating | _CoInteger
 
