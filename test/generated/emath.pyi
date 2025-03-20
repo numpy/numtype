@@ -1,4 +1,4 @@
-# @generated 2025-03-11T03:12:57Z with tool/testgen.py
+# @generated 2025-03-20T21:21:59Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -38,7 +38,7 @@ assert_type(np.emath.sqrt(SC_f8), np.float64 | np.complex128)
 assert_type(np.emath.sqrt(SC_g), np.longdouble | np.complex128)
 assert_type(np.emath.sqrt(SC_c8), np.complex64)
 assert_type(np.emath.sqrt(SC_c16), np.complex128)
-assert_type(np.emath.sqrt(SC_G), np.complex128 | np.clongdouble)
+assert_type(np.emath.sqrt(SC_G), np.clongdouble | np.complex128)
 
 ###
 # np.emath.log
@@ -57,7 +57,7 @@ assert_type(np.emath.log(SC_f8), np.float64 | np.complex128)
 assert_type(np.emath.log(SC_g), np.longdouble | np.complex128)
 assert_type(np.emath.log(SC_c8), np.complex64)
 assert_type(np.emath.log(SC_c16), np.complex128)
-assert_type(np.emath.log(SC_G), np.complex128 | np.clongdouble)
+assert_type(np.emath.log(SC_G), np.clongdouble | np.complex128)
 
 ###
 # np.emath.log2
@@ -76,7 +76,7 @@ assert_type(np.emath.log2(SC_f8), np.float64 | np.complex128)
 assert_type(np.emath.log2(SC_g), np.longdouble | np.complex128)
 assert_type(np.emath.log2(SC_c8), np.complex64)
 assert_type(np.emath.log2(SC_c16), np.complex128)
-assert_type(np.emath.log2(SC_G), np.complex128 | np.clongdouble)
+assert_type(np.emath.log2(SC_G), np.clongdouble | np.complex128)
 
 ###
 # np.emath.log10
@@ -95,7 +95,7 @@ assert_type(np.emath.log10(SC_f8), np.float64 | np.complex128)
 assert_type(np.emath.log10(SC_g), np.longdouble | np.complex128)
 assert_type(np.emath.log10(SC_c8), np.complex64)
 assert_type(np.emath.log10(SC_c16), np.complex128)
-assert_type(np.emath.log10(SC_G), np.complex128 | np.clongdouble)
+assert_type(np.emath.log10(SC_G), np.clongdouble | np.complex128)
 
 ###
 # np.emath.arccos
@@ -114,7 +114,7 @@ assert_type(np.emath.arccos(SC_f8), np.float64 | np.complex128)
 assert_type(np.emath.arccos(SC_g), np.longdouble | np.complex128)
 assert_type(np.emath.arccos(SC_c8), np.complex64)
 assert_type(np.emath.arccos(SC_c16), np.complex128)
-assert_type(np.emath.arccos(SC_G), np.complex128 | np.clongdouble)
+assert_type(np.emath.arccos(SC_G), np.clongdouble | np.complex128)
 
 ###
 # np.emath.arcsin
@@ -133,7 +133,7 @@ assert_type(np.emath.arcsin(SC_f8), np.float64 | np.complex128)
 assert_type(np.emath.arcsin(SC_g), np.longdouble | np.complex128)
 assert_type(np.emath.arcsin(SC_c8), np.complex64)
 assert_type(np.emath.arcsin(SC_c16), np.complex128)
-assert_type(np.emath.arcsin(SC_G), np.complex128 | np.clongdouble)
+assert_type(np.emath.arcsin(SC_G), np.clongdouble | np.complex128)
 
 ###
 # np.emath.arctanh
@@ -152,4 +152,4 @@ assert_type(np.emath.arctanh(SC_f8), np.float64 | np.complex128)
 assert_type(np.emath.arctanh(SC_g), np.longdouble | np.complex128)
 assert_type(np.emath.arctanh(SC_c8), np.complex64)
 assert_type(np.emath.arctanh(SC_c16), np.complex128)
-assert_type(np.emath.arctanh(SC_G), np.complex128 | np.clongdouble)
+assert_type(np.emath.arctanh(SC_G), np.clongdouble | np.complex128)

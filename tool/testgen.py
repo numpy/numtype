@@ -23,18 +23,18 @@ BR: Final = "\n"
 NP: Final = "np"
 PREAMBLE_PREFIX: Final = "@generated"
 
-TYPES_I: Final = frozenset({f"{NP}.int8", f"{NP}.int16", f"{NP}.int32", f"{NP}.int64"})
-TYPES_U: Final = frozenset({
-    f"{NP}.uint8",
-    f"{NP}.uint16",
-    f"{NP}.uint32",
-    f"{NP}.uint64",
-})
-TYPES_F: Final = frozenset({f"{NP}.float32", f"{NP}.float64", f"{NP}.longdouble"})
-TYPES_C: Final = frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"})
-TYPES_IU: Final = TYPES_I | TYPES_U
-TYPES_FC: Final = TYPES_F | TYPES_C
-TYPES_IUFC: Final = TYPES_IU | TYPES_FC
+_NUMBERS_ABSTRACT: Final = {
+    "i": "signedinteger",
+    "u": "unsignedinteger",
+    "f": "floating",
+    "c": "complexfloating",
+}
+_NUMBERS_CONCRETE: Final = {
+    "i": frozenset({f"{NP}.int8", f"{NP}.int16", f"{NP}.int32", f"{NP}.int64"}),
+    "u": frozenset({f"{NP}.uint8", f"{NP}.uint16", f"{NP}.uint32", f"{NP}.uint64"}),
+    "f": frozenset({f"{NP}.float32", f"{NP}.float64", f"{NP}.longdouble"}),
+    "c": frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"}),
+}
 
 DATETIME_OPS: Final = {"+", "-"}
 TIMEDELTA_OPS: Final = DATETIME_OPS | {"*", "/", "//", "%"}
@@ -77,35 +77,21 @@ def _sctype_expr(dtype: np.dtype[Any]) -> str:
 
 
 def _union(*types: str) -> str:
-    ints: set[str] = set()
-    uints: set[str] = set()
-    floats: set[str] = set()
-    cfloats: set[str] = set()
-    others: set[str] = set()
+    numbers: dict[str, list[str]] = {"i": [], "u": [], "f": [], "c": []}
+    other: list[str] = []
 
     for tp in types:
-        kind = np.dtype(tp.removeprefix(f"{NP}.")).kind
-        if kind == "i":
-            ints.add(tp)
-        elif kind == "u":
-            uints.add(tp)
-        elif kind == "f":
-            floats.add(tp)
-        elif kind == "c":
-            cfloats.add(tp)
+        kind: str = np.dtype(tp.removeprefix(f"{NP}.")).kind
+        numbers.get(kind, other).append(tp)
+
+    combined: list[str] = []
+    for kind, base in _NUMBERS_ABSTRACT.items():
+        if set(numbers[kind]) >= _NUMBERS_CONCRETE[kind]:
+            combined.append(base)
         else:
-            others.add(tp)
+            combined.extend(numbers[kind])
 
-    if ints >= TYPES_I:
-        ints = {"signedinteger"}
-    if uints >= TYPES_U:
-        uints = {"unsignedinteger"}
-    if floats >= TYPES_F:
-        floats = {"floating"}
-    if cfloats >= TYPES_C:
-        cfloats = {"complexfloating"}
-
-    return " | ".join((*others, *ints, *uints, *floats, *cfloats))
+    return " | ".join(dict.fromkeys(combined))
 
 
 def _strip_preamble(source: str) -> tuple[str | None, str]:
