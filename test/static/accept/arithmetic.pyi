@@ -458,7 +458,7 @@ assert_type(f8 + f4, np.float64)
 assert_type(f8 + i4, np.float64)
 assert_type(f8 + b_, np.float64)
 assert_type(f8 + b, np.float64)
-assert_type(f8 + c, np.float64 | np.complex128)
+assert_type(f8 + c, np.complex128)
 assert_type(f8 + f, np.float64)
 assert_type(f8 + AR_f, npt.NDArray[np.float64])
 
@@ -470,13 +470,13 @@ assert_type(i4 + f8, np.float64)
 assert_type(b_ + f8, np.float64)
 assert_type(b + f8, np.float64)
 # https://github.com/microsoft/pyright/issues/9684
-assert_type(c + f8, np.complex128 | np.float64)  # pyright: ignore[reportAssertTypeFailure]
+assert_type(c + f8, np.complex128)  # pyright: ignore[reportAssertTypeFailure]
 assert_type(f + f8, np.float64)  # pyright: ignore[reportAssertTypeFailure]
 assert_type(AR_f + f8, npt.NDArray[np.float64])
 
 assert_type(f4 + b, np.float32)
 assert_type(f4 + f, np.float32)
-assert_type(f4 + c, np.float32 | np.complex64)
+assert_type(f4 + c, np.complex64)
 assert_type(f4 + f16, np.longdouble)
 assert_type(f4 + f8, np.float64)
 assert_type(f4 + i8, np.float64)
@@ -487,7 +487,7 @@ assert_type(f4 + AR_f, npt.NDArray[np.float64])
 
 assert_type(b + f4, np.float32)
 assert_type(f + f4, np.float32)
-assert_type(c + f4, np.float32 | np.complex64)
+assert_type(c + f4, np.complex64)
 assert_type(f16 + f4, np.longdouble)
 assert_type(f8 + f4, np.float64)
 assert_type(i8 + f4, np.float64)

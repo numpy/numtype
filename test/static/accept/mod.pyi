@@ -159,7 +159,7 @@ assert_type(divmod(f8, f), tuple[np.float64, np.float64])
 assert_type(divmod(f8, f8), tuple[np.float64, np.float64])
 assert_type(divmod(f8, f4), tuple[np.float64, np.float64])
 assert_type(divmod(f4, f4), tuple[np.float32, np.float32])
-assert_type(AR_b.__rdivmod__(f8), tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]])
+assert_type(divmod(f8, AR_b), tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]])
 
 assert_type(b % f8, np.float64)
 assert_type(f % f8, np.float64)  # pyright: ignore[reportAssertTypeFailure]  # pyright incorrectly infers `builtins.float`
@@ -171,6 +171,6 @@ assert_type(AR_b % f8, npt.NDArray[np.float64])
 assert_type(divmod(b, f8), tuple[np.float64, np.float64])
 assert_type(divmod(f8, f8), tuple[np.float64, np.float64])
 assert_type(divmod(f4, f4), tuple[np.float32, np.float32])
-assert_type(f8.__rdivmod__(f), tuple[np.float64, np.float64])
-assert_type(f8.__rdivmod__(f4), tuple[np.float64, np.float64])
-assert_type(AR_b.__divmod__(f8), tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]])
+assert_type(divmod(f, f8), tuple[np.float64, np.float64])  # pyright: ignore[reportAssertTypeFailure]
+assert_type(divmod(f4, f8), tuple[np.float64, np.float64])
+assert_type(divmod(AR_b, f8), tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]])
