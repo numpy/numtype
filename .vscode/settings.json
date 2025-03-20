@@ -1,9 +1,9 @@
 {
-  "[python]": {
-    "editor.rulers": [88, 130]
-  },
   "[markdown]": {
     "editor.rulers": [130]
+  },
+  "[python]": {
+    "editor.rulers": [88, 130]
   },
   "evenBetterToml.formatter.alignComments": true,
   "evenBetterToml.formatter.allowedBlankLines": 2,
@@ -14,8 +14,9 @@
   "evenBetterToml.formatter.indentString": "    ",
   "evenBetterToml.formatter.indentTables": true,
   "evenBetterToml.formatter.trailingNewline": true,
-  "mypy-type-checker.path": ["uv", "run", "mypy"],
   "files.readonlyInclude": {
     "**/generated/*.pyi": true
-  }
+  },
+  "markdownlint.configFile": "doc/.markdownlint.yaml",
+  "mypy-type-checker.path": ["uv", "run", "mypy"]
 }
