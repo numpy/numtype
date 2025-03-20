@@ -9,8 +9,13 @@ updates:
       actions:
         patterns:
           - "*"
+    labels:
+      - "topic: dependencies"
+      - "tool: github-actions"
+    commit-message:
+      prefix: "⬆️ "
 
-  - package-ecosystem: pip
+  - package-ecosystem: uv
     directory: /
     target-branch: main
     schedule:
@@ -19,3 +24,10 @@ updates:
       actions:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "numpy"
+    labels:
+      - "topic: dependencies"
+      - "tool: uv"
+    commit-message:
+      prefix: "⬆️ "
