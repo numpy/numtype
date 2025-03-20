@@ -1,1 +1,0 @@
-Closes #ISSUE_NUMBER
