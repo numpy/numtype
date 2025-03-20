@@ -3,9 +3,11 @@
 # ruff: noqa: PLR6301, TD003, ERA001, D101, D102
 
 import abc
+import difflib
 import itertools
 import operator as op
-from collections.abc import Callable, Generator, Iterable, Sequence
+import sys
+from collections.abc import Callable, Generator, Iterable, Iterator, Sequence
 from pathlib import Path
 from typing import Any, ClassVar, Final, cast, final
 from typing_extensions import override
@@ -13,31 +15,31 @@ from typing_extensions import override
 import numpy as np
 
 ROOT_DIR: Final = Path(__file__).parent.parent
-TEST_DIR: Final = ROOT_DIR / "test"
-OUTPUT_DIR: Final = TEST_DIR / "generated"
+TARGET_DIR: Final = ROOT_DIR / "test" / "generated"
 
 TAB: Final = " " * 4
-LINEBREAK: Final = "\n"
+BR: Final = "\n"
 
-NP = "np"
+NP: Final = "np"
+PREAMBLE_PREFIX: Final = "@generated"
 
-TYPES_I: Final = frozenset({f"{NP}.int8", f"{NP}.int16", f"{NP}.int32", f"{NP}.int64"})
-TYPES_U: Final = frozenset({
-    f"{NP}.uint8",
-    f"{NP}.uint16",
-    f"{NP}.uint32",
-    f"{NP}.uint64",
-})
-TYPES_F: Final = frozenset({f"{NP}.float32", f"{NP}.float64", f"{NP}.longdouble"})
-TYPES_C: Final = frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"})
-TYPES_IU: Final = TYPES_I | TYPES_U
-TYPES_FC: Final = TYPES_F | TYPES_C
-TYPES_IUFC: Final = TYPES_IU | TYPES_FC
+_NUMBERS_ABSTRACT: Final = {
+    "i": "signedinteger",
+    "u": "unsignedinteger",
+    "f": "floating",
+    "c": "complexfloating",
+}
+_NUMBERS_CONCRETE: Final = {
+    "i": frozenset({f"{NP}.int8", f"{NP}.int16", f"{NP}.int32", f"{NP}.int64"}),
+    "u": frozenset({f"{NP}.uint8", f"{NP}.uint16", f"{NP}.uint32", f"{NP}.uint64"}),
+    "f": frozenset({f"{NP}.float32", f"{NP}.float64", f"{NP}.longdouble"}),
+    "c": frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"}),
+}
 
-DATETIME_OPS = {"+", "-"}
-TIMEDELTA_OPS = DATETIME_OPS | {"*", "/", "//", "%"}
-BITWISE_OPS = {"<<", ">>", "&", "^", "|"}
-BITWISE_CHARS = "?bhilqBHILQ"
+DATETIME_OPS: Final = {"+", "-"}
+TIMEDELTA_OPS: Final = DATETIME_OPS | {"*", "/", "//", "%"}
+BITWISE_OPS: Final = {"<<", ">>", "&", "^", "|"}
+BITWISE_CHARS: Final = "?bhilqBHILQ"
 
 
 def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
@@ -75,35 +77,36 @@ def _sctype_expr(dtype: np.dtype[Any]) -> str:
 
 
 def _union(*types: str) -> str:
-    ints: set[str] = set()
-    uints: set[str] = set()
-    floats: set[str] = set()
-    cfloats: set[str] = set()
-    others: set[str] = set()
+    numbers: dict[str, list[str]] = {"i": [], "u": [], "f": [], "c": []}
+    other: list[str] = []
 
     for tp in types:
-        kind = np.dtype(tp.removeprefix(f"{NP}.")).kind
-        if kind == "i":
-            ints.add(tp)
-        elif kind == "u":
-            uints.add(tp)
-        elif kind == "f":
-            floats.add(tp)
-        elif kind == "c":
-            cfloats.add(tp)
+        kind: str = np.dtype(tp.removeprefix(f"{NP}.")).kind
+        numbers.get(kind, other).append(tp)
+
+    combined: list[str] = []
+    for kind, base in _NUMBERS_ABSTRACT.items():
+        if set(numbers[kind]) >= _NUMBERS_CONCRETE[kind]:
+            combined.append(base)
         else:
-            others.add(tp)
+            combined.extend(numbers[kind])
 
-    if ints >= TYPES_I:
-        ints = {"signedinteger"}
-    if uints >= TYPES_U:
-        uints = {"unsignedinteger"}
-    if floats >= TYPES_F:
-        floats = {"floating"}
-    if cfloats >= TYPES_C:
-        cfloats = {"complexfloating"}
+    return " | ".join(dict.fromkeys(combined))
 
-    return " | ".join((*others, *ints, *uints, *floats, *cfloats))
+
+def _strip_preamble(source: str) -> tuple[str | None, str]:
+    preamble_prefix = f"# {PREAMBLE_PREFIX}"
+
+    preamble: str | None = None
+    lines: list[str] = []
+
+    for line in source.splitlines(keepends=True):
+        if preamble is None and line.startswith(preamble_prefix):
+            preamble = line.removeprefix(preamble_prefix).strip()
+        else:
+            lines.append(line)
+
+    return preamble, "".join(lines)
 
 
 class TestGen(abc.ABC):
@@ -117,8 +120,8 @@ class TestGen(abc.ABC):
         self._current_indent = 0
 
     @property
-    def output_file(self) -> Path:
-        return OUTPUT_DIR / f"{self.testname}.pyi"
+    def path(self) -> Path:
+        return TARGET_DIR / f"{self.testname}.pyi"
 
     def get_names(self) -> Iterable[tuple[str, str]]:
         return ()
@@ -148,7 +151,7 @@ class TestGen(abc.ABC):
         timestamp = f"{np.datetime64('now')}Z"
         here = Path(__file__).relative_to(ROOT_DIR)
 
-        yield f"# @generated {timestamp} with {here}"
+        yield f"# {PREAMBLE_PREFIX} {timestamp} with {here}"
 
     def _generate_imports(self) -> Generator[str]:
         # NOTE: The trailing newlines are required for ruff compatibility
@@ -207,15 +210,53 @@ class TestGen(abc.ABC):
         if not n_empty:
             lines.append("")
 
-        return LINEBREAK.join(lines)
+        return BR.join(lines)
 
     @final
-    def generate(self, /) -> tuple[Path, bool]:
-        output = self.build()
-        output_file = self.output_file
-        exists = output_file.exists()
-        output_file.write_text(output, encoding="utf-8", newline=LINEBREAK)
-        return output_file, exists
+    def _read(self, /) -> str | None:
+        if not self.path.exists():
+            return None
+        return self.path.read_text(encoding="utf-8")
+
+    @final
+    def _write(self, src: str, /) -> int:
+        assert src, "cannot write empty test file"
+        return self.path.write_text(src, encoding="utf-8", newline=BR)
+
+    @final
+    def regenerate(self, /, *, always: bool = False) -> Iterator[str]:
+        src_new = self.build()
+
+        head_new, body_new = _strip_preamble(src_new)
+        assert head_new, src_new
+
+        path_new = str(self.path.relative_to(ROOT_DIR))
+        date_new = head_new.split(" ", 1)[0]
+
+        if src_old := self._read():
+            head_old, body_old = _strip_preamble(src_old)
+            date_old = head_old.split(" ", 1)[0] if head_old else ""
+            path_old = path_new
+            write = always or not head_old or body_old != body_new
+        else:
+            body_old = path_old = date_old = ""
+            write = True
+
+        if write:
+            self._write(src_new)
+
+        lines_old = body_old.splitlines(keepends=True)
+        lines_new = body_new.splitlines(keepends=True) if write else lines_old
+        return difflib.unified_diff(
+            lines_old,
+            lines_new,
+            fromfile=path_old,
+            tofile=path_new,
+            fromfiledate=date_old,
+            tofiledate=date_new if write else date_old,
+            n=0,
+            lineterm=BR,
+        )
 
 
 @final
@@ -726,9 +767,7 @@ TESTGENS: Final[Sequence[TestGen]] = [
 def main() -> None:
     """(Re)generate the `test/generated/{}.pyi` type-tests."""
     for testgen in TESTGENS:
-        path, exists = testgen.generate()
-        relpath = path.relative_to(ROOT_DIR)
-        print("regenerated" if exists else "  generated", str(relpath))
+        sys.stdout.writelines(testgen.regenerate())
 
 
 if __name__ == "__main__":
