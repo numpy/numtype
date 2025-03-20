@@ -6,8 +6,6 @@
     />
 </h1>
 
----
-
 NumType provides experimental typing stubs for <a href="https://github.com/numpy/numpy">NumPy</a>.
 
 > [!WARNING]
