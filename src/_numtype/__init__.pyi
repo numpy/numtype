@@ -692,7 +692,7 @@ _CoFloat64: TypeAlias = Floating64 | Floating32 | Floating16 | _CoInteger
 _CoFloating: TypeAlias = np.floating | _CoInteger
 
 _CoComplex64: TypeAlias = Inexact32 | Number16 | Number8
-_CoComplex128: TypeAlias = Number64 | _CoComplex64
+_CoComplex128: TypeAlias = Number64 | Number32 | Number16 | _CoInteger
 _CoComplex: TypeAlias = np.number | _ToBool
 
 _CoTimeDelta: TypeAlias = _ToTimeDelta | _CoInteger
