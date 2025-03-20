@@ -216,7 +216,7 @@ class TestGen(abc.ABC):
     def _read(self, /) -> str | None:
         if not self.path.exists():
             return None
-        return self.path.read_text(encoding="utf-8", newline=BR)
+        return self.path.read_text(encoding="utf-8")
 
     @final
     def _write(self, src: str, /) -> int:
