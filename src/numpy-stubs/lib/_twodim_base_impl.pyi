@@ -5,6 +5,7 @@ from typing_extensions import TypeVar
 import numpy as np
 from _numtype import (
     Array,
+    CFloating64,
     CoComplex_1d,
     CoFloat64_1d,
     Floating64,
@@ -25,7 +26,6 @@ from _numtype import (
     ToStr_1nd,
     _ToArray_1d,
     _ToArray_1nd,
-    CFloating64,
     _ToBytes,
     _ToStr,
 )
