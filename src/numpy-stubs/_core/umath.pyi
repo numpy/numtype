@@ -362,6 +362,16 @@ class _Call11Bool(Protocol):
 
 @type_check_only
 class _Call11Float(Protocol):
+    @overload  # (float) -> float64
+    def __call__(
+        self,
+        x: float,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.float64: ...
     @overload  # (scalar) -> float
     def __call__(
         self,
@@ -382,6 +392,16 @@ class _Call11Float(Protocol):
         dtype: _DTypeLikeFloat | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> _ArrayT: ...
+    @overload  # (NDArray[float64] | _NestedSequence[float]) -> NDArray[float64]
+    def __call__(
+        self,
+        x: NDArray[np.float64] | _NestedSequence[float],
+        /,
+        out: _Out1[NDArray[np.float64]] | None = None,
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.float64]: ...
     @overload  # (array) -> Array[float]
     def __call__(
         self,
@@ -1187,8 +1207,8 @@ class _ReduceAt2(Protocol):
     def __call__(
         self,
         array: ArrayLike,
-        /,
         indices: _ArrayLikeInt_co,
+        /,
         axis: SupportsIndex,
         dtype: _DTypeLike[_ScalarT],
         out: NDArray[_ScalarT] | None = None,

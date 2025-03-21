@@ -5,9 +5,11 @@ import numpy as np
 import numpy.typing as npt
 
 i8: np.int64
+f4: np.float32
 f8: np.float64
 dt64: np.datetime64
 td64: np.timedelta64
+AR_f4: npt.NDArray[np.float32]
 AR_f8: npt.NDArray[np.float64]
 AR_i8: npt.NDArray[np.int64]
 AR_bool: npt.NDArray[np.bool_]
@@ -89,6 +91,8 @@ assert_type(np.logical_xor(AR_i8, AR_bool, out=AR_bool), npt.NDArray[np.bool_])
 assert_type(np.logical_xor(AR_bool, AR_i8), npt.NDArray[np.bool_])
 assert_type(np.logical_xor(AR_bool, AR_bool, dtype=np.object_), npt.NDArray[np.object_])
 
-assert_type(np.spacing(f8), np.floating)
-assert_type(np.spacing(AR_f8), npt.NDArray[np.floating])
+assert_type(np.spacing(f4), np.floating)
+assert_type(np.spacing(f8), np.float64)
+assert_type(np.spacing(AR_f8), npt.NDArray[np.float64])
+assert_type(np.spacing(AR_f4), npt.NDArray[np.floating])
 assert_type(np.spacing(AR_f8, out=AR_f8), npt.NDArray[np.float64])
