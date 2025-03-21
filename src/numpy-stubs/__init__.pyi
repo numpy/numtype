@@ -355,7 +355,6 @@ from ._typing import (
     _ComplexFloatingCodes,
     _DTypeLike,
     _DTypeLikeVoid,
-    _NBitIntP,
     _NestedSequence,
     _NumberLike_co,
     _ScalarLike_co,
@@ -5148,8 +5147,7 @@ intc = int32
 long: TypeAlias = signedinteger[_n._32_64]
 longlong = int64
 
-# TODO(jorenham): int32 | int64
-intp: TypeAlias = signedinteger[_NBitIntP]
+intp: TypeAlias = signedinteger[_n._32_64]
 int_ = intp
 
 class unsignedinteger(integer[_BitT]):
@@ -5893,7 +5891,7 @@ uintc = uint32
 ulong: TypeAlias = unsignedinteger[_n._32_64]
 ulonglong = uint64
 
-uintp: TypeAlias = unsignedinteger[_NBitIntP]
+uintp: TypeAlias = unsignedinteger[_n._32_64]
 uint = uintp
 
 class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co]):
