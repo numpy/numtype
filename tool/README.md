@@ -4,7 +4,7 @@
 
 Introspect NumPy universal functions (ufuncs) by examining their type signatures.
 
-```python
+```shell
 uv run tool/ufunc.py [-h] [-p] [-f <TABULATE_FORMAT>] <NIN> <NOUT>
 ```
 
@@ -12,7 +12,7 @@ uv run tool/ufunc.py [-h] [-p] [-f <TABULATE_FORMAT>] <NIN> <NOUT>
 
 Generate type tests for NumType's NumPy integration.
 
-```python
+```shell
 uv run tool/testgen.py
 ```
 
@@ -20,7 +20,7 @@ uv run tool/testgen.py
 
 Test type stubs against actual implementations using MyPy's stubtest.
 
-```python
+```shell
 uv run tool/stubtest.py <OPTIONS>
 ```
 
@@ -28,6 +28,6 @@ uv run tool/stubtest.py <OPTIONS>
 
 Remove all `.pyi` files from the NumPy site-packages directory.
 
-```python
+```shell
 uv run tool/unstub.py
 ```
