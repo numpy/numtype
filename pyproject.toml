@@ -145,7 +145,7 @@ reportImplicitRelativeImport = true
 reportImplicitStringConcatenation = false
 reportInvalidCast = true
 reportPrivateLocalImportUsage = true
-reportUnannotatedClassAttribute = false   # TODO
+reportUnannotatedClassAttribute = false
 strictGenericNarrowing = true
 
 [[executionEnvironments]]

@@ -643,21 +643,13 @@ __all__ = [  # noqa: RUF022
 
 _AnyShapeT = TypeVar(
     "_AnyShapeT",
-    tuple[()],  # 0-d
-    tuple[int],  # 1-d
-    tuple[int, int],  # 2-d
-    tuple[int, int, int],  # 3-d
-    tuple[int, int, int, int],  # 4-d
-    tuple[int, int, int, int, int],  # 5-d
-    tuple[int, int, int, int, int, int],  # 6-d
-    tuple[int, int, int, int, int, int, int],  # 7-d
-    tuple[int, int, int, int, int, int, int, int],  # 8-d
-    tuple[int, ...],  # N-d
+    tuple[()],
+    tuple[int],
+    tuple[int, int],
+    tuple[int, int, int],
+    tuple[int, int, int, int],
+    tuple[int, ...],
 )
-_AnyTD64Item = TypeVar("_AnyTD64Item", dt.timedelta, int, None, dt.timedelta | int | None)
-_AnyDT64Arg = TypeVar("_AnyDT64Arg", dt.datetime, dt.date, None)
-_AnyDate = TypeVar("_AnyDate", dt.date, dt.datetime)
-_AnyDateOrTime = TypeVar("_AnyDateOrTime", dt.date, dt.datetime, dt.timedelta)
 
 ###
 # Type parameters (for internal use only)
@@ -930,6 +922,11 @@ _SortKind: TypeAlias = L[
     "H", "heap", "heapsort",
     "S", "stable", "stablesort",
 ]  # fmt: skip
+
+_Bool0: TypeAlias = bool_[L[False]]
+_Bool1: TypeAlias = bool_[L[True]]
+_ToFalse: TypeAlias = L[False] | bool_[L[False]]
+_ToTrue: TypeAlias = L[True] | bool_[L[True]]
 
 _ConvertibleToInt: TypeAlias = CanInt | CanIndex | _CharLike_co
 _ConvertibleToFloat: TypeAlias = CanFloat | CanIndex | _CharLike_co
@@ -4311,8 +4308,6 @@ class number(
 ):
     @abc.abstractmethod
     def __init__(self, value: _NumberItemT_co, /) -> None: ...
-
-    #
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
@@ -4333,12 +4328,6 @@ class number(
     def __rtruediv__(self, x: Any, /) -> inexact: ...
     def __floordiv__(self: number[Any, float], x: Any, /) -> floating | integer: ...
     def __rfloordiv__(self: number[Any, float], x: Any, /) -> floating | integer: ...
-
-_Bool0: TypeAlias = bool_[L[False]]
-_Bool1: TypeAlias = bool_[L[True]]
-
-_ToFalse: TypeAlias = L[False] | bool_[L[False]]
-_ToTrue: TypeAlias = L[True] | bool_[L[True]]
 
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
@@ -4780,35 +4769,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @overload
     def __ror__(self, x: _nt.ToIntP_0d, /) -> intp: ...
 
-# NOTE: The `object_` constructor returns the passed object, so instances with type
-# `object_` cannot exists (at runtime).
-# NOTE: Because mypy has some long-standing bugs related to `__new__`, `object_` can't
-# be made generic.
-@final
-class object_(_RealMixin, generic[Any]):
-    @overload
-    def __new__(cls, nothing_to_see_here: None = None, /) -> None: ...  # type: ignore[misc]
-    @overload
-    def __new__(cls, stringy: str, /) -> str: ...  # type: ignore[misc]  # pyright: ignore[reportOverlappingOverload]
-    @overload
-    def __new__(cls, stringy: bytes, /) -> bytes: ...  # type: ignore[misc]
-    @overload
-    def __new__(cls, array: ndarray[_ShapeT, Any], /) -> ndarray[_ShapeT, dtype[Self]]: ...  # type: ignore[misc]
-    @overload
-    def __new__(cls, sequence: SupportsLenAndGetItem[object], /) -> NDArray[Self]: ...  # type: ignore[misc]
-    @overload
-    def __new__(cls, value: _T, /) -> _T: ...  # type: ignore[misc]
-    @overload  # catch-all
-    def __new__(cls, value: Any = ..., /) -> object | NDArray[Self]: ...  # type: ignore[misc]
-
-    #
-    def __init__(self, value: object = ..., /) -> None: ...
-    @override
-    def __hash__(self, /) -> int: ...
-    def __call__(self, /, *args: object, **kwargs: object) -> Any: ...
-
-    if sys.version_info >= (3, 12):
-        def __release_buffer__(self, buffer: memoryview, /) -> None: ...
+bool = bool_
 
 class integer(_IntegralMixin, _RoundMixin, number[_BitT, int]):
     @abc.abstractmethod
@@ -5177,6 +5138,19 @@ class signedinteger(integer[_BitT]):
     def __or__(self: int8, x: int16, /) -> int16: ...
     @overload
     def __or__(self, x: signedinteger, /) -> signedinteger: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+int8: TypeAlias = signedinteger[_n._8]
+int16: TypeAlias = signedinteger[_n._16]
+int32: TypeAlias = signedinteger[_n._32]
+int64: TypeAlias = signedinteger[_n._64]
+
+byte = int8
+short = int16
+intc = int32
+long: TypeAlias = signedinteger[_NBitLong]
+intp: TypeAlias = signedinteger[_NBitIntP]
+int_ = intp
+longlong: TypeAlias = signedinteger[_NBitLongLong]
 
 class unsignedinteger(integer[_BitT]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
@@ -5908,6 +5882,19 @@ class unsignedinteger(integer[_BitT]):
     @overload
     def __ror__(self: _ToUInteger32, x: integer, /) -> integer: ...
 
+uint8: TypeAlias = unsignedinteger[_n._8]
+uint16: TypeAlias = unsignedinteger[_n._16]
+uint32: TypeAlias = unsignedinteger[_n._32]
+uint64: TypeAlias = unsignedinteger[_n._64]
+
+ubyte = uint8
+ushort = uint16
+uintc = uint32
+ulong: TypeAlias = unsignedinteger[_NBitLong]
+uintp: TypeAlias = unsignedinteger[_NBitIntP]
+uint = uintp
+ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
+
 class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co]):
     @abc.abstractmethod
     def __init__(self, value: _InexactItemT_co | None = ..., /) -> None: ...
@@ -6080,7 +6067,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __mul__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
     @overload
-    def __mul__(self, x: _nt.CanArray0D[timedelta64[_TD64ItemT]], /) -> timedelta64[_TD64ItemT]: ...
+    def __mul__(self, x: _nt.CanArray0D[timedelta64[_TD64ItemT]], /) -> timedelta64[_TD64ItemT | None]: ...
     @overload
     def __mul__(self, x: _nt.CoFloating_0d, /) -> floating: ...
     @overload
@@ -6108,7 +6095,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __rmul__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...
     @overload
-    def __rmul__(self, x: _nt.CanArray0D[timedelta64[_TD64ItemT]], /) -> timedelta64[_TD64ItemT]: ...
+    def __rmul__(self, x: _nt.CanArray0D[timedelta64[_TD64ItemT]], /) -> timedelta64[_TD64ItemT | None]: ...
     @overload
     def __rmul__(self, x: integer, /) -> floating: ...
     @overload
@@ -6234,7 +6221,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __rtruediv__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...
     @overload
-    def __rtruediv__(self, x: timedelta64[_TD64ItemT], /) -> timedelta64[_TD64ItemT]: ...
+    def __rtruediv__(self, x: timedelta64[_TD64ItemT], /) -> timedelta64[_TD64ItemT | None]: ...
     @overload
     def __rtruediv__(self, x: integer, /) -> floating: ...
     @overload
@@ -6354,6 +6341,9 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __rdivmod__(self: _ToFloating32, x: _nt.Integer16, /) -> _2Tuple[float32]: ...
 
+float16: TypeAlias = floating[_n._16]
+float32: TypeAlias = floating[_n._32]
+
 class float64(floating[_n._64], float):  # type: ignore[misc]
     @property
     @override
@@ -6386,6 +6376,14 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     #
     @override
     def __abs__(self, /) -> float64: ...
+
+float96: TypeAlias = floating[_n._LD]
+float128: TypeAlias = floating[_n._LD]
+
+half = float16
+single = float32
+double = float64
+longdouble: TypeAlias = floating[_n._LD]
 
 # The main reason for `complexfloating` having two typevars is cosmetic.
 # It is used to clarify why `complex128`s precision is `_64Bit`, the latter
@@ -6585,6 +6583,8 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
     @override
     def __rfloordiv__(self, x: Never, /) -> Never: ...
 
+complex64: TypeAlias = complexfloating[_n._32]
+
 class complex128(complexfloating[_n._64], complex):
     @property
     @override
@@ -6609,6 +6609,193 @@ class complex128(complexfloating[_n._64], complex):
     def __abs__(self, /) -> float64: ...
     @override
     def conjugate(self) -> Self: ...
+
+complex192: TypeAlias = complexfloating[_n._LD]
+complex256: TypeAlias = complexfloating[_n._LD]
+
+csingle = complex64
+cdouble = complex128
+clongdouble: TypeAlias = complexfloating[_n._LD]
+
+# NOTE: The `object_` constructor returns the passed object, so instances with type `object_` cannot exists at runtime.
+# NOTE: Because mypy does not fully support `__new__`, `object_` can't be made generic.
+@final
+class object_(_RealMixin, generic[Any]):
+    @overload
+    def __new__(cls, nothing_to_see_here: None = None, /) -> None: ...  # type: ignore[misc]
+    @overload
+    def __new__(cls, stringy: str, /) -> str: ...  # type: ignore[misc]  # pyright: ignore[reportOverlappingOverload]
+    @overload
+    def __new__(cls, stringy: bytes, /) -> bytes: ...  # type: ignore[misc]
+    @overload
+    def __new__(cls, array: ndarray[_ShapeT, Any], /) -> ndarray[_ShapeT, dtype[Self]]: ...  # type: ignore[misc]
+    @overload
+    def __new__(cls, sequence: SupportsLenAndGetItem[object], /) -> NDArray[Self]: ...  # type: ignore[misc]
+    @overload
+    def __new__(cls, value: _T, /) -> _T: ...  # type: ignore[misc]
+    @overload  # catch-all
+    def __new__(cls, value: Any = ..., /) -> object | NDArray[Self]: ...  # type: ignore[misc]
+
+    #
+    def __init__(self, value: object = ..., /) -> None: ...
+    @override
+    def __hash__(self, /) -> int: ...
+    def __call__(self, /, *args: object, **kwargs: object) -> Any: ...
+
+    if sys.version_info >= (3, 12):
+        def __release_buffer__(self, buffer: memoryview, /) -> None: ...
+
+@final
+class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):  # type: ignore[misc]
+    @abc.abstractmethod
+    def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
+
+class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
+    @abc.abstractmethod
+    def __init__(self, value: _CharacterItemT_co = ..., /) -> None: ...
+
+class bytes_(character[bytes], bytes):  # type: ignore[misc]
+    @overload
+    def __new__(cls, s: str, /, encoding: str, errors: str = "strict") -> Self: ...
+    @overload
+    def __new__(cls, o: object = b"", /) -> Self: ...
+    @overload
+    def __init__(self, s: str, /, encoding: str, errors: str = "strict") -> None: ...
+    @overload
+    def __init__(self, o: object = b"", /) -> None: ...
+
+class str_(character[str], str):  # type: ignore[misc]
+    @overload
+    def __new__(cls, value: object = "", /) -> Self: ...
+    @overload
+    def __new__(cls, value: bytes, /, encoding: str = "utf-8", errors: str = "strict") -> Self: ...
+    @overload
+    def __init__(self, value: object = "", /) -> None: ...
+    @overload
+    def __init__(self, value: bytes, /, encoding: str = "utf-8", errors: str = "strict") -> None: ...
+
+class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
+    @overload
+    def __init__(self, value: _nt.CoInteger_0d | bytes, /, dtype: None = None) -> None: ...
+    @overload
+    def __init__(self, value: Any, /, dtype: _DTypeLikeVoid) -> None: ...
+    @overload
+    def __getitem__(self, key: str | CanIndex, /) -> Any: ...
+    @overload
+    def __getitem__(self, key: list[str], /) -> void: ...
+    def __setitem__(self, key: str | list[str] | CanIndex, value: ArrayLike, /) -> None: ...
+    @override
+    def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
+
+class datetime64(
+    _RealMixin,
+    _NumericComparisonMixin[datetime64, _ArrayLikeDT64_co],
+    generic[_DT64ItemT_co],
+    Generic[_DT64ItemT_co],
+):
+    @property
+    @override
+    def itemsize(self) -> L[8]: ...
+    @property
+    @override
+    def nbytes(self) -> L[8]: ...
+
+    #
+    @overload
+    def __init__(self, value: datetime64[_DT64ItemT_co], /) -> None: ...
+    @overload
+    def __init__(self: datetime64[None], value: _NaTValue | None = ..., format: _TimeUnitSpec = ..., /) -> None: ...
+    @overload
+    def __init__(self: datetime64[dt.datetime], value: dt.datetime, /) -> None: ...
+    @overload
+    def __init__(self: datetime64[dt.date], value: dt.date, /) -> None: ...
+    @overload
+    def __init__(self: datetime64[dt.datetime], value: _DT64Now, format: _TimeUnitSpec[_NativeTimeUnit] = ..., /) -> None: ...
+    @overload
+    def __init__(self: datetime64[dt.date], value: _DT64Date, format: _TimeUnitSpec[_DateUnit] = ..., /) -> None: ...
+    @overload
+    def __init__(self: datetime64[int], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_IntTimeUnit], /) -> None: ...
+    @overload
+    def __init__(
+        self: datetime64[dt.datetime], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_NativeTimeUnit], /
+    ) -> None: ...
+    @overload
+    def __init__(self: datetime64[dt.date], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_DateUnit], /) -> None: ...
+    @overload
+    def __init__(self, value: bytes | str | dt.date | None, format: _TimeUnitSpec = ..., /) -> None: ...
+
+    #
+    @overload
+    def __add__(self, x: int | integer | bool_, /) -> Self: ...
+    @overload
+    def __add__(self, x: timedelta64[None], /) -> datetime64[None]: ...
+    @overload
+    def __add__(self: datetime64[None], x: timedelta64, /) -> datetime64[None]: ...
+    @overload
+    def __add__(self: datetime64[int], x: timedelta64[int | dt.timedelta], /) -> datetime64[int]: ...
+    @overload
+    def __add__(self: datetime64[int | dt.date], x: timedelta64[int], /) -> datetime64[int]: ...
+    @overload
+    def __add__(self: datetime64[dt.datetime], x: timedelta64[dt.timedelta], /) -> datetime64[dt.datetime]: ...
+    @overload
+    def __add__(self: datetime64[dt.date], x: timedelta64[dt.timedelta], /) -> datetime64[dt.date]: ...
+    @overload
+    def __add__(self, x: _TD64Like_co, /) -> datetime64: ...
+
+    #
+    @overload
+    def __radd__(self, x: int | integer | bool_, /) -> Self: ...
+    @overload
+    def __radd__(self, x: timedelta64[None], /) -> datetime64[None]: ...
+    @overload
+    def __radd__(self: datetime64[None], x: timedelta64, /) -> datetime64[None]: ...
+    @overload
+    def __radd__(self: datetime64[int], x: timedelta64[int | dt.timedelta], /) -> datetime64[int]: ...
+    @overload
+    def __radd__(self: datetime64[int | dt.date], x: timedelta64[int], /) -> datetime64[int]: ...
+    @overload
+    def __radd__(self: datetime64[dt.datetime], x: timedelta64[dt.timedelta], /) -> datetime64[dt.datetime]: ...
+    @overload
+    def __radd__(self: datetime64[dt.date], x: timedelta64[dt.timedelta], /) -> datetime64[dt.date]: ...
+    @overload
+    def __radd__(self, x: _TD64Like_co, /) -> datetime64: ...
+
+    #
+    @overload
+    def __sub__(self, x: int | integer | bool_, /) -> Self: ...
+    @overload
+    def __sub__(self, x: datetime64[None], /) -> timedelta64[None]: ...
+    @overload
+    def __sub__(self, x: timedelta64[None], /) -> datetime64[None]: ...
+    @overload
+    def __sub__(self: datetime64[dt.date], x: dt.date, /) -> dt.timedelta: ...
+    @overload
+    def __sub__(self: datetime64[None], x: datetime64, /) -> timedelta64[None]: ...
+    @overload
+    def __sub__(self: datetime64[None], x: timedelta64, /) -> datetime64[None]: ...
+    @overload
+    def __sub__(self: datetime64[int], x: datetime64[int | dt.date], /) -> timedelta64[int]: ...
+    @overload
+    def __sub__(self: datetime64[int], x: timedelta64[int | dt.timedelta], /) -> datetime64[int]: ...
+    @overload
+    def __sub__(self: datetime64[dt.datetime], x: datetime64[int], /) -> timedelta64[int]: ...
+    @overload
+    def __sub__(self: datetime64[dt.datetime], x: timedelta64[int], /) -> datetime64[int]: ...
+    @overload
+    def __sub__(self: datetime64[dt.datetime], x: timedelta64[dt.timedelta], /) -> datetime64[dt.datetime]: ...
+    @overload
+    def __sub__(self: datetime64[dt.date], x: datetime64[dt.date], /) -> timedelta64[dt.timedelta]: ...
+    @overload
+    def __sub__(self: datetime64[dt.date], x: timedelta64[dt.timedelta], /) -> datetime64[dt.date]: ...
+    @overload
+    def __sub__(self: datetime64[dt.date], x: timedelta64[int], /) -> datetime64[dt.date | int]: ...
+    @overload
+    def __sub__(self, x: _TD64Like_co, /) -> datetime64: ...
+    @overload
+    def __sub__(self, x: datetime64, /) -> timedelta64: ...
+
+    #
+    def __rsub__(self: datetime64[dt.date], x: dt.date, /) -> dt.timedelta: ...
 
 class timedelta64(
     _NumericComparisonMixin[_TD64Like_co, _ArrayLikeTD64_co],
@@ -6670,17 +6857,33 @@ class timedelta64(
     @overload
     def __add__(self: timedelta64[int], x: timedelta64, /) -> timedelta64[int | None]: ...
     @overload
-    def __add__(self: timedelta64[dt.timedelta], x: _AnyDateOrTime, /) -> _AnyDateOrTime: ...
-    __radd__ = __add__
+    def __add__(self: timedelta64[dt.timedelta], x: dt.timedelta, /) -> dt.timedelta: ...
+    @overload
+    def __add__(self: timedelta64[dt.timedelta], x: dt.datetime, /) -> dt.datetime: ...
+    @overload
+    def __add__(self: timedelta64[dt.timedelta], x: dt.date, /) -> dt.date: ...
 
     #
     @overload
-    def __mul__(self: timedelta64[_AnyTD64Item], x: int | integer | bool_, /) -> timedelta64[_AnyTD64Item]: ...
+    def __radd__(self, x: _nt.CoInteger_0d, /) -> Self: ...
     @overload
-    def __mul__(self: timedelta64[_AnyTD64Item], x: float | floating, /) -> timedelta64[_AnyTD64Item | None]: ...
+    def __radd__(self: timedelta64[dt.timedelta], x: dt.timedelta, /) -> dt.timedelta: ...
     @overload
-    def __mul__(self, x: float | _nt._CoFloating, /) -> timedelta64: ...
-    __rmul__ = __mul__
+    def __radd__(self: timedelta64[dt.timedelta], x: dt.datetime, /) -> dt.datetime: ...
+    @overload
+    def __radd__(self: timedelta64[dt.timedelta], x: dt.date, /) -> dt.date: ...
+
+    #
+    @overload
+    def __mul__(self, x: int | integer | bool_, /) -> Self: ...
+    @overload
+    def __mul__(self, x: _nt.JustFloat | floating, /) -> timedelta64[_TD64ItemT_co | None]: ...
+
+    #
+    @overload
+    def __rmul__(self, x: int | integer | bool_, /) -> Self: ...
+    @overload
+    def __rmul__(self, x: _nt.JustFloat | floating, /) -> timedelta64[_TD64ItemT_co | None]: ...
 
     #
     @overload
@@ -6716,8 +6919,6 @@ class timedelta64(
     @overload
     def __truediv__(self, b: _nt.JustFloat | floating, /) -> timedelta64[_TD64ItemT_co | None]: ...
     @overload
-    def __truediv__(self, b: _nt.JustFloat | floating | integer, /) -> timedelta64: ...
-    @overload
     def __truediv__(self: timedelta64[dt.timedelta], b: dt.timedelta, /) -> float: ...
 
     #
@@ -6732,7 +6933,7 @@ class timedelta64(
     @overload
     def __floordiv__(self, b: _nt.JustInt | integer, /) -> Self: ...
     @overload
-    def __floordiv__(self, b: _nt.JustFloat | floating | integer, /) -> timedelta64[_TD64ItemT_co | None]: ...
+    def __floordiv__(self, b: _nt.JustFloat | floating, /) -> timedelta64[_TD64ItemT_co | None]: ...
     @overload
     def __floordiv__(self: timedelta64[dt.timedelta], b: dt.timedelta, /) -> int: ...
 
@@ -6748,13 +6949,13 @@ class timedelta64(
     @overload
     def __mod__(self: timedelta64[None], x: timedelta64, /) -> timedelta64[None]: ...
     @overload
-    def __mod__(self: timedelta64[int], x: timedelta64[int | dt.timedelta], /) -> timedelta64[int | None]: ...
+    def __mod__(self, x: timedelta64[int], /) -> timedelta64[int | None]: ...
     @overload
-    def __mod__(self: timedelta64[dt.timedelta], x: timedelta64[_AnyTD64Item], /) -> timedelta64[_AnyTD64Item | None]: ...  # type: ignore[overload-overlap]
+    def __mod__(self: timedelta64[int], x: timedelta64, /) -> timedelta64[int | None]: ...
+    @overload
+    def __mod__(self: timedelta64[dt.timedelta], x: timedelta64[dt.timedelta], /) -> timedelta64[dt.timedelta | None]: ...
     @overload
     def __mod__(self: timedelta64[dt.timedelta], x: dt.timedelta, /) -> dt.timedelta: ...
-    @overload
-    def __mod__(self, x: timedelta64[int], /) -> timedelta64[int | None]: ...
     @overload
     def __mod__(self, x: timedelta64, /) -> timedelta64: ...
 
@@ -6772,15 +6973,15 @@ class timedelta64(
     @overload
     def __divmod__(self: timedelta64[None], x: timedelta64, /) -> tuple[int64, timedelta64[None]]: ...
     @overload
-    def __divmod__(self: timedelta64[int], x: timedelta64[int | dt.timedelta], /) -> tuple[int64, timedelta64[int | None]]: ...
+    def __divmod__(self, x: timedelta64[int], /) -> tuple[int64, timedelta64[int | None]]: ...
     @overload
-    def __divmod__(  # type: ignore[overload-overlap]
-        self: timedelta64[dt.timedelta], x: timedelta64[_AnyTD64Item], /
-    ) -> tuple[int64, timedelta64[_AnyTD64Item | None]]: ...
+    def __divmod__(self: timedelta64[int], x: timedelta64, /) -> tuple[int64, timedelta64[int | None]]: ...
+    @overload
+    def __divmod__(
+        self: timedelta64[dt.timedelta], x: timedelta64[dt.timedelta], /
+    ) -> tuple[int64, timedelta64[dt.timedelta | None]]: ...
     @overload
     def __divmod__(self: timedelta64[dt.timedelta], x: dt.timedelta, /) -> tuple[int, dt.timedelta]: ...
-    @overload
-    def __divmod__(self, x: timedelta64[int], /) -> tuple[int64, timedelta64[int | None]]: ...
     @overload
     def __divmod__(self, x: timedelta64, /) -> tuple[int64, timedelta64]: ...
 
@@ -6791,189 +6992,6 @@ class timedelta64(
     def __rdivmod__(self: timedelta64[L[0] | None], x: timedelta64, /) -> tuple[int64, timedelta64[None]]: ...
     @overload
     def __rdivmod__(self: timedelta64[dt.timedelta], x: dt.timedelta, /) -> tuple[int, dt.timedelta]: ...
-
-class datetime64(
-    _RealMixin,
-    _NumericComparisonMixin[datetime64, _ArrayLikeDT64_co],
-    generic[_DT64ItemT_co],
-    Generic[_DT64ItemT_co],
-):
-    @property
-    @override
-    def itemsize(self) -> L[8]: ...
-    @property
-    @override
-    def nbytes(self) -> L[8]: ...
-
-    #
-    @overload
-    def __init__(self, value: datetime64[_DT64ItemT_co], /) -> None: ...
-    @overload
-    def __init__(self: datetime64[_AnyDT64Arg], value: _AnyDT64Arg, /) -> None: ...
-    @overload
-    def __init__(self: datetime64[None], value: _NaTValue | None = ..., format: _TimeUnitSpec = ..., /) -> None: ...
-    @overload
-    def __init__(self: datetime64[dt.datetime], value: _DT64Now, format: _TimeUnitSpec[_NativeTimeUnit] = ..., /) -> None: ...
-    @overload
-    def __init__(self: datetime64[dt.date], value: _DT64Date, format: _TimeUnitSpec[_DateUnit] = ..., /) -> None: ...
-    @overload
-    def __init__(self: datetime64[int], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_IntTimeUnit], /) -> None: ...
-    @overload
-    def __init__(
-        self: datetime64[dt.datetime], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_NativeTimeUnit], /
-    ) -> None: ...
-    @overload
-    def __init__(self: datetime64[dt.date], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_DateUnit], /) -> None: ...
-    @overload
-    def __init__(self, value: bytes | str | dt.date | None, format: _TimeUnitSpec = ..., /) -> None: ...
-
-    #
-    @overload
-    def __add__(self, x: int | integer | bool_, /) -> Self: ...
-    @overload
-    def __add__(self, x: timedelta64[None], /) -> datetime64[None]: ...
-    @overload
-    def __add__(self: datetime64[None], x: timedelta64, /) -> datetime64[None]: ...
-    @overload
-    def __add__(self: datetime64[int], x: timedelta64[int | dt.timedelta], /) -> datetime64[int]: ...
-    @overload
-    def __add__(self: datetime64[int | dt.date], x: timedelta64[int], /) -> datetime64[int]: ...
-    @overload
-    def __add__(self: datetime64[dt.datetime], x: timedelta64[dt.timedelta], /) -> datetime64[dt.datetime]: ...
-    @overload
-    def __add__(self: datetime64[dt.date], x: timedelta64[dt.timedelta], /) -> datetime64[dt.date]: ...
-    @overload
-    def __add__(self, x: _TD64Like_co, /) -> datetime64: ...
-    __radd__ = __add__
-
-    @overload
-    def __sub__(self, x: int | integer | bool_, /) -> Self: ...
-    @overload
-    def __sub__(self, x: datetime64[None], /) -> timedelta64[None]: ...
-    @overload
-    def __sub__(self, x: timedelta64[None], /) -> datetime64[None]: ...
-    @overload
-    def __sub__(self: datetime64[_AnyDate], x: _AnyDate, /) -> dt.timedelta: ...
-    @overload
-    def __sub__(self: datetime64[None], x: datetime64, /) -> timedelta64[None]: ...
-    @overload
-    def __sub__(self: datetime64[None], x: timedelta64, /) -> datetime64[None]: ...
-    @overload
-    def __sub__(self: datetime64[int], x: datetime64[int | dt.date], /) -> timedelta64[int]: ...
-    @overload
-    def __sub__(self: datetime64[int], x: timedelta64[int | dt.timedelta], /) -> datetime64[int]: ...
-    @overload
-    def __sub__(self: datetime64[dt.datetime], x: datetime64[int], /) -> timedelta64[int]: ...
-    @overload
-    def __sub__(self: datetime64[dt.datetime], x: timedelta64[int], /) -> datetime64[int]: ...
-    @overload
-    def __sub__(self: datetime64[dt.datetime], x: timedelta64[dt.timedelta], /) -> datetime64[dt.datetime]: ...
-    @overload
-    def __sub__(self: datetime64[dt.date], x: datetime64[dt.date], /) -> timedelta64[dt.timedelta]: ...
-    @overload
-    def __sub__(self: datetime64[dt.date], x: timedelta64[dt.timedelta], /) -> datetime64[dt.date]: ...
-    @overload
-    def __sub__(self: datetime64[dt.date], x: timedelta64[int], /) -> datetime64[dt.date | int]: ...
-    @overload
-    def __sub__(self, x: _TD64Like_co, /) -> datetime64: ...
-    @overload
-    def __sub__(self, x: datetime64, /) -> timedelta64: ...
-
-    #
-    def __rsub__(self: datetime64[_AnyDate], x: _AnyDate, /) -> dt.timedelta: ...
-
-@final
-class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):  # type: ignore[misc]
-    @abc.abstractmethod
-    def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
-
-class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @overload
-    def __init__(self, value: _nt.CoInteger_0d | bytes, /, dtype: None = None) -> None: ...
-    @overload
-    def __init__(self, value: Any, /, dtype: _DTypeLikeVoid) -> None: ...
-
-    #
-    @overload
-    def __getitem__(self, key: str | CanIndex, /) -> Any: ...
-    @overload
-    def __getitem__(self, key: list[str], /) -> void: ...
-
-    #
-    def __setitem__(self, key: str | list[str] | CanIndex, value: ArrayLike, /) -> None: ...
-
-    #
-    @override
-    def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
-
-class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @abc.abstractmethod
-    def __init__(self, value: _CharacterItemT_co = ..., /) -> None: ...
-
-class bytes_(character[bytes], bytes):  # type: ignore[misc]
-    @overload
-    def __new__(cls, s: str, /, encoding: str, errors: str = "strict") -> Self: ...
-    @overload
-    def __new__(cls, o: object = b"", /) -> Self: ...
-    @overload
-    def __init__(self, s: str, /, encoding: str, errors: str = "strict") -> None: ...
-    @overload
-    def __init__(self, o: object = b"", /) -> None: ...
-
-class str_(character[str], str):  # type: ignore[misc]
-    @overload
-    def __new__(cls, value: object = "", /) -> Self: ...
-    @overload
-    def __new__(cls, value: bytes, /, encoding: str = "utf-8", errors: str = "strict") -> Self: ...
-    @overload
-    def __init__(self, value: object = "", /) -> None: ...
-    @overload
-    def __init__(self, value: bytes, /, encoding: str = "utf-8", errors: str = "strict") -> None: ...
-
-# TODO(jorenham): concrete subtyping
-# https://github.com/numpy/numtype/issues/136
-int8: TypeAlias = signedinteger[_n._8]
-int16: TypeAlias = signedinteger[_n._16]
-int32: TypeAlias = signedinteger[_n._32]
-int64: TypeAlias = signedinteger[_n._64]
-intp: TypeAlias = signedinteger[_NBitIntP]
-long: TypeAlias = signedinteger[_NBitLong]
-longlong: TypeAlias = signedinteger[_NBitLongLong]
-
-uint8: TypeAlias = unsignedinteger[_n._8]
-uint16: TypeAlias = unsignedinteger[_n._16]
-uint32: TypeAlias = unsignedinteger[_n._32]
-uint64: TypeAlias = unsignedinteger[_n._64]
-uintp: TypeAlias = unsignedinteger[_NBitIntP]
-ulong: TypeAlias = unsignedinteger[_NBitLong]
-ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
-
-float16: TypeAlias = floating[_n._16]
-float32: TypeAlias = floating[_n._32]
-float96: TypeAlias = floating[_n._LD]
-float128: TypeAlias = floating[_n._LD]
-longdouble: TypeAlias = floating[_n._LD]
-
-complex64: TypeAlias = complexfloating[_n._32]
-complex192: TypeAlias = complexfloating[_n._LD]
-complex256: TypeAlias = complexfloating[_n._LD]
-clongdouble: TypeAlias = complexfloating[_n._LD]
-
-# NOTE: These should NOT be `Final` or a `TypeAlias`!
-bool = bool_
-byte = int8
-ubyte = uint8
-short = int16
-ushort = uint16
-intc = int32
-uintc = uint32
-int_ = intp
-uint = uintp
-half = float16
-single = float32
-double = float64
-csingle = complex64
-cdouble = complex128
 
 ###
 # ufuncs (s See `numpy._typing._ufunc` for more concrete nin-/nout-specific stubs)
