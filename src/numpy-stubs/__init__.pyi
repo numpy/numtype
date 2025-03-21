@@ -356,8 +356,6 @@ from ._typing import (
     _DTypeLike,
     _DTypeLikeVoid,
     _NBitIntP,
-    _NBitLong,
-    _NBitLongLong,
     _NestedSequence,
     _NumberLike_co,
     _ScalarLike_co,
@@ -5147,10 +5145,12 @@ int64: TypeAlias = signedinteger[_n._64]
 byte = int8
 short = int16
 intc = int32
-long: TypeAlias = signedinteger[_NBitLong]
+long: TypeAlias = signedinteger[_n._32_64]
+longlong = int64
+
+# TODO(jorenham): int32 | int64
 intp: TypeAlias = signedinteger[_NBitIntP]
 int_ = intp
-longlong: TypeAlias = signedinteger[_NBitLongLong]
 
 class unsignedinteger(integer[_BitT]):
     def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
@@ -5890,10 +5890,11 @@ uint64: TypeAlias = unsignedinteger[_n._64]
 ubyte = uint8
 ushort = uint16
 uintc = uint32
-ulong: TypeAlias = unsignedinteger[_NBitLong]
+ulong: TypeAlias = unsignedinteger[_n._32_64]
+ulonglong = uint64
+
 uintp: TypeAlias = unsignedinteger[_NBitIntP]
 uint = uintp
-ulonglong: TypeAlias = unsignedinteger[_NBitLongLong]
 
 class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co]):
     @abc.abstractmethod
