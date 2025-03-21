@@ -21,11 +21,14 @@ from numpy._typing import (
     NDArray,
     _ArrayLike,
     _ArrayLikeBool_co,
+    _ArrayLikeFloat_co,
     _ArrayLikeInt_co,
     _ArrayLikeNumber_co,
     _ArrayLikeObject_co,
     _DTypeLike,
     _DTypeLikeBool,
+    _DTypeLikeFloat,
+    _FloatLike_co,
     _NestedSequence,
     _NumberLike_co,
     _ScalarLike_co,
@@ -356,6 +359,39 @@ class _Call11Bool(Protocol):
         dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> NDArray[np.bool] | np.bool: ...
+
+@type_check_only
+class _Call11Float(Protocol):
+    @overload  # (scalar) -> float
+    def __call__(
+        self,
+        x: _FloatLike_co,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.floating: ...
+    @overload  # (array-like, out: T) -> T
+    def __call__(
+        self,
+        x: _ArrayLikeFloat_co,
+        /,
+        out: _Out1[_ArrayT],
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _ArrayT: ...
+    @overload  # (array) -> Array[float]
+    def __call__(
+        self,
+        x: NDArray[np.floating] | _NestedSequence[np.floating],
+        /,
+        out: _Out1[NDArray[np.floating]] | None = None,
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.floating]: ...
 
 @type_check_only
 class _Call11Isnat(Protocol):
@@ -1360,7 +1396,7 @@ str_len: _ufunc_1_1[_UFunc11String[np.intp]]
 bitwise_count: Final[_ufunc_1_1] = ...
 
 # {[f]} -> $1
-spacing: Final[_ufunc_1_1] = ...
+spacing: Final[_ufunc_1_1[_Call11Float]] = ...
 
 # {[f]O} -> $1
 cbrt: Final[_ufunc_1_1] = ...
