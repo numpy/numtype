@@ -1,4 +1,4 @@
-# NumType Tools
+# NumType development tools
 
 ## ufunc.py
 
