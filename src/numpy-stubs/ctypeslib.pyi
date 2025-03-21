@@ -13,8 +13,6 @@ from numpy._typing import NDArray, _ArrayLike, _BoolCodes, _DTypeLike, _Shape, _
 from numpy._typing._char_codes import (
     _Float32Codes,
     _Float64Codes,
-    _Float96Codes,
-    _Float128Codes,
     _Int8Codes,
     _Int16Codes,
     _Int32Codes,
@@ -132,53 +130,45 @@ def as_ctypes(obj: np.bool) -> ct.c_bool: ...
 @overload
 def as_ctypes(obj: NDArray[np.bool]) -> ct.Array[ct.c_bool]: ...
 @overload  # int8 / byte
-def as_ctypes(obj: np.int8) -> ct.c_byte: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: np.int8) -> ct.c_int8: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes(obj: NDArray[np.int8]) -> ct.Array[ct.c_byte]: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: NDArray[np.int8]) -> ct.Array[ct.c_int8]: ...  # type: ignore[overload-overlap]
 @overload  # int16 / short
-def as_ctypes(obj: np.int16) -> ct.c_short: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: np.int16) -> ct.c_int16: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes(obj: NDArray[np.int16]) -> ct.Array[ct.c_short]: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: NDArray[np.int16]) -> ct.Array[ct.c_int16]: ...  # type: ignore[overload-overlap]
 @overload  # int32 / int[c]
-def as_ctypes(obj: np.int32) -> ct.c_int: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: np.int32) -> ct.c_int32: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes(obj: NDArray[np.int32]) -> ct.Array[ct.c_int]: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: NDArray[np.int32]) -> ct.Array[ct.c_int32]: ...  # type: ignore[overload-overlap]
 @overload  # long
 def as_ctypes(obj: np.long) -> ct.c_long: ...  # type: ignore[overload-overlap]
 @overload
 def as_ctypes(obj: NDArray[np.long]) -> ct.Array[ct.c_long]: ...  # type: ignore[overload-overlap]
-@overload  # intp / ssize_t (alias for `int`, `long` or `longlong`)
-def as_ctypes(obj: np.intp) -> ct.c_ssize_t: ...  # pyright: ignore[reportOverlappingOverload]
-@overload
-def as_ctypes(obj: NDArray[np.intp]) -> ct.Array[ct.c_ssize_t]: ...  # pyright: ignore[reportOverlappingOverload]
 @overload  # int64 / longlong (which might be an alias for for `long`)
-def as_ctypes(obj: np.int64) -> ct.c_longlong: ...  # type: ignore[overload-cannot-match]   # pyright: ignore[reportOverlappingOverload]
+def as_ctypes(obj: np.int64) -> ct.c_int64: ...
 @overload
-def as_ctypes(obj: NDArray[np.int64]) -> ct.Array[ct.c_longlong]: ...  # type: ignore[overload-cannot-match]  # pyright: ignore[reportOverlappingOverload]
+def as_ctypes(obj: NDArray[np.int64]) -> ct.Array[ct.c_int64]: ...
 @overload  # uint8 / ubyte
-def as_ctypes(obj: np.uint8) -> ct.c_ubyte: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: np.uint8) -> ct.c_uint8: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes(obj: NDArray[np.uint8]) -> ct.Array[ct.c_ubyte]: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: NDArray[np.uint8]) -> ct.Array[ct.c_uint8]: ...  # type: ignore[overload-overlap]
 @overload  # uint16 / ushort
-def as_ctypes(obj: np.uint16) -> ct.c_ushort: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: np.uint16) -> ct.c_uint16: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes(obj: NDArray[np.uint16]) -> ct.Array[ct.c_ushort]: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: NDArray[np.uint16]) -> ct.Array[ct.c_uint16]: ...  # type: ignore[overload-overlap]
 @overload  # uint32 / uint
-def as_ctypes(obj: np.uint32) -> ct.c_uint: ...  # type: ignore[overload-overlap]
+def as_ctypes(obj: np.uint32) -> ct.c_uint32: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes(obj: NDArray[np.uint32]) -> ct.Array[ct.c_uint]: ...  # type: ignore[overload-overlap]
-@overload  # uintp / size_t
-def as_ctypes(obj: np.uintp) -> ct.c_size_t: ...  # pyright: ignore[reportOverlappingOverload]
-@overload
-def as_ctypes(obj: NDArray[np.uintp]) -> ct.Array[ct.c_size_t]: ...  # pyright: ignore[reportOverlappingOverload]
+def as_ctypes(obj: NDArray[np.uint32]) -> ct.Array[ct.c_uint32]: ...  # type: ignore[overload-overlap]
 @overload  # ulong
 def as_ctypes(obj: np.ulong) -> ct.c_ulong: ...  # type: ignore[overload-overlap]
 @overload
 def as_ctypes(obj: NDArray[np.ulong]) -> ct.Array[ct.c_ulong]: ...  # type: ignore[overload-overlap]
 @overload  # uint64 / ulonglong
-def as_ctypes(obj: np.uint64) -> ct.c_ulonglong: ...  # type: ignore[overload-cannot-match]  # pyright: ignore[reportOverlappingOverload]
+def as_ctypes(obj: np.uint64) -> ct.c_uint64: ...
 @overload
-def as_ctypes(obj: NDArray[np.uint64]) -> ct.Array[ct.c_ulonglong]: ...  # type: ignore[overload-cannot-match]  # pyright: ignore[reportOverlappingOverload]
+def as_ctypes(obj: NDArray[np.uint64]) -> ct.Array[ct.c_uint64]: ...
 @overload  # float32 / single / float
 def as_ctypes(obj: np.float32) -> ct.c_float: ...  # type: ignore[overload-overlap]
 @overload
@@ -194,39 +184,37 @@ def as_ctypes(obj: NDArray[np.longdouble]) -> ct.Array[ct.c_longdouble]: ...
 
 #
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.bool] | type[ct.c_bool] | _BoolCodes) -> type[ct.c_bool]: ...
+def as_ctypes_type(dtype: _DTypeLike[np.bool] | type[bool | ct.c_bool] | _BoolCodes) -> type[ct.c_bool]: ...
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.int8] | type[ct.c_int8 | ct.c_byte] | _Int8Codes) -> type[ct.c_byte]: ...  # type: ignore[overload-overlap]
+def as_ctypes_type(dtype: _DTypeLike[np.int8] | type[ct.c_int8 | ct.c_byte] | _Int8Codes) -> type[ct.c_int8]: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.int16] | type[ct.c_int16 | ct.c_short] | _Int16Codes) -> type[ct.c_short]: ...  # type: ignore[overload-overlap]
+def as_ctypes_type(dtype: _DTypeLike[np.int16] | type[ct.c_int16 | ct.c_short] | _Int16Codes) -> type[ct.c_int16]: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.int32] | type[ct.c_int32 | ct.c_int] | _Int32Codes) -> type[ct.c_int]: ...  # type: ignore[overload-overlap]
+def as_ctypes_type(dtype: _DTypeLike[np.int32] | type[ct.c_int32 | ct.c_int] | _Int32Codes) -> type[ct.c_int32]: ...  # type: ignore[overload-overlap]
 @overload
 def as_ctypes_type(dtype: _DTypeLike[np.long] | type[ct.c_long] | _LongCodes) -> type[ct.c_long]: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.intp] | type[JustInt | ct.c_ssize_t] | _IntPCodes) -> type[ct.c_ssize_t]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def as_ctypes_type(dtype: _DTypeLike[np.int64] | type[ct.c_int64] | _Int64Codes) -> type[ct.c_int64]: ...
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.int64] | type[ct.c_int64 | ct.c_longlong] | _Int64Codes) -> type[ct.c_longlong]: ...
+def as_ctypes_type(dtype: type[JustInt | ct.c_ssize_t] | _IntPCodes) -> type[ct.c_ssize_t]: ...
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.uint8] | type[ct.c_uint8 | ct.c_ubyte] | _UInt8Codes) -> type[ct.c_ubyte]: ...  # type: ignore[overload-overlap]
+def as_ctypes_type(dtype: _DTypeLike[np.uint8] | type[ct.c_uint8 | ct.c_ubyte] | _UInt8Codes) -> type[ct.c_uint8]: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.uint16] | type[ct.c_uint16 | ct.c_ushort] | _UInt16Codes) -> type[ct.c_ushort]: ...  # type: ignore[overload-overlap]
+def as_ctypes_type(dtype: _DTypeLike[np.uint16] | type[ct.c_uint16 | ct.c_ushort] | _UInt16Codes) -> type[ct.c_uint16]: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.uint32] | type[ct.c_uint32 | ct.c_uint] | _UInt32Codes) -> type[ct.c_uint]: ...  # type: ignore[overload-overlap]
-@overload
-def as_ctypes_type(dtype: _DTypeLike[np.uintp] | type[ct.c_size_t] | _UIntPCodes) -> type[ct.c_size_t]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def as_ctypes_type(dtype: _DTypeLike[np.uint32] | type[ct.c_uint32 | ct.c_uint] | _UInt32Codes) -> type[ct.c_uint32]: ...  # type: ignore[overload-overlap]
 @overload
 def as_ctypes_type(dtype: _DTypeLike[np.ulong] | type[ct.c_ulong] | _ULongCodes) -> type[ct.c_ulong]: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes_type(dtype: _DTypeLike[np.uint64] | type[ct.c_uint64 | ct.c_ulonglong] | _UInt64Codes) -> type[ct.c_ulonglong]: ...
+def as_ctypes_type(dtype: _DTypeLike[np.uint64] | type[ct.c_uint64] | _UInt64Codes) -> type[ct.c_uint64]: ...
+@overload
+def as_ctypes_type(dtype: type[ct.c_size_t] | _UIntPCodes) -> type[ct.c_size_t]: ...
 @overload
 def as_ctypes_type(dtype: _DTypeLike[np.float32] | type[ct.c_float] | _Float32Codes) -> type[ct.c_float]: ...  # type: ignore[overload-overlap]
 @overload
 def as_ctypes_type(dtype: _DTypeLike[np.float64] | type[ct.c_double] | _Float64Codes) -> type[ct.c_double]: ...  # type: ignore[overload-overlap]
 @overload
-def as_ctypes_type(
-    dtype: (_DTypeLike[np.longdouble] | type[ct.c_longdouble] | _Float96Codes | _Float128Codes | _LongDoubleCodes),
-) -> type[ct.c_longdouble]: ...
+def as_ctypes_type(dtype: _DTypeLike[np.longdouble] | type[ct.c_longdouble] | _LongDoubleCodes) -> type[ct.c_longdouble]: ...
 @overload
 def as_ctypes_type(dtype: _VoidDTypeLike) -> _ct._UnionType | _ct._PyCStructType: ...
 @overload
