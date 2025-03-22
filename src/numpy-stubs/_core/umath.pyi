@@ -482,7 +482,7 @@ class _Call11Float_O(Protocol):  # {[f]O} -> $1
         /,
         out: None = None,
         *,
-        dtype: _DTypeLikeBool | None = None,
+        dtype: _DTypeLikeFloat | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> NDArray[np.floating] | np.floating: ...
 
