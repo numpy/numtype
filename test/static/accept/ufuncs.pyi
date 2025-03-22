@@ -96,3 +96,7 @@ assert_type(np.spacing(f8), np.float64)
 assert_type(np.spacing(AR_f8), npt.NDArray[np.float64])
 assert_type(np.spacing(AR_f4), npt.NDArray[np.floating])
 assert_type(np.spacing(AR_f8, out=AR_f8), npt.NDArray[np.float64])
+
+assert_type(np.signbit(f8), np.bool_)
+assert_type(np.signbit(AR_f8), npt.NDArray[np.bool_])
+assert_type(np.signbit(AR_f8, out=AR_bool), npt.NDArray[np.bool_])

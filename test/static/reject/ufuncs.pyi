@@ -63,3 +63,6 @@ np.logical_xor(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyr
 
 np.spacing(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.spacing(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.signbit(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.signbit(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
