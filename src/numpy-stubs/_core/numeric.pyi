@@ -559,7 +559,6 @@ __all__ = [
     "newaxis",
     "nextafter",
     "nonzero",
-    "normalize_axis_index",
     "normalize_axis_tuple",
     "not_equal",
     "number",
