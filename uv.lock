@@ -183,6 +183,12 @@ dev = [
     { name = "pytest" },
     { name = "ruff" },
 ]
+lint = [
+    { name = "numtype", extra = ["numpy"] },
+    { name = "pytest" },
+    { name = "ruff" },
+    { name = "typing-extensions" },
+]
 numpy = [
     { name = "numtype", extra = ["numpy"] },
 ]
@@ -190,6 +196,10 @@ orjson = [
     { name = "orjson" },
 ]
 types = [
+    { name = "basedpyright" },
+    { name = "mypy" },
+    { name = "numtype", extra = ["numpy"] },
+    { name = "pytest" },
     { name = "types-setuptools" },
     { name = "types-tabulate" },
 ]
@@ -205,9 +215,19 @@ dev = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ruff", specifier = ">=0.11.2" },
 ]
+lint = [
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "ruff", specifier = ">=0.11.0" },
+    { name = "typing-extensions" },
+]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
 orjson = [{ name = "orjson", specifier = ">=3.10.15" }]
 types = [
+    { name = "basedpyright", specifier = ">=1.28.2" },
+    { name = "mypy", specifier = ">=1.15.0" },
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=76.0.0.20250313" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
 ]
