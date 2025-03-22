@@ -14,6 +14,7 @@ from typing import (
 from typing_extensions import Never, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
+from _numtype import CoFloat64_nd, ToFloat64_1nd
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
 from numpy._typing import (
     ArrayLike,
@@ -755,6 +756,7 @@ class _Call21Float(Protocol):
         x2: float,
         /,
         out: None = None,
+        *,
         dtype: _DTypeLikeFloat | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> np.float64: ...
@@ -765,6 +767,7 @@ class _Call21Float(Protocol):
         x2: _FloatLike_co,
         /,
         out: None = None,
+        *,
         dtype: _DTypeLikeFloat | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> np.floating: ...
@@ -774,17 +777,18 @@ class _Call21Float(Protocol):
         x1: _ArrayLikeFloat_co,
         x2: _ArrayLikeFloat_co,
         /,
-        out: _ArrayT | tuple[_ArrayT],
+        out: _Out1[_ArrayT],
         **kwds: Unpack[_Kwargs3],
     ) -> _ArrayT: ...
     @overload  # (array-like, array) -> Array[float64]
     def __call__(
         self,
-        x1: _ArrayLikeFloat_co,
-        x2: NDArray[np.float64] | _NestedSequence[float],
+        x1: CoFloat64_nd,
+        x2: ToFloat64_1nd,
         /,
-        out: _Out1[_AnyArray] | None = None,
-        dtype: _DTypeLikeFloat | None = None,
+        out: None = None,
+        *,
+        dtype: None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.float64]: ...
     @overload  # (array, array-like) -> Array[float64]
@@ -793,8 +797,9 @@ class _Call21Float(Protocol):
         x1: NDArray[np.float64] | _NestedSequence[float],
         x2: _ArrayLikeFloat_co,
         /,
-        out: _Out1[_AnyArray] | None = None,
-        dtype: _DTypeLikeFloat | None = None,
+        out: None = None,
+        *,
+        dtype: None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.float64]: ...
     @overload  # (array-like, array) -> Array[float]
@@ -804,6 +809,7 @@ class _Call21Float(Protocol):
         x2: NDArray[np.floating] | _NestedSequence[float],
         /,
         out: _Out1[_AnyArray] | None = None,
+        *,
         dtype: _DTypeLikeFloat | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.floating]: ...
@@ -814,9 +820,20 @@ class _Call21Float(Protocol):
         x2: _ArrayLikeFloat_co,
         /,
         out: _Out1[_AnyArray] | None = None,
+        *,
         dtype: _DTypeLikeFloat | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> NDArray[np.floating]: ...
+    @overload  # (array-like, array-like) -> Array[float] | float
+    def __call__(
+        self,
+        x1: ArrayLike,
+        x2: ArrayLike,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        dtype: _DTypeLikeBool | None = None,
+        **kwds: Unpack[_Kwargs3],
+    ) -> np.floating | NDArray[np.floating]: ...
 
 @type_check_only
 class _Call21Logical(Protocol):
