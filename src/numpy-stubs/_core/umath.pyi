@@ -732,7 +732,7 @@ class _Call21Bool(Protocol):
         x1: ArrayLike,
         x2: ArrayLike,
         /,
-        out: _ArrayT | tuple[_ArrayT],
+        out: _Out1[_ArrayT],
         **kwds: Unpack[_Kwargs3],
     ) -> _ArrayT: ...
     @overload  # (array-like, array-like) -> Array[bool] | bool
@@ -933,7 +933,7 @@ class _Call21(Protocol):
         x1: ArrayLike,
         x2: ArrayLike,
         /,
-        out: _ArrayT | tuple[_ArrayT],
+        out: _Out1[_ArrayT],
         *,
         dtype: None = None,
         **kwds: Unpack[_Kwargs3],
@@ -1677,7 +1677,7 @@ class _Call11_py(Protocol[_OutT_co]):
         self,
         x: ArrayLike,
         /,
-        out: _ArrayT | tuple[_ArrayT],
+        out: _Out1[_ArrayT],
         dtype: DTypeLike | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> _ArrayT: ...
@@ -1719,7 +1719,7 @@ class _Call21_py(Protocol[_OutT_co]):
         x1: ArrayLike,
         x2: ArrayLike,
         /,
-        out: _ArrayT | tuple[_ArrayT],
+        out: _Out1[_ArrayT],
         dtype: DTypeLike | None = None,
         **kwargs: Unpack[_Kwargs3],
     ) -> _ArrayT: ...
@@ -1778,7 +1778,7 @@ class _Call3N1_py(Protocol[_OutT_co]):
         x3: ArrayLike,
         /,
         *xs: ArrayLike,
-        out: _ArrayT | tuple[_ArrayT],
+        out: _Out1[_ArrayT],
         dtype: DTypeLike | None = None,
         **kwargs: Unpack[_Kwargs4_],
     ) -> _ArrayT: ...
