@@ -414,6 +414,79 @@ class _Call11Float(Protocol):
     ) -> NDArray[np.floating]: ...
 
 @type_check_only
+class _Call11Float_O(Protocol):  # {[f]O} -> $1
+    @overload  # (scalar, dtype: np.object_) -> float
+    def __call__(
+        self,
+        x: _ScalarLike_co,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLike[np.object_],
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.floating: ...
+    @overload  # (float) -> float64
+    def __call__(
+        self,
+        x: float,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.float64: ...
+    @overload  # (scalar) -> float
+    def __call__(
+        self,
+        x: _FloatLike_co,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.floating: ...
+    @overload  # (array-like, dtype: np.object_) -> np.object_
+    def __call__(
+        self,
+        x: _ArrayLikeFloat_co | _ArrayLikeObject_co,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLike[np.object_],
+        **kwargs: Unpack[_Kwargs2],
+    ) -> NDArray[np.object_] | np.floating: ...
+    @overload  # (array-like, out: T) -> T
+    def __call__(
+        self,
+        x: _ArrayLikeFloat_co | _ArrayLikeObject_co,
+        /,
+        out: _Out1[_ArrayT],
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _ArrayT: ...
+    @overload  # (array) -> NDArray[float64]
+    def __call__(
+        self,
+        x: NDArray[np.float64] | _NestedSequence[float],
+        /,
+        out: _Out1[NDArray[np.float64]] | None = None,
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.float64]: ...
+    @overload  # (array-like) -> Array[floating] | floating
+    def __call__(
+        self,
+        x: _ArrayLikeFloat_co,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeBool | None = None,
+        **kwargs: Unpack[_Kwargs2],
+    ) -> NDArray[np.floating] | np.floating: ...
+
+@type_check_only
 class _Call11Isnat(Protocol):
     @overload  # (scalar) -> bool
     def __call__(
@@ -1454,12 +1527,12 @@ bitwise_count: Final[_ufunc_1_1] = ...
 spacing: Final[_ufunc_1_1[_Call11Float]] = ...
 
 # {[f]O} -> $1
-cbrt: Final[_ufunc_1_1] = ...
-deg2rad: Final[_ufunc_1_1] = ...
-degrees: Final[_ufunc_1_1] = ...
-fabs: Final[_ufunc_1_1] = ...
-rad2deg: Final[_ufunc_1_1] = ...
-radians: Final[_ufunc_1_1] = ...
+cbrt: Final[_ufunc_1_1[_Call11Float_O]] = ...
+deg2rad: Final[_ufunc_1_1[_Call11Float_O]] = ...
+degrees: Final[_ufunc_1_1[_Call11Float_O]] = ...
+fabs: Final[_ufunc_1_1[_Call11Float_O]] = ...
+rad2deg: Final[_ufunc_1_1[_Call11Float_O]] = ...
+radians: Final[_ufunc_1_1[_Call11Float_O]] = ...
 
 # {[fc]O} -> $1
 arccos: Final[_ufunc_1_1] = ...
