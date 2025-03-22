@@ -4,6 +4,7 @@ import numpy.typing as npt
 i8: np.int64
 AR_f8: npt.NDArray[np.float64]
 dt64: np.datetime64
+AR_dt64: npt.NDArray[np.datetime64]
 
 np.sin.nin + "foo"  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
@@ -84,3 +85,28 @@ np.rad2deg(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ign
 
 np.radians(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.radians(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.copysign(dt64, dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.copysign(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.copysign(AR_dt64, i8)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.copysign(i8, AR_dt64)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+
+np.heaviside(dt64, dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.heaviside(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.heaviside(dt64, i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.heaviside(i8, AR_dt64)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+
+np.logaddexp(dt64, dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.logaddexp(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.logaddexp(dt64, i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.logaddexp(i8, AR_dt64)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+
+np.logaddexp2(dt64, dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.logaddexp2(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.logaddexp2(dt64, i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.logaddexp2(i8, AR_dt64)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+
+np.nextafter(dt64, dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.nextafter(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.nextafter(dt64, i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.nextafter(i8, AR_dt64)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
