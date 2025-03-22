@@ -100,3 +100,33 @@ assert_type(np.spacing(AR_f8, out=AR_f8), npt.NDArray[np.float64])
 assert_type(np.signbit(f8), np.bool_)
 assert_type(np.signbit(AR_f8), npt.NDArray[np.bool_])
 assert_type(np.signbit(AR_f8, out=AR_bool), npt.NDArray[np.bool_])
+
+assert_type(np.cbrt(f8), np.float64)
+assert_type(np.cbrt(f8, dtype=np.float64), np.float64)
+assert_type(np.cbrt(AR_f8), npt.NDArray[np.float64])
+assert_type(np.cbrt(AR_f8, out=AR_f8), npt.NDArray[np.float64])
+
+assert_type(np.deg2rad(f8), np.float64)
+assert_type(np.deg2rad(f8, dtype=np.float64), np.float64)
+assert_type(np.deg2rad(AR_f8), npt.NDArray[np.float64])
+assert_type(np.deg2rad(AR_f8, out=AR_f8), npt.NDArray[np.float64])
+
+assert_type(np.degrees(f8), np.float64)
+assert_type(np.degrees(f8, dtype=np.float64), np.float64)
+assert_type(np.degrees(AR_f8), npt.NDArray[np.float64])
+assert_type(np.degrees(AR_f8, out=AR_f8), npt.NDArray[np.float64])
+
+assert_type(np.fabs(f8), np.float64)
+assert_type(np.fabs(f8, dtype=np.float64), np.float64)
+assert_type(np.fabs(AR_f8), npt.NDArray[np.float64])
+assert_type(np.fabs(AR_f8, out=AR_f8), npt.NDArray[np.float64])
+
+assert_type(np.rad2deg(f8), np.float64)
+assert_type(np.rad2deg(f8, dtype=np.float64), np.float64)
+assert_type(np.rad2deg(AR_f8), npt.NDArray[np.float64])
+assert_type(np.rad2deg(AR_f8, out=AR_f8), npt.NDArray[np.float64])
+
+assert_type(np.radians(f8), np.float64)
+assert_type(np.radians(f8, dtype=np.float64), np.float64)
+assert_type(np.radians(AR_f8), npt.NDArray[np.float64])
+assert_type(np.radians(AR_f8, out=AR_f8), npt.NDArray[np.float64])
