@@ -447,6 +447,39 @@ class _Call11Isnat(Protocol):
     ) -> NDArray[np.bool]: ...
 
 @type_check_only
+class _Call11Signbit(Protocol):
+    @overload  # (scalar) -> bool
+    def __call__(
+        self,
+        x: _FloatLike_co,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeBool | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.bool: ...
+    @overload  # (array-like, out: T) -> T
+    def __call__(
+        self,
+        x: _ArrayLikeFloat_co,
+        /,
+        out: _Out1[_ArrayT],
+        *,
+        dtype: _DTypeLikeBool | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _ArrayT: ...
+    @overload  # (array) -> Array[bool]
+    def __call__(
+        self,
+        x: NDArray[np.floating] | _NestedSequence[np.floating],
+        /,
+        out: _Out1[NDArray[np.floating]] | None = None,
+        *,
+        dtype: _DTypeLikeBool | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.bool]: ...
+
+@type_check_only
 class _Call11Logical(Protocol):
     @overload
     def __call__(  # (scalar, dtype: np.object_) -> bool
@@ -1384,7 +1417,9 @@ _ufunc_2_2 = TypeAliasType(
 isnat: Final[_ufunc_1_1[_Call11Isnat]] = ...
 
 # {[f]} -> ?
-signbit: Final[_ufunc_1_1] = ...
+signbit: Final[_ufunc_1_1[_Call11Signbit]] = ...
+
+# {?[uifc]Mm} -> ?
 isfinite: Final[_ufunc_1_1[_Call11Bool]] = ...
 isinf: Final[_ufunc_1_1[_Call11Bool]] = ...
 
