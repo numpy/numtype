@@ -14,6 +14,7 @@
   "evenBetterToml.formatter.indentString": "    ",
   "evenBetterToml.formatter.indentTables": true,
   "evenBetterToml.formatter.trailingNewline": true,
+  "evenBetterToml.schema.enabled": false,
   "files.readonlyInclude": {
     "**/generated/*.pyi": true
   },
