@@ -8,6 +8,14 @@ Introspect NumPy universal functions (ufuncs) by examining their type signatures
 uv run tool/ufunc.py [-h] [-p] [-f <TABULATE_FORMAT>] <NIN> <NOUT>
 ```
 
+## promotion.py
+
+Introspect NumPy's scalar promotion rules, as a markdown table (default) or mermaid graph.
+
+```shell
+uv run promotion.py [-h] [-f {table,graph}] [-d DTYPES]
+```
+
 ## testgen.py
 
 Generate type tests for NumType's NumPy integration.
