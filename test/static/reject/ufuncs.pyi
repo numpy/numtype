@@ -66,3 +66,21 @@ np.spacing(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ign
 
 np.signbit(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.signbit(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.cbrt(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.cbrt(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.deg2rad(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.deg2rad(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.degrees(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.degrees(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.fabs(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.fabs(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.rad2deg(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.rad2deg(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+np.radians(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.radians(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
