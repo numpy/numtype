@@ -79,6 +79,7 @@ from _numtype._just import JustComplex
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc, _SupportsDType
 from numpy._typing._char_codes import _BoolCodes, _Complex128Codes, _Float64Codes, _IntPCodes
+from numpy.lib._array_utils_impl import normalize_axis_tuple
 
 from ._asarray import require
 from ._ufunc_config import errstate, getbufsize, geterr, geterrcall, setbufsize, seterr, seterrcall
@@ -558,6 +559,8 @@ __all__ = [
     "newaxis",
     "nextafter",
     "nonzero",
+    "normalize_axis_index",
+    "normalize_axis_tuple",
     "not_equal",
     "number",
     "object_",
