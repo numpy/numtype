@@ -7,6 +7,10 @@ AR_f8: npt.NDArray[np.float64]
 AR_M: npt.NDArray[np.datetime64]
 AR_b: npt.NDArray[np.bool]
 
+f_0d: float
+U_0d: str
+U_1d: list[str]
+
 ctypes_obj = AR_f8.ctypes
 
 ###
@@ -44,6 +48,6 @@ def test_sort() -> None:
 
 AR_b.__index__()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
 
-AR_f8[1.5]  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
-AR_f8["field_a"]  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
-AR_f8[["field_a", "field_b"]]  # type: ignore[index]  # pyright: ignore[reportArgumentType, reportCallIssue]
+AR_f8[f_0d]  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+AR_f8[U_0d]  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+AR_f8[U_1d]  # type: ignore[index]  # pyright: ignore[reportArgumentType, reportCallIssue]

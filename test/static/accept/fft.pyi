@@ -25,38 +25,52 @@ c16_nd: npt.NDArray[np.complex128]
 c32_1d: Array1D[np.clongdouble]
 c32_nd: npt.NDArray[np.clongdouble]
 
+b_1d: list[bool]
+i_1d: list[int]
+f_1d: list[float]
+c_1d: list[complex]
+S_1d: list[bytes]
+U_1d: list[str]
+
+b_3d: list[list[list[bool]]]
+i_3d: list[list[list[int]]]
+f_3d: list[list[list[float]]]
+c_3d: list[list[list[complex]]]
+S_3d: list[list[list[bytes]]]
+U_3d: list[list[list[str]]]
+
 ###
 
 # keep in sync with `ifftshift` (same signature)
-assert_type(np.fft.fftshift([False, True]), Array1D[np.bool])
-assert_type(np.fft.fftshift([1, 2]), Array1D[np.intp])
-assert_type(np.fft.fftshift([0.1, 0.2]), Array1D[np.float64])
-assert_type(np.fft.fftshift([1j, 2j], axes=0), Array1D[np.complex128])
-assert_type(np.fft.fftshift(["a", "b"], axes=(0,)), Array1D[np.str_])
-assert_type(np.fft.fftshift([b"a", b"b"], axes=(0,)), Array1D[np.bytes_])
-assert_type(np.fft.fftshift([[[False, True]]]), npt.NDArray[np.bool])
-assert_type(np.fft.fftshift([[[1, 2]]]), npt.NDArray[np.intp])
-assert_type(np.fft.fftshift([[[0.1, 0.2]]]), npt.NDArray[np.float64])
-assert_type(np.fft.fftshift([[[1j, 2j]]]), npt.NDArray[np.complex128])
-assert_type(np.fft.fftshift([[["a", "b"]]]), npt.NDArray[np.str_])
-assert_type(np.fft.fftshift([[[b"a", b"b"]]]), npt.NDArray[np.bytes_])
+assert_type(np.fft.fftshift(b_1d), Array1D[np.bool])
+assert_type(np.fft.fftshift(i_1d), Array1D[np.intp])
+assert_type(np.fft.fftshift(f_1d), Array1D[np.float64])
+assert_type(np.fft.fftshift(c_1d, axes=0), Array1D[np.complex128])
+assert_type(np.fft.fftshift(U_1d, axes=(0,)), Array1D[np.str_])
+assert_type(np.fft.fftshift(S_1d, axes=(0,)), Array1D[np.bytes_])
+assert_type(np.fft.fftshift(b_3d), npt.NDArray[np.bool])
+assert_type(np.fft.fftshift(i_3d), npt.NDArray[np.intp])
+assert_type(np.fft.fftshift(f_3d), npt.NDArray[np.float64])
+assert_type(np.fft.fftshift(c_3d), npt.NDArray[np.complex128])
+assert_type(np.fft.fftshift(U_3d), npt.NDArray[np.str_])
+assert_type(np.fft.fftshift(S_3d), npt.NDArray[np.bytes_])
 assert_type(np.fft.fftshift(f8_1d), Array1D[np.float64])
 assert_type(np.fft.fftshift(f8_nd), npt.NDArray[np.float64])
 assert_type(np.fft.fftshift(c8_1d), Array1D[np.complex64])
 assert_type(np.fft.fftshift(c32_nd), npt.NDArray[np.clongdouble])
 
-assert_type(np.fft.ifftshift([False, True]), Array1D[np.bool])
-assert_type(np.fft.ifftshift([1, 2]), Array1D[np.intp])
-assert_type(np.fft.ifftshift([0.1, 0.2]), Array1D[np.float64])
-assert_type(np.fft.ifftshift([1j, 2j], axes=0), Array1D[np.complex128])
-assert_type(np.fft.ifftshift(["a", "b"], axes=(0,)), Array1D[np.str_])
-assert_type(np.fft.ifftshift([b"a", b"b"], axes=(0,)), Array1D[np.bytes_])
-assert_type(np.fft.ifftshift([[[False, True]]]), npt.NDArray[np.bool])
-assert_type(np.fft.ifftshift([[[1, 2]]]), npt.NDArray[np.intp])
-assert_type(np.fft.ifftshift([[[0.1, 0.2]]]), npt.NDArray[np.float64])
-assert_type(np.fft.ifftshift([[[1j, 2j]]]), npt.NDArray[np.complex128])
-assert_type(np.fft.ifftshift([[["a", "b"]]]), npt.NDArray[np.str_])
-assert_type(np.fft.ifftshift([[[b"a", b"b"]]]), npt.NDArray[np.bytes_])
+assert_type(np.fft.ifftshift(b_1d), Array1D[np.bool])
+assert_type(np.fft.ifftshift(i_1d), Array1D[np.intp])
+assert_type(np.fft.ifftshift(f_1d), Array1D[np.float64])
+assert_type(np.fft.ifftshift(c_1d, axes=0), Array1D[np.complex128])
+assert_type(np.fft.ifftshift(U_1d, axes=(0,)), Array1D[np.str_])
+assert_type(np.fft.ifftshift(S_1d, axes=(0,)), Array1D[np.bytes_])
+assert_type(np.fft.ifftshift(b_3d), npt.NDArray[np.bool])
+assert_type(np.fft.ifftshift(i_3d), npt.NDArray[np.intp])
+assert_type(np.fft.ifftshift(f_3d), npt.NDArray[np.float64])
+assert_type(np.fft.ifftshift(c_3d), npt.NDArray[np.complex128])
+assert_type(np.fft.ifftshift(U_3d), npt.NDArray[np.str_])
+assert_type(np.fft.ifftshift(S_3d), npt.NDArray[np.bytes_])
 assert_type(np.fft.ifftshift(f8_1d), Array1D[np.float64])
 assert_type(np.fft.ifftshift(f8_nd), npt.NDArray[np.float64])
 assert_type(np.fft.ifftshift(c8_1d), Array1D[np.complex64])
