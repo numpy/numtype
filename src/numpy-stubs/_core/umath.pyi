@@ -833,6 +833,7 @@ class _Call21Float(Protocol):
         x2: CoFloating_nd,
         /,
         out: _Out1[_AnyArray] | None = None,
+        *,
         dtype: _DTypeLikeFloat | None = None,
         **kwds: Unpack[_Kwargs3],
     ) -> Any: ...
