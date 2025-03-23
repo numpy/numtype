@@ -11,23 +11,21 @@ from _numtype import (
     Array1D,
     Array2D,
     Array3D,
-    CFloating64,
     CoComplex_1d,
     CoComplex_1nd,
     CoComplex_nd,
     CoFloating_1d,
     CoFloating_1nd,
     CoFloating_nd,
-    CoSInteger_1d,
-    CoSInteger_1nd,
-    CoSInteger_nd,
+    CoInt64_1d,
+    CoInt64_1nd,
+    CoInt64_nd,
     CoTimeDelta_1d,
     CoTimeDelta_1nd,
     CoTimeDelta_nd,
-    CoUInteger_1d,
-    CoUInteger_1nd,
-    CoUInteger_nd,
-    Floating64,
+    CoUInt64_1d,
+    CoUInt64_1nd,
+    CoUInt64_nd,
     JustFloat,
     JustInt,
     ToBool_0d,
@@ -74,6 +72,8 @@ from _numtype import (
     ToUInteger_1d,
     ToUInteger_1nd,
     ToUInteger_nd,
+    cfloating64,
+    floating64,
 )
 from _numtype._just import JustComplex
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
@@ -663,8 +663,8 @@ _ShapeLike3D: TypeAlias = tuple[SupportsIndex, SupportsIndex, SupportsIndex]
 
 _DTypeLikeBool: TypeAlias = type[bool] | _DTypeLike[np.bool] | _BoolCodes
 _DTypeLikeIntP: TypeAlias = type[JustInt] | _IntPCodes
-_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[Floating64] | _Float64Codes | None
-_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[CFloating64] | _Complex128Codes
+_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[floating64] | _Float64Codes | None
+_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[cfloating64] | _Complex128Codes
 
 _PyScalar: TypeAlias = complex | str | bytes
 _Device: TypeAlias = L["cpu"]
@@ -2026,13 +2026,13 @@ def isfortran(a: Array | np.generic) -> py_bool: ...
 @overload
 def correlate(a: ToBool_1d, v: ToBool_1d, mode: _Mode = "valid") -> Array1D[np.bool]: ...
 @overload
-def correlate(a: ToUInteger_1d, v: CoUInteger_1d, mode: _Mode = "valid") -> Array1D[np.unsignedinteger]: ...
+def correlate(a: ToUInteger_1d, v: CoUInt64_1d, mode: _Mode = "valid") -> Array1D[np.unsignedinteger]: ...
 @overload
-def correlate(a: CoUInteger_1d, v: ToUInteger_1d, mode: _Mode = "valid") -> Array1D[np.unsignedinteger]: ...  #
+def correlate(a: CoUInt64_1d, v: ToUInteger_1d, mode: _Mode = "valid") -> Array1D[np.unsignedinteger]: ...  #
 @overload
-def correlate(a: ToSInteger_1d, v: CoSInteger_1d, mode: _Mode = "valid") -> Array1D[np.signedinteger]: ...
+def correlate(a: ToSInteger_1d, v: CoInt64_1d, mode: _Mode = "valid") -> Array1D[np.signedinteger]: ...
 @overload
-def correlate(a: CoSInteger_1d, v: ToSInteger_1d, mode: _Mode = "valid") -> Array1D[np.signedinteger]: ...
+def correlate(a: CoInt64_1d, v: ToSInteger_1d, mode: _Mode = "valid") -> Array1D[np.signedinteger]: ...
 @overload
 def correlate(a: ToFloating_1d, v: CoFloating_1d, mode: _Mode = "valid") -> Array1D[np.floating]: ...
 @overload
@@ -2058,13 +2058,13 @@ def correlate(
 @overload
 def convolve(a: ToBool_1d, v: ToBool_1d, mode: _Mode = "valid") -> Array1D[np.bool]: ...
 @overload
-def convolve(a: ToUInteger_1d, v: CoUInteger_1d, mode: _Mode = "valid") -> Array1D[np.unsignedinteger]: ...
+def convolve(a: ToUInteger_1d, v: CoUInt64_1d, mode: _Mode = "valid") -> Array1D[np.unsignedinteger]: ...
 @overload
-def convolve(a: CoUInteger_1d, v: ToUInteger_1d, mode: _Mode = "valid") -> Array1D[np.unsignedinteger]: ...
+def convolve(a: CoUInt64_1d, v: ToUInteger_1d, mode: _Mode = "valid") -> Array1D[np.unsignedinteger]: ...
 @overload
-def convolve(a: ToSInteger_1d, v: CoSInteger_1d, mode: _Mode = "valid") -> Array1D[np.signedinteger]: ...
+def convolve(a: ToSInteger_1d, v: CoInt64_1d, mode: _Mode = "valid") -> Array1D[np.signedinteger]: ...
 @overload
-def convolve(a: CoSInteger_1d, v: ToSInteger_1d, mode: _Mode = "valid") -> Array1D[np.signedinteger]: ...
+def convolve(a: CoInt64_1d, v: ToSInteger_1d, mode: _Mode = "valid") -> Array1D[np.signedinteger]: ...
 @overload
 def convolve(a: ToFloating_1d, v: CoFloating_1d, mode: _Mode = "valid") -> Array1D[np.floating]: ...
 @overload
@@ -2090,13 +2090,13 @@ def convolve(
 @overload
 def outer(a: ToBool_nd, b: ToBool_nd, out: None = None) -> Array2D[np.bool]: ...
 @overload
-def outer(a: ToUInteger_nd, b: CoUInteger_nd, out: None = None) -> Array2D[np.unsignedinteger]: ...
+def outer(a: ToUInteger_nd, b: CoUInt64_nd, out: None = None) -> Array2D[np.unsignedinteger]: ...
 @overload
-def outer(a: CoUInteger_nd, b: ToUInteger_nd, out: None = None) -> Array2D[np.unsignedinteger]: ...
+def outer(a: CoUInt64_nd, b: ToUInteger_nd, out: None = None) -> Array2D[np.unsignedinteger]: ...
 @overload
-def outer(a: ToSInteger_nd, b: CoSInteger_nd, out: None = None) -> Array2D[np.signedinteger]: ...
+def outer(a: ToSInteger_nd, b: CoInt64_nd, out: None = None) -> Array2D[np.signedinteger]: ...
 @overload
-def outer(a: CoSInteger_nd, b: ToSInteger_nd, out: None = None) -> Array2D[np.signedinteger]: ...
+def outer(a: CoInt64_nd, b: ToSInteger_nd, out: None = None) -> Array2D[np.signedinteger]: ...
 @overload
 def outer(a: ToFloating_nd, b: CoFloating_nd, out: None = None) -> Array2D[np.floating]: ...
 @overload
@@ -2122,13 +2122,13 @@ def outer(
 @overload
 def tensordot(a: ToBool_1nd, b: ToBool_1nd, axes: _Axes = 2) -> Array[np.bool]: ...
 @overload
-def tensordot(a: ToUInteger_1nd, b: CoUInteger_1nd, axes: _Axes = 2) -> Array[np.unsignedinteger]: ...
+def tensordot(a: ToUInteger_1nd, b: CoUInt64_1nd, axes: _Axes = 2) -> Array[np.unsignedinteger]: ...
 @overload
-def tensordot(a: CoUInteger_1nd, b: ToUInteger_1nd, axes: _Axes = 2) -> Array[np.unsignedinteger]: ...
+def tensordot(a: CoUInt64_1nd, b: ToUInteger_1nd, axes: _Axes = 2) -> Array[np.unsignedinteger]: ...
 @overload
-def tensordot(a: ToSInteger_1nd, b: CoSInteger_1nd, axes: _Axes = 2) -> Array[np.signedinteger]: ...
+def tensordot(a: ToSInteger_1nd, b: CoInt64_1nd, axes: _Axes = 2) -> Array[np.signedinteger]: ...
 @overload
-def tensordot(a: CoSInteger_1nd, b: ToSInteger_1nd, axes: _Axes = 2) -> Array[np.signedinteger]: ...
+def tensordot(a: CoInt64_1nd, b: ToSInteger_1nd, axes: _Axes = 2) -> Array[np.signedinteger]: ...
 @overload
 def tensordot(a: ToFloating_1nd, b: CoFloating_1nd, axes: _Axes = 2) -> Array[np.floating]: ...
 @overload
@@ -2173,7 +2173,7 @@ def cross(
 @overload
 def cross(
     a: ToUInteger_1nd,
-    b: CoUInteger_1nd,
+    b: CoUInt64_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -2181,7 +2181,7 @@ def cross(
 ) -> Array[np.unsignedinteger]: ...
 @overload
 def cross(
-    a: CoUInteger_1nd,
+    a: CoUInt64_1nd,
     b: ToUInteger_1nd,
     axisa: int = -1,
     axisb: int = -1,
@@ -2191,7 +2191,7 @@ def cross(
 @overload
 def cross(
     a: ToSInteger_1nd,
-    b: CoSInteger_1nd,
+    b: CoInt64_1nd,
     axisa: int = -1,
     axisb: int = -1,
     axisc: int = -1,
@@ -2199,7 +2199,7 @@ def cross(
 ) -> Array[np.signedinteger]: ...
 @overload
 def cross(
-    a: CoSInteger_1nd,
+    a: CoInt64_1nd,
     b: ToSInteger_1nd,
     axisa: int = -1,
     axisb: int = -1,

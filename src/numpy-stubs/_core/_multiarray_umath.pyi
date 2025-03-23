@@ -32,8 +32,6 @@ from _numtype import (
     Array3D,
     AtLeast1D,
     AtLeast2D,
-    CFloating64,
-    Floating64,
     JustFloat,
     ToBool_0d,
     ToBool_1ds,
@@ -55,6 +53,8 @@ from _numtype import (
     ToIntP_2ds,
     ToIntP_3ds,
     ToIntP_nd,
+    cfloating64,
+    floating64,
 )
 from _numtype._just import JustComplex, JustInt
 from numpy import _AnyShapeT, _CanSeekTellFileNo, _CastingKind, _ModeKind, _OrderCF, _OrderKACF  # noqa: ICN003
@@ -162,8 +162,8 @@ _ShapeLike3D: TypeAlias = tuple[SupportsIndex, SupportsIndex, SupportsIndex]
 
 _DTypeLikeBool: TypeAlias = type[bool] | _DTypeLike[np.bool] | _BoolCodes
 _DTypeLikeIntP: TypeAlias = type[JustInt] | _IntPCodes
-_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[Floating64] | _Float64Codes | None
-_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[CFloating64] | _Complex128Codes
+_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[floating64] | _Float64Codes | None
+_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[cfloating64] | _Complex128Codes
 
 _FlatIterIndex0: TypeAlias = int | np.integer
 _FlatIterIndex: TypeAlias = _FlatIterIndex0 | tuple[_FlatIterIndex0]

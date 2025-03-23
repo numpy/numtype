@@ -28,29 +28,25 @@ from _numtype import (
     CoFloat64_1nd,
     CoFloating_1ds,
     CoFloating_1nd,
+    CoInt64_1nd,
     CoIntP_1d,
     CoIntP_1ds,
     CoIntP_1nd,
     CoInteger_1d,
     CoInteger_1ds,
     CoInteger_1nd,
-    CoSInteger_1nd,
     CoTimeDelta_1d,
     CoTimeDelta_1nd,
-    CoUInteger_1nd,
-    Floating64,
-    Inexact32,
-    Inexact64,
-    InexactLD,
+    CoUInt64_1nd,
     JustBytes,
     JustComplex,
     JustFloat,
     JustInt,
     JustStr,
+    Sequence1ND,
     Sequence2D,
     Sequence2ND,
     Sequence3ND,
-    SequenceND,
     ToBool_1d,
     ToBool_1ds,
     ToBool_1nd,
@@ -111,6 +107,10 @@ from _numtype import (
     _ToArray_2ds,
     _ToArray_2nd,
     _ToArray_3nd,
+    floating64,
+    inexact32,
+    inexact64,
+    inexact64l,
 )
 from numpy._core.fromnumeric import matrix_transpose
 from numpy._core.numeric import vecdot
@@ -207,29 +207,29 @@ _ArrayOrScalar: TypeAlias = _ScalarT | Array[_ScalarT]
 _Ord: TypeAlias = L[1, -1, 2, -2, "fro", "nuc"] | float
 _UPLO: TypeAlias = L["L", "U", "l", "u"]
 
-_ToArray_2nd_ish: TypeAlias = CanLenArrayND[_ScalarT] | Sequence[SequenceND[_ScalarT]] | SequenceND[CanLenArrayND[_ScalarT]]
+_ToArray_2nd_ish: TypeAlias = CanLenArrayND[_ScalarT] | Sequence[Sequence1ND[_ScalarT]] | Sequence1ND[CanLenArrayND[_ScalarT]]
 
 _ToInteger: TypeAlias = np.integer | np.bool[Any]
 
-_ToFloat64_1nd: TypeAlias = _ToArray2_1nd[Floating64 | _ToInteger, float]
-_ToFloat64_2ds: TypeAlias = _ToArray2_2ds[Floating64 | _ToInteger, float]
-_ToFloat64_3nd: TypeAlias = _ToArray2_3nd[Floating64 | _ToInteger, float]
+_ToFloat64_1nd: TypeAlias = _ToArray2_1nd[floating64 | _ToInteger, float]
+_ToFloat64_2ds: TypeAlias = _ToArray2_2ds[floating64 | _ToInteger, float]
+_ToFloat64_3nd: TypeAlias = _ToArray2_3nd[floating64 | _ToInteger, float]
 
-_ToInexact32_1nd: TypeAlias = _ToArray_1nd[Inexact32]
-_ToInexact32_2ds: TypeAlias = _ToArray_2ds[Inexact32]
-_ToInexact32_3nd: TypeAlias = _ToArray_3nd[Inexact32]
+_Toinexact32_1nd: TypeAlias = _ToArray_1nd[inexact32]
+_Toinexact32_2ds: TypeAlias = _ToArray_2ds[inexact32]
+_Toinexact32_3nd: TypeAlias = _ToArray_3nd[inexact32]
 
-_ToInexact64_1nd: TypeAlias = _ToArray2_1nd[Inexact64 | _ToInteger, complex]
-_ToInexact64_2ds: TypeAlias = _ToArray2_2ds[Inexact64 | _ToInteger, complex]
-_ToInexact64_3nd: TypeAlias = _ToArray2_3nd[Inexact64 | _ToInteger, complex]
+_Toinexact64_1nd: TypeAlias = _ToArray2_1nd[inexact64 | _ToInteger, complex]
+_Toinexact64_2ds: TypeAlias = _ToArray2_2ds[inexact64 | _ToInteger, complex]
+_Toinexact64_3nd: TypeAlias = _ToArray2_3nd[inexact64 | _ToInteger, complex]
 
-_ToInexactLD_1nd: TypeAlias = _ToArray_1nd[InexactLD]
-_ToInexactLD_2ds: TypeAlias = _ToArray_2ds[InexactLD]
-_ToInexactLD_3nd: TypeAlias = _ToArray_3nd[InexactLD]
+_Toinexact64l_1nd: TypeAlias = _ToArray_1nd[inexact64l]
+_Toinexact64l_2ds: TypeAlias = _ToArray_2ds[inexact64l]
+_Toinexact64l_3nd: TypeAlias = _ToArray_3nd[inexact64l]
 
-_ToUnsafe64_1nd: TypeAlias = _ToArray2_1nd[Inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
-_ToUnsafe64_2ds: TypeAlias = _ToArray2_2ds[Inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
-_ToUnsafe64_3nd: TypeAlias = _ToArray2_3nd[Inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
+_ToUnsafe64_1nd: TypeAlias = _ToArray2_1nd[inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
+_ToUnsafe64_2ds: TypeAlias = _ToArray2_2ds[inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
+_ToUnsafe64_3nd: TypeAlias = _ToArray2_3nd[inexact64 | _ToInteger | np.character[Any], complex | _PyCharacter]
 
 _Array_2nd: TypeAlias = Array[_ScalarT, AtLeast2D]
 
@@ -266,13 +266,13 @@ class LinAlgError(ValueError): ...
 @overload
 def tensordot(x1: ToBool_1nd, x2: ToBool_1nd, /, *, axes: _Ax2 = 2) -> Array[np.bool]: ...
 @overload
-def tensordot(x1: ToUInteger_1nd, x2: CoUInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.unsignedinteger]: ...
+def tensordot(x1: ToUInteger_1nd, x2: CoUInt64_1nd, /, *, axes: _Ax2 = 2) -> Array[np.unsignedinteger]: ...
 @overload
-def tensordot(x1: CoUInteger_1nd, x2: ToUInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.unsignedinteger]: ...
+def tensordot(x1: CoUInt64_1nd, x2: ToUInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.unsignedinteger]: ...
 @overload
-def tensordot(x1: ToSInteger_1nd, x2: CoSInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.signedinteger]: ...
+def tensordot(x1: ToSInteger_1nd, x2: CoInt64_1nd, /, *, axes: _Ax2 = 2) -> Array[np.signedinteger]: ...
 @overload
-def tensordot(x1: CoSInteger_1nd, x2: ToSInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.signedinteger]: ...
+def tensordot(x1: CoInt64_1nd, x2: ToSInteger_1nd, /, *, axes: _Ax2 = 2) -> Array[np.signedinteger]: ...
 @overload
 def tensordot(x1: ToFloating_1nd, x2: CoFloating_1nd, /, *, axes: _Ax2 = 2) -> Array[np.floating]: ...
 @overload
@@ -659,9 +659,9 @@ def eigh(a: CoComplex128_1nd, UPLO: _UPLO = "L") -> EighResult: ...
 
 #
 @overload  # float64 | complex128
-def eigvalsh(a: _ToInexact64_1nd, UPLO: _UPLO = "L") -> Array[np.float64]: ...
+def eigvalsh(a: _Toinexact64_1nd, UPLO: _UPLO = "L") -> Array[np.float64]: ...
 @overload  # float32 | complex64
-def eigvalsh(a: _ToInexact32_1nd, UPLO: _UPLO = "L") -> Array[np.float32]: ...
+def eigvalsh(a: _Toinexact32_1nd, UPLO: _UPLO = "L") -> Array[np.float32]: ...
 @overload  # +complex128
 def eigvalsh(a: CoComplex128_1nd, UPLO: _UPLO = "L") -> Array[np.floating]: ...
 
@@ -700,14 +700,14 @@ def qr(a: CoComplex128_1nd, mode: L["r"]) -> _Array_2nd[np.inexact]: ...
 #
 @overload  # float64 | complex128, compute_uv=False (positional)
 def svd(
-    a: _ToInexact64_1nd,
+    a: _Toinexact64_1nd,
     full_matrices: bool,
     compute_uv: _False,
     hermitian: bool = False,
 ) -> Array[np.float64]: ...
 @overload  # float64 | complex128, compute_uv=False (keyword)
 def svd(
-    a: _ToInexact64_1nd,
+    a: _Toinexact64_1nd,
     full_matrices: bool = True,
     *,
     compute_uv: _False,
@@ -736,14 +736,14 @@ def svd(
 ) -> SVDResult[np.float32, np.float32]: ...
 @overload  # float32 | complex64, compute_uv=False (positional)
 def svd(
-    a: _ToInexact32_1nd,
+    a: _Toinexact32_1nd,
     full_matrices: bool,
     compute_uv: _False,
     hermitian: bool = False,
 ) -> Array[np.float32]: ...
 @overload  # float32 | complex64, compute_uv=False (keyword)
 def svd(
-    a: _ToInexact32_1nd,
+    a: _Toinexact32_1nd,
     full_matrices: bool = True,
     *,
     compute_uv: _False,
@@ -781,9 +781,9 @@ def svd(
 
 #
 @overload  # float64 | complex128
-def svdvals(x: _ToInexact64_1nd, /) -> Array[np.float64]: ...
+def svdvals(x: _Toinexact64_1nd, /) -> Array[np.float64]: ...
 @overload  # floaat32 | complex64
-def svdvals(x: _ToInexact32_1nd, /) -> Array[np.float32]: ...
+def svdvals(x: _Toinexact32_1nd, /) -> Array[np.float32]: ...
 @overload  # +complex128
 def svdvals(x: CoComplex128_1nd, /) -> Array[np.floating]: ...
 
@@ -823,15 +823,15 @@ def matrix_rank(
 
 #
 @overload  # 2d float64 | complex128
-def cond(x: _ToInexact64_2ds, p: _Ord | None = None) -> np.float64: ...
+def cond(x: _Toinexact64_2ds, p: _Ord | None = None) -> np.float64: ...
 @overload  # 2d float32 | complex64
-def cond(x: _ToInexact32_2ds, p: _Ord | None = None) -> np.float32: ...
+def cond(x: _Toinexact32_2ds, p: _Ord | None = None) -> np.float32: ...
 @overload  # 2d +complex128
 def cond(x: CoComplex128_2ds, p: _Ord | None = None) -> np.floating: ...
 @overload  # >2d float64 | complex128
-def cond(x: _ToInexact64_3nd, p: _Ord | None = None) -> Array[np.float64]: ...
+def cond(x: _Toinexact64_3nd, p: _Ord | None = None) -> Array[np.float64]: ...
 @overload  # >2d float32 | complex64
-def cond(x: _ToInexact32_3nd, p: _Ord | None = None) -> Array[np.float32]: ...
+def cond(x: _Toinexact32_3nd, p: _Ord | None = None) -> Array[np.float32]: ...
 @overload  # >2d +complex128
 def cond(x: CoComplex128_3nd, p: _Ord | None = None) -> Array[np.floating]: ...
 @overload  # +complex128
@@ -931,33 +931,33 @@ def norm(x: ToFloat16_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, *,
 @overload  # float16, axis=<given> (keyword)
 def norm(x: ToFloat16_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.float16]: ...
 @overload  # float32 | complex64, axis=None, keepdims=False
-def norm(x: _ToInexact32_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.float32: ...
+def norm(x: _Toinexact32_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.float32: ...
 @overload  # float32 | complex64, keepdims=True (keyword)
 def norm(
-    x: _ToInexact32_1nd,
+    x: _Toinexact32_1nd,
     ord: _Ord | None = None,
     axis: _Ax2 | None = None,
     *,
     keepdims: _True,
 ) -> _Array_2nd[np.float32]: ...
 @overload  # float32 | complex64, axis=<given> (positional)
-def norm(x: _ToInexact32_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.float32]: ...
+def norm(x: _Toinexact32_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.float32]: ...
 @overload  # float32 | complex64, axis=<given> (keyword)
-def norm(x: _ToInexact32_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.float32]: ...
+def norm(x: _Toinexact32_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.float32]: ...
 @overload  # longdouble | clongdouble, axis=None, keepdims=False
-def norm(x: _ToInexactLD_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.longdouble: ...
+def norm(x: _Toinexact64l_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.longdouble: ...
 @overload  # longdouble | clongdouble, keepdims=True (keyword)
 def norm(
-    x: _ToInexactLD_1nd,
+    x: _Toinexact64l_1nd,
     ord: _Ord | None = None,
     axis: _Ax2 | None = None,
     *,
     keepdims: _True,
 ) -> _Array_2nd[np.longdouble]: ...
 @overload  # longdouble | clongdouble, axis=<given> (positional)
-def norm(x: _ToInexactLD_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.longdouble]: ...
+def norm(x: _Toinexact64l_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> Array[np.longdouble]: ...
 @overload  # longdouble | clongdouble, axis=<given> (keyword)
-def norm(x: _ToInexactLD_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.longdouble]: ...
+def norm(x: _Toinexact64l_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False) -> Array[np.longdouble]: ...
 @overload  # +number, axis=None, keepdims=False
 def norm(x: CoComplex_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.floating: ...
 @overload  # +number, keepdims=True
@@ -983,17 +983,17 @@ def matrix_norm(x: ToFloat16_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _
 @overload  # >2d float16
 def matrix_norm(x: ToFloat16_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float16]: ...
 @overload  # 2d float32 | complex64, keepdims=True
-def matrix_norm(x: _ToInexact32_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float32: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _Toinexact32_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float32: ...  # type: ignore[overload-overlap]
 @overload  # nd float32 | complex64, keepdims=True
-def matrix_norm(x: _ToInexact32_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array_2nd[np.float32]: ...
+def matrix_norm(x: _Toinexact32_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array_2nd[np.float32]: ...
 @overload  # >2d float32 | complex64
-def matrix_norm(x: _ToInexact32_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float32]: ...
+def matrix_norm(x: _Toinexact32_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.float32]: ...
 @overload  # 2d longdouble | clongdouble
-def matrix_norm(x: _ToInexactLD_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.longdouble: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _Toinexact64l_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.longdouble: ...  # type: ignore[overload-overlap]
 @overload  # nd longdouble | clongdouble, keepdims=True
-def matrix_norm(x: _ToInexactLD_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array_2nd[np.longdouble]: ...
+def matrix_norm(x: _Toinexact64l_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array_2nd[np.longdouble]: ...
 @overload  # >2d longdouble | clongdouble
-def matrix_norm(x: _ToInexactLD_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.longdouble]: ...
+def matrix_norm(x: _Toinexact64l_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> Array[np.longdouble]: ...
 @overload  # 2d +number
 def matrix_norm(x: CoComplex_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.floating: ...  # type: ignore[overload-overlap]
 @overload  # nd +number, keepdims=True
@@ -1017,17 +1017,19 @@ def vector_norm(x: ToFloat16_1nd, /, *, axis: _Ax2 | None = None, keepdims: _Tru
 @overload  # float16, axis=<given>
 def vector_norm(x: ToFloat16_1nd, /, *, axis: _Ax2, keepdims: bool = False, ord: float = 2) -> Array[np.float16]: ...
 @overload  # float32 | complex64, axis=None, keepdims=False
-def vector_norm(x: _ToInexact32_1nd, /, *, axis: None = None, keepdims: _False = False, ord: float = 2) -> np.float32: ...
+def vector_norm(x: _Toinexact32_1nd, /, *, axis: None = None, keepdims: _False = False, ord: float = 2) -> np.float32: ...
 @overload  # float32 | complex64, keepdims=True
-def vector_norm(x: _ToInexact32_1nd, /, *, axis: _Ax2 | None = None, keepdims: _True, ord: float = 2) -> Array[np.float32]: ...
+def vector_norm(x: _Toinexact32_1nd, /, *, axis: _Ax2 | None = None, keepdims: _True, ord: float = 2) -> Array[np.float32]: ...
 @overload  # float32 | complex64, axis=<given>
-def vector_norm(x: _ToInexact32_1nd, /, *, axis: _Ax2, keepdims: bool = False, ord: float = 2) -> Array[np.float32]: ...
+def vector_norm(x: _Toinexact32_1nd, /, *, axis: _Ax2, keepdims: bool = False, ord: float = 2) -> Array[np.float32]: ...
 @overload  # longdouble | clongdouble, axis=None, keepdims=False
-def vector_norm(x: _ToInexactLD_1nd, /, *, axis: None = None, keepdims: _False = False, ord: float = 2) -> np.longdouble: ...
+def vector_norm(x: _Toinexact64l_1nd, /, *, axis: None = None, keepdims: _False = False, ord: float = 2) -> np.longdouble: ...
 @overload  # longdouble | clongdouble, keepdims=True
-def vector_norm(x: _ToInexactLD_1nd, /, *, axis: _Ax2 | None = None, keepdims: _True, ord: float = 2) -> Array[np.longdouble]: ...
+def vector_norm(
+    x: _Toinexact64l_1nd, /, *, axis: _Ax2 | None = None, keepdims: _True, ord: float = 2
+) -> Array[np.longdouble]: ...
 @overload  # longdouble | clongdouble, axis=<given>
-def vector_norm(x: _ToInexactLD_1nd, /, *, axis: _Ax2, keepdims: bool = False, ord: float = 2) -> Array[np.longdouble]: ...
+def vector_norm(x: _Toinexact64l_1nd, /, *, axis: _Ax2, keepdims: bool = False, ord: float = 2) -> Array[np.longdouble]: ...
 @overload  # +number, axis=None, keepdims=False
 def vector_norm(x: CoComplex_1nd, /, *, axis: None = None, keepdims: _False = False, ord: float = 2) -> np.floating: ...
 @overload  # +number, keepdims=True
