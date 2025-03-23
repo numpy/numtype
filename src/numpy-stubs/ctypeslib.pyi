@@ -33,11 +33,11 @@ __all__ = ["as_array", "as_ctypes", "as_ctypes_type", "c_intp", "load_library", 
 ###
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _ShapeT = TypeVar("_ShapeT", bound=_Shape)
-_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[Any], covariant=True)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, covariant=True)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_Shape, default=_Shape, covariant=True)
-_DTypeT0_co = TypeVar("_DTypeT0_co", bound=np.dtype[Any] | None, default=None, covariant=True)
+_DTypeT0_co = TypeVar("_DTypeT0_co", bound=np.dtype | None, default=None, covariant=True)
 _ShapeT0_co = TypeVar("_ShapeT0_co", bound=_Shape | None, default=None, covariant=True)
 
 _FlagsKind: TypeAlias = L[
@@ -98,7 +98,7 @@ def ndpointer(
     *,
     shape: _ShapeLike,
     flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = None,
-) -> type[_concrete_ndptr[np.dtype[Any]]]: ...
+) -> type[_concrete_ndptr[np.dtype]]: ...
 @overload
 def ndpointer(
     dtype: _DTypeLike[_ScalarT],
@@ -112,7 +112,7 @@ def ndpointer(
     ndim: int | None = None,
     shape: None = None,
     flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = None,
-) -> type[_ndptr[np.dtype[Any]]]: ...
+) -> type[_ndptr[np.dtype]]: ...
 
 #
 @overload

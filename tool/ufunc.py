@@ -27,7 +27,7 @@ import tabulate  # pyright: ignore[reportMissingModuleSource]
 import numpy as np
 import numpy._core.umath as um  # noqa: PLC2701
 
-_ScalarLike: TypeAlias = np.generic | np.ndarray[tuple[()], np.dtype[Any]]
+_ScalarLike: TypeAlias = np.generic | np.ndarray[tuple[()], np.dtype]
 
 _EXTRA_SCALARS: Final[tuple[_ScalarLike, ...]] = (
     np.str_(""),

@@ -9,7 +9,7 @@ from . import MaskedArray
 __all__ = ["MaskedRecords", "addfield", "fromarrays", "fromrecords", "fromtextfile", "mrecarray"]
 
 _ShapeType_co = TypeVar("_ShapeType_co", covariant=True, bound=tuple[int, ...])
-_DType_co = TypeVar("_DType_co", bound=np.dtype[Any], covariant=True)
+_DType_co = TypeVar("_DType_co", bound=np.dtype, covariant=True)
 
 class MaskedRecords(MaskedArray[_ShapeType_co, _DType_co]):
     _mask: Any

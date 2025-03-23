@@ -656,8 +656,8 @@ _T_co = TypeVar("_T_co", covariant=True)
 _RealT_co = TypeVar("_RealT_co", covariant=True)
 _ImagT_co = TypeVar("_ImagT_co", covariant=True)
 
-_DTypeT = TypeVar("_DTypeT", bound=dtype[Any])
-_DTypeT_co = TypeVar("_DTypeT_co", bound=dtype[Any], covariant=True)
+_DTypeT = TypeVar("_DTypeT", bound=dtype)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=dtype, covariant=True)
 _FlexDTypeT = TypeVar("_FlexDTypeT", bound=dtype[flexible])
 
 _ArrayT = TypeVar("_ArrayT", bound=NDArray[Any])
@@ -671,7 +671,7 @@ _ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=tuple[int, Unpack[tuple[int, ...]]])
 _1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], Unpack[tuple[L[1], ...]]])  # (1,) | (1, 1) | (1, 1, 1) | ...
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
-_ScalarT_co = TypeVar("_ScalarT_co", bound=generic, covariant=True)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=generic, default=Any, covariant=True)
 _NumberT = TypeVar("_NumberT", bound=number)
 _InexactT = TypeVar("_InexactT", bound=inexact)
 _RealNumberT = TypeVar("_RealNumberT", bound=floating | integer)
@@ -1138,7 +1138,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @property
     def alignment(self) -> int: ...
     @property
-    def base(self) -> dtype[Any]: ...
+    def base(self) -> dtype: ...
     @property
     def byteorder(self) -> _ByteOrderChar: ...
     @property
@@ -1146,7 +1146,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @property
     def descr(self) -> _DTypeDescr: ...
     @property
-    def fields(self) -> MappingProxyType[LiteralString, tuple[dtype[Any], int] | tuple[dtype[Any], int, Any]] | None: ...
+    def fields(self) -> MappingProxyType[LiteralString, tuple[dtype, int] | tuple[dtype, int, Any]] | None: ...
     @property
     def flags(self) -> int: ...
     @property
@@ -1172,7 +1172,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @property
     def ndim(self) -> int: ...
     @property
-    def subdtype(self) -> tuple[dtype[Any], tuple[int, ...]] | None: ...
+    def subdtype(self) -> tuple[dtype, tuple[int, ...]] | None: ...
 
     # `None` results in the default dtype
     @overload
@@ -1604,7 +1604,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
-    ) -> dtype[Any]: ...
+    ) -> dtype: ...
     @overload
     def __new__(
         cls,
@@ -1643,17 +1643,17 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     def __mul__(self, value: CanIndex, /) -> dtype[void]: ...
 
     # NOTE: `__rmul__` seems to be broken when used in combination with literals as of mypy 0.902.
-    # Set the return-type to `dtype[Any]` for now for non-flexible dtypes.
+    # Set the return-type to `dtype` for now for non-flexible dtypes.
     @overload
     def __rmul__(self: _FlexDTypeT, value: CanIndex, /) -> _FlexDTypeT: ...
     @overload
-    def __rmul__(self, value: CanIndex, /) -> dtype[Any]: ...
+    def __rmul__(self, value: CanIndex, /) -> dtype: ...
 
     #
     @overload
     def __getitem__(self: dtype[void], key: list[str], /) -> dtype[void]: ...
     @overload
-    def __getitem__(self: dtype[void], key: str | CanIndex, /) -> dtype[Any]: ...
+    def __getitem__(self: dtype[void], key: str | CanIndex, /) -> dtype: ...
 
     #
     def newbyteorder(self, new_order: _ByteOrder = ..., /) -> Self: ...
@@ -2175,7 +2175,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __getitem__(self, key: _ToIndices, /) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
     @overload
-    def __getitem__(self: NDArray[void], key: str, /) -> ndarray[_ShapeT_co, dtype[Any]]: ...
+    def __getitem__(self: NDArray[void], key: str, /) -> ndarray[_ShapeT_co, dtype]: ...
     @overload
     def __getitem__(self: NDArray[void], key: list[str], /) -> ndarray[_ShapeT_co, dtype[void]]: ...
 
@@ -2247,13 +2247,13 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload  # type: ignore[override]
-    def __eq__(self, other: _ScalarLike_co | ndarray[_ShapeT_co, dtype[Any]], /) -> ndarray[_ShapeT_co, dtype[bool_]]: ...
+    def __eq__(self, other: _ScalarLike_co | ndarray[_ShapeT_co, dtype], /) -> ndarray[_ShapeT_co, dtype[bool_]]: ...
     @overload
     def __eq__(self, other: object, /) -> NDArray[bool_]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @overload  # type: ignore[override]
-    def __ne__(self, other: _ScalarLike_co | ndarray[_ShapeT_co, dtype[Any]], /) -> ndarray[_ShapeT_co, dtype[bool_]]: ...
+    def __ne__(self, other: _ScalarLike_co | ndarray[_ShapeT_co, dtype], /) -> ndarray[_ShapeT_co, dtype[bool_]]: ...
     @overload
     def __ne__(self, other: object, /) -> NDArray[bool_]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
@@ -3835,7 +3835,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         casting: _CastingKind = "unsafe",
         subok: py_bool = True,
         copy: py_bool | _CopyMode = True,
-    ) -> ndarray[_ShapeT_co, dtype[Any]]: ...
+    ) -> ndarray[_ShapeT_co, dtype]: ...
 
     # the special casings work around the lack of higher-kinded typing (HKT) support in Python
     @overload  # ()
@@ -3913,7 +3913,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload  # (_: T)
     def view(self, /, dtype: type[_ArrayT]) -> _ArrayT: ...
     @overload  # (dtype: ?)
-    def view(self, /, dtype: DTypeLike) -> ndarray[_ShapeT_co, dtype[Any]]: ...
+    def view(self, /, dtype: DTypeLike) -> ndarray[_ShapeT_co, dtype]: ...
     @overload  # (dtype: ?, type: type[T])
     def view(self, /, dtype: DTypeLike, type: type[_ArrayT]) -> _ArrayT: ...
 
@@ -3958,7 +3958,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     @overload
     def __eq__(self, other: _ScalarLike_co, /) -> bool_: ...
     @overload
-    def __eq__(self, other: ndarray[_ShapeT, dtype[Any]], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
+    def __eq__(self, other: ndarray[_ShapeT, dtype], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
     @overload
     def __eq__(self, other: _NestedSequence[ArrayLike], /) -> NDArray[bool_]: ...
     @overload
@@ -3968,7 +3968,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     @overload
     def __ne__(self, other: _ScalarLike_co, /) -> bool_: ...
     @overload
-    def __ne__(self, other: ndarray[_ShapeT, dtype[Any]], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
+    def __ne__(self, other: ndarray[_ShapeT, dtype], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
     @overload
     def __ne__(self, other: _NestedSequence[ArrayLike], /) -> NDArray[bool_]: ...
     @overload
@@ -4369,7 +4369,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @overload
     def __eq__(self, other: _ScalarLike_co, /) -> bool_: ...
     @overload
-    def __eq__(self, other: ndarray[_ShapeT, dtype[Any]], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
+    def __eq__(self, other: ndarray[_ShapeT, dtype], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
     @overload
     def __eq__(self, other: _NestedSequence[ArrayLike], /) -> NDArray[bool_]: ...
     @overload
@@ -4385,7 +4385,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @overload
     def __ne__(self, other: _ScalarLike_co, /) -> bool_: ...
     @overload
-    def __ne__(self, other: ndarray[_ShapeT, dtype[Any]], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
+    def __ne__(self, other: ndarray[_ShapeT, dtype], /) -> ndarray[_ShapeT, dtype[bool_]]: ...
     @overload
     def __ne__(self, other: _NestedSequence[ArrayLike], /) -> NDArray[bool_]: ...
     @overload
@@ -7016,13 +7016,13 @@ _ReduceT_co = TypeVar(
 _ReduceAtT_co = TypeVar(
     "_ReduceAtT_co",
     bound=Callable[Concatenate[Never, Never, ...], object],
-    default=Callable[Concatenate[Any, Any, ...], ndarray[Any, dtype[Any]]],
+    default=Callable[Concatenate[Any, Any, ...], ndarray[Any, dtype]],
     covariant=True,
 )
 _AccumulateT_co = TypeVar(
     "_AccumulateT_co",
     bound=Callable[Concatenate[Never, ...], object],
-    default=Callable[Concatenate[Any, ...], ndarray[Any, dtype[Any]]],
+    default=Callable[Concatenate[Any, ...], ndarray[Any, dtype]],
     covariant=True,
 )
 _OuterT_co = TypeVar(
@@ -7070,11 +7070,11 @@ class ufunc(Generic[_CallT_co, _AtT_co, _ReduceT_co, _ReduceAtT_co, _AccumulateT
     def resolve_dtypes(
         self,
         /,
-        dtypes: tuple[dtype[Any] | type | None, ...],
+        dtypes: tuple[dtype | type | None, ...],
         *,
-        signature: tuple[dtype[Any] | None, ...] | None = None,
+        signature: tuple[dtype | None, ...] | None = None,
         casting: _CastingKind | None = None,
         reduction: py_bool = False,
-    ) -> tuple[dtype[Any], ...]: ...
+    ) -> tuple[dtype, ...]: ...
 
 #  NOTE: the individual ufuncs are defined in `numpy-stubs/_core/umath.pyi`

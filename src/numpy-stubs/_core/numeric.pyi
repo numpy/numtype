@@ -654,7 +654,7 @@ _T = TypeVar("_T")
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _ArrayT_co = TypeVar("_ArrayT_co", bound=np.ndarray[Any, Any], covariant=True)
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
-_DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
 _ShapeLike1D: TypeAlias = SupportsIndex | tuple[SupportsIndex]
@@ -2346,4 +2346,4 @@ def astype(
     *,
     copy: py_bool = True,
     device: _Device | None = None,
-) -> ndarray[_ShapeT, dtype[Any]]: ...
+) -> ndarray[_ShapeT, dtype]: ...

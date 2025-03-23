@@ -1,12 +1,11 @@
 from _typeshed import SupportsWrite as CanWrite
-from typing import Any
 from typing_extensions import LiteralString, TypeVar
 
 import numpy as np
 
 __all__ = ["get_include", "info", "show_runtime"]
 
-_DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 
 ###
 
