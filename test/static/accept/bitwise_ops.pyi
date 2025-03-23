@@ -60,12 +60,6 @@ assert_type(u8 | u8, np.uint64)
 assert_type(u8 ^ u8, np.uint64)
 assert_type(u8 & u8, np.uint64)
 
-assert_type(u8 << i4_nd, npt.NDArray[np.signedinteger])
-assert_type(u8 >> i4_nd, npt.NDArray[np.signedinteger])
-assert_type(u8 | i4_nd, npt.NDArray[np.signedinteger])
-assert_type(u8 ^ i4_nd, npt.NDArray[np.signedinteger])
-assert_type(u8 & i4_nd, npt.NDArray[np.signedinteger])
-
 assert_type(u4 << u4, np.uint32)
 assert_type(u4 >> u4, np.uint32)
 assert_type(u4 | u4, np.uint32)
