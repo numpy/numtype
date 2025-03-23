@@ -1,5 +1,3 @@
-from typing import Any
-
 import numpy as np
 import numpy.typing as npt
 
@@ -15,8 +13,6 @@ AR_c: npt.NDArray[np.complex128]
 AR_m: npt.NDArray[np.timedelta64]
 AR_M: npt.NDArray[np.datetime64]
 
-ANY: Any
-
 AR_LIKE_b: list[bool]
 AR_LIKE_u: list[np.uint32]
 AR_LIKE_i: list[int]
@@ -24,6 +20,9 @@ AR_LIKE_f: list[float]
 AR_LIKE_c: list[complex]
 AR_LIKE_m: list[np.timedelta64]
 AR_LIKE_M: list[np.datetime64]
+
+u8: np.uint64
+i4_nd: npt.NDArray[np.int32]
 
 # Array subtraction
 
@@ -73,40 +72,39 @@ AR_f // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIss
 AR_c // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 # Array multiplication
-# NOTE: huh; why does pyright allow the array-likes?
 
 AR_b *= AR_LIKE_u  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_b *= AR_LIKE_i  # type: ignore[arg-type]
-AR_b *= AR_LIKE_f  # type: ignore[arg-type]
-AR_b *= AR_LIKE_c  # type: ignore[arg-type]
+AR_b *= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 AR_b *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_u *= AR_LIKE_f  # type: ignore[arg-type]
-AR_u *= AR_LIKE_c  # type: ignore[arg-type]
+AR_u *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 AR_u *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_i *= AR_LIKE_f  # type: ignore[arg-type]
-AR_i *= AR_LIKE_c  # type: ignore[arg-type]
+AR_i *= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_i *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 AR_i *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_f *= AR_LIKE_c  # type: ignore[arg-type]
+AR_f *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 AR_f *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
 # Array power
 
 AR_b **= AR_LIKE_b  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
 AR_b **= AR_LIKE_u  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_i  # type: ignore[misc]
-AR_b **= AR_LIKE_f  # type: ignore[misc]
-AR_b **= AR_LIKE_c  # type: ignore[misc]
+AR_b **= AR_LIKE_i  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_f  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_c  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
 
-AR_u **= AR_LIKE_f  # type: ignore[arg-type]
-AR_u **= AR_LIKE_c  # type: ignore[arg-type]
+AR_u **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_u **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_i **= AR_LIKE_f  # type: ignore[arg-type]
-AR_i **= AR_LIKE_c  # type: ignore[arg-type]
+AR_i **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_i **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
-AR_f **= AR_LIKE_c  # type: ignore[arg-type]
+AR_f **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
 # Scalars
 
@@ -120,3 +118,12 @@ td % dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 -b_  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 +b_  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+# Scalar and array
+
+# will raise `TypeError` at runtime
+u8 << i4_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 >> i4_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 | i4_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 ^ i4_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & i4_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]

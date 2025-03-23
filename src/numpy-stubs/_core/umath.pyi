@@ -393,7 +393,7 @@ class _Call11Float(Protocol):
         dtype: _DTypeLikeFloat | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> _ArrayT: ...
-    @overload  # (NDArray[float64] | _NestedSequence[float]) -> NDArray[float64]
+    @overload  # (array[float64] | _NestedSequence[float]) -> NDArray[float64]
     def __call__(
         self,
         x: NDArray[np.float64] | _NestedSequence[float],

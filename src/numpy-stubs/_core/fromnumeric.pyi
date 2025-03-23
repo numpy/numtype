@@ -31,6 +31,9 @@ from _numtype import (
     ToGeneric_0d,
     ToGeneric_1ds,
     ToGeneric_1nd,
+    ToGeneric_2ds,
+    ToGeneric_3ds,
+    ToGeneric_nd,
     ToIntP_nd,
     ToInteger_1d,
     ToInteger_nd,
@@ -93,7 +96,6 @@ __all__ = [
     "var",
 ]
 
-_T = TypeVar("_T")
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
@@ -117,9 +119,6 @@ _AnyShapeT = TypeVar(
     tuple[int, int, int, int, int, int, int, int],
     tuple[int, ...],
 )
-
-_PyArray: TypeAlias = list[_T] | tuple[_T, ...]
-_PyScalar: TypeAlias = complex | bytes | str
 
 _Order: TypeAlias = str | Sequence[str]
 
@@ -567,15 +566,15 @@ def nonzero(a: ToGeneric_1nd) -> tuple[Array[np.int_], ...]: ...
 @overload
 def shape(a: _HasShape[_ShapeT]) -> _ShapeT: ...
 @overload
-def shape(a: _PyScalar) -> tuple[()]: ...
+def shape(a: ToGeneric_0d) -> tuple[()]: ...
 @overload
-def shape(a: _PyArray[ToGeneric_0d] | memoryview | bytearray) -> tuple[int]: ...
+def shape(a: ToGeneric_1ds) -> tuple[int]: ...
 @overload
-def shape(a: _PyArray[_PyArray[ToGeneric_0d]]) -> tuple[int, int]: ...
+def shape(a: ToGeneric_2ds) -> tuple[int, int]: ...
 @overload
-def shape(a: _PyArray[_PyArray[_PyArray[ToGeneric_0d]]]) -> tuple[int, int, int]: ...
+def shape(a: ToGeneric_3ds) -> tuple[int, int, int]: ...
 @overload
-def shape(a: ArrayLike) -> tuple[int, ...]: ...
+def shape(a: ToGeneric_nd) -> tuple[int, ...]: ...
 
 #
 @overload
