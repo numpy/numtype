@@ -744,7 +744,7 @@ class _Call21Bool(Protocol):
         out: _Out1[_AnyArray] | None = None,
         dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs3],
-    ) -> np.bool | NDArray[np.bool]: ...
+    ) -> Any: ...
 
 @type_check_only
 class _Call21Logical(Protocol):
