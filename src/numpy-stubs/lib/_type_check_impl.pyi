@@ -44,6 +44,7 @@ __all__ = [
 _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_RealT = TypeVar("_RealT", bound=np.floating | np.integer | np.bool_)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 
 @type_check_only
@@ -160,13 +161,13 @@ def nan_to_num(
 # expected to verify the output dtype (so we can return an unsafe union here)
 
 @overload
+def real_if_close(a: ToCLongDouble_nd, tol: float = 100) -> Array[np.longdouble | np.clongdouble]: ...  # type: ignore[overload-overlap]
+@overload
 def real_if_close(a: ToComplex128_nd, tol: float = 100) -> Array[np.float64 | np.complex128]: ...
 @overload
 def real_if_close(a: ToComplex64_nd, tol: float = 100) -> Array[np.float32 | np.complex64]: ...
 @overload
-def real_if_close(a: ToCLongDouble_nd, tol: float = 100) -> Array[np.longdouble | np.clongdouble]: ...
-@overload
-def real_if_close(a: _ArrayLike[_ScalarT], tol: float = 100) -> Array[_ScalarT]: ...
+def real_if_close(a: _ArrayLike[_RealT], tol: float = 100) -> Array[_RealT]: ...
 @overload
 def real_if_close(a: ArrayLike, tol: float = 100) -> Array: ...
 
