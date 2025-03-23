@@ -86,7 +86,7 @@ np.rad2deg(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ign
 np.radians(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
 np.radians(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.copysign(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.copysign(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.heaviside(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.logaddexp(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.logaddexp2(i8, i8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
