@@ -5909,6 +5909,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
 
     # NOTE: The seemingly redundant overloads work around a mypy bug in overlapping overload detection
+    # TODO(jorenham): The mypy ignores should be removed once all `floating` scalar types are concrete
     @overload
     def __add__(self: _nt.floating64, x: _nt.CanArray0D[_nt.co_float64], /) -> float64: ...
     @overload
@@ -5924,13 +5925,13 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __add__(self: _nt.floating16, x: _nt.CanArray0D[_nt.floating32], /) -> float32: ...
     @overload
-    def __add__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, /) -> complex128: ...
+    def __add__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __add__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], /) -> complex128: ...
+    def __add__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __add__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], /) -> complex64: ...
+    def __add__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
-    def __add__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...
+    def __add__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
     def __add__(self: _nt.floating64l, x: _nt.CoFloating_0d, /) -> longdouble: ...
     @overload
@@ -5971,6 +5972,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     def __radd__(self, x: number, /) -> inexact: ...
 
     # keep in sync with `__add__`
+    # TODO(jorenham): The mypy ignores should be removed once all `floating` scalar types are concrete
     @overload
     def __sub__(self: _nt.floating64, x: _nt.CanArray0D[_nt.co_float64], /) -> float64: ...
     @overload
@@ -5986,13 +5988,13 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __sub__(self: _nt.floating16, x: _nt.CanArray0D[_nt.floating32], /) -> float32: ...
     @overload
-    def __sub__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, /) -> complex128: ...
+    def __sub__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __sub__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], /) -> complex128: ...
+    def __sub__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __sub__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], /) -> complex64: ...
+    def __sub__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
-    def __sub__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...
+    def __sub__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
     def __sub__(self: _nt.floating64l, x: _nt.CoFloating_0d, /) -> longdouble: ...
     @overload
@@ -6033,6 +6035,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     def __rsub__(self, x: number, /) -> inexact: ...
 
     # keep in sync with `__add__` (plus a `timedelta64` overload)
+    # TODO(jorenham): The mypy ignores should be removed once all `floating` scalar types are concrete
     @overload
     def __mul__(self: _nt.floating64, x: _nt.CanArray0D[_nt.co_float64], /) -> float64: ...
     @overload
@@ -6048,13 +6051,13 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __mul__(self: _nt.floating16, x: _nt.CanArray0D[_nt.floating32], /) -> float32: ...
     @overload
-    def __mul__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, /) -> complex128: ...
+    def __mul__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __mul__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], /) -> complex128: ...
+    def __mul__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __mul__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], /) -> complex64: ...
+    def __mul__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
-    def __mul__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...
+    def __mul__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
     def __mul__(self: _nt.floating64l, x: _nt.CoFloating_0d, /) -> longdouble: ...
     @overload
@@ -6099,6 +6102,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     def __rmul__(self, x: number, /) -> inexact: ...
 
     # keep in sync with `__mul__` (minus the `timedelta64` overloads)
+    # TODO(jorenham): The mypy ignores should be removed once all `floating` scalar types are concrete
     @overload
     def __pow__(self: _nt.floating64, x: _nt.CanArray0D[_nt.co_float64], k: None = None, /) -> float64: ...
     @overload
@@ -6114,13 +6118,13 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __pow__(self: _nt.floating16, x: _nt.CanArray0D[_nt.floating32], k: None = None, /) -> float32: ...
     @overload
-    def __pow__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, k: None = None, /) -> complex128: ...
+    def __pow__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, k: None = None, /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __pow__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], k: None = None, /) -> complex128: ...
+    def __pow__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], k: None = None, /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __pow__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], k: None = None, /) -> complex64: ...
+    def __pow__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], k: None = None, /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
-    def __pow__(self: _ToFloating32, x: _nt.JustComplex, k: None = None, /) -> complex64: ...
+    def __pow__(self: _ToFloating32, x: _nt.JustComplex, k: None = None, /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
     def __pow__(self: _nt.floating64l, x: _nt.CoFloating_0d, k: None = None, /) -> longdouble: ...
     @overload
@@ -6161,6 +6165,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     def __rpow__(self, x: number, k: None = None, /) -> inexact: ...
 
     # keep in sync with `__pow__`
+    # TODO(jorenham): The mypy ignores should be removed once all `floating` scalar types are concrete
     @overload
     def __truediv__(self: _nt.floating64, x: _nt.CanArray0D[_nt.co_float64], /) -> float64: ...
     @overload
@@ -6176,13 +6181,13 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __truediv__(self: _nt.floating16, x: _nt.CanArray0D[_nt.floating32], /) -> float32: ...
     @overload
-    def __truediv__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, /) -> complex128: ...
+    def __truediv__(self: _nt.floating64, x: _nt.CanArray0D[_ToCFloating64] | _nt.JustComplex, /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __truediv__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], /) -> complex128: ...
+    def __truediv__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating64], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
-    def __truediv__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], /) -> complex64: ...
+    def __truediv__(self: _ToFloating32, x: _nt.CanArray0D[_nt.cfloating32], /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
-    def __truediv__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...
+    def __truediv__(self: _ToFloating32, x: _nt.JustComplex, /) -> complex64: ...  # type: ignore[overload-overlap]
     @overload
     def __truediv__(self: _nt.floating64l, x: _nt.CoFloating_0d, /) -> longdouble: ...
     @overload
@@ -6374,13 +6379,13 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     @override
     def __abs__(self, /) -> float64: ...
 
-float96: TypeAlias = floating[_n._LD]
-float128: TypeAlias = floating[_n._LD]
-
 half = float16
 single = float32
 double = float64
-longdouble: TypeAlias = floating[_n._LD]
+longdouble: TypeAlias = floating[_n._64L]
+
+float96: TypeAlias = longdouble
+float128: TypeAlias = longdouble
 
 # The main reason for `complexfloating` having two typevars is cosmetic.
 # It is used to clarify why `complex128`s precision is `_64Bit`, the latter
@@ -6580,9 +6585,36 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
     @override
     def __rfloordiv__(self, x: Never, /) -> Never: ...
 
-complex64: TypeAlias = complexfloating[_n._32]
+class complex64(complexfloating[_n._32]):
+    @property
+    @override
+    def itemsize(self) -> L[8]: ...
+    @property
+    @override
+    def nbytes(self) -> L[8]: ...
+    @property
+    @override
+    def real(self) -> float32: ...
+    @property
+    @override
+    def imag(self) -> float32: ...
+    @override
+    def __abs__(self, /) -> float32: ...
+    @override
+    def __hash__(self, /) -> int: ...
+    @override
+    def __complex__(self, /) -> complex: ...
+
+csingle = complex64
 
 class complex128(complexfloating[_n._64], complex):
+    @overload
+    def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...
+    @overload
+    def __new__(cls, real: _ToReal = 0, imag: _ToImag = 0, /) -> Self: ...
+    def __getnewargs__(self, /) -> tuple[float, float]: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[16]: ...
@@ -6595,24 +6627,32 @@ class complex128(complexfloating[_n._64], complex):
     @property
     @override
     def imag(self) -> float64: ...
-
-    #
-    @overload
-    def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...
-    @overload
-    def __new__(cls, real: _ToReal = 0, imag: _ToImag = 0, /) -> Self: ...
-    def __getnewargs__(self, /) -> tuple[float, float]: ...
     @override
     def __abs__(self, /) -> float64: ...
     @override
     def conjugate(self) -> Self: ...
 
-complex192: TypeAlias = complexfloating[_n._LD]
-complex256: TypeAlias = complexfloating[_n._LD]
-
-csingle = complex64
 cdouble = complex128
-clongdouble: TypeAlias = complexfloating[_n._LD]
+
+class clongdouble(complexfloating[_n._64L]):
+    @property
+    @override
+    def itemsize(self) -> L[24, 32]: ...
+    @property
+    @override
+    def nbytes(self) -> L[24, 32]: ...
+    @property
+    @override
+    def real(self) -> longdouble: ...
+    @property
+    @override
+    def imag(self) -> longdouble: ...
+    @override
+    def __abs__(self, /) -> longdouble: ...
+
+# These are platform dependent, so there's no need to distinguish between them
+complex192 = clongdouble
+complex256 = clongdouble
 
 # NOTE: The `object_` constructor returns the passed object, so instances with type `object_` cannot exists at runtime.
 # NOTE: Because mypy does not fully support `__new__`, `object_` can't be made generic.

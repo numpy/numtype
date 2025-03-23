@@ -45,19 +45,19 @@ integer_p: TypeAlias = np.integer[bits._32_64]  # `[u]long`, and always `[u]intp
 floating16: TypeAlias = np.floating[bits._16]  # `float16` and `half`
 floating32: TypeAlias = np.floating[bits._32]  # `float32` and `single`
 floating64: TypeAlias = np.floating[bits._64]  # `float64` and `double`
-floating64l: TypeAlias = np.floating[bits._LD]  # `longdouble`, `float96`, and `float128`
+floating64l: TypeAlias = np.floating[bits._64L]  # `longdouble`, `float96`, and `float128`
 
 cfloating32: TypeAlias = np.complexfloating[bits._32]  # `complex64` and `csingle`
 cfloating64: TypeAlias = np.complexfloating[bits._64]  # `complex128` and `cdouble`
-cfloating64l: TypeAlias = np.complexfloating[bits._LD]  # `clongdouble`, `complex192`, and `complex256`
+cfloating64l: TypeAlias = np.complexfloating[bits._64L]  # `clongdouble`, `complex192`, and `complex256`
 
 inexact16: TypeAlias = np.inexact[bits._16]  # `floating16`
 inexact32: TypeAlias = np.inexact[bits._32]  # `floating32` and `Cfloating32`
 inexact64: TypeAlias = np.inexact[bits._64]  # `floating64` and `Cfloating64`
-inexact64l: TypeAlias = np.inexact[bits._LD]  # `floatingLD` and `CfloatingLD`
+inexact64l: TypeAlias = np.inexact[bits._64L]  # `floatingLD` and `CfloatingLD`
 
 number8: TypeAlias = np.number[bits._8]  # `integer8`
 number16: TypeAlias = np.number[bits._16]  # `integer16` and `float16`
 number32: TypeAlias = np.number[bits._32]  # `integer32` and `inexact32`
 number64: TypeAlias = np.number[bits._64]  # `integer64` and `inexact64`
-number64l: TypeAlias = np.number[bits._LD]  # `inexact64l`
+number64l: TypeAlias = np.number[bits._64L]  # `inexact64l`
