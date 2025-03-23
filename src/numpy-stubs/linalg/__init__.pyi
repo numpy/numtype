@@ -1,3 +1,4 @@
+from . import _linalg as _linalg, _umath_linalg as _umath_linalg, linalg as linalg
 from ._linalg import (
     LinAlgError,
     cholesky,
