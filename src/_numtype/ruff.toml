@@ -6,7 +6,7 @@ extend-ignore = [
     "A",       # flake8-builtins
     "PYI042",  # flake8-pyi:    snake-case-type-alias
     "PYI064",  # flake8-pyi:    redundant-final-literal
-    "SLF001",  # flake8-self:   private-member-acess
+    "SLF001",  # flake8-self:   private-member-access
     "PLR2044", # pylint/R:      empty-comment
     "PLR6301", # pylint/R:      no-self-use
     "PLW3201", # pylint/W:      bad-dunder-method-name
