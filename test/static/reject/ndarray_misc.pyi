@@ -44,6 +44,6 @@ def test_sort() -> None:
 
 AR_b.__index__()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
 
-AR_f8[1.5]  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-AR_f8["field_a"]  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-AR_f8[["field_a", "field_b"]]  # type: ignore[index]  # pyright: ignore[reportCallIssue,reportArgumentType]
+AR_f8[1.5]  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+AR_f8["field_a"]  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+AR_f8[["field_a", "field_b"]]  # type: ignore[index]  # pyright: ignore[reportArgumentType, reportCallIssue]

@@ -8,7 +8,7 @@ AR: npt.NDArray[np.float64]
 func1: Callable[[Any], str]
 func2: Callable[[np.integer], str]
 
-np.array2string(AR, style=None)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType,reportCallIssue]
+np.array2string(AR, style=None)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.array2string(AR, legacy="1.14")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]
 np.array2string(AR, sign="*")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]
 np.array2string(AR, floatmode="default")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]

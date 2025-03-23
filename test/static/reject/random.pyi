@@ -24,16 +24,16 @@ np.random.SeedSequence(SEED_STR)  # type: ignore[arg-type]  # pyright: ignore[re
 
 seed_seq: np.random.bit_generator.SeedSequence = ...
 seed_seq.spawn(11.5)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-seed_seq.generate_state(3.2)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, np.uint8)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, "uint8")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, "u1")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, np.uint16)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, "uint16")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, "u2")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, np.int32)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, "int32")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
-seed_seq.generate_state(3, "i4")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue, reportArgumentType]
+seed_seq.generate_state(3.2)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, np.uint8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, "uint8")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, "u1")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, np.uint16)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, "uint16")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, "u2")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, np.int32)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, "int32")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+seed_seq.generate_state(3, "i4")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 # Bit Generators
 np.random.MT19937(SEED_FLOAT)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]

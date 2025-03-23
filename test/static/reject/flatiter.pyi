@@ -16,6 +16,6 @@ a.index = 0  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue]
 
 a.copy(order="C")  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
 
-a[np.True_]  # type: ignore[index]  # pyright: ignore[reportCallIssue,reportArgumentType]
-a[ix]  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-a[supports_array]  # type: ignore[index]  # pyright: ignore[reportCallIssue,reportArgumentType]
+a[np.True_]  # type: ignore[index]  # pyright: ignore[reportArgumentType, reportCallIssue]
+a[ix]  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+a[supports_array]  # type: ignore[index]  # pyright: ignore[reportArgumentType, reportCallIssue]

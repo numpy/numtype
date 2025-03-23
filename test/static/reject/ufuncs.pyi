@@ -9,15 +9,15 @@ np.sin.nin + "foo"  # type: ignore[operator]  # pyright: ignore[reportOperatorIs
 
 np.sin(1, foo="bar")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 
-np.abs(None)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.abs(None)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.add(1, 1, 1)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.add(1, 1, 1)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.add(1, 1, axis=0)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 
 np.matmul(AR_f8, AR_f8, where=True)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 
-np.frexp(AR_f8, out=None)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.frexp(AR_f8, out=AR_f8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.frexp(AR_f8, out=None)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.frexp(AR_f8, out=AR_f8)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.absolute.outer()  # type: ignore[call-arg, misc]  # pyright: ignore[reportCallIssue]
 np.frexp.outer()  # type: ignore[call-arg, misc]  # pyright: ignore[reportCallIssue]
@@ -45,7 +45,7 @@ np.matmul.at()  # type: ignore[call-arg, misc]  # pyright: ignore[reportCallIssu
 
 np.isnan(i8, dtype=int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.isnat(i8, dtype=np.int64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
-np.isnat(i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.isnat(i8)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.isinf(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.isfinite(i8, dtype=np.int64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
@@ -61,26 +61,26 @@ np.logical_or(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyri
 np.logical_xor(dt64, dt64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.logical_xor(dt64, dt64, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.spacing(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.spacing(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.spacing(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.signbit(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.signbit(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.signbit(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.cbrt(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.cbrt(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.cbrt(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.deg2rad(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.deg2rad(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.deg2rad(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.degrees(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.degrees(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.degrees(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.fabs(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.fabs(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.fabs(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.rad2deg(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.rad2deg(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.rad2deg(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.radians(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.radians(dt64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.radians(AR_f8, dtype=np.datetime64)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
