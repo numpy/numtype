@@ -671,7 +671,7 @@ _ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=tuple[int, Unpack[tuple[int, ...]]])
 _1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], Unpack[tuple[L[1], ...]]])  # (1,) | (1, 1) | (1, 1, 1) | ...
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
-_ScalarT_co = TypeVar("_ScalarT_co", bound=generic, covariant=True)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=generic, default=Any, covariant=True)
 _NumberT = TypeVar("_NumberT", bound=number)
 _InexactT = TypeVar("_InexactT", bound=inexact)
 _RealNumberT = TypeVar("_RealNumberT", bound=floating | integer)
