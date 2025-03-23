@@ -34,6 +34,14 @@ jobs:
           config: "doc/.markdownlint.yaml"
           globs: "**/*.md"
 
+      - uses: uncenter/setup-taplo@v1
+        with:
+          version: "0.9.3"
+      - name: taplo
+        run: |
+          taplo validate --colors never --no-schema
+          taplo fmt --colors never --check
+
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
