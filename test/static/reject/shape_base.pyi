@@ -5,4 +5,4 @@ class DTypeLike:
 
 dtype_like: DTypeLike
 
-np.expand_dims(dtype_like, (5, 10))  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.expand_dims(dtype_like, (5, 10))  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]

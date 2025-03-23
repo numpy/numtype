@@ -16,4 +16,4 @@ np.savez_compressed(bytes_path, AR_i8)  # type: ignore[arg-type]  # pyright: ign
 
 np.load(str_file)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.loadtxt(bytes_path)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-np.fromregex(bytes_path, ".", np.int64)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.fromregex(bytes_path, ".", np.int64)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]

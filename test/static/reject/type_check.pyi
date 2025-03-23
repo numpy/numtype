@@ -6,7 +6,7 @@ np.mintypecode(DTYPE_i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgu
 np.iscomplexobj(DTYPE_i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.isrealobj(DTYPE_i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.typename(DTYPE_i8)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.typename("invalid")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.typename(DTYPE_i8)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.typename("invalid")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.common_type(np.timedelta64())  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.common_type(np.timedelta64())  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]

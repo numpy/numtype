@@ -20,7 +20,7 @@ np.where(AR_b, 1)  # type: ignore[call-overload]  # pyright: ignore[reportCallIs
 
 np.can_cast(AR_f8, 1)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.vdot(AR_M, AR_M)  # type: ignore[type-var]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.vdot(AR_M, AR_M)  # type: ignore[type-var]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.copyto(AR_LIKE_f, AR_f8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
@@ -35,12 +35,12 @@ np.unpackbits(AR_u1, bitorder=">")  # type: ignore[arg-type]  # pyright: ignore[
 np.shares_memory(1, 1, max_work=i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.may_share_memory(1, 1, max_work=i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.arange(M)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.arange(M)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.datetime_data(int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-np.datetime_as_string("2012")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.datetime_as_string("2012")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.char.compare_chararrays("a", b"a", "==", False)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.char.compare_chararrays("a", b"a", "==", False)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.nested_iters([AR_i8, AR_i8])  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
 np.nested_iters([AR_i8, AR_i8], 0)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]

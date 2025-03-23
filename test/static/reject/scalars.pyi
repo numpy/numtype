@@ -14,9 +14,9 @@ class A:
 np.float32(3j)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.float32([1.0, 0.0, 0.0])  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
-np.complex64([])  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.complex64([])  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.datetime64(0)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.datetime64(0)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.int8(A())  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.int16(A())  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
@@ -28,7 +28,7 @@ np.uint32(A())  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.uint64(A())  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
 np.void("test")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]
-np.void("test", dtype=None)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.void("test", dtype=None)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 # pyright doesn't care?
 np.generic(1)  # type: ignore[abstract]

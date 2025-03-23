@@ -16,6 +16,6 @@ t3: dict[str, tuple[type[int | float], int]]
 
 ###
 
-np.dtype(t1)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.dtype(t2)  # type: ignore[arg-type]  # pyright: ignore[reportCallIssue,reportArgumentType]
-np.dtype(t3)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue,reportArgumentType]
+np.dtype(t1)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.dtype(t2)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.dtype(t3)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
