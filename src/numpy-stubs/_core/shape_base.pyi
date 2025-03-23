@@ -15,17 +15,17 @@ _SCT1 = TypeVar("_SCT1", bound=np.generic)
 
 _ArrayT = TypeVar("_ArrayT", bound=NDArray[Any])
 
-_Array1T = TypeVar("_Array1T", bound=np.ndarray[_AtLeast1D, np.dtype[Any]])
-_Array1T0 = TypeVar("_Array1T0", bound=np.ndarray[_AtLeast1D, np.dtype[Any]])
-_Array1T1 = TypeVar("_Array1T1", bound=np.ndarray[_AtLeast1D, np.dtype[Any]])
+_Array1T = TypeVar("_Array1T", bound=np.ndarray[_AtLeast1D, np.dtype])
+_Array1T0 = TypeVar("_Array1T0", bound=np.ndarray[_AtLeast1D, np.dtype])
+_Array1T1 = TypeVar("_Array1T1", bound=np.ndarray[_AtLeast1D, np.dtype])
 
-_Array2T = TypeVar("_Array2T", bound=np.ndarray[_AtLeast2D, np.dtype[Any]])
-_Array2T0 = TypeVar("_Array2T0", bound=np.ndarray[_AtLeast2D, np.dtype[Any]])
-_Array2T1 = TypeVar("_Array2T1", bound=np.ndarray[_AtLeast2D, np.dtype[Any]])
+_Array2T = TypeVar("_Array2T", bound=np.ndarray[_AtLeast2D, np.dtype])
+_Array2T0 = TypeVar("_Array2T0", bound=np.ndarray[_AtLeast2D, np.dtype])
+_Array2T1 = TypeVar("_Array2T1", bound=np.ndarray[_AtLeast2D, np.dtype])
 
-_Array3T = TypeVar("_Array3T", bound=np.ndarray[_AtLeast3D, np.dtype[Any]])
-_Array3T0 = TypeVar("_Array3T0", bound=np.ndarray[_AtLeast3D, np.dtype[Any]])
-_Array3T1 = TypeVar("_Array3T1", bound=np.ndarray[_AtLeast3D, np.dtype[Any]])
+_Array3T = TypeVar("_Array3T", bound=np.ndarray[_AtLeast3D, np.dtype])
+_Array3T0 = TypeVar("_Array3T0", bound=np.ndarray[_AtLeast3D, np.dtype])
+_Array3T1 = TypeVar("_Array3T1", bound=np.ndarray[_AtLeast3D, np.dtype])
 
 _AtLeast1D: TypeAlias = tuple[int, Unpack[tuple[int, ...]]]
 _AtLeast2D: TypeAlias = tuple[int, int, Unpack[tuple[int, ...]]]

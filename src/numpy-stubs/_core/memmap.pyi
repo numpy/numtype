@@ -12,7 +12,7 @@ __all__ = ["memmap"]
 ###
 
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=Any, covariant=True)
-_DType_co = TypeVar("_DType_co", bound=np.dtype[Any], default=np.dtype[Any], covariant=True)
+_DType_co = TypeVar("_DType_co", bound=np.dtype, default=np.dtype, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
 _Mode: TypeAlias = L["r", "c", "r+", "w+"]

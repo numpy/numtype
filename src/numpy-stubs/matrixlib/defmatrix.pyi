@@ -37,7 +37,7 @@ _T = TypeVar("_T")
 _ArrayT = TypeVar("_ArrayT", bound=Array)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_2D, default=_2D, covariant=True)
-_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[Any], default=np.dtype[Any], covariant=True)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
 _2D: TypeAlias = tuple[int, int]
 
@@ -60,7 +60,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def __getitem__(self, key: _ToIndex1 | _ToIndex2, /) -> matrix[_2D, _DTypeT_co]: ...
     @overload
-    def __getitem__(self: Array[np.void], key: str, /) -> matrix[_ShapeT_co, np.dtype[Any]]: ...
+    def __getitem__(self: Array[np.void], key: str, /) -> matrix[_ShapeT_co, np.dtype]: ...
     @overload
     def __getitem__(self: Array[np.void], key: list[str], /) -> matrix[_ShapeT_co, np.dtype[np.void]]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 

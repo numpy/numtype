@@ -1,5 +1,5 @@
 from collections.abc import Collection
-from typing import Any, Final, Literal as L, TypeAlias, TypedDict, type_check_only
+from typing import Final, Literal as L, TypeAlias, TypedDict, type_check_only
 
 import numpy as np
 
@@ -95,7 +95,7 @@ longdouble_type: type[np.longdouble | np.clongdouble]
 bits: int
 base_name: str
 extended_prec_name: str
-type_info: np.dtype[Any]
+type_info: np.dtype
 type_group: str
 concrete_type: type[np.generic]
 abstract_type: type[np.generic]

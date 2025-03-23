@@ -12,8 +12,8 @@ from ._shape import _Shape
 _T = TypeVar("_T")
 _ScalarType = TypeVar("_ScalarType", bound=np.generic)
 _ScalarType_co = TypeVar("_ScalarType_co", bound=np.generic, covariant=True)
-_DType = TypeVar("_DType", bound=np.dtype[Any])
-_DType_co = TypeVar("_DType_co", covariant=True, bound=np.dtype[Any])
+_DType = TypeVar("_DType", bound=np.dtype)
+_DType_co = TypeVar("_DType_co", covariant=True, bound=np.dtype)
 
 NDArray: TypeAlias = np.ndarray[_Shape, np.dtype[_ScalarType_co]]
 
@@ -48,7 +48,7 @@ _ArrayLike: TypeAlias = _SupportsArray[np.dtype[_ScalarType]] | _NestedSequence[
 # and another one for the rest
 _DualArrayLike: TypeAlias = _SupportsArray[_DType] | _T | _NestedSequence[_T] | _NestedSequence[_SupportsArray[_DType]]
 
-ArrayLike: TypeAlias = _DualArrayLike[np.dtype[Any], complex | str | bytes] | Buffer
+ArrayLike: TypeAlias = _DualArrayLike[np.dtype, complex | str | bytes] | Buffer
 
 # `ArrayLike<X>_co`: array-like objects that can be coerced into `X`
 # given the casting rules `same_kind`

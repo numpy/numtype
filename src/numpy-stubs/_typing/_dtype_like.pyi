@@ -22,7 +22,7 @@ from ._char_codes import (
 from ._shape import _ShapeLike
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_DTypeT_co = TypeVar("_DTypeT_co", covariant=True, bound=np.dtype[Any])
+_DTypeT_co = TypeVar("_DTypeT_co", covariant=True, bound=np.dtype)
 
 # TODO(jorenham): Actually annotate this
 _DTypeLikeNested: TypeAlias = Incomplete

@@ -11,7 +11,7 @@ __all__ = ["NDArrayOperatorsMixin"]
 _T_contra = TypeVar("_T_contra", contravariant=True, default=Any)
 _T_co = TypeVar("_T_co", covariant=True, default=Any)
 
-_AnyArray: TypeAlias = np.ndarray[Any, np.dtype[Any]]
+_AnyArray: TypeAlias = np.ndarray[Any, np.dtype]
 
 ###
 

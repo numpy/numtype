@@ -61,7 +61,7 @@ def _scalar(key: str, /) -> np.number | np.bool | np.timedelta64 | np.datetime64
     return dtype.type(max(dtype.num, 1))  # type: ignore[no-any-return]
 
 
-def _sctype_expr(dtype: np.dtype[Any]) -> str:
+def _sctype_expr(dtype: np.dtype) -> str:
     if dtype.char == "q":
         return f"{NP}.longlong"
     if dtype.char == "Q":

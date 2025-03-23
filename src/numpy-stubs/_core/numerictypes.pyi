@@ -1,5 +1,5 @@
 from builtins import bool as py_bool  # noqa: I001
-from typing import Any, Final, Literal as L, TypedDict, type_check_only
+from typing import Final, Literal as L, TypedDict, type_check_only
 
 import numpy as np
 from numpy import (  # noqa: ICN003
@@ -92,5 +92,5 @@ ScalarType: Final[
 ] = ...
 typeDict: Final = sctypeDict
 
-def isdtype(dtype: dtype[Any] | type, kind: DTypeLike | tuple[DTypeLike, ...]) -> py_bool: ...
+def isdtype(dtype: dtype | type, kind: DTypeLike | tuple[DTypeLike, ...]) -> py_bool: ...
 def issubdtype(arg1: DTypeLike, arg2: DTypeLike) -> py_bool: ...

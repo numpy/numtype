@@ -12,8 +12,8 @@ __all__ = ["Arrayterator"]
 ###
 
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...], covariant=True)
-_DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
-_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[Any], default=np.dtype[Any], covariant=True)
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
 _AnyIndex: TypeAlias = EllipsisType | int | slice | tuple[EllipsisType | int | slice, ...]
