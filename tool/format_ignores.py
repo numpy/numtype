@@ -204,8 +204,7 @@ def main(args: Sequence[str] | None = None, /) -> int:
         )
         if check_only:
             print(
-                f"Found {modified} files that would be modified "
-                f"out of {total} checked",
+                f"Found {modified} files that would be modified out of {total} checked",
             )
             return 1 if modified > 0 else 0
         print(f"Updated {modified} files out of {total} checked")
