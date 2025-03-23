@@ -1,5 +1,3 @@
-# ruff: noqa: SLF001
-
 # Internal type-check-only types, that may be moved to the `numtype` public API in the
 # future.
 
@@ -8,11 +6,11 @@ import datetime as dt
 import decimal
 import fractions
 from collections.abc import Sequence
-from typing import Any, ClassVar, TypeAlias, type_check_only
+from typing import Any, TypeAlias, type_check_only
 from typing_extensions import Protocol, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
-from numpy._typing import _nbit_base as bits
+from numpy._typing import _NestedSequence
 
 from ._just import (
     Just as Just,
@@ -24,12 +22,63 @@ from ._just import (
     JustObject as JustObject,
     JustStr as JustStr,
 )
+from ._scalar import (
+    cfloating32 as cfloating32,
+    cfloating64 as cfloating64,
+    cfloating64l as cfloating64l,
+    floating16 as floating16,
+    floating32 as floating32,
+    floating64 as floating64,
+    floating64l as floating64l,
+    inexact16 as inexact16,
+    inexact32 as inexact32,
+    inexact64 as inexact64,
+    inexact64l as inexact64l,
+    integer8 as integer8,
+    integer16 as integer16,
+    integer32 as integer32,
+    integer64 as integer64,
+    integer_p as integer_p,
+    number8 as number8,
+    number16 as number16,
+    number32 as number32,
+    number64 as number64,
+    number64l as number64l,
+)
+from ._scalar_co import (
+    co_complex as co_complex,
+    co_complex64 as co_complex64,
+    co_complex128 as co_complex128,
+    co_datetime as co_datetime,
+    co_float as co_float,
+    co_float16 as co_float16,
+    co_float32 as co_float32,
+    co_float64 as co_float64,
+    co_int8 as co_int8,
+    co_int16 as co_int16,
+    co_int32 as co_int32,
+    co_int64 as co_int64,
+    co_integer as co_integer,
+    co_integer8 as co_integer8,
+    co_integer16 as co_integer16,
+    co_integer32 as co_integer32,
+    co_integer64 as co_integer64,
+    co_intp as co_intp,
+    co_long as co_long,
+    co_number as co_number,
+    co_timedelta as co_timedelta,
+    co_uint8 as co_uint8,
+    co_uint16 as co_uint16,
+    co_uint32 as co_uint32,
+    co_uint64 as co_uint64,
+    co_uintp as co_uintp,
+    co_ulong as co_ulong,
+)
 
 ###
 # Type parameters
 
 _T = TypeVar("_T")
-_T_co = TypeVar("_T_co", covariant=True)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
@@ -74,10 +123,6 @@ class CanLenArray(Protocol[_ScalarT_co, _ShapeT_co]):
     def __len__(self, /) -> int: ...
     def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
 
-@type_check_only
-class Unhashable(Protocol):
-    __hash__: ClassVar[None]  # type: ignore[assignment]  # pyright: ignore[reportIncompatibleMethodOverride]
-
 ###
 # Shape aliases
 
@@ -90,24 +135,14 @@ AtLeast4D = TypeAliasType("AtLeast4D", tuple[int, int, int, int, Unpack[tuple[in
 ###
 # Shape-typed sequences
 
-# A slimmed down version of `_NestedSequence`, based on `optype.numpy.SequenceND`.
-# https://github.com/jorenham/optype
-@type_check_only
-class SequenceND(Protocol[_T_co]):
-    def __len__(self, /) -> int: ...
-    def __getitem__(self, index: int, /) -> _T_co | SequenceND[_T_co]: ...
-    def __contains__(self, x: object, /) -> bool: ...
-    def index(self, value: Any, /) -> int: ...
-
 # we can't use a custom Sequence type due to some mypy bug
 Sequence2D: TypeAlias = Sequence[Sequence[_T]]
 Sequence3D: TypeAlias = Sequence[Sequence[Sequence[_T]]]
 
 # nested sequences with at least k dims, e.g. `2nd` denotes a dimensionality in the interval [2, n]
-# NOTE: The seemingly redundant `Sequence`s are required to work around a pyright bug
-Sequence1ND: TypeAlias = Sequence[_T] | Sequence[SequenceND[_T]]
-Sequence2ND: TypeAlias = Sequence[Sequence[_T]] | Sequence[Sequence[SequenceND[_T]]]
-Sequence3ND: TypeAlias = Sequence[Sequence[Sequence[_T]]] | Sequence[Sequence[Sequence[SequenceND[_T]]]]
+Sequence1ND: TypeAlias = _NestedSequence[_T]
+Sequence2ND: TypeAlias = Sequence[_NestedSequence[_T]]
+Sequence3ND: TypeAlias = Sequence[Sequence[_NestedSequence[_T]]]
 
 ###
 # Shape-typed array aliases
@@ -126,37 +161,6 @@ MArray2D = TypeAliasType("MArray2D", np.ma.MaskedArray[tuple[int, int], np.dtype
 MArray3D = TypeAliasType("MArray3D", np.ma.MaskedArray[tuple[int, int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 
 Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-
-###
-# sized abstract scalar type aliases
-
-Integer8: TypeAlias = np.integer[bits._8]  # `[u]int8` and `[u]byte`
-Integer16: TypeAlias = np.integer[bits._16]  # `[u]int16` and `[u]short`
-Integer32: TypeAlias = np.integer[bits._32]  # `[u]int32`, `[u]intc`, maybe `[u]long`, and sometimes `[u]intp`
-Integer64: TypeAlias = np.integer[bits._64]  # `[u]int64` and `[u]longlong`, maybe `u[long]`, and usually `[u]intp`
-Integer_: TypeAlias = Integer32 | Integer64  # `Integer32`, `Integer64`, always `[u]long`, and always `[u]intp``
-
-Floating16: TypeAlias = np.floating[bits._16]  # `float16` and `half`
-Floating32: TypeAlias = np.floating[bits._32]  # `float32` and `single`
-Floating64: TypeAlias = np.floating[bits._64]  # `float64` and `double`
-FloatingLD: TypeAlias = np.floating[bits._LD]  # `longdouble`, `float96`, and `float128`
-
-CFloating32: TypeAlias = np.complexfloating[bits._32]  # `complex64` and `csingle`
-CFloating64: TypeAlias = np.complexfloating[bits._64]  # `complex128` and `cdouble`
-CFloatingLD: TypeAlias = np.complexfloating[bits._LD]  # `clongdouble`, `complex192`, and `complex256`
-
-Inexact16: TypeAlias = np.inexact[bits._16]  # `Floating16`
-Inexact32: TypeAlias = np.inexact[bits._32]  # `Floating32` and `CFloating32`
-Inexact64: TypeAlias = np.inexact[bits._64]  # `Floating64` and `CFloating64`
-InexactLD: TypeAlias = np.inexact[bits._LD]  # `FloatingLD` and `CFloatingLD`
-
-Number8: TypeAlias = np.number[bits._8]  # `Integer8`
-Number16: TypeAlias = np.number[bits._16]  # `Integer16` and `float16`
-Number32: TypeAlias = np.number[bits._32]  # `Integer32` and `Inexact32`
-Number64: TypeAlias = np.number[bits._64]  # `Integer64` and `Inexact64`
-NumberLD: TypeAlias = np.number[bits._LD]  # `InexactLD`
-
-Scalar8: TypeAlias = Number8 | np.bool_
 
 ###
 # helper aliases
@@ -287,18 +291,6 @@ ToUIntP_1nd = TypeAliasType("ToUIntP_1nd", _ToArray_1nd[np.uintp])
 ToUIntP_2nd = TypeAliasType("ToUIntP_2nd", _ToArray_2nd[np.uintp])
 ToUIntP_3nd = TypeAliasType("ToUIntP_3nd", _ToArray_3nd[np.uintp])
 
-ToULongLong_nd = TypeAliasType("ToULongLong_nd", _ToArray_nd[np.ulonglong])
-ToULongLong_0d = TypeAliasType("ToULongLong_0d", CanArray0D[np.ulonglong])
-ToULongLong_1d = TypeAliasType("ToULongLong_1d", _ToArray_1d[np.ulonglong])
-ToULongLong_2d = TypeAliasType("ToULongLong_2d", _ToArray_2d[np.ulonglong])
-ToULongLong_3d = TypeAliasType("ToULongLong_3d", _ToArray_3d[np.ulonglong])
-ToULongLong_1ds = TypeAliasType("ToULongLong_1ds", _ToArray_1ds[np.ulonglong])
-ToULongLong_2ds = TypeAliasType("ToULongLong_2ds", _ToArray_2ds[np.ulonglong])
-ToULongLong_3ds = TypeAliasType("ToULongLong_3ds", _ToArray_3ds[np.ulonglong])
-ToULongLong_1nd = TypeAliasType("ToULongLong_1nd", _ToArray_1nd[np.ulonglong])
-ToULongLong_2nd = TypeAliasType("ToULongLong_2nd", _ToArray_2nd[np.ulonglong])
-ToULongLong_3nd = TypeAliasType("ToULongLong_3nd", _ToArray_3nd[np.ulonglong])
-
 ToUInteger_nd = TypeAliasType("ToUInteger_nd", _ToArray_nd[np.unsignedinteger])
 ToUInteger_0d = TypeAliasType("ToUInteger_0d", CanArray0D[np.unsignedinteger])
 ToUInteger_1d = TypeAliasType("ToUInteger_1d", _ToArray_1d[np.unsignedinteger])
@@ -384,18 +376,6 @@ ToIntP_1nd = TypeAliasType("ToIntP_1nd", _ToArray2_1nd[np.intp, JustInt])
 ToIntP_2nd = TypeAliasType("ToIntP_2nd", _ToArray2_2nd[np.intp, JustInt])
 ToIntP_3nd = TypeAliasType("ToIntP_3nd", _ToArray2_3nd[np.intp, JustInt])
 
-ToLongLong_nd = TypeAliasType("ToLongLong_nd", _ToArray_nd[np.longlong])
-ToLongLong_0d = TypeAliasType("ToLongLong_0d", CanArray0D[np.longlong])
-ToLongLong_1d = TypeAliasType("ToLongLong_1d", _ToArray_1d[np.longlong])
-ToLongLong_2d = TypeAliasType("ToLongLong_2d", _ToArray_2d[np.longlong])
-ToLongLong_3d = TypeAliasType("ToLongLong_3d", _ToArray_3d[np.longlong])
-ToLongLong_1ds = TypeAliasType("ToLongLong_1ds", _ToArray_1ds[np.longlong])
-ToLongLong_2ds = TypeAliasType("ToLongLong_2ds", _ToArray_2ds[np.longlong])
-ToLongLong_3ds = TypeAliasType("ToLongLong_3ds", _ToArray_3ds[np.longlong])
-ToLongLong_1nd = TypeAliasType("ToLongLong_1nd", _ToArray_1nd[np.longlong])
-ToLongLong_2nd = TypeAliasType("ToLongLong_2nd", _ToArray_2nd[np.longlong])
-ToLongLong_3nd = TypeAliasType("ToLongLong_3nd", _ToArray_3nd[np.longlong])
-
 ToSInteger_nd = TypeAliasType("ToSInteger_nd", _ToArray2_nd[np.signedinteger, JustInt])
 ToSInteger_0d = TypeAliasType("ToSInteger_0d", _ToArray2_0d[np.signedinteger, JustInt])
 ToSInteger_1d = TypeAliasType("ToSInteger_1d", _ToArray2_1d[np.signedinteger, JustInt])
@@ -422,53 +402,53 @@ ToInteger_2nd = TypeAliasType("ToInteger_2nd", _ToArray2_2nd[np.integer, JustInt
 ToInteger_3nd = TypeAliasType("ToInteger_3nd", _ToArray2_3nd[np.integer, JustInt])
 
 # real floats
-ToFloat16_nd = TypeAliasType("ToFloat16_nd", _ToArray_nd[Floating16])
-ToFloat16_0d = TypeAliasType("ToFloat16_0d", CanArray0D[Floating16])
-ToFloat16_1d = TypeAliasType("ToFloat16_1d", _ToArray_1d[Floating16])
-ToFloat16_2d = TypeAliasType("ToFloat16_2d", _ToArray_2d[Floating16])
-ToFloat16_3d = TypeAliasType("ToFloat16_3d", _ToArray_3d[Floating16])
-ToFloat16_1ds = TypeAliasType("ToFloat16_1ds", _ToArray_1ds[Floating16])
-ToFloat16_2ds = TypeAliasType("ToFloat16_2ds", _ToArray_2ds[Floating16])
-ToFloat16_3ds = TypeAliasType("ToFloat16_3ds", _ToArray_3ds[Floating16])
-ToFloat16_1nd = TypeAliasType("ToFloat16_1nd", _ToArray_1nd[Floating16])
-ToFloat16_2nd = TypeAliasType("ToFloat16_2nd", _ToArray_2nd[Floating16])
-ToFloat16_3nd = TypeAliasType("ToFloat16_3nd", _ToArray_3nd[Floating16])
+ToFloat16_nd = TypeAliasType("ToFloat16_nd", _ToArray_nd[floating16])
+ToFloat16_0d = TypeAliasType("ToFloat16_0d", CanArray0D[floating16])
+ToFloat16_1d = TypeAliasType("ToFloat16_1d", _ToArray_1d[floating16])
+ToFloat16_2d = TypeAliasType("ToFloat16_2d", _ToArray_2d[floating16])
+ToFloat16_3d = TypeAliasType("ToFloat16_3d", _ToArray_3d[floating16])
+ToFloat16_1ds = TypeAliasType("ToFloat16_1ds", _ToArray_1ds[floating16])
+ToFloat16_2ds = TypeAliasType("ToFloat16_2ds", _ToArray_2ds[floating16])
+ToFloat16_3ds = TypeAliasType("ToFloat16_3ds", _ToArray_3ds[floating16])
+ToFloat16_1nd = TypeAliasType("ToFloat16_1nd", _ToArray_1nd[floating16])
+ToFloat16_2nd = TypeAliasType("ToFloat16_2nd", _ToArray_2nd[floating16])
+ToFloat16_3nd = TypeAliasType("ToFloat16_3nd", _ToArray_3nd[floating16])
 
-ToFloat32_nd = TypeAliasType("ToFloat32_nd", _ToArray_nd[Floating32])
-ToFloat32_0d = TypeAliasType("ToFloat32_0d", CanArray0D[Floating32])
-ToFloat32_1d = TypeAliasType("ToFloat32_1d", _ToArray_1d[Floating32])
-ToFloat32_2d = TypeAliasType("ToFloat32_2d", _ToArray_2d[Floating32])
-ToFloat32_3d = TypeAliasType("ToFloat32_3d", _ToArray_3d[Floating32])
-ToFloat32_1ds = TypeAliasType("ToFloat32_1ds", _ToArray_1ds[Floating32])
-ToFloat32_2ds = TypeAliasType("ToFloat32_2ds", _ToArray_2ds[Floating32])
-ToFloat32_3ds = TypeAliasType("ToFloat32_3ds", _ToArray_3ds[Floating32])
-ToFloat32_1nd = TypeAliasType("ToFloat32_1nd", _ToArray_1nd[Floating32])
-ToFloat32_2nd = TypeAliasType("ToFloat32_2nd", _ToArray_2nd[Floating32])
-ToFloat32_3nd = TypeAliasType("ToFloat32_3nd", _ToArray_3nd[Floating32])
+ToFloat32_nd = TypeAliasType("ToFloat32_nd", _ToArray_nd[floating32])
+ToFloat32_0d = TypeAliasType("ToFloat32_0d", CanArray0D[floating32])
+ToFloat32_1d = TypeAliasType("ToFloat32_1d", _ToArray_1d[floating32])
+ToFloat32_2d = TypeAliasType("ToFloat32_2d", _ToArray_2d[floating32])
+ToFloat32_3d = TypeAliasType("ToFloat32_3d", _ToArray_3d[floating32])
+ToFloat32_1ds = TypeAliasType("ToFloat32_1ds", _ToArray_1ds[floating32])
+ToFloat32_2ds = TypeAliasType("ToFloat32_2ds", _ToArray_2ds[floating32])
+ToFloat32_3ds = TypeAliasType("ToFloat32_3ds", _ToArray_3ds[floating32])
+ToFloat32_1nd = TypeAliasType("ToFloat32_1nd", _ToArray_1nd[floating32])
+ToFloat32_2nd = TypeAliasType("ToFloat32_2nd", _ToArray_2nd[floating32])
+ToFloat32_3nd = TypeAliasType("ToFloat32_3nd", _ToArray_3nd[floating32])
 
-ToFloat64_nd = TypeAliasType("ToFloat64_nd", _ToArray2_nd[Floating64, JustFloat])
-ToFloat64_0d = TypeAliasType("ToFloat64_0d", _ToArray2_0d[Floating64, JustFloat])
-ToFloat64_1d = TypeAliasType("ToFloat64_1d", _ToArray2_1d[Floating64, JustFloat])
-ToFloat64_2d = TypeAliasType("ToFloat64_2d", _ToArray2_2d[Floating64, JustFloat])
-ToFloat64_3d = TypeAliasType("ToFloat64_3d", _ToArray2_3d[Floating64, JustFloat])
-ToFloat64_1ds = TypeAliasType("ToFloat64_1ds", _ToArray2_1ds[Floating64, JustFloat])
-ToFloat64_2ds = TypeAliasType("ToFloat64_2ds", _ToArray2_2ds[Floating64, JustFloat])
-ToFloat64_3ds = TypeAliasType("ToFloat64_3ds", _ToArray2_3ds[Floating64, JustFloat])
-ToFloat64_1nd = TypeAliasType("ToFloat64_1nd", _ToArray2_1nd[Floating64, JustFloat])
-ToFloat64_2nd = TypeAliasType("ToFloat64_2nd", _ToArray2_2nd[Floating64, JustFloat])
-ToFloat64_3nd = TypeAliasType("ToFloat64_3nd", _ToArray2_3nd[Floating64, JustFloat])
+ToFloat64_nd = TypeAliasType("ToFloat64_nd", _ToArray2_nd[floating64, JustFloat])
+ToFloat64_0d = TypeAliasType("ToFloat64_0d", _ToArray2_0d[floating64, JustFloat])
+ToFloat64_1d = TypeAliasType("ToFloat64_1d", _ToArray2_1d[floating64, JustFloat])
+ToFloat64_2d = TypeAliasType("ToFloat64_2d", _ToArray2_2d[floating64, JustFloat])
+ToFloat64_3d = TypeAliasType("ToFloat64_3d", _ToArray2_3d[floating64, JustFloat])
+ToFloat64_1ds = TypeAliasType("ToFloat64_1ds", _ToArray2_1ds[floating64, JustFloat])
+ToFloat64_2ds = TypeAliasType("ToFloat64_2ds", _ToArray2_2ds[floating64, JustFloat])
+ToFloat64_3ds = TypeAliasType("ToFloat64_3ds", _ToArray2_3ds[floating64, JustFloat])
+ToFloat64_1nd = TypeAliasType("ToFloat64_1nd", _ToArray2_1nd[floating64, JustFloat])
+ToFloat64_2nd = TypeAliasType("ToFloat64_2nd", _ToArray2_2nd[floating64, JustFloat])
+ToFloat64_3nd = TypeAliasType("ToFloat64_3nd", _ToArray2_3nd[floating64, JustFloat])
 
-ToLongDouble_nd = TypeAliasType("ToLongDouble_nd", _ToArray_nd[FloatingLD])
-ToLongDouble_0d = TypeAliasType("ToLongDouble_0d", CanArray0D[FloatingLD])
-ToLongDouble_1d = TypeAliasType("ToLongDouble_1d", _ToArray_1d[FloatingLD])
-ToLongDouble_2d = TypeAliasType("ToLongDouble_2d", _ToArray_2d[FloatingLD])
-ToLongDouble_3d = TypeAliasType("ToLongDouble_3d", _ToArray_3d[FloatingLD])
-ToLongDouble_1ds = TypeAliasType("ToLongDouble_1ds", _ToArray_1ds[FloatingLD])
-ToLongDouble_2ds = TypeAliasType("ToLongDouble_2ds", _ToArray_2ds[FloatingLD])
-ToLongDouble_3ds = TypeAliasType("ToLongDouble_3ds", _ToArray_3ds[FloatingLD])
-ToLongDouble_1nd = TypeAliasType("ToLongDouble_1nd", _ToArray_1nd[FloatingLD])
-ToLongDouble_2nd = TypeAliasType("ToLongDouble_2nd", _ToArray_2nd[FloatingLD])
-ToLongDouble_3nd = TypeAliasType("ToLongDouble_3nd", _ToArray_3nd[FloatingLD])
+ToLongDouble_nd = TypeAliasType("ToLongDouble_nd", _ToArray_nd[floating64l])
+ToLongDouble_0d = TypeAliasType("ToLongDouble_0d", CanArray0D[floating64l])
+ToLongDouble_1d = TypeAliasType("ToLongDouble_1d", _ToArray_1d[floating64l])
+ToLongDouble_2d = TypeAliasType("ToLongDouble_2d", _ToArray_2d[floating64l])
+ToLongDouble_3d = TypeAliasType("ToLongDouble_3d", _ToArray_3d[floating64l])
+ToLongDouble_1ds = TypeAliasType("ToLongDouble_1ds", _ToArray_1ds[floating64l])
+ToLongDouble_2ds = TypeAliasType("ToLongDouble_2ds", _ToArray_2ds[floating64l])
+ToLongDouble_3ds = TypeAliasType("ToLongDouble_3ds", _ToArray_3ds[floating64l])
+ToLongDouble_1nd = TypeAliasType("ToLongDouble_1nd", _ToArray_1nd[floating64l])
+ToLongDouble_2nd = TypeAliasType("ToLongDouble_2nd", _ToArray_2nd[floating64l])
+ToLongDouble_3nd = TypeAliasType("ToLongDouble_3nd", _ToArray_3nd[floating64l])
 
 ToFloating_nd = TypeAliasType("ToFloating_nd", _ToArray2_nd[np.floating, JustFloat])
 ToFloating_0d = TypeAliasType("ToFloating_0d", _ToArray2_0d[np.floating, JustFloat])
@@ -483,41 +463,41 @@ ToFloating_2nd = TypeAliasType("ToFloating_2nd", _ToArray2_2nd[np.floating, Just
 ToFloating_3nd = TypeAliasType("ToFloating_3nd", _ToArray2_3nd[np.floating, JustFloat])
 
 # complex floats
-ToComplex64_nd = TypeAliasType("ToComplex64_nd", _ToArray_nd[CFloating32])
-ToComplex64_0d = TypeAliasType("ToComplex64_0d", CanArray0D[CFloating32])
-ToComplex64_1d = TypeAliasType("ToComplex64_1d", _ToArray_1d[CFloating32])
-ToComplex64_2d = TypeAliasType("ToComplex64_2d", _ToArray_2d[CFloating32])
-ToComplex64_3d = TypeAliasType("ToComplex64_3d", _ToArray_3d[CFloating32])
-ToComplex64_1ds = TypeAliasType("ToComplex64_1ds", _ToArray_1ds[CFloating32])
-ToComplex64_2ds = TypeAliasType("ToComplex64_2ds", _ToArray_2ds[CFloating32])
-ToComplex64_3ds = TypeAliasType("ToComplex64_3ds", _ToArray_3ds[CFloating32])
-ToComplex64_1nd = TypeAliasType("ToComplex64_1nd", _ToArray_1nd[CFloating32])
-ToComplex64_2nd = TypeAliasType("ToComplex64_2nd", _ToArray_2nd[CFloating32])
-ToComplex64_3nd = TypeAliasType("ToComplex64_3nd", _ToArray_3nd[CFloating32])
+ToComplex64_nd = TypeAliasType("ToComplex64_nd", _ToArray_nd[cfloating32])
+ToComplex64_0d = TypeAliasType("ToComplex64_0d", CanArray0D[cfloating32])
+ToComplex64_1d = TypeAliasType("ToComplex64_1d", _ToArray_1d[cfloating32])
+ToComplex64_2d = TypeAliasType("ToComplex64_2d", _ToArray_2d[cfloating32])
+ToComplex64_3d = TypeAliasType("ToComplex64_3d", _ToArray_3d[cfloating32])
+ToComplex64_1ds = TypeAliasType("ToComplex64_1ds", _ToArray_1ds[cfloating32])
+ToComplex64_2ds = TypeAliasType("ToComplex64_2ds", _ToArray_2ds[cfloating32])
+ToComplex64_3ds = TypeAliasType("ToComplex64_3ds", _ToArray_3ds[cfloating32])
+ToComplex64_1nd = TypeAliasType("ToComplex64_1nd", _ToArray_1nd[cfloating32])
+ToComplex64_2nd = TypeAliasType("ToComplex64_2nd", _ToArray_2nd[cfloating32])
+ToComplex64_3nd = TypeAliasType("ToComplex64_3nd", _ToArray_3nd[cfloating32])
 
-ToComplex128_nd = TypeAliasType("ToComplex128_nd", _ToArray2_nd[CFloating64, JustComplex])
-ToComplex128_0d = TypeAliasType("ToComplex128_0d", _ToArray2_0d[CFloating64, JustComplex])
-ToComplex128_1d = TypeAliasType("ToComplex128_1d", _ToArray2_1d[CFloating64, JustComplex])
-ToComplex128_2d = TypeAliasType("ToComplex128_2d", _ToArray2_2d[CFloating64, JustComplex])
-ToComplex128_3d = TypeAliasType("ToComplex128_3d", _ToArray2_3d[CFloating64, JustComplex])
-ToComplex128_1ds = TypeAliasType("ToComplex128_1ds", _ToArray2_1ds[CFloating64, JustComplex])
-ToComplex128_2ds = TypeAliasType("ToComplex128_2ds", _ToArray2_2ds[CFloating64, JustComplex])
-ToComplex128_3ds = TypeAliasType("ToComplex128_3ds", _ToArray2_3ds[CFloating64, JustComplex])
-ToComplex128_1nd = TypeAliasType("ToComplex128_1nd", _ToArray2_1nd[CFloating64, JustComplex])
-ToComplex128_2nd = TypeAliasType("ToComplex128_2nd", _ToArray2_2nd[CFloating64, JustComplex])
-ToComplex128_3nd = TypeAliasType("ToComplex128_3nd", _ToArray2_3nd[CFloating64, JustComplex])
+ToComplex128_nd = TypeAliasType("ToComplex128_nd", _ToArray2_nd[cfloating64, JustComplex])
+ToComplex128_0d = TypeAliasType("ToComplex128_0d", _ToArray2_0d[cfloating64, JustComplex])
+ToComplex128_1d = TypeAliasType("ToComplex128_1d", _ToArray2_1d[cfloating64, JustComplex])
+ToComplex128_2d = TypeAliasType("ToComplex128_2d", _ToArray2_2d[cfloating64, JustComplex])
+ToComplex128_3d = TypeAliasType("ToComplex128_3d", _ToArray2_3d[cfloating64, JustComplex])
+ToComplex128_1ds = TypeAliasType("ToComplex128_1ds", _ToArray2_1ds[cfloating64, JustComplex])
+ToComplex128_2ds = TypeAliasType("ToComplex128_2ds", _ToArray2_2ds[cfloating64, JustComplex])
+ToComplex128_3ds = TypeAliasType("ToComplex128_3ds", _ToArray2_3ds[cfloating64, JustComplex])
+ToComplex128_1nd = TypeAliasType("ToComplex128_1nd", _ToArray2_1nd[cfloating64, JustComplex])
+ToComplex128_2nd = TypeAliasType("ToComplex128_2nd", _ToArray2_2nd[cfloating64, JustComplex])
+ToComplex128_3nd = TypeAliasType("ToComplex128_3nd", _ToArray2_3nd[cfloating64, JustComplex])
 
-ToCLongDouble_nd = TypeAliasType("ToCLongDouble_nd", _ToArray_nd[CFloatingLD])
-ToCLongDouble_0d = TypeAliasType("ToCLongDouble_0d", CanArray0D[CFloatingLD])
-ToCLongDouble_1d = TypeAliasType("ToCLongDouble_1d", _ToArray_1d[CFloatingLD])
-ToCLongDouble_2d = TypeAliasType("ToCLongDouble_2d", _ToArray_2d[CFloatingLD])
-ToCLongDouble_3d = TypeAliasType("ToCLongDouble_3d", _ToArray_3d[CFloatingLD])
-ToCLongDouble_1ds = TypeAliasType("ToCLongDouble_1ds", _ToArray_1ds[CFloatingLD])
-ToCLongDouble_2ds = TypeAliasType("ToCLongDouble_2ds", _ToArray_2ds[CFloatingLD])
-ToCLongDouble_3ds = TypeAliasType("ToCLongDouble_3ds", _ToArray_3ds[CFloatingLD])
-ToCLongDouble_1nd = TypeAliasType("ToCLongDouble_1nd", _ToArray_1nd[CFloatingLD])
-ToCLongDouble_2nd = TypeAliasType("ToCLongDouble_2nd", _ToArray_2nd[CFloatingLD])
-ToCLongDouble_3nd = TypeAliasType("ToCLongDouble_3nd", _ToArray_3nd[CFloatingLD])
+ToCLongDouble_nd = TypeAliasType("ToCLongDouble_nd", _ToArray_nd[cfloating64l])
+ToCLongDouble_0d = TypeAliasType("ToCLongDouble_0d", CanArray0D[cfloating64l])
+ToCLongDouble_1d = TypeAliasType("ToCLongDouble_1d", _ToArray_1d[cfloating64l])
+ToCLongDouble_2d = TypeAliasType("ToCLongDouble_2d", _ToArray_2d[cfloating64l])
+ToCLongDouble_3d = TypeAliasType("ToCLongDouble_3d", _ToArray_3d[cfloating64l])
+ToCLongDouble_1ds = TypeAliasType("ToCLongDouble_1ds", _ToArray_1ds[cfloating64l])
+ToCLongDouble_2ds = TypeAliasType("ToCLongDouble_2ds", _ToArray_2ds[cfloating64l])
+ToCLongDouble_3ds = TypeAliasType("ToCLongDouble_3ds", _ToArray_3ds[cfloating64l])
+ToCLongDouble_1nd = TypeAliasType("ToCLongDouble_1nd", _ToArray_1nd[cfloating64l])
+ToCLongDouble_2nd = TypeAliasType("ToCLongDouble_2nd", _ToArray_2nd[cfloating64l])
+ToCLongDouble_3nd = TypeAliasType("ToCLongDouble_3nd", _ToArray_3nd[cfloating64l])
 
 ToComplex_nd = TypeAliasType("ToComplex_nd", _ToArray2_nd[np.complexfloating, JustComplex])
 ToComplex_0d = TypeAliasType("ToComplex_0d", _ToArray2_0d[np.complexfloating, JustComplex])
@@ -663,335 +643,275 @@ ToGeneric_1nd = TypeAliasType("ToGeneric_1nd", _ToArray2_1nd[np.generic, _PyScal
 ToGeneric_2nd = TypeAliasType("ToGeneric_2nd", _ToArray2_2nd[np.generic, _PyScalar])
 ToGeneric_3nd = TypeAliasType("ToGeneric_3nd", _ToArray2_3nd[np.generic, _PyScalar])
 
-###
-# Coercible (overlapping) scalar- and array-likes
-# See https://github.com/numpy/numtype/issues/135 for the scalar promotion table
-
-_CoInteger8: TypeAlias = Integer8 | _ToBool
-_CoInteger16: TypeAlias = Integer16 | _CoInteger8
-_CoInteger32: TypeAlias = Integer32 | _CoInteger16
-
-_CoInt8: TypeAlias = np.int8 | _ToBool
-_CoUInt8: TypeAlias = np.uint8 | _ToBool
-_CoInt16: TypeAlias = np.int16 | _CoInteger8
-_CoUInt16: TypeAlias = np.uint16 | _CoUInt8
-_CoInt32: TypeAlias = np.int32 | _CoInteger16
-_CoUInt32: TypeAlias = np.uint32 | _CoUInt16
-_CoLong: TypeAlias = np.long | _CoInt32
-_CoULong: TypeAlias = np.ulong | _CoUInt32
-_CoIntP: TypeAlias = np.intp | _CoInt32
-_CoUIntP: TypeAlias = np.uintp | _CoUInt32
-_CoInt64: TypeAlias = np.int64 | _CoInteger32
-_CoUInt64: TypeAlias = np.uint64 | _CoUInt32
-_CoSInteger: TypeAlias = np.signedinteger | _CoInteger32
-_CoUInteger: TypeAlias = np.unsignedinteger | _ToBool
-_CoInteger: TypeAlias = np.integer | _ToBool
-
-_CoFloat16: TypeAlias = Floating16 | _CoInteger8
-_CoFloat32: TypeAlias = Floating32 | Floating16 | _CoInteger16
-_CoFloat64: TypeAlias = Floating64 | Floating32 | Floating16 | _CoInteger
-_CoFloating: TypeAlias = np.floating | _CoInteger
-
-_CoComplex64: TypeAlias = Inexact32 | Number16 | Number8
-_CoComplex128: TypeAlias = Number64 | Number32 | Number16 | _CoInteger
-_CoComplex: TypeAlias = np.number | _ToBool
-
-_CoTimeDelta: TypeAlias = _ToTimeDelta | _CoInteger
-_CoDateTime: TypeAlias = _ToDateTime | _ToTimeDelta
-
 # unsigned integers
-CoUInt8_nd = TypeAliasType("CoUInt8_nd", _ToArray2_nd[_CoUInt8, bool])
-CoUInt8_0d = TypeAliasType("CoUInt8_0d", _ToArray2_0d[_CoUInt8, bool])
-CoUInt8_1d = TypeAliasType("CoUInt8_1d", _ToArray2_1d[_CoUInt8, bool])
-CoUInt8_2d = TypeAliasType("CoUInt8_2d", _ToArray2_2d[_CoUInt8, bool])
-CoUInt8_3d = TypeAliasType("CoUInt8_3d", _ToArray2_3d[_CoUInt8, bool])
-CoUInt8_1ds = TypeAliasType("CoUInt8_1ds", _ToArray2_1ds[_CoUInt8, bool])
-CoUInt8_2ds = TypeAliasType("CoUInt8_2ds", _ToArray2_2ds[_CoUInt8, bool])
-CoUInt8_3ds = TypeAliasType("CoUInt8_3ds", _ToArray2_3ds[_CoUInt8, bool])
-CoUInt8_1nd = TypeAliasType("CoUInt8_1nd", _ToArray2_1nd[_CoUInt8, bool])
-CoUInt8_2nd = TypeAliasType("CoUInt8_2nd", _ToArray2_2nd[_CoUInt8, bool])
-CoUInt8_3nd = TypeAliasType("CoUInt8_3nd", _ToArray2_3nd[_CoUInt8, bool])
+CoUInt8_nd = TypeAliasType("CoUInt8_nd", _ToArray2_nd[co_uint8, bool])
+CoUInt8_0d = TypeAliasType("CoUInt8_0d", _ToArray2_0d[co_uint8, bool])
+CoUInt8_1d = TypeAliasType("CoUInt8_1d", _ToArray2_1d[co_uint8, bool])
+CoUInt8_2d = TypeAliasType("CoUInt8_2d", _ToArray2_2d[co_uint8, bool])
+CoUInt8_3d = TypeAliasType("CoUInt8_3d", _ToArray2_3d[co_uint8, bool])
+CoUInt8_1ds = TypeAliasType("CoUInt8_1ds", _ToArray2_1ds[co_uint8, bool])
+CoUInt8_2ds = TypeAliasType("CoUInt8_2ds", _ToArray2_2ds[co_uint8, bool])
+CoUInt8_3ds = TypeAliasType("CoUInt8_3ds", _ToArray2_3ds[co_uint8, bool])
+CoUInt8_1nd = TypeAliasType("CoUInt8_1nd", _ToArray2_1nd[co_uint8, bool])
+CoUInt8_2nd = TypeAliasType("CoUInt8_2nd", _ToArray2_2nd[co_uint8, bool])
+CoUInt8_3nd = TypeAliasType("CoUInt8_3nd", _ToArray2_3nd[co_uint8, bool])
 
-CoUInt16_nd = TypeAliasType("CoUInt16_nd", _ToArray2_nd[_CoUInt16, bool])
-CoUInt16_0d = TypeAliasType("CoUInt16_0d", _ToArray2_0d[_CoUInt16, bool])
-CoUInt16_1d = TypeAliasType("CoUInt16_1d", _ToArray2_1d[_CoUInt16, bool])
-CoUInt16_2d = TypeAliasType("CoUInt16_2d", _ToArray2_2d[_CoUInt16, bool])
-CoUInt16_3d = TypeAliasType("CoUInt16_3d", _ToArray2_3d[_CoUInt16, bool])
-CoUInt16_1ds = TypeAliasType("CoUInt16_1ds", _ToArray2_1ds[_CoUInt16, bool])
-CoUInt16_2ds = TypeAliasType("CoUInt16_2ds", _ToArray2_2ds[_CoUInt16, bool])
-CoUInt16_3ds = TypeAliasType("CoUInt16_3ds", _ToArray2_3ds[_CoUInt16, bool])
-CoUInt16_1nd = TypeAliasType("CoUInt16_1nd", _ToArray2_1nd[_CoUInt16, bool])
-CoUInt16_2nd = TypeAliasType("CoUInt16_2nd", _ToArray2_2nd[_CoUInt16, bool])
-CoUInt16_3nd = TypeAliasType("CoUInt16_3nd", _ToArray2_3nd[_CoUInt16, bool])
+CoUInt16_nd = TypeAliasType("CoUInt16_nd", _ToArray2_nd[co_uint16, bool])
+CoUInt16_0d = TypeAliasType("CoUInt16_0d", _ToArray2_0d[co_uint16, bool])
+CoUInt16_1d = TypeAliasType("CoUInt16_1d", _ToArray2_1d[co_uint16, bool])
+CoUInt16_2d = TypeAliasType("CoUInt16_2d", _ToArray2_2d[co_uint16, bool])
+CoUInt16_3d = TypeAliasType("CoUInt16_3d", _ToArray2_3d[co_uint16, bool])
+CoUInt16_1ds = TypeAliasType("CoUInt16_1ds", _ToArray2_1ds[co_uint16, bool])
+CoUInt16_2ds = TypeAliasType("CoUInt16_2ds", _ToArray2_2ds[co_uint16, bool])
+CoUInt16_3ds = TypeAliasType("CoUInt16_3ds", _ToArray2_3ds[co_uint16, bool])
+CoUInt16_1nd = TypeAliasType("CoUInt16_1nd", _ToArray2_1nd[co_uint16, bool])
+CoUInt16_2nd = TypeAliasType("CoUInt16_2nd", _ToArray2_2nd[co_uint16, bool])
+CoUInt16_3nd = TypeAliasType("CoUInt16_3nd", _ToArray2_3nd[co_uint16, bool])
 
-CoUInt32_nd = TypeAliasType("CoUInt32_nd", _ToArray2_nd[_CoUInt32, bool])
-CoUInt32_0d = TypeAliasType("CoUInt32_0d", _ToArray2_0d[_CoUInt32, bool])
-CoUInt32_1d = TypeAliasType("CoUInt32_1d", _ToArray2_1d[_CoUInt32, bool])
-CoUInt32_2d = TypeAliasType("CoUInt32_2d", _ToArray2_2d[_CoUInt32, bool])
-CoUInt32_3d = TypeAliasType("CoUInt32_3d", _ToArray2_3d[_CoUInt32, bool])
-CoUInt32_1ds = TypeAliasType("CoUInt32_1ds", _ToArray2_1ds[_CoUInt32, bool])
-CoUInt32_2ds = TypeAliasType("CoUInt32_2ds", _ToArray2_2ds[_CoUInt32, bool])
-CoUInt32_3ds = TypeAliasType("CoUInt32_3ds", _ToArray2_3ds[_CoUInt32, bool])
-CoUInt32_1nd = TypeAliasType("CoUInt32_1nd", _ToArray2_1nd[_CoUInt32, bool])
-CoUInt32_2nd = TypeAliasType("CoUInt32_2nd", _ToArray2_2nd[_CoUInt32, bool])
-CoUInt32_3nd = TypeAliasType("CoUInt32_3nd", _ToArray2_3nd[_CoUInt32, bool])
+CoUInt32_nd = TypeAliasType("CoUInt32_nd", _ToArray2_nd[co_uint32, bool])
+CoUInt32_0d = TypeAliasType("CoUInt32_0d", _ToArray2_0d[co_uint32, bool])
+CoUInt32_1d = TypeAliasType("CoUInt32_1d", _ToArray2_1d[co_uint32, bool])
+CoUInt32_2d = TypeAliasType("CoUInt32_2d", _ToArray2_2d[co_uint32, bool])
+CoUInt32_3d = TypeAliasType("CoUInt32_3d", _ToArray2_3d[co_uint32, bool])
+CoUInt32_1ds = TypeAliasType("CoUInt32_1ds", _ToArray2_1ds[co_uint32, bool])
+CoUInt32_2ds = TypeAliasType("CoUInt32_2ds", _ToArray2_2ds[co_uint32, bool])
+CoUInt32_3ds = TypeAliasType("CoUInt32_3ds", _ToArray2_3ds[co_uint32, bool])
+CoUInt32_1nd = TypeAliasType("CoUInt32_1nd", _ToArray2_1nd[co_uint32, bool])
+CoUInt32_2nd = TypeAliasType("CoUInt32_2nd", _ToArray2_2nd[co_uint32, bool])
+CoUInt32_3nd = TypeAliasType("CoUInt32_3nd", _ToArray2_3nd[co_uint32, bool])
 
-CoUInt64_nd = TypeAliasType("CoUInt64_nd", _ToArray2_nd[_CoUInt64, bool])
-CoUInt64_0d = TypeAliasType("CoUInt64_0d", _ToArray2_0d[_CoUInt64, bool])
-CoUInt64_1d = TypeAliasType("CoUInt64_1d", _ToArray2_1d[_CoUInt64, bool])
-CoUInt64_2d = TypeAliasType("CoUInt64_2d", _ToArray2_2d[_CoUInt64, bool])
-CoUInt64_3d = TypeAliasType("CoUInt64_3d", _ToArray2_3d[_CoUInt64, bool])
-CoUInt64_1ds = TypeAliasType("CoUInt64_1ds", _ToArray2_1ds[_CoUInt64, bool])
-CoUInt64_2ds = TypeAliasType("CoUInt64_2ds", _ToArray2_2ds[_CoUInt64, bool])
-CoUInt64_3ds = TypeAliasType("CoUInt64_3ds", _ToArray2_3ds[_CoUInt64, bool])
-CoUInt64_1nd = TypeAliasType("CoUInt64_1nd", _ToArray2_1nd[_CoUInt64, bool])
-CoUInt64_2nd = TypeAliasType("CoUInt64_2nd", _ToArray2_2nd[_CoUInt64, bool])
-CoUInt64_3nd = TypeAliasType("CoUInt64_3nd", _ToArray2_3nd[_CoUInt64, bool])
+CoULong_nd = TypeAliasType("CoULong_nd", _ToArray2_nd[co_ulong, bool])
+CoULong_0d = TypeAliasType("CoULong_0d", _ToArray2_0d[co_ulong, bool])
+CoULong_1d = TypeAliasType("CoULong_1d", _ToArray2_1d[co_ulong, bool])
+CoULong_2d = TypeAliasType("CoULong_2d", _ToArray2_2d[co_ulong, bool])
+CoULong_3d = TypeAliasType("CoULong_3d", _ToArray2_3d[co_ulong, bool])
+CoULong_1ds = TypeAliasType("CoULong_1ds", _ToArray2_1ds[co_ulong, bool])
+CoULong_2ds = TypeAliasType("CoULong_2ds", _ToArray2_2ds[co_ulong, bool])
+CoULong_3ds = TypeAliasType("CoULong_3ds", _ToArray2_3ds[co_ulong, bool])
+CoULong_1nd = TypeAliasType("CoULong_1nd", _ToArray2_1nd[co_ulong, bool])
+CoULong_2nd = TypeAliasType("CoULong_2nd", _ToArray2_2nd[co_ulong, bool])
+CoULong_3nd = TypeAliasType("CoULong_3nd", _ToArray2_3nd[co_ulong, bool])
 
-CoULong_nd = TypeAliasType("CoULong_nd", _ToArray2_nd[_CoULong, bool])
-CoULong_0d = TypeAliasType("CoULong_0d", _ToArray2_0d[_CoULong, bool])
-CoULong_1d = TypeAliasType("CoULong_1d", _ToArray2_1d[_CoULong, bool])
-CoULong_2d = TypeAliasType("CoULong_2d", _ToArray2_2d[_CoULong, bool])
-CoULong_3d = TypeAliasType("CoULong_3d", _ToArray2_3d[_CoULong, bool])
-CoULong_1ds = TypeAliasType("CoULong_1ds", _ToArray2_1ds[_CoULong, bool])
-CoULong_2ds = TypeAliasType("CoULong_2ds", _ToArray2_2ds[_CoULong, bool])
-CoULong_3ds = TypeAliasType("CoULong_3ds", _ToArray2_3ds[_CoULong, bool])
-CoULong_1nd = TypeAliasType("CoULong_1nd", _ToArray2_1nd[_CoULong, bool])
-CoULong_2nd = TypeAliasType("CoULong_2nd", _ToArray2_2nd[_CoULong, bool])
-CoULong_3nd = TypeAliasType("CoULong_3nd", _ToArray2_3nd[_CoULong, bool])
+CoUIntP_nd = TypeAliasType("CoUIntP_nd", _ToArray2_nd[co_uintp, bool])
+CoUIntP_0d = TypeAliasType("CoUIntP_0d", _ToArray2_0d[co_uintp, bool])
+CoUIntP_1d = TypeAliasType("CoUIntP_1d", _ToArray2_1d[co_uintp, bool])
+CoUIntP_2d = TypeAliasType("CoUIntP_2d", _ToArray2_2d[co_uintp, bool])
+CoUIntP_3d = TypeAliasType("CoUIntP_3d", _ToArray2_3d[co_uintp, bool])
+CoUIntP_1ds = TypeAliasType("CoUIntP_1ds", _ToArray2_1ds[co_uintp, bool])
+CoUIntP_2ds = TypeAliasType("CoUIntP_2ds", _ToArray2_2ds[co_uintp, bool])
+CoUIntP_3ds = TypeAliasType("CoUIntP_3ds", _ToArray2_3ds[co_uintp, bool])
+CoUIntP_1nd = TypeAliasType("CoUIntP_1nd", _ToArray2_1nd[co_uintp, bool])
+CoUIntP_2nd = TypeAliasType("CoUIntP_2nd", _ToArray2_2nd[co_uintp, bool])
+CoUIntP_3nd = TypeAliasType("CoUIntP_3nd", _ToArray2_3nd[co_uintp, bool])
 
-CoUIntP_nd = TypeAliasType("CoUIntP_nd", _ToArray2_nd[_CoUIntP, bool])
-CoUIntP_0d = TypeAliasType("CoUIntP_0d", _ToArray2_0d[_CoUIntP, bool])
-CoUIntP_1d = TypeAliasType("CoUIntP_1d", _ToArray2_1d[_CoUIntP, bool])
-CoUIntP_2d = TypeAliasType("CoUIntP_2d", _ToArray2_2d[_CoUIntP, bool])
-CoUIntP_3d = TypeAliasType("CoUIntP_3d", _ToArray2_3d[_CoUIntP, bool])
-CoUIntP_1ds = TypeAliasType("CoUIntP_1ds", _ToArray2_1ds[_CoUIntP, bool])
-CoUIntP_2ds = TypeAliasType("CoUIntP_2ds", _ToArray2_2ds[_CoUIntP, bool])
-CoUIntP_3ds = TypeAliasType("CoUIntP_3ds", _ToArray2_3ds[_CoUIntP, bool])
-CoUIntP_1nd = TypeAliasType("CoUIntP_1nd", _ToArray2_1nd[_CoUIntP, bool])
-CoUIntP_2nd = TypeAliasType("CoUIntP_2nd", _ToArray2_2nd[_CoUIntP, bool])
-CoUIntP_3nd = TypeAliasType("CoUIntP_3nd", _ToArray2_3nd[_CoUIntP, bool])
-
-CoUInteger_nd = TypeAliasType("CoUInteger_nd", _ToArray2_nd[_CoUInteger, bool])
-CoUInteger_0d = TypeAliasType("CoUInteger_0d", _ToArray2_0d[_CoUInteger, bool])
-CoUInteger_1d = TypeAliasType("CoUInteger_1d", _ToArray2_1d[_CoUInteger, bool])
-CoUInteger_2d = TypeAliasType("CoUInteger_2d", _ToArray2_2d[_CoUInteger, bool])
-CoUInteger_3d = TypeAliasType("CoUInteger_3d", _ToArray2_3d[_CoUInteger, bool])
-CoUInteger_1ds = TypeAliasType("CoUInteger_1ds", _ToArray2_1ds[_CoUInteger, bool])
-CoUInteger_2ds = TypeAliasType("CoUInteger_2ds", _ToArray2_2ds[_CoUInteger, bool])
-CoUInteger_3ds = TypeAliasType("CoUInteger_3ds", _ToArray2_3ds[_CoUInteger, bool])
-CoUInteger_1nd = TypeAliasType("CoUInteger_1nd", _ToArray2_1nd[_CoUInteger, bool])
-CoUInteger_2nd = TypeAliasType("CoUInteger_2nd", _ToArray2_2nd[_CoUInteger, bool])
-CoUInteger_3nd = TypeAliasType("CoUInteger_3nd", _ToArray2_3nd[_CoUInteger, bool])
+CoUInt64_nd = TypeAliasType("CoUInt64_nd", _ToArray2_nd[co_uint64, bool])
+CoUInt64_0d = TypeAliasType("CoUInt64_0d", _ToArray2_0d[co_uint64, bool])
+CoUInt64_1d = TypeAliasType("CoUInt64_1d", _ToArray2_1d[co_uint64, bool])
+CoUInt64_2d = TypeAliasType("CoUInt64_2d", _ToArray2_2d[co_uint64, bool])
+CoUInt64_3d = TypeAliasType("CoUInt64_3d", _ToArray2_3d[co_uint64, bool])
+CoUInt64_1ds = TypeAliasType("CoUInt64_1ds", _ToArray2_1ds[co_uint64, bool])
+CoUInt64_2ds = TypeAliasType("CoUInt64_2ds", _ToArray2_2ds[co_uint64, bool])
+CoUInt64_3ds = TypeAliasType("CoUInt64_3ds", _ToArray2_3ds[co_uint64, bool])
+CoUInt64_1nd = TypeAliasType("CoUInt64_1nd", _ToArray2_1nd[co_uint64, bool])
+CoUInt64_2nd = TypeAliasType("CoUInt64_2nd", _ToArray2_2nd[co_uint64, bool])
+CoUInt64_3nd = TypeAliasType("CoUInt64_3nd", _ToArray2_3nd[co_uint64, bool])
 
 # signed integers
-CoInt8_nd = TypeAliasType("CoInt8_nd", _ToArray2_nd[_CoInt8, bool])
-CoInt8_0d = TypeAliasType("CoInt8_0d", _ToArray2_0d[_CoInt8, bool])
-CoInt8_1d = TypeAliasType("CoInt8_1d", _ToArray2_1d[_CoInt8, bool])
-CoInt8_2d = TypeAliasType("CoInt8_2d", _ToArray2_2d[_CoInt8, bool])
-CoInt8_3d = TypeAliasType("CoInt8_3d", _ToArray2_3d[_CoInt8, bool])
-CoInt8_1ds = TypeAliasType("CoInt8_1ds", _ToArray2_1ds[_CoInt8, bool])
-CoInt8_2ds = TypeAliasType("CoInt8_2ds", _ToArray2_2ds[_CoInt8, bool])
-CoInt8_3ds = TypeAliasType("CoInt8_3ds", _ToArray2_3ds[_CoInt8, bool])
-CoInt8_1nd = TypeAliasType("CoInt8_1nd", _ToArray2_1nd[_CoInt8, bool])
-CoInt8_2nd = TypeAliasType("CoInt8_2nd", _ToArray2_2nd[_CoInt8, bool])
-CoInt8_3nd = TypeAliasType("CoInt8_3nd", _ToArray2_3nd[_CoInt8, bool])
+CoInt8_nd = TypeAliasType("CoInt8_nd", _ToArray2_nd[co_int8, bool])
+CoInt8_0d = TypeAliasType("CoInt8_0d", _ToArray2_0d[co_int8, bool])
+CoInt8_1d = TypeAliasType("CoInt8_1d", _ToArray2_1d[co_int8, bool])
+CoInt8_2d = TypeAliasType("CoInt8_2d", _ToArray2_2d[co_int8, bool])
+CoInt8_3d = TypeAliasType("CoInt8_3d", _ToArray2_3d[co_int8, bool])
+CoInt8_1ds = TypeAliasType("CoInt8_1ds", _ToArray2_1ds[co_int8, bool])
+CoInt8_2ds = TypeAliasType("CoInt8_2ds", _ToArray2_2ds[co_int8, bool])
+CoInt8_3ds = TypeAliasType("CoInt8_3ds", _ToArray2_3ds[co_int8, bool])
+CoInt8_1nd = TypeAliasType("CoInt8_1nd", _ToArray2_1nd[co_int8, bool])
+CoInt8_2nd = TypeAliasType("CoInt8_2nd", _ToArray2_2nd[co_int8, bool])
+CoInt8_3nd = TypeAliasType("CoInt8_3nd", _ToArray2_3nd[co_int8, bool])
 
-CoInt16_nd = TypeAliasType("CoInt16_nd", _ToArray2_nd[_CoInt16, bool])
-CoInt16_0d = TypeAliasType("CoInt16_0d", _ToArray2_0d[_CoInt16, bool])
-CoInt16_1d = TypeAliasType("CoInt16_1d", _ToArray2_1d[_CoInt16, bool])
-CoInt16_2d = TypeAliasType("CoInt16_2d", _ToArray2_2d[_CoInt16, bool])
-CoInt16_3d = TypeAliasType("CoInt16_3d", _ToArray2_3d[_CoInt16, bool])
-CoInt16_1ds = TypeAliasType("CoInt16_1ds", _ToArray2_1ds[_CoInt16, bool])
-CoInt16_2ds = TypeAliasType("CoInt16_2ds", _ToArray2_2ds[_CoInt16, bool])
-CoInt16_3ds = TypeAliasType("CoInt16_3ds", _ToArray2_3ds[_CoInt16, bool])
-CoInt16_1nd = TypeAliasType("CoInt16_1nd", _ToArray2_1nd[_CoInt16, bool])
-CoInt16_2nd = TypeAliasType("CoInt16_2nd", _ToArray2_2nd[_CoInt16, bool])
-CoInt16_3nd = TypeAliasType("CoInt16_3nd", _ToArray2_3nd[_CoInt16, bool])
+CoInt16_nd = TypeAliasType("CoInt16_nd", _ToArray2_nd[co_int16, bool])
+CoInt16_0d = TypeAliasType("CoInt16_0d", _ToArray2_0d[co_int16, bool])
+CoInt16_1d = TypeAliasType("CoInt16_1d", _ToArray2_1d[co_int16, bool])
+CoInt16_2d = TypeAliasType("CoInt16_2d", _ToArray2_2d[co_int16, bool])
+CoInt16_3d = TypeAliasType("CoInt16_3d", _ToArray2_3d[co_int16, bool])
+CoInt16_1ds = TypeAliasType("CoInt16_1ds", _ToArray2_1ds[co_int16, bool])
+CoInt16_2ds = TypeAliasType("CoInt16_2ds", _ToArray2_2ds[co_int16, bool])
+CoInt16_3ds = TypeAliasType("CoInt16_3ds", _ToArray2_3ds[co_int16, bool])
+CoInt16_1nd = TypeAliasType("CoInt16_1nd", _ToArray2_1nd[co_int16, bool])
+CoInt16_2nd = TypeAliasType("CoInt16_2nd", _ToArray2_2nd[co_int16, bool])
+CoInt16_3nd = TypeAliasType("CoInt16_3nd", _ToArray2_3nd[co_int16, bool])
 
-CoInt32_nd = TypeAliasType("CoInt32_nd", _ToArray2_nd[_CoInt32, bool])
-CoInt32_0d = TypeAliasType("CoInt32_0d", _ToArray2_0d[_CoInt32, bool])
-CoInt32_1d = TypeAliasType("CoInt32_1d", _ToArray2_1d[_CoInt32, bool])
-CoInt32_2d = TypeAliasType("CoInt32_2d", _ToArray2_2d[_CoInt32, bool])
-CoInt32_3d = TypeAliasType("CoInt32_3d", _ToArray2_3d[_CoInt32, bool])
-CoInt32_1ds = TypeAliasType("CoInt32_1ds", _ToArray2_1ds[_CoInt32, bool])
-CoInt32_2ds = TypeAliasType("CoInt32_2ds", _ToArray2_2ds[_CoInt32, bool])
-CoInt32_3ds = TypeAliasType("CoInt32_3ds", _ToArray2_3ds[_CoInt32, bool])
-CoInt32_1nd = TypeAliasType("CoInt32_1nd", _ToArray2_1nd[_CoInt32, bool])
-CoInt32_2nd = TypeAliasType("CoInt32_2nd", _ToArray2_2nd[_CoInt32, bool])
-CoInt32_3nd = TypeAliasType("CoInt32_3nd", _ToArray2_3nd[_CoInt32, bool])
+CoInt32_nd = TypeAliasType("CoInt32_nd", _ToArray2_nd[co_int32, bool])
+CoInt32_0d = TypeAliasType("CoInt32_0d", _ToArray2_0d[co_int32, bool])
+CoInt32_1d = TypeAliasType("CoInt32_1d", _ToArray2_1d[co_int32, bool])
+CoInt32_2d = TypeAliasType("CoInt32_2d", _ToArray2_2d[co_int32, bool])
+CoInt32_3d = TypeAliasType("CoInt32_3d", _ToArray2_3d[co_int32, bool])
+CoInt32_1ds = TypeAliasType("CoInt32_1ds", _ToArray2_1ds[co_int32, bool])
+CoInt32_2ds = TypeAliasType("CoInt32_2ds", _ToArray2_2ds[co_int32, bool])
+CoInt32_3ds = TypeAliasType("CoInt32_3ds", _ToArray2_3ds[co_int32, bool])
+CoInt32_1nd = TypeAliasType("CoInt32_1nd", _ToArray2_1nd[co_int32, bool])
+CoInt32_2nd = TypeAliasType("CoInt32_2nd", _ToArray2_2nd[co_int32, bool])
+CoInt32_3nd = TypeAliasType("CoInt32_3nd", _ToArray2_3nd[co_int32, bool])
 
-CoInt64_nd = TypeAliasType("CoInt64_nd", _ToArray2_nd[_CoInt64, int])
-CoInt64_0d = TypeAliasType("CoInt64_0d", _ToArray2_0d[_CoInt64, int])
-CoInt64_1d = TypeAliasType("CoInt64_1d", _ToArray2_1d[_CoInt64, int])
-CoInt64_2d = TypeAliasType("CoInt64_2d", _ToArray2_2d[_CoInt64, int])
-CoInt64_3d = TypeAliasType("CoInt64_3d", _ToArray2_3d[_CoInt64, int])
-CoInt64_1ds = TypeAliasType("CoInt64_1ds", _ToArray2_1ds[_CoInt64, int])
-CoInt64_2ds = TypeAliasType("CoInt64_2ds", _ToArray2_2ds[_CoInt64, int])
-CoInt64_3ds = TypeAliasType("CoInt64_3ds", _ToArray2_3ds[_CoInt64, int])
-CoInt64_1nd = TypeAliasType("CoInt64_1nd", _ToArray2_1nd[_CoInt64, int])
-CoInt64_2nd = TypeAliasType("CoInt64_2nd", _ToArray2_2nd[_CoInt64, int])
-CoInt64_3nd = TypeAliasType("CoInt64_3nd", _ToArray2_3nd[_CoInt64, int])
+CoLong_nd = TypeAliasType("CoLong_nd", _ToArray2_nd[co_long, bool])
+CoLong_0d = TypeAliasType("CoLong_0d", _ToArray2_0d[co_long, bool])
+CoLong_1d = TypeAliasType("CoLong_1d", _ToArray2_1d[co_long, bool])
+CoLong_2d = TypeAliasType("CoLong_2d", _ToArray2_2d[co_long, bool])
+CoLong_3d = TypeAliasType("CoLong_3d", _ToArray2_3d[co_long, bool])
+CoLong_1ds = TypeAliasType("CoLong_1ds", _ToArray2_1ds[co_long, bool])
+CoLong_2ds = TypeAliasType("CoLong_2ds", _ToArray2_2ds[co_long, bool])
+CoLong_3ds = TypeAliasType("CoLong_3ds", _ToArray2_3ds[co_long, bool])
+CoLong_1nd = TypeAliasType("CoLong_1nd", _ToArray2_1nd[co_long, bool])
+CoLong_2nd = TypeAliasType("CoLong_2nd", _ToArray2_2nd[co_long, bool])
+CoLong_3nd = TypeAliasType("CoLong_3nd", _ToArray2_3nd[co_long, bool])
 
-CoLong_nd = TypeAliasType("CoLong_nd", _ToArray2_nd[_CoLong, bool])
-CoLong_0d = TypeAliasType("CoLong_0d", _ToArray2_0d[_CoLong, bool])
-CoLong_1d = TypeAliasType("CoLong_1d", _ToArray2_1d[_CoLong, bool])
-CoLong_2d = TypeAliasType("CoLong_2d", _ToArray2_2d[_CoLong, bool])
-CoLong_3d = TypeAliasType("CoLong_3d", _ToArray2_3d[_CoLong, bool])
-CoLong_1ds = TypeAliasType("CoLong_1ds", _ToArray2_1ds[_CoLong, bool])
-CoLong_2ds = TypeAliasType("CoLong_2ds", _ToArray2_2ds[_CoLong, bool])
-CoLong_3ds = TypeAliasType("CoLong_3ds", _ToArray2_3ds[_CoLong, bool])
-CoLong_1nd = TypeAliasType("CoLong_1nd", _ToArray2_1nd[_CoLong, bool])
-CoLong_2nd = TypeAliasType("CoLong_2nd", _ToArray2_2nd[_CoLong, bool])
-CoLong_3nd = TypeAliasType("CoLong_3nd", _ToArray2_3nd[_CoLong, bool])
+CoIntP_nd = TypeAliasType("CoIntP_nd", _ToArray2_nd[co_intp, int])
+CoIntP_0d = TypeAliasType("CoIntP_0d", _ToArray2_0d[co_intp, int])
+CoIntP_1d = TypeAliasType("CoIntP_1d", _ToArray2_1d[co_intp, int])
+CoIntP_2d = TypeAliasType("CoIntP_2d", _ToArray2_2d[co_intp, int])
+CoIntP_3d = TypeAliasType("CoIntP_3d", _ToArray2_3d[co_intp, int])
+CoIntP_1ds = TypeAliasType("CoIntP_1ds", _ToArray2_1ds[co_intp, int])
+CoIntP_2ds = TypeAliasType("CoIntP_2ds", _ToArray2_2ds[co_intp, int])
+CoIntP_3ds = TypeAliasType("CoIntP_3ds", _ToArray2_3ds[co_intp, int])
+CoIntP_1nd = TypeAliasType("CoIntP_1nd", _ToArray2_1nd[co_intp, int])
+CoIntP_2nd = TypeAliasType("CoIntP_2nd", _ToArray2_2nd[co_intp, int])
+CoIntP_3nd = TypeAliasType("CoIntP_3nd", _ToArray2_3nd[co_intp, int])
 
-CoIntP_nd = TypeAliasType("CoIntP_nd", _ToArray2_nd[_CoIntP, int])
-CoIntP_0d = TypeAliasType("CoIntP_0d", _ToArray2_0d[_CoIntP, int])
-CoIntP_1d = TypeAliasType("CoIntP_1d", _ToArray2_1d[_CoIntP, int])
-CoIntP_2d = TypeAliasType("CoIntP_2d", _ToArray2_2d[_CoIntP, int])
-CoIntP_3d = TypeAliasType("CoIntP_3d", _ToArray2_3d[_CoIntP, int])
-CoIntP_1ds = TypeAliasType("CoIntP_1ds", _ToArray2_1ds[_CoIntP, int])
-CoIntP_2ds = TypeAliasType("CoIntP_2ds", _ToArray2_2ds[_CoIntP, int])
-CoIntP_3ds = TypeAliasType("CoIntP_3ds", _ToArray2_3ds[_CoIntP, int])
-CoIntP_1nd = TypeAliasType("CoIntP_1nd", _ToArray2_1nd[_CoIntP, int])
-CoIntP_2nd = TypeAliasType("CoIntP_2nd", _ToArray2_2nd[_CoIntP, int])
-CoIntP_3nd = TypeAliasType("CoIntP_3nd", _ToArray2_3nd[_CoIntP, int])
+CoInt64_nd = TypeAliasType("CoInt64_nd", _ToArray2_nd[co_int64, int])
+CoInt64_0d = TypeAliasType("CoInt64_0d", _ToArray2_0d[co_int64, int])
+CoInt64_1d = TypeAliasType("CoInt64_1d", _ToArray2_1d[co_int64, int])
+CoInt64_2d = TypeAliasType("CoInt64_2d", _ToArray2_2d[co_int64, int])
+CoInt64_3d = TypeAliasType("CoInt64_3d", _ToArray2_3d[co_int64, int])
+CoInt64_1ds = TypeAliasType("CoInt64_1ds", _ToArray2_1ds[co_int64, int])
+CoInt64_2ds = TypeAliasType("CoInt64_2ds", _ToArray2_2ds[co_int64, int])
+CoInt64_3ds = TypeAliasType("CoInt64_3ds", _ToArray2_3ds[co_int64, int])
+CoInt64_1nd = TypeAliasType("CoInt64_1nd", _ToArray2_1nd[co_int64, int])
+CoInt64_2nd = TypeAliasType("CoInt64_2nd", _ToArray2_2nd[co_int64, int])
+CoInt64_3nd = TypeAliasType("CoInt64_3nd", _ToArray2_3nd[co_int64, int])
 
-CoSInteger_nd = TypeAliasType("CoSInteger_nd", _ToArray2_nd[_CoSInteger, int])
-CoSInteger_0d = TypeAliasType("CoSInteger_0d", _ToArray2_0d[_CoSInteger, int])
-CoSInteger_1d = TypeAliasType("CoSInteger_1d", _ToArray2_1d[_CoSInteger, int])
-CoSInteger_2d = TypeAliasType("CoSInteger_2d", _ToArray2_2d[_CoSInteger, int])
-CoSInteger_3d = TypeAliasType("CoSInteger_3d", _ToArray2_3d[_CoSInteger, int])
-CoSInteger_1ds = TypeAliasType("CoSInteger_1ds", _ToArray2_1ds[_CoSInteger, int])
-CoSInteger_2ds = TypeAliasType("CoSInteger_2ds", _ToArray2_2ds[_CoSInteger, int])
-CoSInteger_3ds = TypeAliasType("CoSInteger_3ds", _ToArray2_3ds[_CoSInteger, int])
-CoSInteger_1nd = TypeAliasType("CoSInteger_1nd", _ToArray2_1nd[_CoSInteger, int])
-CoSInteger_2nd = TypeAliasType("CoSInteger_2nd", _ToArray2_2nd[_CoSInteger, int])
-CoSInteger_3nd = TypeAliasType("CoSInteger_3nd", _ToArray2_3nd[_CoSInteger, int])
-
-CoInteger_nd = TypeAliasType("CoInteger_nd", _ToArray2_nd[_CoInteger, int])
-CoInteger_0d = TypeAliasType("CoInteger_0d", _ToArray2_0d[_CoInteger, int])
-CoInteger_1d = TypeAliasType("CoInteger_1d", _ToArray2_1d[_CoInteger, int])
-CoInteger_2d = TypeAliasType("CoInteger_2d", _ToArray2_2d[_CoInteger, int])
-CoInteger_3d = TypeAliasType("CoInteger_3d", _ToArray2_3d[_CoInteger, int])
-CoInteger_1ds = TypeAliasType("CoInteger_1ds", _ToArray2_1ds[_CoInteger, int])
-CoInteger_2ds = TypeAliasType("CoInteger_2ds", _ToArray2_2ds[_CoInteger, int])
-CoInteger_3ds = TypeAliasType("CoInteger_3ds", _ToArray2_3ds[_CoInteger, int])
-CoInteger_1nd = TypeAliasType("CoInteger_1nd", _ToArray2_1nd[_CoInteger, int])
-CoInteger_2nd = TypeAliasType("CoInteger_2nd", _ToArray2_2nd[_CoInteger, int])
-CoInteger_3nd = TypeAliasType("CoInteger_3nd", _ToArray2_3nd[_CoInteger, int])
+CoInteger_nd = TypeAliasType("CoInteger_nd", _ToArray2_nd[co_integer, int])
+CoInteger_0d = TypeAliasType("CoInteger_0d", _ToArray2_0d[co_integer, int])
+CoInteger_1d = TypeAliasType("CoInteger_1d", _ToArray2_1d[co_integer, int])
+CoInteger_2d = TypeAliasType("CoInteger_2d", _ToArray2_2d[co_integer, int])
+CoInteger_3d = TypeAliasType("CoInteger_3d", _ToArray2_3d[co_integer, int])
+CoInteger_1ds = TypeAliasType("CoInteger_1ds", _ToArray2_1ds[co_integer, int])
+CoInteger_2ds = TypeAliasType("CoInteger_2ds", _ToArray2_2ds[co_integer, int])
+CoInteger_3ds = TypeAliasType("CoInteger_3ds", _ToArray2_3ds[co_integer, int])
+CoInteger_1nd = TypeAliasType("CoInteger_1nd", _ToArray2_1nd[co_integer, int])
+CoInteger_2nd = TypeAliasType("CoInteger_2nd", _ToArray2_2nd[co_integer, int])
+CoInteger_3nd = TypeAliasType("CoInteger_3nd", _ToArray2_3nd[co_integer, int])
 
 # real floats
 
-CoFloat16_nd = TypeAliasType("CoFloat16_nd", _ToArray2_nd[_CoFloat16, bool])
-CoFloat16_0d = TypeAliasType("CoFloat16_0d", _ToArray2_0d[_CoFloat16, bool])
-CoFloat16_1d = TypeAliasType("CoFloat16_1d", _ToArray2_1d[_CoFloat16, bool])
-CoFloat16_2d = TypeAliasType("CoFloat16_2d", _ToArray2_2d[_CoFloat16, bool])
-CoFloat16_3d = TypeAliasType("CoFloat16_3d", _ToArray2_3d[_CoFloat16, bool])
-CoFloat16_1ds = TypeAliasType("CoFloat16_1ds", _ToArray2_1ds[_CoFloat16, bool])
-CoFloat16_2ds = TypeAliasType("CoFloat16_2ds", _ToArray2_2ds[_CoFloat16, bool])
-CoFloat16_3ds = TypeAliasType("CoFloat16_3ds", _ToArray2_3ds[_CoFloat16, bool])
-CoFloat16_1nd = TypeAliasType("CoFloat16_1nd", _ToArray2_1nd[_CoFloat16, bool])
-CoFloat16_2nd = TypeAliasType("CoFloat16_2nd", _ToArray2_2nd[_CoFloat16, bool])
-CoFloat16_3nd = TypeAliasType("CoFloat16_3nd", _ToArray2_3nd[_CoFloat16, bool])
+CoFloat16_nd = TypeAliasType("CoFloat16_nd", _ToArray2_nd[co_float16, bool])
+CoFloat16_0d = TypeAliasType("CoFloat16_0d", _ToArray2_0d[co_float16, bool])
+CoFloat16_1d = TypeAliasType("CoFloat16_1d", _ToArray2_1d[co_float16, bool])
+CoFloat16_2d = TypeAliasType("CoFloat16_2d", _ToArray2_2d[co_float16, bool])
+CoFloat16_3d = TypeAliasType("CoFloat16_3d", _ToArray2_3d[co_float16, bool])
+CoFloat16_1ds = TypeAliasType("CoFloat16_1ds", _ToArray2_1ds[co_float16, bool])
+CoFloat16_2ds = TypeAliasType("CoFloat16_2ds", _ToArray2_2ds[co_float16, bool])
+CoFloat16_3ds = TypeAliasType("CoFloat16_3ds", _ToArray2_3ds[co_float16, bool])
+CoFloat16_1nd = TypeAliasType("CoFloat16_1nd", _ToArray2_1nd[co_float16, bool])
+CoFloat16_2nd = TypeAliasType("CoFloat16_2nd", _ToArray2_2nd[co_float16, bool])
+CoFloat16_3nd = TypeAliasType("CoFloat16_3nd", _ToArray2_3nd[co_float16, bool])
 
-CoFloat32_nd = TypeAliasType("CoFloat32_nd", _ToArray2_nd[_CoFloat32, bool])
-CoFloat32_0d = TypeAliasType("CoFloat32_0d", _ToArray2_0d[_CoFloat32, bool])
-CoFloat32_1d = TypeAliasType("CoFloat32_1d", _ToArray2_1d[_CoFloat32, bool])
-CoFloat32_2d = TypeAliasType("CoFloat32_2d", _ToArray2_2d[_CoFloat32, bool])
-CoFloat32_3d = TypeAliasType("CoFloat32_3d", _ToArray2_3d[_CoFloat32, bool])
-CoFloat32_1ds = TypeAliasType("CoFloat32_1ds", _ToArray2_1ds[_CoFloat32, bool])
-CoFloat32_2ds = TypeAliasType("CoFloat32_2ds", _ToArray2_2ds[_CoFloat32, bool])
-CoFloat32_3ds = TypeAliasType("CoFloat32_3ds", _ToArray2_3ds[_CoFloat32, bool])
-CoFloat32_1nd = TypeAliasType("CoFloat32_1nd", _ToArray2_1nd[_CoFloat32, bool])
-CoFloat32_2nd = TypeAliasType("CoFloat32_2nd", _ToArray2_2nd[_CoFloat32, bool])
-CoFloat32_3nd = TypeAliasType("CoFloat32_3nd", _ToArray2_3nd[_CoFloat32, bool])
+CoFloat32_nd = TypeAliasType("CoFloat32_nd", _ToArray2_nd[co_float32, bool])
+CoFloat32_0d = TypeAliasType("CoFloat32_0d", _ToArray2_0d[co_float32, bool])
+CoFloat32_1d = TypeAliasType("CoFloat32_1d", _ToArray2_1d[co_float32, bool])
+CoFloat32_2d = TypeAliasType("CoFloat32_2d", _ToArray2_2d[co_float32, bool])
+CoFloat32_3d = TypeAliasType("CoFloat32_3d", _ToArray2_3d[co_float32, bool])
+CoFloat32_1ds = TypeAliasType("CoFloat32_1ds", _ToArray2_1ds[co_float32, bool])
+CoFloat32_2ds = TypeAliasType("CoFloat32_2ds", _ToArray2_2ds[co_float32, bool])
+CoFloat32_3ds = TypeAliasType("CoFloat32_3ds", _ToArray2_3ds[co_float32, bool])
+CoFloat32_1nd = TypeAliasType("CoFloat32_1nd", _ToArray2_1nd[co_float32, bool])
+CoFloat32_2nd = TypeAliasType("CoFloat32_2nd", _ToArray2_2nd[co_float32, bool])
+CoFloat32_3nd = TypeAliasType("CoFloat32_3nd", _ToArray2_3nd[co_float32, bool])
 
-CoFloat64_nd = TypeAliasType("CoFloat64_nd", _ToArray2_nd[_CoFloat64, float])
-CoFloat64_0d = TypeAliasType("CoFloat64_0d", _ToArray2_0d[_CoFloat64, float])
-CoFloat64_1d = TypeAliasType("CoFloat64_1d", _ToArray2_1d[_CoFloat64, float])
-CoFloat64_2d = TypeAliasType("CoFloat64_2d", _ToArray2_2d[_CoFloat64, float])
-CoFloat64_3d = TypeAliasType("CoFloat64_3d", _ToArray2_3d[_CoFloat64, float])
-CoFloat64_1ds = TypeAliasType("CoFloat64_1ds", _ToArray2_1ds[_CoFloat64, float])
-CoFloat64_2ds = TypeAliasType("CoFloat64_2ds", _ToArray2_2ds[_CoFloat64, float])
-CoFloat64_3ds = TypeAliasType("CoFloat64_3ds", _ToArray2_3ds[_CoFloat64, float])
-CoFloat64_1nd = TypeAliasType("CoFloat64_1nd", _ToArray2_1nd[_CoFloat64, float])
-CoFloat64_2nd = TypeAliasType("CoFloat64_2nd", _ToArray2_2nd[_CoFloat64, float])
-CoFloat64_3nd = TypeAliasType("CoFloat64_3nd", _ToArray2_3nd[_CoFloat64, float])
+CoFloat64_nd = TypeAliasType("CoFloat64_nd", _ToArray2_nd[co_float64, float])
+CoFloat64_0d = TypeAliasType("CoFloat64_0d", _ToArray2_0d[co_float64, float])
+CoFloat64_1d = TypeAliasType("CoFloat64_1d", _ToArray2_1d[co_float64, float])
+CoFloat64_2d = TypeAliasType("CoFloat64_2d", _ToArray2_2d[co_float64, float])
+CoFloat64_3d = TypeAliasType("CoFloat64_3d", _ToArray2_3d[co_float64, float])
+CoFloat64_1ds = TypeAliasType("CoFloat64_1ds", _ToArray2_1ds[co_float64, float])
+CoFloat64_2ds = TypeAliasType("CoFloat64_2ds", _ToArray2_2ds[co_float64, float])
+CoFloat64_3ds = TypeAliasType("CoFloat64_3ds", _ToArray2_3ds[co_float64, float])
+CoFloat64_1nd = TypeAliasType("CoFloat64_1nd", _ToArray2_1nd[co_float64, float])
+CoFloat64_2nd = TypeAliasType("CoFloat64_2nd", _ToArray2_2nd[co_float64, float])
+CoFloat64_3nd = TypeAliasType("CoFloat64_3nd", _ToArray2_3nd[co_float64, float])
 
-CoFloating_nd = TypeAliasType("CoFloating_nd", _ToArray2_nd[_CoFloating, float])
-CoFloating_0d = TypeAliasType("CoFloating_0d", _ToArray2_0d[_CoFloating, float])
-CoFloating_1d = TypeAliasType("CoFloating_1d", _ToArray2_1d[_CoFloating, float])
-CoFloating_2d = TypeAliasType("CoFloating_2d", _ToArray2_2d[_CoFloating, float])
-CoFloating_3d = TypeAliasType("CoFloating_3d", _ToArray2_3d[_CoFloating, float])
-CoFloating_1ds = TypeAliasType("CoFloating_1ds", _ToArray2_1ds[_CoFloating, float])
-CoFloating_2ds = TypeAliasType("CoFloating_2ds", _ToArray2_2ds[_CoFloating, float])
-CoFloating_3ds = TypeAliasType("CoFloating_3ds", _ToArray2_3ds[_CoFloating, float])
-CoFloating_1nd = TypeAliasType("CoFloating_1nd", _ToArray2_1nd[_CoFloating, float])
-CoFloating_2nd = TypeAliasType("CoFloating_2nd", _ToArray2_2nd[_CoFloating, float])
-CoFloating_3nd = TypeAliasType("CoFloating_3nd", _ToArray2_3nd[_CoFloating, float])
+CoFloating_nd = TypeAliasType("CoFloating_nd", _ToArray2_nd[co_float, float])
+CoFloating_0d = TypeAliasType("CoFloating_0d", _ToArray2_0d[co_float, float])
+CoFloating_1d = TypeAliasType("CoFloating_1d", _ToArray2_1d[co_float, float])
+CoFloating_2d = TypeAliasType("CoFloating_2d", _ToArray2_2d[co_float, float])
+CoFloating_3d = TypeAliasType("CoFloating_3d", _ToArray2_3d[co_float, float])
+CoFloating_1ds = TypeAliasType("CoFloating_1ds", _ToArray2_1ds[co_float, float])
+CoFloating_2ds = TypeAliasType("CoFloating_2ds", _ToArray2_2ds[co_float, float])
+CoFloating_3ds = TypeAliasType("CoFloating_3ds", _ToArray2_3ds[co_float, float])
+CoFloating_1nd = TypeAliasType("CoFloating_1nd", _ToArray2_1nd[co_float, float])
+CoFloating_2nd = TypeAliasType("CoFloating_2nd", _ToArray2_2nd[co_float, float])
+CoFloating_3nd = TypeAliasType("CoFloating_3nd", _ToArray2_3nd[co_float, float])
 
 # complex floats
-CoComplex64_nd = TypeAliasType("CoComplex64_nd", _ToArray2_nd[_CoComplex64, bool])
-CoComplex64_0d = TypeAliasType("CoComplex64_0d", _ToArray2_0d[_CoComplex64, bool])
-CoComplex64_1d = TypeAliasType("CoComplex64_1d", _ToArray2_1d[_CoComplex64, bool])
-CoComplex64_2d = TypeAliasType("CoComplex64_2d", _ToArray2_2d[_CoComplex64, bool])
-CoComplex64_3d = TypeAliasType("CoComplex64_3d", _ToArray2_3d[_CoComplex64, bool])
-CoComplex64_1ds = TypeAliasType("CoComplex64_1ds", _ToArray2_1ds[_CoComplex64, bool])
-CoComplex64_2ds = TypeAliasType("CoComplex64_2ds", _ToArray2_2ds[_CoComplex64, bool])
-CoComplex64_3ds = TypeAliasType("CoComplex64_3ds", _ToArray2_3ds[_CoComplex64, bool])
-CoComplex64_1nd = TypeAliasType("CoComplex64_1nd", _ToArray2_1nd[_CoComplex64, bool])
-CoComplex64_2nd = TypeAliasType("CoComplex64_2nd", _ToArray2_2nd[_CoComplex64, bool])
-CoComplex64_3nd = TypeAliasType("CoComplex64_3nd", _ToArray2_3nd[_CoComplex64, bool])
+CoComplex64_nd = TypeAliasType("CoComplex64_nd", _ToArray2_nd[co_complex64, bool])
+CoComplex64_0d = TypeAliasType("CoComplex64_0d", _ToArray2_0d[co_complex64, bool])
+CoComplex64_1d = TypeAliasType("CoComplex64_1d", _ToArray2_1d[co_complex64, bool])
+CoComplex64_2d = TypeAliasType("CoComplex64_2d", _ToArray2_2d[co_complex64, bool])
+CoComplex64_3d = TypeAliasType("CoComplex64_3d", _ToArray2_3d[co_complex64, bool])
+CoComplex64_1ds = TypeAliasType("CoComplex64_1ds", _ToArray2_1ds[co_complex64, bool])
+CoComplex64_2ds = TypeAliasType("CoComplex64_2ds", _ToArray2_2ds[co_complex64, bool])
+CoComplex64_3ds = TypeAliasType("CoComplex64_3ds", _ToArray2_3ds[co_complex64, bool])
+CoComplex64_1nd = TypeAliasType("CoComplex64_1nd", _ToArray2_1nd[co_complex64, bool])
+CoComplex64_2nd = TypeAliasType("CoComplex64_2nd", _ToArray2_2nd[co_complex64, bool])
+CoComplex64_3nd = TypeAliasType("CoComplex64_3nd", _ToArray2_3nd[co_complex64, bool])
 
-CoComplex128_nd = TypeAliasType("CoComplex128_nd", _ToArray2_nd[_CoComplex128, complex])
-CoComplex128_0d = TypeAliasType("CoComplex128_0d", _ToArray2_0d[_CoComplex128, complex])
-CoComplex128_1d = TypeAliasType("CoComplex128_1d", _ToArray2_1d[_CoComplex128, complex])
-CoComplex128_2d = TypeAliasType("CoComplex128_2d", _ToArray2_2d[_CoComplex128, complex])
-CoComplex128_3d = TypeAliasType("CoComplex128_3d", _ToArray2_3d[_CoComplex128, complex])
-CoComplex128_1ds = TypeAliasType("CoComplex128_1ds", _ToArray2_1ds[_CoComplex128, complex])
-CoComplex128_2ds = TypeAliasType("CoComplex128_2ds", _ToArray2_2ds[_CoComplex128, complex])
-CoComplex128_3ds = TypeAliasType("CoComplex128_3ds", _ToArray2_3ds[_CoComplex128, complex])
-CoComplex128_1nd = TypeAliasType("CoComplex128_1nd", _ToArray2_1nd[_CoComplex128, complex])
-CoComplex128_2nd = TypeAliasType("CoComplex128_2nd", _ToArray2_2nd[_CoComplex128, complex])
-CoComplex128_3nd = TypeAliasType("CoComplex128_3nd", _ToArray2_3nd[_CoComplex128, complex])
+CoComplex128_nd = TypeAliasType("CoComplex128_nd", _ToArray2_nd[co_complex128, complex])
+CoComplex128_0d = TypeAliasType("CoComplex128_0d", _ToArray2_0d[co_complex128, complex])
+CoComplex128_1d = TypeAliasType("CoComplex128_1d", _ToArray2_1d[co_complex128, complex])
+CoComplex128_2d = TypeAliasType("CoComplex128_2d", _ToArray2_2d[co_complex128, complex])
+CoComplex128_3d = TypeAliasType("CoComplex128_3d", _ToArray2_3d[co_complex128, complex])
+CoComplex128_1ds = TypeAliasType("CoComplex128_1ds", _ToArray2_1ds[co_complex128, complex])
+CoComplex128_2ds = TypeAliasType("CoComplex128_2ds", _ToArray2_2ds[co_complex128, complex])
+CoComplex128_3ds = TypeAliasType("CoComplex128_3ds", _ToArray2_3ds[co_complex128, complex])
+CoComplex128_1nd = TypeAliasType("CoComplex128_1nd", _ToArray2_1nd[co_complex128, complex])
+CoComplex128_2nd = TypeAliasType("CoComplex128_2nd", _ToArray2_2nd[co_complex128, complex])
+CoComplex128_3nd = TypeAliasType("CoComplex128_3nd", _ToArray2_3nd[co_complex128, complex])
 
-CoComplex_nd = TypeAliasType("CoComplex_nd", _ToArray2_nd[_CoComplex, complex])
-CoComplex_0d = TypeAliasType("CoComplex_0d", _ToArray2_0d[_CoComplex, complex])
-CoComplex_1d = TypeAliasType("CoComplex_1d", _ToArray2_1d[_CoComplex, complex])
-CoComplex_2d = TypeAliasType("CoComplex_2d", _ToArray2_2d[_CoComplex, complex])
-CoComplex_3d = TypeAliasType("CoComplex_3d", _ToArray2_3d[_CoComplex, complex])
-CoComplex_1ds = TypeAliasType("CoComplex_1ds", _ToArray2_1ds[_CoComplex, complex])
-CoComplex_2ds = TypeAliasType("CoComplex_2ds", _ToArray2_2ds[_CoComplex, complex])
-CoComplex_3ds = TypeAliasType("CoComplex_3ds", _ToArray2_3ds[_CoComplex, complex])
-CoComplex_1nd = TypeAliasType("CoComplex_1nd", _ToArray2_1nd[_CoComplex, complex])
-CoComplex_2nd = TypeAliasType("CoComplex_2nd", _ToArray2_2nd[_CoComplex, complex])
-CoComplex_3nd = TypeAliasType("CoComplex_3nd", _ToArray2_3nd[_CoComplex, complex])
+CoComplex_nd = TypeAliasType("CoComplex_nd", _ToArray2_nd[co_complex, complex])
+CoComplex_0d = TypeAliasType("CoComplex_0d", _ToArray2_0d[co_complex, complex])
+CoComplex_1d = TypeAliasType("CoComplex_1d", _ToArray2_1d[co_complex, complex])
+CoComplex_2d = TypeAliasType("CoComplex_2d", _ToArray2_2d[co_complex, complex])
+CoComplex_3d = TypeAliasType("CoComplex_3d", _ToArray2_3d[co_complex, complex])
+CoComplex_1ds = TypeAliasType("CoComplex_1ds", _ToArray2_1ds[co_complex, complex])
+CoComplex_2ds = TypeAliasType("CoComplex_2ds", _ToArray2_2ds[co_complex, complex])
+CoComplex_3ds = TypeAliasType("CoComplex_3ds", _ToArray2_3ds[co_complex, complex])
+CoComplex_1nd = TypeAliasType("CoComplex_1nd", _ToArray2_1nd[co_complex, complex])
+CoComplex_2nd = TypeAliasType("CoComplex_2nd", _ToArray2_2nd[co_complex, complex])
+CoComplex_3nd = TypeAliasType("CoComplex_3nd", _ToArray2_3nd[co_complex, complex])
 
 # temporal
-CoTimeDelta_nd = TypeAliasType("CoTimeDelta_nd", _ToArray2_nd[_CoTimeDelta, int])
-CoTimeDelta_0d = TypeAliasType("CoTimeDelta_0d", _ToArray2_0d[_CoTimeDelta, int])
-CoTimeDelta_1d = TypeAliasType("CoTimeDelta_1d", _ToArray2_1d[_CoTimeDelta, int])
-CoTimeDelta_2d = TypeAliasType("CoTimeDelta_2d", _ToArray2_2d[_CoTimeDelta, int])
-CoTimeDelta_3d = TypeAliasType("CoTimeDelta_3d", _ToArray2_3d[_CoTimeDelta, int])
-CoTimeDelta_1ds = TypeAliasType("CoTimeDelta_1ds", _ToArray2_1ds[_CoTimeDelta, int])
-CoTimeDelta_2ds = TypeAliasType("CoTimeDelta_2ds", _ToArray2_2ds[_CoTimeDelta, int])
-CoTimeDelta_3ds = TypeAliasType("CoTimeDelta_3ds", _ToArray2_3ds[_CoTimeDelta, int])
-CoTimeDelta_1nd = TypeAliasType("CoTimeDelta_1nd", _ToArray2_1nd[_CoTimeDelta, int])
-CoTimeDelta_2nd = TypeAliasType("CoTimeDelta_2nd", _ToArray2_2nd[_CoTimeDelta, int])
-CoTimeDelta_3nd = TypeAliasType("CoTimeDelta_3nd", _ToArray2_3nd[_CoTimeDelta, int])
+CoTimeDelta_nd = TypeAliasType("CoTimeDelta_nd", _ToArray2_nd[co_timedelta, int])
+CoTimeDelta_0d = TypeAliasType("CoTimeDelta_0d", _ToArray2_0d[co_timedelta, int])
+CoTimeDelta_1d = TypeAliasType("CoTimeDelta_1d", _ToArray2_1d[co_timedelta, int])
+CoTimeDelta_2d = TypeAliasType("CoTimeDelta_2d", _ToArray2_2d[co_timedelta, int])
+CoTimeDelta_3d = TypeAliasType("CoTimeDelta_3d", _ToArray2_3d[co_timedelta, int])
+CoTimeDelta_1ds = TypeAliasType("CoTimeDelta_1ds", _ToArray2_1ds[co_timedelta, int])
+CoTimeDelta_2ds = TypeAliasType("CoTimeDelta_2ds", _ToArray2_2ds[co_timedelta, int])
+CoTimeDelta_3ds = TypeAliasType("CoTimeDelta_3ds", _ToArray2_3ds[co_timedelta, int])
+CoTimeDelta_1nd = TypeAliasType("CoTimeDelta_1nd", _ToArray2_1nd[co_timedelta, int])
+CoTimeDelta_2nd = TypeAliasType("CoTimeDelta_2nd", _ToArray2_2nd[co_timedelta, int])
+CoTimeDelta_3nd = TypeAliasType("CoTimeDelta_3nd", _ToArray2_3nd[co_timedelta, int])
 
-CoDateTime_nd = TypeAliasType("CoDateTime_nd", _ToArray_nd[_CoDateTime])
-CoDateTime_0d = TypeAliasType("CoDateTime_0d", CanArray0D[_CoDateTime])
-CoDateTime_1d = TypeAliasType("CoDateTime_1d", _ToArray_1d[_CoDateTime])
-CoDateTime_2d = TypeAliasType("CoDateTime_2d", _ToArray_2d[_CoDateTime])
-CoDateTime_3d = TypeAliasType("CoDateTime_3d", _ToArray_3d[_CoDateTime])
-CoDateTime_1ds = TypeAliasType("CoDateTime_1ds", _ToArray_1ds[_CoDateTime])
-CoDateTime_2ds = TypeAliasType("CoDateTime_2ds", _ToArray_2ds[_CoDateTime])
-CoDateTime_3ds = TypeAliasType("CoDateTime_3ds", _ToArray_3ds[_CoDateTime])
-CoDateTime_1nd = TypeAliasType("CoDateTime_1nd", _ToArray_1nd[_CoDateTime])
-CoDateTime_2nd = TypeAliasType("CoDateTime_2nd", _ToArray_2nd[_CoDateTime])
-CoDateTime_3nd = TypeAliasType("CoDateTime_3nd", _ToArray_3nd[_CoDateTime])
+CoDateTime_nd = TypeAliasType("CoDateTime_nd", _ToArray_nd[co_datetime])
+CoDateTime_0d = TypeAliasType("CoDateTime_0d", CanArray0D[co_datetime])
+CoDateTime_1d = TypeAliasType("CoDateTime_1d", _ToArray_1d[co_datetime])
+CoDateTime_2d = TypeAliasType("CoDateTime_2d", _ToArray_2d[co_datetime])
+CoDateTime_3d = TypeAliasType("CoDateTime_3d", _ToArray_3d[co_datetime])
+CoDateTime_1ds = TypeAliasType("CoDateTime_1ds", _ToArray_1ds[co_datetime])
+CoDateTime_2ds = TypeAliasType("CoDateTime_2ds", _ToArray_2ds[co_datetime])
+CoDateTime_3ds = TypeAliasType("CoDateTime_3ds", _ToArray_3ds[co_datetime])
+CoDateTime_1nd = TypeAliasType("CoDateTime_1nd", _ToArray_1nd[co_datetime])
+CoDateTime_2nd = TypeAliasType("CoDateTime_2nd", _ToArray_2nd[co_datetime])
+CoDateTime_3nd = TypeAliasType("CoDateTime_3nd", _ToArray_3nd[co_datetime])
 
 # fixed strings
 CoBytes_nd = TypeAliasType("CoBytes_nd", _ToArray2_nd[_ToBytes, JustBytes])
