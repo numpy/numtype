@@ -8,8 +8,12 @@ name = "numtype"
 version = "2.2.4.0.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
-authors = [{name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com"}]
-maintainers = [{name = "NumPy Developers", email = "numpy-discussion@python.org"}]
+authors = [
+    {name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com"},
+]
+maintainers = [
+    {name = "NumPy Developers", email = "numpy-discussion@python.org"},
+]
 license = "BSD-3-Clause"
 keywords = ["numpy", "typing", "stubs"]
 classifiers = [
@@ -174,7 +178,7 @@ reportUnusedCallResult = true
 src = ["src", "test", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
 force-exclude = true
-# https://typing.readthedocs.io/en/latest/guides/writing_stubs.html#maximum-line-length
+# https://typing.python.org/en/latest/guides/writing_stubs.html#maximum-line-length
 line-length = 130
 preview = true
 
@@ -243,11 +247,29 @@ preview = true
 [tool.tox]
 min_version = "4"
 requires = ["tox-uv>=1"]
-env_list = ["ruff", "pytest", "basedpyright", "basedmypy", "3.13", "3.12", "3.11", "3.10"]
+env_list = [
+    "ruff",
+    "pytest",
+    "basedpyright",
+    "basedmypy",
+    "3.13",
+    "3.12",
+    "3.11",
+    "3.10",
+]
 
     [tool.tox.env_run_base]
     description = "stubtest ({base_python})"
-    commands = [["uv", "run", "-q", "-p={base_python}", "--active", "tool/stubtest.py"]]
+    commands = [
+        [
+            "uv",
+            "run",
+            "-q",
+            "-p={base_python}",
+            "--active",
+            "tool/stubtest.py",
+        ],
+    ]
 
     [tool.tox.env.ruff]
     description = "ruff"
@@ -274,11 +296,18 @@ env_list = ["ruff", "pytest", "basedpyright", "basedmypy", "3.13", "3.12", "3.11
     description = "basedmypy"
     runner = "uv-venv-lock-runner"
     dependency_groups = ["dev", "orjson"]
-    commands = [["mypy", {replace = "posargs", default = ["."], extend = true}]]
+    commands = [
+        [
+            "mypy",
+            {replace = "posargs", default = ["."], extend = true},
+        ],
+    ]
 
 
-[tool.typos.default]
-extend-ignore-identifiers-re = ['ND|nd|nin|NIN']
+[tool.typos]
 
-[tool.typos.files]
-extend-exclude = ["*.pyi", ".mypyignore"]
+    [tool.typos.default]
+    extend-ignore-identifiers-re = ['ND|nd|nin|NIN']
+
+    [tool.typos.files]
+    extend-exclude = ["*.pyi", ".mypyignore"]

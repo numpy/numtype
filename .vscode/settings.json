@@ -5,19 +5,14 @@
   "[python]": {
     "editor.rulers": [88, 130]
   },
-  "evenBetterToml.formatter.alignComments": true,
-  "evenBetterToml.formatter.allowedBlankLines": 2,
-  "evenBetterToml.formatter.arrayTrailingComma": true,
-  "evenBetterToml.formatter.columnWidth": 100,
-  "evenBetterToml.formatter.compactArrays": true,
-  "evenBetterToml.formatter.compactInlineTables": true,
-  "evenBetterToml.formatter.indentString": "    ",
-  "evenBetterToml.formatter.indentTables": true,
-  "evenBetterToml.formatter.trailingNewline": true,
-  "evenBetterToml.schema.enabled": false,
+  "[toml]": {
+    "editor.rulers": [88]
+  },
+  "evenBetterToml.taplo.configFile.path": ".taplo.toml",
   "files.readonlyInclude": {
     "**/generated/*.pyi": true
   },
+  "git.branchProtection": ["main"],
   "markdownlint.configFile": "doc/.markdownlint.yaml",
   "mypy-type-checker.path": ["uv", "run", "mypy"]
 }
