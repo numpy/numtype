@@ -39,3 +39,11 @@ Remove all `.pyi` files from the NumPy site-packages directory.
 ```shell
 uv run tool/unstub.py
 ```
+
+## format_ignores.py
+
+Format pyright ignore comments to ensure they are alphabetically sorted with proper spacing.
+
+```shell
+uv run tool/format_ignores.py [-h] [--extensions EXTENSIONS] [--check] [PATH]
+```
