@@ -13,8 +13,8 @@ from typing import (
 )
 from typing_extensions import Never, TypeAliasType, TypeVar, Unpack
 
+import _numtype as _nt
 import numpy as np
-from _numtype import CoFloat64_nd, CoFloating_nd, ToFloat64_1nd
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
 from numpy._typing import (
     ArrayLike,
@@ -28,6 +28,7 @@ from numpy._typing import (
     _ArrayLikeObject_co,
     _DTypeLike,
     _DTypeLikeBool,
+    _DTypeLikeComplex,
     _DTypeLikeFloat,
     _FloatLike_co,
     _NestedSequence,
@@ -415,6 +416,99 @@ class _Call11Float(Protocol):
     ) -> NDArray[np.floating]: ...
 
 @type_check_only
+class _Call11Inexact(Protocol):
+    @overload  # (float) -> float64
+    def __call__(
+        self,
+        x: _nt.ToFloat64_0d,
+        /,
+        out: None = None,
+        *,
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.float64: ...
+    @overload  # (float-like) -> float
+    def __call__(
+        self,
+        x: _nt.CoFloating_0d,
+        /,
+        out: None = None,
+        *,
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.floating: ...
+    @overload  # (scalar) -> complex128
+    def __call__(
+        self,
+        x: _nt.ToComplex128_0d,
+        /,
+        out: None = None,
+        *,
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> np.complex128: ...
+    @overload  # (array-like, out: T) -> T
+    def __call__(
+        self,
+        x: _nt.CoComplex_nd,
+        /,
+        out: _Out1[_ArrayT],
+        *,
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> _ArrayT: ...
+    @overload  # (array) -> NDArray[float64]
+    def __call__(
+        self,
+        x: _nt.ToFloat64_1nd,
+        /,
+        out: None = None,
+        *,
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.float64]: ...
+    @overload  # (array) -> NDArray[complex128]
+    def __call__(
+        self,
+        x: _nt.ToComplex128_1nd,
+        /,
+        out: None = None,
+        *,
+        dtype: None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.complex128]: ...
+    @overload  # (array) -> Array[np.floating]
+    def __call__(
+        self,
+        x: _nt.CoFloating_1nd,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeFloat | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.floating]: ...
+    @overload  # (array) -> Array[complex]
+    def __call__(
+        self,
+        x: _nt.ToComplex_1nd,
+        /,
+        out: None = None,
+        *,
+        dtype: _DTypeLikeComplex | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> NDArray[np.complexfloating]: ...
+    @overload  # (?) -> ?
+    def __call__(
+        self,
+        x: _nt.CoComplex_nd | _CanArrayUFunc,
+        /,
+        out: _Out1[_AnyArray] | None = None,
+        *,
+        dtype: _DTypeLikeFloat | _DTypeLikeComplex | None = None,
+        **kwds: Unpack[_Kwargs2],
+    ) -> Any: ...
+
+@type_check_only
 class _Call11Isnat(Protocol):
     @overload  # (scalar) -> bool
     def __call__(
@@ -785,8 +879,8 @@ class _Call21Float(Protocol):
     @overload  # (array-like, array) -> Array[float64]
     def __call__(
         self,
-        x1: CoFloat64_nd,
-        x2: ToFloat64_1nd,
+        x1: _nt.CoFloat64_nd,
+        x2: _nt.ToFloat64_1nd,
         /,
         out: None = None,
         *,
@@ -796,8 +890,8 @@ class _Call21Float(Protocol):
     @overload  # (array, array-like) -> Array[float64]
     def __call__(
         self,
-        x1: ToFloat64_1nd,
-        x2: CoFloat64_nd,
+        x1: _nt.ToFloat64_1nd,
+        x2: _nt.CoFloat64_nd,
         /,
         out: None = None,
         *,
@@ -829,8 +923,8 @@ class _Call21Float(Protocol):
     @overload  # (array-like, array-like) -> Array[float] | float
     def __call__(
         self,
-        x1: CoFloating_nd,
-        x2: CoFloating_nd,
+        x1: _nt.CoFloating_nd,
+        x2: _nt.CoFloating_nd,
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
@@ -1555,14 +1649,14 @@ rad2deg: Final[_ufunc_1_1[_Call11Float]] = ...
 radians: Final[_ufunc_1_1[_Call11Float]] = ...
 
 # {[fc]O} -> $1
-arccos: Final[_ufunc_1_1] = ...
-arccosh: Final[_ufunc_1_1] = ...
-arcsin: Final[_ufunc_1_1] = ...
-arcsinh: Final[_ufunc_1_1] = ...
-arctan: Final[_ufunc_1_1] = ...
-arctanh: Final[_ufunc_1_1] = ...
-cos: Final[_ufunc_1_1] = ...
-cosh: Final[_ufunc_1_1] = ...
+arccos: Final[_ufunc_1_1[_Call11Inexact]] = ...
+arccosh: Final[_ufunc_1_1[_Call11Inexact]] = ...
+arcsin: Final[_ufunc_1_1[_Call11Inexact]] = ...
+arcsinh: Final[_ufunc_1_1[_Call11Inexact]] = ...
+arctan: Final[_ufunc_1_1[_Call11Inexact]] = ...
+arctanh: Final[_ufunc_1_1[_Call11Inexact]] = ...
+cos: Final[_ufunc_1_1[_Call11Inexact]] = ...
+cosh: Final[_ufunc_1_1[_Call11Inexact]] = ...
 exp: Final[_ufunc_1_1] = ...
 exp2: Final[_ufunc_1_1] = ...
 expm1: Final[_ufunc_1_1] = ...
