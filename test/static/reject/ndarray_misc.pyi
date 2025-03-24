@@ -41,7 +41,7 @@ def test_partition() -> None:
     f8.partition(0)  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
 
 def test_setfield() -> None:
-    f8.setfield(2, np.float64)  # type: ignore[misc, arg-type]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
+    f8.setfield(2, np.float64)  # type: ignore[arg-type, misc]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
 
 def test_sort() -> None:
     f8.sort()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
