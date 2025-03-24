@@ -1,7 +1,7 @@
-"""Format pyright ignore comments with proper sorting and spacing.
+"""Format `(type|pyright): ignore[...]` comments with proper sorting and spacing.
 
-Ensures that pyright ignore comments in Python files have their entries sorted
-alphabetically and formatted with proper spacing between items.
+Ensures that `(type|pyright): ignore[...]` comments in Python files have their entries
+sorted alphabetically and formatted with proper spacing between items.
 
 Usage: uv run tool/format_ignores.py [-h] [--pattern PATTERN] [--check] [PATH]
 """
@@ -19,7 +19,7 @@ combined_pattern = re.compile(r"(\s*#\s*(pyright|type):\s*ignore\[)([^\]]+)(\])"
 
 def _sort_ignore_list(ignore_text: str, /) -> str:
     """
-    Sort the items in a pyright ignore list and ensure proper spacing.
+    Sort the items in a `(type|pyright): ignore[...]` list and ensure proper spacing.
 
     Parameters
     ----------
@@ -31,8 +31,9 @@ def _sort_ignore_list(ignore_text: str, /) -> str:
     str
         Sorted and formatted ignore list
     """
-    # Extract items from the ignore list
-    return ", ".join(sorted(set(filter(bool, map(str.strip, ignore_text.split(","))))))
+    items = filter(bool, map(str.strip, ignore_text.split(",")))
+    sorted_items = sorted(set(items))
+    return ", ".join(sorted_items)
 
 
 def _process_file(
@@ -42,7 +43,7 @@ def _process_file(
     check_only: bool = False,
 ) -> bool:
     """
-    Process a file to sort pyright ignore comments.
+    Process a file to sort `(type|pyright): ignore[...]` comments.
 
     Parameters
     ----------
@@ -152,7 +153,7 @@ def _parse_args(args: Sequence[str] | None = None, /) -> argparse.Namespace:
         Parsed arguments
     """
     parser = argparse.ArgumentParser(
-        description="Format pyright ignore comments in Python files.",
+        description="Format `(type|pyright): ignore[...]` comments in Python files.",
     )
     parser.add_argument(
         "path",
