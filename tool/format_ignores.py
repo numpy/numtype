@@ -7,6 +7,7 @@ Usage: uv run tool/format_ignores.py [-h] [--extensions EXTENSIONS] [--check] [P
 """
 
 import argparse
+import errno
 import os
 import re
 import sys
@@ -169,8 +170,10 @@ def main(args: Sequence[str] | None = None, /) -> int:
     Returns
     -------
     int
-        Exit code: 0 for success, 1 for error or (in check mode) if files would
-        be modified
+        Exit code:
+        - 0: Success
+        - errno.EAGAIN: Files would be modified (in check mode)
+        - errno.ENOENT: Path not found
     """
     namespace = _parse_args(args)
     extensions = tuple(ext.strip() for ext in namespace.extensions.split(","))
@@ -189,7 +192,7 @@ def main(args: Sequence[str] | None = None, /) -> int:
             print(
                 f"Found {modified} files that would be modified out of {total} checked",
             )
-            return 1 if modified > 0 else 0
+            return errno.EAGAIN if modified > 0 else 0
         print(f"Updated {modified} files out of {total} checked")
         return 0
     if path_obj.is_file():
@@ -197,12 +200,12 @@ def main(args: Sequence[str] | None = None, /) -> int:
         if check_only:
             if modified:
                 print(f"File {path} would be modified")
-                return 1
+                return errno.EAGAIN
             print(f"File {path} is correctly formatted")
             return 0
         return 0
     print(f"Path not found: {path}", file=sys.stderr)
-    return 1
+    return errno.ENOENT
 
 
 if __name__ == "__main__":
