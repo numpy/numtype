@@ -10,7 +10,7 @@ supports_array: npt._SupportsArray[np.dtype[np.float64]]
 
 ###
 
-a.base = int  # type: ignore[assignment,misc]  # pyright: ignore[reportAttributeAccessIssue]
+a.base = int  # type: ignore[assignment, misc]  # pyright: ignore[reportAttributeAccessIssue]
 a.coords = ()  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue]
 a.index = 0  # type: ignore[misc]  # pyright: ignore[reportAttributeAccessIssue]
 

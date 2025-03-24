@@ -222,7 +222,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def __mod__(self, rhs: object, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rmod__(self: Never, rhs: Never, /) -> Any: ...  # type: ignore[override, misc]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rmod__(self: Never, rhs: Never, /) -> Any: ...  # type: ignore[misc, override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @overload  # type: ignore[override]

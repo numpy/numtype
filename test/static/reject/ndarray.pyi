@@ -5,4 +5,4 @@ AR_f8: npt.NDArray[np.float64]
 
 ###
 
-AR_f8.dtype = np.bool  # type: ignore[assignment,misc]  # pyright: ignore[reportAttributeAccessIssue]
+AR_f8.dtype = np.bool  # type: ignore[assignment, misc]  # pyright: ignore[reportAttributeAccessIssue]
