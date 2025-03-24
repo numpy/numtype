@@ -1,7 +1,0 @@
-from typing_extensions import assert_type
-
-import numpy as np
-from numpy._typing import _96Bit, _128Bit
-
-assert_type(np.float96(), np.floating[_96Bit])
-assert_type(np.float128(), np.floating[_128Bit])

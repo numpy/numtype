@@ -2,7 +2,6 @@ from typing import Protocol, TypeAlias
 from typing_extensions import TypeVar, assert_type
 
 import numpy as np
-from numpy._typing import _64Bit
 
 _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
@@ -55,9 +54,7 @@ assert_type(do_abs(f8_1d), _Float64_1d)
 assert_type(do_abs(g_1d), _LongDouble_1d)
 
 assert_type(do_abs(c8_1d), _Float32_1d)
-# NOTE: Unfortunately it's not possible to have this return a `float64` sctype, see
-# https://github.com/python/mypy/issues/14070
-assert_type(do_abs(c16_1d), np.ndarray[tuple[int], np.dtype[np.floating[_64Bit]]])
+assert_type(do_abs(c16_1d), _Float64_1d)
 assert_type(do_abs(G_1d), _LongDouble_1d)
 
 assert_type(do_invert(b1_1d), _Bool_1d)
