@@ -86,13 +86,15 @@ provides-extras = ["numpy"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "basedpyright", specifier = ">=1.28.1" },
+    { name = "basedpyright", specifier = ">=1.28.3" },
+    { name = "lefthook", specifier = ">=1.11.4" },
+    { name = "mdformat", specifier = ">=0.7.22" },
     { name = "mypy", specifier = ">=1.15.0" },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.0" },
+    { name = "ruff", specifier = ">=0.11.2" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
-orjson = [{ name = "orjson", specifier = ">=3.10.15" }]
+orjson = [{ name = "orjson", specifier = ">=3.10.16" }]
 types = [
     { name = "types-setuptools", specifier = ">=76.0.0.20250313" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
