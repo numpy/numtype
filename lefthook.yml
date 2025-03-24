@@ -1,0 +1,26 @@
+# lefthook.yml
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.{py,pyi}"
+      run: uv run --no-group=orjson ruff format {staged_files}
+      stage-fixed: true
+    markdown-lint:
+      glob: "*.md"
+      run: uv run --no-group=orjson mdformat {staged_files}
+      stage-fixed: true
+
+post-checkout:
+  commands:
+    dependencies:
+      glob: uv.lock
+      run: uv sync
+
+post-merge:
+  files: "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD"
+  commands:
+    dependencies:
+      glob: uv.lock
+      run: uv sync
