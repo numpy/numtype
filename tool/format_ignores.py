@@ -1,13 +1,3 @@
-# /// script
-# requires-python = ">=3.10"
-# dependencies = [
-#     "numtype[numpy]",
-# ]
-#
-# [tool.uv.sources]
-# numtype = {path = ".."}
-# ///
-
 """Format pyright ignore comments with proper sorting and spacing.
 
 Ensures that pyright ignore comments in Python files have their entries sorted
