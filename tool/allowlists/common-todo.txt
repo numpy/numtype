@@ -3,4 +3,3 @@ numpy(\..+)?\.(un)?signedinteger.__index__
 numpy(\..+)?\.(un)?signedinteger.bit_count
 numpy(\..+)?\.floating.is_integer
 numpy(\..+)?\.floating.as_integer_ratio
-numpy(\..+)?\.complexfloating.__complex__

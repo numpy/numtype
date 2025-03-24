@@ -104,7 +104,7 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with np.ndarray
     @overload
-    def __abs__(self: container[_ShapeT, np.dtype[np.complex64]], /) -> container[_ShapeT, np.dtype[np.float32]]: ...  # type: ignore[overload-overlap]
+    def __abs__(self: container[_ShapeT, np.dtype[np.complex64]], /) -> container[_ShapeT, np.dtype[np.float32]]: ...
     @overload
     def __abs__(self: container[_ShapeT, np.dtype[np.complex128]], /) -> container[_ShapeT, np.dtype[np.float64]]: ...
     @overload

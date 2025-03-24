@@ -10,11 +10,12 @@ class NBitBase: ...
 ###
 #
 
+# long double
 @type_check_only
-class _LD(NBitBase): ...  # pyright: ignore[reportGeneralTypeIssues]
+class _64L(NBitBase): ...  # pyright: ignore[reportGeneralTypeIssues]
 
 @type_check_only
-class _64(_LD): ...
+class _64(_64L): ...
 
 @type_check_only
 class _32(_64): ...
@@ -31,8 +32,8 @@ class _8(_16): ...
 ###
 # legacy `numpy._typing` runtime definitions
 
-_128Bit = _LD
-_96Bit = _LD
+_128Bit = _64L
+_96Bit = _64L
 _64Bit = _64
 _32Bit = _32
 _16Bit = _16
