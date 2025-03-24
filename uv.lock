@@ -42,6 +42,15 @@ wheels = [
 ]
 
 [[package]]
+name = "lefthook"
+version = "1.11.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/98/5a/e268be2d6792ca0ffc974af162ff7fa4a83b308c8fac1e8a5abb1ebd1e36/lefthook-1.11.3.tar.gz", hash = "sha256:5520fc669072c81d3ab103608d1bea39aa901f81eba08e069485599de5362415", size = 46559864 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d9/c1/74590fa9cb5d799dde99552341af5a3c6df4b15026edd4487c2f1195f5ee/lefthook-1.11.3-py3-none-any.whl", hash = "sha256:ab93b75ba936f19a194b1998725e7e4c59c8469da42c496d1a47231e72e96265", size = 46782823 },
+]
+
+[[package]]
 name = "mypy"
 version = "1.15.0"
 source = { registry = "https://pypi.org/simple" }
@@ -179,6 +188,7 @@ numpy = [
 [package.dev-dependencies]
 dev = [
     { name = "basedpyright" },
+    { name = "lefthook" },
     { name = "mypy" },
     { name = "pytest" },
     { name = "ruff" },
@@ -201,6 +211,7 @@ provides-extras = ["numpy"]
 [package.metadata.requires-dev]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.3" },
+    { name = "lefthook", specifier = ">=1.11.3" },
     { name = "mypy", specifier = ">=1.15.0" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ruff", specifier = ">=0.11.2" },
