@@ -201,7 +201,7 @@ def main(args: Sequence[str] | None = None, /) -> int:
             print(f"File {path} is correctly formatted")
             return 0
         return 0
-    print(f"Path not found: {path}")
+    print(f"Path not found: {path}", file=sys.stderr)
     return 1
 
 
