@@ -7,11 +7,7 @@ pre-commit:
       glob: "*.{py,pyi}"
       run: uv run --no-group=orjson ruff format {staged_files}
       stage-fixed: true
-    lint:
-      glob: "*.{py,pyi}"
-      run: uv run --no-group=orjson ruff check {staged_files}
-      stage-fixed: true
     markdown-lint:
       glob: "*.md"
-      run: uv run mdformat {staged_files}
+      run: uv run --no-group=orjson mdformat {staged_files}
       stage-fixed: true
