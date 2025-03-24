@@ -326,7 +326,7 @@ class _Call11Bool(Protocol):
         /,
         out: None = None,
         *,
-        dtype: None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> np.bool: ...
     @overload  # (array-like, out: T) -> T
