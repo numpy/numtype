@@ -14,7 +14,7 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-combined_pattern = re.compile(r"(\s*#\s*(pyright|type):\s*ignore\[)([^\]]+)(\])")
+combined_pattern = re.compile(r"(\s*#\s*)(pyright|type)(\s*:\s*ignore\[)([^\]]+)(\])")
 
 
 def _sort_ignore_list(ignore_text: str, /) -> str:
@@ -62,12 +62,15 @@ def _process_file(
 
     # Process both pyright and mypy ignore comments
     def replace_match(match: re.Match[str], /) -> str:
-        prefix = match.group(1)
-        # group(2) contains either "pyright" or "type", which we don't need separately
-        ignore_list = match.group(3)
-        suffix = match.group(4)
+        prefix = match.group(1)  # Whitespace and '#'
+        type_or_pyright = match.group(2)  # "pyright" or "type"
+        match.group(
+            3,
+        )  # ":" and any surrounding whitespace plus "ignore["
+        ignore_list = match.group(4)  # The content inside the brackets
+        suffix = match.group(5)  # The closing bracket "]"
         sorted_ignore = _sort_ignore_list(ignore_list)
-        return f"{prefix}{sorted_ignore}{suffix}"
+        return f"{prefix}{type_or_pyright}: ignore[{sorted_ignore}{suffix}"
 
     updated_content = combined_pattern.sub(replace_match, content)
 
