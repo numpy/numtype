@@ -13,10 +13,10 @@ pre-commit:
       stage-fixed: true
 
 post-checkout:
-commands:
-  dependencies:
-    glob: uv.lock
-    run: uv sync
+  commands:
+    dependencies:
+      glob: uv.lock
+      run: uv sync
 
 post-merge:
   files: "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD"
