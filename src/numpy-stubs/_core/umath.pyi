@@ -346,7 +346,7 @@ class _Call11Bool(Protocol):
         /,
         out: _Out1[_AnyArray] | None = None,
         *,
-        dtype: None = None,
+        dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> NDArray[np.bool]: ...
     @overload  # (?) -> Any
