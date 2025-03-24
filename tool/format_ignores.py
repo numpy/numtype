@@ -109,13 +109,29 @@ def _process_directory(
 
     dir_path = Path(directory_path)
 
-    for path in dir_path.glob(glob_pattern):
-        if path.is_file():
+    # Walk the directory tree manually to avoid hidden directories
+    for root, dirs, files in os.walk(dir_path):
+        # Skip directories that start with a dot
+        dirs[:] = [d for d in dirs if not d.startswith(".")]
+
+        # Extract the file extension from the pattern
+        if "*." not in glob_pattern:
+            continue
+
+        ext = glob_pattern.split("*.", 1)[1]
+        root_path = Path(root)
+
+        # Process matching files in the current directory
+        for file in files:
+            if not file.endswith(f".{ext}"):
+                continue
+
+            file_path = root_path / file
             total_count += 1
-            if _process_file(path, check_only=check_only):
+            if _process_file(file_path, check_only=check_only):
                 modified_count += 1
                 if check_only:
-                    print(f"Would update {path}")
+                    print(f"Would update {file_path}")
 
     return modified_count, total_count
 

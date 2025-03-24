@@ -16,7 +16,7 @@ np.polymul(AR_f8, AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgum
 np.polydiv(AR_f8, AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.polyint(AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
-np.polyint(AR_f8, m=1j)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportArgumentType, reportCallIssue]
+np.polyint(AR_f8, m=1j)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.polyder(AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.polyder(AR_f8, m=1j)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
