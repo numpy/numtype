@@ -106,7 +106,7 @@ def _process_directory(
     modified_count = 0
     total_count = 0
 
-    dir_path = Path(str(directory_path))
+    dir_path = Path(directory_path)
 
     for ext in extensions:
         for path in dir_path.rglob(f"*{ext}"):
