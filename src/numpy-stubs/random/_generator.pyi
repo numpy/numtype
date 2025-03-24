@@ -171,8 +171,8 @@ class Generator:
     #
     @overload
     def random(self, /, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None) -> float: ...
-    @overload  # mypy false positives
-    def random(  # type: ignore[overload-overlap]
+    @overload
+    def random(
         self,
         /,
         size: _ShapeLike | None = None,
@@ -181,7 +181,7 @@ class Generator:
         out: NDArray[np.float64],
     ) -> NDArray[np.float64]: ...
     @overload
-    def random(  # type: ignore[overload-overlap]
+    def random(
         self,
         /,
         size: _ShapeLike,
@@ -275,8 +275,8 @@ class Generator:
         method: _ExpMethod = "zig",
         out: None = None,
     ) -> float: ...
-    @overload  # mypy false positive
-    def standard_exponential(  # type: ignore[overload-overlap]
+    @overload
+    def standard_exponential(
         self,
         /,
         size: _ShapeLike | None = None,
@@ -286,7 +286,7 @@ class Generator:
         out: NDArray[np.float64],
     ) -> NDArray[np.float64]: ...
     @overload
-    def standard_exponential(  # type: ignore[overload-overlap]
+    def standard_exponential(
         self,
         /,
         size: _ShapeLike,
@@ -459,7 +459,7 @@ class Generator:
     @overload
     def standard_normal(self, /, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None) -> float: ...
     @overload
-    def standard_normal(  # type: ignore[overload-overlap]
+    def standard_normal(
         self,
         /,
         size: _ShapeLike | None = None,
@@ -467,8 +467,8 @@ class Generator:
         *,
         out: NDArray[np.float64],
     ) -> NDArray[np.float64]: ...
-    @overload  # mypy false positive
-    def standard_normal(  # type: ignore[overload-overlap]
+    @overload
+    def standard_normal(
         self,
         /,
         size: _ShapeLike,
@@ -577,8 +577,8 @@ class Generator:
         dtype: _DTypeLikeFloat = ...,
         out: None = None,
     ) -> float: ...
-    @overload  # mypy false positives
-    def standard_gamma(  # type: ignore[overload-overlap]
+    @overload
+    def standard_gamma(
         self,
         /,
         shape: _ArrayLikeFloat_co,
@@ -588,7 +588,7 @@ class Generator:
         out: NDArray[np.float64],
     ) -> NDArray[np.float64]: ...
     @overload
-    def standard_gamma(  # type: ignore[overload-overlap]
+    def standard_gamma(
         self,
         /,
         shape: _ArrayLikeFloat_co,
@@ -597,7 +597,7 @@ class Generator:
         out: NDArray[np.float64] | None = None,
     ) -> NDArray[np.float64]: ...
     @overload
-    def standard_gamma(  # type: ignore[overload-overlap]
+    def standard_gamma(
         self,
         /,
         shape: _ArrayLikeFloat_co,
