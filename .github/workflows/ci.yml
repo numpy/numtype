@@ -55,6 +55,9 @@ jobs:
       - name: pytest
         run: uv run --no-group=orjson pytest
 
+      - name: format-ignores
+        run: uv run --no-group=orjson tool/format_ignores.py --check
+
   basedpyright:
     runs-on: ubuntu-latest
     timeout-minutes: 5
