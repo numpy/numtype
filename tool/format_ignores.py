@@ -29,14 +29,7 @@ def _sort_ignore_list(ignore_text: str, /) -> str:
         Sorted and formatted ignore list
     """
     # Extract items from the ignore list
-    items = ignore_text.strip("[]").split(",")
-
-    # Clean up each item and sort
-    cleaned_items = [item.strip() for item in items if item.strip()]
-    sorted_items = sorted(cleaned_items)
-
-    # Join with comma and space
-    return ", ".join(sorted_items)
+    return ", ".join(sorted(set(filter(bool, map(str.strip, ignore_text.split(","))))))
 
 
 def _process_file(
