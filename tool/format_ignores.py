@@ -3,7 +3,7 @@
 Ensures that pyright ignore comments in Python files have their entries sorted
 alphabetically and formatted with proper spacing between items.
 
-Usage: uv run tool/format_ignores.py [-h] [--extensions EXTENSIONS] [--check] [PATH]
+Usage: uv run tool/format_ignores.py [-h] [--pattern PATTERN] [--check] [PATH]
 """
 
 import argparse
@@ -11,7 +11,7 @@ import errno
 import os
 import re
 import sys
-from collections.abc import Iterable, Sequence
+from collections.abc import Sequence
 from pathlib import Path
 
 
@@ -84,18 +84,18 @@ def _process_directory(
     directory_path: str | os.PathLike[str],
     /,
     *,
-    extensions: Iterable[str] = (".pyi",),
+    glob_pattern: str = "**/*.pyi",
     check_only: bool = False,
 ) -> tuple[int, int]:
     """
-    Process all files with the given extensions in a directory and its subdirectories.
+    Process all files matching the glob pattern in a directory and its subdirectories.
 
     Parameters
     ----------
     directory_path : str or os.PathLike[str]
         The path to the directory to process
-    extensions : iterable of str, default=('.pyi',)
-        File extensions to process
+    glob_pattern : str, default='**/*.pyi'
+        Glob pattern to match files
     check_only : bool, default=False
         If True, don't modify files, just check them
 
@@ -109,8 +109,8 @@ def _process_directory(
 
     dir_path = Path(directory_path)
 
-    for ext in extensions:
-        for path in dir_path.rglob(f"*{ext}"):
+    for path in dir_path.glob(glob_pattern):
+        if path.is_file():
             total_count += 1
             if _process_file(path, check_only=check_only):
                 modified_count += 1
@@ -144,9 +144,9 @@ def _parse_args(args: Sequence[str] | None = None, /) -> argparse.Namespace:
         help="Path to file or directory to process (default: current directory)",
     )
     parser.add_argument(
-        "--extensions",
-        default=".pyi",
-        help="Comma-separated list of file extensions to process (default: .pyi)",
+        "--pattern",
+        default="**/*.pyi",
+        help="Glob pattern to match files (default: **/*.pyi)",
     )
     parser.add_argument(
         "--check",
@@ -176,16 +176,15 @@ def main(args: Sequence[str] | None = None, /) -> int:
         - errno.ENOENT: Path not found
     """
     namespace = _parse_args(args)
-    extensions = tuple(ext.strip() for ext in namespace.extensions.split(","))
-
     path = namespace.path
     check_only = namespace.check
+    glob_pattern = namespace.pattern
     path_obj = Path(path)
 
     if path_obj.is_dir():
         modified, total = _process_directory(
             path,
-            extensions=extensions,
+            glob_pattern=glob_pattern,
             check_only=check_only,
         )
         if check_only:

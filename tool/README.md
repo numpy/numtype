@@ -45,5 +45,5 @@ uv run tool/unstub.py
 Format pyright ignore comments to ensure they are alphabetically sorted with proper spacing.
 
 ```shell
-uv run tool/format_ignores.py [-h] [--extensions EXTENSIONS] [--check] [PATH]
+uv run tool/format_ignores.py [-h] [--pattern PATTERN] [--check] [PATH]
 ```
