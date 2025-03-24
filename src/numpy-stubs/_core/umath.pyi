@@ -350,7 +350,7 @@ class _Call11Bool(Protocol):
         dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
     ) -> NDArray[np.bool]: ...
-    @overload  # (array-like) -> Array[bool] | bool
+    @overload  # (?) -> Any
     def __call__(
         self,
         x: ArrayLike,
@@ -359,7 +359,7 @@ class _Call11Bool(Protocol):
         *,
         dtype: _DTypeLikeBool | None = None,
         **kwds: Unpack[_Kwargs2],
-    ) -> NDArray[np.bool] | np.bool: ...
+    ) -> Any: ...
 
 @type_check_only
 class _Call11Float(Protocol):
@@ -736,7 +736,7 @@ class _Call21Bool(Protocol):
         out: _Out1[_ArrayT],
         **kwds: Unpack[_Kwargs3],
     ) -> _ArrayT: ...
-    @overload  # (array-like, array-like) -> Array[bool] | bool
+    @overload  # (array-like, array-like) -> Any
     def __call__(
         self,
         x1: ArrayLike,
