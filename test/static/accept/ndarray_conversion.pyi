@@ -22,14 +22,14 @@ assert_type(b1_0d.item(()), bool)
 assert_type(u2_1d.item((0,)), int)
 assert_type(i4_2d.item(-1, 2), int)
 assert_type(f8_3d.item(2, 1, -1), float)
-assert_type(cG_4d.item(-0xED_FED_DEB_A_DEAD_BEE), complex)  # c'mon Ed, we talked about this...
+assert_type(cG_4d.item(-0xED_FED_DEB_A_DEAD_BEE), np.clongdouble)  # c'mon Ed, we talked about this...
 
 # tolist
 assert_type(b1_0d.tolist(), bool)
 assert_type(u2_1d.tolist(), list[int])
 assert_type(i4_2d.tolist(), list[list[int]])
 assert_type(f8_3d.tolist(), list[list[list[float]]])
-assert_type(cG_4d.tolist(), list[list[list[list[complex]]]])
+assert_type(cG_4d.tolist(), list[list[list[list[np.clongdouble]]]])
 assert_type(i0_nd.tolist(), Any)
 
 # itemset does not return a value

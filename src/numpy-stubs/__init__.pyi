@@ -6650,6 +6650,14 @@ class clongdouble(complexfloating[_n._64L]):
     @override
     def __abs__(self, /) -> longdouble: ...
 
+    #
+    @overload  # type: ignore[override]
+    def item(self, /) -> Self: ...
+    @overload
+    def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def tolist(self, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
 # These are platform dependent, so there's no need to distinguish between them
 complex192 = clongdouble
 complex256 = clongdouble
