@@ -184,6 +184,13 @@ All [documentation] lives in the `README.md`. Please read it carefully
 before proposing any changes. Ensure that the markdown is formatted correctly
 with [markdownlint](https://github.com/DavidAnson/markdownlint/tree/main).
 
+## Development Tools
+
+NumType provides several development tools to help with development.
+
+For detailed usage of each tool, please refer to the `README.md`
+in the [`tool`][tool-docs] directory or the docstrings within each tool.
+
 ## Commit message style
 
 For the most part, commit messages in NumType should follow
@@ -205,3 +212,4 @@ one of the development dependencies.
 [ruff]: https://docs.astral.sh/ruff/
 [stub-style]: https://typing.python.org/en/latest/guides/writing_stubs.html#style-guide
 [test-docs]: https://github.com/numpy/numtype/tree/main/test
+[tool-docs]: https://github.com/numpy/numtype/tree/main/tool
