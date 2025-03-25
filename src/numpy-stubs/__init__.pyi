@@ -6200,7 +6200,7 @@ class float16(floating[_n._16]):
     def __add__(self, x: _nt.JustComplex, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __radd__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __radd__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6220,7 +6220,7 @@ class float16(floating[_n._16]):
     def __sub__(self, x: _nt.JustComplex, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__radd__`
-    @overload
+    @overload  # type: ignore[override]
     def __rsub__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rsub__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6240,7 +6240,7 @@ class float16(floating[_n._16]):
     def __mul__(self, x: _nt.JustComplex, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__radd__`
-    @overload
+    @overload  # type: ignore[override]
     def __rmul__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rmul__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6260,7 +6260,7 @@ class float16(floating[_n._16]):
     def __pow__(self, x: _nt.JustComplex, k: None = None, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__radd__`
-    @overload
+    @overload  # type: ignore[override]
     def __rpow__(self, x: _CoFloat16, k: None = None, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rpow__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], k: None = None, /) -> float64: ...
@@ -6280,7 +6280,7 @@ class float16(floating[_n._16]):
     def __truediv__(self, x: _nt.JustComplex, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__radd__`
-    @overload
+    @overload  # type: ignore[override]
     def __rtruediv__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rtruediv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6298,7 +6298,7 @@ class float16(floating[_n._16]):
     def __floordiv__(self, x: _nt.CanArray0D[_nt.integer16], /) -> float32: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__rtruediv__`, minus the complex overload
-    @overload
+    @overload  # type: ignore[override]
     def __rfloordiv__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rfloordiv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6314,7 +6314,7 @@ class float16(floating[_n._16]):
     def __mod__(self, x: _nt.CanArray0D[_nt.integer16], /) -> float32: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__rfloordiv__`
-    @overload
+    @overload  # type: ignore[override]
     def __rmod__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6330,7 +6330,7 @@ class float16(floating[_n._16]):
     def __divmod__(self, x: _nt.CanArray0D[_nt.integer16], /) -> _2Tuple[float32]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__rmod__`
-    @overload
+    @overload  # type: ignore[override]
     def __rdivmod__(self, x: _CoFloat16, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
     @overload
     def __rdivmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> _2Tuple[float64]: ...
@@ -6360,7 +6360,7 @@ class float32(floating[_n._32]):
     def __add__(self, x: _nt.JustComplex, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __radd__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __radd__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6376,7 +6376,7 @@ class float32(floating[_n._32]):
     def __sub__(self, x: _nt.JustComplex, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __rsub__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rsub__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6392,7 +6392,7 @@ class float32(floating[_n._32]):
     def __mul__(self, x: _nt.JustComplex, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __rmul__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rmul__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6408,7 +6408,7 @@ class float32(floating[_n._32]):
     def __pow__(self, x: _nt.JustComplex, mod: None = None, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __rpow__(self, x: _CoFloat32, mod: None = None, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rpow__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], mod: None = None, /) -> float64: ...
@@ -6424,7 +6424,7 @@ class float32(floating[_n._32]):
     def __truediv__(self, x: _nt.JustComplex, /) -> complex64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __rtruediv__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rtruediv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
@@ -6436,7 +6436,7 @@ class float32(floating[_n._32]):
     def __floordiv__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __floordiv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload
+    @overload  # type: ignore[override]
     def __rfloordiv__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rfloordiv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -6446,7 +6446,7 @@ class float32(floating[_n._32]):
     def __mod__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __mod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload
+    @overload  # type: ignore[override]
     def __rmod__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
     @overload
     def __rmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -6456,7 +6456,7 @@ class float32(floating[_n._32]):
     def __divmod__(self, x: _CoFloat32, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
     @overload
     def __divmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> _2Tuple[float64]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload
+    @overload  # type: ignore[override]
     def __rdivmod__(self, x: _CoFloat32, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
     @overload
     def __rdivmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> _2Tuple[float64]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -6497,7 +6497,7 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     def __add__(self, x: _CoFloat64, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustComplex, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload
+    @overload  # type: ignore[override]
     def __radd__(self, x: _CoFloat64, /) -> Self: ...
     @overload
     def __radd__(self, x: _nt.JustComplex, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -6507,7 +6507,7 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     def __sub__(self, x: _CoFloat64, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.JustComplex, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload
+    @overload  # type: ignore[override]
     def __rsub__(self, x: _CoFloat64, /) -> Self: ...
     @overload
     def __rsub__(self, x: _nt.JustComplex, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -6517,7 +6517,7 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     def __mul__(self, x: _CoFloat64, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.JustComplex, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload
+    @overload  # type: ignore[override]
     def __rmul__(self, x: _CoFloat64, /) -> Self: ...
     @overload
     def __rmul__(self, x: _nt.JustComplex, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -6527,7 +6527,7 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     def __pow__(self, x: _CoFloat64, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.JustComplex, mod: None = None, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload
+    @overload  # type: ignore[override]
     def __rpow__(self, x: _CoFloat64, mod: None = None, /) -> Self: ...
     @overload
     def __rpow__(self, x: _nt.JustComplex, mod: None = None, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -6537,28 +6537,28 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     def __truediv__(self, x: _CoFloat64, /) -> Self: ...
     @overload
     def __truediv__(self, x: _nt.JustComplex, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload
+    @overload  # type: ignore[override]
     def __rtruediv__(self, x: _CoFloat64, /) -> Self: ...
     @overload
     def __rtruediv__(self, x: _nt.JustComplex, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @override
-    def __floordiv__(self, x: _CoFloat64, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __floordiv__(self, x: _CoFloat64, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rfloordiv__(self, x: _CoFloat64, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rfloordiv__(self, x: _CoFloat64, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @override
-    def __mod__(self, x: _CoFloat64, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __mod__(self, x: _CoFloat64, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rmod__(self, x: _CoFloat64, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rmod__(self, x: _CoFloat64, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @override
-    def __divmod__(self, x: _CoFloat64, /) -> _2Tuple[Self]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __divmod__(self, x: _CoFloat64, /) -> _2Tuple[Self]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rdivmod__(self, x: _CoFloat64, /) -> _2Tuple[Self]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rdivmod__(self, x: _CoFloat64, /) -> _2Tuple[Self]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 half = float16
 single = float32
@@ -6679,7 +6679,7 @@ class complex64(complexfloating[_n._32]):
 
     # TODO(jorenham): Figure out these LSP violations
     @overload  # type: ignore[override]
-    def __add__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
+    def __add__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __add__(self, x: _CoComplex64, /) -> Self: ...
     @overload
@@ -6687,7 +6687,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __radd__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
+    def __radd__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __radd__(self, x: _CoComplex64, /) -> Self: ...
     @overload
@@ -6695,7 +6695,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __sub__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
+    def __sub__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __sub__(self, x: _CoComplex64, /) -> Self: ...
     @overload
@@ -6703,7 +6703,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __rsub__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
+    def __rsub__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __rsub__(self, x: _CoComplex64, /) -> Self: ...
     @overload
@@ -6711,7 +6711,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __mul__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
+    def __mul__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __mul__(self, x: _CoComplex64, /) -> Self: ...
     @overload
@@ -6719,7 +6719,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __rmul__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
+    def __rmul__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __rmul__(self, x: _CoComplex64, /) -> Self: ...
     @overload
@@ -6727,7 +6727,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __pow__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], mod: None = None, /) -> complex128: ...
+    def __pow__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], mod: None = None, /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __pow__(self, x: _CoComplex64, mod: None = None, /) -> Self: ...
     @overload
@@ -6735,7 +6735,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __rpow__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], mod: None = None, /) -> complex128: ...
+    def __rpow__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], mod: None = None, /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __rpow__(self, x: _CoComplex64, mod: None = None, /) -> Self: ...
     @overload
@@ -6743,7 +6743,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __truediv__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
+    def __truediv__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __truediv__(self, x: _CoComplex64, /) -> Self: ...
     @overload
@@ -6751,7 +6751,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __rtruediv__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
+    def __rtruediv__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...  # type: ignore[overload-overlap]
     @overload
     def __rtruediv__(self, x: _CoComplex64, /) -> Self: ...
     @overload
