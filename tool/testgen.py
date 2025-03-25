@@ -715,11 +715,15 @@ class ScalarBinOpTestGen(TestGen):
 
             for lhs in self.NAMES:
                 if self._is_builtin(lhs):
-                    # this will cause false positives on pyright - as designed
+                    # will cause false positives on pyright; as designed, of course
                     continue
 
                 n = 0
                 for rhs in self.NAMES:
+                    if fn.__name__ in {"eq", "ne"} and self._is_abstract(rhs):
+                        # will be inferred by mypy as `Any` for some reason
+                        continue
+
                     if stmt := self._assert_stmt(symbol, lhs, rhs):
                         yield stmt
                         n += 1
