@@ -8,6 +8,7 @@
   "[toml]": {
     "editor.rulers": [88]
   },
+  "evenBetterToml.schema.enabled": false,
   "evenBetterToml.taplo.configFile.path": ".taplo.toml",
   "files.readonlyInclude": {
     "**/generated/*.pyi": true

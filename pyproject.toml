@@ -51,14 +51,13 @@ dependencies = []
 [dependency-groups]
 dev = [
     "basedpyright>=1.28.3",
-    "lefthook>=1.11.3",
     "mdformat>=0.7.22",
     "mypy>=1.15.0",
     "pytest>=8.3.5",
     "ruff>=0.11.2",
 ]
 numpy = ["numtype[numpy]"]
-orjson = ["orjson>=3.10.15"] # speeds up mypy cache, but is missing 3.13t wheels
+orjson = ["orjson>=3.10.16"] # speeds up mypy cache, but is missing 3.13t wheels
 types = [
     "types-setuptools>=76.0.0.20250313",
     "types-tabulate>=0.9.0.20241207",
@@ -253,11 +252,11 @@ env_list = [
     "ruff",
     "pytest",
     "basedpyright",
-    "basedmypy",
-    "3.13",
-    "3.12",
-    "3.11",
+    "mypy",
     "3.10",
+    "3.11",
+    "3.12",
+    "3.13",
 ]
 
     [tool.tox.env_run_base]
@@ -270,6 +269,7 @@ env_list = [
             "-p={base_python}",
             "--active",
             "tool/stubtest.py",
+            "--concise",
         ],
     ]
 
@@ -292,15 +292,18 @@ env_list = [
     description = "basedpyright"
     runner = "uv-venv-lock-runner"
     dependency_groups = ["dev"]
-    commands = [["basedpyright"]]
+    commands = [["basedpyright", {replace = "posargs", default = [], extend = true}]]
 
-    [tool.tox.env.basedmypy]
-    description = "basedmypy"
+    [tool.tox.env.mypy]
+    description = "mypy"
     runner = "uv-venv-lock-runner"
-    dependency_groups = ["dev", "orjson"]
+    dependency_groups = ["dev", "orjson", "types"]
     commands = [
         [
             "mypy",
+            "--no-incremental",
+            "--cache-dir=/dev/null",
+            "--soft-error-limit=-1",
             {replace = "posargs", default = ["."], extend = true},
         ],
     ]
