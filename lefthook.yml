@@ -3,7 +3,11 @@
 pre-commit:
   parallel: true
   commands:
-    format:
+    ruff-check:
+      glob: "*.{py,pyi}"
+      run: uv run --no-group=orjson ruff check --fix {staged_files}
+      stage_fixed: true
+    ruff-format:
       glob: "*.{py,pyi}"
       run: uv run --no-group=orjson ruff format {staged_files}
       stage_fixed: true
