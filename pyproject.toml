@@ -312,7 +312,7 @@ env_list = [
 [tool.typos]
 
     [tool.typos.default]
-    extend-ignore-identifiers-re = ['ND|nd|nin|NIN']
+    extend-ignore-identifiers-re = ['ND|nd|nin|NIN|TYP']
 
     [tool.typos.files]
     extend-exclude = ["*.pyi", ".mypyignore"]
