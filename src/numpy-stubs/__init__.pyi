@@ -4511,6 +4511,189 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @abc.abstractmethod
     def __rdivmod__(self, x: _nt.CoFloating_0d, /) -> _2Tuple[floating]: ...
 
+# The main reason for `complexfloating` having two typevars is cosmetic.
+# It is used to clarify why `complex128`s precision is `_64Bit`, the latter
+# describing the two 64 bit floats representing its real and imaginary component
+class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
+    @overload
+    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
+    @overload
+    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
+
+    #
+    @property
+    @abc.abstractmethod
+    @override
+    def real(self) -> floating[_BitT1]: ...
+    @property
+    @abc.abstractmethod
+    @override
+    def imag(self) -> floating[_BitT2]: ...
+
+    #
+    @abc.abstractmethod
+    @override
+    def __abs__(self, /) -> floating[_BitT1]: ...
+
+    #
+    @abc.abstractmethod
+    @overload
+    def __add__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __add__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __add__(self, x: complex, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __add__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
+
+    # keep in sync with `__add__`
+    @abc.abstractmethod
+    @overload
+    def __radd__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __radd__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __radd__(self, x: complex, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __radd__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
+
+    # keep in sync with `__add__`
+    @abc.abstractmethod
+    @overload
+    def __sub__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __sub__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __sub__(self, x: complex, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __sub__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
+
+    # keep in sync with `__add__`
+    @abc.abstractmethod
+    @overload
+    def __rsub__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __rsub__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __rsub__(self, x: complex, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __rsub__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
+
+    # keep in sync with `__add__`
+    @abc.abstractmethod
+    @overload
+    def __mul__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __mul__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __mul__(self, x: complex, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __mul__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
+
+    # keep in sync with `__add__`
+    @abc.abstractmethod
+    @overload
+    def __rmul__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __rmul__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __rmul__(self, x: complex, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __rmul__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
+
+    # keep in sync with `__add__`
+    @abc.abstractmethod
+    @overload
+    def __pow__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, mod: None = None, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __pow__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], mod: None = None, /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __pow__(self, x: complex, mod: None = None, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __pow__(self, x: _nt.ToLongDouble_0d, mod: None = None, /) -> clongdouble: ...
+
+    # keep in sync with `__add__`
+    @abc.abstractmethod
+    @overload
+    def __rpow__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, mod: None = None, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __rpow__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], mod: None = None, /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __rpow__(self, x: complex, mod: None = None, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __rpow__(self, x: _nt.ToLongDouble_0d, mod: None = None, /) -> clongdouble: ...
+
+    # keep in sync with `__add__`
+    @abc.abstractmethod
+    @overload
+    def __truediv__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __truediv__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __truediv__(self, x: complex, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __truediv__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
+
+    # keep in sync with `__radd__`
+    @abc.abstractmethod
+    @overload
+    def __rtruediv__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __rtruediv__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
+    @abc.abstractmethod
+    @overload
+    def __rtruediv__(self, x: complex, /) -> Self: ...
+    @abc.abstractmethod
+    @overload
+    def __rtruediv__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
+
+    # NOTE: Without these, mypy will use the `misc` error code instead of `opererator`
+    # when attempting to floordiv a complex
+    @override
+    def __floordiv__(self, x: Never, /) -> Never: ...
+    @override
+    def __rfloordiv__(self, x: Never, /) -> Never: ...
+    @override
+    def __mod__(self, x: Never, /) -> Never: ...
+    @override
+    def __rmod__(self, x: Never, /) -> Never: ...
+    @override
+    def __divmod__(self, x: Never, /) -> Never: ...
+    @override
+    def __rdivmod__(self, x: Never, /) -> Never: ...
+
+    #
+    @deprecated("The Python built-in `round` is deprecated for complex scalars, and will raise a `TypeError` in a future release")
+    def __round__(self, /, ndigits: CanIndex | None = None) -> Self: ...
+
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @property
@@ -6574,189 +6757,6 @@ class longdouble(floating[_n._64L]):
 
 float96 = longdouble
 float128 = longdouble
-
-# The main reason for `complexfloating` having two typevars is cosmetic.
-# It is used to clarify why `complex128`s precision is `_64Bit`, the latter
-# describing the two 64 bit floats representing its real and imaginary component
-class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
-    @overload
-    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
-    @overload
-    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
-
-    #
-    @property
-    @abc.abstractmethod
-    @override
-    def real(self) -> floating[_BitT1]: ...
-    @property
-    @abc.abstractmethod
-    @override
-    def imag(self) -> floating[_BitT2]: ...
-
-    #
-    @abc.abstractmethod
-    @override
-    def __abs__(self, /) -> floating[_BitT1]: ...
-
-    #
-    @abc.abstractmethod
-    @overload
-    def __add__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __add__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __add__(self, x: complex, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __add__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # keep in sync with `__add__`
-    @abc.abstractmethod
-    @overload
-    def __radd__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __radd__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __radd__(self, x: complex, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __radd__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # keep in sync with `__add__`
-    @abc.abstractmethod
-    @overload
-    def __sub__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __sub__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __sub__(self, x: complex, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __sub__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # keep in sync with `__add__`
-    @abc.abstractmethod
-    @overload
-    def __rsub__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __rsub__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __rsub__(self, x: complex, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __rsub__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # keep in sync with `__add__`
-    @abc.abstractmethod
-    @overload
-    def __mul__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __mul__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __mul__(self, x: complex, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __mul__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # keep in sync with `__add__`
-    @abc.abstractmethod
-    @overload
-    def __rmul__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __rmul__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __rmul__(self, x: complex, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __rmul__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # keep in sync with `__add__`
-    @abc.abstractmethod
-    @overload
-    def __pow__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, mod: None = None, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __pow__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], mod: None = None, /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __pow__(self, x: complex, mod: None = None, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __pow__(self, x: _nt.ToLongDouble_0d, mod: None = None, /) -> clongdouble: ...
-
-    # keep in sync with `__add__`
-    @abc.abstractmethod
-    @overload
-    def __rpow__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, mod: None = None, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __rpow__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], mod: None = None, /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __rpow__(self, x: complex, mod: None = None, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __rpow__(self, x: _nt.ToLongDouble_0d, mod: None = None, /) -> clongdouble: ...
-
-    # keep in sync with `__add__`
-    @abc.abstractmethod
-    @overload
-    def __truediv__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __truediv__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __truediv__(self, x: complex, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __truediv__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # keep in sync with `__radd__`
-    @abc.abstractmethod
-    @overload
-    def __rtruediv__(self, x: inexact[_BitT1] | _nt.CoComplex64_0d, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __rtruediv__(self, x: _nt.CanArray0D[_nt.number64 | _nt.integer32], /) -> complex128 | clongdouble: ...
-    @abc.abstractmethod
-    @overload
-    def __rtruediv__(self, x: complex, /) -> Self: ...
-    @abc.abstractmethod
-    @overload
-    def __rtruediv__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # NOTE: Without these, mypy will use the `misc` error code instead of `opererator`
-    # when attempting to floordiv a complex
-    @override
-    def __floordiv__(self, x: Never, /) -> Never: ...
-    @override
-    def __rfloordiv__(self, x: Never, /) -> Never: ...
-    @override
-    def __mod__(self, x: Never, /) -> Never: ...
-    @override
-    def __rmod__(self, x: Never, /) -> Never: ...
-    @override
-    def __divmod__(self, x: Never, /) -> Never: ...
-    @override
-    def __rdivmod__(self, x: Never, /) -> Never: ...
-
-    #
-    @deprecated("The Python built-in `round` is deprecated for complex scalars, and will raise a `TypeError` in a future release")
-    def __round__(self, /, ndigits: CanIndex | None = None) -> Self: ...
 
 class complex64(complexfloating[_n._32]):
     @property
