@@ -184,6 +184,12 @@ All [documentation] lives in the `README.md`. Please read it carefully
 before proposing any changes. Ensure that the markdown is formatted correctly
 with [markdownlint](https://github.com/DavidAnson/markdownlint/tree/main).
 
+## Development Tools
+
+NumType provides several development tools to help maintain code quality and consistency.
+
+For detailed usage of each tool, please refer to the `README.md` in the [`tool`](tool) directory.
+
 ## Commit message style
 
 For the most part, commit messages in NumType should follow
