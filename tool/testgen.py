@@ -664,7 +664,7 @@ class ScalarBinOpTestGen(TestGen):
             yield "", ""
             for char, kind in self.NAMES.items():
                 if len(char) > 1 and not kind.endswith("_py"):
-                    yield kind, self.ABSTRACT_TYPES[kind]
+                    yield kind, f"{NP}.{self.ABSTRACT_TYPES[kind]}"
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
@@ -840,7 +840,7 @@ class BoolBitOpTestGen(TestGen):
 
 TESTGENS: Final[Sequence[TestGen]] = [
     EMathTestGen(binary=False),
-    ScalarBinOpTestGen(abstract=False),  # TODO(jorenham): Enable and fix failures
+    ScalarBinOpTestGen(),
     BoolBitOpTestGen(),
 ]
 
