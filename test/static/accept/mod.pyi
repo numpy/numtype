@@ -124,7 +124,7 @@ assert_type(divmod(i8, i8), tuple[np.int64, np.int64])
 assert_type(divmod(i8, f8), tuple[np.float64, np.float64])
 assert_type(divmod(i8, f4), tuple[np.float64, np.float64])
 assert_type(divmod(i4, i4), tuple[np.int32, np.int32])
-assert_type(divmod(i8, AR_b), tuple[npt.NDArray[np.int64], npt.NDArray[np.int64]])
+assert_type(AR_b.__rdivmod__(i8), tuple[npt.NDArray[np.int64], npt.NDArray[np.int64]])
 
 assert_type(b % i8, np.int64)
 assert_type(f % i8, np.float64)
@@ -144,7 +144,7 @@ assert_type(divmod(i8, i4), tuple[np.int64, np.int64])
 assert_type(divmod(i4, i8), tuple[np.int64, np.int64])
 assert_type(divmod(f4, i8), tuple[np.float64, np.float64])
 assert_type(divmod(f4, i4), tuple[np.float64, np.float64])
-assert_type(divmod(AR_b, i8), tuple[npt.NDArray[np.int64], npt.NDArray[np.int64]])
+assert_type(AR_b.__divmod__(i8), tuple[npt.NDArray[np.int64], npt.NDArray[np.int64]])
 
 # float
 
