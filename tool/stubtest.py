@@ -41,7 +41,6 @@ ROOT_SITE_DIR = (
 
 ALLOWLISTS = [
     "common.txt",
-    "common-todo.txt",
     ("ge" if sys.version_info >= (3, 12) else "lt") + "-py312.txt",
 ]
 
