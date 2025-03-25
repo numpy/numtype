@@ -575,16 +575,15 @@ class ScalarBinOpTestGen(TestGen):
     }
     INTP_EXPR: ClassVar = np.intp.__name__
 
-    abstract: Final[bool]
+    def _is_builtin(self, key: str, /) -> bool:
+        return len(key) > 1 and self.NAMES[key].endswith("_py")
 
-    def __init__(self, /, *, abstract: bool = True) -> None:
-        self.abstract = abstract
-        super().__init__()
+    def _is_abstract(self, key: str, /) -> bool:
+        return len(key) > 1 and not self.NAMES[key].endswith("_py")
 
     def _decompose(self, key: str, /) -> tuple[_Scalar, ...]:
-        if len(key) == 1 or self.NAMES[key].endswith("_py"):
+        if not self._is_abstract(key):
             return (_scalar(key),)
-
         return tuple(map(_scalar, key))
 
     def _evaluate_concrete(self, op: str, lhs: str, rhs: str, /) -> str | None:
@@ -654,21 +653,20 @@ class ScalarBinOpTestGen(TestGen):
     def get_names(self) -> Iterable[tuple[str, str]]:
         # builtin scalars
         for builtin, name in self.NAMES.items():
-            if len(builtin) > 1 and name.endswith("_py"):
+            if self._is_builtin(builtin):
                 yield name, builtin
 
-        # numpy scalars
+        # constrete numpy scalars
         yield "", ""
         for char, name in self.NAMES.items():
-            if len(char) == 1 and not name.endswith("_py"):
+            if len(char) == 1:
                 yield name, _sctype_expr(np.dtype(char))
 
-        if self.abstract:
-            # numpy abstract scalars
-            yield "", ""
-            for char, kind in self.NAMES.items():
-                if len(char) > 1 and not kind.endswith("_py"):
-                    yield kind, f"{NP}.{self.ABSTRACT_TYPES[kind]}"
+        # abstract numpy scalars
+        yield "", ""
+        for char, kind in self.NAMES.items():
+            if self._is_abstract(char):
+                yield kind, f"{NP}.{self.ABSTRACT_TYPES[kind]}"
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
@@ -677,14 +675,13 @@ class ScalarBinOpTestGen(TestGen):
 
             yield from self._generate_section(f"__[r]{opname}__")
 
-            for lhs, lname in self.NAMES.items():
-                if len(lhs) > 1 and (lname.endswith("py_") or not self.abstract):
+            for lhs in self.NAMES:
+                if self._is_builtin(lhs):
+                    # this will cause false positives on pyright - as designed
                     continue
 
                 n = 0
-                for rhs, rname in self.NAMES.items():
-                    if not self.abstract and len(rhs) > 1 and not rname.endswith("_py"):
-                        continue
+                for rhs in self.NAMES:
                     if stmt := self._assert_stmt(symbol, lhs, rhs):
                         yield stmt
                         n += 1
