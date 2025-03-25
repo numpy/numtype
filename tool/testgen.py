@@ -1,6 +1,6 @@
 """Type-tests generation."""
 
-# ruff: noqa: PLR6301, TD003, ERA001, D101, D102
+# ruff: noqa: PLR0916, PLR6301, TD003, ERA001, D101, D102
 
 import abc
 import difflib
@@ -9,10 +9,12 @@ import operator as op
 import sys
 from collections.abc import Callable, Generator, Iterable, Iterator, Sequence
 from pathlib import Path
-from typing import Any, ClassVar, Final, cast, final
+from typing import Any, ClassVar, Final, TypeAlias, cast, final
 from typing_extensions import override
 
 import numpy as np
+
+_Scalar: TypeAlias = np.number | np.bool | np.timedelta64 | np.datetime64 | complex
 
 ROOT_DIR: Final = Path(__file__).parent.parent
 TARGET_DIR: Final = ROOT_DIR / "test" / "generated"
@@ -24,14 +26,14 @@ NP: Final = "np"
 PREAMBLE_PREFIX: Final = "@generated"
 
 _NUMBERS_ABSTRACT: Final = {
-    "i": "signedinteger",
     "u": "unsignedinteger",
+    "i": "signedinteger",
     "f": "floating",
     "c": "complexfloating",
 }
 _NUMBERS_CONCRETE: Final = {
-    "i": frozenset({f"{NP}.int8", f"{NP}.int16", f"{NP}.int32", f"{NP}.int64"}),
     "u": frozenset({f"{NP}.uint8", f"{NP}.uint16", f"{NP}.uint32", f"{NP}.uint64"}),
+    "i": frozenset({f"{NP}.int8", f"{NP}.int16", f"{NP}.int32", f"{NP}.int64"}),
     "f": frozenset({f"{NP}.float32", f"{NP}.float64", f"{NP}.longdouble"}),
     "c": frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"}),
 }
@@ -46,7 +48,7 @@ def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
     return f"assert_type({val_expr}, {type_expr})"
 
 
-def _scalar(key: str, /) -> np.number | np.bool | np.timedelta64 | np.datetime64 | bool:
+def _scalar(key: str, /) -> _Scalar:
     if len(key) > 1:
         # must be one of the builtin scalars
         pytype: type[bool] = getattr(__builtins__, key)
@@ -61,11 +63,15 @@ def _scalar(key: str, /) -> np.number | np.bool | np.timedelta64 | np.datetime64
     return dtype.type(max(dtype.num, 1))  # type: ignore[no-any-return]
 
 
-def _sctype_expr(dtype: np.dtype) -> str:
-    if dtype.char == "q":
-        return f"{NP}.longlong"
-    if dtype.char == "Q":
-        return f"{NP}.ulonglong"
+def _sctype_expr(dtype: np.dtype | type[complex]) -> str:
+    if isinstance(dtype, type):
+        assert type.__module__ == "builtins", type
+        return dtype.__name__
+
+    # if dtype.char == "q":
+    #     return f"{NP}.longlong"
+    # if dtype.char == "Q":
+    #     return f"{NP}.ulonglong"
     if dtype.char == "g":
         return f"{NP}.longdouble"
     if dtype.char == "G":
@@ -77,19 +83,35 @@ def _sctype_expr(dtype: np.dtype) -> str:
 
 
 def _union(*types: str) -> str:
-    numbers: dict[str, list[str]] = {"i": [], "u": [], "f": [], "c": []}
+    numbers: dict[str, list[str]] = {"u": [], "i": [], "f": [], "c": []}
     other: list[str] = []
 
     for tp in types:
         kind: str = np.dtype(tp.removeprefix(f"{NP}.")).kind
         numbers.get(kind, other).append(tp)
 
+    kind_expr: dict[str, str] = {}
     combined: list[str] = []
     for kind, base in _NUMBERS_ABSTRACT.items():
         if set(numbers[kind]) >= _NUMBERS_CONCRETE[kind]:
-            combined.append(base)
+            expr = f"{NP}.{base}"
+            kind_expr[kind] = expr
+            combined.append(expr)
         else:
             combined.extend(numbers[kind])
+
+    if len(kind_expr) == 4:  # noqa: PLR2004
+        expr_map = dict.fromkeys(kind_expr.values(), f"{NP}.number")
+        combined = [expr_map.get(expr, expr) for expr in combined]
+    elif len(kind_expr) > 1:
+        if "u" in kind_expr and "i" in kind_expr:
+            expr_map = dict.fromkeys([kind_expr["u"], kind_expr["i"]], f"{NP}.integer")
+        elif "f" in kind_expr and "c" in kind_expr:
+            expr_map = dict.fromkeys([kind_expr["f"], kind_expr["c"]], f"{NP}.inexact")
+        else:
+            expr_map = {}
+
+        combined = [expr_map.get(expr, expr) for expr in combined]
 
     return " | ".join(dict.fromkeys(combined))
 
@@ -116,7 +138,7 @@ class TestGen(abc.ABC):
     _current_indent: int
 
     def __init__(self) -> None:
-        self._names = {tp: name for name, tp in self.get_names()}
+        self._names = {tp: name for name, tp in self.get_names() if tp and name}
         self._current_indent = 0
 
     @property
@@ -479,73 +501,129 @@ class EMathTestGen(TestGen):
 class ScalarBinOpTestGen(TestGen):
     testname = "scalar_binops"
 
-    OPS: ClassVar = {
-        "+": op.__add__,
-        "-": op.__sub__,
-        "*": op.__mul__,
-        "**": op.__pow__,
-        "/": op.__truediv__,
-        "//": op.__floordiv__,
-        "%": op.__mod__,
-        "<<": op.__lshift__,
-        ">>": op.__rshift__,
-        "&": op.__and__,
-        "^": op.__xor__,
-        "|": op.__or__,
-        "<": op.__lt__,
-        "<=": op.__le__,
-        ">=": op.__ge__,
-        ">": op.__gt__,
-        "==": op.__eq__,
+    OPS: ClassVar[dict[str, Callable[[Any, Any], Any]]] = {
+        "{} + {}": op.__add__,
+        "{} - {}": op.__sub__,
+        "{} * {}": op.__mul__,
+        "{}**{}": op.__pow__,
+        "{} / {}": op.__truediv__,
+        "{} // {}": op.__floordiv__,
+        "{} % {}": op.__mod__,
+        "{} << {}": op.__lshift__,
+        "{} >> {}": op.__rshift__,
+        "{} & {}": op.__and__,
+        "{} ^ {}": op.__xor__,
+        "{} | {}": op.__or__,
+        "{} < {}": op.__lt__,
+        "{} <= {}": op.__le__,
+        "{} >= {}": op.__ge__,
+        "{} > {}": op.__gt__,
+        "{} == {}": op.__eq__,
     }
 
     NAMES: ClassVar = {
         # builtins (key length > 1)
-        "bool": "b0",
-        "int": "i0",
-        "float": "f0",
-        "complex": "c0",
+        "bool": "b_py",
+        "int": "i_py",
+        "float": "f_py",
+        "complex": "c_py",
         # numpy boolean
         "?": "b1",
         # unsigned integers
-        "B": "u1",
-        "H": "u2",
-        "I": "u4",
-        "L": "u8",
+        "B": "u8",
+        "H": "u16",
+        np.dtype("uint32").char: "u32",
+        np.dtype("uint64").char: "u64",
         # signed integers
-        "b": "i1",
-        "h": "i2",
-        "i": "i4",
-        "l": "i8",
+        "b": "i8",
+        "h": "i16",
+        np.dtype("int32").char: "i32",
+        np.dtype("int64").char: "i64",
         # real floating
-        "e": "f2",
-        "f": "f4",
-        "d": "f8",
-        "g": "ld",
-        # complexes
-        "F": "c8",
-        "D": "c16",
-        "G": "cld",
-        "m": "m8",
-        "M": "M8",
+        "e": "f16",
+        "f": "f32",
+        "d": "f64",
+        "g": "f64l",
+        # complex floating
+        "F": "c32",
+        "D": "c64",
+        "G": "c64l",
+        # temporal
+        "M": "M64",
+        "m": "m64",
+        # # abstract numeric
+        "BHIL": "u",  # unsignedinteger
+        "bhil": "i",  # signedinteger
+        "efdg": "f",  # floating
+        "FDG": "c",  # complexfloating
+        # "BHILbhil": "ui",  # integer
+        # "efdgFDG": "fc",  # inexact
+        # "BHILbhilefdgFDG": "uifc",  # number
+    }
+    ABSTRACT_TYPES: ClassVar = {
+        "u": "unsignedinteger",
+        "i": "signedinteger",
+        "f": "floating",
+        "c": "complexfloating",
+        # "ui": "integer",
+        # "fc": "inexact",
+        # "uifc": "number",
     }
     INTP_EXPR: ClassVar = np.intp.__name__
 
-    def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
-        # ruff doesn't like whitespace around `**` for some reason
-        pad = " " * (op != "**")
-        expr_eval = f"{self.NAMES[lhs]}{pad}{op}{pad}{self.NAMES[rhs]}"
+    abstract: Final[bool]
 
-        try:
-            val_out = self.OPS[op](_scalar(lhs), _scalar(rhs))
-        except TypeError:
+    def __init__(self, /, *, abstract: bool = True) -> None:
+        self.abstract = abstract
+        super().__init__()
+
+    def _decompose(self, key: str, /) -> tuple[_Scalar, ...]:
+        if len(key) == 1 or self.NAMES[key].endswith("_py"):
+            return (_scalar(key),)
+
+        return tuple(map(_scalar, key))
+
+    def _evaluate_concrete(self, op: str, lhs: str, rhs: str, /) -> str | None:
+        types_out: list[str] = []
+        for val_lhs, val_rhs in itertools.product(
+            self._decompose(lhs),
+            self._decompose(rhs),
+        ):
+            try:
+                val_out = self.OPS[op](val_lhs, val_rhs)
+            except TypeError:
+                continue
+
+            if isinstance(val_out, np.generic):
+                # redundant cast is needed for pyright compat
+                dtype = cast("np.generic", val_out).dtype  # type: ignore[redundant-cast]
+                types_out.append(_sctype_expr(dtype))
+            else:
+                types_out.append(type(val_out).__qualname__)
+
+        if not types_out:
+            return None
+
+        # dedupe while maintaining order
+        types_out = list(dict.fromkeys(types_out))
+
+        if len(types_out) == 1:
+            return types_out[0]
+
+        return _union(*types_out)
+
+    def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
+        expr_eval = op.format(self.NAMES[lhs], self.NAMES[rhs])
+
+        if not (expr_type := self._evaluate_concrete(op, lhs, rhs)):
             # generate rejection test, while avoiding trivial cases
-            if op not in DATETIME_OPS and (lhs == "M" or rhs == "M"):
-                return None
-            if op not in TIMEDELTA_OPS and (lhs == "m" or rhs == "m"):
-                return None
-            if op in BITWISE_OPS and not (
-                lhs in BITWISE_CHARS and rhs in BITWISE_CHARS
+            if (
+                # ignore bitwise ops if either arg is not a bitwise char
+                (op in BITWISE_OPS and {lhs, rhs} - set(BITWISE_CHARS))
+                # ignore if either arg is datetime and and not a datetime op
+                or (op not in DATETIME_OPS and "M" in {lhs, rhs})
+                # ignore if either arg is timedelta and and not a timedelta op
+                or (op not in TIMEDELTA_OPS and "m" in {lhs, rhs})
             ):
                 return None
 
@@ -554,12 +632,6 @@ class ScalarBinOpTestGen(TestGen):
                 "# type: ignore[operator]",
                 "# pyright: ignore[reportOperatorIssue]",
             ))
-
-        expr_type = (  # redundant cast is needed for pyright compat
-            _sctype_expr(cast("np.generic", val_out).dtype)  # type: ignore[redundant-cast]
-            if isinstance(val_out, np.generic)
-            else type(val_out).__qualname__
-        )
 
         # for `builtins.int` input, if the sctype is the alias of `intp`, then assume
         # that it actually originated from `intp`, and use that instead.
@@ -576,14 +648,23 @@ class ScalarBinOpTestGen(TestGen):
 
     @override
     def get_names(self) -> Iterable[tuple[str, str]]:
+        # builtin scalars
         for builtin, name in self.NAMES.items():
-            if len(builtin) > 1:
+            if len(builtin) > 1 and name.endswith("_py"):
                 yield name, builtin
 
         # numpy scalars
+        yield "", ""
         for char, name in self.NAMES.items():
-            if len(char) == 1:
+            if len(char) == 1 and not name.endswith("_py"):
                 yield name, _sctype_expr(np.dtype(char))
+
+        if self.abstract:
+            # numpy abstract scalars
+            yield "", ""
+            for char, kind in self.NAMES.items():
+                if len(char) > 1 and not kind.endswith("_py"):
+                    yield kind, self.ABSTRACT_TYPES[kind]
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
@@ -592,13 +673,14 @@ class ScalarBinOpTestGen(TestGen):
 
             yield from self._generate_section(f"__[r]{opname}__")
 
-            for lhs in self.NAMES:
-                # skip builtins on the lhs; avoid a pyright ~bug~ "as designed"
-                if len(lhs) > 1:
+            for lhs, lname in self.NAMES.items():
+                if len(lhs) > 1 and (lname.endswith("py_") or not self.abstract):
                     continue
 
                 n = 0
-                for rhs in self.NAMES:
+                for rhs, rname in self.NAMES.items():
+                    if not self.abstract and len(rhs) > 1 and not rname.endswith("_py"):
+                        continue
                     if stmt := self._assert_stmt(symbol, lhs, rhs):
                         yield stmt
                         n += 1
@@ -758,7 +840,7 @@ class BoolBitOpTestGen(TestGen):
 
 TESTGENS: Final[Sequence[TestGen]] = [
     EMathTestGen(binary=False),
-    ScalarBinOpTestGen(),
+    ScalarBinOpTestGen(abstract=False),  # TODO(jorenham): Enable and fix failures
     BoolBitOpTestGen(),
 ]
 
