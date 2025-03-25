@@ -1707,9 +1707,9 @@ positive: Final[_ufunc_1_1] = ...
 sign: Final[_ufunc_1_1] = ...
 
 # {SUT} -> $1
-_lstrip_whitespace: _ufunc_1_1[_UFunc11String[np.str_]]
-_rstrip_whitespace: _ufunc_1_1[_UFunc11String[np.str_]]
-_strip_whitespace: _ufunc_1_1[_UFunc11String[np.str_]]
+_lstrip_whitespace: _ufunc_1_1[_UFunc11String[Any]]
+_rstrip_whitespace: _ufunc_1_1[_UFunc11String[Any]]
+_strip_whitespace: _ufunc_1_1[_UFunc11String[Any]]
 
 # {?[uifc]MmO} -> $1
 _ones_like: _ufunc_1_1
