@@ -1,4 +1,4 @@
-# @generated 2025-03-20T19:33:41Z with tool/testgen.py
+# @generated 2025-03-25T16:43:28Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -6,5066 +6,6044 @@ import numpy as np
 ###
 # scalars
 
-b0: bool
-i0: int
-f0: float
-c0: complex
+b_py: bool
+i_py: int
+f_py: float
+c_py: complex
+
 b1: np.bool
-u1: np.uint8
-u2: np.uint16
-u4: np.uint32
-u8: np.uint64
-i1: np.int8
-i2: np.int16
-i4: np.int32
-i8: np.int64
-f2: np.float16
-f4: np.float32
-f8: np.float64
-ld: np.longdouble
-c8: np.complex64
-c16: np.complex128
-cld: np.clongdouble
-m8: np.timedelta64
-M8: np.datetime64
+u8: np.uint8
+u16: np.uint16
+u32: np.uint32
+u64: np.uint64
+i8: np.int8
+i16: np.int16
+i32: np.int32
+i64: np.int64
+f16: np.float16
+f32: np.float32
+f64: np.float64
+f64l: np.longdouble
+c32: np.complex64
+c64: np.complex128
+c64l: np.clongdouble
+M64: np.datetime64
+m64: np.timedelta64
 
 ###
 # __[r]add__
 
-assert_type(b1 + b0, np.bool)
-assert_type(b1 + i0, np.int_)
-assert_type(b1 + f0, np.float64)
-assert_type(b1 + c0, np.complex128)
+assert_type(b1 + b_py, np.bool)
+assert_type(b1 + i_py, np.int_)
+assert_type(b1 + f_py, np.float64)
+assert_type(b1 + c_py, np.complex128)
 assert_type(b1 + b1, np.bool)
-assert_type(b1 + u1, np.uint8)
-assert_type(b1 + u2, np.uint16)
-assert_type(b1 + u4, np.uint32)
-assert_type(b1 + u8, np.uint64)
-assert_type(b1 + i1, np.int8)
-assert_type(b1 + i2, np.int16)
-assert_type(b1 + i4, np.int32)
-assert_type(b1 + i8, np.int64)
-assert_type(b1 + f2, np.float16)
-assert_type(b1 + f4, np.float32)
-assert_type(b1 + f8, np.float64)
-assert_type(b1 + ld, np.longdouble)
-assert_type(b1 + c8, np.complex64)
-assert_type(b1 + c16, np.complex128)
-assert_type(b1 + cld, np.clongdouble)
-assert_type(b1 + m8, np.timedelta64)
-assert_type(b1 + M8, np.datetime64)
+assert_type(b1 + u8, np.uint8)
+assert_type(b1 + u16, np.uint16)
+assert_type(b1 + u32, np.uint32)
+assert_type(b1 + u64, np.uint64)
+assert_type(b1 + i8, np.int8)
+assert_type(b1 + i16, np.int16)
+assert_type(b1 + i32, np.int32)
+assert_type(b1 + i64, np.int64)
+assert_type(b1 + f16, np.float16)
+assert_type(b1 + f32, np.float32)
+assert_type(b1 + f64, np.float64)
+assert_type(b1 + f64l, np.longdouble)
+assert_type(b1 + c32, np.complex64)
+assert_type(b1 + c64, np.complex128)
+assert_type(b1 + c64l, np.clongdouble)
+assert_type(b1 + M64, np.datetime64)
+assert_type(b1 + m64, np.timedelta64)
 
-assert_type(u1 + b0, np.uint8)
-assert_type(u1 + i0, np.uint8)
-assert_type(u1 + f0, np.float64)
-assert_type(u1 + c0, np.complex128)
-assert_type(u1 + b1, np.uint8)
-assert_type(u1 + u1, np.uint8)
-assert_type(u1 + u2, np.uint16)
-assert_type(u1 + u4, np.uint32)
-assert_type(u1 + u8, np.uint64)
-assert_type(u1 + i1, np.int16)
-assert_type(u1 + i2, np.int16)
-assert_type(u1 + i4, np.int32)
-assert_type(u1 + i8, np.int64)
-assert_type(u1 + f2, np.float16)
-assert_type(u1 + f4, np.float32)
-assert_type(u1 + f8, np.float64)
-assert_type(u1 + ld, np.longdouble)
-assert_type(u1 + c8, np.complex64)
-assert_type(u1 + c16, np.complex128)
-assert_type(u1 + cld, np.clongdouble)
-assert_type(u1 + m8, np.timedelta64)
-assert_type(u1 + M8, np.datetime64)
+assert_type(u8 + b_py, np.uint8)
+assert_type(u8 + i_py, np.uint8)
+assert_type(u8 + f_py, np.float64)
+assert_type(u8 + c_py, np.complex128)
+assert_type(u8 + b1, np.uint8)
+assert_type(u8 + u8, np.uint8)
+assert_type(u8 + u16, np.uint16)
+assert_type(u8 + u32, np.uint32)
+assert_type(u8 + u64, np.uint64)
+assert_type(u8 + i8, np.int16)
+assert_type(u8 + i16, np.int16)
+assert_type(u8 + i32, np.int32)
+assert_type(u8 + i64, np.int64)
+assert_type(u8 + f16, np.float16)
+assert_type(u8 + f32, np.float32)
+assert_type(u8 + f64, np.float64)
+assert_type(u8 + f64l, np.longdouble)
+assert_type(u8 + c32, np.complex64)
+assert_type(u8 + c64, np.complex128)
+assert_type(u8 + c64l, np.clongdouble)
+assert_type(u8 + M64, np.datetime64)
+assert_type(u8 + m64, np.timedelta64)
 
-assert_type(u2 + b0, np.uint16)
-assert_type(u2 + i0, np.uint16)
-assert_type(u2 + f0, np.float64)
-assert_type(u2 + c0, np.complex128)
-assert_type(u2 + b1, np.uint16)
-assert_type(u2 + u1, np.uint16)
-assert_type(u2 + u2, np.uint16)
-assert_type(u2 + u4, np.uint32)
-assert_type(u2 + u8, np.uint64)
-assert_type(u2 + i1, np.int32)
-assert_type(u2 + i2, np.int32)
-assert_type(u2 + i4, np.int32)
-assert_type(u2 + i8, np.int64)
-assert_type(u2 + f2, np.float32)
-assert_type(u2 + f4, np.float32)
-assert_type(u2 + f8, np.float64)
-assert_type(u2 + ld, np.longdouble)
-assert_type(u2 + c8, np.complex64)
-assert_type(u2 + c16, np.complex128)
-assert_type(u2 + cld, np.clongdouble)
-assert_type(u2 + m8, np.timedelta64)
-assert_type(u2 + M8, np.datetime64)
+assert_type(u16 + b_py, np.uint16)
+assert_type(u16 + i_py, np.uint16)
+assert_type(u16 + f_py, np.float64)
+assert_type(u16 + c_py, np.complex128)
+assert_type(u16 + b1, np.uint16)
+assert_type(u16 + u8, np.uint16)
+assert_type(u16 + u16, np.uint16)
+assert_type(u16 + u32, np.uint32)
+assert_type(u16 + u64, np.uint64)
+assert_type(u16 + i8, np.int32)
+assert_type(u16 + i16, np.int32)
+assert_type(u16 + i32, np.int32)
+assert_type(u16 + i64, np.int64)
+assert_type(u16 + f16, np.float32)
+assert_type(u16 + f32, np.float32)
+assert_type(u16 + f64, np.float64)
+assert_type(u16 + f64l, np.longdouble)
+assert_type(u16 + c32, np.complex64)
+assert_type(u16 + c64, np.complex128)
+assert_type(u16 + c64l, np.clongdouble)
+assert_type(u16 + M64, np.datetime64)
+assert_type(u16 + m64, np.timedelta64)
 
-assert_type(u4 + b0, np.uint32)
-assert_type(u4 + i0, np.uint32)
-assert_type(u4 + f0, np.float64)
-assert_type(u4 + c0, np.complex128)
-assert_type(u4 + b1, np.uint32)
-assert_type(u4 + u1, np.uint32)
-assert_type(u4 + u2, np.uint32)
-assert_type(u4 + u4, np.uint32)
-assert_type(u4 + u8, np.uint64)
-assert_type(u4 + i1, np.int64)
-assert_type(u4 + i2, np.int64)
-assert_type(u4 + i4, np.int64)
-assert_type(u4 + i8, np.int64)
-assert_type(u4 + f2, np.float64)
-assert_type(u4 + f4, np.float64)
-assert_type(u4 + f8, np.float64)
-assert_type(u4 + ld, np.longdouble)
-assert_type(u4 + c8, np.complex128)
-assert_type(u4 + c16, np.complex128)
-assert_type(u4 + cld, np.clongdouble)
-assert_type(u4 + m8, np.timedelta64)
-assert_type(u4 + M8, np.datetime64)
+assert_type(u32 + b_py, np.uint32)
+assert_type(u32 + i_py, np.uint32)
+assert_type(u32 + f_py, np.float64)
+assert_type(u32 + c_py, np.complex128)
+assert_type(u32 + b1, np.uint32)
+assert_type(u32 + u8, np.uint32)
+assert_type(u32 + u16, np.uint32)
+assert_type(u32 + u32, np.uint32)
+assert_type(u32 + u64, np.uint64)
+assert_type(u32 + i8, np.int64)
+assert_type(u32 + i16, np.int64)
+assert_type(u32 + i32, np.int64)
+assert_type(u32 + i64, np.int64)
+assert_type(u32 + f16, np.float64)
+assert_type(u32 + f32, np.float64)
+assert_type(u32 + f64, np.float64)
+assert_type(u32 + f64l, np.longdouble)
+assert_type(u32 + c32, np.complex128)
+assert_type(u32 + c64, np.complex128)
+assert_type(u32 + c64l, np.clongdouble)
+assert_type(u32 + M64, np.datetime64)
+assert_type(u32 + m64, np.timedelta64)
 
-assert_type(u8 + b0, np.uint64)
-assert_type(u8 + i0, np.uint64)
-assert_type(u8 + f0, np.float64)
-assert_type(u8 + c0, np.complex128)
-assert_type(u8 + b1, np.uint64)
-assert_type(u8 + u1, np.uint64)
-assert_type(u8 + u2, np.uint64)
-assert_type(u8 + u4, np.uint64)
-assert_type(u8 + u8, np.uint64)
-assert_type(u8 + i1, np.float64)
-assert_type(u8 + i2, np.float64)
-assert_type(u8 + i4, np.float64)
-assert_type(u8 + i8, np.float64)
-assert_type(u8 + f2, np.float64)
-assert_type(u8 + f4, np.float64)
-assert_type(u8 + f8, np.float64)
-assert_type(u8 + ld, np.longdouble)
-assert_type(u8 + c8, np.complex128)
-assert_type(u8 + c16, np.complex128)
-assert_type(u8 + cld, np.clongdouble)
-assert_type(u8 + m8, np.timedelta64)
-assert_type(u8 + M8, np.datetime64)
+assert_type(u64 + b_py, np.uint64)
+assert_type(u64 + i_py, np.uint64)
+assert_type(u64 + f_py, np.float64)
+assert_type(u64 + c_py, np.complex128)
+assert_type(u64 + b1, np.uint64)
+assert_type(u64 + u8, np.uint64)
+assert_type(u64 + u16, np.uint64)
+assert_type(u64 + u32, np.uint64)
+assert_type(u64 + u64, np.uint64)
+assert_type(u64 + i8, np.float64)
+assert_type(u64 + i16, np.float64)
+assert_type(u64 + i32, np.float64)
+assert_type(u64 + i64, np.float64)
+assert_type(u64 + f16, np.float64)
+assert_type(u64 + f32, np.float64)
+assert_type(u64 + f64, np.float64)
+assert_type(u64 + f64l, np.longdouble)
+assert_type(u64 + c32, np.complex128)
+assert_type(u64 + c64, np.complex128)
+assert_type(u64 + c64l, np.clongdouble)
+assert_type(u64 + M64, np.datetime64)
+assert_type(u64 + m64, np.timedelta64)
 
-assert_type(i1 + b0, np.int8)
-assert_type(i1 + i0, np.int8)
-assert_type(i1 + f0, np.float64)
-assert_type(i1 + c0, np.complex128)
-assert_type(i1 + b1, np.int8)
-assert_type(i1 + u1, np.int16)
-assert_type(i1 + u2, np.int32)
-assert_type(i1 + u4, np.int64)
-assert_type(i1 + u8, np.float64)
-assert_type(i1 + i1, np.int8)
-assert_type(i1 + i2, np.int16)
-assert_type(i1 + i4, np.int32)
-assert_type(i1 + i8, np.int64)
-assert_type(i1 + f2, np.float16)
-assert_type(i1 + f4, np.float32)
-assert_type(i1 + f8, np.float64)
-assert_type(i1 + ld, np.longdouble)
-assert_type(i1 + c8, np.complex64)
-assert_type(i1 + c16, np.complex128)
-assert_type(i1 + cld, np.clongdouble)
-assert_type(i1 + m8, np.timedelta64)
-assert_type(i1 + M8, np.datetime64)
+assert_type(i8 + b_py, np.int8)
+assert_type(i8 + i_py, np.int8)
+assert_type(i8 + f_py, np.float64)
+assert_type(i8 + c_py, np.complex128)
+assert_type(i8 + b1, np.int8)
+assert_type(i8 + u8, np.int16)
+assert_type(i8 + u16, np.int32)
+assert_type(i8 + u32, np.int64)
+assert_type(i8 + u64, np.float64)
+assert_type(i8 + i8, np.int8)
+assert_type(i8 + i16, np.int16)
+assert_type(i8 + i32, np.int32)
+assert_type(i8 + i64, np.int64)
+assert_type(i8 + f16, np.float16)
+assert_type(i8 + f32, np.float32)
+assert_type(i8 + f64, np.float64)
+assert_type(i8 + f64l, np.longdouble)
+assert_type(i8 + c32, np.complex64)
+assert_type(i8 + c64, np.complex128)
+assert_type(i8 + c64l, np.clongdouble)
+assert_type(i8 + M64, np.datetime64)
+assert_type(i8 + m64, np.timedelta64)
 
-assert_type(i2 + b0, np.int16)
-assert_type(i2 + i0, np.int16)
-assert_type(i2 + f0, np.float64)
-assert_type(i2 + c0, np.complex128)
-assert_type(i2 + b1, np.int16)
-assert_type(i2 + u1, np.int16)
-assert_type(i2 + u2, np.int32)
-assert_type(i2 + u4, np.int64)
-assert_type(i2 + u8, np.float64)
-assert_type(i2 + i1, np.int16)
-assert_type(i2 + i2, np.int16)
-assert_type(i2 + i4, np.int32)
-assert_type(i2 + i8, np.int64)
-assert_type(i2 + f2, np.float32)
-assert_type(i2 + f4, np.float32)
-assert_type(i2 + f8, np.float64)
-assert_type(i2 + ld, np.longdouble)
-assert_type(i2 + c8, np.complex64)
-assert_type(i2 + c16, np.complex128)
-assert_type(i2 + cld, np.clongdouble)
-assert_type(i2 + m8, np.timedelta64)
-assert_type(i2 + M8, np.datetime64)
+assert_type(i16 + b_py, np.int16)
+assert_type(i16 + i_py, np.int16)
+assert_type(i16 + f_py, np.float64)
+assert_type(i16 + c_py, np.complex128)
+assert_type(i16 + b1, np.int16)
+assert_type(i16 + u8, np.int16)
+assert_type(i16 + u16, np.int32)
+assert_type(i16 + u32, np.int64)
+assert_type(i16 + u64, np.float64)
+assert_type(i16 + i8, np.int16)
+assert_type(i16 + i16, np.int16)
+assert_type(i16 + i32, np.int32)
+assert_type(i16 + i64, np.int64)
+assert_type(i16 + f16, np.float32)
+assert_type(i16 + f32, np.float32)
+assert_type(i16 + f64, np.float64)
+assert_type(i16 + f64l, np.longdouble)
+assert_type(i16 + c32, np.complex64)
+assert_type(i16 + c64, np.complex128)
+assert_type(i16 + c64l, np.clongdouble)
+assert_type(i16 + M64, np.datetime64)
+assert_type(i16 + m64, np.timedelta64)
 
-assert_type(i4 + b0, np.int32)
-assert_type(i4 + i0, np.int32)
-assert_type(i4 + f0, np.float64)
-assert_type(i4 + c0, np.complex128)
-assert_type(i4 + b1, np.int32)
-assert_type(i4 + u1, np.int32)
-assert_type(i4 + u2, np.int32)
-assert_type(i4 + u4, np.int64)
-assert_type(i4 + u8, np.float64)
-assert_type(i4 + i1, np.int32)
-assert_type(i4 + i2, np.int32)
-assert_type(i4 + i4, np.int32)
-assert_type(i4 + i8, np.int64)
-assert_type(i4 + f2, np.float64)
-assert_type(i4 + f4, np.float64)
-assert_type(i4 + f8, np.float64)
-assert_type(i4 + ld, np.longdouble)
-assert_type(i4 + c8, np.complex128)
-assert_type(i4 + c16, np.complex128)
-assert_type(i4 + cld, np.clongdouble)
-assert_type(i4 + m8, np.timedelta64)
-assert_type(i4 + M8, np.datetime64)
+assert_type(i32 + b_py, np.int32)
+assert_type(i32 + i_py, np.int32)
+assert_type(i32 + f_py, np.float64)
+assert_type(i32 + c_py, np.complex128)
+assert_type(i32 + b1, np.int32)
+assert_type(i32 + u8, np.int32)
+assert_type(i32 + u16, np.int32)
+assert_type(i32 + u32, np.int64)
+assert_type(i32 + u64, np.float64)
+assert_type(i32 + i8, np.int32)
+assert_type(i32 + i16, np.int32)
+assert_type(i32 + i32, np.int32)
+assert_type(i32 + i64, np.int64)
+assert_type(i32 + f16, np.float64)
+assert_type(i32 + f32, np.float64)
+assert_type(i32 + f64, np.float64)
+assert_type(i32 + f64l, np.longdouble)
+assert_type(i32 + c32, np.complex128)
+assert_type(i32 + c64, np.complex128)
+assert_type(i32 + c64l, np.clongdouble)
+assert_type(i32 + M64, np.datetime64)
+assert_type(i32 + m64, np.timedelta64)
 
-assert_type(i8 + b0, np.int64)
-assert_type(i8 + i0, np.int64)
-assert_type(i8 + f0, np.float64)
-assert_type(i8 + c0, np.complex128)
-assert_type(i8 + b1, np.int64)
-assert_type(i8 + u1, np.int64)
-assert_type(i8 + u2, np.int64)
-assert_type(i8 + u4, np.int64)
-assert_type(i8 + u8, np.float64)
-assert_type(i8 + i1, np.int64)
-assert_type(i8 + i2, np.int64)
-assert_type(i8 + i4, np.int64)
-assert_type(i8 + i8, np.int64)
-assert_type(i8 + f2, np.float64)
-assert_type(i8 + f4, np.float64)
-assert_type(i8 + f8, np.float64)
-assert_type(i8 + ld, np.longdouble)
-assert_type(i8 + c8, np.complex128)
-assert_type(i8 + c16, np.complex128)
-assert_type(i8 + cld, np.clongdouble)
-assert_type(i8 + m8, np.timedelta64)
-assert_type(i8 + M8, np.datetime64)
+assert_type(i64 + b_py, np.int64)
+assert_type(i64 + i_py, np.int64)
+assert_type(i64 + f_py, np.float64)
+assert_type(i64 + c_py, np.complex128)
+assert_type(i64 + b1, np.int64)
+assert_type(i64 + u8, np.int64)
+assert_type(i64 + u16, np.int64)
+assert_type(i64 + u32, np.int64)
+assert_type(i64 + u64, np.float64)
+assert_type(i64 + i8, np.int64)
+assert_type(i64 + i16, np.int64)
+assert_type(i64 + i32, np.int64)
+assert_type(i64 + i64, np.int64)
+assert_type(i64 + f16, np.float64)
+assert_type(i64 + f32, np.float64)
+assert_type(i64 + f64, np.float64)
+assert_type(i64 + f64l, np.longdouble)
+assert_type(i64 + c32, np.complex128)
+assert_type(i64 + c64, np.complex128)
+assert_type(i64 + c64l, np.clongdouble)
+assert_type(i64 + M64, np.datetime64)
+assert_type(i64 + m64, np.timedelta64)
 
-assert_type(f2 + b0, np.float16)
-assert_type(f2 + i0, np.float16)
-assert_type(f2 + f0, np.float16)
-assert_type(f2 + c0, np.complex64)
-assert_type(f2 + b1, np.float16)
-assert_type(f2 + u1, np.float16)
-assert_type(f2 + u2, np.float32)
-assert_type(f2 + u4, np.float64)
-assert_type(f2 + u8, np.float64)
-assert_type(f2 + i1, np.float16)
-assert_type(f2 + i2, np.float32)
-assert_type(f2 + i4, np.float64)
-assert_type(f2 + i8, np.float64)
-assert_type(f2 + f2, np.float16)
-assert_type(f2 + f4, np.float32)
-assert_type(f2 + f8, np.float64)
-assert_type(f2 + ld, np.longdouble)
-assert_type(f2 + c8, np.complex64)
-assert_type(f2 + c16, np.complex128)
-assert_type(f2 + cld, np.clongdouble)
-f2 + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f2 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f16 + b_py, np.float16)
+assert_type(f16 + i_py, np.float16)
+assert_type(f16 + f_py, np.float16)
+assert_type(f16 + c_py, np.complex64)
+assert_type(f16 + b1, np.float16)
+assert_type(f16 + u8, np.float16)
+assert_type(f16 + u16, np.float32)
+assert_type(f16 + u32, np.float64)
+assert_type(f16 + u64, np.float64)
+assert_type(f16 + i8, np.float16)
+assert_type(f16 + i16, np.float32)
+assert_type(f16 + i32, np.float64)
+assert_type(f16 + i64, np.float64)
+assert_type(f16 + f16, np.float16)
+assert_type(f16 + f32, np.float32)
+assert_type(f16 + f64, np.float64)
+assert_type(f16 + f64l, np.longdouble)
+assert_type(f16 + c32, np.complex64)
+assert_type(f16 + c64, np.complex128)
+assert_type(f16 + c64l, np.clongdouble)
 
-assert_type(f4 + b0, np.float32)
-assert_type(f4 + i0, np.float32)
-assert_type(f4 + f0, np.float32)
-assert_type(f4 + c0, np.complex64)
-assert_type(f4 + b1, np.float32)
-assert_type(f4 + u1, np.float32)
-assert_type(f4 + u2, np.float32)
-assert_type(f4 + u4, np.float64)
-assert_type(f4 + u8, np.float64)
-assert_type(f4 + i1, np.float32)
-assert_type(f4 + i2, np.float32)
-assert_type(f4 + i4, np.float64)
-assert_type(f4 + i8, np.float64)
-assert_type(f4 + f2, np.float32)
-assert_type(f4 + f4, np.float32)
-assert_type(f4 + f8, np.float64)
-assert_type(f4 + ld, np.longdouble)
-assert_type(f4 + c8, np.complex64)
-assert_type(f4 + c16, np.complex128)
-assert_type(f4 + cld, np.clongdouble)
-f4 + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f4 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f32 + b_py, np.float32)
+assert_type(f32 + i_py, np.float32)
+assert_type(f32 + f_py, np.float32)
+assert_type(f32 + c_py, np.complex64)
+assert_type(f32 + b1, np.float32)
+assert_type(f32 + u8, np.float32)
+assert_type(f32 + u16, np.float32)
+assert_type(f32 + u32, np.float64)
+assert_type(f32 + u64, np.float64)
+assert_type(f32 + i8, np.float32)
+assert_type(f32 + i16, np.float32)
+assert_type(f32 + i32, np.float64)
+assert_type(f32 + i64, np.float64)
+assert_type(f32 + f16, np.float32)
+assert_type(f32 + f32, np.float32)
+assert_type(f32 + f64, np.float64)
+assert_type(f32 + f64l, np.longdouble)
+assert_type(f32 + c32, np.complex64)
+assert_type(f32 + c64, np.complex128)
+assert_type(f32 + c64l, np.clongdouble)
 
-assert_type(f8 + b0, np.float64)
-assert_type(f8 + i0, np.float64)
-assert_type(f8 + f0, np.float64)
-assert_type(f8 + c0, np.complex128)
-assert_type(f8 + b1, np.float64)
-assert_type(f8 + u1, np.float64)
-assert_type(f8 + u2, np.float64)
-assert_type(f8 + u4, np.float64)
-assert_type(f8 + u8, np.float64)
-assert_type(f8 + i1, np.float64)
-assert_type(f8 + i2, np.float64)
-assert_type(f8 + i4, np.float64)
-assert_type(f8 + i8, np.float64)
-assert_type(f8 + f2, np.float64)
-assert_type(f8 + f4, np.float64)
-assert_type(f8 + f8, np.float64)
-assert_type(f8 + ld, np.longdouble)
-assert_type(f8 + c8, np.complex128)
-assert_type(f8 + c16, np.complex128)
-assert_type(f8 + cld, np.clongdouble)
-f8 + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f8 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64 + b_py, np.float64)
+assert_type(f64 + i_py, np.float64)
+assert_type(f64 + f_py, np.float64)
+assert_type(f64 + c_py, np.complex128)
+assert_type(f64 + b1, np.float64)
+assert_type(f64 + u8, np.float64)
+assert_type(f64 + u16, np.float64)
+assert_type(f64 + u32, np.float64)
+assert_type(f64 + u64, np.float64)
+assert_type(f64 + i8, np.float64)
+assert_type(f64 + i16, np.float64)
+assert_type(f64 + i32, np.float64)
+assert_type(f64 + i64, np.float64)
+assert_type(f64 + f16, np.float64)
+assert_type(f64 + f32, np.float64)
+assert_type(f64 + f64, np.float64)
+assert_type(f64 + f64l, np.longdouble)
+assert_type(f64 + c32, np.complex128)
+assert_type(f64 + c64, np.complex128)
+assert_type(f64 + c64l, np.clongdouble)
 
-assert_type(ld + b0, np.longdouble)
-assert_type(ld + i0, np.longdouble)
-assert_type(ld + f0, np.longdouble)
-assert_type(ld + c0, np.clongdouble)
-assert_type(ld + b1, np.longdouble)
-assert_type(ld + u1, np.longdouble)
-assert_type(ld + u2, np.longdouble)
-assert_type(ld + u4, np.longdouble)
-assert_type(ld + u8, np.longdouble)
-assert_type(ld + i1, np.longdouble)
-assert_type(ld + i2, np.longdouble)
-assert_type(ld + i4, np.longdouble)
-assert_type(ld + i8, np.longdouble)
-assert_type(ld + f2, np.longdouble)
-assert_type(ld + f4, np.longdouble)
-assert_type(ld + f8, np.longdouble)
-assert_type(ld + ld, np.longdouble)
-assert_type(ld + c8, np.clongdouble)
-assert_type(ld + c16, np.clongdouble)
-assert_type(ld + cld, np.clongdouble)
-ld + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-ld + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64l + b_py, np.longdouble)
+assert_type(f64l + i_py, np.longdouble)
+assert_type(f64l + f_py, np.longdouble)
+assert_type(f64l + c_py, np.clongdouble)
+assert_type(f64l + b1, np.longdouble)
+assert_type(f64l + u8, np.longdouble)
+assert_type(f64l + u16, np.longdouble)
+assert_type(f64l + u32, np.longdouble)
+assert_type(f64l + u64, np.longdouble)
+assert_type(f64l + i8, np.longdouble)
+assert_type(f64l + i16, np.longdouble)
+assert_type(f64l + i32, np.longdouble)
+assert_type(f64l + i64, np.longdouble)
+assert_type(f64l + f16, np.longdouble)
+assert_type(f64l + f32, np.longdouble)
+assert_type(f64l + f64, np.longdouble)
+assert_type(f64l + f64l, np.longdouble)
+assert_type(f64l + c32, np.clongdouble)
+assert_type(f64l + c64, np.clongdouble)
+assert_type(f64l + c64l, np.clongdouble)
 
-assert_type(c8 + b0, np.complex64)
-assert_type(c8 + i0, np.complex64)
-assert_type(c8 + f0, np.complex64)
-assert_type(c8 + c0, np.complex64)
-assert_type(c8 + b1, np.complex64)
-assert_type(c8 + u1, np.complex64)
-assert_type(c8 + u2, np.complex64)
-assert_type(c8 + u4, np.complex128)
-assert_type(c8 + u8, np.complex128)
-assert_type(c8 + i1, np.complex64)
-assert_type(c8 + i2, np.complex64)
-assert_type(c8 + i4, np.complex128)
-assert_type(c8 + i8, np.complex128)
-assert_type(c8 + f2, np.complex64)
-assert_type(c8 + f4, np.complex64)
-assert_type(c8 + f8, np.complex128)
-assert_type(c8 + ld, np.clongdouble)
-assert_type(c8 + c8, np.complex64)
-assert_type(c8 + c16, np.complex128)
-assert_type(c8 + cld, np.clongdouble)
-c8 + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c32 + b_py, np.complex64)
+assert_type(c32 + i_py, np.complex64)
+assert_type(c32 + f_py, np.complex64)
+assert_type(c32 + c_py, np.complex64)
+assert_type(c32 + b1, np.complex64)
+assert_type(c32 + u8, np.complex64)
+assert_type(c32 + u16, np.complex64)
+assert_type(c32 + u32, np.complex128)
+assert_type(c32 + u64, np.complex128)
+assert_type(c32 + i8, np.complex64)
+assert_type(c32 + i16, np.complex64)
+assert_type(c32 + i32, np.complex128)
+assert_type(c32 + i64, np.complex128)
+assert_type(c32 + f16, np.complex64)
+assert_type(c32 + f32, np.complex64)
+assert_type(c32 + f64, np.complex128)
+assert_type(c32 + f64l, np.clongdouble)
+assert_type(c32 + c32, np.complex64)
+assert_type(c32 + c64, np.complex128)
+assert_type(c32 + c64l, np.clongdouble)
 
-assert_type(c16 + b0, np.complex128)
-assert_type(c16 + i0, np.complex128)
-assert_type(c16 + f0, np.complex128)
-assert_type(c16 + c0, np.complex128)
-assert_type(c16 + b1, np.complex128)
-assert_type(c16 + u1, np.complex128)
-assert_type(c16 + u2, np.complex128)
-assert_type(c16 + u4, np.complex128)
-assert_type(c16 + u8, np.complex128)
-assert_type(c16 + i1, np.complex128)
-assert_type(c16 + i2, np.complex128)
-assert_type(c16 + i4, np.complex128)
-assert_type(c16 + i8, np.complex128)
-assert_type(c16 + f2, np.complex128)
-assert_type(c16 + f4, np.complex128)
-assert_type(c16 + f8, np.complex128)
-assert_type(c16 + ld, np.clongdouble)
-assert_type(c16 + c8, np.complex128)
-assert_type(c16 + c16, np.complex128)
-assert_type(c16 + cld, np.clongdouble)
-c16 + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c64 + b_py, np.complex128)
+assert_type(c64 + i_py, np.complex128)
+assert_type(c64 + f_py, np.complex128)
+assert_type(c64 + c_py, np.complex128)
+assert_type(c64 + b1, np.complex128)
+assert_type(c64 + u8, np.complex128)
+assert_type(c64 + u16, np.complex128)
+assert_type(c64 + u32, np.complex128)
+assert_type(c64 + u64, np.complex128)
+assert_type(c64 + i8, np.complex128)
+assert_type(c64 + i16, np.complex128)
+assert_type(c64 + i32, np.complex128)
+assert_type(c64 + i64, np.complex128)
+assert_type(c64 + f16, np.complex128)
+assert_type(c64 + f32, np.complex128)
+assert_type(c64 + f64, np.complex128)
+assert_type(c64 + f64l, np.clongdouble)
+assert_type(c64 + c32, np.complex128)
+assert_type(c64 + c64, np.complex128)
+assert_type(c64 + c64l, np.clongdouble)
 
-assert_type(cld + b0, np.clongdouble)
-assert_type(cld + i0, np.clongdouble)
-assert_type(cld + f0, np.clongdouble)
-assert_type(cld + c0, np.clongdouble)
-assert_type(cld + b1, np.clongdouble)
-assert_type(cld + u1, np.clongdouble)
-assert_type(cld + u2, np.clongdouble)
-assert_type(cld + u4, np.clongdouble)
-assert_type(cld + u8, np.clongdouble)
-assert_type(cld + i1, np.clongdouble)
-assert_type(cld + i2, np.clongdouble)
-assert_type(cld + i4, np.clongdouble)
-assert_type(cld + i8, np.clongdouble)
-assert_type(cld + f2, np.clongdouble)
-assert_type(cld + f4, np.clongdouble)
-assert_type(cld + f8, np.clongdouble)
-assert_type(cld + ld, np.clongdouble)
-assert_type(cld + c8, np.clongdouble)
-assert_type(cld + c16, np.clongdouble)
-assert_type(cld + cld, np.clongdouble)
-cld + m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c64l + b_py, np.clongdouble)
+assert_type(c64l + i_py, np.clongdouble)
+assert_type(c64l + f_py, np.clongdouble)
+assert_type(c64l + c_py, np.clongdouble)
+assert_type(c64l + b1, np.clongdouble)
+assert_type(c64l + u8, np.clongdouble)
+assert_type(c64l + u16, np.clongdouble)
+assert_type(c64l + u32, np.clongdouble)
+assert_type(c64l + u64, np.clongdouble)
+assert_type(c64l + i8, np.clongdouble)
+assert_type(c64l + i16, np.clongdouble)
+assert_type(c64l + i32, np.clongdouble)
+assert_type(c64l + i64, np.clongdouble)
+assert_type(c64l + f16, np.clongdouble)
+assert_type(c64l + f32, np.clongdouble)
+assert_type(c64l + f64, np.clongdouble)
+assert_type(c64l + f64l, np.clongdouble)
+assert_type(c64l + c32, np.clongdouble)
+assert_type(c64l + c64, np.clongdouble)
+assert_type(c64l + c64l, np.clongdouble)
 
-assert_type(m8 + b0, np.timedelta64)
-assert_type(m8 + i0, np.timedelta64)
-m8 + f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 + c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 + b1, np.timedelta64)
-assert_type(m8 + u1, np.timedelta64)
-assert_type(m8 + u2, np.timedelta64)
-assert_type(m8 + u4, np.timedelta64)
-assert_type(m8 + u8, np.timedelta64)
-assert_type(m8 + i1, np.timedelta64)
-assert_type(m8 + i2, np.timedelta64)
-assert_type(m8 + i4, np.timedelta64)
-assert_type(m8 + i8, np.timedelta64)
-m8 + f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 + f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 + f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 + ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 + c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 + c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 + cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 + m8, np.timedelta64)
-assert_type(m8 + M8, np.datetime64)
+assert_type(M64 + b_py, np.datetime64)
+assert_type(M64 + i_py, np.datetime64)
+assert_type(M64 + b1, np.datetime64)
+assert_type(M64 + u8, np.datetime64)
+assert_type(M64 + u16, np.datetime64)
+assert_type(M64 + u32, np.datetime64)
+assert_type(M64 + u64, np.datetime64)
+assert_type(M64 + i8, np.datetime64)
+assert_type(M64 + i16, np.datetime64)
+assert_type(M64 + i32, np.datetime64)
+assert_type(M64 + i64, np.datetime64)
+assert_type(M64 + m64, np.datetime64)
 
-assert_type(M8 + b0, np.datetime64)
-assert_type(M8 + i0, np.datetime64)
-M8 + f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 + c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(M8 + b1, np.datetime64)
-assert_type(M8 + u1, np.datetime64)
-assert_type(M8 + u2, np.datetime64)
-assert_type(M8 + u4, np.datetime64)
-assert_type(M8 + u8, np.datetime64)
-assert_type(M8 + i1, np.datetime64)
-assert_type(M8 + i2, np.datetime64)
-assert_type(M8 + i4, np.datetime64)
-assert_type(M8 + i8, np.datetime64)
-M8 + f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 + f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 + f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 + ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 + c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 + c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 + cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(M8 + m8, np.datetime64)
-M8 + M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(m64 + b_py, np.timedelta64)
+assert_type(m64 + i_py, np.timedelta64)
+assert_type(m64 + b1, np.timedelta64)
+assert_type(m64 + u8, np.timedelta64)
+assert_type(m64 + u16, np.timedelta64)
+assert_type(m64 + u32, np.timedelta64)
+assert_type(m64 + u64, np.timedelta64)
+assert_type(m64 + i8, np.timedelta64)
+assert_type(m64 + i16, np.timedelta64)
+assert_type(m64 + i32, np.timedelta64)
+assert_type(m64 + i64, np.timedelta64)
+assert_type(m64 + M64, np.datetime64)
+assert_type(m64 + m64, np.timedelta64)
 
 ###
 # __[r]sub__
 
-b1 - b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(b1 - i0, np.int_)
-assert_type(b1 - f0, np.float64)
-assert_type(b1 - c0, np.complex128)
+b1 - b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(b1 - i_py, np.int_)
+assert_type(b1 - f_py, np.float64)
+assert_type(b1 - c_py, np.complex128)
 b1 - b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(b1 - u1, np.uint8)
-assert_type(b1 - u2, np.uint16)
-assert_type(b1 - u4, np.uint32)
-assert_type(b1 - u8, np.uint64)
-assert_type(b1 - i1, np.int8)
-assert_type(b1 - i2, np.int16)
-assert_type(b1 - i4, np.int32)
-assert_type(b1 - i8, np.int64)
-assert_type(b1 - f2, np.float16)
-assert_type(b1 - f4, np.float32)
-assert_type(b1 - f8, np.float64)
-assert_type(b1 - ld, np.longdouble)
-assert_type(b1 - c8, np.complex64)
-assert_type(b1 - c16, np.complex128)
-assert_type(b1 - cld, np.clongdouble)
-assert_type(b1 - m8, np.timedelta64)
-b1 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(b1 - u8, np.uint8)
+assert_type(b1 - u16, np.uint16)
+assert_type(b1 - u32, np.uint32)
+assert_type(b1 - u64, np.uint64)
+assert_type(b1 - i8, np.int8)
+assert_type(b1 - i16, np.int16)
+assert_type(b1 - i32, np.int32)
+assert_type(b1 - i64, np.int64)
+assert_type(b1 - f16, np.float16)
+assert_type(b1 - f32, np.float32)
+assert_type(b1 - f64, np.float64)
+assert_type(b1 - f64l, np.longdouble)
+assert_type(b1 - c32, np.complex64)
+assert_type(b1 - c64, np.complex128)
+assert_type(b1 - c64l, np.clongdouble)
+assert_type(b1 - m64, np.timedelta64)
 
-assert_type(u1 - b0, np.uint8)
-assert_type(u1 - i0, np.uint8)
-assert_type(u1 - f0, np.float64)
-assert_type(u1 - c0, np.complex128)
-assert_type(u1 - b1, np.uint8)
-assert_type(u1 - u1, np.uint8)
-assert_type(u1 - u2, np.uint16)
-assert_type(u1 - u4, np.uint32)
-assert_type(u1 - u8, np.uint64)
-assert_type(u1 - i1, np.int16)
-assert_type(u1 - i2, np.int16)
-assert_type(u1 - i4, np.int32)
-assert_type(u1 - i8, np.int64)
-assert_type(u1 - f2, np.float16)
-assert_type(u1 - f4, np.float32)
-assert_type(u1 - f8, np.float64)
-assert_type(u1 - ld, np.longdouble)
-assert_type(u1 - c8, np.complex64)
-assert_type(u1 - c16, np.complex128)
-assert_type(u1 - cld, np.clongdouble)
-assert_type(u1 - m8, np.timedelta64)
-u1 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 - b_py, np.uint8)
+assert_type(u8 - i_py, np.uint8)
+assert_type(u8 - f_py, np.float64)
+assert_type(u8 - c_py, np.complex128)
+assert_type(u8 - b1, np.uint8)
+assert_type(u8 - u8, np.uint8)
+assert_type(u8 - u16, np.uint16)
+assert_type(u8 - u32, np.uint32)
+assert_type(u8 - u64, np.uint64)
+assert_type(u8 - i8, np.int16)
+assert_type(u8 - i16, np.int16)
+assert_type(u8 - i32, np.int32)
+assert_type(u8 - i64, np.int64)
+assert_type(u8 - f16, np.float16)
+assert_type(u8 - f32, np.float32)
+assert_type(u8 - f64, np.float64)
+assert_type(u8 - f64l, np.longdouble)
+assert_type(u8 - c32, np.complex64)
+assert_type(u8 - c64, np.complex128)
+assert_type(u8 - c64l, np.clongdouble)
+assert_type(u8 - m64, np.timedelta64)
 
-assert_type(u2 - b0, np.uint16)
-assert_type(u2 - i0, np.uint16)
-assert_type(u2 - f0, np.float64)
-assert_type(u2 - c0, np.complex128)
-assert_type(u2 - b1, np.uint16)
-assert_type(u2 - u1, np.uint16)
-assert_type(u2 - u2, np.uint16)
-assert_type(u2 - u4, np.uint32)
-assert_type(u2 - u8, np.uint64)
-assert_type(u2 - i1, np.int32)
-assert_type(u2 - i2, np.int32)
-assert_type(u2 - i4, np.int32)
-assert_type(u2 - i8, np.int64)
-assert_type(u2 - f2, np.float32)
-assert_type(u2 - f4, np.float32)
-assert_type(u2 - f8, np.float64)
-assert_type(u2 - ld, np.longdouble)
-assert_type(u2 - c8, np.complex64)
-assert_type(u2 - c16, np.complex128)
-assert_type(u2 - cld, np.clongdouble)
-assert_type(u2 - m8, np.timedelta64)
-u2 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 - b_py, np.uint16)
+assert_type(u16 - i_py, np.uint16)
+assert_type(u16 - f_py, np.float64)
+assert_type(u16 - c_py, np.complex128)
+assert_type(u16 - b1, np.uint16)
+assert_type(u16 - u8, np.uint16)
+assert_type(u16 - u16, np.uint16)
+assert_type(u16 - u32, np.uint32)
+assert_type(u16 - u64, np.uint64)
+assert_type(u16 - i8, np.int32)
+assert_type(u16 - i16, np.int32)
+assert_type(u16 - i32, np.int32)
+assert_type(u16 - i64, np.int64)
+assert_type(u16 - f16, np.float32)
+assert_type(u16 - f32, np.float32)
+assert_type(u16 - f64, np.float64)
+assert_type(u16 - f64l, np.longdouble)
+assert_type(u16 - c32, np.complex64)
+assert_type(u16 - c64, np.complex128)
+assert_type(u16 - c64l, np.clongdouble)
+assert_type(u16 - m64, np.timedelta64)
 
-assert_type(u4 - b0, np.uint32)
-assert_type(u4 - i0, np.uint32)
-assert_type(u4 - f0, np.float64)
-assert_type(u4 - c0, np.complex128)
-assert_type(u4 - b1, np.uint32)
-assert_type(u4 - u1, np.uint32)
-assert_type(u4 - u2, np.uint32)
-assert_type(u4 - u4, np.uint32)
-assert_type(u4 - u8, np.uint64)
-assert_type(u4 - i1, np.int64)
-assert_type(u4 - i2, np.int64)
-assert_type(u4 - i4, np.int64)
-assert_type(u4 - i8, np.int64)
-assert_type(u4 - f2, np.float64)
-assert_type(u4 - f4, np.float64)
-assert_type(u4 - f8, np.float64)
-assert_type(u4 - ld, np.longdouble)
-assert_type(u4 - c8, np.complex128)
-assert_type(u4 - c16, np.complex128)
-assert_type(u4 - cld, np.clongdouble)
-assert_type(u4 - m8, np.timedelta64)
-u4 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 - b_py, np.uint32)
+assert_type(u32 - i_py, np.uint32)
+assert_type(u32 - f_py, np.float64)
+assert_type(u32 - c_py, np.complex128)
+assert_type(u32 - b1, np.uint32)
+assert_type(u32 - u8, np.uint32)
+assert_type(u32 - u16, np.uint32)
+assert_type(u32 - u32, np.uint32)
+assert_type(u32 - u64, np.uint64)
+assert_type(u32 - i8, np.int64)
+assert_type(u32 - i16, np.int64)
+assert_type(u32 - i32, np.int64)
+assert_type(u32 - i64, np.int64)
+assert_type(u32 - f16, np.float64)
+assert_type(u32 - f32, np.float64)
+assert_type(u32 - f64, np.float64)
+assert_type(u32 - f64l, np.longdouble)
+assert_type(u32 - c32, np.complex128)
+assert_type(u32 - c64, np.complex128)
+assert_type(u32 - c64l, np.clongdouble)
+assert_type(u32 - m64, np.timedelta64)
 
-assert_type(u8 - b0, np.uint64)
-assert_type(u8 - i0, np.uint64)
-assert_type(u8 - f0, np.float64)
-assert_type(u8 - c0, np.complex128)
-assert_type(u8 - b1, np.uint64)
-assert_type(u8 - u1, np.uint64)
-assert_type(u8 - u2, np.uint64)
-assert_type(u8 - u4, np.uint64)
-assert_type(u8 - u8, np.uint64)
-assert_type(u8 - i1, np.float64)
-assert_type(u8 - i2, np.float64)
-assert_type(u8 - i4, np.float64)
-assert_type(u8 - i8, np.float64)
-assert_type(u8 - f2, np.float64)
-assert_type(u8 - f4, np.float64)
-assert_type(u8 - f8, np.float64)
-assert_type(u8 - ld, np.longdouble)
-assert_type(u8 - c8, np.complex128)
-assert_type(u8 - c16, np.complex128)
-assert_type(u8 - cld, np.clongdouble)
-assert_type(u8 - m8, np.timedelta64)
-u8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 - b_py, np.uint64)
+assert_type(u64 - i_py, np.uint64)
+assert_type(u64 - f_py, np.float64)
+assert_type(u64 - c_py, np.complex128)
+assert_type(u64 - b1, np.uint64)
+assert_type(u64 - u8, np.uint64)
+assert_type(u64 - u16, np.uint64)
+assert_type(u64 - u32, np.uint64)
+assert_type(u64 - u64, np.uint64)
+assert_type(u64 - i8, np.float64)
+assert_type(u64 - i16, np.float64)
+assert_type(u64 - i32, np.float64)
+assert_type(u64 - i64, np.float64)
+assert_type(u64 - f16, np.float64)
+assert_type(u64 - f32, np.float64)
+assert_type(u64 - f64, np.float64)
+assert_type(u64 - f64l, np.longdouble)
+assert_type(u64 - c32, np.complex128)
+assert_type(u64 - c64, np.complex128)
+assert_type(u64 - c64l, np.clongdouble)
+assert_type(u64 - m64, np.timedelta64)
 
-assert_type(i1 - b0, np.int8)
-assert_type(i1 - i0, np.int8)
-assert_type(i1 - f0, np.float64)
-assert_type(i1 - c0, np.complex128)
-assert_type(i1 - b1, np.int8)
-assert_type(i1 - u1, np.int16)
-assert_type(i1 - u2, np.int32)
-assert_type(i1 - u4, np.int64)
-assert_type(i1 - u8, np.float64)
-assert_type(i1 - i1, np.int8)
-assert_type(i1 - i2, np.int16)
-assert_type(i1 - i4, np.int32)
-assert_type(i1 - i8, np.int64)
-assert_type(i1 - f2, np.float16)
-assert_type(i1 - f4, np.float32)
-assert_type(i1 - f8, np.float64)
-assert_type(i1 - ld, np.longdouble)
-assert_type(i1 - c8, np.complex64)
-assert_type(i1 - c16, np.complex128)
-assert_type(i1 - cld, np.clongdouble)
-assert_type(i1 - m8, np.timedelta64)
-i1 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 - b_py, np.int8)
+assert_type(i8 - i_py, np.int8)
+assert_type(i8 - f_py, np.float64)
+assert_type(i8 - c_py, np.complex128)
+assert_type(i8 - b1, np.int8)
+assert_type(i8 - u8, np.int16)
+assert_type(i8 - u16, np.int32)
+assert_type(i8 - u32, np.int64)
+assert_type(i8 - u64, np.float64)
+assert_type(i8 - i8, np.int8)
+assert_type(i8 - i16, np.int16)
+assert_type(i8 - i32, np.int32)
+assert_type(i8 - i64, np.int64)
+assert_type(i8 - f16, np.float16)
+assert_type(i8 - f32, np.float32)
+assert_type(i8 - f64, np.float64)
+assert_type(i8 - f64l, np.longdouble)
+assert_type(i8 - c32, np.complex64)
+assert_type(i8 - c64, np.complex128)
+assert_type(i8 - c64l, np.clongdouble)
+assert_type(i8 - m64, np.timedelta64)
 
-assert_type(i2 - b0, np.int16)
-assert_type(i2 - i0, np.int16)
-assert_type(i2 - f0, np.float64)
-assert_type(i2 - c0, np.complex128)
-assert_type(i2 - b1, np.int16)
-assert_type(i2 - u1, np.int16)
-assert_type(i2 - u2, np.int32)
-assert_type(i2 - u4, np.int64)
-assert_type(i2 - u8, np.float64)
-assert_type(i2 - i1, np.int16)
-assert_type(i2 - i2, np.int16)
-assert_type(i2 - i4, np.int32)
-assert_type(i2 - i8, np.int64)
-assert_type(i2 - f2, np.float32)
-assert_type(i2 - f4, np.float32)
-assert_type(i2 - f8, np.float64)
-assert_type(i2 - ld, np.longdouble)
-assert_type(i2 - c8, np.complex64)
-assert_type(i2 - c16, np.complex128)
-assert_type(i2 - cld, np.clongdouble)
-assert_type(i2 - m8, np.timedelta64)
-i2 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 - b_py, np.int16)
+assert_type(i16 - i_py, np.int16)
+assert_type(i16 - f_py, np.float64)
+assert_type(i16 - c_py, np.complex128)
+assert_type(i16 - b1, np.int16)
+assert_type(i16 - u8, np.int16)
+assert_type(i16 - u16, np.int32)
+assert_type(i16 - u32, np.int64)
+assert_type(i16 - u64, np.float64)
+assert_type(i16 - i8, np.int16)
+assert_type(i16 - i16, np.int16)
+assert_type(i16 - i32, np.int32)
+assert_type(i16 - i64, np.int64)
+assert_type(i16 - f16, np.float32)
+assert_type(i16 - f32, np.float32)
+assert_type(i16 - f64, np.float64)
+assert_type(i16 - f64l, np.longdouble)
+assert_type(i16 - c32, np.complex64)
+assert_type(i16 - c64, np.complex128)
+assert_type(i16 - c64l, np.clongdouble)
+assert_type(i16 - m64, np.timedelta64)
 
-assert_type(i4 - b0, np.int32)
-assert_type(i4 - i0, np.int32)
-assert_type(i4 - f0, np.float64)
-assert_type(i4 - c0, np.complex128)
-assert_type(i4 - b1, np.int32)
-assert_type(i4 - u1, np.int32)
-assert_type(i4 - u2, np.int32)
-assert_type(i4 - u4, np.int64)
-assert_type(i4 - u8, np.float64)
-assert_type(i4 - i1, np.int32)
-assert_type(i4 - i2, np.int32)
-assert_type(i4 - i4, np.int32)
-assert_type(i4 - i8, np.int64)
-assert_type(i4 - f2, np.float64)
-assert_type(i4 - f4, np.float64)
-assert_type(i4 - f8, np.float64)
-assert_type(i4 - ld, np.longdouble)
-assert_type(i4 - c8, np.complex128)
-assert_type(i4 - c16, np.complex128)
-assert_type(i4 - cld, np.clongdouble)
-assert_type(i4 - m8, np.timedelta64)
-i4 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 - b_py, np.int32)
+assert_type(i32 - i_py, np.int32)
+assert_type(i32 - f_py, np.float64)
+assert_type(i32 - c_py, np.complex128)
+assert_type(i32 - b1, np.int32)
+assert_type(i32 - u8, np.int32)
+assert_type(i32 - u16, np.int32)
+assert_type(i32 - u32, np.int64)
+assert_type(i32 - u64, np.float64)
+assert_type(i32 - i8, np.int32)
+assert_type(i32 - i16, np.int32)
+assert_type(i32 - i32, np.int32)
+assert_type(i32 - i64, np.int64)
+assert_type(i32 - f16, np.float64)
+assert_type(i32 - f32, np.float64)
+assert_type(i32 - f64, np.float64)
+assert_type(i32 - f64l, np.longdouble)
+assert_type(i32 - c32, np.complex128)
+assert_type(i32 - c64, np.complex128)
+assert_type(i32 - c64l, np.clongdouble)
+assert_type(i32 - m64, np.timedelta64)
 
-assert_type(i8 - b0, np.int64)
-assert_type(i8 - i0, np.int64)
-assert_type(i8 - f0, np.float64)
-assert_type(i8 - c0, np.complex128)
-assert_type(i8 - b1, np.int64)
-assert_type(i8 - u1, np.int64)
-assert_type(i8 - u2, np.int64)
-assert_type(i8 - u4, np.int64)
-assert_type(i8 - u8, np.float64)
-assert_type(i8 - i1, np.int64)
-assert_type(i8 - i2, np.int64)
-assert_type(i8 - i4, np.int64)
-assert_type(i8 - i8, np.int64)
-assert_type(i8 - f2, np.float64)
-assert_type(i8 - f4, np.float64)
-assert_type(i8 - f8, np.float64)
-assert_type(i8 - ld, np.longdouble)
-assert_type(i8 - c8, np.complex128)
-assert_type(i8 - c16, np.complex128)
-assert_type(i8 - cld, np.clongdouble)
-assert_type(i8 - m8, np.timedelta64)
-i8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 - b_py, np.int64)
+assert_type(i64 - i_py, np.int64)
+assert_type(i64 - f_py, np.float64)
+assert_type(i64 - c_py, np.complex128)
+assert_type(i64 - b1, np.int64)
+assert_type(i64 - u8, np.int64)
+assert_type(i64 - u16, np.int64)
+assert_type(i64 - u32, np.int64)
+assert_type(i64 - u64, np.float64)
+assert_type(i64 - i8, np.int64)
+assert_type(i64 - i16, np.int64)
+assert_type(i64 - i32, np.int64)
+assert_type(i64 - i64, np.int64)
+assert_type(i64 - f16, np.float64)
+assert_type(i64 - f32, np.float64)
+assert_type(i64 - f64, np.float64)
+assert_type(i64 - f64l, np.longdouble)
+assert_type(i64 - c32, np.complex128)
+assert_type(i64 - c64, np.complex128)
+assert_type(i64 - c64l, np.clongdouble)
+assert_type(i64 - m64, np.timedelta64)
 
-assert_type(f2 - b0, np.float16)
-assert_type(f2 - i0, np.float16)
-assert_type(f2 - f0, np.float16)
-assert_type(f2 - c0, np.complex64)
-assert_type(f2 - b1, np.float16)
-assert_type(f2 - u1, np.float16)
-assert_type(f2 - u2, np.float32)
-assert_type(f2 - u4, np.float64)
-assert_type(f2 - u8, np.float64)
-assert_type(f2 - i1, np.float16)
-assert_type(f2 - i2, np.float32)
-assert_type(f2 - i4, np.float64)
-assert_type(f2 - i8, np.float64)
-assert_type(f2 - f2, np.float16)
-assert_type(f2 - f4, np.float32)
-assert_type(f2 - f8, np.float64)
-assert_type(f2 - ld, np.longdouble)
-assert_type(f2 - c8, np.complex64)
-assert_type(f2 - c16, np.complex128)
-assert_type(f2 - cld, np.clongdouble)
-f2 - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f2 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f16 - b_py, np.float16)
+assert_type(f16 - i_py, np.float16)
+assert_type(f16 - f_py, np.float16)
+assert_type(f16 - c_py, np.complex64)
+assert_type(f16 - b1, np.float16)
+assert_type(f16 - u8, np.float16)
+assert_type(f16 - u16, np.float32)
+assert_type(f16 - u32, np.float64)
+assert_type(f16 - u64, np.float64)
+assert_type(f16 - i8, np.float16)
+assert_type(f16 - i16, np.float32)
+assert_type(f16 - i32, np.float64)
+assert_type(f16 - i64, np.float64)
+assert_type(f16 - f16, np.float16)
+assert_type(f16 - f32, np.float32)
+assert_type(f16 - f64, np.float64)
+assert_type(f16 - f64l, np.longdouble)
+assert_type(f16 - c32, np.complex64)
+assert_type(f16 - c64, np.complex128)
+assert_type(f16 - c64l, np.clongdouble)
 
-assert_type(f4 - b0, np.float32)
-assert_type(f4 - i0, np.float32)
-assert_type(f4 - f0, np.float32)
-assert_type(f4 - c0, np.complex64)
-assert_type(f4 - b1, np.float32)
-assert_type(f4 - u1, np.float32)
-assert_type(f4 - u2, np.float32)
-assert_type(f4 - u4, np.float64)
-assert_type(f4 - u8, np.float64)
-assert_type(f4 - i1, np.float32)
-assert_type(f4 - i2, np.float32)
-assert_type(f4 - i4, np.float64)
-assert_type(f4 - i8, np.float64)
-assert_type(f4 - f2, np.float32)
-assert_type(f4 - f4, np.float32)
-assert_type(f4 - f8, np.float64)
-assert_type(f4 - ld, np.longdouble)
-assert_type(f4 - c8, np.complex64)
-assert_type(f4 - c16, np.complex128)
-assert_type(f4 - cld, np.clongdouble)
-f4 - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f4 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f32 - b_py, np.float32)
+assert_type(f32 - i_py, np.float32)
+assert_type(f32 - f_py, np.float32)
+assert_type(f32 - c_py, np.complex64)
+assert_type(f32 - b1, np.float32)
+assert_type(f32 - u8, np.float32)
+assert_type(f32 - u16, np.float32)
+assert_type(f32 - u32, np.float64)
+assert_type(f32 - u64, np.float64)
+assert_type(f32 - i8, np.float32)
+assert_type(f32 - i16, np.float32)
+assert_type(f32 - i32, np.float64)
+assert_type(f32 - i64, np.float64)
+assert_type(f32 - f16, np.float32)
+assert_type(f32 - f32, np.float32)
+assert_type(f32 - f64, np.float64)
+assert_type(f32 - f64l, np.longdouble)
+assert_type(f32 - c32, np.complex64)
+assert_type(f32 - c64, np.complex128)
+assert_type(f32 - c64l, np.clongdouble)
 
-assert_type(f8 - b0, np.float64)
-assert_type(f8 - i0, np.float64)
-assert_type(f8 - f0, np.float64)
-assert_type(f8 - c0, np.complex128)
-assert_type(f8 - b1, np.float64)
-assert_type(f8 - u1, np.float64)
-assert_type(f8 - u2, np.float64)
-assert_type(f8 - u4, np.float64)
-assert_type(f8 - u8, np.float64)
-assert_type(f8 - i1, np.float64)
-assert_type(f8 - i2, np.float64)
-assert_type(f8 - i4, np.float64)
-assert_type(f8 - i8, np.float64)
-assert_type(f8 - f2, np.float64)
-assert_type(f8 - f4, np.float64)
-assert_type(f8 - f8, np.float64)
-assert_type(f8 - ld, np.longdouble)
-assert_type(f8 - c8, np.complex128)
-assert_type(f8 - c16, np.complex128)
-assert_type(f8 - cld, np.clongdouble)
-f8 - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64 - b_py, np.float64)
+assert_type(f64 - i_py, np.float64)
+assert_type(f64 - f_py, np.float64)
+assert_type(f64 - c_py, np.complex128)
+assert_type(f64 - b1, np.float64)
+assert_type(f64 - u8, np.float64)
+assert_type(f64 - u16, np.float64)
+assert_type(f64 - u32, np.float64)
+assert_type(f64 - u64, np.float64)
+assert_type(f64 - i8, np.float64)
+assert_type(f64 - i16, np.float64)
+assert_type(f64 - i32, np.float64)
+assert_type(f64 - i64, np.float64)
+assert_type(f64 - f16, np.float64)
+assert_type(f64 - f32, np.float64)
+assert_type(f64 - f64, np.float64)
+assert_type(f64 - f64l, np.longdouble)
+assert_type(f64 - c32, np.complex128)
+assert_type(f64 - c64, np.complex128)
+assert_type(f64 - c64l, np.clongdouble)
 
-assert_type(ld - b0, np.longdouble)
-assert_type(ld - i0, np.longdouble)
-assert_type(ld - f0, np.longdouble)
-assert_type(ld - c0, np.clongdouble)
-assert_type(ld - b1, np.longdouble)
-assert_type(ld - u1, np.longdouble)
-assert_type(ld - u2, np.longdouble)
-assert_type(ld - u4, np.longdouble)
-assert_type(ld - u8, np.longdouble)
-assert_type(ld - i1, np.longdouble)
-assert_type(ld - i2, np.longdouble)
-assert_type(ld - i4, np.longdouble)
-assert_type(ld - i8, np.longdouble)
-assert_type(ld - f2, np.longdouble)
-assert_type(ld - f4, np.longdouble)
-assert_type(ld - f8, np.longdouble)
-assert_type(ld - ld, np.longdouble)
-assert_type(ld - c8, np.clongdouble)
-assert_type(ld - c16, np.clongdouble)
-assert_type(ld - cld, np.clongdouble)
-ld - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-ld - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64l - b_py, np.longdouble)
+assert_type(f64l - i_py, np.longdouble)
+assert_type(f64l - f_py, np.longdouble)
+assert_type(f64l - c_py, np.clongdouble)
+assert_type(f64l - b1, np.longdouble)
+assert_type(f64l - u8, np.longdouble)
+assert_type(f64l - u16, np.longdouble)
+assert_type(f64l - u32, np.longdouble)
+assert_type(f64l - u64, np.longdouble)
+assert_type(f64l - i8, np.longdouble)
+assert_type(f64l - i16, np.longdouble)
+assert_type(f64l - i32, np.longdouble)
+assert_type(f64l - i64, np.longdouble)
+assert_type(f64l - f16, np.longdouble)
+assert_type(f64l - f32, np.longdouble)
+assert_type(f64l - f64, np.longdouble)
+assert_type(f64l - f64l, np.longdouble)
+assert_type(f64l - c32, np.clongdouble)
+assert_type(f64l - c64, np.clongdouble)
+assert_type(f64l - c64l, np.clongdouble)
 
-assert_type(c8 - b0, np.complex64)
-assert_type(c8 - i0, np.complex64)
-assert_type(c8 - f0, np.complex64)
-assert_type(c8 - c0, np.complex64)
-assert_type(c8 - b1, np.complex64)
-assert_type(c8 - u1, np.complex64)
-assert_type(c8 - u2, np.complex64)
-assert_type(c8 - u4, np.complex128)
-assert_type(c8 - u8, np.complex128)
-assert_type(c8 - i1, np.complex64)
-assert_type(c8 - i2, np.complex64)
-assert_type(c8 - i4, np.complex128)
-assert_type(c8 - i8, np.complex128)
-assert_type(c8 - f2, np.complex64)
-assert_type(c8 - f4, np.complex64)
-assert_type(c8 - f8, np.complex128)
-assert_type(c8 - ld, np.clongdouble)
-assert_type(c8 - c8, np.complex64)
-assert_type(c8 - c16, np.complex128)
-assert_type(c8 - cld, np.clongdouble)
-c8 - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c32 - b_py, np.complex64)
+assert_type(c32 - i_py, np.complex64)
+assert_type(c32 - f_py, np.complex64)
+assert_type(c32 - c_py, np.complex64)
+assert_type(c32 - b1, np.complex64)
+assert_type(c32 - u8, np.complex64)
+assert_type(c32 - u16, np.complex64)
+assert_type(c32 - u32, np.complex128)
+assert_type(c32 - u64, np.complex128)
+assert_type(c32 - i8, np.complex64)
+assert_type(c32 - i16, np.complex64)
+assert_type(c32 - i32, np.complex128)
+assert_type(c32 - i64, np.complex128)
+assert_type(c32 - f16, np.complex64)
+assert_type(c32 - f32, np.complex64)
+assert_type(c32 - f64, np.complex128)
+assert_type(c32 - f64l, np.clongdouble)
+assert_type(c32 - c32, np.complex64)
+assert_type(c32 - c64, np.complex128)
+assert_type(c32 - c64l, np.clongdouble)
 
-assert_type(c16 - b0, np.complex128)
-assert_type(c16 - i0, np.complex128)
-assert_type(c16 - f0, np.complex128)
-assert_type(c16 - c0, np.complex128)
-assert_type(c16 - b1, np.complex128)
-assert_type(c16 - u1, np.complex128)
-assert_type(c16 - u2, np.complex128)
-assert_type(c16 - u4, np.complex128)
-assert_type(c16 - u8, np.complex128)
-assert_type(c16 - i1, np.complex128)
-assert_type(c16 - i2, np.complex128)
-assert_type(c16 - i4, np.complex128)
-assert_type(c16 - i8, np.complex128)
-assert_type(c16 - f2, np.complex128)
-assert_type(c16 - f4, np.complex128)
-assert_type(c16 - f8, np.complex128)
-assert_type(c16 - ld, np.clongdouble)
-assert_type(c16 - c8, np.complex128)
-assert_type(c16 - c16, np.complex128)
-assert_type(c16 - cld, np.clongdouble)
-c16 - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c64 - b_py, np.complex128)
+assert_type(c64 - i_py, np.complex128)
+assert_type(c64 - f_py, np.complex128)
+assert_type(c64 - c_py, np.complex128)
+assert_type(c64 - b1, np.complex128)
+assert_type(c64 - u8, np.complex128)
+assert_type(c64 - u16, np.complex128)
+assert_type(c64 - u32, np.complex128)
+assert_type(c64 - u64, np.complex128)
+assert_type(c64 - i8, np.complex128)
+assert_type(c64 - i16, np.complex128)
+assert_type(c64 - i32, np.complex128)
+assert_type(c64 - i64, np.complex128)
+assert_type(c64 - f16, np.complex128)
+assert_type(c64 - f32, np.complex128)
+assert_type(c64 - f64, np.complex128)
+assert_type(c64 - f64l, np.clongdouble)
+assert_type(c64 - c32, np.complex128)
+assert_type(c64 - c64, np.complex128)
+assert_type(c64 - c64l, np.clongdouble)
 
-assert_type(cld - b0, np.clongdouble)
-assert_type(cld - i0, np.clongdouble)
-assert_type(cld - f0, np.clongdouble)
-assert_type(cld - c0, np.clongdouble)
-assert_type(cld - b1, np.clongdouble)
-assert_type(cld - u1, np.clongdouble)
-assert_type(cld - u2, np.clongdouble)
-assert_type(cld - u4, np.clongdouble)
-assert_type(cld - u8, np.clongdouble)
-assert_type(cld - i1, np.clongdouble)
-assert_type(cld - i2, np.clongdouble)
-assert_type(cld - i4, np.clongdouble)
-assert_type(cld - i8, np.clongdouble)
-assert_type(cld - f2, np.clongdouble)
-assert_type(cld - f4, np.clongdouble)
-assert_type(cld - f8, np.clongdouble)
-assert_type(cld - ld, np.clongdouble)
-assert_type(cld - c8, np.clongdouble)
-assert_type(cld - c16, np.clongdouble)
-assert_type(cld - cld, np.clongdouble)
-cld - m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c64l - b_py, np.clongdouble)
+assert_type(c64l - i_py, np.clongdouble)
+assert_type(c64l - f_py, np.clongdouble)
+assert_type(c64l - c_py, np.clongdouble)
+assert_type(c64l - b1, np.clongdouble)
+assert_type(c64l - u8, np.clongdouble)
+assert_type(c64l - u16, np.clongdouble)
+assert_type(c64l - u32, np.clongdouble)
+assert_type(c64l - u64, np.clongdouble)
+assert_type(c64l - i8, np.clongdouble)
+assert_type(c64l - i16, np.clongdouble)
+assert_type(c64l - i32, np.clongdouble)
+assert_type(c64l - i64, np.clongdouble)
+assert_type(c64l - f16, np.clongdouble)
+assert_type(c64l - f32, np.clongdouble)
+assert_type(c64l - f64, np.clongdouble)
+assert_type(c64l - f64l, np.clongdouble)
+assert_type(c64l - c32, np.clongdouble)
+assert_type(c64l - c64, np.clongdouble)
+assert_type(c64l - c64l, np.clongdouble)
 
-assert_type(m8 - b0, np.timedelta64)
-assert_type(m8 - i0, np.timedelta64)
-m8 - f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 - c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 - b1, np.timedelta64)
-assert_type(m8 - u1, np.timedelta64)
-assert_type(m8 - u2, np.timedelta64)
-assert_type(m8 - u4, np.timedelta64)
-assert_type(m8 - u8, np.timedelta64)
-assert_type(m8 - i1, np.timedelta64)
-assert_type(m8 - i2, np.timedelta64)
-assert_type(m8 - i4, np.timedelta64)
-assert_type(m8 - i8, np.timedelta64)
-m8 - f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 - f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 - f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 - ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 - c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 - c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 - cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 - m8, np.timedelta64)
-m8 - M8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(M64 - b_py, np.datetime64)
+assert_type(M64 - i_py, np.datetime64)
+assert_type(M64 - b1, np.datetime64)
+assert_type(M64 - u8, np.datetime64)
+assert_type(M64 - u16, np.datetime64)
+assert_type(M64 - u32, np.datetime64)
+assert_type(M64 - u64, np.datetime64)
+assert_type(M64 - i8, np.datetime64)
+assert_type(M64 - i16, np.datetime64)
+assert_type(M64 - i32, np.datetime64)
+assert_type(M64 - i64, np.datetime64)
+assert_type(M64 - M64, np.timedelta64)
+assert_type(M64 - m64, np.datetime64)
 
-assert_type(M8 - b0, np.datetime64)
-assert_type(M8 - i0, np.datetime64)
-M8 - f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 - c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(M8 - b1, np.datetime64)
-assert_type(M8 - u1, np.datetime64)
-assert_type(M8 - u2, np.datetime64)
-assert_type(M8 - u4, np.datetime64)
-assert_type(M8 - u8, np.datetime64)
-assert_type(M8 - i1, np.datetime64)
-assert_type(M8 - i2, np.datetime64)
-assert_type(M8 - i4, np.datetime64)
-assert_type(M8 - i8, np.datetime64)
-M8 - f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 - f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 - f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 - ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 - c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 - c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-M8 - cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(M8 - m8, np.datetime64)
-assert_type(M8 - M8, np.timedelta64)
+assert_type(m64 - b_py, np.timedelta64)
+assert_type(m64 - i_py, np.timedelta64)
+assert_type(m64 - b1, np.timedelta64)
+assert_type(m64 - u8, np.timedelta64)
+assert_type(m64 - u16, np.timedelta64)
+assert_type(m64 - u32, np.timedelta64)
+assert_type(m64 - u64, np.timedelta64)
+assert_type(m64 - i8, np.timedelta64)
+assert_type(m64 - i16, np.timedelta64)
+assert_type(m64 - i32, np.timedelta64)
+assert_type(m64 - i64, np.timedelta64)
+assert_type(m64 - m64, np.timedelta64)
 
 ###
 # __[r]mul__
 
-assert_type(b1 * b0, np.bool)
-assert_type(b1 * i0, np.int_)
-assert_type(b1 * f0, np.float64)
-assert_type(b1 * c0, np.complex128)
+assert_type(b1 * b_py, np.bool)
+assert_type(b1 * i_py, np.int_)
+assert_type(b1 * f_py, np.float64)
+assert_type(b1 * c_py, np.complex128)
 assert_type(b1 * b1, np.bool)
-assert_type(b1 * u1, np.uint8)
-assert_type(b1 * u2, np.uint16)
-assert_type(b1 * u4, np.uint32)
-assert_type(b1 * u8, np.uint64)
-assert_type(b1 * i1, np.int8)
-assert_type(b1 * i2, np.int16)
-assert_type(b1 * i4, np.int32)
-assert_type(b1 * i8, np.int64)
-assert_type(b1 * f2, np.float16)
-assert_type(b1 * f4, np.float32)
-assert_type(b1 * f8, np.float64)
-assert_type(b1 * ld, np.longdouble)
-assert_type(b1 * c8, np.complex64)
-assert_type(b1 * c16, np.complex128)
-assert_type(b1 * cld, np.clongdouble)
-assert_type(b1 * m8, np.timedelta64)
+assert_type(b1 * u8, np.uint8)
+assert_type(b1 * u16, np.uint16)
+assert_type(b1 * u32, np.uint32)
+assert_type(b1 * u64, np.uint64)
+assert_type(b1 * i8, np.int8)
+assert_type(b1 * i16, np.int16)
+assert_type(b1 * i32, np.int32)
+assert_type(b1 * i64, np.int64)
+assert_type(b1 * f16, np.float16)
+assert_type(b1 * f32, np.float32)
+assert_type(b1 * f64, np.float64)
+assert_type(b1 * f64l, np.longdouble)
+assert_type(b1 * c32, np.complex64)
+assert_type(b1 * c64, np.complex128)
+assert_type(b1 * c64l, np.clongdouble)
+assert_type(b1 * m64, np.timedelta64)
 
-assert_type(u1 * b0, np.uint8)
-assert_type(u1 * i0, np.uint8)
-assert_type(u1 * f0, np.float64)
-assert_type(u1 * c0, np.complex128)
-assert_type(u1 * b1, np.uint8)
-assert_type(u1 * u1, np.uint8)
-assert_type(u1 * u2, np.uint16)
-assert_type(u1 * u4, np.uint32)
-assert_type(u1 * u8, np.uint64)
-assert_type(u1 * i1, np.int16)
-assert_type(u1 * i2, np.int16)
-assert_type(u1 * i4, np.int32)
-assert_type(u1 * i8, np.int64)
-assert_type(u1 * f2, np.float16)
-assert_type(u1 * f4, np.float32)
-assert_type(u1 * f8, np.float64)
-assert_type(u1 * ld, np.longdouble)
-assert_type(u1 * c8, np.complex64)
-assert_type(u1 * c16, np.complex128)
-assert_type(u1 * cld, np.clongdouble)
-assert_type(u1 * m8, np.timedelta64)
+assert_type(u8 * b_py, np.uint8)
+assert_type(u8 * i_py, np.uint8)
+assert_type(u8 * f_py, np.float64)
+assert_type(u8 * c_py, np.complex128)
+assert_type(u8 * b1, np.uint8)
+assert_type(u8 * u8, np.uint8)
+assert_type(u8 * u16, np.uint16)
+assert_type(u8 * u32, np.uint32)
+assert_type(u8 * u64, np.uint64)
+assert_type(u8 * i8, np.int16)
+assert_type(u8 * i16, np.int16)
+assert_type(u8 * i32, np.int32)
+assert_type(u8 * i64, np.int64)
+assert_type(u8 * f16, np.float16)
+assert_type(u8 * f32, np.float32)
+assert_type(u8 * f64, np.float64)
+assert_type(u8 * f64l, np.longdouble)
+assert_type(u8 * c32, np.complex64)
+assert_type(u8 * c64, np.complex128)
+assert_type(u8 * c64l, np.clongdouble)
+assert_type(u8 * m64, np.timedelta64)
 
-assert_type(u2 * b0, np.uint16)
-assert_type(u2 * i0, np.uint16)
-assert_type(u2 * f0, np.float64)
-assert_type(u2 * c0, np.complex128)
-assert_type(u2 * b1, np.uint16)
-assert_type(u2 * u1, np.uint16)
-assert_type(u2 * u2, np.uint16)
-assert_type(u2 * u4, np.uint32)
-assert_type(u2 * u8, np.uint64)
-assert_type(u2 * i1, np.int32)
-assert_type(u2 * i2, np.int32)
-assert_type(u2 * i4, np.int32)
-assert_type(u2 * i8, np.int64)
-assert_type(u2 * f2, np.float32)
-assert_type(u2 * f4, np.float32)
-assert_type(u2 * f8, np.float64)
-assert_type(u2 * ld, np.longdouble)
-assert_type(u2 * c8, np.complex64)
-assert_type(u2 * c16, np.complex128)
-assert_type(u2 * cld, np.clongdouble)
-assert_type(u2 * m8, np.timedelta64)
+assert_type(u16 * b_py, np.uint16)
+assert_type(u16 * i_py, np.uint16)
+assert_type(u16 * f_py, np.float64)
+assert_type(u16 * c_py, np.complex128)
+assert_type(u16 * b1, np.uint16)
+assert_type(u16 * u8, np.uint16)
+assert_type(u16 * u16, np.uint16)
+assert_type(u16 * u32, np.uint32)
+assert_type(u16 * u64, np.uint64)
+assert_type(u16 * i8, np.int32)
+assert_type(u16 * i16, np.int32)
+assert_type(u16 * i32, np.int32)
+assert_type(u16 * i64, np.int64)
+assert_type(u16 * f16, np.float32)
+assert_type(u16 * f32, np.float32)
+assert_type(u16 * f64, np.float64)
+assert_type(u16 * f64l, np.longdouble)
+assert_type(u16 * c32, np.complex64)
+assert_type(u16 * c64, np.complex128)
+assert_type(u16 * c64l, np.clongdouble)
+assert_type(u16 * m64, np.timedelta64)
 
-assert_type(u4 * b0, np.uint32)
-assert_type(u4 * i0, np.uint32)
-assert_type(u4 * f0, np.float64)
-assert_type(u4 * c0, np.complex128)
-assert_type(u4 * b1, np.uint32)
-assert_type(u4 * u1, np.uint32)
-assert_type(u4 * u2, np.uint32)
-assert_type(u4 * u4, np.uint32)
-assert_type(u4 * u8, np.uint64)
-assert_type(u4 * i1, np.int64)
-assert_type(u4 * i2, np.int64)
-assert_type(u4 * i4, np.int64)
-assert_type(u4 * i8, np.int64)
-assert_type(u4 * f2, np.float64)
-assert_type(u4 * f4, np.float64)
-assert_type(u4 * f8, np.float64)
-assert_type(u4 * ld, np.longdouble)
-assert_type(u4 * c8, np.complex128)
-assert_type(u4 * c16, np.complex128)
-assert_type(u4 * cld, np.clongdouble)
-assert_type(u4 * m8, np.timedelta64)
+assert_type(u32 * b_py, np.uint32)
+assert_type(u32 * i_py, np.uint32)
+assert_type(u32 * f_py, np.float64)
+assert_type(u32 * c_py, np.complex128)
+assert_type(u32 * b1, np.uint32)
+assert_type(u32 * u8, np.uint32)
+assert_type(u32 * u16, np.uint32)
+assert_type(u32 * u32, np.uint32)
+assert_type(u32 * u64, np.uint64)
+assert_type(u32 * i8, np.int64)
+assert_type(u32 * i16, np.int64)
+assert_type(u32 * i32, np.int64)
+assert_type(u32 * i64, np.int64)
+assert_type(u32 * f16, np.float64)
+assert_type(u32 * f32, np.float64)
+assert_type(u32 * f64, np.float64)
+assert_type(u32 * f64l, np.longdouble)
+assert_type(u32 * c32, np.complex128)
+assert_type(u32 * c64, np.complex128)
+assert_type(u32 * c64l, np.clongdouble)
+assert_type(u32 * m64, np.timedelta64)
 
-assert_type(u8 * b0, np.uint64)
-assert_type(u8 * i0, np.uint64)
-assert_type(u8 * f0, np.float64)
-assert_type(u8 * c0, np.complex128)
-assert_type(u8 * b1, np.uint64)
-assert_type(u8 * u1, np.uint64)
-assert_type(u8 * u2, np.uint64)
-assert_type(u8 * u4, np.uint64)
-assert_type(u8 * u8, np.uint64)
-assert_type(u8 * i1, np.float64)
-assert_type(u8 * i2, np.float64)
-assert_type(u8 * i4, np.float64)
-assert_type(u8 * i8, np.float64)
-assert_type(u8 * f2, np.float64)
-assert_type(u8 * f4, np.float64)
-assert_type(u8 * f8, np.float64)
-assert_type(u8 * ld, np.longdouble)
-assert_type(u8 * c8, np.complex128)
-assert_type(u8 * c16, np.complex128)
-assert_type(u8 * cld, np.clongdouble)
-assert_type(u8 * m8, np.timedelta64)
+assert_type(u64 * b_py, np.uint64)
+assert_type(u64 * i_py, np.uint64)
+assert_type(u64 * f_py, np.float64)
+assert_type(u64 * c_py, np.complex128)
+assert_type(u64 * b1, np.uint64)
+assert_type(u64 * u8, np.uint64)
+assert_type(u64 * u16, np.uint64)
+assert_type(u64 * u32, np.uint64)
+assert_type(u64 * u64, np.uint64)
+assert_type(u64 * i8, np.float64)
+assert_type(u64 * i16, np.float64)
+assert_type(u64 * i32, np.float64)
+assert_type(u64 * i64, np.float64)
+assert_type(u64 * f16, np.float64)
+assert_type(u64 * f32, np.float64)
+assert_type(u64 * f64, np.float64)
+assert_type(u64 * f64l, np.longdouble)
+assert_type(u64 * c32, np.complex128)
+assert_type(u64 * c64, np.complex128)
+assert_type(u64 * c64l, np.clongdouble)
+assert_type(u64 * m64, np.timedelta64)
 
-assert_type(i1 * b0, np.int8)
-assert_type(i1 * i0, np.int8)
-assert_type(i1 * f0, np.float64)
-assert_type(i1 * c0, np.complex128)
-assert_type(i1 * b1, np.int8)
-assert_type(i1 * u1, np.int16)
-assert_type(i1 * u2, np.int32)
-assert_type(i1 * u4, np.int64)
-assert_type(i1 * u8, np.float64)
-assert_type(i1 * i1, np.int8)
-assert_type(i1 * i2, np.int16)
-assert_type(i1 * i4, np.int32)
-assert_type(i1 * i8, np.int64)
-assert_type(i1 * f2, np.float16)
-assert_type(i1 * f4, np.float32)
-assert_type(i1 * f8, np.float64)
-assert_type(i1 * ld, np.longdouble)
-assert_type(i1 * c8, np.complex64)
-assert_type(i1 * c16, np.complex128)
-assert_type(i1 * cld, np.clongdouble)
-assert_type(i1 * m8, np.timedelta64)
+assert_type(i8 * b_py, np.int8)
+assert_type(i8 * i_py, np.int8)
+assert_type(i8 * f_py, np.float64)
+assert_type(i8 * c_py, np.complex128)
+assert_type(i8 * b1, np.int8)
+assert_type(i8 * u8, np.int16)
+assert_type(i8 * u16, np.int32)
+assert_type(i8 * u32, np.int64)
+assert_type(i8 * u64, np.float64)
+assert_type(i8 * i8, np.int8)
+assert_type(i8 * i16, np.int16)
+assert_type(i8 * i32, np.int32)
+assert_type(i8 * i64, np.int64)
+assert_type(i8 * f16, np.float16)
+assert_type(i8 * f32, np.float32)
+assert_type(i8 * f64, np.float64)
+assert_type(i8 * f64l, np.longdouble)
+assert_type(i8 * c32, np.complex64)
+assert_type(i8 * c64, np.complex128)
+assert_type(i8 * c64l, np.clongdouble)
+assert_type(i8 * m64, np.timedelta64)
 
-assert_type(i2 * b0, np.int16)
-assert_type(i2 * i0, np.int16)
-assert_type(i2 * f0, np.float64)
-assert_type(i2 * c0, np.complex128)
-assert_type(i2 * b1, np.int16)
-assert_type(i2 * u1, np.int16)
-assert_type(i2 * u2, np.int32)
-assert_type(i2 * u4, np.int64)
-assert_type(i2 * u8, np.float64)
-assert_type(i2 * i1, np.int16)
-assert_type(i2 * i2, np.int16)
-assert_type(i2 * i4, np.int32)
-assert_type(i2 * i8, np.int64)
-assert_type(i2 * f2, np.float32)
-assert_type(i2 * f4, np.float32)
-assert_type(i2 * f8, np.float64)
-assert_type(i2 * ld, np.longdouble)
-assert_type(i2 * c8, np.complex64)
-assert_type(i2 * c16, np.complex128)
-assert_type(i2 * cld, np.clongdouble)
-assert_type(i2 * m8, np.timedelta64)
+assert_type(i16 * b_py, np.int16)
+assert_type(i16 * i_py, np.int16)
+assert_type(i16 * f_py, np.float64)
+assert_type(i16 * c_py, np.complex128)
+assert_type(i16 * b1, np.int16)
+assert_type(i16 * u8, np.int16)
+assert_type(i16 * u16, np.int32)
+assert_type(i16 * u32, np.int64)
+assert_type(i16 * u64, np.float64)
+assert_type(i16 * i8, np.int16)
+assert_type(i16 * i16, np.int16)
+assert_type(i16 * i32, np.int32)
+assert_type(i16 * i64, np.int64)
+assert_type(i16 * f16, np.float32)
+assert_type(i16 * f32, np.float32)
+assert_type(i16 * f64, np.float64)
+assert_type(i16 * f64l, np.longdouble)
+assert_type(i16 * c32, np.complex64)
+assert_type(i16 * c64, np.complex128)
+assert_type(i16 * c64l, np.clongdouble)
+assert_type(i16 * m64, np.timedelta64)
 
-assert_type(i4 * b0, np.int32)
-assert_type(i4 * i0, np.int32)
-assert_type(i4 * f0, np.float64)
-assert_type(i4 * c0, np.complex128)
-assert_type(i4 * b1, np.int32)
-assert_type(i4 * u1, np.int32)
-assert_type(i4 * u2, np.int32)
-assert_type(i4 * u4, np.int64)
-assert_type(i4 * u8, np.float64)
-assert_type(i4 * i1, np.int32)
-assert_type(i4 * i2, np.int32)
-assert_type(i4 * i4, np.int32)
-assert_type(i4 * i8, np.int64)
-assert_type(i4 * f2, np.float64)
-assert_type(i4 * f4, np.float64)
-assert_type(i4 * f8, np.float64)
-assert_type(i4 * ld, np.longdouble)
-assert_type(i4 * c8, np.complex128)
-assert_type(i4 * c16, np.complex128)
-assert_type(i4 * cld, np.clongdouble)
-assert_type(i4 * m8, np.timedelta64)
+assert_type(i32 * b_py, np.int32)
+assert_type(i32 * i_py, np.int32)
+assert_type(i32 * f_py, np.float64)
+assert_type(i32 * c_py, np.complex128)
+assert_type(i32 * b1, np.int32)
+assert_type(i32 * u8, np.int32)
+assert_type(i32 * u16, np.int32)
+assert_type(i32 * u32, np.int64)
+assert_type(i32 * u64, np.float64)
+assert_type(i32 * i8, np.int32)
+assert_type(i32 * i16, np.int32)
+assert_type(i32 * i32, np.int32)
+assert_type(i32 * i64, np.int64)
+assert_type(i32 * f16, np.float64)
+assert_type(i32 * f32, np.float64)
+assert_type(i32 * f64, np.float64)
+assert_type(i32 * f64l, np.longdouble)
+assert_type(i32 * c32, np.complex128)
+assert_type(i32 * c64, np.complex128)
+assert_type(i32 * c64l, np.clongdouble)
+assert_type(i32 * m64, np.timedelta64)
 
-assert_type(i8 * b0, np.int64)
-assert_type(i8 * i0, np.int64)
-assert_type(i8 * f0, np.float64)
-assert_type(i8 * c0, np.complex128)
-assert_type(i8 * b1, np.int64)
-assert_type(i8 * u1, np.int64)
-assert_type(i8 * u2, np.int64)
-assert_type(i8 * u4, np.int64)
-assert_type(i8 * u8, np.float64)
-assert_type(i8 * i1, np.int64)
-assert_type(i8 * i2, np.int64)
-assert_type(i8 * i4, np.int64)
-assert_type(i8 * i8, np.int64)
-assert_type(i8 * f2, np.float64)
-assert_type(i8 * f4, np.float64)
-assert_type(i8 * f8, np.float64)
-assert_type(i8 * ld, np.longdouble)
-assert_type(i8 * c8, np.complex128)
-assert_type(i8 * c16, np.complex128)
-assert_type(i8 * cld, np.clongdouble)
-assert_type(i8 * m8, np.timedelta64)
+assert_type(i64 * b_py, np.int64)
+assert_type(i64 * i_py, np.int64)
+assert_type(i64 * f_py, np.float64)
+assert_type(i64 * c_py, np.complex128)
+assert_type(i64 * b1, np.int64)
+assert_type(i64 * u8, np.int64)
+assert_type(i64 * u16, np.int64)
+assert_type(i64 * u32, np.int64)
+assert_type(i64 * u64, np.float64)
+assert_type(i64 * i8, np.int64)
+assert_type(i64 * i16, np.int64)
+assert_type(i64 * i32, np.int64)
+assert_type(i64 * i64, np.int64)
+assert_type(i64 * f16, np.float64)
+assert_type(i64 * f32, np.float64)
+assert_type(i64 * f64, np.float64)
+assert_type(i64 * f64l, np.longdouble)
+assert_type(i64 * c32, np.complex128)
+assert_type(i64 * c64, np.complex128)
+assert_type(i64 * c64l, np.clongdouble)
+assert_type(i64 * m64, np.timedelta64)
 
-assert_type(f2 * b0, np.float16)
-assert_type(f2 * i0, np.float16)
-assert_type(f2 * f0, np.float16)
-assert_type(f2 * c0, np.complex64)
-assert_type(f2 * b1, np.float16)
-assert_type(f2 * u1, np.float16)
-assert_type(f2 * u2, np.float32)
-assert_type(f2 * u4, np.float64)
-assert_type(f2 * u8, np.float64)
-assert_type(f2 * i1, np.float16)
-assert_type(f2 * i2, np.float32)
-assert_type(f2 * i4, np.float64)
-assert_type(f2 * i8, np.float64)
-assert_type(f2 * f2, np.float16)
-assert_type(f2 * f4, np.float32)
-assert_type(f2 * f8, np.float64)
-assert_type(f2 * ld, np.longdouble)
-assert_type(f2 * c8, np.complex64)
-assert_type(f2 * c16, np.complex128)
-assert_type(f2 * cld, np.clongdouble)
-assert_type(f2 * m8, np.timedelta64)
+assert_type(f16 * b_py, np.float16)
+assert_type(f16 * i_py, np.float16)
+assert_type(f16 * f_py, np.float16)
+assert_type(f16 * c_py, np.complex64)
+assert_type(f16 * b1, np.float16)
+assert_type(f16 * u8, np.float16)
+assert_type(f16 * u16, np.float32)
+assert_type(f16 * u32, np.float64)
+assert_type(f16 * u64, np.float64)
+assert_type(f16 * i8, np.float16)
+assert_type(f16 * i16, np.float32)
+assert_type(f16 * i32, np.float64)
+assert_type(f16 * i64, np.float64)
+assert_type(f16 * f16, np.float16)
+assert_type(f16 * f32, np.float32)
+assert_type(f16 * f64, np.float64)
+assert_type(f16 * f64l, np.longdouble)
+assert_type(f16 * c32, np.complex64)
+assert_type(f16 * c64, np.complex128)
+assert_type(f16 * c64l, np.clongdouble)
+assert_type(f16 * m64, np.timedelta64)
 
-assert_type(f4 * b0, np.float32)
-assert_type(f4 * i0, np.float32)
-assert_type(f4 * f0, np.float32)
-assert_type(f4 * c0, np.complex64)
-assert_type(f4 * b1, np.float32)
-assert_type(f4 * u1, np.float32)
-assert_type(f4 * u2, np.float32)
-assert_type(f4 * u4, np.float64)
-assert_type(f4 * u8, np.float64)
-assert_type(f4 * i1, np.float32)
-assert_type(f4 * i2, np.float32)
-assert_type(f4 * i4, np.float64)
-assert_type(f4 * i8, np.float64)
-assert_type(f4 * f2, np.float32)
-assert_type(f4 * f4, np.float32)
-assert_type(f4 * f8, np.float64)
-assert_type(f4 * ld, np.longdouble)
-assert_type(f4 * c8, np.complex64)
-assert_type(f4 * c16, np.complex128)
-assert_type(f4 * cld, np.clongdouble)
-assert_type(f4 * m8, np.timedelta64)
+assert_type(f32 * b_py, np.float32)
+assert_type(f32 * i_py, np.float32)
+assert_type(f32 * f_py, np.float32)
+assert_type(f32 * c_py, np.complex64)
+assert_type(f32 * b1, np.float32)
+assert_type(f32 * u8, np.float32)
+assert_type(f32 * u16, np.float32)
+assert_type(f32 * u32, np.float64)
+assert_type(f32 * u64, np.float64)
+assert_type(f32 * i8, np.float32)
+assert_type(f32 * i16, np.float32)
+assert_type(f32 * i32, np.float64)
+assert_type(f32 * i64, np.float64)
+assert_type(f32 * f16, np.float32)
+assert_type(f32 * f32, np.float32)
+assert_type(f32 * f64, np.float64)
+assert_type(f32 * f64l, np.longdouble)
+assert_type(f32 * c32, np.complex64)
+assert_type(f32 * c64, np.complex128)
+assert_type(f32 * c64l, np.clongdouble)
+assert_type(f32 * m64, np.timedelta64)
 
-assert_type(f8 * b0, np.float64)
-assert_type(f8 * i0, np.float64)
-assert_type(f8 * f0, np.float64)
-assert_type(f8 * c0, np.complex128)
-assert_type(f8 * b1, np.float64)
-assert_type(f8 * u1, np.float64)
-assert_type(f8 * u2, np.float64)
-assert_type(f8 * u4, np.float64)
-assert_type(f8 * u8, np.float64)
-assert_type(f8 * i1, np.float64)
-assert_type(f8 * i2, np.float64)
-assert_type(f8 * i4, np.float64)
-assert_type(f8 * i8, np.float64)
-assert_type(f8 * f2, np.float64)
-assert_type(f8 * f4, np.float64)
-assert_type(f8 * f8, np.float64)
-assert_type(f8 * ld, np.longdouble)
-assert_type(f8 * c8, np.complex128)
-assert_type(f8 * c16, np.complex128)
-assert_type(f8 * cld, np.clongdouble)
-assert_type(f8 * m8, np.timedelta64)
+assert_type(f64 * b_py, np.float64)
+assert_type(f64 * i_py, np.float64)
+assert_type(f64 * f_py, np.float64)
+assert_type(f64 * c_py, np.complex128)
+assert_type(f64 * b1, np.float64)
+assert_type(f64 * u8, np.float64)
+assert_type(f64 * u16, np.float64)
+assert_type(f64 * u32, np.float64)
+assert_type(f64 * u64, np.float64)
+assert_type(f64 * i8, np.float64)
+assert_type(f64 * i16, np.float64)
+assert_type(f64 * i32, np.float64)
+assert_type(f64 * i64, np.float64)
+assert_type(f64 * f16, np.float64)
+assert_type(f64 * f32, np.float64)
+assert_type(f64 * f64, np.float64)
+assert_type(f64 * f64l, np.longdouble)
+assert_type(f64 * c32, np.complex128)
+assert_type(f64 * c64, np.complex128)
+assert_type(f64 * c64l, np.clongdouble)
+assert_type(f64 * m64, np.timedelta64)
 
-assert_type(ld * b0, np.longdouble)
-assert_type(ld * i0, np.longdouble)
-assert_type(ld * f0, np.longdouble)
-assert_type(ld * c0, np.clongdouble)
-assert_type(ld * b1, np.longdouble)
-assert_type(ld * u1, np.longdouble)
-assert_type(ld * u2, np.longdouble)
-assert_type(ld * u4, np.longdouble)
-assert_type(ld * u8, np.longdouble)
-assert_type(ld * i1, np.longdouble)
-assert_type(ld * i2, np.longdouble)
-assert_type(ld * i4, np.longdouble)
-assert_type(ld * i8, np.longdouble)
-assert_type(ld * f2, np.longdouble)
-assert_type(ld * f4, np.longdouble)
-assert_type(ld * f8, np.longdouble)
-assert_type(ld * ld, np.longdouble)
-assert_type(ld * c8, np.clongdouble)
-assert_type(ld * c16, np.clongdouble)
-assert_type(ld * cld, np.clongdouble)
-assert_type(ld * m8, np.timedelta64)
+assert_type(f64l * b_py, np.longdouble)
+assert_type(f64l * i_py, np.longdouble)
+assert_type(f64l * f_py, np.longdouble)
+assert_type(f64l * c_py, np.clongdouble)
+assert_type(f64l * b1, np.longdouble)
+assert_type(f64l * u8, np.longdouble)
+assert_type(f64l * u16, np.longdouble)
+assert_type(f64l * u32, np.longdouble)
+assert_type(f64l * u64, np.longdouble)
+assert_type(f64l * i8, np.longdouble)
+assert_type(f64l * i16, np.longdouble)
+assert_type(f64l * i32, np.longdouble)
+assert_type(f64l * i64, np.longdouble)
+assert_type(f64l * f16, np.longdouble)
+assert_type(f64l * f32, np.longdouble)
+assert_type(f64l * f64, np.longdouble)
+assert_type(f64l * f64l, np.longdouble)
+assert_type(f64l * c32, np.clongdouble)
+assert_type(f64l * c64, np.clongdouble)
+assert_type(f64l * c64l, np.clongdouble)
+assert_type(f64l * m64, np.timedelta64)
 
-assert_type(c8 * b0, np.complex64)
-assert_type(c8 * i0, np.complex64)
-assert_type(c8 * f0, np.complex64)
-assert_type(c8 * c0, np.complex64)
-assert_type(c8 * b1, np.complex64)
-assert_type(c8 * u1, np.complex64)
-assert_type(c8 * u2, np.complex64)
-assert_type(c8 * u4, np.complex128)
-assert_type(c8 * u8, np.complex128)
-assert_type(c8 * i1, np.complex64)
-assert_type(c8 * i2, np.complex64)
-assert_type(c8 * i4, np.complex128)
-assert_type(c8 * i8, np.complex128)
-assert_type(c8 * f2, np.complex64)
-assert_type(c8 * f4, np.complex64)
-assert_type(c8 * f8, np.complex128)
-assert_type(c8 * ld, np.clongdouble)
-assert_type(c8 * c8, np.complex64)
-assert_type(c8 * c16, np.complex128)
-assert_type(c8 * cld, np.clongdouble)
-c8 * m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c32 * b_py, np.complex64)
+assert_type(c32 * i_py, np.complex64)
+assert_type(c32 * f_py, np.complex64)
+assert_type(c32 * c_py, np.complex64)
+assert_type(c32 * b1, np.complex64)
+assert_type(c32 * u8, np.complex64)
+assert_type(c32 * u16, np.complex64)
+assert_type(c32 * u32, np.complex128)
+assert_type(c32 * u64, np.complex128)
+assert_type(c32 * i8, np.complex64)
+assert_type(c32 * i16, np.complex64)
+assert_type(c32 * i32, np.complex128)
+assert_type(c32 * i64, np.complex128)
+assert_type(c32 * f16, np.complex64)
+assert_type(c32 * f32, np.complex64)
+assert_type(c32 * f64, np.complex128)
+assert_type(c32 * f64l, np.clongdouble)
+assert_type(c32 * c32, np.complex64)
+assert_type(c32 * c64, np.complex128)
+assert_type(c32 * c64l, np.clongdouble)
 
-assert_type(c16 * b0, np.complex128)
-assert_type(c16 * i0, np.complex128)
-assert_type(c16 * f0, np.complex128)
-assert_type(c16 * c0, np.complex128)
-assert_type(c16 * b1, np.complex128)
-assert_type(c16 * u1, np.complex128)
-assert_type(c16 * u2, np.complex128)
-assert_type(c16 * u4, np.complex128)
-assert_type(c16 * u8, np.complex128)
-assert_type(c16 * i1, np.complex128)
-assert_type(c16 * i2, np.complex128)
-assert_type(c16 * i4, np.complex128)
-assert_type(c16 * i8, np.complex128)
-assert_type(c16 * f2, np.complex128)
-assert_type(c16 * f4, np.complex128)
-assert_type(c16 * f8, np.complex128)
-assert_type(c16 * ld, np.clongdouble)
-assert_type(c16 * c8, np.complex128)
-assert_type(c16 * c16, np.complex128)
-assert_type(c16 * cld, np.clongdouble)
-c16 * m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c64 * b_py, np.complex128)
+assert_type(c64 * i_py, np.complex128)
+assert_type(c64 * f_py, np.complex128)
+assert_type(c64 * c_py, np.complex128)
+assert_type(c64 * b1, np.complex128)
+assert_type(c64 * u8, np.complex128)
+assert_type(c64 * u16, np.complex128)
+assert_type(c64 * u32, np.complex128)
+assert_type(c64 * u64, np.complex128)
+assert_type(c64 * i8, np.complex128)
+assert_type(c64 * i16, np.complex128)
+assert_type(c64 * i32, np.complex128)
+assert_type(c64 * i64, np.complex128)
+assert_type(c64 * f16, np.complex128)
+assert_type(c64 * f32, np.complex128)
+assert_type(c64 * f64, np.complex128)
+assert_type(c64 * f64l, np.clongdouble)
+assert_type(c64 * c32, np.complex128)
+assert_type(c64 * c64, np.complex128)
+assert_type(c64 * c64l, np.clongdouble)
 
-assert_type(cld * b0, np.clongdouble)
-assert_type(cld * i0, np.clongdouble)
-assert_type(cld * f0, np.clongdouble)
-assert_type(cld * c0, np.clongdouble)
-assert_type(cld * b1, np.clongdouble)
-assert_type(cld * u1, np.clongdouble)
-assert_type(cld * u2, np.clongdouble)
-assert_type(cld * u4, np.clongdouble)
-assert_type(cld * u8, np.clongdouble)
-assert_type(cld * i1, np.clongdouble)
-assert_type(cld * i2, np.clongdouble)
-assert_type(cld * i4, np.clongdouble)
-assert_type(cld * i8, np.clongdouble)
-assert_type(cld * f2, np.clongdouble)
-assert_type(cld * f4, np.clongdouble)
-assert_type(cld * f8, np.clongdouble)
-assert_type(cld * ld, np.clongdouble)
-assert_type(cld * c8, np.clongdouble)
-assert_type(cld * c16, np.clongdouble)
-assert_type(cld * cld, np.clongdouble)
-cld * m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c64l * b_py, np.clongdouble)
+assert_type(c64l * i_py, np.clongdouble)
+assert_type(c64l * f_py, np.clongdouble)
+assert_type(c64l * c_py, np.clongdouble)
+assert_type(c64l * b1, np.clongdouble)
+assert_type(c64l * u8, np.clongdouble)
+assert_type(c64l * u16, np.clongdouble)
+assert_type(c64l * u32, np.clongdouble)
+assert_type(c64l * u64, np.clongdouble)
+assert_type(c64l * i8, np.clongdouble)
+assert_type(c64l * i16, np.clongdouble)
+assert_type(c64l * i32, np.clongdouble)
+assert_type(c64l * i64, np.clongdouble)
+assert_type(c64l * f16, np.clongdouble)
+assert_type(c64l * f32, np.clongdouble)
+assert_type(c64l * f64, np.clongdouble)
+assert_type(c64l * f64l, np.clongdouble)
+assert_type(c64l * c32, np.clongdouble)
+assert_type(c64l * c64, np.clongdouble)
+assert_type(c64l * c64l, np.clongdouble)
 
-assert_type(m8 * b0, np.timedelta64)
-assert_type(m8 * i0, np.timedelta64)
-assert_type(m8 * f0, np.timedelta64)
-m8 * c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 * b1, np.timedelta64)
-assert_type(m8 * u1, np.timedelta64)
-assert_type(m8 * u2, np.timedelta64)
-assert_type(m8 * u4, np.timedelta64)
-assert_type(m8 * u8, np.timedelta64)
-assert_type(m8 * i1, np.timedelta64)
-assert_type(m8 * i2, np.timedelta64)
-assert_type(m8 * i4, np.timedelta64)
-assert_type(m8 * i8, np.timedelta64)
-assert_type(m8 * f2, np.timedelta64)
-assert_type(m8 * f4, np.timedelta64)
-assert_type(m8 * f8, np.timedelta64)
-assert_type(m8 * ld, np.timedelta64)
-m8 * c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 * c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 * cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 * m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(m64 * b_py, np.timedelta64)
+assert_type(m64 * i_py, np.timedelta64)
+assert_type(m64 * f_py, np.timedelta64)
+assert_type(m64 * b1, np.timedelta64)
+assert_type(m64 * u8, np.timedelta64)
+assert_type(m64 * u16, np.timedelta64)
+assert_type(m64 * u32, np.timedelta64)
+assert_type(m64 * u64, np.timedelta64)
+assert_type(m64 * i8, np.timedelta64)
+assert_type(m64 * i16, np.timedelta64)
+assert_type(m64 * i32, np.timedelta64)
+assert_type(m64 * i64, np.timedelta64)
+assert_type(m64 * f16, np.timedelta64)
+assert_type(m64 * f32, np.timedelta64)
+assert_type(m64 * f64, np.timedelta64)
+assert_type(m64 * f64l, np.timedelta64)
 
 ###
 # __[r]pow__
 
-assert_type(b1**b0, np.int8)
-assert_type(b1**i0, np.int_)
-assert_type(b1**f0, np.float64)
-assert_type(b1**c0, np.complex128)
+assert_type(b1**b_py, np.int8)
+assert_type(b1**i_py, np.int_)
+assert_type(b1**f_py, np.float64)
+assert_type(b1**c_py, np.complex128)
 assert_type(b1**b1, np.int8)
-assert_type(b1**u1, np.uint8)
-assert_type(b1**u2, np.uint16)
-assert_type(b1**u4, np.uint32)
-assert_type(b1**u8, np.uint64)
-assert_type(b1**i1, np.int8)
-assert_type(b1**i2, np.int16)
-assert_type(b1**i4, np.int32)
-assert_type(b1**i8, np.int64)
-assert_type(b1**f2, np.float16)
-assert_type(b1**f4, np.float32)
-assert_type(b1**f8, np.float64)
-assert_type(b1**ld, np.longdouble)
-assert_type(b1**c8, np.complex64)
-assert_type(b1**c16, np.complex128)
-assert_type(b1**cld, np.clongdouble)
+assert_type(b1**u8, np.uint8)
+assert_type(b1**u16, np.uint16)
+assert_type(b1**u32, np.uint32)
+assert_type(b1**u64, np.uint64)
+assert_type(b1**i8, np.int8)
+assert_type(b1**i16, np.int16)
+assert_type(b1**i32, np.int32)
+assert_type(b1**i64, np.int64)
+assert_type(b1**f16, np.float16)
+assert_type(b1**f32, np.float32)
+assert_type(b1**f64, np.float64)
+assert_type(b1**f64l, np.longdouble)
+assert_type(b1**c32, np.complex64)
+assert_type(b1**c64, np.complex128)
+assert_type(b1**c64l, np.clongdouble)
 
-assert_type(u1**b0, np.uint8)
-assert_type(u1**i0, np.uint8)
-assert_type(u1**f0, np.float64)
-assert_type(u1**c0, np.complex128)
-assert_type(u1**b1, np.uint8)
-assert_type(u1**u1, np.uint8)
-assert_type(u1**u2, np.uint16)
-assert_type(u1**u4, np.uint32)
-assert_type(u1**u8, np.uint64)
-assert_type(u1**i1, np.int16)
-assert_type(u1**i2, np.int16)
-assert_type(u1**i4, np.int32)
-assert_type(u1**i8, np.int64)
-assert_type(u1**f2, np.float16)
-assert_type(u1**f4, np.float32)
-assert_type(u1**f8, np.float64)
-assert_type(u1**ld, np.longdouble)
-assert_type(u1**c8, np.complex64)
-assert_type(u1**c16, np.complex128)
-assert_type(u1**cld, np.clongdouble)
+assert_type(u8**b_py, np.uint8)
+assert_type(u8**i_py, np.uint8)
+assert_type(u8**f_py, np.float64)
+assert_type(u8**c_py, np.complex128)
+assert_type(u8**b1, np.uint8)
+assert_type(u8**u8, np.uint8)
+assert_type(u8**u16, np.uint16)
+assert_type(u8**u32, np.uint32)
+assert_type(u8**u64, np.uint64)
+assert_type(u8**i8, np.int16)
+assert_type(u8**i16, np.int16)
+assert_type(u8**i32, np.int32)
+assert_type(u8**i64, np.int64)
+assert_type(u8**f16, np.float16)
+assert_type(u8**f32, np.float32)
+assert_type(u8**f64, np.float64)
+assert_type(u8**f64l, np.longdouble)
+assert_type(u8**c32, np.complex64)
+assert_type(u8**c64, np.complex128)
+assert_type(u8**c64l, np.clongdouble)
 
-assert_type(u2**b0, np.uint16)
-assert_type(u2**i0, np.uint16)
-assert_type(u2**f0, np.float64)
-assert_type(u2**c0, np.complex128)
-assert_type(u2**b1, np.uint16)
-assert_type(u2**u1, np.uint16)
-assert_type(u2**u2, np.uint16)
-assert_type(u2**u4, np.uint32)
-assert_type(u2**u8, np.uint64)
-assert_type(u2**i1, np.int32)
-assert_type(u2**i2, np.int32)
-assert_type(u2**i4, np.int32)
-assert_type(u2**i8, np.int64)
-assert_type(u2**f2, np.float32)
-assert_type(u2**f4, np.float32)
-assert_type(u2**f8, np.float64)
-assert_type(u2**ld, np.longdouble)
-assert_type(u2**c8, np.complex64)
-assert_type(u2**c16, np.complex128)
-assert_type(u2**cld, np.clongdouble)
+assert_type(u16**b_py, np.uint16)
+assert_type(u16**i_py, np.uint16)
+assert_type(u16**f_py, np.float64)
+assert_type(u16**c_py, np.complex128)
+assert_type(u16**b1, np.uint16)
+assert_type(u16**u8, np.uint16)
+assert_type(u16**u16, np.uint16)
+assert_type(u16**u32, np.uint32)
+assert_type(u16**u64, np.uint64)
+assert_type(u16**i8, np.int32)
+assert_type(u16**i16, np.int32)
+assert_type(u16**i32, np.int32)
+assert_type(u16**i64, np.int64)
+assert_type(u16**f16, np.float32)
+assert_type(u16**f32, np.float32)
+assert_type(u16**f64, np.float64)
+assert_type(u16**f64l, np.longdouble)
+assert_type(u16**c32, np.complex64)
+assert_type(u16**c64, np.complex128)
+assert_type(u16**c64l, np.clongdouble)
 
-assert_type(u4**b0, np.uint32)
-assert_type(u4**i0, np.uint32)
-assert_type(u4**f0, np.float64)
-assert_type(u4**c0, np.complex128)
-assert_type(u4**b1, np.uint32)
-assert_type(u4**u1, np.uint32)
-assert_type(u4**u2, np.uint32)
-assert_type(u4**u4, np.uint32)
-assert_type(u4**u8, np.uint64)
-assert_type(u4**i1, np.int64)
-assert_type(u4**i2, np.int64)
-assert_type(u4**i4, np.int64)
-assert_type(u4**i8, np.int64)
-assert_type(u4**f2, np.float64)
-assert_type(u4**f4, np.float64)
-assert_type(u4**f8, np.float64)
-assert_type(u4**ld, np.longdouble)
-assert_type(u4**c8, np.complex128)
-assert_type(u4**c16, np.complex128)
-assert_type(u4**cld, np.clongdouble)
+assert_type(u32**b_py, np.uint32)
+assert_type(u32**i_py, np.uint32)
+assert_type(u32**f_py, np.float64)
+assert_type(u32**c_py, np.complex128)
+assert_type(u32**b1, np.uint32)
+assert_type(u32**u8, np.uint32)
+assert_type(u32**u16, np.uint32)
+assert_type(u32**u32, np.uint32)
+assert_type(u32**u64, np.uint64)
+assert_type(u32**i8, np.int64)
+assert_type(u32**i16, np.int64)
+assert_type(u32**i32, np.int64)
+assert_type(u32**i64, np.int64)
+assert_type(u32**f16, np.float64)
+assert_type(u32**f32, np.float64)
+assert_type(u32**f64, np.float64)
+assert_type(u32**f64l, np.longdouble)
+assert_type(u32**c32, np.complex128)
+assert_type(u32**c64, np.complex128)
+assert_type(u32**c64l, np.clongdouble)
 
-assert_type(u8**b0, np.uint64)
-assert_type(u8**i0, np.uint64)
-assert_type(u8**f0, np.float64)
-assert_type(u8**c0, np.complex128)
-assert_type(u8**b1, np.uint64)
-assert_type(u8**u1, np.uint64)
-assert_type(u8**u2, np.uint64)
-assert_type(u8**u4, np.uint64)
-assert_type(u8**u8, np.uint64)
-assert_type(u8**i1, np.float64)
-assert_type(u8**i2, np.float64)
-assert_type(u8**i4, np.float64)
-assert_type(u8**i8, np.float64)
-assert_type(u8**f2, np.float64)
-assert_type(u8**f4, np.float64)
-assert_type(u8**f8, np.float64)
-assert_type(u8**ld, np.longdouble)
-assert_type(u8**c8, np.complex128)
-assert_type(u8**c16, np.complex128)
-assert_type(u8**cld, np.clongdouble)
+assert_type(u64**b_py, np.uint64)
+assert_type(u64**i_py, np.uint64)
+assert_type(u64**f_py, np.float64)
+assert_type(u64**c_py, np.complex128)
+assert_type(u64**b1, np.uint64)
+assert_type(u64**u8, np.uint64)
+assert_type(u64**u16, np.uint64)
+assert_type(u64**u32, np.uint64)
+assert_type(u64**u64, np.uint64)
+assert_type(u64**i8, np.float64)
+assert_type(u64**i16, np.float64)
+assert_type(u64**i32, np.float64)
+assert_type(u64**i64, np.float64)
+assert_type(u64**f16, np.float64)
+assert_type(u64**f32, np.float64)
+assert_type(u64**f64, np.float64)
+assert_type(u64**f64l, np.longdouble)
+assert_type(u64**c32, np.complex128)
+assert_type(u64**c64, np.complex128)
+assert_type(u64**c64l, np.clongdouble)
 
-assert_type(i1**b0, np.int8)
-assert_type(i1**i0, np.int8)
-assert_type(i1**f0, np.float64)
-assert_type(i1**c0, np.complex128)
-assert_type(i1**b1, np.int8)
-assert_type(i1**u1, np.int16)
-assert_type(i1**u2, np.int32)
-assert_type(i1**u4, np.int64)
-assert_type(i1**u8, np.float64)
-assert_type(i1**i1, np.int8)
-assert_type(i1**i2, np.int16)
-assert_type(i1**i4, np.int32)
-assert_type(i1**i8, np.int64)
-assert_type(i1**f2, np.float16)
-assert_type(i1**f4, np.float32)
-assert_type(i1**f8, np.float64)
-assert_type(i1**ld, np.longdouble)
-assert_type(i1**c8, np.complex64)
-assert_type(i1**c16, np.complex128)
-assert_type(i1**cld, np.clongdouble)
+assert_type(i8**b_py, np.int8)
+assert_type(i8**i_py, np.int8)
+assert_type(i8**f_py, np.float64)
+assert_type(i8**c_py, np.complex128)
+assert_type(i8**b1, np.int8)
+assert_type(i8**u8, np.int16)
+assert_type(i8**u16, np.int32)
+assert_type(i8**u32, np.int64)
+assert_type(i8**u64, np.float64)
+assert_type(i8**i8, np.int8)
+assert_type(i8**i16, np.int16)
+assert_type(i8**i32, np.int32)
+assert_type(i8**i64, np.int64)
+assert_type(i8**f16, np.float16)
+assert_type(i8**f32, np.float32)
+assert_type(i8**f64, np.float64)
+assert_type(i8**f64l, np.longdouble)
+assert_type(i8**c32, np.complex64)
+assert_type(i8**c64, np.complex128)
+assert_type(i8**c64l, np.clongdouble)
 
-assert_type(i2**b0, np.int16)
-assert_type(i2**i0, np.int16)
-assert_type(i2**f0, np.float64)
-assert_type(i2**c0, np.complex128)
-assert_type(i2**b1, np.int16)
-assert_type(i2**u1, np.int16)
-assert_type(i2**u2, np.int32)
-assert_type(i2**u4, np.int64)
-assert_type(i2**u8, np.float64)
-assert_type(i2**i1, np.int16)
-assert_type(i2**i2, np.int16)
-assert_type(i2**i4, np.int32)
-assert_type(i2**i8, np.int64)
-assert_type(i2**f2, np.float32)
-assert_type(i2**f4, np.float32)
-assert_type(i2**f8, np.float64)
-assert_type(i2**ld, np.longdouble)
-assert_type(i2**c8, np.complex64)
-assert_type(i2**c16, np.complex128)
-assert_type(i2**cld, np.clongdouble)
+assert_type(i16**b_py, np.int16)
+assert_type(i16**i_py, np.int16)
+assert_type(i16**f_py, np.float64)
+assert_type(i16**c_py, np.complex128)
+assert_type(i16**b1, np.int16)
+assert_type(i16**u8, np.int16)
+assert_type(i16**u16, np.int32)
+assert_type(i16**u32, np.int64)
+assert_type(i16**u64, np.float64)
+assert_type(i16**i8, np.int16)
+assert_type(i16**i16, np.int16)
+assert_type(i16**i32, np.int32)
+assert_type(i16**i64, np.int64)
+assert_type(i16**f16, np.float32)
+assert_type(i16**f32, np.float32)
+assert_type(i16**f64, np.float64)
+assert_type(i16**f64l, np.longdouble)
+assert_type(i16**c32, np.complex64)
+assert_type(i16**c64, np.complex128)
+assert_type(i16**c64l, np.clongdouble)
 
-assert_type(i4**b0, np.int32)
-assert_type(i4**i0, np.int32)
-assert_type(i4**f0, np.float64)
-assert_type(i4**c0, np.complex128)
-assert_type(i4**b1, np.int32)
-assert_type(i4**u1, np.int32)
-assert_type(i4**u2, np.int32)
-assert_type(i4**u4, np.int64)
-assert_type(i4**u8, np.float64)
-assert_type(i4**i1, np.int32)
-assert_type(i4**i2, np.int32)
-assert_type(i4**i4, np.int32)
-assert_type(i4**i8, np.int64)
-assert_type(i4**f2, np.float64)
-assert_type(i4**f4, np.float64)
-assert_type(i4**f8, np.float64)
-assert_type(i4**ld, np.longdouble)
-assert_type(i4**c8, np.complex128)
-assert_type(i4**c16, np.complex128)
-assert_type(i4**cld, np.clongdouble)
+assert_type(i32**b_py, np.int32)
+assert_type(i32**i_py, np.int32)
+assert_type(i32**f_py, np.float64)
+assert_type(i32**c_py, np.complex128)
+assert_type(i32**b1, np.int32)
+assert_type(i32**u8, np.int32)
+assert_type(i32**u16, np.int32)
+assert_type(i32**u32, np.int64)
+assert_type(i32**u64, np.float64)
+assert_type(i32**i8, np.int32)
+assert_type(i32**i16, np.int32)
+assert_type(i32**i32, np.int32)
+assert_type(i32**i64, np.int64)
+assert_type(i32**f16, np.float64)
+assert_type(i32**f32, np.float64)
+assert_type(i32**f64, np.float64)
+assert_type(i32**f64l, np.longdouble)
+assert_type(i32**c32, np.complex128)
+assert_type(i32**c64, np.complex128)
+assert_type(i32**c64l, np.clongdouble)
 
-assert_type(i8**b0, np.int64)
-assert_type(i8**i0, np.int64)
-assert_type(i8**f0, np.float64)
-assert_type(i8**c0, np.complex128)
-assert_type(i8**b1, np.int64)
-assert_type(i8**u1, np.int64)
-assert_type(i8**u2, np.int64)
-assert_type(i8**u4, np.int64)
-assert_type(i8**u8, np.float64)
-assert_type(i8**i1, np.int64)
-assert_type(i8**i2, np.int64)
-assert_type(i8**i4, np.int64)
-assert_type(i8**i8, np.int64)
-assert_type(i8**f2, np.float64)
-assert_type(i8**f4, np.float64)
-assert_type(i8**f8, np.float64)
-assert_type(i8**ld, np.longdouble)
-assert_type(i8**c8, np.complex128)
-assert_type(i8**c16, np.complex128)
-assert_type(i8**cld, np.clongdouble)
+assert_type(i64**b_py, np.int64)
+assert_type(i64**i_py, np.int64)
+assert_type(i64**f_py, np.float64)
+assert_type(i64**c_py, np.complex128)
+assert_type(i64**b1, np.int64)
+assert_type(i64**u8, np.int64)
+assert_type(i64**u16, np.int64)
+assert_type(i64**u32, np.int64)
+assert_type(i64**u64, np.float64)
+assert_type(i64**i8, np.int64)
+assert_type(i64**i16, np.int64)
+assert_type(i64**i32, np.int64)
+assert_type(i64**i64, np.int64)
+assert_type(i64**f16, np.float64)
+assert_type(i64**f32, np.float64)
+assert_type(i64**f64, np.float64)
+assert_type(i64**f64l, np.longdouble)
+assert_type(i64**c32, np.complex128)
+assert_type(i64**c64, np.complex128)
+assert_type(i64**c64l, np.clongdouble)
 
-assert_type(f2**b0, np.float16)
-assert_type(f2**i0, np.float16)
-assert_type(f2**f0, np.float16)
-assert_type(f2**c0, np.complex64)
-assert_type(f2**b1, np.float16)
-assert_type(f2**u1, np.float16)
-assert_type(f2**u2, np.float32)
-assert_type(f2**u4, np.float64)
-assert_type(f2**u8, np.float64)
-assert_type(f2**i1, np.float16)
-assert_type(f2**i2, np.float32)
-assert_type(f2**i4, np.float64)
-assert_type(f2**i8, np.float64)
-assert_type(f2**f2, np.float16)
-assert_type(f2**f4, np.float32)
-assert_type(f2**f8, np.float64)
-assert_type(f2**ld, np.longdouble)
-assert_type(f2**c8, np.complex64)
-assert_type(f2**c16, np.complex128)
-assert_type(f2**cld, np.clongdouble)
+assert_type(f16**b_py, np.float16)
+assert_type(f16**i_py, np.float16)
+assert_type(f16**f_py, np.float16)
+assert_type(f16**c_py, np.complex64)
+assert_type(f16**b1, np.float16)
+assert_type(f16**u8, np.float16)
+assert_type(f16**u16, np.float32)
+assert_type(f16**u32, np.float64)
+assert_type(f16**u64, np.float64)
+assert_type(f16**i8, np.float16)
+assert_type(f16**i16, np.float32)
+assert_type(f16**i32, np.float64)
+assert_type(f16**i64, np.float64)
+assert_type(f16**f16, np.float16)
+assert_type(f16**f32, np.float32)
+assert_type(f16**f64, np.float64)
+assert_type(f16**f64l, np.longdouble)
+assert_type(f16**c32, np.complex64)
+assert_type(f16**c64, np.complex128)
+assert_type(f16**c64l, np.clongdouble)
 
-assert_type(f4**b0, np.float32)
-assert_type(f4**i0, np.float32)
-assert_type(f4**f0, np.float32)
-assert_type(f4**c0, np.complex64)
-assert_type(f4**b1, np.float32)
-assert_type(f4**u1, np.float32)
-assert_type(f4**u2, np.float32)
-assert_type(f4**u4, np.float64)
-assert_type(f4**u8, np.float64)
-assert_type(f4**i1, np.float32)
-assert_type(f4**i2, np.float32)
-assert_type(f4**i4, np.float64)
-assert_type(f4**i8, np.float64)
-assert_type(f4**f2, np.float32)
-assert_type(f4**f4, np.float32)
-assert_type(f4**f8, np.float64)
-assert_type(f4**ld, np.longdouble)
-assert_type(f4**c8, np.complex64)
-assert_type(f4**c16, np.complex128)
-assert_type(f4**cld, np.clongdouble)
+assert_type(f32**b_py, np.float32)
+assert_type(f32**i_py, np.float32)
+assert_type(f32**f_py, np.float32)
+assert_type(f32**c_py, np.complex64)
+assert_type(f32**b1, np.float32)
+assert_type(f32**u8, np.float32)
+assert_type(f32**u16, np.float32)
+assert_type(f32**u32, np.float64)
+assert_type(f32**u64, np.float64)
+assert_type(f32**i8, np.float32)
+assert_type(f32**i16, np.float32)
+assert_type(f32**i32, np.float64)
+assert_type(f32**i64, np.float64)
+assert_type(f32**f16, np.float32)
+assert_type(f32**f32, np.float32)
+assert_type(f32**f64, np.float64)
+assert_type(f32**f64l, np.longdouble)
+assert_type(f32**c32, np.complex64)
+assert_type(f32**c64, np.complex128)
+assert_type(f32**c64l, np.clongdouble)
 
-assert_type(f8**b0, np.float64)
-assert_type(f8**i0, np.float64)
-assert_type(f8**f0, np.float64)
-assert_type(f8**c0, np.complex128)
-assert_type(f8**b1, np.float64)
-assert_type(f8**u1, np.float64)
-assert_type(f8**u2, np.float64)
-assert_type(f8**u4, np.float64)
-assert_type(f8**u8, np.float64)
-assert_type(f8**i1, np.float64)
-assert_type(f8**i2, np.float64)
-assert_type(f8**i4, np.float64)
-assert_type(f8**i8, np.float64)
-assert_type(f8**f2, np.float64)
-assert_type(f8**f4, np.float64)
-assert_type(f8**f8, np.float64)
-assert_type(f8**ld, np.longdouble)
-assert_type(f8**c8, np.complex128)
-assert_type(f8**c16, np.complex128)
-assert_type(f8**cld, np.clongdouble)
+assert_type(f64**b_py, np.float64)
+assert_type(f64**i_py, np.float64)
+assert_type(f64**f_py, np.float64)
+assert_type(f64**c_py, np.complex128)
+assert_type(f64**b1, np.float64)
+assert_type(f64**u8, np.float64)
+assert_type(f64**u16, np.float64)
+assert_type(f64**u32, np.float64)
+assert_type(f64**u64, np.float64)
+assert_type(f64**i8, np.float64)
+assert_type(f64**i16, np.float64)
+assert_type(f64**i32, np.float64)
+assert_type(f64**i64, np.float64)
+assert_type(f64**f16, np.float64)
+assert_type(f64**f32, np.float64)
+assert_type(f64**f64, np.float64)
+assert_type(f64**f64l, np.longdouble)
+assert_type(f64**c32, np.complex128)
+assert_type(f64**c64, np.complex128)
+assert_type(f64**c64l, np.clongdouble)
 
-assert_type(ld**b0, np.longdouble)
-assert_type(ld**i0, np.longdouble)
-assert_type(ld**f0, np.longdouble)
-assert_type(ld**c0, np.clongdouble)
-assert_type(ld**b1, np.longdouble)
-assert_type(ld**u1, np.longdouble)
-assert_type(ld**u2, np.longdouble)
-assert_type(ld**u4, np.longdouble)
-assert_type(ld**u8, np.longdouble)
-assert_type(ld**i1, np.longdouble)
-assert_type(ld**i2, np.longdouble)
-assert_type(ld**i4, np.longdouble)
-assert_type(ld**i8, np.longdouble)
-assert_type(ld**f2, np.longdouble)
-assert_type(ld**f4, np.longdouble)
-assert_type(ld**f8, np.longdouble)
-assert_type(ld**ld, np.longdouble)
-assert_type(ld**c8, np.clongdouble)
-assert_type(ld**c16, np.clongdouble)
-assert_type(ld**cld, np.clongdouble)
+assert_type(f64l**b_py, np.longdouble)
+assert_type(f64l**i_py, np.longdouble)
+assert_type(f64l**f_py, np.longdouble)
+assert_type(f64l**c_py, np.clongdouble)
+assert_type(f64l**b1, np.longdouble)
+assert_type(f64l**u8, np.longdouble)
+assert_type(f64l**u16, np.longdouble)
+assert_type(f64l**u32, np.longdouble)
+assert_type(f64l**u64, np.longdouble)
+assert_type(f64l**i8, np.longdouble)
+assert_type(f64l**i16, np.longdouble)
+assert_type(f64l**i32, np.longdouble)
+assert_type(f64l**i64, np.longdouble)
+assert_type(f64l**f16, np.longdouble)
+assert_type(f64l**f32, np.longdouble)
+assert_type(f64l**f64, np.longdouble)
+assert_type(f64l**f64l, np.longdouble)
+assert_type(f64l**c32, np.clongdouble)
+assert_type(f64l**c64, np.clongdouble)
+assert_type(f64l**c64l, np.clongdouble)
 
-assert_type(c8**b0, np.complex64)
-assert_type(c8**i0, np.complex64)
-assert_type(c8**f0, np.complex64)
-assert_type(c8**c0, np.complex64)
-assert_type(c8**b1, np.complex64)
-assert_type(c8**u1, np.complex64)
-assert_type(c8**u2, np.complex64)
-assert_type(c8**u4, np.complex128)
-assert_type(c8**u8, np.complex128)
-assert_type(c8**i1, np.complex64)
-assert_type(c8**i2, np.complex64)
-assert_type(c8**i4, np.complex128)
-assert_type(c8**i8, np.complex128)
-assert_type(c8**f2, np.complex64)
-assert_type(c8**f4, np.complex64)
-assert_type(c8**f8, np.complex128)
-assert_type(c8**ld, np.clongdouble)
-assert_type(c8**c8, np.complex64)
-assert_type(c8**c16, np.complex128)
-assert_type(c8**cld, np.clongdouble)
+assert_type(c32**b_py, np.complex64)
+assert_type(c32**i_py, np.complex64)
+assert_type(c32**f_py, np.complex64)
+assert_type(c32**c_py, np.complex64)
+assert_type(c32**b1, np.complex64)
+assert_type(c32**u8, np.complex64)
+assert_type(c32**u16, np.complex64)
+assert_type(c32**u32, np.complex128)
+assert_type(c32**u64, np.complex128)
+assert_type(c32**i8, np.complex64)
+assert_type(c32**i16, np.complex64)
+assert_type(c32**i32, np.complex128)
+assert_type(c32**i64, np.complex128)
+assert_type(c32**f16, np.complex64)
+assert_type(c32**f32, np.complex64)
+assert_type(c32**f64, np.complex128)
+assert_type(c32**f64l, np.clongdouble)
+assert_type(c32**c32, np.complex64)
+assert_type(c32**c64, np.complex128)
+assert_type(c32**c64l, np.clongdouble)
 
-assert_type(c16**b0, np.complex128)
-assert_type(c16**i0, np.complex128)
-assert_type(c16**f0, np.complex128)
-assert_type(c16**c0, np.complex128)
-assert_type(c16**b1, np.complex128)
-assert_type(c16**u1, np.complex128)
-assert_type(c16**u2, np.complex128)
-assert_type(c16**u4, np.complex128)
-assert_type(c16**u8, np.complex128)
-assert_type(c16**i1, np.complex128)
-assert_type(c16**i2, np.complex128)
-assert_type(c16**i4, np.complex128)
-assert_type(c16**i8, np.complex128)
-assert_type(c16**f2, np.complex128)
-assert_type(c16**f4, np.complex128)
-assert_type(c16**f8, np.complex128)
-assert_type(c16**ld, np.clongdouble)
-assert_type(c16**c8, np.complex128)
-assert_type(c16**c16, np.complex128)
-assert_type(c16**cld, np.clongdouble)
+assert_type(c64**b_py, np.complex128)
+assert_type(c64**i_py, np.complex128)
+assert_type(c64**f_py, np.complex128)
+assert_type(c64**c_py, np.complex128)
+assert_type(c64**b1, np.complex128)
+assert_type(c64**u8, np.complex128)
+assert_type(c64**u16, np.complex128)
+assert_type(c64**u32, np.complex128)
+assert_type(c64**u64, np.complex128)
+assert_type(c64**i8, np.complex128)
+assert_type(c64**i16, np.complex128)
+assert_type(c64**i32, np.complex128)
+assert_type(c64**i64, np.complex128)
+assert_type(c64**f16, np.complex128)
+assert_type(c64**f32, np.complex128)
+assert_type(c64**f64, np.complex128)
+assert_type(c64**f64l, np.clongdouble)
+assert_type(c64**c32, np.complex128)
+assert_type(c64**c64, np.complex128)
+assert_type(c64**c64l, np.clongdouble)
 
-assert_type(cld**b0, np.clongdouble)
-assert_type(cld**i0, np.clongdouble)
-assert_type(cld**f0, np.clongdouble)
-assert_type(cld**c0, np.clongdouble)
-assert_type(cld**b1, np.clongdouble)
-assert_type(cld**u1, np.clongdouble)
-assert_type(cld**u2, np.clongdouble)
-assert_type(cld**u4, np.clongdouble)
-assert_type(cld**u8, np.clongdouble)
-assert_type(cld**i1, np.clongdouble)
-assert_type(cld**i2, np.clongdouble)
-assert_type(cld**i4, np.clongdouble)
-assert_type(cld**i8, np.clongdouble)
-assert_type(cld**f2, np.clongdouble)
-assert_type(cld**f4, np.clongdouble)
-assert_type(cld**f8, np.clongdouble)
-assert_type(cld**ld, np.clongdouble)
-assert_type(cld**c8, np.clongdouble)
-assert_type(cld**c16, np.clongdouble)
-assert_type(cld**cld, np.clongdouble)
+assert_type(c64l**b_py, np.clongdouble)
+assert_type(c64l**i_py, np.clongdouble)
+assert_type(c64l**f_py, np.clongdouble)
+assert_type(c64l**c_py, np.clongdouble)
+assert_type(c64l**b1, np.clongdouble)
+assert_type(c64l**u8, np.clongdouble)
+assert_type(c64l**u16, np.clongdouble)
+assert_type(c64l**u32, np.clongdouble)
+assert_type(c64l**u64, np.clongdouble)
+assert_type(c64l**i8, np.clongdouble)
+assert_type(c64l**i16, np.clongdouble)
+assert_type(c64l**i32, np.clongdouble)
+assert_type(c64l**i64, np.clongdouble)
+assert_type(c64l**f16, np.clongdouble)
+assert_type(c64l**f32, np.clongdouble)
+assert_type(c64l**f64, np.clongdouble)
+assert_type(c64l**f64l, np.clongdouble)
+assert_type(c64l**c32, np.clongdouble)
+assert_type(c64l**c64, np.clongdouble)
+assert_type(c64l**c64l, np.clongdouble)
 
 ###
 # __[r]truediv__
 
-assert_type(b1 / b0, np.float64)
-assert_type(b1 / i0, np.float64)
-assert_type(b1 / f0, np.float64)
-assert_type(b1 / c0, np.complex128)
+assert_type(b1 / b_py, np.float64)
+assert_type(b1 / i_py, np.float64)
+assert_type(b1 / f_py, np.float64)
+assert_type(b1 / c_py, np.complex128)
 assert_type(b1 / b1, np.float64)
-assert_type(b1 / u1, np.float64)
-assert_type(b1 / u2, np.float64)
-assert_type(b1 / u4, np.float64)
 assert_type(b1 / u8, np.float64)
-assert_type(b1 / i1, np.float64)
-assert_type(b1 / i2, np.float64)
-assert_type(b1 / i4, np.float64)
+assert_type(b1 / u16, np.float64)
+assert_type(b1 / u32, np.float64)
+assert_type(b1 / u64, np.float64)
 assert_type(b1 / i8, np.float64)
-assert_type(b1 / f2, np.float16)
-assert_type(b1 / f4, np.float32)
-assert_type(b1 / f8, np.float64)
-assert_type(b1 / ld, np.longdouble)
-assert_type(b1 / c8, np.complex64)
-assert_type(b1 / c16, np.complex128)
-assert_type(b1 / cld, np.clongdouble)
-b1 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(b1 / i16, np.float64)
+assert_type(b1 / i32, np.float64)
+assert_type(b1 / i64, np.float64)
+assert_type(b1 / f16, np.float16)
+assert_type(b1 / f32, np.float32)
+assert_type(b1 / f64, np.float64)
+assert_type(b1 / f64l, np.longdouble)
+assert_type(b1 / c32, np.complex64)
+assert_type(b1 / c64, np.complex128)
+assert_type(b1 / c64l, np.clongdouble)
 
-assert_type(u1 / b0, np.float64)
-assert_type(u1 / i0, np.float64)
-assert_type(u1 / f0, np.float64)
-assert_type(u1 / c0, np.complex128)
-assert_type(u1 / b1, np.float64)
-assert_type(u1 / u1, np.float64)
-assert_type(u1 / u2, np.float64)
-assert_type(u1 / u4, np.float64)
-assert_type(u1 / u8, np.float64)
-assert_type(u1 / i1, np.float64)
-assert_type(u1 / i2, np.float64)
-assert_type(u1 / i4, np.float64)
-assert_type(u1 / i8, np.float64)
-assert_type(u1 / f2, np.float16)
-assert_type(u1 / f4, np.float32)
-assert_type(u1 / f8, np.float64)
-assert_type(u1 / ld, np.longdouble)
-assert_type(u1 / c8, np.complex64)
-assert_type(u1 / c16, np.complex128)
-assert_type(u1 / cld, np.clongdouble)
-u1 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-assert_type(u2 / b0, np.float64)
-assert_type(u2 / i0, np.float64)
-assert_type(u2 / f0, np.float64)
-assert_type(u2 / c0, np.complex128)
-assert_type(u2 / b1, np.float64)
-assert_type(u2 / u1, np.float64)
-assert_type(u2 / u2, np.float64)
-assert_type(u2 / u4, np.float64)
-assert_type(u2 / u8, np.float64)
-assert_type(u2 / i1, np.float64)
-assert_type(u2 / i2, np.float64)
-assert_type(u2 / i4, np.float64)
-assert_type(u2 / i8, np.float64)
-assert_type(u2 / f2, np.float32)
-assert_type(u2 / f4, np.float32)
-assert_type(u2 / f8, np.float64)
-assert_type(u2 / ld, np.longdouble)
-assert_type(u2 / c8, np.complex64)
-assert_type(u2 / c16, np.complex128)
-assert_type(u2 / cld, np.clongdouble)
-u2 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-assert_type(u4 / b0, np.float64)
-assert_type(u4 / i0, np.float64)
-assert_type(u4 / f0, np.float64)
-assert_type(u4 / c0, np.complex128)
-assert_type(u4 / b1, np.float64)
-assert_type(u4 / u1, np.float64)
-assert_type(u4 / u2, np.float64)
-assert_type(u4 / u4, np.float64)
-assert_type(u4 / u8, np.float64)
-assert_type(u4 / i1, np.float64)
-assert_type(u4 / i2, np.float64)
-assert_type(u4 / i4, np.float64)
-assert_type(u4 / i8, np.float64)
-assert_type(u4 / f2, np.float64)
-assert_type(u4 / f4, np.float64)
-assert_type(u4 / f8, np.float64)
-assert_type(u4 / ld, np.longdouble)
-assert_type(u4 / c8, np.complex128)
-assert_type(u4 / c16, np.complex128)
-assert_type(u4 / cld, np.clongdouble)
-u4 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-assert_type(u8 / b0, np.float64)
-assert_type(u8 / i0, np.float64)
-assert_type(u8 / f0, np.float64)
-assert_type(u8 / c0, np.complex128)
+assert_type(u8 / b_py, np.float64)
+assert_type(u8 / i_py, np.float64)
+assert_type(u8 / f_py, np.float64)
+assert_type(u8 / c_py, np.complex128)
 assert_type(u8 / b1, np.float64)
-assert_type(u8 / u1, np.float64)
-assert_type(u8 / u2, np.float64)
-assert_type(u8 / u4, np.float64)
 assert_type(u8 / u8, np.float64)
-assert_type(u8 / i1, np.float64)
-assert_type(u8 / i2, np.float64)
-assert_type(u8 / i4, np.float64)
+assert_type(u8 / u16, np.float64)
+assert_type(u8 / u32, np.float64)
+assert_type(u8 / u64, np.float64)
 assert_type(u8 / i8, np.float64)
-assert_type(u8 / f2, np.float64)
-assert_type(u8 / f4, np.float64)
-assert_type(u8 / f8, np.float64)
-assert_type(u8 / ld, np.longdouble)
-assert_type(u8 / c8, np.complex128)
-assert_type(u8 / c16, np.complex128)
-assert_type(u8 / cld, np.clongdouble)
-u8 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 / i16, np.float64)
+assert_type(u8 / i32, np.float64)
+assert_type(u8 / i64, np.float64)
+assert_type(u8 / f16, np.float16)
+assert_type(u8 / f32, np.float32)
+assert_type(u8 / f64, np.float64)
+assert_type(u8 / f64l, np.longdouble)
+assert_type(u8 / c32, np.complex64)
+assert_type(u8 / c64, np.complex128)
+assert_type(u8 / c64l, np.clongdouble)
 
-assert_type(i1 / b0, np.float64)
-assert_type(i1 / i0, np.float64)
-assert_type(i1 / f0, np.float64)
-assert_type(i1 / c0, np.complex128)
-assert_type(i1 / b1, np.float64)
-assert_type(i1 / u1, np.float64)
-assert_type(i1 / u2, np.float64)
-assert_type(i1 / u4, np.float64)
-assert_type(i1 / u8, np.float64)
-assert_type(i1 / i1, np.float64)
-assert_type(i1 / i2, np.float64)
-assert_type(i1 / i4, np.float64)
-assert_type(i1 / i8, np.float64)
-assert_type(i1 / f2, np.float16)
-assert_type(i1 / f4, np.float32)
-assert_type(i1 / f8, np.float64)
-assert_type(i1 / ld, np.longdouble)
-assert_type(i1 / c8, np.complex64)
-assert_type(i1 / c16, np.complex128)
-assert_type(i1 / cld, np.clongdouble)
-i1 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 / b_py, np.float64)
+assert_type(u16 / i_py, np.float64)
+assert_type(u16 / f_py, np.float64)
+assert_type(u16 / c_py, np.complex128)
+assert_type(u16 / b1, np.float64)
+assert_type(u16 / u8, np.float64)
+assert_type(u16 / u16, np.float64)
+assert_type(u16 / u32, np.float64)
+assert_type(u16 / u64, np.float64)
+assert_type(u16 / i8, np.float64)
+assert_type(u16 / i16, np.float64)
+assert_type(u16 / i32, np.float64)
+assert_type(u16 / i64, np.float64)
+assert_type(u16 / f16, np.float32)
+assert_type(u16 / f32, np.float32)
+assert_type(u16 / f64, np.float64)
+assert_type(u16 / f64l, np.longdouble)
+assert_type(u16 / c32, np.complex64)
+assert_type(u16 / c64, np.complex128)
+assert_type(u16 / c64l, np.clongdouble)
 
-assert_type(i2 / b0, np.float64)
-assert_type(i2 / i0, np.float64)
-assert_type(i2 / f0, np.float64)
-assert_type(i2 / c0, np.complex128)
-assert_type(i2 / b1, np.float64)
-assert_type(i2 / u1, np.float64)
-assert_type(i2 / u2, np.float64)
-assert_type(i2 / u4, np.float64)
-assert_type(i2 / u8, np.float64)
-assert_type(i2 / i1, np.float64)
-assert_type(i2 / i2, np.float64)
-assert_type(i2 / i4, np.float64)
-assert_type(i2 / i8, np.float64)
-assert_type(i2 / f2, np.float32)
-assert_type(i2 / f4, np.float32)
-assert_type(i2 / f8, np.float64)
-assert_type(i2 / ld, np.longdouble)
-assert_type(i2 / c8, np.complex64)
-assert_type(i2 / c16, np.complex128)
-assert_type(i2 / cld, np.clongdouble)
-i2 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 / b_py, np.float64)
+assert_type(u32 / i_py, np.float64)
+assert_type(u32 / f_py, np.float64)
+assert_type(u32 / c_py, np.complex128)
+assert_type(u32 / b1, np.float64)
+assert_type(u32 / u8, np.float64)
+assert_type(u32 / u16, np.float64)
+assert_type(u32 / u32, np.float64)
+assert_type(u32 / u64, np.float64)
+assert_type(u32 / i8, np.float64)
+assert_type(u32 / i16, np.float64)
+assert_type(u32 / i32, np.float64)
+assert_type(u32 / i64, np.float64)
+assert_type(u32 / f16, np.float64)
+assert_type(u32 / f32, np.float64)
+assert_type(u32 / f64, np.float64)
+assert_type(u32 / f64l, np.longdouble)
+assert_type(u32 / c32, np.complex128)
+assert_type(u32 / c64, np.complex128)
+assert_type(u32 / c64l, np.clongdouble)
 
-assert_type(i4 / b0, np.float64)
-assert_type(i4 / i0, np.float64)
-assert_type(i4 / f0, np.float64)
-assert_type(i4 / c0, np.complex128)
-assert_type(i4 / b1, np.float64)
-assert_type(i4 / u1, np.float64)
-assert_type(i4 / u2, np.float64)
-assert_type(i4 / u4, np.float64)
-assert_type(i4 / u8, np.float64)
-assert_type(i4 / i1, np.float64)
-assert_type(i4 / i2, np.float64)
-assert_type(i4 / i4, np.float64)
-assert_type(i4 / i8, np.float64)
-assert_type(i4 / f2, np.float64)
-assert_type(i4 / f4, np.float64)
-assert_type(i4 / f8, np.float64)
-assert_type(i4 / ld, np.longdouble)
-assert_type(i4 / c8, np.complex128)
-assert_type(i4 / c16, np.complex128)
-assert_type(i4 / cld, np.clongdouble)
-i4 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 / b_py, np.float64)
+assert_type(u64 / i_py, np.float64)
+assert_type(u64 / f_py, np.float64)
+assert_type(u64 / c_py, np.complex128)
+assert_type(u64 / b1, np.float64)
+assert_type(u64 / u8, np.float64)
+assert_type(u64 / u16, np.float64)
+assert_type(u64 / u32, np.float64)
+assert_type(u64 / u64, np.float64)
+assert_type(u64 / i8, np.float64)
+assert_type(u64 / i16, np.float64)
+assert_type(u64 / i32, np.float64)
+assert_type(u64 / i64, np.float64)
+assert_type(u64 / f16, np.float64)
+assert_type(u64 / f32, np.float64)
+assert_type(u64 / f64, np.float64)
+assert_type(u64 / f64l, np.longdouble)
+assert_type(u64 / c32, np.complex128)
+assert_type(u64 / c64, np.complex128)
+assert_type(u64 / c64l, np.clongdouble)
 
-assert_type(i8 / b0, np.float64)
-assert_type(i8 / i0, np.float64)
-assert_type(i8 / f0, np.float64)
-assert_type(i8 / c0, np.complex128)
+assert_type(i8 / b_py, np.float64)
+assert_type(i8 / i_py, np.float64)
+assert_type(i8 / f_py, np.float64)
+assert_type(i8 / c_py, np.complex128)
 assert_type(i8 / b1, np.float64)
-assert_type(i8 / u1, np.float64)
-assert_type(i8 / u2, np.float64)
-assert_type(i8 / u4, np.float64)
 assert_type(i8 / u8, np.float64)
-assert_type(i8 / i1, np.float64)
-assert_type(i8 / i2, np.float64)
-assert_type(i8 / i4, np.float64)
+assert_type(i8 / u16, np.float64)
+assert_type(i8 / u32, np.float64)
+assert_type(i8 / u64, np.float64)
 assert_type(i8 / i8, np.float64)
-assert_type(i8 / f2, np.float64)
-assert_type(i8 / f4, np.float64)
-assert_type(i8 / f8, np.float64)
-assert_type(i8 / ld, np.longdouble)
-assert_type(i8 / c8, np.complex128)
-assert_type(i8 / c16, np.complex128)
-assert_type(i8 / cld, np.clongdouble)
-i8 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 / i16, np.float64)
+assert_type(i8 / i32, np.float64)
+assert_type(i8 / i64, np.float64)
+assert_type(i8 / f16, np.float16)
+assert_type(i8 / f32, np.float32)
+assert_type(i8 / f64, np.float64)
+assert_type(i8 / f64l, np.longdouble)
+assert_type(i8 / c32, np.complex64)
+assert_type(i8 / c64, np.complex128)
+assert_type(i8 / c64l, np.clongdouble)
 
-assert_type(f2 / b0, np.float16)
-assert_type(f2 / i0, np.float16)
-assert_type(f2 / f0, np.float16)
-assert_type(f2 / c0, np.complex64)
-assert_type(f2 / b1, np.float16)
-assert_type(f2 / u1, np.float16)
-assert_type(f2 / u2, np.float32)
-assert_type(f2 / u4, np.float64)
-assert_type(f2 / u8, np.float64)
-assert_type(f2 / i1, np.float16)
-assert_type(f2 / i2, np.float32)
-assert_type(f2 / i4, np.float64)
-assert_type(f2 / i8, np.float64)
-assert_type(f2 / f2, np.float16)
-assert_type(f2 / f4, np.float32)
-assert_type(f2 / f8, np.float64)
-assert_type(f2 / ld, np.longdouble)
-assert_type(f2 / c8, np.complex64)
-assert_type(f2 / c16, np.complex128)
-assert_type(f2 / cld, np.clongdouble)
-f2 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 / b_py, np.float64)
+assert_type(i16 / i_py, np.float64)
+assert_type(i16 / f_py, np.float64)
+assert_type(i16 / c_py, np.complex128)
+assert_type(i16 / b1, np.float64)
+assert_type(i16 / u8, np.float64)
+assert_type(i16 / u16, np.float64)
+assert_type(i16 / u32, np.float64)
+assert_type(i16 / u64, np.float64)
+assert_type(i16 / i8, np.float64)
+assert_type(i16 / i16, np.float64)
+assert_type(i16 / i32, np.float64)
+assert_type(i16 / i64, np.float64)
+assert_type(i16 / f16, np.float32)
+assert_type(i16 / f32, np.float32)
+assert_type(i16 / f64, np.float64)
+assert_type(i16 / f64l, np.longdouble)
+assert_type(i16 / c32, np.complex64)
+assert_type(i16 / c64, np.complex128)
+assert_type(i16 / c64l, np.clongdouble)
 
-assert_type(f4 / b0, np.float32)
-assert_type(f4 / i0, np.float32)
-assert_type(f4 / f0, np.float32)
-assert_type(f4 / c0, np.complex64)
-assert_type(f4 / b1, np.float32)
-assert_type(f4 / u1, np.float32)
-assert_type(f4 / u2, np.float32)
-assert_type(f4 / u4, np.float64)
-assert_type(f4 / u8, np.float64)
-assert_type(f4 / i1, np.float32)
-assert_type(f4 / i2, np.float32)
-assert_type(f4 / i4, np.float64)
-assert_type(f4 / i8, np.float64)
-assert_type(f4 / f2, np.float32)
-assert_type(f4 / f4, np.float32)
-assert_type(f4 / f8, np.float64)
-assert_type(f4 / ld, np.longdouble)
-assert_type(f4 / c8, np.complex64)
-assert_type(f4 / c16, np.complex128)
-assert_type(f4 / cld, np.clongdouble)
-f4 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 / b_py, np.float64)
+assert_type(i32 / i_py, np.float64)
+assert_type(i32 / f_py, np.float64)
+assert_type(i32 / c_py, np.complex128)
+assert_type(i32 / b1, np.float64)
+assert_type(i32 / u8, np.float64)
+assert_type(i32 / u16, np.float64)
+assert_type(i32 / u32, np.float64)
+assert_type(i32 / u64, np.float64)
+assert_type(i32 / i8, np.float64)
+assert_type(i32 / i16, np.float64)
+assert_type(i32 / i32, np.float64)
+assert_type(i32 / i64, np.float64)
+assert_type(i32 / f16, np.float64)
+assert_type(i32 / f32, np.float64)
+assert_type(i32 / f64, np.float64)
+assert_type(i32 / f64l, np.longdouble)
+assert_type(i32 / c32, np.complex128)
+assert_type(i32 / c64, np.complex128)
+assert_type(i32 / c64l, np.clongdouble)
 
-assert_type(f8 / b0, np.float64)
-assert_type(f8 / i0, np.float64)
-assert_type(f8 / f0, np.float64)
-assert_type(f8 / c0, np.complex128)
-assert_type(f8 / b1, np.float64)
-assert_type(f8 / u1, np.float64)
-assert_type(f8 / u2, np.float64)
-assert_type(f8 / u4, np.float64)
-assert_type(f8 / u8, np.float64)
-assert_type(f8 / i1, np.float64)
-assert_type(f8 / i2, np.float64)
-assert_type(f8 / i4, np.float64)
-assert_type(f8 / i8, np.float64)
-assert_type(f8 / f2, np.float64)
-assert_type(f8 / f4, np.float64)
-assert_type(f8 / f8, np.float64)
-assert_type(f8 / ld, np.longdouble)
-assert_type(f8 / c8, np.complex128)
-assert_type(f8 / c16, np.complex128)
-assert_type(f8 / cld, np.clongdouble)
-f8 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 / b_py, np.float64)
+assert_type(i64 / i_py, np.float64)
+assert_type(i64 / f_py, np.float64)
+assert_type(i64 / c_py, np.complex128)
+assert_type(i64 / b1, np.float64)
+assert_type(i64 / u8, np.float64)
+assert_type(i64 / u16, np.float64)
+assert_type(i64 / u32, np.float64)
+assert_type(i64 / u64, np.float64)
+assert_type(i64 / i8, np.float64)
+assert_type(i64 / i16, np.float64)
+assert_type(i64 / i32, np.float64)
+assert_type(i64 / i64, np.float64)
+assert_type(i64 / f16, np.float64)
+assert_type(i64 / f32, np.float64)
+assert_type(i64 / f64, np.float64)
+assert_type(i64 / f64l, np.longdouble)
+assert_type(i64 / c32, np.complex128)
+assert_type(i64 / c64, np.complex128)
+assert_type(i64 / c64l, np.clongdouble)
 
-assert_type(ld / b0, np.longdouble)
-assert_type(ld / i0, np.longdouble)
-assert_type(ld / f0, np.longdouble)
-assert_type(ld / c0, np.clongdouble)
-assert_type(ld / b1, np.longdouble)
-assert_type(ld / u1, np.longdouble)
-assert_type(ld / u2, np.longdouble)
-assert_type(ld / u4, np.longdouble)
-assert_type(ld / u8, np.longdouble)
-assert_type(ld / i1, np.longdouble)
-assert_type(ld / i2, np.longdouble)
-assert_type(ld / i4, np.longdouble)
-assert_type(ld / i8, np.longdouble)
-assert_type(ld / f2, np.longdouble)
-assert_type(ld / f4, np.longdouble)
-assert_type(ld / f8, np.longdouble)
-assert_type(ld / ld, np.longdouble)
-assert_type(ld / c8, np.clongdouble)
-assert_type(ld / c16, np.clongdouble)
-assert_type(ld / cld, np.clongdouble)
-ld / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f16 / b_py, np.float16)
+assert_type(f16 / i_py, np.float16)
+assert_type(f16 / f_py, np.float16)
+assert_type(f16 / c_py, np.complex64)
+assert_type(f16 / b1, np.float16)
+assert_type(f16 / u8, np.float16)
+assert_type(f16 / u16, np.float32)
+assert_type(f16 / u32, np.float64)
+assert_type(f16 / u64, np.float64)
+assert_type(f16 / i8, np.float16)
+assert_type(f16 / i16, np.float32)
+assert_type(f16 / i32, np.float64)
+assert_type(f16 / i64, np.float64)
+assert_type(f16 / f16, np.float16)
+assert_type(f16 / f32, np.float32)
+assert_type(f16 / f64, np.float64)
+assert_type(f16 / f64l, np.longdouble)
+assert_type(f16 / c32, np.complex64)
+assert_type(f16 / c64, np.complex128)
+assert_type(f16 / c64l, np.clongdouble)
 
-assert_type(c8 / b0, np.complex64)
-assert_type(c8 / i0, np.complex64)
-assert_type(c8 / f0, np.complex64)
-assert_type(c8 / c0, np.complex64)
-assert_type(c8 / b1, np.complex64)
-assert_type(c8 / u1, np.complex64)
-assert_type(c8 / u2, np.complex64)
-assert_type(c8 / u4, np.complex128)
-assert_type(c8 / u8, np.complex128)
-assert_type(c8 / i1, np.complex64)
-assert_type(c8 / i2, np.complex64)
-assert_type(c8 / i4, np.complex128)
-assert_type(c8 / i8, np.complex128)
-assert_type(c8 / f2, np.complex64)
-assert_type(c8 / f4, np.complex64)
-assert_type(c8 / f8, np.complex128)
-assert_type(c8 / ld, np.clongdouble)
-assert_type(c8 / c8, np.complex64)
-assert_type(c8 / c16, np.complex128)
-assert_type(c8 / cld, np.clongdouble)
-c8 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f32 / b_py, np.float32)
+assert_type(f32 / i_py, np.float32)
+assert_type(f32 / f_py, np.float32)
+assert_type(f32 / c_py, np.complex64)
+assert_type(f32 / b1, np.float32)
+assert_type(f32 / u8, np.float32)
+assert_type(f32 / u16, np.float32)
+assert_type(f32 / u32, np.float64)
+assert_type(f32 / u64, np.float64)
+assert_type(f32 / i8, np.float32)
+assert_type(f32 / i16, np.float32)
+assert_type(f32 / i32, np.float64)
+assert_type(f32 / i64, np.float64)
+assert_type(f32 / f16, np.float32)
+assert_type(f32 / f32, np.float32)
+assert_type(f32 / f64, np.float64)
+assert_type(f32 / f64l, np.longdouble)
+assert_type(f32 / c32, np.complex64)
+assert_type(f32 / c64, np.complex128)
+assert_type(f32 / c64l, np.clongdouble)
 
-assert_type(c16 / b0, np.complex128)
-assert_type(c16 / i0, np.complex128)
-assert_type(c16 / f0, np.complex128)
-assert_type(c16 / c0, np.complex128)
-assert_type(c16 / b1, np.complex128)
-assert_type(c16 / u1, np.complex128)
-assert_type(c16 / u2, np.complex128)
-assert_type(c16 / u4, np.complex128)
-assert_type(c16 / u8, np.complex128)
-assert_type(c16 / i1, np.complex128)
-assert_type(c16 / i2, np.complex128)
-assert_type(c16 / i4, np.complex128)
-assert_type(c16 / i8, np.complex128)
-assert_type(c16 / f2, np.complex128)
-assert_type(c16 / f4, np.complex128)
-assert_type(c16 / f8, np.complex128)
-assert_type(c16 / ld, np.clongdouble)
-assert_type(c16 / c8, np.complex128)
-assert_type(c16 / c16, np.complex128)
-assert_type(c16 / cld, np.clongdouble)
-c16 / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64 / b_py, np.float64)
+assert_type(f64 / i_py, np.float64)
+assert_type(f64 / f_py, np.float64)
+assert_type(f64 / c_py, np.complex128)
+assert_type(f64 / b1, np.float64)
+assert_type(f64 / u8, np.float64)
+assert_type(f64 / u16, np.float64)
+assert_type(f64 / u32, np.float64)
+assert_type(f64 / u64, np.float64)
+assert_type(f64 / i8, np.float64)
+assert_type(f64 / i16, np.float64)
+assert_type(f64 / i32, np.float64)
+assert_type(f64 / i64, np.float64)
+assert_type(f64 / f16, np.float64)
+assert_type(f64 / f32, np.float64)
+assert_type(f64 / f64, np.float64)
+assert_type(f64 / f64l, np.longdouble)
+assert_type(f64 / c32, np.complex128)
+assert_type(f64 / c64, np.complex128)
+assert_type(f64 / c64l, np.clongdouble)
 
-assert_type(cld / b0, np.clongdouble)
-assert_type(cld / i0, np.clongdouble)
-assert_type(cld / f0, np.clongdouble)
-assert_type(cld / c0, np.clongdouble)
-assert_type(cld / b1, np.clongdouble)
-assert_type(cld / u1, np.clongdouble)
-assert_type(cld / u2, np.clongdouble)
-assert_type(cld / u4, np.clongdouble)
-assert_type(cld / u8, np.clongdouble)
-assert_type(cld / i1, np.clongdouble)
-assert_type(cld / i2, np.clongdouble)
-assert_type(cld / i4, np.clongdouble)
-assert_type(cld / i8, np.clongdouble)
-assert_type(cld / f2, np.clongdouble)
-assert_type(cld / f4, np.clongdouble)
-assert_type(cld / f8, np.clongdouble)
-assert_type(cld / ld, np.clongdouble)
-assert_type(cld / c8, np.clongdouble)
-assert_type(cld / c16, np.clongdouble)
-assert_type(cld / cld, np.clongdouble)
-cld / m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64l / b_py, np.longdouble)
+assert_type(f64l / i_py, np.longdouble)
+assert_type(f64l / f_py, np.longdouble)
+assert_type(f64l / c_py, np.clongdouble)
+assert_type(f64l / b1, np.longdouble)
+assert_type(f64l / u8, np.longdouble)
+assert_type(f64l / u16, np.longdouble)
+assert_type(f64l / u32, np.longdouble)
+assert_type(f64l / u64, np.longdouble)
+assert_type(f64l / i8, np.longdouble)
+assert_type(f64l / i16, np.longdouble)
+assert_type(f64l / i32, np.longdouble)
+assert_type(f64l / i64, np.longdouble)
+assert_type(f64l / f16, np.longdouble)
+assert_type(f64l / f32, np.longdouble)
+assert_type(f64l / f64, np.longdouble)
+assert_type(f64l / f64l, np.longdouble)
+assert_type(f64l / c32, np.clongdouble)
+assert_type(f64l / c64, np.clongdouble)
+assert_type(f64l / c64l, np.clongdouble)
 
-m8 / b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 / i0, np.timedelta64)
-assert_type(m8 / f0, np.timedelta64)
-m8 / c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 / b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 / u1, np.timedelta64)
-assert_type(m8 / u2, np.timedelta64)
-assert_type(m8 / u4, np.timedelta64)
-assert_type(m8 / u8, np.timedelta64)
-assert_type(m8 / i1, np.timedelta64)
-assert_type(m8 / i2, np.timedelta64)
-assert_type(m8 / i4, np.timedelta64)
-assert_type(m8 / i8, np.timedelta64)
-assert_type(m8 / f2, np.timedelta64)
-assert_type(m8 / f4, np.timedelta64)
-assert_type(m8 / f8, np.timedelta64)
-assert_type(m8 / ld, np.timedelta64)
-m8 / c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 / c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 / cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 / m8, np.float64)
+assert_type(c32 / b_py, np.complex64)
+assert_type(c32 / i_py, np.complex64)
+assert_type(c32 / f_py, np.complex64)
+assert_type(c32 / c_py, np.complex64)
+assert_type(c32 / b1, np.complex64)
+assert_type(c32 / u8, np.complex64)
+assert_type(c32 / u16, np.complex64)
+assert_type(c32 / u32, np.complex128)
+assert_type(c32 / u64, np.complex128)
+assert_type(c32 / i8, np.complex64)
+assert_type(c32 / i16, np.complex64)
+assert_type(c32 / i32, np.complex128)
+assert_type(c32 / i64, np.complex128)
+assert_type(c32 / f16, np.complex64)
+assert_type(c32 / f32, np.complex64)
+assert_type(c32 / f64, np.complex128)
+assert_type(c32 / f64l, np.clongdouble)
+assert_type(c32 / c32, np.complex64)
+assert_type(c32 / c64, np.complex128)
+assert_type(c32 / c64l, np.clongdouble)
+
+assert_type(c64 / b_py, np.complex128)
+assert_type(c64 / i_py, np.complex128)
+assert_type(c64 / f_py, np.complex128)
+assert_type(c64 / c_py, np.complex128)
+assert_type(c64 / b1, np.complex128)
+assert_type(c64 / u8, np.complex128)
+assert_type(c64 / u16, np.complex128)
+assert_type(c64 / u32, np.complex128)
+assert_type(c64 / u64, np.complex128)
+assert_type(c64 / i8, np.complex128)
+assert_type(c64 / i16, np.complex128)
+assert_type(c64 / i32, np.complex128)
+assert_type(c64 / i64, np.complex128)
+assert_type(c64 / f16, np.complex128)
+assert_type(c64 / f32, np.complex128)
+assert_type(c64 / f64, np.complex128)
+assert_type(c64 / f64l, np.clongdouble)
+assert_type(c64 / c32, np.complex128)
+assert_type(c64 / c64, np.complex128)
+assert_type(c64 / c64l, np.clongdouble)
+
+assert_type(c64l / b_py, np.clongdouble)
+assert_type(c64l / i_py, np.clongdouble)
+assert_type(c64l / f_py, np.clongdouble)
+assert_type(c64l / c_py, np.clongdouble)
+assert_type(c64l / b1, np.clongdouble)
+assert_type(c64l / u8, np.clongdouble)
+assert_type(c64l / u16, np.clongdouble)
+assert_type(c64l / u32, np.clongdouble)
+assert_type(c64l / u64, np.clongdouble)
+assert_type(c64l / i8, np.clongdouble)
+assert_type(c64l / i16, np.clongdouble)
+assert_type(c64l / i32, np.clongdouble)
+assert_type(c64l / i64, np.clongdouble)
+assert_type(c64l / f16, np.clongdouble)
+assert_type(c64l / f32, np.clongdouble)
+assert_type(c64l / f64, np.clongdouble)
+assert_type(c64l / f64l, np.clongdouble)
+assert_type(c64l / c32, np.clongdouble)
+assert_type(c64l / c64, np.clongdouble)
+assert_type(c64l / c64l, np.clongdouble)
+
+assert_type(m64 / i_py, np.timedelta64)
+assert_type(m64 / f_py, np.timedelta64)
+assert_type(m64 / u8, np.timedelta64)
+assert_type(m64 / u16, np.timedelta64)
+assert_type(m64 / u32, np.timedelta64)
+assert_type(m64 / u64, np.timedelta64)
+assert_type(m64 / i8, np.timedelta64)
+assert_type(m64 / i16, np.timedelta64)
+assert_type(m64 / i32, np.timedelta64)
+assert_type(m64 / i64, np.timedelta64)
+assert_type(m64 / f16, np.timedelta64)
+assert_type(m64 / f32, np.timedelta64)
+assert_type(m64 / f64, np.timedelta64)
+assert_type(m64 / f64l, np.timedelta64)
+assert_type(m64 / m64, np.float64)
 
 ###
 # __[r]floordiv__
 
-assert_type(b1 // b0, np.int8)
-assert_type(b1 // i0, np.int_)
-assert_type(b1 // f0, np.float64)
-b1 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(b1 // b_py, np.int8)
+assert_type(b1 // i_py, np.int_)
+assert_type(b1 // f_py, np.float64)
+b1 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(b1 // b1, np.int8)
-assert_type(b1 // u1, np.uint8)
-assert_type(b1 // u2, np.uint16)
-assert_type(b1 // u4, np.uint32)
-assert_type(b1 // u8, np.uint64)
-assert_type(b1 // i1, np.int8)
-assert_type(b1 // i2, np.int16)
-assert_type(b1 // i4, np.int32)
-assert_type(b1 // i8, np.int64)
-assert_type(b1 // f2, np.float16)
-assert_type(b1 // f4, np.float32)
-assert_type(b1 // f8, np.float64)
-assert_type(b1 // ld, np.longdouble)
-b1 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-b1 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-b1 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-b1 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(b1 // u8, np.uint8)
+assert_type(b1 // u16, np.uint16)
+assert_type(b1 // u32, np.uint32)
+assert_type(b1 // u64, np.uint64)
+assert_type(b1 // i8, np.int8)
+assert_type(b1 // i16, np.int16)
+assert_type(b1 // i32, np.int32)
+assert_type(b1 // i64, np.int64)
+assert_type(b1 // f16, np.float16)
+assert_type(b1 // f32, np.float32)
+assert_type(b1 // f64, np.float64)
+assert_type(b1 // f64l, np.longdouble)
+b1 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u1 // b0, np.uint8)
-assert_type(u1 // i0, np.uint8)
-assert_type(u1 // f0, np.float64)
-u1 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(u1 // b1, np.uint8)
-assert_type(u1 // u1, np.uint8)
-assert_type(u1 // u2, np.uint16)
-assert_type(u1 // u4, np.uint32)
-assert_type(u1 // u8, np.uint64)
-assert_type(u1 // i1, np.int16)
-assert_type(u1 // i2, np.int16)
-assert_type(u1 // i4, np.int32)
-assert_type(u1 // i8, np.int64)
-assert_type(u1 // f2, np.float16)
-assert_type(u1 // f4, np.float32)
-assert_type(u1 // f8, np.float64)
-assert_type(u1 // ld, np.longdouble)
-u1 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u1 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u1 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u1 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 // b_py, np.uint8)
+assert_type(u8 // i_py, np.uint8)
+assert_type(u8 // f_py, np.float64)
+u8 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 // b1, np.uint8)
+assert_type(u8 // u8, np.uint8)
+assert_type(u8 // u16, np.uint16)
+assert_type(u8 // u32, np.uint32)
+assert_type(u8 // u64, np.uint64)
+assert_type(u8 // i8, np.int16)
+assert_type(u8 // i16, np.int16)
+assert_type(u8 // i32, np.int32)
+assert_type(u8 // i64, np.int64)
+assert_type(u8 // f16, np.float16)
+assert_type(u8 // f32, np.float32)
+assert_type(u8 // f64, np.float64)
+assert_type(u8 // f64l, np.longdouble)
+u8 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 // b0, np.uint16)
-assert_type(u2 // i0, np.uint16)
-assert_type(u2 // f0, np.float64)
-u2 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(u2 // b1, np.uint16)
-assert_type(u2 // u1, np.uint16)
-assert_type(u2 // u2, np.uint16)
-assert_type(u2 // u4, np.uint32)
-assert_type(u2 // u8, np.uint64)
-assert_type(u2 // i1, np.int32)
-assert_type(u2 // i2, np.int32)
-assert_type(u2 // i4, np.int32)
-assert_type(u2 // i8, np.int64)
-assert_type(u2 // f2, np.float32)
-assert_type(u2 // f4, np.float32)
-assert_type(u2 // f8, np.float64)
-assert_type(u2 // ld, np.longdouble)
-u2 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u2 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u2 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u2 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 // b_py, np.uint16)
+assert_type(u16 // i_py, np.uint16)
+assert_type(u16 // f_py, np.float64)
+u16 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 // b1, np.uint16)
+assert_type(u16 // u8, np.uint16)
+assert_type(u16 // u16, np.uint16)
+assert_type(u16 // u32, np.uint32)
+assert_type(u16 // u64, np.uint64)
+assert_type(u16 // i8, np.int32)
+assert_type(u16 // i16, np.int32)
+assert_type(u16 // i32, np.int32)
+assert_type(u16 // i64, np.int64)
+assert_type(u16 // f16, np.float32)
+assert_type(u16 // f32, np.float32)
+assert_type(u16 // f64, np.float64)
+assert_type(u16 // f64l, np.longdouble)
+u16 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 // b0, np.uint32)
-assert_type(u4 // i0, np.uint32)
-assert_type(u4 // f0, np.float64)
-u4 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(u4 // b1, np.uint32)
-assert_type(u4 // u1, np.uint32)
-assert_type(u4 // u2, np.uint32)
-assert_type(u4 // u4, np.uint32)
-assert_type(u4 // u8, np.uint64)
-assert_type(u4 // i1, np.int64)
-assert_type(u4 // i2, np.int64)
-assert_type(u4 // i4, np.int64)
-assert_type(u4 // i8, np.int64)
-assert_type(u4 // f2, np.float64)
-assert_type(u4 // f4, np.float64)
-assert_type(u4 // f8, np.float64)
-assert_type(u4 // ld, np.longdouble)
-u4 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u4 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u4 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u4 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 // b_py, np.uint32)
+assert_type(u32 // i_py, np.uint32)
+assert_type(u32 // f_py, np.float64)
+u32 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 // b1, np.uint32)
+assert_type(u32 // u8, np.uint32)
+assert_type(u32 // u16, np.uint32)
+assert_type(u32 // u32, np.uint32)
+assert_type(u32 // u64, np.uint64)
+assert_type(u32 // i8, np.int64)
+assert_type(u32 // i16, np.int64)
+assert_type(u32 // i32, np.int64)
+assert_type(u32 // i64, np.int64)
+assert_type(u32 // f16, np.float64)
+assert_type(u32 // f32, np.float64)
+assert_type(u32 // f64, np.float64)
+assert_type(u32 // f64l, np.longdouble)
+u32 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 // b0, np.uint64)
-assert_type(u8 // i0, np.uint64)
-assert_type(u8 // f0, np.float64)
-u8 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(u8 // b1, np.uint64)
-assert_type(u8 // u1, np.uint64)
-assert_type(u8 // u2, np.uint64)
-assert_type(u8 // u4, np.uint64)
-assert_type(u8 // u8, np.uint64)
-assert_type(u8 // i1, np.float64)
-assert_type(u8 // i2, np.float64)
-assert_type(u8 // i4, np.float64)
-assert_type(u8 // i8, np.float64)
-assert_type(u8 // f2, np.float64)
-assert_type(u8 // f4, np.float64)
-assert_type(u8 // f8, np.float64)
-assert_type(u8 // ld, np.longdouble)
-u8 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 // b_py, np.uint64)
+assert_type(u64 // i_py, np.uint64)
+assert_type(u64 // f_py, np.float64)
+u64 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 // b1, np.uint64)
+assert_type(u64 // u8, np.uint64)
+assert_type(u64 // u16, np.uint64)
+assert_type(u64 // u32, np.uint64)
+assert_type(u64 // u64, np.uint64)
+assert_type(u64 // i8, np.float64)
+assert_type(u64 // i16, np.float64)
+assert_type(u64 // i32, np.float64)
+assert_type(u64 // i64, np.float64)
+assert_type(u64 // f16, np.float64)
+assert_type(u64 // f32, np.float64)
+assert_type(u64 // f64, np.float64)
+assert_type(u64 // f64l, np.longdouble)
+u64 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 // b0, np.int8)
-assert_type(i1 // i0, np.int8)
-assert_type(i1 // f0, np.float64)
-i1 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i1 // b1, np.int8)
-assert_type(i1 // u1, np.int16)
-assert_type(i1 // u2, np.int32)
-assert_type(i1 // u4, np.int64)
-assert_type(i1 // u8, np.float64)
-assert_type(i1 // i1, np.int8)
-assert_type(i1 // i2, np.int16)
-assert_type(i1 // i4, np.int32)
-assert_type(i1 // i8, np.int64)
-assert_type(i1 // f2, np.float16)
-assert_type(i1 // f4, np.float32)
-assert_type(i1 // f8, np.float64)
-assert_type(i1 // ld, np.longdouble)
-i1 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i1 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i1 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i1 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 // b_py, np.int8)
+assert_type(i8 // i_py, np.int8)
+assert_type(i8 // f_py, np.float64)
+i8 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 // b1, np.int8)
+assert_type(i8 // u8, np.int16)
+assert_type(i8 // u16, np.int32)
+assert_type(i8 // u32, np.int64)
+assert_type(i8 // u64, np.float64)
+assert_type(i8 // i8, np.int8)
+assert_type(i8 // i16, np.int16)
+assert_type(i8 // i32, np.int32)
+assert_type(i8 // i64, np.int64)
+assert_type(i8 // f16, np.float16)
+assert_type(i8 // f32, np.float32)
+assert_type(i8 // f64, np.float64)
+assert_type(i8 // f64l, np.longdouble)
+i8 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 // b0, np.int16)
-assert_type(i2 // i0, np.int16)
-assert_type(i2 // f0, np.float64)
-i2 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i2 // b1, np.int16)
-assert_type(i2 // u1, np.int16)
-assert_type(i2 // u2, np.int32)
-assert_type(i2 // u4, np.int64)
-assert_type(i2 // u8, np.float64)
-assert_type(i2 // i1, np.int16)
-assert_type(i2 // i2, np.int16)
-assert_type(i2 // i4, np.int32)
-assert_type(i2 // i8, np.int64)
-assert_type(i2 // f2, np.float32)
-assert_type(i2 // f4, np.float32)
-assert_type(i2 // f8, np.float64)
-assert_type(i2 // ld, np.longdouble)
-i2 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i2 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i2 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i2 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 // b_py, np.int16)
+assert_type(i16 // i_py, np.int16)
+assert_type(i16 // f_py, np.float64)
+i16 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 // b1, np.int16)
+assert_type(i16 // u8, np.int16)
+assert_type(i16 // u16, np.int32)
+assert_type(i16 // u32, np.int64)
+assert_type(i16 // u64, np.float64)
+assert_type(i16 // i8, np.int16)
+assert_type(i16 // i16, np.int16)
+assert_type(i16 // i32, np.int32)
+assert_type(i16 // i64, np.int64)
+assert_type(i16 // f16, np.float32)
+assert_type(i16 // f32, np.float32)
+assert_type(i16 // f64, np.float64)
+assert_type(i16 // f64l, np.longdouble)
+i16 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 // b0, np.int32)
-assert_type(i4 // i0, np.int32)
-assert_type(i4 // f0, np.float64)
-i4 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i4 // b1, np.int32)
-assert_type(i4 // u1, np.int32)
-assert_type(i4 // u2, np.int32)
-assert_type(i4 // u4, np.int64)
-assert_type(i4 // u8, np.float64)
-assert_type(i4 // i1, np.int32)
-assert_type(i4 // i2, np.int32)
-assert_type(i4 // i4, np.int32)
-assert_type(i4 // i8, np.int64)
-assert_type(i4 // f2, np.float64)
-assert_type(i4 // f4, np.float64)
-assert_type(i4 // f8, np.float64)
-assert_type(i4 // ld, np.longdouble)
-i4 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i4 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i4 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i4 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 // b_py, np.int32)
+assert_type(i32 // i_py, np.int32)
+assert_type(i32 // f_py, np.float64)
+i32 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 // b1, np.int32)
+assert_type(i32 // u8, np.int32)
+assert_type(i32 // u16, np.int32)
+assert_type(i32 // u32, np.int64)
+assert_type(i32 // u64, np.float64)
+assert_type(i32 // i8, np.int32)
+assert_type(i32 // i16, np.int32)
+assert_type(i32 // i32, np.int32)
+assert_type(i32 // i64, np.int64)
+assert_type(i32 // f16, np.float64)
+assert_type(i32 // f32, np.float64)
+assert_type(i32 // f64, np.float64)
+assert_type(i32 // f64l, np.longdouble)
+i32 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 // b0, np.int64)
-assert_type(i8 // i0, np.int64)
-assert_type(i8 // f0, np.float64)
-i8 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 // b1, np.int64)
-assert_type(i8 // u1, np.int64)
-assert_type(i8 // u2, np.int64)
-assert_type(i8 // u4, np.int64)
-assert_type(i8 // u8, np.float64)
-assert_type(i8 // i1, np.int64)
-assert_type(i8 // i2, np.int64)
-assert_type(i8 // i4, np.int64)
-assert_type(i8 // i8, np.int64)
-assert_type(i8 // f2, np.float64)
-assert_type(i8 // f4, np.float64)
-assert_type(i8 // f8, np.float64)
-assert_type(i8 // ld, np.longdouble)
-i8 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 // b_py, np.int64)
+assert_type(i64 // i_py, np.int64)
+assert_type(i64 // f_py, np.float64)
+i64 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 // b1, np.int64)
+assert_type(i64 // u8, np.int64)
+assert_type(i64 // u16, np.int64)
+assert_type(i64 // u32, np.int64)
+assert_type(i64 // u64, np.float64)
+assert_type(i64 // i8, np.int64)
+assert_type(i64 // i16, np.int64)
+assert_type(i64 // i32, np.int64)
+assert_type(i64 // i64, np.int64)
+assert_type(i64 // f16, np.float64)
+assert_type(i64 // f32, np.float64)
+assert_type(i64 // f64, np.float64)
+assert_type(i64 // f64l, np.longdouble)
+i64 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f2 // b0, np.float16)
-assert_type(f2 // i0, np.float16)
-assert_type(f2 // f0, np.float16)
-f2 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(f2 // b1, np.float16)
-assert_type(f2 // u1, np.float16)
-assert_type(f2 // u2, np.float32)
-assert_type(f2 // u4, np.float64)
-assert_type(f2 // u8, np.float64)
-assert_type(f2 // i1, np.float16)
-assert_type(f2 // i2, np.float32)
-assert_type(f2 // i4, np.float64)
-assert_type(f2 // i8, np.float64)
-assert_type(f2 // f2, np.float16)
-assert_type(f2 // f4, np.float32)
-assert_type(f2 // f8, np.float64)
-assert_type(f2 // ld, np.longdouble)
-f2 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f2 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f2 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f2 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f16 // b_py, np.float16)
+assert_type(f16 // i_py, np.float16)
+assert_type(f16 // f_py, np.float16)
+f16 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f16 // b1, np.float16)
+assert_type(f16 // u8, np.float16)
+assert_type(f16 // u16, np.float32)
+assert_type(f16 // u32, np.float64)
+assert_type(f16 // u64, np.float64)
+assert_type(f16 // i8, np.float16)
+assert_type(f16 // i16, np.float32)
+assert_type(f16 // i32, np.float64)
+assert_type(f16 // i64, np.float64)
+assert_type(f16 // f16, np.float16)
+assert_type(f16 // f32, np.float32)
+assert_type(f16 // f64, np.float64)
+assert_type(f16 // f64l, np.longdouble)
+f16 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f4 // b0, np.float32)
-assert_type(f4 // i0, np.float32)
-assert_type(f4 // f0, np.float32)
-f4 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(f4 // b1, np.float32)
-assert_type(f4 // u1, np.float32)
-assert_type(f4 // u2, np.float32)
-assert_type(f4 // u4, np.float64)
-assert_type(f4 // u8, np.float64)
-assert_type(f4 // i1, np.float32)
-assert_type(f4 // i2, np.float32)
-assert_type(f4 // i4, np.float64)
-assert_type(f4 // i8, np.float64)
-assert_type(f4 // f2, np.float32)
-assert_type(f4 // f4, np.float32)
-assert_type(f4 // f8, np.float64)
-assert_type(f4 // ld, np.longdouble)
-f4 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f4 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f4 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f4 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f32 // b_py, np.float32)
+assert_type(f32 // i_py, np.float32)
+assert_type(f32 // f_py, np.float32)
+f32 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f32 // b1, np.float32)
+assert_type(f32 // u8, np.float32)
+assert_type(f32 // u16, np.float32)
+assert_type(f32 // u32, np.float64)
+assert_type(f32 // u64, np.float64)
+assert_type(f32 // i8, np.float32)
+assert_type(f32 // i16, np.float32)
+assert_type(f32 // i32, np.float64)
+assert_type(f32 // i64, np.float64)
+assert_type(f32 // f16, np.float32)
+assert_type(f32 // f32, np.float32)
+assert_type(f32 // f64, np.float64)
+assert_type(f32 // f64l, np.longdouble)
+f32 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f8 // b0, np.float64)
-assert_type(f8 // i0, np.float64)
-assert_type(f8 // f0, np.float64)
-f8 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(f8 // b1, np.float64)
-assert_type(f8 // u1, np.float64)
-assert_type(f8 // u2, np.float64)
-assert_type(f8 // u4, np.float64)
-assert_type(f8 // u8, np.float64)
-assert_type(f8 // i1, np.float64)
-assert_type(f8 // i2, np.float64)
-assert_type(f8 // i4, np.float64)
-assert_type(f8 // i8, np.float64)
-assert_type(f8 // f2, np.float64)
-assert_type(f8 // f4, np.float64)
-assert_type(f8 // f8, np.float64)
-assert_type(f8 // ld, np.longdouble)
-f8 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f8 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f8 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f8 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64 // b_py, np.float64)
+assert_type(f64 // i_py, np.float64)
+assert_type(f64 // f_py, np.float64)
+f64 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64 // b1, np.float64)
+assert_type(f64 // u8, np.float64)
+assert_type(f64 // u16, np.float64)
+assert_type(f64 // u32, np.float64)
+assert_type(f64 // u64, np.float64)
+assert_type(f64 // i8, np.float64)
+assert_type(f64 // i16, np.float64)
+assert_type(f64 // i32, np.float64)
+assert_type(f64 // i64, np.float64)
+assert_type(f64 // f16, np.float64)
+assert_type(f64 // f32, np.float64)
+assert_type(f64 // f64, np.float64)
+assert_type(f64 // f64l, np.longdouble)
+f64 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(ld // b0, np.longdouble)
-assert_type(ld // i0, np.longdouble)
-assert_type(ld // f0, np.longdouble)
-ld // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(ld // b1, np.longdouble)
-assert_type(ld // u1, np.longdouble)
-assert_type(ld // u2, np.longdouble)
-assert_type(ld // u4, np.longdouble)
-assert_type(ld // u8, np.longdouble)
-assert_type(ld // i1, np.longdouble)
-assert_type(ld // i2, np.longdouble)
-assert_type(ld // i4, np.longdouble)
-assert_type(ld // i8, np.longdouble)
-assert_type(ld // f2, np.longdouble)
-assert_type(ld // f4, np.longdouble)
-assert_type(ld // f8, np.longdouble)
-assert_type(ld // ld, np.longdouble)
-ld // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-ld // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-ld // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-ld // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64l // b_py, np.longdouble)
+assert_type(f64l // i_py, np.longdouble)
+assert_type(f64l // f_py, np.longdouble)
+f64l // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64l // b1, np.longdouble)
+assert_type(f64l // u8, np.longdouble)
+assert_type(f64l // u16, np.longdouble)
+assert_type(f64l // u32, np.longdouble)
+assert_type(f64l // u64, np.longdouble)
+assert_type(f64l // i8, np.longdouble)
+assert_type(f64l // i16, np.longdouble)
+assert_type(f64l // i32, np.longdouble)
+assert_type(f64l // i64, np.longdouble)
+assert_type(f64l // f16, np.longdouble)
+assert_type(f64l // f32, np.longdouble)
+assert_type(f64l // f64, np.longdouble)
+assert_type(f64l // f64l, np.longdouble)
+f64l // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-c8 // b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // i0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // u1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // u2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // u4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-c16 // b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // i0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // u1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // u2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // u4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-cld // b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // i0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // u1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // u2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // u4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld // m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-m8 // b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 // i0, np.timedelta64)
-assert_type(m8 // f0, np.timedelta64)
-m8 // c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 // b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 // u1, np.timedelta64)
-assert_type(m8 // u2, np.timedelta64)
-assert_type(m8 // u4, np.timedelta64)
-assert_type(m8 // u8, np.timedelta64)
-assert_type(m8 // i1, np.timedelta64)
-assert_type(m8 // i2, np.timedelta64)
-assert_type(m8 // i4, np.timedelta64)
-assert_type(m8 // i8, np.timedelta64)
-assert_type(m8 // f2, np.timedelta64)
-assert_type(m8 // f4, np.timedelta64)
-assert_type(m8 // f8, np.timedelta64)
-assert_type(m8 // ld, np.timedelta64)
-m8 // c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 // c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 // cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 // m8, np.longlong)
+assert_type(m64 // i_py, np.timedelta64)
+assert_type(m64 // f_py, np.timedelta64)
+assert_type(m64 // u8, np.timedelta64)
+assert_type(m64 // u16, np.timedelta64)
+assert_type(m64 // u32, np.timedelta64)
+assert_type(m64 // u64, np.timedelta64)
+assert_type(m64 // i8, np.timedelta64)
+assert_type(m64 // i16, np.timedelta64)
+assert_type(m64 // i32, np.timedelta64)
+assert_type(m64 // i64, np.timedelta64)
+assert_type(m64 // f16, np.timedelta64)
+assert_type(m64 // f32, np.timedelta64)
+assert_type(m64 // f64, np.timedelta64)
+assert_type(m64 // f64l, np.timedelta64)
+assert_type(m64 // m64, np.int64)
 
 ###
 # __[r]mod__
 
-assert_type(b1 % b0, np.int8)
-assert_type(b1 % i0, np.int_)
-assert_type(b1 % f0, np.float64)
-b1 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(b1 % b_py, np.int8)
+assert_type(b1 % i_py, np.int_)
+assert_type(b1 % f_py, np.float64)
+b1 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(b1 % b1, np.int8)
-assert_type(b1 % u1, np.uint8)
-assert_type(b1 % u2, np.uint16)
-assert_type(b1 % u4, np.uint32)
-assert_type(b1 % u8, np.uint64)
-assert_type(b1 % i1, np.int8)
-assert_type(b1 % i2, np.int16)
-assert_type(b1 % i4, np.int32)
-assert_type(b1 % i8, np.int64)
-assert_type(b1 % f2, np.float16)
-assert_type(b1 % f4, np.float32)
-assert_type(b1 % f8, np.float64)
-assert_type(b1 % ld, np.longdouble)
-b1 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-b1 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-b1 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-b1 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(b1 % u8, np.uint8)
+assert_type(b1 % u16, np.uint16)
+assert_type(b1 % u32, np.uint32)
+assert_type(b1 % u64, np.uint64)
+assert_type(b1 % i8, np.int8)
+assert_type(b1 % i16, np.int16)
+assert_type(b1 % i32, np.int32)
+assert_type(b1 % i64, np.int64)
+assert_type(b1 % f16, np.float16)
+assert_type(b1 % f32, np.float32)
+assert_type(b1 % f64, np.float64)
+assert_type(b1 % f64l, np.longdouble)
+b1 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u1 % b0, np.uint8)
-assert_type(u1 % i0, np.uint8)
-assert_type(u1 % f0, np.float64)
-u1 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(u1 % b1, np.uint8)
-assert_type(u1 % u1, np.uint8)
-assert_type(u1 % u2, np.uint16)
-assert_type(u1 % u4, np.uint32)
-assert_type(u1 % u8, np.uint64)
-assert_type(u1 % i1, np.int16)
-assert_type(u1 % i2, np.int16)
-assert_type(u1 % i4, np.int32)
-assert_type(u1 % i8, np.int64)
-assert_type(u1 % f2, np.float16)
-assert_type(u1 % f4, np.float32)
-assert_type(u1 % f8, np.float64)
-assert_type(u1 % ld, np.longdouble)
-u1 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u1 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u1 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u1 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 % b_py, np.uint8)
+assert_type(u8 % i_py, np.uint8)
+assert_type(u8 % f_py, np.float64)
+u8 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 % b1, np.uint8)
+assert_type(u8 % u8, np.uint8)
+assert_type(u8 % u16, np.uint16)
+assert_type(u8 % u32, np.uint32)
+assert_type(u8 % u64, np.uint64)
+assert_type(u8 % i8, np.int16)
+assert_type(u8 % i16, np.int16)
+assert_type(u8 % i32, np.int32)
+assert_type(u8 % i64, np.int64)
+assert_type(u8 % f16, np.float16)
+assert_type(u8 % f32, np.float32)
+assert_type(u8 % f64, np.float64)
+assert_type(u8 % f64l, np.longdouble)
+u8 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 % b0, np.uint16)
-assert_type(u2 % i0, np.uint16)
-assert_type(u2 % f0, np.float64)
-u2 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(u2 % b1, np.uint16)
-assert_type(u2 % u1, np.uint16)
-assert_type(u2 % u2, np.uint16)
-assert_type(u2 % u4, np.uint32)
-assert_type(u2 % u8, np.uint64)
-assert_type(u2 % i1, np.int32)
-assert_type(u2 % i2, np.int32)
-assert_type(u2 % i4, np.int32)
-assert_type(u2 % i8, np.int64)
-assert_type(u2 % f2, np.float32)
-assert_type(u2 % f4, np.float32)
-assert_type(u2 % f8, np.float64)
-assert_type(u2 % ld, np.longdouble)
-u2 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u2 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u2 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u2 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 % b_py, np.uint16)
+assert_type(u16 % i_py, np.uint16)
+assert_type(u16 % f_py, np.float64)
+u16 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 % b1, np.uint16)
+assert_type(u16 % u8, np.uint16)
+assert_type(u16 % u16, np.uint16)
+assert_type(u16 % u32, np.uint32)
+assert_type(u16 % u64, np.uint64)
+assert_type(u16 % i8, np.int32)
+assert_type(u16 % i16, np.int32)
+assert_type(u16 % i32, np.int32)
+assert_type(u16 % i64, np.int64)
+assert_type(u16 % f16, np.float32)
+assert_type(u16 % f32, np.float32)
+assert_type(u16 % f64, np.float64)
+assert_type(u16 % f64l, np.longdouble)
+u16 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 % b0, np.uint32)
-assert_type(u4 % i0, np.uint32)
-assert_type(u4 % f0, np.float64)
-u4 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(u4 % b1, np.uint32)
-assert_type(u4 % u1, np.uint32)
-assert_type(u4 % u2, np.uint32)
-assert_type(u4 % u4, np.uint32)
-assert_type(u4 % u8, np.uint64)
-assert_type(u4 % i1, np.int64)
-assert_type(u4 % i2, np.int64)
-assert_type(u4 % i4, np.int64)
-assert_type(u4 % i8, np.int64)
-assert_type(u4 % f2, np.float64)
-assert_type(u4 % f4, np.float64)
-assert_type(u4 % f8, np.float64)
-assert_type(u4 % ld, np.longdouble)
-u4 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u4 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u4 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u4 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 % b_py, np.uint32)
+assert_type(u32 % i_py, np.uint32)
+assert_type(u32 % f_py, np.float64)
+u32 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 % b1, np.uint32)
+assert_type(u32 % u8, np.uint32)
+assert_type(u32 % u16, np.uint32)
+assert_type(u32 % u32, np.uint32)
+assert_type(u32 % u64, np.uint64)
+assert_type(u32 % i8, np.int64)
+assert_type(u32 % i16, np.int64)
+assert_type(u32 % i32, np.int64)
+assert_type(u32 % i64, np.int64)
+assert_type(u32 % f16, np.float64)
+assert_type(u32 % f32, np.float64)
+assert_type(u32 % f64, np.float64)
+assert_type(u32 % f64l, np.longdouble)
+u32 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 % b0, np.uint64)
-assert_type(u8 % i0, np.uint64)
-assert_type(u8 % f0, np.float64)
-u8 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(u8 % b1, np.uint64)
-assert_type(u8 % u1, np.uint64)
-assert_type(u8 % u2, np.uint64)
-assert_type(u8 % u4, np.uint64)
-assert_type(u8 % u8, np.uint64)
-assert_type(u8 % i1, np.float64)
-assert_type(u8 % i2, np.float64)
-assert_type(u8 % i4, np.float64)
-assert_type(u8 % i8, np.float64)
-assert_type(u8 % f2, np.float64)
-assert_type(u8 % f4, np.float64)
-assert_type(u8 % f8, np.float64)
-assert_type(u8 % ld, np.longdouble)
-u8 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 % b_py, np.uint64)
+assert_type(u64 % i_py, np.uint64)
+assert_type(u64 % f_py, np.float64)
+u64 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 % b1, np.uint64)
+assert_type(u64 % u8, np.uint64)
+assert_type(u64 % u16, np.uint64)
+assert_type(u64 % u32, np.uint64)
+assert_type(u64 % u64, np.uint64)
+assert_type(u64 % i8, np.float64)
+assert_type(u64 % i16, np.float64)
+assert_type(u64 % i32, np.float64)
+assert_type(u64 % i64, np.float64)
+assert_type(u64 % f16, np.float64)
+assert_type(u64 % f32, np.float64)
+assert_type(u64 % f64, np.float64)
+assert_type(u64 % f64l, np.longdouble)
+u64 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 % b0, np.int8)
-assert_type(i1 % i0, np.int8)
-assert_type(i1 % f0, np.float64)
-i1 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i1 % b1, np.int8)
-assert_type(i1 % u1, np.int16)
-assert_type(i1 % u2, np.int32)
-assert_type(i1 % u4, np.int64)
-assert_type(i1 % u8, np.float64)
-assert_type(i1 % i1, np.int8)
-assert_type(i1 % i2, np.int16)
-assert_type(i1 % i4, np.int32)
-assert_type(i1 % i8, np.int64)
-assert_type(i1 % f2, np.float16)
-assert_type(i1 % f4, np.float32)
-assert_type(i1 % f8, np.float64)
-assert_type(i1 % ld, np.longdouble)
-i1 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i1 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i1 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i1 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 % b_py, np.int8)
+assert_type(i8 % i_py, np.int8)
+assert_type(i8 % f_py, np.float64)
+i8 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 % b1, np.int8)
+assert_type(i8 % u8, np.int16)
+assert_type(i8 % u16, np.int32)
+assert_type(i8 % u32, np.int64)
+assert_type(i8 % u64, np.float64)
+assert_type(i8 % i8, np.int8)
+assert_type(i8 % i16, np.int16)
+assert_type(i8 % i32, np.int32)
+assert_type(i8 % i64, np.int64)
+assert_type(i8 % f16, np.float16)
+assert_type(i8 % f32, np.float32)
+assert_type(i8 % f64, np.float64)
+assert_type(i8 % f64l, np.longdouble)
+i8 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 % b0, np.int16)
-assert_type(i2 % i0, np.int16)
-assert_type(i2 % f0, np.float64)
-i2 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i2 % b1, np.int16)
-assert_type(i2 % u1, np.int16)
-assert_type(i2 % u2, np.int32)
-assert_type(i2 % u4, np.int64)
-assert_type(i2 % u8, np.float64)
-assert_type(i2 % i1, np.int16)
-assert_type(i2 % i2, np.int16)
-assert_type(i2 % i4, np.int32)
-assert_type(i2 % i8, np.int64)
-assert_type(i2 % f2, np.float32)
-assert_type(i2 % f4, np.float32)
-assert_type(i2 % f8, np.float64)
-assert_type(i2 % ld, np.longdouble)
-i2 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i2 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i2 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i2 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 % b_py, np.int16)
+assert_type(i16 % i_py, np.int16)
+assert_type(i16 % f_py, np.float64)
+i16 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 % b1, np.int16)
+assert_type(i16 % u8, np.int16)
+assert_type(i16 % u16, np.int32)
+assert_type(i16 % u32, np.int64)
+assert_type(i16 % u64, np.float64)
+assert_type(i16 % i8, np.int16)
+assert_type(i16 % i16, np.int16)
+assert_type(i16 % i32, np.int32)
+assert_type(i16 % i64, np.int64)
+assert_type(i16 % f16, np.float32)
+assert_type(i16 % f32, np.float32)
+assert_type(i16 % f64, np.float64)
+assert_type(i16 % f64l, np.longdouble)
+i16 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 % b0, np.int32)
-assert_type(i4 % i0, np.int32)
-assert_type(i4 % f0, np.float64)
-i4 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i4 % b1, np.int32)
-assert_type(i4 % u1, np.int32)
-assert_type(i4 % u2, np.int32)
-assert_type(i4 % u4, np.int64)
-assert_type(i4 % u8, np.float64)
-assert_type(i4 % i1, np.int32)
-assert_type(i4 % i2, np.int32)
-assert_type(i4 % i4, np.int32)
-assert_type(i4 % i8, np.int64)
-assert_type(i4 % f2, np.float64)
-assert_type(i4 % f4, np.float64)
-assert_type(i4 % f8, np.float64)
-assert_type(i4 % ld, np.longdouble)
-i4 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i4 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i4 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i4 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 % b_py, np.int32)
+assert_type(i32 % i_py, np.int32)
+assert_type(i32 % f_py, np.float64)
+i32 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 % b1, np.int32)
+assert_type(i32 % u8, np.int32)
+assert_type(i32 % u16, np.int32)
+assert_type(i32 % u32, np.int64)
+assert_type(i32 % u64, np.float64)
+assert_type(i32 % i8, np.int32)
+assert_type(i32 % i16, np.int32)
+assert_type(i32 % i32, np.int32)
+assert_type(i32 % i64, np.int64)
+assert_type(i32 % f16, np.float64)
+assert_type(i32 % f32, np.float64)
+assert_type(i32 % f64, np.float64)
+assert_type(i32 % f64l, np.longdouble)
+i32 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 % b0, np.int64)
-assert_type(i8 % i0, np.int64)
-assert_type(i8 % f0, np.float64)
-i8 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 % b1, np.int64)
-assert_type(i8 % u1, np.int64)
-assert_type(i8 % u2, np.int64)
-assert_type(i8 % u4, np.int64)
-assert_type(i8 % u8, np.float64)
-assert_type(i8 % i1, np.int64)
-assert_type(i8 % i2, np.int64)
-assert_type(i8 % i4, np.int64)
-assert_type(i8 % i8, np.int64)
-assert_type(i8 % f2, np.float64)
-assert_type(i8 % f4, np.float64)
-assert_type(i8 % f8, np.float64)
-assert_type(i8 % ld, np.longdouble)
-i8 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 % b_py, np.int64)
+assert_type(i64 % i_py, np.int64)
+assert_type(i64 % f_py, np.float64)
+i64 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 % b1, np.int64)
+assert_type(i64 % u8, np.int64)
+assert_type(i64 % u16, np.int64)
+assert_type(i64 % u32, np.int64)
+assert_type(i64 % u64, np.float64)
+assert_type(i64 % i8, np.int64)
+assert_type(i64 % i16, np.int64)
+assert_type(i64 % i32, np.int64)
+assert_type(i64 % i64, np.int64)
+assert_type(i64 % f16, np.float64)
+assert_type(i64 % f32, np.float64)
+assert_type(i64 % f64, np.float64)
+assert_type(i64 % f64l, np.longdouble)
+i64 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f2 % b0, np.float16)
-assert_type(f2 % i0, np.float16)
-assert_type(f2 % f0, np.float16)
-f2 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(f2 % b1, np.float16)
-assert_type(f2 % u1, np.float16)
-assert_type(f2 % u2, np.float32)
-assert_type(f2 % u4, np.float64)
-assert_type(f2 % u8, np.float64)
-assert_type(f2 % i1, np.float16)
-assert_type(f2 % i2, np.float32)
-assert_type(f2 % i4, np.float64)
-assert_type(f2 % i8, np.float64)
-assert_type(f2 % f2, np.float16)
-assert_type(f2 % f4, np.float32)
-assert_type(f2 % f8, np.float64)
-assert_type(f2 % ld, np.longdouble)
-f2 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f2 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f2 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f2 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f16 % b_py, np.float16)
+assert_type(f16 % i_py, np.float16)
+assert_type(f16 % f_py, np.float16)
+f16 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f16 % b1, np.float16)
+assert_type(f16 % u8, np.float16)
+assert_type(f16 % u16, np.float32)
+assert_type(f16 % u32, np.float64)
+assert_type(f16 % u64, np.float64)
+assert_type(f16 % i8, np.float16)
+assert_type(f16 % i16, np.float32)
+assert_type(f16 % i32, np.float64)
+assert_type(f16 % i64, np.float64)
+assert_type(f16 % f16, np.float16)
+assert_type(f16 % f32, np.float32)
+assert_type(f16 % f64, np.float64)
+assert_type(f16 % f64l, np.longdouble)
+f16 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f4 % b0, np.float32)
-assert_type(f4 % i0, np.float32)
-assert_type(f4 % f0, np.float32)
-f4 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(f4 % b1, np.float32)
-assert_type(f4 % u1, np.float32)
-assert_type(f4 % u2, np.float32)
-assert_type(f4 % u4, np.float64)
-assert_type(f4 % u8, np.float64)
-assert_type(f4 % i1, np.float32)
-assert_type(f4 % i2, np.float32)
-assert_type(f4 % i4, np.float64)
-assert_type(f4 % i8, np.float64)
-assert_type(f4 % f2, np.float32)
-assert_type(f4 % f4, np.float32)
-assert_type(f4 % f8, np.float64)
-assert_type(f4 % ld, np.longdouble)
-f4 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f4 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f4 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f4 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f32 % b_py, np.float32)
+assert_type(f32 % i_py, np.float32)
+assert_type(f32 % f_py, np.float32)
+f32 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f32 % b1, np.float32)
+assert_type(f32 % u8, np.float32)
+assert_type(f32 % u16, np.float32)
+assert_type(f32 % u32, np.float64)
+assert_type(f32 % u64, np.float64)
+assert_type(f32 % i8, np.float32)
+assert_type(f32 % i16, np.float32)
+assert_type(f32 % i32, np.float64)
+assert_type(f32 % i64, np.float64)
+assert_type(f32 % f16, np.float32)
+assert_type(f32 % f32, np.float32)
+assert_type(f32 % f64, np.float64)
+assert_type(f32 % f64l, np.longdouble)
+f32 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(f8 % b0, np.float64)
-assert_type(f8 % i0, np.float64)
-assert_type(f8 % f0, np.float64)
-f8 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(f8 % b1, np.float64)
-assert_type(f8 % u1, np.float64)
-assert_type(f8 % u2, np.float64)
-assert_type(f8 % u4, np.float64)
-assert_type(f8 % u8, np.float64)
-assert_type(f8 % i1, np.float64)
-assert_type(f8 % i2, np.float64)
-assert_type(f8 % i4, np.float64)
-assert_type(f8 % i8, np.float64)
-assert_type(f8 % f2, np.float64)
-assert_type(f8 % f4, np.float64)
-assert_type(f8 % f8, np.float64)
-assert_type(f8 % ld, np.longdouble)
-f8 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f8 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f8 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-f8 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64 % b_py, np.float64)
+assert_type(f64 % i_py, np.float64)
+assert_type(f64 % f_py, np.float64)
+f64 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64 % b1, np.float64)
+assert_type(f64 % u8, np.float64)
+assert_type(f64 % u16, np.float64)
+assert_type(f64 % u32, np.float64)
+assert_type(f64 % u64, np.float64)
+assert_type(f64 % i8, np.float64)
+assert_type(f64 % i16, np.float64)
+assert_type(f64 % i32, np.float64)
+assert_type(f64 % i64, np.float64)
+assert_type(f64 % f16, np.float64)
+assert_type(f64 % f32, np.float64)
+assert_type(f64 % f64, np.float64)
+assert_type(f64 % f64l, np.longdouble)
+f64 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(ld % b0, np.longdouble)
-assert_type(ld % i0, np.longdouble)
-assert_type(ld % f0, np.longdouble)
-ld % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(ld % b1, np.longdouble)
-assert_type(ld % u1, np.longdouble)
-assert_type(ld % u2, np.longdouble)
-assert_type(ld % u4, np.longdouble)
-assert_type(ld % u8, np.longdouble)
-assert_type(ld % i1, np.longdouble)
-assert_type(ld % i2, np.longdouble)
-assert_type(ld % i4, np.longdouble)
-assert_type(ld % i8, np.longdouble)
-assert_type(ld % f2, np.longdouble)
-assert_type(ld % f4, np.longdouble)
-assert_type(ld % f8, np.longdouble)
-assert_type(ld % ld, np.longdouble)
-ld % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-ld % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-ld % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-ld % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64l % b_py, np.longdouble)
+assert_type(f64l % i_py, np.longdouble)
+assert_type(f64l % f_py, np.longdouble)
+f64l % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f64l % b1, np.longdouble)
+assert_type(f64l % u8, np.longdouble)
+assert_type(f64l % u16, np.longdouble)
+assert_type(f64l % u32, np.longdouble)
+assert_type(f64l % u64, np.longdouble)
+assert_type(f64l % i8, np.longdouble)
+assert_type(f64l % i16, np.longdouble)
+assert_type(f64l % i32, np.longdouble)
+assert_type(f64l % i64, np.longdouble)
+assert_type(f64l % f16, np.longdouble)
+assert_type(f64l % f32, np.longdouble)
+assert_type(f64l % f64, np.longdouble)
+assert_type(f64l % f64l, np.longdouble)
+f64l % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-c8 % b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % i0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % u1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % u2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % u4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c8 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-c16 % b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % i0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % u1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % u2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % u4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-c16 % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-cld % b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % i0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % u1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % u2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % u4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-cld % m8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-m8 % b0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % i0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % f0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % c0  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % u1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % u2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % u4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % f2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % f4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % f8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % ld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % c8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % c16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-m8 % cld  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m8 % m8, np.timedelta64)
+assert_type(m64 % m64, np.timedelta64)
 
 ###
 # __[r]lshift__
 
-assert_type(b1 << b0, np.int8)
-assert_type(b1 << i0, np.int_)
+assert_type(b1 << b_py, np.int8)
+assert_type(b1 << i_py, np.int_)
+b1 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(b1 << b1, np.int8)
-assert_type(b1 << u1, np.uint8)
-assert_type(b1 << u2, np.uint16)
-assert_type(b1 << u4, np.uint32)
-assert_type(b1 << u8, np.uint64)
-assert_type(b1 << i1, np.int8)
-assert_type(b1 << i2, np.int16)
-assert_type(b1 << i4, np.int32)
-assert_type(b1 << i8, np.int64)
+assert_type(b1 << u8, np.uint8)
+assert_type(b1 << u16, np.uint16)
+assert_type(b1 << u32, np.uint32)
+assert_type(b1 << u64, np.uint64)
+assert_type(b1 << i8, np.int8)
+assert_type(b1 << i16, np.int16)
+assert_type(b1 << i32, np.int32)
+assert_type(b1 << i64, np.int64)
+b1 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u1 << b0, np.uint8)
-assert_type(u1 << i0, np.uint8)
-assert_type(u1 << b1, np.uint8)
-assert_type(u1 << u1, np.uint8)
-assert_type(u1 << u2, np.uint16)
-assert_type(u1 << u4, np.uint32)
-assert_type(u1 << u8, np.uint64)
-assert_type(u1 << i1, np.int16)
-assert_type(u1 << i2, np.int16)
-assert_type(u1 << i4, np.int32)
-assert_type(u1 << i8, np.int64)
+assert_type(u8 << b_py, np.uint8)
+assert_type(u8 << i_py, np.uint8)
+u8 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 << b1, np.uint8)
+assert_type(u8 << u8, np.uint8)
+assert_type(u8 << u16, np.uint16)
+assert_type(u8 << u32, np.uint32)
+assert_type(u8 << u64, np.uint64)
+assert_type(u8 << i8, np.int16)
+assert_type(u8 << i16, np.int16)
+assert_type(u8 << i32, np.int32)
+assert_type(u8 << i64, np.int64)
+u8 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 << b0, np.uint16)
-assert_type(u2 << i0, np.uint16)
-assert_type(u2 << b1, np.uint16)
-assert_type(u2 << u1, np.uint16)
-assert_type(u2 << u2, np.uint16)
-assert_type(u2 << u4, np.uint32)
-assert_type(u2 << u8, np.uint64)
-assert_type(u2 << i1, np.int32)
-assert_type(u2 << i2, np.int32)
-assert_type(u2 << i4, np.int32)
-assert_type(u2 << i8, np.int64)
+assert_type(u16 << b_py, np.uint16)
+assert_type(u16 << i_py, np.uint16)
+u16 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 << b1, np.uint16)
+assert_type(u16 << u8, np.uint16)
+assert_type(u16 << u16, np.uint16)
+assert_type(u16 << u32, np.uint32)
+assert_type(u16 << u64, np.uint64)
+assert_type(u16 << i8, np.int32)
+assert_type(u16 << i16, np.int32)
+assert_type(u16 << i32, np.int32)
+assert_type(u16 << i64, np.int64)
+u16 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 << b0, np.uint32)
-assert_type(u4 << i0, np.uint32)
-assert_type(u4 << b1, np.uint32)
-assert_type(u4 << u1, np.uint32)
-assert_type(u4 << u2, np.uint32)
-assert_type(u4 << u4, np.uint32)
-assert_type(u4 << u8, np.uint64)
-assert_type(u4 << i1, np.int64)
-assert_type(u4 << i2, np.int64)
-assert_type(u4 << i4, np.int64)
-assert_type(u4 << i8, np.int64)
+assert_type(u32 << b_py, np.uint32)
+assert_type(u32 << i_py, np.uint32)
+u32 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 << b1, np.uint32)
+assert_type(u32 << u8, np.uint32)
+assert_type(u32 << u16, np.uint32)
+assert_type(u32 << u32, np.uint32)
+assert_type(u32 << u64, np.uint64)
+assert_type(u32 << i8, np.int64)
+assert_type(u32 << i16, np.int64)
+assert_type(u32 << i32, np.int64)
+assert_type(u32 << i64, np.int64)
+u32 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 << b0, np.uint64)
-assert_type(u8 << i0, np.uint64)
-assert_type(u8 << b1, np.uint64)
-assert_type(u8 << u1, np.uint64)
-assert_type(u8 << u2, np.uint64)
-assert_type(u8 << u4, np.uint64)
-assert_type(u8 << u8, np.uint64)
-u8 << i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 << i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 << i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 << b_py, np.uint64)
+assert_type(u64 << i_py, np.uint64)
+u64 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 << b1, np.uint64)
+assert_type(u64 << u8, np.uint64)
+assert_type(u64 << u16, np.uint64)
+assert_type(u64 << u32, np.uint64)
+assert_type(u64 << u64, np.uint64)
+u64 << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 << b0, np.int8)
-assert_type(i1 << i0, np.int8)
-assert_type(i1 << b1, np.int8)
-assert_type(i1 << u1, np.int16)
-assert_type(i1 << u2, np.int32)
-assert_type(i1 << u4, np.int64)
-i1 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i1 << i1, np.int8)
-assert_type(i1 << i2, np.int16)
-assert_type(i1 << i4, np.int32)
-assert_type(i1 << i8, np.int64)
+assert_type(i8 << b_py, np.int8)
+assert_type(i8 << i_py, np.int8)
+i8 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 << b1, np.int8)
+assert_type(i8 << u8, np.int16)
+assert_type(i8 << u16, np.int32)
+assert_type(i8 << u32, np.int64)
+i8 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 << i8, np.int8)
+assert_type(i8 << i16, np.int16)
+assert_type(i8 << i32, np.int32)
+assert_type(i8 << i64, np.int64)
+i8 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 << b0, np.int16)
-assert_type(i2 << i0, np.int16)
-assert_type(i2 << b1, np.int16)
-assert_type(i2 << u1, np.int16)
-assert_type(i2 << u2, np.int32)
-assert_type(i2 << u4, np.int64)
-i2 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i2 << i1, np.int16)
-assert_type(i2 << i2, np.int16)
-assert_type(i2 << i4, np.int32)
-assert_type(i2 << i8, np.int64)
+assert_type(i16 << b_py, np.int16)
+assert_type(i16 << i_py, np.int16)
+i16 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 << b1, np.int16)
+assert_type(i16 << u8, np.int16)
+assert_type(i16 << u16, np.int32)
+assert_type(i16 << u32, np.int64)
+i16 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 << i8, np.int16)
+assert_type(i16 << i16, np.int16)
+assert_type(i16 << i32, np.int32)
+assert_type(i16 << i64, np.int64)
+i16 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 << b0, np.int32)
-assert_type(i4 << i0, np.int32)
-assert_type(i4 << b1, np.int32)
-assert_type(i4 << u1, np.int32)
-assert_type(i4 << u2, np.int32)
-assert_type(i4 << u4, np.int64)
-i4 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i4 << i1, np.int32)
-assert_type(i4 << i2, np.int32)
-assert_type(i4 << i4, np.int32)
-assert_type(i4 << i8, np.int64)
+assert_type(i32 << b_py, np.int32)
+assert_type(i32 << i_py, np.int32)
+i32 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 << b1, np.int32)
+assert_type(i32 << u8, np.int32)
+assert_type(i32 << u16, np.int32)
+assert_type(i32 << u32, np.int64)
+i32 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 << i8, np.int32)
+assert_type(i32 << i16, np.int32)
+assert_type(i32 << i32, np.int32)
+assert_type(i32 << i64, np.int64)
+i32 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 << b0, np.int64)
-assert_type(i8 << i0, np.int64)
-assert_type(i8 << b1, np.int64)
-assert_type(i8 << u1, np.int64)
-assert_type(i8 << u2, np.int64)
-assert_type(i8 << u4, np.int64)
-i8 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 << i1, np.int64)
-assert_type(i8 << i2, np.int64)
-assert_type(i8 << i4, np.int64)
-assert_type(i8 << i8, np.int64)
+assert_type(i64 << b_py, np.int64)
+assert_type(i64 << i_py, np.int64)
+i64 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 << b1, np.int64)
+assert_type(i64 << u8, np.int64)
+assert_type(i64 << u16, np.int64)
+assert_type(i64 << u32, np.int64)
+i64 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 << i8, np.int64)
+assert_type(i64 << i16, np.int64)
+assert_type(i64 << i32, np.int64)
+assert_type(i64 << i64, np.int64)
+i64 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f16 << b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f32 << b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64 << b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64l << b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c32 << b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64 << b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64l << b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l << c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 ###
 # __[r]rshift__
 
-assert_type(b1 >> b0, np.int8)
-assert_type(b1 >> i0, np.int_)
+assert_type(b1 >> b_py, np.int8)
+assert_type(b1 >> i_py, np.int_)
+b1 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(b1 >> b1, np.int8)
-assert_type(b1 >> u1, np.uint8)
-assert_type(b1 >> u2, np.uint16)
-assert_type(b1 >> u4, np.uint32)
-assert_type(b1 >> u8, np.uint64)
-assert_type(b1 >> i1, np.int8)
-assert_type(b1 >> i2, np.int16)
-assert_type(b1 >> i4, np.int32)
-assert_type(b1 >> i8, np.int64)
+assert_type(b1 >> u8, np.uint8)
+assert_type(b1 >> u16, np.uint16)
+assert_type(b1 >> u32, np.uint32)
+assert_type(b1 >> u64, np.uint64)
+assert_type(b1 >> i8, np.int8)
+assert_type(b1 >> i16, np.int16)
+assert_type(b1 >> i32, np.int32)
+assert_type(b1 >> i64, np.int64)
+b1 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u1 >> b0, np.uint8)
-assert_type(u1 >> i0, np.uint8)
-assert_type(u1 >> b1, np.uint8)
-assert_type(u1 >> u1, np.uint8)
-assert_type(u1 >> u2, np.uint16)
-assert_type(u1 >> u4, np.uint32)
-assert_type(u1 >> u8, np.uint64)
-assert_type(u1 >> i1, np.int16)
-assert_type(u1 >> i2, np.int16)
-assert_type(u1 >> i4, np.int32)
-assert_type(u1 >> i8, np.int64)
+assert_type(u8 >> b_py, np.uint8)
+assert_type(u8 >> i_py, np.uint8)
+u8 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 >> b1, np.uint8)
+assert_type(u8 >> u8, np.uint8)
+assert_type(u8 >> u16, np.uint16)
+assert_type(u8 >> u32, np.uint32)
+assert_type(u8 >> u64, np.uint64)
+assert_type(u8 >> i8, np.int16)
+assert_type(u8 >> i16, np.int16)
+assert_type(u8 >> i32, np.int32)
+assert_type(u8 >> i64, np.int64)
+u8 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 >> b0, np.uint16)
-assert_type(u2 >> i0, np.uint16)
-assert_type(u2 >> b1, np.uint16)
-assert_type(u2 >> u1, np.uint16)
-assert_type(u2 >> u2, np.uint16)
-assert_type(u2 >> u4, np.uint32)
-assert_type(u2 >> u8, np.uint64)
-assert_type(u2 >> i1, np.int32)
-assert_type(u2 >> i2, np.int32)
-assert_type(u2 >> i4, np.int32)
-assert_type(u2 >> i8, np.int64)
+assert_type(u16 >> b_py, np.uint16)
+assert_type(u16 >> i_py, np.uint16)
+u16 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 >> b1, np.uint16)
+assert_type(u16 >> u8, np.uint16)
+assert_type(u16 >> u16, np.uint16)
+assert_type(u16 >> u32, np.uint32)
+assert_type(u16 >> u64, np.uint64)
+assert_type(u16 >> i8, np.int32)
+assert_type(u16 >> i16, np.int32)
+assert_type(u16 >> i32, np.int32)
+assert_type(u16 >> i64, np.int64)
+u16 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 >> b0, np.uint32)
-assert_type(u4 >> i0, np.uint32)
-assert_type(u4 >> b1, np.uint32)
-assert_type(u4 >> u1, np.uint32)
-assert_type(u4 >> u2, np.uint32)
-assert_type(u4 >> u4, np.uint32)
-assert_type(u4 >> u8, np.uint64)
-assert_type(u4 >> i1, np.int64)
-assert_type(u4 >> i2, np.int64)
-assert_type(u4 >> i4, np.int64)
-assert_type(u4 >> i8, np.int64)
+assert_type(u32 >> b_py, np.uint32)
+assert_type(u32 >> i_py, np.uint32)
+u32 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 >> b1, np.uint32)
+assert_type(u32 >> u8, np.uint32)
+assert_type(u32 >> u16, np.uint32)
+assert_type(u32 >> u32, np.uint32)
+assert_type(u32 >> u64, np.uint64)
+assert_type(u32 >> i8, np.int64)
+assert_type(u32 >> i16, np.int64)
+assert_type(u32 >> i32, np.int64)
+assert_type(u32 >> i64, np.int64)
+u32 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 >> b0, np.uint64)
-assert_type(u8 >> i0, np.uint64)
-assert_type(u8 >> b1, np.uint64)
-assert_type(u8 >> u1, np.uint64)
-assert_type(u8 >> u2, np.uint64)
-assert_type(u8 >> u4, np.uint64)
-assert_type(u8 >> u8, np.uint64)
-u8 >> i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 >> i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 >> i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 >> b_py, np.uint64)
+assert_type(u64 >> i_py, np.uint64)
+u64 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 >> b1, np.uint64)
+assert_type(u64 >> u8, np.uint64)
+assert_type(u64 >> u16, np.uint64)
+assert_type(u64 >> u32, np.uint64)
+assert_type(u64 >> u64, np.uint64)
+u64 >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 >> b0, np.int8)
-assert_type(i1 >> i0, np.int8)
-assert_type(i1 >> b1, np.int8)
-assert_type(i1 >> u1, np.int16)
-assert_type(i1 >> u2, np.int32)
-assert_type(i1 >> u4, np.int64)
-i1 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i1 >> i1, np.int8)
-assert_type(i1 >> i2, np.int16)
-assert_type(i1 >> i4, np.int32)
-assert_type(i1 >> i8, np.int64)
+assert_type(i8 >> b_py, np.int8)
+assert_type(i8 >> i_py, np.int8)
+i8 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 >> b1, np.int8)
+assert_type(i8 >> u8, np.int16)
+assert_type(i8 >> u16, np.int32)
+assert_type(i8 >> u32, np.int64)
+i8 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 >> i8, np.int8)
+assert_type(i8 >> i16, np.int16)
+assert_type(i8 >> i32, np.int32)
+assert_type(i8 >> i64, np.int64)
+i8 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 >> b0, np.int16)
-assert_type(i2 >> i0, np.int16)
-assert_type(i2 >> b1, np.int16)
-assert_type(i2 >> u1, np.int16)
-assert_type(i2 >> u2, np.int32)
-assert_type(i2 >> u4, np.int64)
-i2 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i2 >> i1, np.int16)
-assert_type(i2 >> i2, np.int16)
-assert_type(i2 >> i4, np.int32)
-assert_type(i2 >> i8, np.int64)
+assert_type(i16 >> b_py, np.int16)
+assert_type(i16 >> i_py, np.int16)
+i16 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 >> b1, np.int16)
+assert_type(i16 >> u8, np.int16)
+assert_type(i16 >> u16, np.int32)
+assert_type(i16 >> u32, np.int64)
+i16 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 >> i8, np.int16)
+assert_type(i16 >> i16, np.int16)
+assert_type(i16 >> i32, np.int32)
+assert_type(i16 >> i64, np.int64)
+i16 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 >> b0, np.int32)
-assert_type(i4 >> i0, np.int32)
-assert_type(i4 >> b1, np.int32)
-assert_type(i4 >> u1, np.int32)
-assert_type(i4 >> u2, np.int32)
-assert_type(i4 >> u4, np.int64)
-i4 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i4 >> i1, np.int32)
-assert_type(i4 >> i2, np.int32)
-assert_type(i4 >> i4, np.int32)
-assert_type(i4 >> i8, np.int64)
+assert_type(i32 >> b_py, np.int32)
+assert_type(i32 >> i_py, np.int32)
+i32 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 >> b1, np.int32)
+assert_type(i32 >> u8, np.int32)
+assert_type(i32 >> u16, np.int32)
+assert_type(i32 >> u32, np.int64)
+i32 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 >> i8, np.int32)
+assert_type(i32 >> i16, np.int32)
+assert_type(i32 >> i32, np.int32)
+assert_type(i32 >> i64, np.int64)
+i32 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 >> b0, np.int64)
-assert_type(i8 >> i0, np.int64)
-assert_type(i8 >> b1, np.int64)
-assert_type(i8 >> u1, np.int64)
-assert_type(i8 >> u2, np.int64)
-assert_type(i8 >> u4, np.int64)
-i8 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 >> i1, np.int64)
-assert_type(i8 >> i2, np.int64)
-assert_type(i8 >> i4, np.int64)
-assert_type(i8 >> i8, np.int64)
+assert_type(i64 >> b_py, np.int64)
+assert_type(i64 >> i_py, np.int64)
+i64 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 >> b1, np.int64)
+assert_type(i64 >> u8, np.int64)
+assert_type(i64 >> u16, np.int64)
+assert_type(i64 >> u32, np.int64)
+i64 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 >> i8, np.int64)
+assert_type(i64 >> i16, np.int64)
+assert_type(i64 >> i32, np.int64)
+assert_type(i64 >> i64, np.int64)
+i64 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f16 >> b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f32 >> b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64 >> b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64l >> b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c32 >> b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64 >> b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64l >> b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l >> c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 ###
 # __[r]and__
 
-assert_type(b1 & b0, np.bool)
-assert_type(b1 & i0, np.int_)
+assert_type(b1 & b_py, np.bool)
+assert_type(b1 & i_py, np.int_)
+b1 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(b1 & b1, np.bool)
-assert_type(b1 & u1, np.uint8)
-assert_type(b1 & u2, np.uint16)
-assert_type(b1 & u4, np.uint32)
-assert_type(b1 & u8, np.uint64)
-assert_type(b1 & i1, np.int8)
-assert_type(b1 & i2, np.int16)
-assert_type(b1 & i4, np.int32)
-assert_type(b1 & i8, np.int64)
+assert_type(b1 & u8, np.uint8)
+assert_type(b1 & u16, np.uint16)
+assert_type(b1 & u32, np.uint32)
+assert_type(b1 & u64, np.uint64)
+assert_type(b1 & i8, np.int8)
+assert_type(b1 & i16, np.int16)
+assert_type(b1 & i32, np.int32)
+assert_type(b1 & i64, np.int64)
+b1 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u1 & b0, np.uint8)
-assert_type(u1 & i0, np.uint8)
-assert_type(u1 & b1, np.uint8)
-assert_type(u1 & u1, np.uint8)
-assert_type(u1 & u2, np.uint16)
-assert_type(u1 & u4, np.uint32)
-assert_type(u1 & u8, np.uint64)
-assert_type(u1 & i1, np.int16)
-assert_type(u1 & i2, np.int16)
-assert_type(u1 & i4, np.int32)
-assert_type(u1 & i8, np.int64)
+assert_type(u8 & b_py, np.uint8)
+assert_type(u8 & i_py, np.uint8)
+u8 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 & b1, np.uint8)
+assert_type(u8 & u8, np.uint8)
+assert_type(u8 & u16, np.uint16)
+assert_type(u8 & u32, np.uint32)
+assert_type(u8 & u64, np.uint64)
+assert_type(u8 & i8, np.int16)
+assert_type(u8 & i16, np.int16)
+assert_type(u8 & i32, np.int32)
+assert_type(u8 & i64, np.int64)
+u8 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 & b0, np.uint16)
-assert_type(u2 & i0, np.uint16)
-assert_type(u2 & b1, np.uint16)
-assert_type(u2 & u1, np.uint16)
-assert_type(u2 & u2, np.uint16)
-assert_type(u2 & u4, np.uint32)
-assert_type(u2 & u8, np.uint64)
-assert_type(u2 & i1, np.int32)
-assert_type(u2 & i2, np.int32)
-assert_type(u2 & i4, np.int32)
-assert_type(u2 & i8, np.int64)
+assert_type(u16 & b_py, np.uint16)
+assert_type(u16 & i_py, np.uint16)
+u16 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 & b1, np.uint16)
+assert_type(u16 & u8, np.uint16)
+assert_type(u16 & u16, np.uint16)
+assert_type(u16 & u32, np.uint32)
+assert_type(u16 & u64, np.uint64)
+assert_type(u16 & i8, np.int32)
+assert_type(u16 & i16, np.int32)
+assert_type(u16 & i32, np.int32)
+assert_type(u16 & i64, np.int64)
+u16 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 & b0, np.uint32)
-assert_type(u4 & i0, np.uint32)
-assert_type(u4 & b1, np.uint32)
-assert_type(u4 & u1, np.uint32)
-assert_type(u4 & u2, np.uint32)
-assert_type(u4 & u4, np.uint32)
-assert_type(u4 & u8, np.uint64)
-assert_type(u4 & i1, np.int64)
-assert_type(u4 & i2, np.int64)
-assert_type(u4 & i4, np.int64)
-assert_type(u4 & i8, np.int64)
+assert_type(u32 & b_py, np.uint32)
+assert_type(u32 & i_py, np.uint32)
+u32 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 & b1, np.uint32)
+assert_type(u32 & u8, np.uint32)
+assert_type(u32 & u16, np.uint32)
+assert_type(u32 & u32, np.uint32)
+assert_type(u32 & u64, np.uint64)
+assert_type(u32 & i8, np.int64)
+assert_type(u32 & i16, np.int64)
+assert_type(u32 & i32, np.int64)
+assert_type(u32 & i64, np.int64)
+u32 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 & b0, np.uint64)
-assert_type(u8 & i0, np.uint64)
-assert_type(u8 & b1, np.uint64)
-assert_type(u8 & u1, np.uint64)
-assert_type(u8 & u2, np.uint64)
-assert_type(u8 & u4, np.uint64)
-assert_type(u8 & u8, np.uint64)
-u8 & i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 & i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 & i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 & b_py, np.uint64)
+assert_type(u64 & i_py, np.uint64)
+u64 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 & b1, np.uint64)
+assert_type(u64 & u8, np.uint64)
+assert_type(u64 & u16, np.uint64)
+assert_type(u64 & u32, np.uint64)
+assert_type(u64 & u64, np.uint64)
+u64 & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 & b0, np.int8)
-assert_type(i1 & i0, np.int8)
-assert_type(i1 & b1, np.int8)
-assert_type(i1 & u1, np.int16)
-assert_type(i1 & u2, np.int32)
-assert_type(i1 & u4, np.int64)
-i1 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i1 & i1, np.int8)
-assert_type(i1 & i2, np.int16)
-assert_type(i1 & i4, np.int32)
-assert_type(i1 & i8, np.int64)
+assert_type(i8 & b_py, np.int8)
+assert_type(i8 & i_py, np.int8)
+i8 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 & b1, np.int8)
+assert_type(i8 & u8, np.int16)
+assert_type(i8 & u16, np.int32)
+assert_type(i8 & u32, np.int64)
+i8 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 & i8, np.int8)
+assert_type(i8 & i16, np.int16)
+assert_type(i8 & i32, np.int32)
+assert_type(i8 & i64, np.int64)
+i8 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 & b0, np.int16)
-assert_type(i2 & i0, np.int16)
-assert_type(i2 & b1, np.int16)
-assert_type(i2 & u1, np.int16)
-assert_type(i2 & u2, np.int32)
-assert_type(i2 & u4, np.int64)
-i2 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i2 & i1, np.int16)
-assert_type(i2 & i2, np.int16)
-assert_type(i2 & i4, np.int32)
-assert_type(i2 & i8, np.int64)
+assert_type(i16 & b_py, np.int16)
+assert_type(i16 & i_py, np.int16)
+i16 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 & b1, np.int16)
+assert_type(i16 & u8, np.int16)
+assert_type(i16 & u16, np.int32)
+assert_type(i16 & u32, np.int64)
+i16 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 & i8, np.int16)
+assert_type(i16 & i16, np.int16)
+assert_type(i16 & i32, np.int32)
+assert_type(i16 & i64, np.int64)
+i16 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 & b0, np.int32)
-assert_type(i4 & i0, np.int32)
-assert_type(i4 & b1, np.int32)
-assert_type(i4 & u1, np.int32)
-assert_type(i4 & u2, np.int32)
-assert_type(i4 & u4, np.int64)
-i4 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i4 & i1, np.int32)
-assert_type(i4 & i2, np.int32)
-assert_type(i4 & i4, np.int32)
-assert_type(i4 & i8, np.int64)
+assert_type(i32 & b_py, np.int32)
+assert_type(i32 & i_py, np.int32)
+i32 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 & b1, np.int32)
+assert_type(i32 & u8, np.int32)
+assert_type(i32 & u16, np.int32)
+assert_type(i32 & u32, np.int64)
+i32 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 & i8, np.int32)
+assert_type(i32 & i16, np.int32)
+assert_type(i32 & i32, np.int32)
+assert_type(i32 & i64, np.int64)
+i32 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 & b0, np.int64)
-assert_type(i8 & i0, np.int64)
-assert_type(i8 & b1, np.int64)
-assert_type(i8 & u1, np.int64)
-assert_type(i8 & u2, np.int64)
-assert_type(i8 & u4, np.int64)
-i8 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 & i1, np.int64)
-assert_type(i8 & i2, np.int64)
-assert_type(i8 & i4, np.int64)
-assert_type(i8 & i8, np.int64)
+assert_type(i64 & b_py, np.int64)
+assert_type(i64 & i_py, np.int64)
+i64 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 & b1, np.int64)
+assert_type(i64 & u8, np.int64)
+assert_type(i64 & u16, np.int64)
+assert_type(i64 & u32, np.int64)
+i64 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 & i8, np.int64)
+assert_type(i64 & i16, np.int64)
+assert_type(i64 & i32, np.int64)
+assert_type(i64 & i64, np.int64)
+i64 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f16 & b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f32 & b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64 & b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64l & b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c32 & b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64 & b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64l & b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l & c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 ###
 # __[r]xor__
 
-assert_type(b1 ^ b0, np.bool)
-assert_type(b1 ^ i0, np.int_)
+assert_type(b1 ^ b_py, np.bool)
+assert_type(b1 ^ i_py, np.int_)
+b1 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(b1 ^ b1, np.bool)
-assert_type(b1 ^ u1, np.uint8)
-assert_type(b1 ^ u2, np.uint16)
-assert_type(b1 ^ u4, np.uint32)
-assert_type(b1 ^ u8, np.uint64)
-assert_type(b1 ^ i1, np.int8)
-assert_type(b1 ^ i2, np.int16)
-assert_type(b1 ^ i4, np.int32)
-assert_type(b1 ^ i8, np.int64)
+assert_type(b1 ^ u8, np.uint8)
+assert_type(b1 ^ u16, np.uint16)
+assert_type(b1 ^ u32, np.uint32)
+assert_type(b1 ^ u64, np.uint64)
+assert_type(b1 ^ i8, np.int8)
+assert_type(b1 ^ i16, np.int16)
+assert_type(b1 ^ i32, np.int32)
+assert_type(b1 ^ i64, np.int64)
+b1 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u1 ^ b0, np.uint8)
-assert_type(u1 ^ i0, np.uint8)
-assert_type(u1 ^ b1, np.uint8)
-assert_type(u1 ^ u1, np.uint8)
-assert_type(u1 ^ u2, np.uint16)
-assert_type(u1 ^ u4, np.uint32)
-assert_type(u1 ^ u8, np.uint64)
-assert_type(u1 ^ i1, np.int16)
-assert_type(u1 ^ i2, np.int16)
-assert_type(u1 ^ i4, np.int32)
-assert_type(u1 ^ i8, np.int64)
+assert_type(u8 ^ b_py, np.uint8)
+assert_type(u8 ^ i_py, np.uint8)
+u8 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 ^ b1, np.uint8)
+assert_type(u8 ^ u8, np.uint8)
+assert_type(u8 ^ u16, np.uint16)
+assert_type(u8 ^ u32, np.uint32)
+assert_type(u8 ^ u64, np.uint64)
+assert_type(u8 ^ i8, np.int16)
+assert_type(u8 ^ i16, np.int16)
+assert_type(u8 ^ i32, np.int32)
+assert_type(u8 ^ i64, np.int64)
+u8 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 ^ b0, np.uint16)
-assert_type(u2 ^ i0, np.uint16)
-assert_type(u2 ^ b1, np.uint16)
-assert_type(u2 ^ u1, np.uint16)
-assert_type(u2 ^ u2, np.uint16)
-assert_type(u2 ^ u4, np.uint32)
-assert_type(u2 ^ u8, np.uint64)
-assert_type(u2 ^ i1, np.int32)
-assert_type(u2 ^ i2, np.int32)
-assert_type(u2 ^ i4, np.int32)
-assert_type(u2 ^ i8, np.int64)
+assert_type(u16 ^ b_py, np.uint16)
+assert_type(u16 ^ i_py, np.uint16)
+u16 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 ^ b1, np.uint16)
+assert_type(u16 ^ u8, np.uint16)
+assert_type(u16 ^ u16, np.uint16)
+assert_type(u16 ^ u32, np.uint32)
+assert_type(u16 ^ u64, np.uint64)
+assert_type(u16 ^ i8, np.int32)
+assert_type(u16 ^ i16, np.int32)
+assert_type(u16 ^ i32, np.int32)
+assert_type(u16 ^ i64, np.int64)
+u16 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 ^ b0, np.uint32)
-assert_type(u4 ^ i0, np.uint32)
-assert_type(u4 ^ b1, np.uint32)
-assert_type(u4 ^ u1, np.uint32)
-assert_type(u4 ^ u2, np.uint32)
-assert_type(u4 ^ u4, np.uint32)
-assert_type(u4 ^ u8, np.uint64)
-assert_type(u4 ^ i1, np.int64)
-assert_type(u4 ^ i2, np.int64)
-assert_type(u4 ^ i4, np.int64)
-assert_type(u4 ^ i8, np.int64)
+assert_type(u32 ^ b_py, np.uint32)
+assert_type(u32 ^ i_py, np.uint32)
+u32 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 ^ b1, np.uint32)
+assert_type(u32 ^ u8, np.uint32)
+assert_type(u32 ^ u16, np.uint32)
+assert_type(u32 ^ u32, np.uint32)
+assert_type(u32 ^ u64, np.uint64)
+assert_type(u32 ^ i8, np.int64)
+assert_type(u32 ^ i16, np.int64)
+assert_type(u32 ^ i32, np.int64)
+assert_type(u32 ^ i64, np.int64)
+u32 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 ^ b0, np.uint64)
-assert_type(u8 ^ i0, np.uint64)
-assert_type(u8 ^ b1, np.uint64)
-assert_type(u8 ^ u1, np.uint64)
-assert_type(u8 ^ u2, np.uint64)
-assert_type(u8 ^ u4, np.uint64)
-assert_type(u8 ^ u8, np.uint64)
-u8 ^ i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 ^ i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 ^ i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 ^ b_py, np.uint64)
+assert_type(u64 ^ i_py, np.uint64)
+u64 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 ^ b1, np.uint64)
+assert_type(u64 ^ u8, np.uint64)
+assert_type(u64 ^ u16, np.uint64)
+assert_type(u64 ^ u32, np.uint64)
+assert_type(u64 ^ u64, np.uint64)
+u64 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 ^ b0, np.int8)
-assert_type(i1 ^ i0, np.int8)
-assert_type(i1 ^ b1, np.int8)
-assert_type(i1 ^ u1, np.int16)
-assert_type(i1 ^ u2, np.int32)
-assert_type(i1 ^ u4, np.int64)
-i1 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i1 ^ i1, np.int8)
-assert_type(i1 ^ i2, np.int16)
-assert_type(i1 ^ i4, np.int32)
-assert_type(i1 ^ i8, np.int64)
+assert_type(i8 ^ b_py, np.int8)
+assert_type(i8 ^ i_py, np.int8)
+i8 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 ^ b1, np.int8)
+assert_type(i8 ^ u8, np.int16)
+assert_type(i8 ^ u16, np.int32)
+assert_type(i8 ^ u32, np.int64)
+i8 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 ^ i8, np.int8)
+assert_type(i8 ^ i16, np.int16)
+assert_type(i8 ^ i32, np.int32)
+assert_type(i8 ^ i64, np.int64)
+i8 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 ^ b0, np.int16)
-assert_type(i2 ^ i0, np.int16)
-assert_type(i2 ^ b1, np.int16)
-assert_type(i2 ^ u1, np.int16)
-assert_type(i2 ^ u2, np.int32)
-assert_type(i2 ^ u4, np.int64)
-i2 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i2 ^ i1, np.int16)
-assert_type(i2 ^ i2, np.int16)
-assert_type(i2 ^ i4, np.int32)
-assert_type(i2 ^ i8, np.int64)
+assert_type(i16 ^ b_py, np.int16)
+assert_type(i16 ^ i_py, np.int16)
+i16 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 ^ b1, np.int16)
+assert_type(i16 ^ u8, np.int16)
+assert_type(i16 ^ u16, np.int32)
+assert_type(i16 ^ u32, np.int64)
+i16 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 ^ i8, np.int16)
+assert_type(i16 ^ i16, np.int16)
+assert_type(i16 ^ i32, np.int32)
+assert_type(i16 ^ i64, np.int64)
+i16 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 ^ b0, np.int32)
-assert_type(i4 ^ i0, np.int32)
-assert_type(i4 ^ b1, np.int32)
-assert_type(i4 ^ u1, np.int32)
-assert_type(i4 ^ u2, np.int32)
-assert_type(i4 ^ u4, np.int64)
-i4 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i4 ^ i1, np.int32)
-assert_type(i4 ^ i2, np.int32)
-assert_type(i4 ^ i4, np.int32)
-assert_type(i4 ^ i8, np.int64)
+assert_type(i32 ^ b_py, np.int32)
+assert_type(i32 ^ i_py, np.int32)
+i32 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 ^ b1, np.int32)
+assert_type(i32 ^ u8, np.int32)
+assert_type(i32 ^ u16, np.int32)
+assert_type(i32 ^ u32, np.int64)
+i32 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 ^ i8, np.int32)
+assert_type(i32 ^ i16, np.int32)
+assert_type(i32 ^ i32, np.int32)
+assert_type(i32 ^ i64, np.int64)
+i32 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 ^ b0, np.int64)
-assert_type(i8 ^ i0, np.int64)
-assert_type(i8 ^ b1, np.int64)
-assert_type(i8 ^ u1, np.int64)
-assert_type(i8 ^ u2, np.int64)
-assert_type(i8 ^ u4, np.int64)
-i8 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 ^ i1, np.int64)
-assert_type(i8 ^ i2, np.int64)
-assert_type(i8 ^ i4, np.int64)
-assert_type(i8 ^ i8, np.int64)
+assert_type(i64 ^ b_py, np.int64)
+assert_type(i64 ^ i_py, np.int64)
+i64 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 ^ b1, np.int64)
+assert_type(i64 ^ u8, np.int64)
+assert_type(i64 ^ u16, np.int64)
+assert_type(i64 ^ u32, np.int64)
+i64 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 ^ i8, np.int64)
+assert_type(i64 ^ i16, np.int64)
+assert_type(i64 ^ i32, np.int64)
+assert_type(i64 ^ i64, np.int64)
+i64 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f16 ^ b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f32 ^ b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64 ^ b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64l ^ b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c32 ^ b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64 ^ b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64l ^ b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l ^ c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 ###
 # __[r]or__
 
-assert_type(b1 | b0, np.bool)
-assert_type(b1 | i0, np.int_)
+assert_type(b1 | b_py, np.bool)
+assert_type(b1 | i_py, np.int_)
+b1 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(b1 | b1, np.bool)
-assert_type(b1 | u1, np.uint8)
-assert_type(b1 | u2, np.uint16)
-assert_type(b1 | u4, np.uint32)
-assert_type(b1 | u8, np.uint64)
-assert_type(b1 | i1, np.int8)
-assert_type(b1 | i2, np.int16)
-assert_type(b1 | i4, np.int32)
-assert_type(b1 | i8, np.int64)
+assert_type(b1 | u8, np.uint8)
+assert_type(b1 | u16, np.uint16)
+assert_type(b1 | u32, np.uint32)
+assert_type(b1 | u64, np.uint64)
+assert_type(b1 | i8, np.int8)
+assert_type(b1 | i16, np.int16)
+assert_type(b1 | i32, np.int32)
+assert_type(b1 | i64, np.int64)
+b1 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u1 | b0, np.uint8)
-assert_type(u1 | i0, np.uint8)
-assert_type(u1 | b1, np.uint8)
-assert_type(u1 | u1, np.uint8)
-assert_type(u1 | u2, np.uint16)
-assert_type(u1 | u4, np.uint32)
-assert_type(u1 | u8, np.uint64)
-assert_type(u1 | i1, np.int16)
-assert_type(u1 | i2, np.int16)
-assert_type(u1 | i4, np.int32)
-assert_type(u1 | i8, np.int64)
+assert_type(u8 | b_py, np.uint8)
+assert_type(u8 | i_py, np.uint8)
+u8 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8 | b1, np.uint8)
+assert_type(u8 | u8, np.uint8)
+assert_type(u8 | u16, np.uint16)
+assert_type(u8 | u32, np.uint32)
+assert_type(u8 | u64, np.uint64)
+assert_type(u8 | i8, np.int16)
+assert_type(u8 | i16, np.int16)
+assert_type(u8 | i32, np.int32)
+assert_type(u8 | i64, np.int64)
+u8 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u8 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u2 | b0, np.uint16)
-assert_type(u2 | i0, np.uint16)
-assert_type(u2 | b1, np.uint16)
-assert_type(u2 | u1, np.uint16)
-assert_type(u2 | u2, np.uint16)
-assert_type(u2 | u4, np.uint32)
-assert_type(u2 | u8, np.uint64)
-assert_type(u2 | i1, np.int32)
-assert_type(u2 | i2, np.int32)
-assert_type(u2 | i4, np.int32)
-assert_type(u2 | i8, np.int64)
+assert_type(u16 | b_py, np.uint16)
+assert_type(u16 | i_py, np.uint16)
+u16 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u16 | b1, np.uint16)
+assert_type(u16 | u8, np.uint16)
+assert_type(u16 | u16, np.uint16)
+assert_type(u16 | u32, np.uint32)
+assert_type(u16 | u64, np.uint64)
+assert_type(u16 | i8, np.int32)
+assert_type(u16 | i16, np.int32)
+assert_type(u16 | i32, np.int32)
+assert_type(u16 | i64, np.int64)
+u16 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u16 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u4 | b0, np.uint32)
-assert_type(u4 | i0, np.uint32)
-assert_type(u4 | b1, np.uint32)
-assert_type(u4 | u1, np.uint32)
-assert_type(u4 | u2, np.uint32)
-assert_type(u4 | u4, np.uint32)
-assert_type(u4 | u8, np.uint64)
-assert_type(u4 | i1, np.int64)
-assert_type(u4 | i2, np.int64)
-assert_type(u4 | i4, np.int64)
-assert_type(u4 | i8, np.int64)
+assert_type(u32 | b_py, np.uint32)
+assert_type(u32 | i_py, np.uint32)
+u32 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u32 | b1, np.uint32)
+assert_type(u32 | u8, np.uint32)
+assert_type(u32 | u16, np.uint32)
+assert_type(u32 | u32, np.uint32)
+assert_type(u32 | u64, np.uint64)
+assert_type(u32 | i8, np.int64)
+assert_type(u32 | i16, np.int64)
+assert_type(u32 | i32, np.int64)
+assert_type(u32 | i64, np.int64)
+u32 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u32 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(u8 | b0, np.uint64)
-assert_type(u8 | i0, np.uint64)
-assert_type(u8 | b1, np.uint64)
-assert_type(u8 | u1, np.uint64)
-assert_type(u8 | u2, np.uint64)
-assert_type(u8 | u4, np.uint64)
-assert_type(u8 | u8, np.uint64)
-u8 | i1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 | i2  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 | i4  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-u8 | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 | b_py, np.uint64)
+assert_type(u64 | i_py, np.uint64)
+u64 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u64 | b1, np.uint64)
+assert_type(u64 | u8, np.uint64)
+assert_type(u64 | u16, np.uint64)
+assert_type(u64 | u32, np.uint64)
+assert_type(u64 | u64, np.uint64)
+u64 | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u64 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i1 | b0, np.int8)
-assert_type(i1 | i0, np.int8)
-assert_type(i1 | b1, np.int8)
-assert_type(i1 | u1, np.int16)
-assert_type(i1 | u2, np.int32)
-assert_type(i1 | u4, np.int64)
-i1 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i1 | i1, np.int8)
-assert_type(i1 | i2, np.int16)
-assert_type(i1 | i4, np.int32)
-assert_type(i1 | i8, np.int64)
+assert_type(i8 | b_py, np.int8)
+assert_type(i8 | i_py, np.int8)
+i8 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 | b1, np.int8)
+assert_type(i8 | u8, np.int16)
+assert_type(i8 | u16, np.int32)
+assert_type(i8 | u32, np.int64)
+i8 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8 | i8, np.int8)
+assert_type(i8 | i16, np.int16)
+assert_type(i8 | i32, np.int32)
+assert_type(i8 | i64, np.int64)
+i8 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i2 | b0, np.int16)
-assert_type(i2 | i0, np.int16)
-assert_type(i2 | b1, np.int16)
-assert_type(i2 | u1, np.int16)
-assert_type(i2 | u2, np.int32)
-assert_type(i2 | u4, np.int64)
-i2 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i2 | i1, np.int16)
-assert_type(i2 | i2, np.int16)
-assert_type(i2 | i4, np.int32)
-assert_type(i2 | i8, np.int64)
+assert_type(i16 | b_py, np.int16)
+assert_type(i16 | i_py, np.int16)
+i16 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 | b1, np.int16)
+assert_type(i16 | u8, np.int16)
+assert_type(i16 | u16, np.int32)
+assert_type(i16 | u32, np.int64)
+i16 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i16 | i8, np.int16)
+assert_type(i16 | i16, np.int16)
+assert_type(i16 | i32, np.int32)
+assert_type(i16 | i64, np.int64)
+i16 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i16 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i4 | b0, np.int32)
-assert_type(i4 | i0, np.int32)
-assert_type(i4 | b1, np.int32)
-assert_type(i4 | u1, np.int32)
-assert_type(i4 | u2, np.int32)
-assert_type(i4 | u4, np.int64)
-i4 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i4 | i1, np.int32)
-assert_type(i4 | i2, np.int32)
-assert_type(i4 | i4, np.int32)
-assert_type(i4 | i8, np.int64)
+assert_type(i32 | b_py, np.int32)
+assert_type(i32 | i_py, np.int32)
+i32 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 | b1, np.int32)
+assert_type(i32 | u8, np.int32)
+assert_type(i32 | u16, np.int32)
+assert_type(i32 | u32, np.int64)
+i32 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i32 | i8, np.int32)
+assert_type(i32 | i16, np.int32)
+assert_type(i32 | i32, np.int32)
+assert_type(i32 | i64, np.int64)
+i32 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i32 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-assert_type(i8 | b0, np.int64)
-assert_type(i8 | i0, np.int64)
-assert_type(i8 | b1, np.int64)
-assert_type(i8 | u1, np.int64)
-assert_type(i8 | u2, np.int64)
-assert_type(i8 | u4, np.int64)
-i8 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 | i1, np.int64)
-assert_type(i8 | i2, np.int64)
-assert_type(i8 | i4, np.int64)
-assert_type(i8 | i8, np.int64)
+assert_type(i64 | b_py, np.int64)
+assert_type(i64 | i_py, np.int64)
+i64 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 | b1, np.int64)
+assert_type(i64 | u8, np.int64)
+assert_type(i64 | u16, np.int64)
+assert_type(i64 | u32, np.int64)
+i64 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i64 | i8, np.int64)
+assert_type(i64 | i16, np.int64)
+assert_type(i64 | i32, np.int64)
+assert_type(i64 | i64, np.int64)
+i64 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i64 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f16 | b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f16 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f32 | b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f32 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64 | b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+f64l | b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f64l | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c32 | b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c32 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64 | b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64 | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+c64l | b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | b1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | u8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | u16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | u32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | u64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | i8  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | i16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | i32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | i64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | f16  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | f32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | f64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | f64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c64l | c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 ###
 # __[r]lt__
 
-assert_type(b1 < b0, np.bool)
-assert_type(b1 < i0, np.bool)
-assert_type(b1 < f0, np.bool)
-assert_type(b1 < c0, np.bool)
+assert_type(b1 < b_py, np.bool)
+assert_type(b1 < i_py, np.bool)
+assert_type(b1 < f_py, np.bool)
+assert_type(b1 < c_py, np.bool)
 assert_type(b1 < b1, np.bool)
-assert_type(b1 < u1, np.bool)
-assert_type(b1 < u2, np.bool)
-assert_type(b1 < u4, np.bool)
 assert_type(b1 < u8, np.bool)
-assert_type(b1 < i1, np.bool)
-assert_type(b1 < i2, np.bool)
-assert_type(b1 < i4, np.bool)
+assert_type(b1 < u16, np.bool)
+assert_type(b1 < u32, np.bool)
+assert_type(b1 < u64, np.bool)
 assert_type(b1 < i8, np.bool)
-assert_type(b1 < f2, np.bool)
-assert_type(b1 < f4, np.bool)
-assert_type(b1 < f8, np.bool)
-assert_type(b1 < ld, np.bool)
-assert_type(b1 < c8, np.bool)
-assert_type(b1 < c16, np.bool)
-assert_type(b1 < cld, np.bool)
-assert_type(b1 < m8, np.bool)
+assert_type(b1 < i16, np.bool)
+assert_type(b1 < i32, np.bool)
+assert_type(b1 < i64, np.bool)
+assert_type(b1 < f16, np.bool)
+assert_type(b1 < f32, np.bool)
+assert_type(b1 < f64, np.bool)
+assert_type(b1 < f64l, np.bool)
+assert_type(b1 < c32, np.bool)
+assert_type(b1 < c64, np.bool)
+assert_type(b1 < c64l, np.bool)
+assert_type(b1 < m64, np.bool)
 
-assert_type(u1 < b0, np.bool)
-assert_type(u1 < i0, np.bool)
-assert_type(u1 < f0, np.bool)
-assert_type(u1 < c0, np.bool)
-assert_type(u1 < b1, np.bool)
-assert_type(u1 < u1, np.bool)
-assert_type(u1 < u2, np.bool)
-assert_type(u1 < u4, np.bool)
-assert_type(u1 < u8, np.bool)
-assert_type(u1 < i1, np.bool)
-assert_type(u1 < i2, np.bool)
-assert_type(u1 < i4, np.bool)
-assert_type(u1 < i8, np.bool)
-assert_type(u1 < f2, np.bool)
-assert_type(u1 < f4, np.bool)
-assert_type(u1 < f8, np.bool)
-assert_type(u1 < ld, np.bool)
-assert_type(u1 < c8, np.bool)
-assert_type(u1 < c16, np.bool)
-assert_type(u1 < cld, np.bool)
-assert_type(u1 < m8, np.bool)
-
-assert_type(u2 < b0, np.bool)
-assert_type(u2 < i0, np.bool)
-assert_type(u2 < f0, np.bool)
-assert_type(u2 < c0, np.bool)
-assert_type(u2 < b1, np.bool)
-assert_type(u2 < u1, np.bool)
-assert_type(u2 < u2, np.bool)
-assert_type(u2 < u4, np.bool)
-assert_type(u2 < u8, np.bool)
-assert_type(u2 < i1, np.bool)
-assert_type(u2 < i2, np.bool)
-assert_type(u2 < i4, np.bool)
-assert_type(u2 < i8, np.bool)
-assert_type(u2 < f2, np.bool)
-assert_type(u2 < f4, np.bool)
-assert_type(u2 < f8, np.bool)
-assert_type(u2 < ld, np.bool)
-assert_type(u2 < c8, np.bool)
-assert_type(u2 < c16, np.bool)
-assert_type(u2 < cld, np.bool)
-assert_type(u2 < m8, np.bool)
-
-assert_type(u4 < b0, np.bool)
-assert_type(u4 < i0, np.bool)
-assert_type(u4 < f0, np.bool)
-assert_type(u4 < c0, np.bool)
-assert_type(u4 < b1, np.bool)
-assert_type(u4 < u1, np.bool)
-assert_type(u4 < u2, np.bool)
-assert_type(u4 < u4, np.bool)
-assert_type(u4 < u8, np.bool)
-assert_type(u4 < i1, np.bool)
-assert_type(u4 < i2, np.bool)
-assert_type(u4 < i4, np.bool)
-assert_type(u4 < i8, np.bool)
-assert_type(u4 < f2, np.bool)
-assert_type(u4 < f4, np.bool)
-assert_type(u4 < f8, np.bool)
-assert_type(u4 < ld, np.bool)
-assert_type(u4 < c8, np.bool)
-assert_type(u4 < c16, np.bool)
-assert_type(u4 < cld, np.bool)
-assert_type(u4 < m8, np.bool)
-
-assert_type(u8 < b0, np.bool)
-assert_type(u8 < i0, np.bool)
-assert_type(u8 < f0, np.bool)
-assert_type(u8 < c0, np.bool)
+assert_type(u8 < b_py, np.bool)
+assert_type(u8 < i_py, np.bool)
+assert_type(u8 < f_py, np.bool)
+assert_type(u8 < c_py, np.bool)
 assert_type(u8 < b1, np.bool)
-assert_type(u8 < u1, np.bool)
-assert_type(u8 < u2, np.bool)
-assert_type(u8 < u4, np.bool)
 assert_type(u8 < u8, np.bool)
-assert_type(u8 < i1, np.bool)
-assert_type(u8 < i2, np.bool)
-assert_type(u8 < i4, np.bool)
+assert_type(u8 < u16, np.bool)
+assert_type(u8 < u32, np.bool)
+assert_type(u8 < u64, np.bool)
 assert_type(u8 < i8, np.bool)
-assert_type(u8 < f2, np.bool)
-assert_type(u8 < f4, np.bool)
-assert_type(u8 < f8, np.bool)
-assert_type(u8 < ld, np.bool)
-assert_type(u8 < c8, np.bool)
-assert_type(u8 < c16, np.bool)
-assert_type(u8 < cld, np.bool)
+assert_type(u8 < i16, np.bool)
+assert_type(u8 < i32, np.bool)
+assert_type(u8 < i64, np.bool)
+assert_type(u8 < f16, np.bool)
+assert_type(u8 < f32, np.bool)
+assert_type(u8 < f64, np.bool)
+assert_type(u8 < f64l, np.bool)
+assert_type(u8 < c32, np.bool)
+assert_type(u8 < c64, np.bool)
+assert_type(u8 < c64l, np.bool)
+assert_type(u8 < m64, np.bool)
 
-assert_type(i1 < b0, np.bool)
-assert_type(i1 < i0, np.bool)
-assert_type(i1 < f0, np.bool)
-assert_type(i1 < c0, np.bool)
-assert_type(i1 < b1, np.bool)
-assert_type(i1 < u1, np.bool)
-assert_type(i1 < u2, np.bool)
-assert_type(i1 < u4, np.bool)
-assert_type(i1 < u8, np.bool)
-assert_type(i1 < i1, np.bool)
-assert_type(i1 < i2, np.bool)
-assert_type(i1 < i4, np.bool)
-assert_type(i1 < i8, np.bool)
-assert_type(i1 < f2, np.bool)
-assert_type(i1 < f4, np.bool)
-assert_type(i1 < f8, np.bool)
-assert_type(i1 < ld, np.bool)
-assert_type(i1 < c8, np.bool)
-assert_type(i1 < c16, np.bool)
-assert_type(i1 < cld, np.bool)
-assert_type(i1 < m8, np.bool)
+assert_type(u16 < b_py, np.bool)
+assert_type(u16 < i_py, np.bool)
+assert_type(u16 < f_py, np.bool)
+assert_type(u16 < c_py, np.bool)
+assert_type(u16 < b1, np.bool)
+assert_type(u16 < u8, np.bool)
+assert_type(u16 < u16, np.bool)
+assert_type(u16 < u32, np.bool)
+assert_type(u16 < u64, np.bool)
+assert_type(u16 < i8, np.bool)
+assert_type(u16 < i16, np.bool)
+assert_type(u16 < i32, np.bool)
+assert_type(u16 < i64, np.bool)
+assert_type(u16 < f16, np.bool)
+assert_type(u16 < f32, np.bool)
+assert_type(u16 < f64, np.bool)
+assert_type(u16 < f64l, np.bool)
+assert_type(u16 < c32, np.bool)
+assert_type(u16 < c64, np.bool)
+assert_type(u16 < c64l, np.bool)
+assert_type(u16 < m64, np.bool)
 
-assert_type(i2 < b0, np.bool)
-assert_type(i2 < i0, np.bool)
-assert_type(i2 < f0, np.bool)
-assert_type(i2 < c0, np.bool)
-assert_type(i2 < b1, np.bool)
-assert_type(i2 < u1, np.bool)
-assert_type(i2 < u2, np.bool)
-assert_type(i2 < u4, np.bool)
-assert_type(i2 < u8, np.bool)
-assert_type(i2 < i1, np.bool)
-assert_type(i2 < i2, np.bool)
-assert_type(i2 < i4, np.bool)
-assert_type(i2 < i8, np.bool)
-assert_type(i2 < f2, np.bool)
-assert_type(i2 < f4, np.bool)
-assert_type(i2 < f8, np.bool)
-assert_type(i2 < ld, np.bool)
-assert_type(i2 < c8, np.bool)
-assert_type(i2 < c16, np.bool)
-assert_type(i2 < cld, np.bool)
-assert_type(i2 < m8, np.bool)
+assert_type(u32 < b_py, np.bool)
+assert_type(u32 < i_py, np.bool)
+assert_type(u32 < f_py, np.bool)
+assert_type(u32 < c_py, np.bool)
+assert_type(u32 < b1, np.bool)
+assert_type(u32 < u8, np.bool)
+assert_type(u32 < u16, np.bool)
+assert_type(u32 < u32, np.bool)
+assert_type(u32 < u64, np.bool)
+assert_type(u32 < i8, np.bool)
+assert_type(u32 < i16, np.bool)
+assert_type(u32 < i32, np.bool)
+assert_type(u32 < i64, np.bool)
+assert_type(u32 < f16, np.bool)
+assert_type(u32 < f32, np.bool)
+assert_type(u32 < f64, np.bool)
+assert_type(u32 < f64l, np.bool)
+assert_type(u32 < c32, np.bool)
+assert_type(u32 < c64, np.bool)
+assert_type(u32 < c64l, np.bool)
+assert_type(u32 < m64, np.bool)
 
-assert_type(i4 < b0, np.bool)
-assert_type(i4 < i0, np.bool)
-assert_type(i4 < f0, np.bool)
-assert_type(i4 < c0, np.bool)
-assert_type(i4 < b1, np.bool)
-assert_type(i4 < u1, np.bool)
-assert_type(i4 < u2, np.bool)
-assert_type(i4 < u4, np.bool)
-assert_type(i4 < u8, np.bool)
-assert_type(i4 < i1, np.bool)
-assert_type(i4 < i2, np.bool)
-assert_type(i4 < i4, np.bool)
-assert_type(i4 < i8, np.bool)
-assert_type(i4 < f2, np.bool)
-assert_type(i4 < f4, np.bool)
-assert_type(i4 < f8, np.bool)
-assert_type(i4 < ld, np.bool)
-assert_type(i4 < c8, np.bool)
-assert_type(i4 < c16, np.bool)
-assert_type(i4 < cld, np.bool)
-assert_type(i4 < m8, np.bool)
+assert_type(u64 < b_py, np.bool)
+assert_type(u64 < i_py, np.bool)
+assert_type(u64 < f_py, np.bool)
+assert_type(u64 < c_py, np.bool)
+assert_type(u64 < b1, np.bool)
+assert_type(u64 < u8, np.bool)
+assert_type(u64 < u16, np.bool)
+assert_type(u64 < u32, np.bool)
+assert_type(u64 < u64, np.bool)
+assert_type(u64 < i8, np.bool)
+assert_type(u64 < i16, np.bool)
+assert_type(u64 < i32, np.bool)
+assert_type(u64 < i64, np.bool)
+assert_type(u64 < f16, np.bool)
+assert_type(u64 < f32, np.bool)
+assert_type(u64 < f64, np.bool)
+assert_type(u64 < f64l, np.bool)
+assert_type(u64 < c32, np.bool)
+assert_type(u64 < c64, np.bool)
+assert_type(u64 < c64l, np.bool)
 
-assert_type(i8 < b0, np.bool)
-assert_type(i8 < i0, np.bool)
-assert_type(i8 < f0, np.bool)
-assert_type(i8 < c0, np.bool)
+assert_type(i8 < b_py, np.bool)
+assert_type(i8 < i_py, np.bool)
+assert_type(i8 < f_py, np.bool)
+assert_type(i8 < c_py, np.bool)
 assert_type(i8 < b1, np.bool)
-assert_type(i8 < u1, np.bool)
-assert_type(i8 < u2, np.bool)
-assert_type(i8 < u4, np.bool)
 assert_type(i8 < u8, np.bool)
-assert_type(i8 < i1, np.bool)
-assert_type(i8 < i2, np.bool)
-assert_type(i8 < i4, np.bool)
+assert_type(i8 < u16, np.bool)
+assert_type(i8 < u32, np.bool)
+assert_type(i8 < u64, np.bool)
 assert_type(i8 < i8, np.bool)
-assert_type(i8 < f2, np.bool)
-assert_type(i8 < f4, np.bool)
-assert_type(i8 < f8, np.bool)
-assert_type(i8 < ld, np.bool)
-assert_type(i8 < c8, np.bool)
-assert_type(i8 < c16, np.bool)
-assert_type(i8 < cld, np.bool)
-assert_type(i8 < m8, np.bool)
+assert_type(i8 < i16, np.bool)
+assert_type(i8 < i32, np.bool)
+assert_type(i8 < i64, np.bool)
+assert_type(i8 < f16, np.bool)
+assert_type(i8 < f32, np.bool)
+assert_type(i8 < f64, np.bool)
+assert_type(i8 < f64l, np.bool)
+assert_type(i8 < c32, np.bool)
+assert_type(i8 < c64, np.bool)
+assert_type(i8 < c64l, np.bool)
+assert_type(i8 < m64, np.bool)
 
-assert_type(f2 < b0, np.bool)
-assert_type(f2 < i0, np.bool)
-assert_type(f2 < f0, np.bool)
-assert_type(f2 < c0, np.bool)
-assert_type(f2 < b1, np.bool)
-assert_type(f2 < u1, np.bool)
-assert_type(f2 < u2, np.bool)
-assert_type(f2 < u4, np.bool)
-assert_type(f2 < u8, np.bool)
-assert_type(f2 < i1, np.bool)
-assert_type(f2 < i2, np.bool)
-assert_type(f2 < i4, np.bool)
-assert_type(f2 < i8, np.bool)
-assert_type(f2 < f2, np.bool)
-assert_type(f2 < f4, np.bool)
-assert_type(f2 < f8, np.bool)
-assert_type(f2 < ld, np.bool)
-assert_type(f2 < c8, np.bool)
-assert_type(f2 < c16, np.bool)
-assert_type(f2 < cld, np.bool)
+assert_type(i16 < b_py, np.bool)
+assert_type(i16 < i_py, np.bool)
+assert_type(i16 < f_py, np.bool)
+assert_type(i16 < c_py, np.bool)
+assert_type(i16 < b1, np.bool)
+assert_type(i16 < u8, np.bool)
+assert_type(i16 < u16, np.bool)
+assert_type(i16 < u32, np.bool)
+assert_type(i16 < u64, np.bool)
+assert_type(i16 < i8, np.bool)
+assert_type(i16 < i16, np.bool)
+assert_type(i16 < i32, np.bool)
+assert_type(i16 < i64, np.bool)
+assert_type(i16 < f16, np.bool)
+assert_type(i16 < f32, np.bool)
+assert_type(i16 < f64, np.bool)
+assert_type(i16 < f64l, np.bool)
+assert_type(i16 < c32, np.bool)
+assert_type(i16 < c64, np.bool)
+assert_type(i16 < c64l, np.bool)
+assert_type(i16 < m64, np.bool)
 
-assert_type(f4 < b0, np.bool)
-assert_type(f4 < i0, np.bool)
-assert_type(f4 < f0, np.bool)
-assert_type(f4 < c0, np.bool)
-assert_type(f4 < b1, np.bool)
-assert_type(f4 < u1, np.bool)
-assert_type(f4 < u2, np.bool)
-assert_type(f4 < u4, np.bool)
-assert_type(f4 < u8, np.bool)
-assert_type(f4 < i1, np.bool)
-assert_type(f4 < i2, np.bool)
-assert_type(f4 < i4, np.bool)
-assert_type(f4 < i8, np.bool)
-assert_type(f4 < f2, np.bool)
-assert_type(f4 < f4, np.bool)
-assert_type(f4 < f8, np.bool)
-assert_type(f4 < ld, np.bool)
-assert_type(f4 < c8, np.bool)
-assert_type(f4 < c16, np.bool)
-assert_type(f4 < cld, np.bool)
+assert_type(i32 < b_py, np.bool)
+assert_type(i32 < i_py, np.bool)
+assert_type(i32 < f_py, np.bool)
+assert_type(i32 < c_py, np.bool)
+assert_type(i32 < b1, np.bool)
+assert_type(i32 < u8, np.bool)
+assert_type(i32 < u16, np.bool)
+assert_type(i32 < u32, np.bool)
+assert_type(i32 < u64, np.bool)
+assert_type(i32 < i8, np.bool)
+assert_type(i32 < i16, np.bool)
+assert_type(i32 < i32, np.bool)
+assert_type(i32 < i64, np.bool)
+assert_type(i32 < f16, np.bool)
+assert_type(i32 < f32, np.bool)
+assert_type(i32 < f64, np.bool)
+assert_type(i32 < f64l, np.bool)
+assert_type(i32 < c32, np.bool)
+assert_type(i32 < c64, np.bool)
+assert_type(i32 < c64l, np.bool)
+assert_type(i32 < m64, np.bool)
 
-assert_type(f8 < b0, np.bool)
-assert_type(f8 < i0, np.bool)
-assert_type(f8 < f0, np.bool)
-assert_type(f8 < c0, np.bool)
-assert_type(f8 < b1, np.bool)
-assert_type(f8 < u1, np.bool)
-assert_type(f8 < u2, np.bool)
-assert_type(f8 < u4, np.bool)
-assert_type(f8 < u8, np.bool)
-assert_type(f8 < i1, np.bool)
-assert_type(f8 < i2, np.bool)
-assert_type(f8 < i4, np.bool)
-assert_type(f8 < i8, np.bool)
-assert_type(f8 < f2, np.bool)
-assert_type(f8 < f4, np.bool)
-assert_type(f8 < f8, np.bool)
-assert_type(f8 < ld, np.bool)
-assert_type(f8 < c8, np.bool)
-assert_type(f8 < c16, np.bool)
-assert_type(f8 < cld, np.bool)
+assert_type(i64 < b_py, np.bool)
+assert_type(i64 < i_py, np.bool)
+assert_type(i64 < f_py, np.bool)
+assert_type(i64 < c_py, np.bool)
+assert_type(i64 < b1, np.bool)
+assert_type(i64 < u8, np.bool)
+assert_type(i64 < u16, np.bool)
+assert_type(i64 < u32, np.bool)
+assert_type(i64 < u64, np.bool)
+assert_type(i64 < i8, np.bool)
+assert_type(i64 < i16, np.bool)
+assert_type(i64 < i32, np.bool)
+assert_type(i64 < i64, np.bool)
+assert_type(i64 < f16, np.bool)
+assert_type(i64 < f32, np.bool)
+assert_type(i64 < f64, np.bool)
+assert_type(i64 < f64l, np.bool)
+assert_type(i64 < c32, np.bool)
+assert_type(i64 < c64, np.bool)
+assert_type(i64 < c64l, np.bool)
+assert_type(i64 < m64, np.bool)
 
-assert_type(ld < b0, np.bool)
-assert_type(ld < i0, np.bool)
-assert_type(ld < f0, np.bool)
-assert_type(ld < c0, np.bool)
-assert_type(ld < b1, np.bool)
-assert_type(ld < u1, np.bool)
-assert_type(ld < u2, np.bool)
-assert_type(ld < u4, np.bool)
-assert_type(ld < u8, np.bool)
-assert_type(ld < i1, np.bool)
-assert_type(ld < i2, np.bool)
-assert_type(ld < i4, np.bool)
-assert_type(ld < i8, np.bool)
-assert_type(ld < f2, np.bool)
-assert_type(ld < f4, np.bool)
-assert_type(ld < f8, np.bool)
-assert_type(ld < ld, np.bool)
-assert_type(ld < c8, np.bool)
-assert_type(ld < c16, np.bool)
-assert_type(ld < cld, np.bool)
+assert_type(f16 < b_py, np.bool)
+assert_type(f16 < i_py, np.bool)
+assert_type(f16 < f_py, np.bool)
+assert_type(f16 < c_py, np.bool)
+assert_type(f16 < b1, np.bool)
+assert_type(f16 < u8, np.bool)
+assert_type(f16 < u16, np.bool)
+assert_type(f16 < u32, np.bool)
+assert_type(f16 < u64, np.bool)
+assert_type(f16 < i8, np.bool)
+assert_type(f16 < i16, np.bool)
+assert_type(f16 < i32, np.bool)
+assert_type(f16 < i64, np.bool)
+assert_type(f16 < f16, np.bool)
+assert_type(f16 < f32, np.bool)
+assert_type(f16 < f64, np.bool)
+assert_type(f16 < f64l, np.bool)
+assert_type(f16 < c32, np.bool)
+assert_type(f16 < c64, np.bool)
+assert_type(f16 < c64l, np.bool)
 
-assert_type(c8 < b0, np.bool)
-assert_type(c8 < i0, np.bool)
-assert_type(c8 < f0, np.bool)
-assert_type(c8 < c0, np.bool)
-assert_type(c8 < b1, np.bool)
-assert_type(c8 < u1, np.bool)
-assert_type(c8 < u2, np.bool)
-assert_type(c8 < u4, np.bool)
-assert_type(c8 < u8, np.bool)
-assert_type(c8 < i1, np.bool)
-assert_type(c8 < i2, np.bool)
-assert_type(c8 < i4, np.bool)
-assert_type(c8 < i8, np.bool)
-assert_type(c8 < f2, np.bool)
-assert_type(c8 < f4, np.bool)
-assert_type(c8 < f8, np.bool)
-assert_type(c8 < ld, np.bool)
-assert_type(c8 < c8, np.bool)
-assert_type(c8 < c16, np.bool)
-assert_type(c8 < cld, np.bool)
+assert_type(f32 < b_py, np.bool)
+assert_type(f32 < i_py, np.bool)
+assert_type(f32 < f_py, np.bool)
+assert_type(f32 < c_py, np.bool)
+assert_type(f32 < b1, np.bool)
+assert_type(f32 < u8, np.bool)
+assert_type(f32 < u16, np.bool)
+assert_type(f32 < u32, np.bool)
+assert_type(f32 < u64, np.bool)
+assert_type(f32 < i8, np.bool)
+assert_type(f32 < i16, np.bool)
+assert_type(f32 < i32, np.bool)
+assert_type(f32 < i64, np.bool)
+assert_type(f32 < f16, np.bool)
+assert_type(f32 < f32, np.bool)
+assert_type(f32 < f64, np.bool)
+assert_type(f32 < f64l, np.bool)
+assert_type(f32 < c32, np.bool)
+assert_type(f32 < c64, np.bool)
+assert_type(f32 < c64l, np.bool)
 
-assert_type(c16 < b0, np.bool)
-assert_type(c16 < i0, np.bool)
-assert_type(c16 < f0, np.bool)
-assert_type(c16 < c0, np.bool)
-assert_type(c16 < b1, np.bool)
-assert_type(c16 < u1, np.bool)
-assert_type(c16 < u2, np.bool)
-assert_type(c16 < u4, np.bool)
-assert_type(c16 < u8, np.bool)
-assert_type(c16 < i1, np.bool)
-assert_type(c16 < i2, np.bool)
-assert_type(c16 < i4, np.bool)
-assert_type(c16 < i8, np.bool)
-assert_type(c16 < f2, np.bool)
-assert_type(c16 < f4, np.bool)
-assert_type(c16 < f8, np.bool)
-assert_type(c16 < ld, np.bool)
-assert_type(c16 < c8, np.bool)
-assert_type(c16 < c16, np.bool)
-assert_type(c16 < cld, np.bool)
+assert_type(f64 < b_py, np.bool)
+assert_type(f64 < i_py, np.bool)
+assert_type(f64 < f_py, np.bool)
+assert_type(f64 < c_py, np.bool)
+assert_type(f64 < b1, np.bool)
+assert_type(f64 < u8, np.bool)
+assert_type(f64 < u16, np.bool)
+assert_type(f64 < u32, np.bool)
+assert_type(f64 < u64, np.bool)
+assert_type(f64 < i8, np.bool)
+assert_type(f64 < i16, np.bool)
+assert_type(f64 < i32, np.bool)
+assert_type(f64 < i64, np.bool)
+assert_type(f64 < f16, np.bool)
+assert_type(f64 < f32, np.bool)
+assert_type(f64 < f64, np.bool)
+assert_type(f64 < f64l, np.bool)
+assert_type(f64 < c32, np.bool)
+assert_type(f64 < c64, np.bool)
+assert_type(f64 < c64l, np.bool)
 
-assert_type(cld < b0, np.bool)
-assert_type(cld < i0, np.bool)
-assert_type(cld < f0, np.bool)
-assert_type(cld < c0, np.bool)
-assert_type(cld < b1, np.bool)
-assert_type(cld < u1, np.bool)
-assert_type(cld < u2, np.bool)
-assert_type(cld < u4, np.bool)
-assert_type(cld < u8, np.bool)
-assert_type(cld < i1, np.bool)
-assert_type(cld < i2, np.bool)
-assert_type(cld < i4, np.bool)
-assert_type(cld < i8, np.bool)
-assert_type(cld < f2, np.bool)
-assert_type(cld < f4, np.bool)
-assert_type(cld < f8, np.bool)
-assert_type(cld < ld, np.bool)
-assert_type(cld < c8, np.bool)
-assert_type(cld < c16, np.bool)
-assert_type(cld < cld, np.bool)
+assert_type(f64l < b_py, np.bool)
+assert_type(f64l < i_py, np.bool)
+assert_type(f64l < f_py, np.bool)
+assert_type(f64l < c_py, np.bool)
+assert_type(f64l < b1, np.bool)
+assert_type(f64l < u8, np.bool)
+assert_type(f64l < u16, np.bool)
+assert_type(f64l < u32, np.bool)
+assert_type(f64l < u64, np.bool)
+assert_type(f64l < i8, np.bool)
+assert_type(f64l < i16, np.bool)
+assert_type(f64l < i32, np.bool)
+assert_type(f64l < i64, np.bool)
+assert_type(f64l < f16, np.bool)
+assert_type(f64l < f32, np.bool)
+assert_type(f64l < f64, np.bool)
+assert_type(f64l < f64l, np.bool)
+assert_type(f64l < c32, np.bool)
+assert_type(f64l < c64, np.bool)
+assert_type(f64l < c64l, np.bool)
 
-assert_type(m8 < b0, np.bool)
-assert_type(m8 < i0, np.bool)
-assert_type(m8 < b1, np.bool)
-assert_type(m8 < u1, np.bool)
-assert_type(m8 < u2, np.bool)
-assert_type(m8 < u4, np.bool)
-assert_type(m8 < i1, np.bool)
-assert_type(m8 < i2, np.bool)
-assert_type(m8 < i4, np.bool)
-assert_type(m8 < i8, np.bool)
-assert_type(m8 < m8, np.bool)
+assert_type(c32 < b_py, np.bool)
+assert_type(c32 < i_py, np.bool)
+assert_type(c32 < f_py, np.bool)
+assert_type(c32 < c_py, np.bool)
+assert_type(c32 < b1, np.bool)
+assert_type(c32 < u8, np.bool)
+assert_type(c32 < u16, np.bool)
+assert_type(c32 < u32, np.bool)
+assert_type(c32 < u64, np.bool)
+assert_type(c32 < i8, np.bool)
+assert_type(c32 < i16, np.bool)
+assert_type(c32 < i32, np.bool)
+assert_type(c32 < i64, np.bool)
+assert_type(c32 < f16, np.bool)
+assert_type(c32 < f32, np.bool)
+assert_type(c32 < f64, np.bool)
+assert_type(c32 < f64l, np.bool)
+assert_type(c32 < c32, np.bool)
+assert_type(c32 < c64, np.bool)
+assert_type(c32 < c64l, np.bool)
 
-assert_type(M8 < M8, np.bool)
+assert_type(c64 < b_py, np.bool)
+assert_type(c64 < i_py, np.bool)
+assert_type(c64 < f_py, np.bool)
+assert_type(c64 < c_py, np.bool)
+assert_type(c64 < b1, np.bool)
+assert_type(c64 < u8, np.bool)
+assert_type(c64 < u16, np.bool)
+assert_type(c64 < u32, np.bool)
+assert_type(c64 < u64, np.bool)
+assert_type(c64 < i8, np.bool)
+assert_type(c64 < i16, np.bool)
+assert_type(c64 < i32, np.bool)
+assert_type(c64 < i64, np.bool)
+assert_type(c64 < f16, np.bool)
+assert_type(c64 < f32, np.bool)
+assert_type(c64 < f64, np.bool)
+assert_type(c64 < f64l, np.bool)
+assert_type(c64 < c32, np.bool)
+assert_type(c64 < c64, np.bool)
+assert_type(c64 < c64l, np.bool)
+
+assert_type(c64l < b_py, np.bool)
+assert_type(c64l < i_py, np.bool)
+assert_type(c64l < f_py, np.bool)
+assert_type(c64l < c_py, np.bool)
+assert_type(c64l < b1, np.bool)
+assert_type(c64l < u8, np.bool)
+assert_type(c64l < u16, np.bool)
+assert_type(c64l < u32, np.bool)
+assert_type(c64l < u64, np.bool)
+assert_type(c64l < i8, np.bool)
+assert_type(c64l < i16, np.bool)
+assert_type(c64l < i32, np.bool)
+assert_type(c64l < i64, np.bool)
+assert_type(c64l < f16, np.bool)
+assert_type(c64l < f32, np.bool)
+assert_type(c64l < f64, np.bool)
+assert_type(c64l < f64l, np.bool)
+assert_type(c64l < c32, np.bool)
+assert_type(c64l < c64, np.bool)
+assert_type(c64l < c64l, np.bool)
+
+assert_type(M64 < M64, np.bool)
+
+assert_type(m64 < b_py, np.bool)
+assert_type(m64 < i_py, np.bool)
+assert_type(m64 < b1, np.bool)
+assert_type(m64 < u8, np.bool)
+assert_type(m64 < u16, np.bool)
+assert_type(m64 < u32, np.bool)
+assert_type(m64 < i8, np.bool)
+assert_type(m64 < i16, np.bool)
+assert_type(m64 < i32, np.bool)
+assert_type(m64 < i64, np.bool)
+assert_type(m64 < m64, np.bool)
 
 ###
 # __[r]le__
 
-assert_type(b1 <= b0, np.bool)
-assert_type(b1 <= i0, np.bool)
-assert_type(b1 <= f0, np.bool)
-assert_type(b1 <= c0, np.bool)
+assert_type(b1 <= b_py, np.bool)
+assert_type(b1 <= i_py, np.bool)
+assert_type(b1 <= f_py, np.bool)
+assert_type(b1 <= c_py, np.bool)
 assert_type(b1 <= b1, np.bool)
-assert_type(b1 <= u1, np.bool)
-assert_type(b1 <= u2, np.bool)
-assert_type(b1 <= u4, np.bool)
 assert_type(b1 <= u8, np.bool)
-assert_type(b1 <= i1, np.bool)
-assert_type(b1 <= i2, np.bool)
-assert_type(b1 <= i4, np.bool)
+assert_type(b1 <= u16, np.bool)
+assert_type(b1 <= u32, np.bool)
+assert_type(b1 <= u64, np.bool)
 assert_type(b1 <= i8, np.bool)
-assert_type(b1 <= f2, np.bool)
-assert_type(b1 <= f4, np.bool)
-assert_type(b1 <= f8, np.bool)
-assert_type(b1 <= ld, np.bool)
-assert_type(b1 <= c8, np.bool)
-assert_type(b1 <= c16, np.bool)
-assert_type(b1 <= cld, np.bool)
-assert_type(b1 <= m8, np.bool)
+assert_type(b1 <= i16, np.bool)
+assert_type(b1 <= i32, np.bool)
+assert_type(b1 <= i64, np.bool)
+assert_type(b1 <= f16, np.bool)
+assert_type(b1 <= f32, np.bool)
+assert_type(b1 <= f64, np.bool)
+assert_type(b1 <= f64l, np.bool)
+assert_type(b1 <= c32, np.bool)
+assert_type(b1 <= c64, np.bool)
+assert_type(b1 <= c64l, np.bool)
+assert_type(b1 <= m64, np.bool)
 
-assert_type(u1 <= b0, np.bool)
-assert_type(u1 <= i0, np.bool)
-assert_type(u1 <= f0, np.bool)
-assert_type(u1 <= c0, np.bool)
-assert_type(u1 <= b1, np.bool)
-assert_type(u1 <= u1, np.bool)
-assert_type(u1 <= u2, np.bool)
-assert_type(u1 <= u4, np.bool)
-assert_type(u1 <= u8, np.bool)
-assert_type(u1 <= i1, np.bool)
-assert_type(u1 <= i2, np.bool)
-assert_type(u1 <= i4, np.bool)
-assert_type(u1 <= i8, np.bool)
-assert_type(u1 <= f2, np.bool)
-assert_type(u1 <= f4, np.bool)
-assert_type(u1 <= f8, np.bool)
-assert_type(u1 <= ld, np.bool)
-assert_type(u1 <= c8, np.bool)
-assert_type(u1 <= c16, np.bool)
-assert_type(u1 <= cld, np.bool)
-assert_type(u1 <= m8, np.bool)
-
-assert_type(u2 <= b0, np.bool)
-assert_type(u2 <= i0, np.bool)
-assert_type(u2 <= f0, np.bool)
-assert_type(u2 <= c0, np.bool)
-assert_type(u2 <= b1, np.bool)
-assert_type(u2 <= u1, np.bool)
-assert_type(u2 <= u2, np.bool)
-assert_type(u2 <= u4, np.bool)
-assert_type(u2 <= u8, np.bool)
-assert_type(u2 <= i1, np.bool)
-assert_type(u2 <= i2, np.bool)
-assert_type(u2 <= i4, np.bool)
-assert_type(u2 <= i8, np.bool)
-assert_type(u2 <= f2, np.bool)
-assert_type(u2 <= f4, np.bool)
-assert_type(u2 <= f8, np.bool)
-assert_type(u2 <= ld, np.bool)
-assert_type(u2 <= c8, np.bool)
-assert_type(u2 <= c16, np.bool)
-assert_type(u2 <= cld, np.bool)
-assert_type(u2 <= m8, np.bool)
-
-assert_type(u4 <= b0, np.bool)
-assert_type(u4 <= i0, np.bool)
-assert_type(u4 <= f0, np.bool)
-assert_type(u4 <= c0, np.bool)
-assert_type(u4 <= b1, np.bool)
-assert_type(u4 <= u1, np.bool)
-assert_type(u4 <= u2, np.bool)
-assert_type(u4 <= u4, np.bool)
-assert_type(u4 <= u8, np.bool)
-assert_type(u4 <= i1, np.bool)
-assert_type(u4 <= i2, np.bool)
-assert_type(u4 <= i4, np.bool)
-assert_type(u4 <= i8, np.bool)
-assert_type(u4 <= f2, np.bool)
-assert_type(u4 <= f4, np.bool)
-assert_type(u4 <= f8, np.bool)
-assert_type(u4 <= ld, np.bool)
-assert_type(u4 <= c8, np.bool)
-assert_type(u4 <= c16, np.bool)
-assert_type(u4 <= cld, np.bool)
-assert_type(u4 <= m8, np.bool)
-
-assert_type(u8 <= b0, np.bool)
-assert_type(u8 <= i0, np.bool)
-assert_type(u8 <= f0, np.bool)
-assert_type(u8 <= c0, np.bool)
+assert_type(u8 <= b_py, np.bool)
+assert_type(u8 <= i_py, np.bool)
+assert_type(u8 <= f_py, np.bool)
+assert_type(u8 <= c_py, np.bool)
 assert_type(u8 <= b1, np.bool)
-assert_type(u8 <= u1, np.bool)
-assert_type(u8 <= u2, np.bool)
-assert_type(u8 <= u4, np.bool)
 assert_type(u8 <= u8, np.bool)
-assert_type(u8 <= i1, np.bool)
-assert_type(u8 <= i2, np.bool)
-assert_type(u8 <= i4, np.bool)
+assert_type(u8 <= u16, np.bool)
+assert_type(u8 <= u32, np.bool)
+assert_type(u8 <= u64, np.bool)
 assert_type(u8 <= i8, np.bool)
-assert_type(u8 <= f2, np.bool)
-assert_type(u8 <= f4, np.bool)
-assert_type(u8 <= f8, np.bool)
-assert_type(u8 <= ld, np.bool)
-assert_type(u8 <= c8, np.bool)
-assert_type(u8 <= c16, np.bool)
-assert_type(u8 <= cld, np.bool)
+assert_type(u8 <= i16, np.bool)
+assert_type(u8 <= i32, np.bool)
+assert_type(u8 <= i64, np.bool)
+assert_type(u8 <= f16, np.bool)
+assert_type(u8 <= f32, np.bool)
+assert_type(u8 <= f64, np.bool)
+assert_type(u8 <= f64l, np.bool)
+assert_type(u8 <= c32, np.bool)
+assert_type(u8 <= c64, np.bool)
+assert_type(u8 <= c64l, np.bool)
+assert_type(u8 <= m64, np.bool)
 
-assert_type(i1 <= b0, np.bool)
-assert_type(i1 <= i0, np.bool)
-assert_type(i1 <= f0, np.bool)
-assert_type(i1 <= c0, np.bool)
-assert_type(i1 <= b1, np.bool)
-assert_type(i1 <= u1, np.bool)
-assert_type(i1 <= u2, np.bool)
-assert_type(i1 <= u4, np.bool)
-assert_type(i1 <= u8, np.bool)
-assert_type(i1 <= i1, np.bool)
-assert_type(i1 <= i2, np.bool)
-assert_type(i1 <= i4, np.bool)
-assert_type(i1 <= i8, np.bool)
-assert_type(i1 <= f2, np.bool)
-assert_type(i1 <= f4, np.bool)
-assert_type(i1 <= f8, np.bool)
-assert_type(i1 <= ld, np.bool)
-assert_type(i1 <= c8, np.bool)
-assert_type(i1 <= c16, np.bool)
-assert_type(i1 <= cld, np.bool)
-assert_type(i1 <= m8, np.bool)
+assert_type(u16 <= b_py, np.bool)
+assert_type(u16 <= i_py, np.bool)
+assert_type(u16 <= f_py, np.bool)
+assert_type(u16 <= c_py, np.bool)
+assert_type(u16 <= b1, np.bool)
+assert_type(u16 <= u8, np.bool)
+assert_type(u16 <= u16, np.bool)
+assert_type(u16 <= u32, np.bool)
+assert_type(u16 <= u64, np.bool)
+assert_type(u16 <= i8, np.bool)
+assert_type(u16 <= i16, np.bool)
+assert_type(u16 <= i32, np.bool)
+assert_type(u16 <= i64, np.bool)
+assert_type(u16 <= f16, np.bool)
+assert_type(u16 <= f32, np.bool)
+assert_type(u16 <= f64, np.bool)
+assert_type(u16 <= f64l, np.bool)
+assert_type(u16 <= c32, np.bool)
+assert_type(u16 <= c64, np.bool)
+assert_type(u16 <= c64l, np.bool)
+assert_type(u16 <= m64, np.bool)
 
-assert_type(i2 <= b0, np.bool)
-assert_type(i2 <= i0, np.bool)
-assert_type(i2 <= f0, np.bool)
-assert_type(i2 <= c0, np.bool)
-assert_type(i2 <= b1, np.bool)
-assert_type(i2 <= u1, np.bool)
-assert_type(i2 <= u2, np.bool)
-assert_type(i2 <= u4, np.bool)
-assert_type(i2 <= u8, np.bool)
-assert_type(i2 <= i1, np.bool)
-assert_type(i2 <= i2, np.bool)
-assert_type(i2 <= i4, np.bool)
-assert_type(i2 <= i8, np.bool)
-assert_type(i2 <= f2, np.bool)
-assert_type(i2 <= f4, np.bool)
-assert_type(i2 <= f8, np.bool)
-assert_type(i2 <= ld, np.bool)
-assert_type(i2 <= c8, np.bool)
-assert_type(i2 <= c16, np.bool)
-assert_type(i2 <= cld, np.bool)
-assert_type(i2 <= m8, np.bool)
+assert_type(u32 <= b_py, np.bool)
+assert_type(u32 <= i_py, np.bool)
+assert_type(u32 <= f_py, np.bool)
+assert_type(u32 <= c_py, np.bool)
+assert_type(u32 <= b1, np.bool)
+assert_type(u32 <= u8, np.bool)
+assert_type(u32 <= u16, np.bool)
+assert_type(u32 <= u32, np.bool)
+assert_type(u32 <= u64, np.bool)
+assert_type(u32 <= i8, np.bool)
+assert_type(u32 <= i16, np.bool)
+assert_type(u32 <= i32, np.bool)
+assert_type(u32 <= i64, np.bool)
+assert_type(u32 <= f16, np.bool)
+assert_type(u32 <= f32, np.bool)
+assert_type(u32 <= f64, np.bool)
+assert_type(u32 <= f64l, np.bool)
+assert_type(u32 <= c32, np.bool)
+assert_type(u32 <= c64, np.bool)
+assert_type(u32 <= c64l, np.bool)
+assert_type(u32 <= m64, np.bool)
 
-assert_type(i4 <= b0, np.bool)
-assert_type(i4 <= i0, np.bool)
-assert_type(i4 <= f0, np.bool)
-assert_type(i4 <= c0, np.bool)
-assert_type(i4 <= b1, np.bool)
-assert_type(i4 <= u1, np.bool)
-assert_type(i4 <= u2, np.bool)
-assert_type(i4 <= u4, np.bool)
-assert_type(i4 <= u8, np.bool)
-assert_type(i4 <= i1, np.bool)
-assert_type(i4 <= i2, np.bool)
-assert_type(i4 <= i4, np.bool)
-assert_type(i4 <= i8, np.bool)
-assert_type(i4 <= f2, np.bool)
-assert_type(i4 <= f4, np.bool)
-assert_type(i4 <= f8, np.bool)
-assert_type(i4 <= ld, np.bool)
-assert_type(i4 <= c8, np.bool)
-assert_type(i4 <= c16, np.bool)
-assert_type(i4 <= cld, np.bool)
-assert_type(i4 <= m8, np.bool)
+assert_type(u64 <= b_py, np.bool)
+assert_type(u64 <= i_py, np.bool)
+assert_type(u64 <= f_py, np.bool)
+assert_type(u64 <= c_py, np.bool)
+assert_type(u64 <= b1, np.bool)
+assert_type(u64 <= u8, np.bool)
+assert_type(u64 <= u16, np.bool)
+assert_type(u64 <= u32, np.bool)
+assert_type(u64 <= u64, np.bool)
+assert_type(u64 <= i8, np.bool)
+assert_type(u64 <= i16, np.bool)
+assert_type(u64 <= i32, np.bool)
+assert_type(u64 <= i64, np.bool)
+assert_type(u64 <= f16, np.bool)
+assert_type(u64 <= f32, np.bool)
+assert_type(u64 <= f64, np.bool)
+assert_type(u64 <= f64l, np.bool)
+assert_type(u64 <= c32, np.bool)
+assert_type(u64 <= c64, np.bool)
+assert_type(u64 <= c64l, np.bool)
 
-assert_type(i8 <= b0, np.bool)
-assert_type(i8 <= i0, np.bool)
-assert_type(i8 <= f0, np.bool)
-assert_type(i8 <= c0, np.bool)
+assert_type(i8 <= b_py, np.bool)
+assert_type(i8 <= i_py, np.bool)
+assert_type(i8 <= f_py, np.bool)
+assert_type(i8 <= c_py, np.bool)
 assert_type(i8 <= b1, np.bool)
-assert_type(i8 <= u1, np.bool)
-assert_type(i8 <= u2, np.bool)
-assert_type(i8 <= u4, np.bool)
 assert_type(i8 <= u8, np.bool)
-assert_type(i8 <= i1, np.bool)
-assert_type(i8 <= i2, np.bool)
-assert_type(i8 <= i4, np.bool)
+assert_type(i8 <= u16, np.bool)
+assert_type(i8 <= u32, np.bool)
+assert_type(i8 <= u64, np.bool)
 assert_type(i8 <= i8, np.bool)
-assert_type(i8 <= f2, np.bool)
-assert_type(i8 <= f4, np.bool)
-assert_type(i8 <= f8, np.bool)
-assert_type(i8 <= ld, np.bool)
-assert_type(i8 <= c8, np.bool)
-assert_type(i8 <= c16, np.bool)
-assert_type(i8 <= cld, np.bool)
-assert_type(i8 <= m8, np.bool)
+assert_type(i8 <= i16, np.bool)
+assert_type(i8 <= i32, np.bool)
+assert_type(i8 <= i64, np.bool)
+assert_type(i8 <= f16, np.bool)
+assert_type(i8 <= f32, np.bool)
+assert_type(i8 <= f64, np.bool)
+assert_type(i8 <= f64l, np.bool)
+assert_type(i8 <= c32, np.bool)
+assert_type(i8 <= c64, np.bool)
+assert_type(i8 <= c64l, np.bool)
+assert_type(i8 <= m64, np.bool)
 
-assert_type(f2 <= b0, np.bool)
-assert_type(f2 <= i0, np.bool)
-assert_type(f2 <= f0, np.bool)
-assert_type(f2 <= c0, np.bool)
-assert_type(f2 <= b1, np.bool)
-assert_type(f2 <= u1, np.bool)
-assert_type(f2 <= u2, np.bool)
-assert_type(f2 <= u4, np.bool)
-assert_type(f2 <= u8, np.bool)
-assert_type(f2 <= i1, np.bool)
-assert_type(f2 <= i2, np.bool)
-assert_type(f2 <= i4, np.bool)
-assert_type(f2 <= i8, np.bool)
-assert_type(f2 <= f2, np.bool)
-assert_type(f2 <= f4, np.bool)
-assert_type(f2 <= f8, np.bool)
-assert_type(f2 <= ld, np.bool)
-assert_type(f2 <= c8, np.bool)
-assert_type(f2 <= c16, np.bool)
-assert_type(f2 <= cld, np.bool)
+assert_type(i16 <= b_py, np.bool)
+assert_type(i16 <= i_py, np.bool)
+assert_type(i16 <= f_py, np.bool)
+assert_type(i16 <= c_py, np.bool)
+assert_type(i16 <= b1, np.bool)
+assert_type(i16 <= u8, np.bool)
+assert_type(i16 <= u16, np.bool)
+assert_type(i16 <= u32, np.bool)
+assert_type(i16 <= u64, np.bool)
+assert_type(i16 <= i8, np.bool)
+assert_type(i16 <= i16, np.bool)
+assert_type(i16 <= i32, np.bool)
+assert_type(i16 <= i64, np.bool)
+assert_type(i16 <= f16, np.bool)
+assert_type(i16 <= f32, np.bool)
+assert_type(i16 <= f64, np.bool)
+assert_type(i16 <= f64l, np.bool)
+assert_type(i16 <= c32, np.bool)
+assert_type(i16 <= c64, np.bool)
+assert_type(i16 <= c64l, np.bool)
+assert_type(i16 <= m64, np.bool)
 
-assert_type(f4 <= b0, np.bool)
-assert_type(f4 <= i0, np.bool)
-assert_type(f4 <= f0, np.bool)
-assert_type(f4 <= c0, np.bool)
-assert_type(f4 <= b1, np.bool)
-assert_type(f4 <= u1, np.bool)
-assert_type(f4 <= u2, np.bool)
-assert_type(f4 <= u4, np.bool)
-assert_type(f4 <= u8, np.bool)
-assert_type(f4 <= i1, np.bool)
-assert_type(f4 <= i2, np.bool)
-assert_type(f4 <= i4, np.bool)
-assert_type(f4 <= i8, np.bool)
-assert_type(f4 <= f2, np.bool)
-assert_type(f4 <= f4, np.bool)
-assert_type(f4 <= f8, np.bool)
-assert_type(f4 <= ld, np.bool)
-assert_type(f4 <= c8, np.bool)
-assert_type(f4 <= c16, np.bool)
-assert_type(f4 <= cld, np.bool)
+assert_type(i32 <= b_py, np.bool)
+assert_type(i32 <= i_py, np.bool)
+assert_type(i32 <= f_py, np.bool)
+assert_type(i32 <= c_py, np.bool)
+assert_type(i32 <= b1, np.bool)
+assert_type(i32 <= u8, np.bool)
+assert_type(i32 <= u16, np.bool)
+assert_type(i32 <= u32, np.bool)
+assert_type(i32 <= u64, np.bool)
+assert_type(i32 <= i8, np.bool)
+assert_type(i32 <= i16, np.bool)
+assert_type(i32 <= i32, np.bool)
+assert_type(i32 <= i64, np.bool)
+assert_type(i32 <= f16, np.bool)
+assert_type(i32 <= f32, np.bool)
+assert_type(i32 <= f64, np.bool)
+assert_type(i32 <= f64l, np.bool)
+assert_type(i32 <= c32, np.bool)
+assert_type(i32 <= c64, np.bool)
+assert_type(i32 <= c64l, np.bool)
+assert_type(i32 <= m64, np.bool)
 
-assert_type(f8 <= b0, np.bool)
-assert_type(f8 <= i0, np.bool)
-assert_type(f8 <= f0, np.bool)
-assert_type(f8 <= c0, np.bool)
-assert_type(f8 <= b1, np.bool)
-assert_type(f8 <= u1, np.bool)
-assert_type(f8 <= u2, np.bool)
-assert_type(f8 <= u4, np.bool)
-assert_type(f8 <= u8, np.bool)
-assert_type(f8 <= i1, np.bool)
-assert_type(f8 <= i2, np.bool)
-assert_type(f8 <= i4, np.bool)
-assert_type(f8 <= i8, np.bool)
-assert_type(f8 <= f2, np.bool)
-assert_type(f8 <= f4, np.bool)
-assert_type(f8 <= f8, np.bool)
-assert_type(f8 <= ld, np.bool)
-assert_type(f8 <= c8, np.bool)
-assert_type(f8 <= c16, np.bool)
-assert_type(f8 <= cld, np.bool)
+assert_type(i64 <= b_py, np.bool)
+assert_type(i64 <= i_py, np.bool)
+assert_type(i64 <= f_py, np.bool)
+assert_type(i64 <= c_py, np.bool)
+assert_type(i64 <= b1, np.bool)
+assert_type(i64 <= u8, np.bool)
+assert_type(i64 <= u16, np.bool)
+assert_type(i64 <= u32, np.bool)
+assert_type(i64 <= u64, np.bool)
+assert_type(i64 <= i8, np.bool)
+assert_type(i64 <= i16, np.bool)
+assert_type(i64 <= i32, np.bool)
+assert_type(i64 <= i64, np.bool)
+assert_type(i64 <= f16, np.bool)
+assert_type(i64 <= f32, np.bool)
+assert_type(i64 <= f64, np.bool)
+assert_type(i64 <= f64l, np.bool)
+assert_type(i64 <= c32, np.bool)
+assert_type(i64 <= c64, np.bool)
+assert_type(i64 <= c64l, np.bool)
+assert_type(i64 <= m64, np.bool)
 
-assert_type(ld <= b0, np.bool)
-assert_type(ld <= i0, np.bool)
-assert_type(ld <= f0, np.bool)
-assert_type(ld <= c0, np.bool)
-assert_type(ld <= b1, np.bool)
-assert_type(ld <= u1, np.bool)
-assert_type(ld <= u2, np.bool)
-assert_type(ld <= u4, np.bool)
-assert_type(ld <= u8, np.bool)
-assert_type(ld <= i1, np.bool)
-assert_type(ld <= i2, np.bool)
-assert_type(ld <= i4, np.bool)
-assert_type(ld <= i8, np.bool)
-assert_type(ld <= f2, np.bool)
-assert_type(ld <= f4, np.bool)
-assert_type(ld <= f8, np.bool)
-assert_type(ld <= ld, np.bool)
-assert_type(ld <= c8, np.bool)
-assert_type(ld <= c16, np.bool)
-assert_type(ld <= cld, np.bool)
+assert_type(f16 <= b_py, np.bool)
+assert_type(f16 <= i_py, np.bool)
+assert_type(f16 <= f_py, np.bool)
+assert_type(f16 <= c_py, np.bool)
+assert_type(f16 <= b1, np.bool)
+assert_type(f16 <= u8, np.bool)
+assert_type(f16 <= u16, np.bool)
+assert_type(f16 <= u32, np.bool)
+assert_type(f16 <= u64, np.bool)
+assert_type(f16 <= i8, np.bool)
+assert_type(f16 <= i16, np.bool)
+assert_type(f16 <= i32, np.bool)
+assert_type(f16 <= i64, np.bool)
+assert_type(f16 <= f16, np.bool)
+assert_type(f16 <= f32, np.bool)
+assert_type(f16 <= f64, np.bool)
+assert_type(f16 <= f64l, np.bool)
+assert_type(f16 <= c32, np.bool)
+assert_type(f16 <= c64, np.bool)
+assert_type(f16 <= c64l, np.bool)
 
-assert_type(c8 <= b0, np.bool)
-assert_type(c8 <= i0, np.bool)
-assert_type(c8 <= f0, np.bool)
-assert_type(c8 <= c0, np.bool)
-assert_type(c8 <= b1, np.bool)
-assert_type(c8 <= u1, np.bool)
-assert_type(c8 <= u2, np.bool)
-assert_type(c8 <= u4, np.bool)
-assert_type(c8 <= u8, np.bool)
-assert_type(c8 <= i1, np.bool)
-assert_type(c8 <= i2, np.bool)
-assert_type(c8 <= i4, np.bool)
-assert_type(c8 <= i8, np.bool)
-assert_type(c8 <= f2, np.bool)
-assert_type(c8 <= f4, np.bool)
-assert_type(c8 <= f8, np.bool)
-assert_type(c8 <= ld, np.bool)
-assert_type(c8 <= c8, np.bool)
-assert_type(c8 <= c16, np.bool)
-assert_type(c8 <= cld, np.bool)
+assert_type(f32 <= b_py, np.bool)
+assert_type(f32 <= i_py, np.bool)
+assert_type(f32 <= f_py, np.bool)
+assert_type(f32 <= c_py, np.bool)
+assert_type(f32 <= b1, np.bool)
+assert_type(f32 <= u8, np.bool)
+assert_type(f32 <= u16, np.bool)
+assert_type(f32 <= u32, np.bool)
+assert_type(f32 <= u64, np.bool)
+assert_type(f32 <= i8, np.bool)
+assert_type(f32 <= i16, np.bool)
+assert_type(f32 <= i32, np.bool)
+assert_type(f32 <= i64, np.bool)
+assert_type(f32 <= f16, np.bool)
+assert_type(f32 <= f32, np.bool)
+assert_type(f32 <= f64, np.bool)
+assert_type(f32 <= f64l, np.bool)
+assert_type(f32 <= c32, np.bool)
+assert_type(f32 <= c64, np.bool)
+assert_type(f32 <= c64l, np.bool)
 
-assert_type(c16 <= b0, np.bool)
-assert_type(c16 <= i0, np.bool)
-assert_type(c16 <= f0, np.bool)
-assert_type(c16 <= c0, np.bool)
-assert_type(c16 <= b1, np.bool)
-assert_type(c16 <= u1, np.bool)
-assert_type(c16 <= u2, np.bool)
-assert_type(c16 <= u4, np.bool)
-assert_type(c16 <= u8, np.bool)
-assert_type(c16 <= i1, np.bool)
-assert_type(c16 <= i2, np.bool)
-assert_type(c16 <= i4, np.bool)
-assert_type(c16 <= i8, np.bool)
-assert_type(c16 <= f2, np.bool)
-assert_type(c16 <= f4, np.bool)
-assert_type(c16 <= f8, np.bool)
-assert_type(c16 <= ld, np.bool)
-assert_type(c16 <= c8, np.bool)
-assert_type(c16 <= c16, np.bool)
-assert_type(c16 <= cld, np.bool)
+assert_type(f64 <= b_py, np.bool)
+assert_type(f64 <= i_py, np.bool)
+assert_type(f64 <= f_py, np.bool)
+assert_type(f64 <= c_py, np.bool)
+assert_type(f64 <= b1, np.bool)
+assert_type(f64 <= u8, np.bool)
+assert_type(f64 <= u16, np.bool)
+assert_type(f64 <= u32, np.bool)
+assert_type(f64 <= u64, np.bool)
+assert_type(f64 <= i8, np.bool)
+assert_type(f64 <= i16, np.bool)
+assert_type(f64 <= i32, np.bool)
+assert_type(f64 <= i64, np.bool)
+assert_type(f64 <= f16, np.bool)
+assert_type(f64 <= f32, np.bool)
+assert_type(f64 <= f64, np.bool)
+assert_type(f64 <= f64l, np.bool)
+assert_type(f64 <= c32, np.bool)
+assert_type(f64 <= c64, np.bool)
+assert_type(f64 <= c64l, np.bool)
 
-assert_type(cld <= b0, np.bool)
-assert_type(cld <= i0, np.bool)
-assert_type(cld <= f0, np.bool)
-assert_type(cld <= c0, np.bool)
-assert_type(cld <= b1, np.bool)
-assert_type(cld <= u1, np.bool)
-assert_type(cld <= u2, np.bool)
-assert_type(cld <= u4, np.bool)
-assert_type(cld <= u8, np.bool)
-assert_type(cld <= i1, np.bool)
-assert_type(cld <= i2, np.bool)
-assert_type(cld <= i4, np.bool)
-assert_type(cld <= i8, np.bool)
-assert_type(cld <= f2, np.bool)
-assert_type(cld <= f4, np.bool)
-assert_type(cld <= f8, np.bool)
-assert_type(cld <= ld, np.bool)
-assert_type(cld <= c8, np.bool)
-assert_type(cld <= c16, np.bool)
-assert_type(cld <= cld, np.bool)
+assert_type(f64l <= b_py, np.bool)
+assert_type(f64l <= i_py, np.bool)
+assert_type(f64l <= f_py, np.bool)
+assert_type(f64l <= c_py, np.bool)
+assert_type(f64l <= b1, np.bool)
+assert_type(f64l <= u8, np.bool)
+assert_type(f64l <= u16, np.bool)
+assert_type(f64l <= u32, np.bool)
+assert_type(f64l <= u64, np.bool)
+assert_type(f64l <= i8, np.bool)
+assert_type(f64l <= i16, np.bool)
+assert_type(f64l <= i32, np.bool)
+assert_type(f64l <= i64, np.bool)
+assert_type(f64l <= f16, np.bool)
+assert_type(f64l <= f32, np.bool)
+assert_type(f64l <= f64, np.bool)
+assert_type(f64l <= f64l, np.bool)
+assert_type(f64l <= c32, np.bool)
+assert_type(f64l <= c64, np.bool)
+assert_type(f64l <= c64l, np.bool)
 
-assert_type(m8 <= b0, np.bool)
-assert_type(m8 <= i0, np.bool)
-assert_type(m8 <= b1, np.bool)
-assert_type(m8 <= u1, np.bool)
-assert_type(m8 <= u2, np.bool)
-assert_type(m8 <= u4, np.bool)
-assert_type(m8 <= i1, np.bool)
-assert_type(m8 <= i2, np.bool)
-assert_type(m8 <= i4, np.bool)
-assert_type(m8 <= i8, np.bool)
-assert_type(m8 <= m8, np.bool)
+assert_type(c32 <= b_py, np.bool)
+assert_type(c32 <= i_py, np.bool)
+assert_type(c32 <= f_py, np.bool)
+assert_type(c32 <= c_py, np.bool)
+assert_type(c32 <= b1, np.bool)
+assert_type(c32 <= u8, np.bool)
+assert_type(c32 <= u16, np.bool)
+assert_type(c32 <= u32, np.bool)
+assert_type(c32 <= u64, np.bool)
+assert_type(c32 <= i8, np.bool)
+assert_type(c32 <= i16, np.bool)
+assert_type(c32 <= i32, np.bool)
+assert_type(c32 <= i64, np.bool)
+assert_type(c32 <= f16, np.bool)
+assert_type(c32 <= f32, np.bool)
+assert_type(c32 <= f64, np.bool)
+assert_type(c32 <= f64l, np.bool)
+assert_type(c32 <= c32, np.bool)
+assert_type(c32 <= c64, np.bool)
+assert_type(c32 <= c64l, np.bool)
 
-assert_type(M8 <= M8, np.bool)
+assert_type(c64 <= b_py, np.bool)
+assert_type(c64 <= i_py, np.bool)
+assert_type(c64 <= f_py, np.bool)
+assert_type(c64 <= c_py, np.bool)
+assert_type(c64 <= b1, np.bool)
+assert_type(c64 <= u8, np.bool)
+assert_type(c64 <= u16, np.bool)
+assert_type(c64 <= u32, np.bool)
+assert_type(c64 <= u64, np.bool)
+assert_type(c64 <= i8, np.bool)
+assert_type(c64 <= i16, np.bool)
+assert_type(c64 <= i32, np.bool)
+assert_type(c64 <= i64, np.bool)
+assert_type(c64 <= f16, np.bool)
+assert_type(c64 <= f32, np.bool)
+assert_type(c64 <= f64, np.bool)
+assert_type(c64 <= f64l, np.bool)
+assert_type(c64 <= c32, np.bool)
+assert_type(c64 <= c64, np.bool)
+assert_type(c64 <= c64l, np.bool)
+
+assert_type(c64l <= b_py, np.bool)
+assert_type(c64l <= i_py, np.bool)
+assert_type(c64l <= f_py, np.bool)
+assert_type(c64l <= c_py, np.bool)
+assert_type(c64l <= b1, np.bool)
+assert_type(c64l <= u8, np.bool)
+assert_type(c64l <= u16, np.bool)
+assert_type(c64l <= u32, np.bool)
+assert_type(c64l <= u64, np.bool)
+assert_type(c64l <= i8, np.bool)
+assert_type(c64l <= i16, np.bool)
+assert_type(c64l <= i32, np.bool)
+assert_type(c64l <= i64, np.bool)
+assert_type(c64l <= f16, np.bool)
+assert_type(c64l <= f32, np.bool)
+assert_type(c64l <= f64, np.bool)
+assert_type(c64l <= f64l, np.bool)
+assert_type(c64l <= c32, np.bool)
+assert_type(c64l <= c64, np.bool)
+assert_type(c64l <= c64l, np.bool)
+
+assert_type(M64 <= M64, np.bool)
+
+assert_type(m64 <= b_py, np.bool)
+assert_type(m64 <= i_py, np.bool)
+assert_type(m64 <= b1, np.bool)
+assert_type(m64 <= u8, np.bool)
+assert_type(m64 <= u16, np.bool)
+assert_type(m64 <= u32, np.bool)
+assert_type(m64 <= i8, np.bool)
+assert_type(m64 <= i16, np.bool)
+assert_type(m64 <= i32, np.bool)
+assert_type(m64 <= i64, np.bool)
+assert_type(m64 <= m64, np.bool)
 
 ###
 # __[r]ge__
 
-assert_type(b1 >= b0, np.bool)
-assert_type(b1 >= i0, np.bool)
-assert_type(b1 >= f0, np.bool)
-assert_type(b1 >= c0, np.bool)
+assert_type(b1 >= b_py, np.bool)
+assert_type(b1 >= i_py, np.bool)
+assert_type(b1 >= f_py, np.bool)
+assert_type(b1 >= c_py, np.bool)
 assert_type(b1 >= b1, np.bool)
-assert_type(b1 >= u1, np.bool)
-assert_type(b1 >= u2, np.bool)
-assert_type(b1 >= u4, np.bool)
 assert_type(b1 >= u8, np.bool)
-assert_type(b1 >= i1, np.bool)
-assert_type(b1 >= i2, np.bool)
-assert_type(b1 >= i4, np.bool)
+assert_type(b1 >= u16, np.bool)
+assert_type(b1 >= u32, np.bool)
+assert_type(b1 >= u64, np.bool)
 assert_type(b1 >= i8, np.bool)
-assert_type(b1 >= f2, np.bool)
-assert_type(b1 >= f4, np.bool)
-assert_type(b1 >= f8, np.bool)
-assert_type(b1 >= ld, np.bool)
-assert_type(b1 >= c8, np.bool)
-assert_type(b1 >= c16, np.bool)
-assert_type(b1 >= cld, np.bool)
-assert_type(b1 >= m8, np.bool)
+assert_type(b1 >= i16, np.bool)
+assert_type(b1 >= i32, np.bool)
+assert_type(b1 >= i64, np.bool)
+assert_type(b1 >= f16, np.bool)
+assert_type(b1 >= f32, np.bool)
+assert_type(b1 >= f64, np.bool)
+assert_type(b1 >= f64l, np.bool)
+assert_type(b1 >= c32, np.bool)
+assert_type(b1 >= c64, np.bool)
+assert_type(b1 >= c64l, np.bool)
+assert_type(b1 >= m64, np.bool)
 
-assert_type(u1 >= b0, np.bool)
-assert_type(u1 >= i0, np.bool)
-assert_type(u1 >= f0, np.bool)
-assert_type(u1 >= c0, np.bool)
-assert_type(u1 >= b1, np.bool)
-assert_type(u1 >= u1, np.bool)
-assert_type(u1 >= u2, np.bool)
-assert_type(u1 >= u4, np.bool)
-assert_type(u1 >= u8, np.bool)
-assert_type(u1 >= i1, np.bool)
-assert_type(u1 >= i2, np.bool)
-assert_type(u1 >= i4, np.bool)
-assert_type(u1 >= i8, np.bool)
-assert_type(u1 >= f2, np.bool)
-assert_type(u1 >= f4, np.bool)
-assert_type(u1 >= f8, np.bool)
-assert_type(u1 >= ld, np.bool)
-assert_type(u1 >= c8, np.bool)
-assert_type(u1 >= c16, np.bool)
-assert_type(u1 >= cld, np.bool)
-assert_type(u1 >= m8, np.bool)
-
-assert_type(u2 >= b0, np.bool)
-assert_type(u2 >= i0, np.bool)
-assert_type(u2 >= f0, np.bool)
-assert_type(u2 >= c0, np.bool)
-assert_type(u2 >= b1, np.bool)
-assert_type(u2 >= u1, np.bool)
-assert_type(u2 >= u2, np.bool)
-assert_type(u2 >= u4, np.bool)
-assert_type(u2 >= u8, np.bool)
-assert_type(u2 >= i1, np.bool)
-assert_type(u2 >= i2, np.bool)
-assert_type(u2 >= i4, np.bool)
-assert_type(u2 >= i8, np.bool)
-assert_type(u2 >= f2, np.bool)
-assert_type(u2 >= f4, np.bool)
-assert_type(u2 >= f8, np.bool)
-assert_type(u2 >= ld, np.bool)
-assert_type(u2 >= c8, np.bool)
-assert_type(u2 >= c16, np.bool)
-assert_type(u2 >= cld, np.bool)
-assert_type(u2 >= m8, np.bool)
-
-assert_type(u4 >= b0, np.bool)
-assert_type(u4 >= i0, np.bool)
-assert_type(u4 >= f0, np.bool)
-assert_type(u4 >= c0, np.bool)
-assert_type(u4 >= b1, np.bool)
-assert_type(u4 >= u1, np.bool)
-assert_type(u4 >= u2, np.bool)
-assert_type(u4 >= u4, np.bool)
-assert_type(u4 >= u8, np.bool)
-assert_type(u4 >= i1, np.bool)
-assert_type(u4 >= i2, np.bool)
-assert_type(u4 >= i4, np.bool)
-assert_type(u4 >= i8, np.bool)
-assert_type(u4 >= f2, np.bool)
-assert_type(u4 >= f4, np.bool)
-assert_type(u4 >= f8, np.bool)
-assert_type(u4 >= ld, np.bool)
-assert_type(u4 >= c8, np.bool)
-assert_type(u4 >= c16, np.bool)
-assert_type(u4 >= cld, np.bool)
-assert_type(u4 >= m8, np.bool)
-
-assert_type(u8 >= b0, np.bool)
-assert_type(u8 >= i0, np.bool)
-assert_type(u8 >= f0, np.bool)
-assert_type(u8 >= c0, np.bool)
+assert_type(u8 >= b_py, np.bool)
+assert_type(u8 >= i_py, np.bool)
+assert_type(u8 >= f_py, np.bool)
+assert_type(u8 >= c_py, np.bool)
 assert_type(u8 >= b1, np.bool)
-assert_type(u8 >= u1, np.bool)
-assert_type(u8 >= u2, np.bool)
-assert_type(u8 >= u4, np.bool)
 assert_type(u8 >= u8, np.bool)
-assert_type(u8 >= i1, np.bool)
-assert_type(u8 >= i2, np.bool)
-assert_type(u8 >= i4, np.bool)
+assert_type(u8 >= u16, np.bool)
+assert_type(u8 >= u32, np.bool)
+assert_type(u8 >= u64, np.bool)
 assert_type(u8 >= i8, np.bool)
-assert_type(u8 >= f2, np.bool)
-assert_type(u8 >= f4, np.bool)
-assert_type(u8 >= f8, np.bool)
-assert_type(u8 >= ld, np.bool)
-assert_type(u8 >= c8, np.bool)
-assert_type(u8 >= c16, np.bool)
-assert_type(u8 >= cld, np.bool)
+assert_type(u8 >= i16, np.bool)
+assert_type(u8 >= i32, np.bool)
+assert_type(u8 >= i64, np.bool)
+assert_type(u8 >= f16, np.bool)
+assert_type(u8 >= f32, np.bool)
+assert_type(u8 >= f64, np.bool)
+assert_type(u8 >= f64l, np.bool)
+assert_type(u8 >= c32, np.bool)
+assert_type(u8 >= c64, np.bool)
+assert_type(u8 >= c64l, np.bool)
+assert_type(u8 >= m64, np.bool)
 
-assert_type(i1 >= b0, np.bool)
-assert_type(i1 >= i0, np.bool)
-assert_type(i1 >= f0, np.bool)
-assert_type(i1 >= c0, np.bool)
-assert_type(i1 >= b1, np.bool)
-assert_type(i1 >= u1, np.bool)
-assert_type(i1 >= u2, np.bool)
-assert_type(i1 >= u4, np.bool)
-assert_type(i1 >= u8, np.bool)
-assert_type(i1 >= i1, np.bool)
-assert_type(i1 >= i2, np.bool)
-assert_type(i1 >= i4, np.bool)
-assert_type(i1 >= i8, np.bool)
-assert_type(i1 >= f2, np.bool)
-assert_type(i1 >= f4, np.bool)
-assert_type(i1 >= f8, np.bool)
-assert_type(i1 >= ld, np.bool)
-assert_type(i1 >= c8, np.bool)
-assert_type(i1 >= c16, np.bool)
-assert_type(i1 >= cld, np.bool)
-assert_type(i1 >= m8, np.bool)
+assert_type(u16 >= b_py, np.bool)
+assert_type(u16 >= i_py, np.bool)
+assert_type(u16 >= f_py, np.bool)
+assert_type(u16 >= c_py, np.bool)
+assert_type(u16 >= b1, np.bool)
+assert_type(u16 >= u8, np.bool)
+assert_type(u16 >= u16, np.bool)
+assert_type(u16 >= u32, np.bool)
+assert_type(u16 >= u64, np.bool)
+assert_type(u16 >= i8, np.bool)
+assert_type(u16 >= i16, np.bool)
+assert_type(u16 >= i32, np.bool)
+assert_type(u16 >= i64, np.bool)
+assert_type(u16 >= f16, np.bool)
+assert_type(u16 >= f32, np.bool)
+assert_type(u16 >= f64, np.bool)
+assert_type(u16 >= f64l, np.bool)
+assert_type(u16 >= c32, np.bool)
+assert_type(u16 >= c64, np.bool)
+assert_type(u16 >= c64l, np.bool)
+assert_type(u16 >= m64, np.bool)
 
-assert_type(i2 >= b0, np.bool)
-assert_type(i2 >= i0, np.bool)
-assert_type(i2 >= f0, np.bool)
-assert_type(i2 >= c0, np.bool)
-assert_type(i2 >= b1, np.bool)
-assert_type(i2 >= u1, np.bool)
-assert_type(i2 >= u2, np.bool)
-assert_type(i2 >= u4, np.bool)
-assert_type(i2 >= u8, np.bool)
-assert_type(i2 >= i1, np.bool)
-assert_type(i2 >= i2, np.bool)
-assert_type(i2 >= i4, np.bool)
-assert_type(i2 >= i8, np.bool)
-assert_type(i2 >= f2, np.bool)
-assert_type(i2 >= f4, np.bool)
-assert_type(i2 >= f8, np.bool)
-assert_type(i2 >= ld, np.bool)
-assert_type(i2 >= c8, np.bool)
-assert_type(i2 >= c16, np.bool)
-assert_type(i2 >= cld, np.bool)
-assert_type(i2 >= m8, np.bool)
+assert_type(u32 >= b_py, np.bool)
+assert_type(u32 >= i_py, np.bool)
+assert_type(u32 >= f_py, np.bool)
+assert_type(u32 >= c_py, np.bool)
+assert_type(u32 >= b1, np.bool)
+assert_type(u32 >= u8, np.bool)
+assert_type(u32 >= u16, np.bool)
+assert_type(u32 >= u32, np.bool)
+assert_type(u32 >= u64, np.bool)
+assert_type(u32 >= i8, np.bool)
+assert_type(u32 >= i16, np.bool)
+assert_type(u32 >= i32, np.bool)
+assert_type(u32 >= i64, np.bool)
+assert_type(u32 >= f16, np.bool)
+assert_type(u32 >= f32, np.bool)
+assert_type(u32 >= f64, np.bool)
+assert_type(u32 >= f64l, np.bool)
+assert_type(u32 >= c32, np.bool)
+assert_type(u32 >= c64, np.bool)
+assert_type(u32 >= c64l, np.bool)
+assert_type(u32 >= m64, np.bool)
 
-assert_type(i4 >= b0, np.bool)
-assert_type(i4 >= i0, np.bool)
-assert_type(i4 >= f0, np.bool)
-assert_type(i4 >= c0, np.bool)
-assert_type(i4 >= b1, np.bool)
-assert_type(i4 >= u1, np.bool)
-assert_type(i4 >= u2, np.bool)
-assert_type(i4 >= u4, np.bool)
-assert_type(i4 >= u8, np.bool)
-assert_type(i4 >= i1, np.bool)
-assert_type(i4 >= i2, np.bool)
-assert_type(i4 >= i4, np.bool)
-assert_type(i4 >= i8, np.bool)
-assert_type(i4 >= f2, np.bool)
-assert_type(i4 >= f4, np.bool)
-assert_type(i4 >= f8, np.bool)
-assert_type(i4 >= ld, np.bool)
-assert_type(i4 >= c8, np.bool)
-assert_type(i4 >= c16, np.bool)
-assert_type(i4 >= cld, np.bool)
-assert_type(i4 >= m8, np.bool)
+assert_type(u64 >= b_py, np.bool)
+assert_type(u64 >= i_py, np.bool)
+assert_type(u64 >= f_py, np.bool)
+assert_type(u64 >= c_py, np.bool)
+assert_type(u64 >= b1, np.bool)
+assert_type(u64 >= u8, np.bool)
+assert_type(u64 >= u16, np.bool)
+assert_type(u64 >= u32, np.bool)
+assert_type(u64 >= u64, np.bool)
+assert_type(u64 >= i8, np.bool)
+assert_type(u64 >= i16, np.bool)
+assert_type(u64 >= i32, np.bool)
+assert_type(u64 >= i64, np.bool)
+assert_type(u64 >= f16, np.bool)
+assert_type(u64 >= f32, np.bool)
+assert_type(u64 >= f64, np.bool)
+assert_type(u64 >= f64l, np.bool)
+assert_type(u64 >= c32, np.bool)
+assert_type(u64 >= c64, np.bool)
+assert_type(u64 >= c64l, np.bool)
 
-assert_type(i8 >= b0, np.bool)
-assert_type(i8 >= i0, np.bool)
-assert_type(i8 >= f0, np.bool)
-assert_type(i8 >= c0, np.bool)
+assert_type(i8 >= b_py, np.bool)
+assert_type(i8 >= i_py, np.bool)
+assert_type(i8 >= f_py, np.bool)
+assert_type(i8 >= c_py, np.bool)
 assert_type(i8 >= b1, np.bool)
-assert_type(i8 >= u1, np.bool)
-assert_type(i8 >= u2, np.bool)
-assert_type(i8 >= u4, np.bool)
 assert_type(i8 >= u8, np.bool)
-assert_type(i8 >= i1, np.bool)
-assert_type(i8 >= i2, np.bool)
-assert_type(i8 >= i4, np.bool)
+assert_type(i8 >= u16, np.bool)
+assert_type(i8 >= u32, np.bool)
+assert_type(i8 >= u64, np.bool)
 assert_type(i8 >= i8, np.bool)
-assert_type(i8 >= f2, np.bool)
-assert_type(i8 >= f4, np.bool)
-assert_type(i8 >= f8, np.bool)
-assert_type(i8 >= ld, np.bool)
-assert_type(i8 >= c8, np.bool)
-assert_type(i8 >= c16, np.bool)
-assert_type(i8 >= cld, np.bool)
-assert_type(i8 >= m8, np.bool)
+assert_type(i8 >= i16, np.bool)
+assert_type(i8 >= i32, np.bool)
+assert_type(i8 >= i64, np.bool)
+assert_type(i8 >= f16, np.bool)
+assert_type(i8 >= f32, np.bool)
+assert_type(i8 >= f64, np.bool)
+assert_type(i8 >= f64l, np.bool)
+assert_type(i8 >= c32, np.bool)
+assert_type(i8 >= c64, np.bool)
+assert_type(i8 >= c64l, np.bool)
+assert_type(i8 >= m64, np.bool)
 
-assert_type(f2 >= b0, np.bool)
-assert_type(f2 >= i0, np.bool)
-assert_type(f2 >= f0, np.bool)
-assert_type(f2 >= c0, np.bool)
-assert_type(f2 >= b1, np.bool)
-assert_type(f2 >= u1, np.bool)
-assert_type(f2 >= u2, np.bool)
-assert_type(f2 >= u4, np.bool)
-assert_type(f2 >= u8, np.bool)
-assert_type(f2 >= i1, np.bool)
-assert_type(f2 >= i2, np.bool)
-assert_type(f2 >= i4, np.bool)
-assert_type(f2 >= i8, np.bool)
-assert_type(f2 >= f2, np.bool)
-assert_type(f2 >= f4, np.bool)
-assert_type(f2 >= f8, np.bool)
-assert_type(f2 >= ld, np.bool)
-assert_type(f2 >= c8, np.bool)
-assert_type(f2 >= c16, np.bool)
-assert_type(f2 >= cld, np.bool)
+assert_type(i16 >= b_py, np.bool)
+assert_type(i16 >= i_py, np.bool)
+assert_type(i16 >= f_py, np.bool)
+assert_type(i16 >= c_py, np.bool)
+assert_type(i16 >= b1, np.bool)
+assert_type(i16 >= u8, np.bool)
+assert_type(i16 >= u16, np.bool)
+assert_type(i16 >= u32, np.bool)
+assert_type(i16 >= u64, np.bool)
+assert_type(i16 >= i8, np.bool)
+assert_type(i16 >= i16, np.bool)
+assert_type(i16 >= i32, np.bool)
+assert_type(i16 >= i64, np.bool)
+assert_type(i16 >= f16, np.bool)
+assert_type(i16 >= f32, np.bool)
+assert_type(i16 >= f64, np.bool)
+assert_type(i16 >= f64l, np.bool)
+assert_type(i16 >= c32, np.bool)
+assert_type(i16 >= c64, np.bool)
+assert_type(i16 >= c64l, np.bool)
+assert_type(i16 >= m64, np.bool)
 
-assert_type(f4 >= b0, np.bool)
-assert_type(f4 >= i0, np.bool)
-assert_type(f4 >= f0, np.bool)
-assert_type(f4 >= c0, np.bool)
-assert_type(f4 >= b1, np.bool)
-assert_type(f4 >= u1, np.bool)
-assert_type(f4 >= u2, np.bool)
-assert_type(f4 >= u4, np.bool)
-assert_type(f4 >= u8, np.bool)
-assert_type(f4 >= i1, np.bool)
-assert_type(f4 >= i2, np.bool)
-assert_type(f4 >= i4, np.bool)
-assert_type(f4 >= i8, np.bool)
-assert_type(f4 >= f2, np.bool)
-assert_type(f4 >= f4, np.bool)
-assert_type(f4 >= f8, np.bool)
-assert_type(f4 >= ld, np.bool)
-assert_type(f4 >= c8, np.bool)
-assert_type(f4 >= c16, np.bool)
-assert_type(f4 >= cld, np.bool)
+assert_type(i32 >= b_py, np.bool)
+assert_type(i32 >= i_py, np.bool)
+assert_type(i32 >= f_py, np.bool)
+assert_type(i32 >= c_py, np.bool)
+assert_type(i32 >= b1, np.bool)
+assert_type(i32 >= u8, np.bool)
+assert_type(i32 >= u16, np.bool)
+assert_type(i32 >= u32, np.bool)
+assert_type(i32 >= u64, np.bool)
+assert_type(i32 >= i8, np.bool)
+assert_type(i32 >= i16, np.bool)
+assert_type(i32 >= i32, np.bool)
+assert_type(i32 >= i64, np.bool)
+assert_type(i32 >= f16, np.bool)
+assert_type(i32 >= f32, np.bool)
+assert_type(i32 >= f64, np.bool)
+assert_type(i32 >= f64l, np.bool)
+assert_type(i32 >= c32, np.bool)
+assert_type(i32 >= c64, np.bool)
+assert_type(i32 >= c64l, np.bool)
+assert_type(i32 >= m64, np.bool)
 
-assert_type(f8 >= b0, np.bool)
-assert_type(f8 >= i0, np.bool)
-assert_type(f8 >= f0, np.bool)
-assert_type(f8 >= c0, np.bool)
-assert_type(f8 >= b1, np.bool)
-assert_type(f8 >= u1, np.bool)
-assert_type(f8 >= u2, np.bool)
-assert_type(f8 >= u4, np.bool)
-assert_type(f8 >= u8, np.bool)
-assert_type(f8 >= i1, np.bool)
-assert_type(f8 >= i2, np.bool)
-assert_type(f8 >= i4, np.bool)
-assert_type(f8 >= i8, np.bool)
-assert_type(f8 >= f2, np.bool)
-assert_type(f8 >= f4, np.bool)
-assert_type(f8 >= f8, np.bool)
-assert_type(f8 >= ld, np.bool)
-assert_type(f8 >= c8, np.bool)
-assert_type(f8 >= c16, np.bool)
-assert_type(f8 >= cld, np.bool)
+assert_type(i64 >= b_py, np.bool)
+assert_type(i64 >= i_py, np.bool)
+assert_type(i64 >= f_py, np.bool)
+assert_type(i64 >= c_py, np.bool)
+assert_type(i64 >= b1, np.bool)
+assert_type(i64 >= u8, np.bool)
+assert_type(i64 >= u16, np.bool)
+assert_type(i64 >= u32, np.bool)
+assert_type(i64 >= u64, np.bool)
+assert_type(i64 >= i8, np.bool)
+assert_type(i64 >= i16, np.bool)
+assert_type(i64 >= i32, np.bool)
+assert_type(i64 >= i64, np.bool)
+assert_type(i64 >= f16, np.bool)
+assert_type(i64 >= f32, np.bool)
+assert_type(i64 >= f64, np.bool)
+assert_type(i64 >= f64l, np.bool)
+assert_type(i64 >= c32, np.bool)
+assert_type(i64 >= c64, np.bool)
+assert_type(i64 >= c64l, np.bool)
+assert_type(i64 >= m64, np.bool)
 
-assert_type(ld >= b0, np.bool)
-assert_type(ld >= i0, np.bool)
-assert_type(ld >= f0, np.bool)
-assert_type(ld >= c0, np.bool)
-assert_type(ld >= b1, np.bool)
-assert_type(ld >= u1, np.bool)
-assert_type(ld >= u2, np.bool)
-assert_type(ld >= u4, np.bool)
-assert_type(ld >= u8, np.bool)
-assert_type(ld >= i1, np.bool)
-assert_type(ld >= i2, np.bool)
-assert_type(ld >= i4, np.bool)
-assert_type(ld >= i8, np.bool)
-assert_type(ld >= f2, np.bool)
-assert_type(ld >= f4, np.bool)
-assert_type(ld >= f8, np.bool)
-assert_type(ld >= ld, np.bool)
-assert_type(ld >= c8, np.bool)
-assert_type(ld >= c16, np.bool)
-assert_type(ld >= cld, np.bool)
+assert_type(f16 >= b_py, np.bool)
+assert_type(f16 >= i_py, np.bool)
+assert_type(f16 >= f_py, np.bool)
+assert_type(f16 >= c_py, np.bool)
+assert_type(f16 >= b1, np.bool)
+assert_type(f16 >= u8, np.bool)
+assert_type(f16 >= u16, np.bool)
+assert_type(f16 >= u32, np.bool)
+assert_type(f16 >= u64, np.bool)
+assert_type(f16 >= i8, np.bool)
+assert_type(f16 >= i16, np.bool)
+assert_type(f16 >= i32, np.bool)
+assert_type(f16 >= i64, np.bool)
+assert_type(f16 >= f16, np.bool)
+assert_type(f16 >= f32, np.bool)
+assert_type(f16 >= f64, np.bool)
+assert_type(f16 >= f64l, np.bool)
+assert_type(f16 >= c32, np.bool)
+assert_type(f16 >= c64, np.bool)
+assert_type(f16 >= c64l, np.bool)
 
-assert_type(c8 >= b0, np.bool)
-assert_type(c8 >= i0, np.bool)
-assert_type(c8 >= f0, np.bool)
-assert_type(c8 >= c0, np.bool)
-assert_type(c8 >= b1, np.bool)
-assert_type(c8 >= u1, np.bool)
-assert_type(c8 >= u2, np.bool)
-assert_type(c8 >= u4, np.bool)
-assert_type(c8 >= u8, np.bool)
-assert_type(c8 >= i1, np.bool)
-assert_type(c8 >= i2, np.bool)
-assert_type(c8 >= i4, np.bool)
-assert_type(c8 >= i8, np.bool)
-assert_type(c8 >= f2, np.bool)
-assert_type(c8 >= f4, np.bool)
-assert_type(c8 >= f8, np.bool)
-assert_type(c8 >= ld, np.bool)
-assert_type(c8 >= c8, np.bool)
-assert_type(c8 >= c16, np.bool)
-assert_type(c8 >= cld, np.bool)
+assert_type(f32 >= b_py, np.bool)
+assert_type(f32 >= i_py, np.bool)
+assert_type(f32 >= f_py, np.bool)
+assert_type(f32 >= c_py, np.bool)
+assert_type(f32 >= b1, np.bool)
+assert_type(f32 >= u8, np.bool)
+assert_type(f32 >= u16, np.bool)
+assert_type(f32 >= u32, np.bool)
+assert_type(f32 >= u64, np.bool)
+assert_type(f32 >= i8, np.bool)
+assert_type(f32 >= i16, np.bool)
+assert_type(f32 >= i32, np.bool)
+assert_type(f32 >= i64, np.bool)
+assert_type(f32 >= f16, np.bool)
+assert_type(f32 >= f32, np.bool)
+assert_type(f32 >= f64, np.bool)
+assert_type(f32 >= f64l, np.bool)
+assert_type(f32 >= c32, np.bool)
+assert_type(f32 >= c64, np.bool)
+assert_type(f32 >= c64l, np.bool)
 
-assert_type(c16 >= b0, np.bool)
-assert_type(c16 >= i0, np.bool)
-assert_type(c16 >= f0, np.bool)
-assert_type(c16 >= c0, np.bool)
-assert_type(c16 >= b1, np.bool)
-assert_type(c16 >= u1, np.bool)
-assert_type(c16 >= u2, np.bool)
-assert_type(c16 >= u4, np.bool)
-assert_type(c16 >= u8, np.bool)
-assert_type(c16 >= i1, np.bool)
-assert_type(c16 >= i2, np.bool)
-assert_type(c16 >= i4, np.bool)
-assert_type(c16 >= i8, np.bool)
-assert_type(c16 >= f2, np.bool)
-assert_type(c16 >= f4, np.bool)
-assert_type(c16 >= f8, np.bool)
-assert_type(c16 >= ld, np.bool)
-assert_type(c16 >= c8, np.bool)
-assert_type(c16 >= c16, np.bool)
-assert_type(c16 >= cld, np.bool)
+assert_type(f64 >= b_py, np.bool)
+assert_type(f64 >= i_py, np.bool)
+assert_type(f64 >= f_py, np.bool)
+assert_type(f64 >= c_py, np.bool)
+assert_type(f64 >= b1, np.bool)
+assert_type(f64 >= u8, np.bool)
+assert_type(f64 >= u16, np.bool)
+assert_type(f64 >= u32, np.bool)
+assert_type(f64 >= u64, np.bool)
+assert_type(f64 >= i8, np.bool)
+assert_type(f64 >= i16, np.bool)
+assert_type(f64 >= i32, np.bool)
+assert_type(f64 >= i64, np.bool)
+assert_type(f64 >= f16, np.bool)
+assert_type(f64 >= f32, np.bool)
+assert_type(f64 >= f64, np.bool)
+assert_type(f64 >= f64l, np.bool)
+assert_type(f64 >= c32, np.bool)
+assert_type(f64 >= c64, np.bool)
+assert_type(f64 >= c64l, np.bool)
 
-assert_type(cld >= b0, np.bool)
-assert_type(cld >= i0, np.bool)
-assert_type(cld >= f0, np.bool)
-assert_type(cld >= c0, np.bool)
-assert_type(cld >= b1, np.bool)
-assert_type(cld >= u1, np.bool)
-assert_type(cld >= u2, np.bool)
-assert_type(cld >= u4, np.bool)
-assert_type(cld >= u8, np.bool)
-assert_type(cld >= i1, np.bool)
-assert_type(cld >= i2, np.bool)
-assert_type(cld >= i4, np.bool)
-assert_type(cld >= i8, np.bool)
-assert_type(cld >= f2, np.bool)
-assert_type(cld >= f4, np.bool)
-assert_type(cld >= f8, np.bool)
-assert_type(cld >= ld, np.bool)
-assert_type(cld >= c8, np.bool)
-assert_type(cld >= c16, np.bool)
-assert_type(cld >= cld, np.bool)
+assert_type(f64l >= b_py, np.bool)
+assert_type(f64l >= i_py, np.bool)
+assert_type(f64l >= f_py, np.bool)
+assert_type(f64l >= c_py, np.bool)
+assert_type(f64l >= b1, np.bool)
+assert_type(f64l >= u8, np.bool)
+assert_type(f64l >= u16, np.bool)
+assert_type(f64l >= u32, np.bool)
+assert_type(f64l >= u64, np.bool)
+assert_type(f64l >= i8, np.bool)
+assert_type(f64l >= i16, np.bool)
+assert_type(f64l >= i32, np.bool)
+assert_type(f64l >= i64, np.bool)
+assert_type(f64l >= f16, np.bool)
+assert_type(f64l >= f32, np.bool)
+assert_type(f64l >= f64, np.bool)
+assert_type(f64l >= f64l, np.bool)
+assert_type(f64l >= c32, np.bool)
+assert_type(f64l >= c64, np.bool)
+assert_type(f64l >= c64l, np.bool)
 
-assert_type(m8 >= b0, np.bool)
-assert_type(m8 >= i0, np.bool)
-assert_type(m8 >= b1, np.bool)
-assert_type(m8 >= u1, np.bool)
-assert_type(m8 >= u2, np.bool)
-assert_type(m8 >= u4, np.bool)
-assert_type(m8 >= i1, np.bool)
-assert_type(m8 >= i2, np.bool)
-assert_type(m8 >= i4, np.bool)
-assert_type(m8 >= i8, np.bool)
-assert_type(m8 >= m8, np.bool)
+assert_type(c32 >= b_py, np.bool)
+assert_type(c32 >= i_py, np.bool)
+assert_type(c32 >= f_py, np.bool)
+assert_type(c32 >= c_py, np.bool)
+assert_type(c32 >= b1, np.bool)
+assert_type(c32 >= u8, np.bool)
+assert_type(c32 >= u16, np.bool)
+assert_type(c32 >= u32, np.bool)
+assert_type(c32 >= u64, np.bool)
+assert_type(c32 >= i8, np.bool)
+assert_type(c32 >= i16, np.bool)
+assert_type(c32 >= i32, np.bool)
+assert_type(c32 >= i64, np.bool)
+assert_type(c32 >= f16, np.bool)
+assert_type(c32 >= f32, np.bool)
+assert_type(c32 >= f64, np.bool)
+assert_type(c32 >= f64l, np.bool)
+assert_type(c32 >= c32, np.bool)
+assert_type(c32 >= c64, np.bool)
+assert_type(c32 >= c64l, np.bool)
 
-assert_type(M8 >= M8, np.bool)
+assert_type(c64 >= b_py, np.bool)
+assert_type(c64 >= i_py, np.bool)
+assert_type(c64 >= f_py, np.bool)
+assert_type(c64 >= c_py, np.bool)
+assert_type(c64 >= b1, np.bool)
+assert_type(c64 >= u8, np.bool)
+assert_type(c64 >= u16, np.bool)
+assert_type(c64 >= u32, np.bool)
+assert_type(c64 >= u64, np.bool)
+assert_type(c64 >= i8, np.bool)
+assert_type(c64 >= i16, np.bool)
+assert_type(c64 >= i32, np.bool)
+assert_type(c64 >= i64, np.bool)
+assert_type(c64 >= f16, np.bool)
+assert_type(c64 >= f32, np.bool)
+assert_type(c64 >= f64, np.bool)
+assert_type(c64 >= f64l, np.bool)
+assert_type(c64 >= c32, np.bool)
+assert_type(c64 >= c64, np.bool)
+assert_type(c64 >= c64l, np.bool)
+
+assert_type(c64l >= b_py, np.bool)
+assert_type(c64l >= i_py, np.bool)
+assert_type(c64l >= f_py, np.bool)
+assert_type(c64l >= c_py, np.bool)
+assert_type(c64l >= b1, np.bool)
+assert_type(c64l >= u8, np.bool)
+assert_type(c64l >= u16, np.bool)
+assert_type(c64l >= u32, np.bool)
+assert_type(c64l >= u64, np.bool)
+assert_type(c64l >= i8, np.bool)
+assert_type(c64l >= i16, np.bool)
+assert_type(c64l >= i32, np.bool)
+assert_type(c64l >= i64, np.bool)
+assert_type(c64l >= f16, np.bool)
+assert_type(c64l >= f32, np.bool)
+assert_type(c64l >= f64, np.bool)
+assert_type(c64l >= f64l, np.bool)
+assert_type(c64l >= c32, np.bool)
+assert_type(c64l >= c64, np.bool)
+assert_type(c64l >= c64l, np.bool)
+
+assert_type(M64 >= M64, np.bool)
+
+assert_type(m64 >= b_py, np.bool)
+assert_type(m64 >= i_py, np.bool)
+assert_type(m64 >= b1, np.bool)
+assert_type(m64 >= u8, np.bool)
+assert_type(m64 >= u16, np.bool)
+assert_type(m64 >= u32, np.bool)
+assert_type(m64 >= i8, np.bool)
+assert_type(m64 >= i16, np.bool)
+assert_type(m64 >= i32, np.bool)
+assert_type(m64 >= i64, np.bool)
+assert_type(m64 >= m64, np.bool)
 
 ###
 # __[r]gt__
 
-assert_type(b1 > b0, np.bool)
-assert_type(b1 > i0, np.bool)
-assert_type(b1 > f0, np.bool)
-assert_type(b1 > c0, np.bool)
+assert_type(b1 > b_py, np.bool)
+assert_type(b1 > i_py, np.bool)
+assert_type(b1 > f_py, np.bool)
+assert_type(b1 > c_py, np.bool)
 assert_type(b1 > b1, np.bool)
-assert_type(b1 > u1, np.bool)
-assert_type(b1 > u2, np.bool)
-assert_type(b1 > u4, np.bool)
 assert_type(b1 > u8, np.bool)
-assert_type(b1 > i1, np.bool)
-assert_type(b1 > i2, np.bool)
-assert_type(b1 > i4, np.bool)
+assert_type(b1 > u16, np.bool)
+assert_type(b1 > u32, np.bool)
+assert_type(b1 > u64, np.bool)
 assert_type(b1 > i8, np.bool)
-assert_type(b1 > f2, np.bool)
-assert_type(b1 > f4, np.bool)
-assert_type(b1 > f8, np.bool)
-assert_type(b1 > ld, np.bool)
-assert_type(b1 > c8, np.bool)
-assert_type(b1 > c16, np.bool)
-assert_type(b1 > cld, np.bool)
-assert_type(b1 > m8, np.bool)
+assert_type(b1 > i16, np.bool)
+assert_type(b1 > i32, np.bool)
+assert_type(b1 > i64, np.bool)
+assert_type(b1 > f16, np.bool)
+assert_type(b1 > f32, np.bool)
+assert_type(b1 > f64, np.bool)
+assert_type(b1 > f64l, np.bool)
+assert_type(b1 > c32, np.bool)
+assert_type(b1 > c64, np.bool)
+assert_type(b1 > c64l, np.bool)
+assert_type(b1 > m64, np.bool)
 
-assert_type(u1 > b0, np.bool)
-assert_type(u1 > i0, np.bool)
-assert_type(u1 > f0, np.bool)
-assert_type(u1 > c0, np.bool)
-assert_type(u1 > b1, np.bool)
-assert_type(u1 > u1, np.bool)
-assert_type(u1 > u2, np.bool)
-assert_type(u1 > u4, np.bool)
-assert_type(u1 > u8, np.bool)
-assert_type(u1 > i1, np.bool)
-assert_type(u1 > i2, np.bool)
-assert_type(u1 > i4, np.bool)
-assert_type(u1 > i8, np.bool)
-assert_type(u1 > f2, np.bool)
-assert_type(u1 > f4, np.bool)
-assert_type(u1 > f8, np.bool)
-assert_type(u1 > ld, np.bool)
-assert_type(u1 > c8, np.bool)
-assert_type(u1 > c16, np.bool)
-assert_type(u1 > cld, np.bool)
-assert_type(u1 > m8, np.bool)
-
-assert_type(u2 > b0, np.bool)
-assert_type(u2 > i0, np.bool)
-assert_type(u2 > f0, np.bool)
-assert_type(u2 > c0, np.bool)
-assert_type(u2 > b1, np.bool)
-assert_type(u2 > u1, np.bool)
-assert_type(u2 > u2, np.bool)
-assert_type(u2 > u4, np.bool)
-assert_type(u2 > u8, np.bool)
-assert_type(u2 > i1, np.bool)
-assert_type(u2 > i2, np.bool)
-assert_type(u2 > i4, np.bool)
-assert_type(u2 > i8, np.bool)
-assert_type(u2 > f2, np.bool)
-assert_type(u2 > f4, np.bool)
-assert_type(u2 > f8, np.bool)
-assert_type(u2 > ld, np.bool)
-assert_type(u2 > c8, np.bool)
-assert_type(u2 > c16, np.bool)
-assert_type(u2 > cld, np.bool)
-assert_type(u2 > m8, np.bool)
-
-assert_type(u4 > b0, np.bool)
-assert_type(u4 > i0, np.bool)
-assert_type(u4 > f0, np.bool)
-assert_type(u4 > c0, np.bool)
-assert_type(u4 > b1, np.bool)
-assert_type(u4 > u1, np.bool)
-assert_type(u4 > u2, np.bool)
-assert_type(u4 > u4, np.bool)
-assert_type(u4 > u8, np.bool)
-assert_type(u4 > i1, np.bool)
-assert_type(u4 > i2, np.bool)
-assert_type(u4 > i4, np.bool)
-assert_type(u4 > i8, np.bool)
-assert_type(u4 > f2, np.bool)
-assert_type(u4 > f4, np.bool)
-assert_type(u4 > f8, np.bool)
-assert_type(u4 > ld, np.bool)
-assert_type(u4 > c8, np.bool)
-assert_type(u4 > c16, np.bool)
-assert_type(u4 > cld, np.bool)
-assert_type(u4 > m8, np.bool)
-
-assert_type(u8 > b0, np.bool)
-assert_type(u8 > i0, np.bool)
-assert_type(u8 > f0, np.bool)
-assert_type(u8 > c0, np.bool)
+assert_type(u8 > b_py, np.bool)
+assert_type(u8 > i_py, np.bool)
+assert_type(u8 > f_py, np.bool)
+assert_type(u8 > c_py, np.bool)
 assert_type(u8 > b1, np.bool)
-assert_type(u8 > u1, np.bool)
-assert_type(u8 > u2, np.bool)
-assert_type(u8 > u4, np.bool)
 assert_type(u8 > u8, np.bool)
-assert_type(u8 > i1, np.bool)
-assert_type(u8 > i2, np.bool)
-assert_type(u8 > i4, np.bool)
+assert_type(u8 > u16, np.bool)
+assert_type(u8 > u32, np.bool)
+assert_type(u8 > u64, np.bool)
 assert_type(u8 > i8, np.bool)
-assert_type(u8 > f2, np.bool)
-assert_type(u8 > f4, np.bool)
-assert_type(u8 > f8, np.bool)
-assert_type(u8 > ld, np.bool)
-assert_type(u8 > c8, np.bool)
-assert_type(u8 > c16, np.bool)
-assert_type(u8 > cld, np.bool)
+assert_type(u8 > i16, np.bool)
+assert_type(u8 > i32, np.bool)
+assert_type(u8 > i64, np.bool)
+assert_type(u8 > f16, np.bool)
+assert_type(u8 > f32, np.bool)
+assert_type(u8 > f64, np.bool)
+assert_type(u8 > f64l, np.bool)
+assert_type(u8 > c32, np.bool)
+assert_type(u8 > c64, np.bool)
+assert_type(u8 > c64l, np.bool)
+assert_type(u8 > m64, np.bool)
 
-assert_type(i1 > b0, np.bool)
-assert_type(i1 > i0, np.bool)
-assert_type(i1 > f0, np.bool)
-assert_type(i1 > c0, np.bool)
-assert_type(i1 > b1, np.bool)
-assert_type(i1 > u1, np.bool)
-assert_type(i1 > u2, np.bool)
-assert_type(i1 > u4, np.bool)
-assert_type(i1 > u8, np.bool)
-assert_type(i1 > i1, np.bool)
-assert_type(i1 > i2, np.bool)
-assert_type(i1 > i4, np.bool)
-assert_type(i1 > i8, np.bool)
-assert_type(i1 > f2, np.bool)
-assert_type(i1 > f4, np.bool)
-assert_type(i1 > f8, np.bool)
-assert_type(i1 > ld, np.bool)
-assert_type(i1 > c8, np.bool)
-assert_type(i1 > c16, np.bool)
-assert_type(i1 > cld, np.bool)
-assert_type(i1 > m8, np.bool)
+assert_type(u16 > b_py, np.bool)
+assert_type(u16 > i_py, np.bool)
+assert_type(u16 > f_py, np.bool)
+assert_type(u16 > c_py, np.bool)
+assert_type(u16 > b1, np.bool)
+assert_type(u16 > u8, np.bool)
+assert_type(u16 > u16, np.bool)
+assert_type(u16 > u32, np.bool)
+assert_type(u16 > u64, np.bool)
+assert_type(u16 > i8, np.bool)
+assert_type(u16 > i16, np.bool)
+assert_type(u16 > i32, np.bool)
+assert_type(u16 > i64, np.bool)
+assert_type(u16 > f16, np.bool)
+assert_type(u16 > f32, np.bool)
+assert_type(u16 > f64, np.bool)
+assert_type(u16 > f64l, np.bool)
+assert_type(u16 > c32, np.bool)
+assert_type(u16 > c64, np.bool)
+assert_type(u16 > c64l, np.bool)
+assert_type(u16 > m64, np.bool)
 
-assert_type(i2 > b0, np.bool)
-assert_type(i2 > i0, np.bool)
-assert_type(i2 > f0, np.bool)
-assert_type(i2 > c0, np.bool)
-assert_type(i2 > b1, np.bool)
-assert_type(i2 > u1, np.bool)
-assert_type(i2 > u2, np.bool)
-assert_type(i2 > u4, np.bool)
-assert_type(i2 > u8, np.bool)
-assert_type(i2 > i1, np.bool)
-assert_type(i2 > i2, np.bool)
-assert_type(i2 > i4, np.bool)
-assert_type(i2 > i8, np.bool)
-assert_type(i2 > f2, np.bool)
-assert_type(i2 > f4, np.bool)
-assert_type(i2 > f8, np.bool)
-assert_type(i2 > ld, np.bool)
-assert_type(i2 > c8, np.bool)
-assert_type(i2 > c16, np.bool)
-assert_type(i2 > cld, np.bool)
-assert_type(i2 > m8, np.bool)
+assert_type(u32 > b_py, np.bool)
+assert_type(u32 > i_py, np.bool)
+assert_type(u32 > f_py, np.bool)
+assert_type(u32 > c_py, np.bool)
+assert_type(u32 > b1, np.bool)
+assert_type(u32 > u8, np.bool)
+assert_type(u32 > u16, np.bool)
+assert_type(u32 > u32, np.bool)
+assert_type(u32 > u64, np.bool)
+assert_type(u32 > i8, np.bool)
+assert_type(u32 > i16, np.bool)
+assert_type(u32 > i32, np.bool)
+assert_type(u32 > i64, np.bool)
+assert_type(u32 > f16, np.bool)
+assert_type(u32 > f32, np.bool)
+assert_type(u32 > f64, np.bool)
+assert_type(u32 > f64l, np.bool)
+assert_type(u32 > c32, np.bool)
+assert_type(u32 > c64, np.bool)
+assert_type(u32 > c64l, np.bool)
+assert_type(u32 > m64, np.bool)
 
-assert_type(i4 > b0, np.bool)
-assert_type(i4 > i0, np.bool)
-assert_type(i4 > f0, np.bool)
-assert_type(i4 > c0, np.bool)
-assert_type(i4 > b1, np.bool)
-assert_type(i4 > u1, np.bool)
-assert_type(i4 > u2, np.bool)
-assert_type(i4 > u4, np.bool)
-assert_type(i4 > u8, np.bool)
-assert_type(i4 > i1, np.bool)
-assert_type(i4 > i2, np.bool)
-assert_type(i4 > i4, np.bool)
-assert_type(i4 > i8, np.bool)
-assert_type(i4 > f2, np.bool)
-assert_type(i4 > f4, np.bool)
-assert_type(i4 > f8, np.bool)
-assert_type(i4 > ld, np.bool)
-assert_type(i4 > c8, np.bool)
-assert_type(i4 > c16, np.bool)
-assert_type(i4 > cld, np.bool)
-assert_type(i4 > m8, np.bool)
+assert_type(u64 > b_py, np.bool)
+assert_type(u64 > i_py, np.bool)
+assert_type(u64 > f_py, np.bool)
+assert_type(u64 > c_py, np.bool)
+assert_type(u64 > b1, np.bool)
+assert_type(u64 > u8, np.bool)
+assert_type(u64 > u16, np.bool)
+assert_type(u64 > u32, np.bool)
+assert_type(u64 > u64, np.bool)
+assert_type(u64 > i8, np.bool)
+assert_type(u64 > i16, np.bool)
+assert_type(u64 > i32, np.bool)
+assert_type(u64 > i64, np.bool)
+assert_type(u64 > f16, np.bool)
+assert_type(u64 > f32, np.bool)
+assert_type(u64 > f64, np.bool)
+assert_type(u64 > f64l, np.bool)
+assert_type(u64 > c32, np.bool)
+assert_type(u64 > c64, np.bool)
+assert_type(u64 > c64l, np.bool)
 
-assert_type(i8 > b0, np.bool)
-assert_type(i8 > i0, np.bool)
-assert_type(i8 > f0, np.bool)
-assert_type(i8 > c0, np.bool)
+assert_type(i8 > b_py, np.bool)
+assert_type(i8 > i_py, np.bool)
+assert_type(i8 > f_py, np.bool)
+assert_type(i8 > c_py, np.bool)
 assert_type(i8 > b1, np.bool)
-assert_type(i8 > u1, np.bool)
-assert_type(i8 > u2, np.bool)
-assert_type(i8 > u4, np.bool)
 assert_type(i8 > u8, np.bool)
-assert_type(i8 > i1, np.bool)
-assert_type(i8 > i2, np.bool)
-assert_type(i8 > i4, np.bool)
+assert_type(i8 > u16, np.bool)
+assert_type(i8 > u32, np.bool)
+assert_type(i8 > u64, np.bool)
 assert_type(i8 > i8, np.bool)
-assert_type(i8 > f2, np.bool)
-assert_type(i8 > f4, np.bool)
-assert_type(i8 > f8, np.bool)
-assert_type(i8 > ld, np.bool)
-assert_type(i8 > c8, np.bool)
-assert_type(i8 > c16, np.bool)
-assert_type(i8 > cld, np.bool)
-assert_type(i8 > m8, np.bool)
+assert_type(i8 > i16, np.bool)
+assert_type(i8 > i32, np.bool)
+assert_type(i8 > i64, np.bool)
+assert_type(i8 > f16, np.bool)
+assert_type(i8 > f32, np.bool)
+assert_type(i8 > f64, np.bool)
+assert_type(i8 > f64l, np.bool)
+assert_type(i8 > c32, np.bool)
+assert_type(i8 > c64, np.bool)
+assert_type(i8 > c64l, np.bool)
+assert_type(i8 > m64, np.bool)
 
-assert_type(f2 > b0, np.bool)
-assert_type(f2 > i0, np.bool)
-assert_type(f2 > f0, np.bool)
-assert_type(f2 > c0, np.bool)
-assert_type(f2 > b1, np.bool)
-assert_type(f2 > u1, np.bool)
-assert_type(f2 > u2, np.bool)
-assert_type(f2 > u4, np.bool)
-assert_type(f2 > u8, np.bool)
-assert_type(f2 > i1, np.bool)
-assert_type(f2 > i2, np.bool)
-assert_type(f2 > i4, np.bool)
-assert_type(f2 > i8, np.bool)
-assert_type(f2 > f2, np.bool)
-assert_type(f2 > f4, np.bool)
-assert_type(f2 > f8, np.bool)
-assert_type(f2 > ld, np.bool)
-assert_type(f2 > c8, np.bool)
-assert_type(f2 > c16, np.bool)
-assert_type(f2 > cld, np.bool)
+assert_type(i16 > b_py, np.bool)
+assert_type(i16 > i_py, np.bool)
+assert_type(i16 > f_py, np.bool)
+assert_type(i16 > c_py, np.bool)
+assert_type(i16 > b1, np.bool)
+assert_type(i16 > u8, np.bool)
+assert_type(i16 > u16, np.bool)
+assert_type(i16 > u32, np.bool)
+assert_type(i16 > u64, np.bool)
+assert_type(i16 > i8, np.bool)
+assert_type(i16 > i16, np.bool)
+assert_type(i16 > i32, np.bool)
+assert_type(i16 > i64, np.bool)
+assert_type(i16 > f16, np.bool)
+assert_type(i16 > f32, np.bool)
+assert_type(i16 > f64, np.bool)
+assert_type(i16 > f64l, np.bool)
+assert_type(i16 > c32, np.bool)
+assert_type(i16 > c64, np.bool)
+assert_type(i16 > c64l, np.bool)
+assert_type(i16 > m64, np.bool)
 
-assert_type(f4 > b0, np.bool)
-assert_type(f4 > i0, np.bool)
-assert_type(f4 > f0, np.bool)
-assert_type(f4 > c0, np.bool)
-assert_type(f4 > b1, np.bool)
-assert_type(f4 > u1, np.bool)
-assert_type(f4 > u2, np.bool)
-assert_type(f4 > u4, np.bool)
-assert_type(f4 > u8, np.bool)
-assert_type(f4 > i1, np.bool)
-assert_type(f4 > i2, np.bool)
-assert_type(f4 > i4, np.bool)
-assert_type(f4 > i8, np.bool)
-assert_type(f4 > f2, np.bool)
-assert_type(f4 > f4, np.bool)
-assert_type(f4 > f8, np.bool)
-assert_type(f4 > ld, np.bool)
-assert_type(f4 > c8, np.bool)
-assert_type(f4 > c16, np.bool)
-assert_type(f4 > cld, np.bool)
+assert_type(i32 > b_py, np.bool)
+assert_type(i32 > i_py, np.bool)
+assert_type(i32 > f_py, np.bool)
+assert_type(i32 > c_py, np.bool)
+assert_type(i32 > b1, np.bool)
+assert_type(i32 > u8, np.bool)
+assert_type(i32 > u16, np.bool)
+assert_type(i32 > u32, np.bool)
+assert_type(i32 > u64, np.bool)
+assert_type(i32 > i8, np.bool)
+assert_type(i32 > i16, np.bool)
+assert_type(i32 > i32, np.bool)
+assert_type(i32 > i64, np.bool)
+assert_type(i32 > f16, np.bool)
+assert_type(i32 > f32, np.bool)
+assert_type(i32 > f64, np.bool)
+assert_type(i32 > f64l, np.bool)
+assert_type(i32 > c32, np.bool)
+assert_type(i32 > c64, np.bool)
+assert_type(i32 > c64l, np.bool)
+assert_type(i32 > m64, np.bool)
 
-assert_type(f8 > b0, np.bool)
-assert_type(f8 > i0, np.bool)
-assert_type(f8 > f0, np.bool)
-assert_type(f8 > c0, np.bool)
-assert_type(f8 > b1, np.bool)
-assert_type(f8 > u1, np.bool)
-assert_type(f8 > u2, np.bool)
-assert_type(f8 > u4, np.bool)
-assert_type(f8 > u8, np.bool)
-assert_type(f8 > i1, np.bool)
-assert_type(f8 > i2, np.bool)
-assert_type(f8 > i4, np.bool)
-assert_type(f8 > i8, np.bool)
-assert_type(f8 > f2, np.bool)
-assert_type(f8 > f4, np.bool)
-assert_type(f8 > f8, np.bool)
-assert_type(f8 > ld, np.bool)
-assert_type(f8 > c8, np.bool)
-assert_type(f8 > c16, np.bool)
-assert_type(f8 > cld, np.bool)
+assert_type(i64 > b_py, np.bool)
+assert_type(i64 > i_py, np.bool)
+assert_type(i64 > f_py, np.bool)
+assert_type(i64 > c_py, np.bool)
+assert_type(i64 > b1, np.bool)
+assert_type(i64 > u8, np.bool)
+assert_type(i64 > u16, np.bool)
+assert_type(i64 > u32, np.bool)
+assert_type(i64 > u64, np.bool)
+assert_type(i64 > i8, np.bool)
+assert_type(i64 > i16, np.bool)
+assert_type(i64 > i32, np.bool)
+assert_type(i64 > i64, np.bool)
+assert_type(i64 > f16, np.bool)
+assert_type(i64 > f32, np.bool)
+assert_type(i64 > f64, np.bool)
+assert_type(i64 > f64l, np.bool)
+assert_type(i64 > c32, np.bool)
+assert_type(i64 > c64, np.bool)
+assert_type(i64 > c64l, np.bool)
+assert_type(i64 > m64, np.bool)
 
-assert_type(ld > b0, np.bool)
-assert_type(ld > i0, np.bool)
-assert_type(ld > f0, np.bool)
-assert_type(ld > c0, np.bool)
-assert_type(ld > b1, np.bool)
-assert_type(ld > u1, np.bool)
-assert_type(ld > u2, np.bool)
-assert_type(ld > u4, np.bool)
-assert_type(ld > u8, np.bool)
-assert_type(ld > i1, np.bool)
-assert_type(ld > i2, np.bool)
-assert_type(ld > i4, np.bool)
-assert_type(ld > i8, np.bool)
-assert_type(ld > f2, np.bool)
-assert_type(ld > f4, np.bool)
-assert_type(ld > f8, np.bool)
-assert_type(ld > ld, np.bool)
-assert_type(ld > c8, np.bool)
-assert_type(ld > c16, np.bool)
-assert_type(ld > cld, np.bool)
+assert_type(f16 > b_py, np.bool)
+assert_type(f16 > i_py, np.bool)
+assert_type(f16 > f_py, np.bool)
+assert_type(f16 > c_py, np.bool)
+assert_type(f16 > b1, np.bool)
+assert_type(f16 > u8, np.bool)
+assert_type(f16 > u16, np.bool)
+assert_type(f16 > u32, np.bool)
+assert_type(f16 > u64, np.bool)
+assert_type(f16 > i8, np.bool)
+assert_type(f16 > i16, np.bool)
+assert_type(f16 > i32, np.bool)
+assert_type(f16 > i64, np.bool)
+assert_type(f16 > f16, np.bool)
+assert_type(f16 > f32, np.bool)
+assert_type(f16 > f64, np.bool)
+assert_type(f16 > f64l, np.bool)
+assert_type(f16 > c32, np.bool)
+assert_type(f16 > c64, np.bool)
+assert_type(f16 > c64l, np.bool)
 
-assert_type(c8 > b0, np.bool)
-assert_type(c8 > i0, np.bool)
-assert_type(c8 > f0, np.bool)
-assert_type(c8 > c0, np.bool)
-assert_type(c8 > b1, np.bool)
-assert_type(c8 > u1, np.bool)
-assert_type(c8 > u2, np.bool)
-assert_type(c8 > u4, np.bool)
-assert_type(c8 > u8, np.bool)
-assert_type(c8 > i1, np.bool)
-assert_type(c8 > i2, np.bool)
-assert_type(c8 > i4, np.bool)
-assert_type(c8 > i8, np.bool)
-assert_type(c8 > f2, np.bool)
-assert_type(c8 > f4, np.bool)
-assert_type(c8 > f8, np.bool)
-assert_type(c8 > ld, np.bool)
-assert_type(c8 > c8, np.bool)
-assert_type(c8 > c16, np.bool)
-assert_type(c8 > cld, np.bool)
+assert_type(f32 > b_py, np.bool)
+assert_type(f32 > i_py, np.bool)
+assert_type(f32 > f_py, np.bool)
+assert_type(f32 > c_py, np.bool)
+assert_type(f32 > b1, np.bool)
+assert_type(f32 > u8, np.bool)
+assert_type(f32 > u16, np.bool)
+assert_type(f32 > u32, np.bool)
+assert_type(f32 > u64, np.bool)
+assert_type(f32 > i8, np.bool)
+assert_type(f32 > i16, np.bool)
+assert_type(f32 > i32, np.bool)
+assert_type(f32 > i64, np.bool)
+assert_type(f32 > f16, np.bool)
+assert_type(f32 > f32, np.bool)
+assert_type(f32 > f64, np.bool)
+assert_type(f32 > f64l, np.bool)
+assert_type(f32 > c32, np.bool)
+assert_type(f32 > c64, np.bool)
+assert_type(f32 > c64l, np.bool)
 
-assert_type(c16 > b0, np.bool)
-assert_type(c16 > i0, np.bool)
-assert_type(c16 > f0, np.bool)
-assert_type(c16 > c0, np.bool)
-assert_type(c16 > b1, np.bool)
-assert_type(c16 > u1, np.bool)
-assert_type(c16 > u2, np.bool)
-assert_type(c16 > u4, np.bool)
-assert_type(c16 > u8, np.bool)
-assert_type(c16 > i1, np.bool)
-assert_type(c16 > i2, np.bool)
-assert_type(c16 > i4, np.bool)
-assert_type(c16 > i8, np.bool)
-assert_type(c16 > f2, np.bool)
-assert_type(c16 > f4, np.bool)
-assert_type(c16 > f8, np.bool)
-assert_type(c16 > ld, np.bool)
-assert_type(c16 > c8, np.bool)
-assert_type(c16 > c16, np.bool)
-assert_type(c16 > cld, np.bool)
+assert_type(f64 > b_py, np.bool)
+assert_type(f64 > i_py, np.bool)
+assert_type(f64 > f_py, np.bool)
+assert_type(f64 > c_py, np.bool)
+assert_type(f64 > b1, np.bool)
+assert_type(f64 > u8, np.bool)
+assert_type(f64 > u16, np.bool)
+assert_type(f64 > u32, np.bool)
+assert_type(f64 > u64, np.bool)
+assert_type(f64 > i8, np.bool)
+assert_type(f64 > i16, np.bool)
+assert_type(f64 > i32, np.bool)
+assert_type(f64 > i64, np.bool)
+assert_type(f64 > f16, np.bool)
+assert_type(f64 > f32, np.bool)
+assert_type(f64 > f64, np.bool)
+assert_type(f64 > f64l, np.bool)
+assert_type(f64 > c32, np.bool)
+assert_type(f64 > c64, np.bool)
+assert_type(f64 > c64l, np.bool)
 
-assert_type(cld > b0, np.bool)
-assert_type(cld > i0, np.bool)
-assert_type(cld > f0, np.bool)
-assert_type(cld > c0, np.bool)
-assert_type(cld > b1, np.bool)
-assert_type(cld > u1, np.bool)
-assert_type(cld > u2, np.bool)
-assert_type(cld > u4, np.bool)
-assert_type(cld > u8, np.bool)
-assert_type(cld > i1, np.bool)
-assert_type(cld > i2, np.bool)
-assert_type(cld > i4, np.bool)
-assert_type(cld > i8, np.bool)
-assert_type(cld > f2, np.bool)
-assert_type(cld > f4, np.bool)
-assert_type(cld > f8, np.bool)
-assert_type(cld > ld, np.bool)
-assert_type(cld > c8, np.bool)
-assert_type(cld > c16, np.bool)
-assert_type(cld > cld, np.bool)
+assert_type(f64l > b_py, np.bool)
+assert_type(f64l > i_py, np.bool)
+assert_type(f64l > f_py, np.bool)
+assert_type(f64l > c_py, np.bool)
+assert_type(f64l > b1, np.bool)
+assert_type(f64l > u8, np.bool)
+assert_type(f64l > u16, np.bool)
+assert_type(f64l > u32, np.bool)
+assert_type(f64l > u64, np.bool)
+assert_type(f64l > i8, np.bool)
+assert_type(f64l > i16, np.bool)
+assert_type(f64l > i32, np.bool)
+assert_type(f64l > i64, np.bool)
+assert_type(f64l > f16, np.bool)
+assert_type(f64l > f32, np.bool)
+assert_type(f64l > f64, np.bool)
+assert_type(f64l > f64l, np.bool)
+assert_type(f64l > c32, np.bool)
+assert_type(f64l > c64, np.bool)
+assert_type(f64l > c64l, np.bool)
 
-assert_type(m8 > b0, np.bool)
-assert_type(m8 > i0, np.bool)
-assert_type(m8 > b1, np.bool)
-assert_type(m8 > u1, np.bool)
-assert_type(m8 > u2, np.bool)
-assert_type(m8 > u4, np.bool)
-assert_type(m8 > i1, np.bool)
-assert_type(m8 > i2, np.bool)
-assert_type(m8 > i4, np.bool)
-assert_type(m8 > i8, np.bool)
-assert_type(m8 > m8, np.bool)
+assert_type(c32 > b_py, np.bool)
+assert_type(c32 > i_py, np.bool)
+assert_type(c32 > f_py, np.bool)
+assert_type(c32 > c_py, np.bool)
+assert_type(c32 > b1, np.bool)
+assert_type(c32 > u8, np.bool)
+assert_type(c32 > u16, np.bool)
+assert_type(c32 > u32, np.bool)
+assert_type(c32 > u64, np.bool)
+assert_type(c32 > i8, np.bool)
+assert_type(c32 > i16, np.bool)
+assert_type(c32 > i32, np.bool)
+assert_type(c32 > i64, np.bool)
+assert_type(c32 > f16, np.bool)
+assert_type(c32 > f32, np.bool)
+assert_type(c32 > f64, np.bool)
+assert_type(c32 > f64l, np.bool)
+assert_type(c32 > c32, np.bool)
+assert_type(c32 > c64, np.bool)
+assert_type(c32 > c64l, np.bool)
 
-assert_type(M8 > M8, np.bool)
+assert_type(c64 > b_py, np.bool)
+assert_type(c64 > i_py, np.bool)
+assert_type(c64 > f_py, np.bool)
+assert_type(c64 > c_py, np.bool)
+assert_type(c64 > b1, np.bool)
+assert_type(c64 > u8, np.bool)
+assert_type(c64 > u16, np.bool)
+assert_type(c64 > u32, np.bool)
+assert_type(c64 > u64, np.bool)
+assert_type(c64 > i8, np.bool)
+assert_type(c64 > i16, np.bool)
+assert_type(c64 > i32, np.bool)
+assert_type(c64 > i64, np.bool)
+assert_type(c64 > f16, np.bool)
+assert_type(c64 > f32, np.bool)
+assert_type(c64 > f64, np.bool)
+assert_type(c64 > f64l, np.bool)
+assert_type(c64 > c32, np.bool)
+assert_type(c64 > c64, np.bool)
+assert_type(c64 > c64l, np.bool)
+
+assert_type(c64l > b_py, np.bool)
+assert_type(c64l > i_py, np.bool)
+assert_type(c64l > f_py, np.bool)
+assert_type(c64l > c_py, np.bool)
+assert_type(c64l > b1, np.bool)
+assert_type(c64l > u8, np.bool)
+assert_type(c64l > u16, np.bool)
+assert_type(c64l > u32, np.bool)
+assert_type(c64l > u64, np.bool)
+assert_type(c64l > i8, np.bool)
+assert_type(c64l > i16, np.bool)
+assert_type(c64l > i32, np.bool)
+assert_type(c64l > i64, np.bool)
+assert_type(c64l > f16, np.bool)
+assert_type(c64l > f32, np.bool)
+assert_type(c64l > f64, np.bool)
+assert_type(c64l > f64l, np.bool)
+assert_type(c64l > c32, np.bool)
+assert_type(c64l > c64, np.bool)
+assert_type(c64l > c64l, np.bool)
+
+assert_type(M64 > M64, np.bool)
+
+assert_type(m64 > b_py, np.bool)
+assert_type(m64 > i_py, np.bool)
+assert_type(m64 > b1, np.bool)
+assert_type(m64 > u8, np.bool)
+assert_type(m64 > u16, np.bool)
+assert_type(m64 > u32, np.bool)
+assert_type(m64 > i8, np.bool)
+assert_type(m64 > i16, np.bool)
+assert_type(m64 > i32, np.bool)
+assert_type(m64 > i64, np.bool)
+assert_type(m64 > m64, np.bool)
 
 ###
 # __[r]eq__
 
-assert_type(b1 == b0, np.bool)
-assert_type(b1 == i0, np.bool)
-assert_type(b1 == f0, np.bool)
-assert_type(b1 == c0, np.bool)
+assert_type(b1 == b_py, np.bool)
+assert_type(b1 == i_py, np.bool)
+assert_type(b1 == f_py, np.bool)
+assert_type(b1 == c_py, np.bool)
 assert_type(b1 == b1, np.bool)
-assert_type(b1 == u1, np.bool)
-assert_type(b1 == u2, np.bool)
-assert_type(b1 == u4, np.bool)
 assert_type(b1 == u8, np.bool)
-assert_type(b1 == i1, np.bool)
-assert_type(b1 == i2, np.bool)
-assert_type(b1 == i4, np.bool)
+assert_type(b1 == u16, np.bool)
+assert_type(b1 == u32, np.bool)
+assert_type(b1 == u64, np.bool)
 assert_type(b1 == i8, np.bool)
-assert_type(b1 == f2, np.bool)
-assert_type(b1 == f4, np.bool)
-assert_type(b1 == f8, np.bool)
-assert_type(b1 == ld, np.bool)
-assert_type(b1 == c8, np.bool)
-assert_type(b1 == c16, np.bool)
-assert_type(b1 == cld, np.bool)
-assert_type(b1 == m8, np.bool)
+assert_type(b1 == i16, np.bool)
+assert_type(b1 == i32, np.bool)
+assert_type(b1 == i64, np.bool)
+assert_type(b1 == f16, np.bool)
+assert_type(b1 == f32, np.bool)
+assert_type(b1 == f64, np.bool)
+assert_type(b1 == f64l, np.bool)
+assert_type(b1 == c32, np.bool)
+assert_type(b1 == c64, np.bool)
+assert_type(b1 == c64l, np.bool)
+assert_type(b1 == m64, np.bool)
 
-assert_type(u1 == b0, np.bool)
-assert_type(u1 == i0, np.bool)
-assert_type(u1 == f0, np.bool)
-assert_type(u1 == c0, np.bool)
-assert_type(u1 == b1, np.bool)
-assert_type(u1 == u1, np.bool)
-assert_type(u1 == u2, np.bool)
-assert_type(u1 == u4, np.bool)
-assert_type(u1 == u8, np.bool)
-assert_type(u1 == i1, np.bool)
-assert_type(u1 == i2, np.bool)
-assert_type(u1 == i4, np.bool)
-assert_type(u1 == i8, np.bool)
-assert_type(u1 == f2, np.bool)
-assert_type(u1 == f4, np.bool)
-assert_type(u1 == f8, np.bool)
-assert_type(u1 == ld, np.bool)
-assert_type(u1 == c8, np.bool)
-assert_type(u1 == c16, np.bool)
-assert_type(u1 == cld, np.bool)
-assert_type(u1 == m8, np.bool)
-
-assert_type(u2 == b0, np.bool)
-assert_type(u2 == i0, np.bool)
-assert_type(u2 == f0, np.bool)
-assert_type(u2 == c0, np.bool)
-assert_type(u2 == b1, np.bool)
-assert_type(u2 == u1, np.bool)
-assert_type(u2 == u2, np.bool)
-assert_type(u2 == u4, np.bool)
-assert_type(u2 == u8, np.bool)
-assert_type(u2 == i1, np.bool)
-assert_type(u2 == i2, np.bool)
-assert_type(u2 == i4, np.bool)
-assert_type(u2 == i8, np.bool)
-assert_type(u2 == f2, np.bool)
-assert_type(u2 == f4, np.bool)
-assert_type(u2 == f8, np.bool)
-assert_type(u2 == ld, np.bool)
-assert_type(u2 == c8, np.bool)
-assert_type(u2 == c16, np.bool)
-assert_type(u2 == cld, np.bool)
-assert_type(u2 == m8, np.bool)
-
-assert_type(u4 == b0, np.bool)
-assert_type(u4 == i0, np.bool)
-assert_type(u4 == f0, np.bool)
-assert_type(u4 == c0, np.bool)
-assert_type(u4 == b1, np.bool)
-assert_type(u4 == u1, np.bool)
-assert_type(u4 == u2, np.bool)
-assert_type(u4 == u4, np.bool)
-assert_type(u4 == u8, np.bool)
-assert_type(u4 == i1, np.bool)
-assert_type(u4 == i2, np.bool)
-assert_type(u4 == i4, np.bool)
-assert_type(u4 == i8, np.bool)
-assert_type(u4 == f2, np.bool)
-assert_type(u4 == f4, np.bool)
-assert_type(u4 == f8, np.bool)
-assert_type(u4 == ld, np.bool)
-assert_type(u4 == c8, np.bool)
-assert_type(u4 == c16, np.bool)
-assert_type(u4 == cld, np.bool)
-assert_type(u4 == m8, np.bool)
-
-assert_type(u8 == b0, np.bool)
-assert_type(u8 == i0, np.bool)
-assert_type(u8 == f0, np.bool)
-assert_type(u8 == c0, np.bool)
+assert_type(u8 == b_py, np.bool)
+assert_type(u8 == i_py, np.bool)
+assert_type(u8 == f_py, np.bool)
+assert_type(u8 == c_py, np.bool)
 assert_type(u8 == b1, np.bool)
-assert_type(u8 == u1, np.bool)
-assert_type(u8 == u2, np.bool)
-assert_type(u8 == u4, np.bool)
 assert_type(u8 == u8, np.bool)
-assert_type(u8 == i1, np.bool)
-assert_type(u8 == i2, np.bool)
-assert_type(u8 == i4, np.bool)
+assert_type(u8 == u16, np.bool)
+assert_type(u8 == u32, np.bool)
+assert_type(u8 == u64, np.bool)
 assert_type(u8 == i8, np.bool)
-assert_type(u8 == f2, np.bool)
-assert_type(u8 == f4, np.bool)
-assert_type(u8 == f8, np.bool)
-assert_type(u8 == ld, np.bool)
-assert_type(u8 == c8, np.bool)
-assert_type(u8 == c16, np.bool)
-assert_type(u8 == cld, np.bool)
+assert_type(u8 == i16, np.bool)
+assert_type(u8 == i32, np.bool)
+assert_type(u8 == i64, np.bool)
+assert_type(u8 == f16, np.bool)
+assert_type(u8 == f32, np.bool)
+assert_type(u8 == f64, np.bool)
+assert_type(u8 == f64l, np.bool)
+assert_type(u8 == c32, np.bool)
+assert_type(u8 == c64, np.bool)
+assert_type(u8 == c64l, np.bool)
+assert_type(u8 == m64, np.bool)
 
-assert_type(i1 == b0, np.bool)
-assert_type(i1 == i0, np.bool)
-assert_type(i1 == f0, np.bool)
-assert_type(i1 == c0, np.bool)
-assert_type(i1 == b1, np.bool)
-assert_type(i1 == u1, np.bool)
-assert_type(i1 == u2, np.bool)
-assert_type(i1 == u4, np.bool)
-assert_type(i1 == u8, np.bool)
-assert_type(i1 == i1, np.bool)
-assert_type(i1 == i2, np.bool)
-assert_type(i1 == i4, np.bool)
-assert_type(i1 == i8, np.bool)
-assert_type(i1 == f2, np.bool)
-assert_type(i1 == f4, np.bool)
-assert_type(i1 == f8, np.bool)
-assert_type(i1 == ld, np.bool)
-assert_type(i1 == c8, np.bool)
-assert_type(i1 == c16, np.bool)
-assert_type(i1 == cld, np.bool)
-assert_type(i1 == m8, np.bool)
+assert_type(u16 == b_py, np.bool)
+assert_type(u16 == i_py, np.bool)
+assert_type(u16 == f_py, np.bool)
+assert_type(u16 == c_py, np.bool)
+assert_type(u16 == b1, np.bool)
+assert_type(u16 == u8, np.bool)
+assert_type(u16 == u16, np.bool)
+assert_type(u16 == u32, np.bool)
+assert_type(u16 == u64, np.bool)
+assert_type(u16 == i8, np.bool)
+assert_type(u16 == i16, np.bool)
+assert_type(u16 == i32, np.bool)
+assert_type(u16 == i64, np.bool)
+assert_type(u16 == f16, np.bool)
+assert_type(u16 == f32, np.bool)
+assert_type(u16 == f64, np.bool)
+assert_type(u16 == f64l, np.bool)
+assert_type(u16 == c32, np.bool)
+assert_type(u16 == c64, np.bool)
+assert_type(u16 == c64l, np.bool)
+assert_type(u16 == m64, np.bool)
 
-assert_type(i2 == b0, np.bool)
-assert_type(i2 == i0, np.bool)
-assert_type(i2 == f0, np.bool)
-assert_type(i2 == c0, np.bool)
-assert_type(i2 == b1, np.bool)
-assert_type(i2 == u1, np.bool)
-assert_type(i2 == u2, np.bool)
-assert_type(i2 == u4, np.bool)
-assert_type(i2 == u8, np.bool)
-assert_type(i2 == i1, np.bool)
-assert_type(i2 == i2, np.bool)
-assert_type(i2 == i4, np.bool)
-assert_type(i2 == i8, np.bool)
-assert_type(i2 == f2, np.bool)
-assert_type(i2 == f4, np.bool)
-assert_type(i2 == f8, np.bool)
-assert_type(i2 == ld, np.bool)
-assert_type(i2 == c8, np.bool)
-assert_type(i2 == c16, np.bool)
-assert_type(i2 == cld, np.bool)
-assert_type(i2 == m8, np.bool)
+assert_type(u32 == b_py, np.bool)
+assert_type(u32 == i_py, np.bool)
+assert_type(u32 == f_py, np.bool)
+assert_type(u32 == c_py, np.bool)
+assert_type(u32 == b1, np.bool)
+assert_type(u32 == u8, np.bool)
+assert_type(u32 == u16, np.bool)
+assert_type(u32 == u32, np.bool)
+assert_type(u32 == u64, np.bool)
+assert_type(u32 == i8, np.bool)
+assert_type(u32 == i16, np.bool)
+assert_type(u32 == i32, np.bool)
+assert_type(u32 == i64, np.bool)
+assert_type(u32 == f16, np.bool)
+assert_type(u32 == f32, np.bool)
+assert_type(u32 == f64, np.bool)
+assert_type(u32 == f64l, np.bool)
+assert_type(u32 == c32, np.bool)
+assert_type(u32 == c64, np.bool)
+assert_type(u32 == c64l, np.bool)
+assert_type(u32 == m64, np.bool)
 
-assert_type(i4 == b0, np.bool)
-assert_type(i4 == i0, np.bool)
-assert_type(i4 == f0, np.bool)
-assert_type(i4 == c0, np.bool)
-assert_type(i4 == b1, np.bool)
-assert_type(i4 == u1, np.bool)
-assert_type(i4 == u2, np.bool)
-assert_type(i4 == u4, np.bool)
-assert_type(i4 == u8, np.bool)
-assert_type(i4 == i1, np.bool)
-assert_type(i4 == i2, np.bool)
-assert_type(i4 == i4, np.bool)
-assert_type(i4 == i8, np.bool)
-assert_type(i4 == f2, np.bool)
-assert_type(i4 == f4, np.bool)
-assert_type(i4 == f8, np.bool)
-assert_type(i4 == ld, np.bool)
-assert_type(i4 == c8, np.bool)
-assert_type(i4 == c16, np.bool)
-assert_type(i4 == cld, np.bool)
-assert_type(i4 == m8, np.bool)
+assert_type(u64 == b_py, np.bool)
+assert_type(u64 == i_py, np.bool)
+assert_type(u64 == f_py, np.bool)
+assert_type(u64 == c_py, np.bool)
+assert_type(u64 == b1, np.bool)
+assert_type(u64 == u8, np.bool)
+assert_type(u64 == u16, np.bool)
+assert_type(u64 == u32, np.bool)
+assert_type(u64 == u64, np.bool)
+assert_type(u64 == i8, np.bool)
+assert_type(u64 == i16, np.bool)
+assert_type(u64 == i32, np.bool)
+assert_type(u64 == i64, np.bool)
+assert_type(u64 == f16, np.bool)
+assert_type(u64 == f32, np.bool)
+assert_type(u64 == f64, np.bool)
+assert_type(u64 == f64l, np.bool)
+assert_type(u64 == c32, np.bool)
+assert_type(u64 == c64, np.bool)
+assert_type(u64 == c64l, np.bool)
 
-assert_type(i8 == b0, np.bool)
-assert_type(i8 == i0, np.bool)
-assert_type(i8 == f0, np.bool)
-assert_type(i8 == c0, np.bool)
+assert_type(i8 == b_py, np.bool)
+assert_type(i8 == i_py, np.bool)
+assert_type(i8 == f_py, np.bool)
+assert_type(i8 == c_py, np.bool)
 assert_type(i8 == b1, np.bool)
-assert_type(i8 == u1, np.bool)
-assert_type(i8 == u2, np.bool)
-assert_type(i8 == u4, np.bool)
 assert_type(i8 == u8, np.bool)
-assert_type(i8 == i1, np.bool)
-assert_type(i8 == i2, np.bool)
-assert_type(i8 == i4, np.bool)
+assert_type(i8 == u16, np.bool)
+assert_type(i8 == u32, np.bool)
+assert_type(i8 == u64, np.bool)
 assert_type(i8 == i8, np.bool)
-assert_type(i8 == f2, np.bool)
-assert_type(i8 == f4, np.bool)
-assert_type(i8 == f8, np.bool)
-assert_type(i8 == ld, np.bool)
-assert_type(i8 == c8, np.bool)
-assert_type(i8 == c16, np.bool)
-assert_type(i8 == cld, np.bool)
-assert_type(i8 == m8, np.bool)
+assert_type(i8 == i16, np.bool)
+assert_type(i8 == i32, np.bool)
+assert_type(i8 == i64, np.bool)
+assert_type(i8 == f16, np.bool)
+assert_type(i8 == f32, np.bool)
+assert_type(i8 == f64, np.bool)
+assert_type(i8 == f64l, np.bool)
+assert_type(i8 == c32, np.bool)
+assert_type(i8 == c64, np.bool)
+assert_type(i8 == c64l, np.bool)
+assert_type(i8 == m64, np.bool)
 
-assert_type(f2 == b0, np.bool)
-assert_type(f2 == i0, np.bool)
-assert_type(f2 == f0, np.bool)
-assert_type(f2 == c0, np.bool)
-assert_type(f2 == b1, np.bool)
-assert_type(f2 == u1, np.bool)
-assert_type(f2 == u2, np.bool)
-assert_type(f2 == u4, np.bool)
-assert_type(f2 == u8, np.bool)
-assert_type(f2 == i1, np.bool)
-assert_type(f2 == i2, np.bool)
-assert_type(f2 == i4, np.bool)
-assert_type(f2 == i8, np.bool)
-assert_type(f2 == f2, np.bool)
-assert_type(f2 == f4, np.bool)
-assert_type(f2 == f8, np.bool)
-assert_type(f2 == ld, np.bool)
-assert_type(f2 == c8, np.bool)
-assert_type(f2 == c16, np.bool)
-assert_type(f2 == cld, np.bool)
+assert_type(i16 == b_py, np.bool)
+assert_type(i16 == i_py, np.bool)
+assert_type(i16 == f_py, np.bool)
+assert_type(i16 == c_py, np.bool)
+assert_type(i16 == b1, np.bool)
+assert_type(i16 == u8, np.bool)
+assert_type(i16 == u16, np.bool)
+assert_type(i16 == u32, np.bool)
+assert_type(i16 == u64, np.bool)
+assert_type(i16 == i8, np.bool)
+assert_type(i16 == i16, np.bool)
+assert_type(i16 == i32, np.bool)
+assert_type(i16 == i64, np.bool)
+assert_type(i16 == f16, np.bool)
+assert_type(i16 == f32, np.bool)
+assert_type(i16 == f64, np.bool)
+assert_type(i16 == f64l, np.bool)
+assert_type(i16 == c32, np.bool)
+assert_type(i16 == c64, np.bool)
+assert_type(i16 == c64l, np.bool)
+assert_type(i16 == m64, np.bool)
 
-assert_type(f4 == b0, np.bool)
-assert_type(f4 == i0, np.bool)
-assert_type(f4 == f0, np.bool)
-assert_type(f4 == c0, np.bool)
-assert_type(f4 == b1, np.bool)
-assert_type(f4 == u1, np.bool)
-assert_type(f4 == u2, np.bool)
-assert_type(f4 == u4, np.bool)
-assert_type(f4 == u8, np.bool)
-assert_type(f4 == i1, np.bool)
-assert_type(f4 == i2, np.bool)
-assert_type(f4 == i4, np.bool)
-assert_type(f4 == i8, np.bool)
-assert_type(f4 == f2, np.bool)
-assert_type(f4 == f4, np.bool)
-assert_type(f4 == f8, np.bool)
-assert_type(f4 == ld, np.bool)
-assert_type(f4 == c8, np.bool)
-assert_type(f4 == c16, np.bool)
-assert_type(f4 == cld, np.bool)
+assert_type(i32 == b_py, np.bool)
+assert_type(i32 == i_py, np.bool)
+assert_type(i32 == f_py, np.bool)
+assert_type(i32 == c_py, np.bool)
+assert_type(i32 == b1, np.bool)
+assert_type(i32 == u8, np.bool)
+assert_type(i32 == u16, np.bool)
+assert_type(i32 == u32, np.bool)
+assert_type(i32 == u64, np.bool)
+assert_type(i32 == i8, np.bool)
+assert_type(i32 == i16, np.bool)
+assert_type(i32 == i32, np.bool)
+assert_type(i32 == i64, np.bool)
+assert_type(i32 == f16, np.bool)
+assert_type(i32 == f32, np.bool)
+assert_type(i32 == f64, np.bool)
+assert_type(i32 == f64l, np.bool)
+assert_type(i32 == c32, np.bool)
+assert_type(i32 == c64, np.bool)
+assert_type(i32 == c64l, np.bool)
+assert_type(i32 == m64, np.bool)
 
-assert_type(f8 == b0, np.bool)
-assert_type(f8 == i0, np.bool)
-assert_type(f8 == f0, np.bool)
-assert_type(f8 == c0, np.bool)
-assert_type(f8 == b1, np.bool)
-assert_type(f8 == u1, np.bool)
-assert_type(f8 == u2, np.bool)
-assert_type(f8 == u4, np.bool)
-assert_type(f8 == u8, np.bool)
-assert_type(f8 == i1, np.bool)
-assert_type(f8 == i2, np.bool)
-assert_type(f8 == i4, np.bool)
-assert_type(f8 == i8, np.bool)
-assert_type(f8 == f2, np.bool)
-assert_type(f8 == f4, np.bool)
-assert_type(f8 == f8, np.bool)
-assert_type(f8 == ld, np.bool)
-assert_type(f8 == c8, np.bool)
-assert_type(f8 == c16, np.bool)
-assert_type(f8 == cld, np.bool)
+assert_type(i64 == b_py, np.bool)
+assert_type(i64 == i_py, np.bool)
+assert_type(i64 == f_py, np.bool)
+assert_type(i64 == c_py, np.bool)
+assert_type(i64 == b1, np.bool)
+assert_type(i64 == u8, np.bool)
+assert_type(i64 == u16, np.bool)
+assert_type(i64 == u32, np.bool)
+assert_type(i64 == u64, np.bool)
+assert_type(i64 == i8, np.bool)
+assert_type(i64 == i16, np.bool)
+assert_type(i64 == i32, np.bool)
+assert_type(i64 == i64, np.bool)
+assert_type(i64 == f16, np.bool)
+assert_type(i64 == f32, np.bool)
+assert_type(i64 == f64, np.bool)
+assert_type(i64 == f64l, np.bool)
+assert_type(i64 == c32, np.bool)
+assert_type(i64 == c64, np.bool)
+assert_type(i64 == c64l, np.bool)
+assert_type(i64 == m64, np.bool)
 
-assert_type(ld == b0, np.bool)
-assert_type(ld == i0, np.bool)
-assert_type(ld == f0, np.bool)
-assert_type(ld == c0, np.bool)
-assert_type(ld == b1, np.bool)
-assert_type(ld == u1, np.bool)
-assert_type(ld == u2, np.bool)
-assert_type(ld == u4, np.bool)
-assert_type(ld == u8, np.bool)
-assert_type(ld == i1, np.bool)
-assert_type(ld == i2, np.bool)
-assert_type(ld == i4, np.bool)
-assert_type(ld == i8, np.bool)
-assert_type(ld == f2, np.bool)
-assert_type(ld == f4, np.bool)
-assert_type(ld == f8, np.bool)
-assert_type(ld == ld, np.bool)
-assert_type(ld == c8, np.bool)
-assert_type(ld == c16, np.bool)
-assert_type(ld == cld, np.bool)
+assert_type(f16 == b_py, np.bool)
+assert_type(f16 == i_py, np.bool)
+assert_type(f16 == f_py, np.bool)
+assert_type(f16 == c_py, np.bool)
+assert_type(f16 == b1, np.bool)
+assert_type(f16 == u8, np.bool)
+assert_type(f16 == u16, np.bool)
+assert_type(f16 == u32, np.bool)
+assert_type(f16 == u64, np.bool)
+assert_type(f16 == i8, np.bool)
+assert_type(f16 == i16, np.bool)
+assert_type(f16 == i32, np.bool)
+assert_type(f16 == i64, np.bool)
+assert_type(f16 == f16, np.bool)
+assert_type(f16 == f32, np.bool)
+assert_type(f16 == f64, np.bool)
+assert_type(f16 == f64l, np.bool)
+assert_type(f16 == c32, np.bool)
+assert_type(f16 == c64, np.bool)
+assert_type(f16 == c64l, np.bool)
 
-assert_type(c8 == b0, np.bool)
-assert_type(c8 == i0, np.bool)
-assert_type(c8 == f0, np.bool)
-assert_type(c8 == c0, np.bool)
-assert_type(c8 == b1, np.bool)
-assert_type(c8 == u1, np.bool)
-assert_type(c8 == u2, np.bool)
-assert_type(c8 == u4, np.bool)
-assert_type(c8 == u8, np.bool)
-assert_type(c8 == i1, np.bool)
-assert_type(c8 == i2, np.bool)
-assert_type(c8 == i4, np.bool)
-assert_type(c8 == i8, np.bool)
-assert_type(c8 == f2, np.bool)
-assert_type(c8 == f4, np.bool)
-assert_type(c8 == f8, np.bool)
-assert_type(c8 == ld, np.bool)
-assert_type(c8 == c8, np.bool)
-assert_type(c8 == c16, np.bool)
-assert_type(c8 == cld, np.bool)
+assert_type(f32 == b_py, np.bool)
+assert_type(f32 == i_py, np.bool)
+assert_type(f32 == f_py, np.bool)
+assert_type(f32 == c_py, np.bool)
+assert_type(f32 == b1, np.bool)
+assert_type(f32 == u8, np.bool)
+assert_type(f32 == u16, np.bool)
+assert_type(f32 == u32, np.bool)
+assert_type(f32 == u64, np.bool)
+assert_type(f32 == i8, np.bool)
+assert_type(f32 == i16, np.bool)
+assert_type(f32 == i32, np.bool)
+assert_type(f32 == i64, np.bool)
+assert_type(f32 == f16, np.bool)
+assert_type(f32 == f32, np.bool)
+assert_type(f32 == f64, np.bool)
+assert_type(f32 == f64l, np.bool)
+assert_type(f32 == c32, np.bool)
+assert_type(f32 == c64, np.bool)
+assert_type(f32 == c64l, np.bool)
 
-assert_type(c16 == b0, np.bool)
-assert_type(c16 == i0, np.bool)
-assert_type(c16 == f0, np.bool)
-assert_type(c16 == c0, np.bool)
-assert_type(c16 == b1, np.bool)
-assert_type(c16 == u1, np.bool)
-assert_type(c16 == u2, np.bool)
-assert_type(c16 == u4, np.bool)
-assert_type(c16 == u8, np.bool)
-assert_type(c16 == i1, np.bool)
-assert_type(c16 == i2, np.bool)
-assert_type(c16 == i4, np.bool)
-assert_type(c16 == i8, np.bool)
-assert_type(c16 == f2, np.bool)
-assert_type(c16 == f4, np.bool)
-assert_type(c16 == f8, np.bool)
-assert_type(c16 == ld, np.bool)
-assert_type(c16 == c8, np.bool)
-assert_type(c16 == c16, np.bool)
-assert_type(c16 == cld, np.bool)
+assert_type(f64 == b_py, np.bool)
+assert_type(f64 == i_py, np.bool)
+assert_type(f64 == f_py, np.bool)
+assert_type(f64 == c_py, np.bool)
+assert_type(f64 == b1, np.bool)
+assert_type(f64 == u8, np.bool)
+assert_type(f64 == u16, np.bool)
+assert_type(f64 == u32, np.bool)
+assert_type(f64 == u64, np.bool)
+assert_type(f64 == i8, np.bool)
+assert_type(f64 == i16, np.bool)
+assert_type(f64 == i32, np.bool)
+assert_type(f64 == i64, np.bool)
+assert_type(f64 == f16, np.bool)
+assert_type(f64 == f32, np.bool)
+assert_type(f64 == f64, np.bool)
+assert_type(f64 == f64l, np.bool)
+assert_type(f64 == c32, np.bool)
+assert_type(f64 == c64, np.bool)
+assert_type(f64 == c64l, np.bool)
 
-assert_type(cld == b0, np.bool)
-assert_type(cld == i0, np.bool)
-assert_type(cld == f0, np.bool)
-assert_type(cld == c0, np.bool)
-assert_type(cld == b1, np.bool)
-assert_type(cld == u1, np.bool)
-assert_type(cld == u2, np.bool)
-assert_type(cld == u4, np.bool)
-assert_type(cld == u8, np.bool)
-assert_type(cld == i1, np.bool)
-assert_type(cld == i2, np.bool)
-assert_type(cld == i4, np.bool)
-assert_type(cld == i8, np.bool)
-assert_type(cld == f2, np.bool)
-assert_type(cld == f4, np.bool)
-assert_type(cld == f8, np.bool)
-assert_type(cld == ld, np.bool)
-assert_type(cld == c8, np.bool)
-assert_type(cld == c16, np.bool)
-assert_type(cld == cld, np.bool)
+assert_type(f64l == b_py, np.bool)
+assert_type(f64l == i_py, np.bool)
+assert_type(f64l == f_py, np.bool)
+assert_type(f64l == c_py, np.bool)
+assert_type(f64l == b1, np.bool)
+assert_type(f64l == u8, np.bool)
+assert_type(f64l == u16, np.bool)
+assert_type(f64l == u32, np.bool)
+assert_type(f64l == u64, np.bool)
+assert_type(f64l == i8, np.bool)
+assert_type(f64l == i16, np.bool)
+assert_type(f64l == i32, np.bool)
+assert_type(f64l == i64, np.bool)
+assert_type(f64l == f16, np.bool)
+assert_type(f64l == f32, np.bool)
+assert_type(f64l == f64, np.bool)
+assert_type(f64l == f64l, np.bool)
+assert_type(f64l == c32, np.bool)
+assert_type(f64l == c64, np.bool)
+assert_type(f64l == c64l, np.bool)
 
-assert_type(m8 == b0, np.bool)
-assert_type(m8 == i0, np.bool)
-assert_type(m8 == b1, np.bool)
-assert_type(m8 == u1, np.bool)
-assert_type(m8 == u2, np.bool)
-assert_type(m8 == u4, np.bool)
-assert_type(m8 == i1, np.bool)
-assert_type(m8 == i2, np.bool)
-assert_type(m8 == i4, np.bool)
-assert_type(m8 == i8, np.bool)
-assert_type(m8 == m8, np.bool)
+assert_type(c32 == b_py, np.bool)
+assert_type(c32 == i_py, np.bool)
+assert_type(c32 == f_py, np.bool)
+assert_type(c32 == c_py, np.bool)
+assert_type(c32 == b1, np.bool)
+assert_type(c32 == u8, np.bool)
+assert_type(c32 == u16, np.bool)
+assert_type(c32 == u32, np.bool)
+assert_type(c32 == u64, np.bool)
+assert_type(c32 == i8, np.bool)
+assert_type(c32 == i16, np.bool)
+assert_type(c32 == i32, np.bool)
+assert_type(c32 == i64, np.bool)
+assert_type(c32 == f16, np.bool)
+assert_type(c32 == f32, np.bool)
+assert_type(c32 == f64, np.bool)
+assert_type(c32 == f64l, np.bool)
+assert_type(c32 == c32, np.bool)
+assert_type(c32 == c64, np.bool)
+assert_type(c32 == c64l, np.bool)
 
-assert_type(M8 == M8, np.bool)
+assert_type(c64 == b_py, np.bool)
+assert_type(c64 == i_py, np.bool)
+assert_type(c64 == f_py, np.bool)
+assert_type(c64 == c_py, np.bool)
+assert_type(c64 == b1, np.bool)
+assert_type(c64 == u8, np.bool)
+assert_type(c64 == u16, np.bool)
+assert_type(c64 == u32, np.bool)
+assert_type(c64 == u64, np.bool)
+assert_type(c64 == i8, np.bool)
+assert_type(c64 == i16, np.bool)
+assert_type(c64 == i32, np.bool)
+assert_type(c64 == i64, np.bool)
+assert_type(c64 == f16, np.bool)
+assert_type(c64 == f32, np.bool)
+assert_type(c64 == f64, np.bool)
+assert_type(c64 == f64l, np.bool)
+assert_type(c64 == c32, np.bool)
+assert_type(c64 == c64, np.bool)
+assert_type(c64 == c64l, np.bool)
+
+assert_type(c64l == b_py, np.bool)
+assert_type(c64l == i_py, np.bool)
+assert_type(c64l == f_py, np.bool)
+assert_type(c64l == c_py, np.bool)
+assert_type(c64l == b1, np.bool)
+assert_type(c64l == u8, np.bool)
+assert_type(c64l == u16, np.bool)
+assert_type(c64l == u32, np.bool)
+assert_type(c64l == u64, np.bool)
+assert_type(c64l == i8, np.bool)
+assert_type(c64l == i16, np.bool)
+assert_type(c64l == i32, np.bool)
+assert_type(c64l == i64, np.bool)
+assert_type(c64l == f16, np.bool)
+assert_type(c64l == f32, np.bool)
+assert_type(c64l == f64, np.bool)
+assert_type(c64l == f64l, np.bool)
+assert_type(c64l == c32, np.bool)
+assert_type(c64l == c64, np.bool)
+assert_type(c64l == c64l, np.bool)
+
+assert_type(M64 == M64, np.bool)
+
+assert_type(m64 == b_py, np.bool)
+assert_type(m64 == i_py, np.bool)
+assert_type(m64 == b1, np.bool)
+assert_type(m64 == u8, np.bool)
+assert_type(m64 == u16, np.bool)
+assert_type(m64 == u32, np.bool)
+assert_type(m64 == i8, np.bool)
+assert_type(m64 == i16, np.bool)
+assert_type(m64 == i32, np.bool)
+assert_type(m64 == i64, np.bool)
+assert_type(m64 == m64, np.bool)
