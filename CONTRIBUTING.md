@@ -186,9 +186,10 @@ with [markdownlint](https://github.com/DavidAnson/markdownlint/tree/main).
 
 ## Development Tools
 
-NumType provides several development tools to help maintain code quality and consistency.
+NumType provides several development tools to help with development.
 
-For detailed usage of each tool, please refer to the `README.md` in the [`tool`](tool) directory.
+For detailed usage of each tool, please refer to the `README.md`
+in the [`tool`][tool-docs] directory or the docstrings within each tool.
 
 ## Commit message style
 
@@ -211,3 +212,4 @@ one of the development dependencies.
 [ruff]: https://docs.astral.sh/ruff/
 [stub-style]: https://typing.python.org/en/latest/guides/writing_stubs.html#style-guide
 [test-docs]: https://github.com/numpy/numtype/tree/main/test
+[tool-docs]: https://github.com/numpy/numtype/tree/main/tool
