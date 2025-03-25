@@ -552,13 +552,13 @@ class ScalarBinOpTestGen(TestGen):
         "M": "M64",
         "m": "m64",
         # # abstract numeric
-        # TODO(jorenham): Enable integers once the conrete integer types are there
+        # TODO(jorenham): Enable integers once the concrete integer types are there
         # https://github.com/numpy/numtype/issues/136
         # "BHIL": "u",  # unsignedinteger
         # "bhil": "i",  # signedinteger
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
-        # TODO(jorenham): Enable integers once all conrete number types are present
+        # TODO(jorenham): Enable integers once all concrete number types are present
         # https://github.com/numpy/numtype/issues/136
         # "BHILbhil": "ui",  # integer
         # "efdgFDG": "fc",  # inexact
