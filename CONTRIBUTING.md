@@ -59,7 +59,7 @@ For more details, see <https://docs.astral.sh/ruff/>.
 To validate that the annotations are correct, we use two type-checkers:
 [basedpyright](https://github.com/detachhead/basedpyright) and
 [mypy](https://github.com/python/mypy). Both are included as development
-dependency, and therefore autoamtically installed with `uv sync`.
+dependency, and therefore automatically installed with `uv sync`.
 
 ### basedpyright
 
