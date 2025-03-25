@@ -30,6 +30,9 @@ _NUMBERS_ABSTRACT: Final = {
     "i": "signedinteger",
     "f": "floating",
     "c": "complexfloating",
+    "".join(set("ui")): "integer",
+    "".join(set("fc")): "inexact",
+    "".join(set("uifc")): "number",
 }
 _NUMBERS_CONCRETE: Final = {
     "u": frozenset({f"{NP}.uint8", f"{NP}.uint16", f"{NP}.uint32", f"{NP}.uint64"}),
@@ -82,23 +85,40 @@ def _sctype_expr(dtype: np.dtype | type[complex]) -> str:
     return f"{NP}.{name}"
 
 
-def _union(*types: str) -> str:
+def __group_types(*types: str) -> tuple[dict[str, list[str]], list[str]]:
+    # TODO(jorenham): character and flexible
     numbers: dict[str, list[str]] = {"u": [], "i": [], "f": [], "c": []}
     other: list[str] = []
 
-    for tp in types:
+    for tp in dict.fromkeys(types):
         kind: str = np.dtype(tp.removeprefix(f"{NP}.")).kind
         numbers.get(kind, other).append(tp)
+
+    return {kind: tps for kind, tps in numbers.items() if tps}, other
+
+
+def _union(*types: str) -> str:
+    # union the types, and join unions if they contain each of the concrete subtypes
+    numbers, other = __group_types(*types)
 
     kind_expr: dict[str, str] = {}
     combined: list[str] = []
     for kind, base in _NUMBERS_ABSTRACT.items():
+        if kind not in numbers:
+            continue
+
         if set(numbers[kind]) >= _NUMBERS_CONCRETE[kind]:
             expr = f"{NP}.{base}"
             kind_expr[kind] = expr
             combined.append(expr)
         else:
             combined.extend(numbers[kind])
+
+    if other:
+        if other[0] == "np.bool":
+            combined = [other[0]] + combined + other[1:]
+        else:
+            combined.extend(other)
 
     if len(kind_expr) == 4:  # noqa: PLR2004
         expr_map = dict.fromkeys(kind_expr.values(), f"{NP}.number")
@@ -114,6 +134,24 @@ def _union(*types: str) -> str:
         combined = [expr_map.get(expr, expr) for expr in combined]
 
     return " | ".join(dict.fromkeys(combined))
+
+
+def _join(*types: str) -> str:
+    # find the common base type
+    types = tuple(dict.fromkeys(types))
+    if len(types) == 1:
+        return types[0]
+
+    numbers, other = __group_types(*types)
+    if other:
+        raise NotImplementedError(f"join of non-number types: {types}")
+
+    kinds = "".join(set(numbers))
+    if len(kinds) == 1 and len(numbers[kinds]) == 1:
+        return numbers[kinds][0]
+    if kinds in _NUMBERS_ABSTRACT:
+        return f"{NP}.{_NUMBERS_ABSTRACT[kinds]}"
+    return f"{NP}.number"
 
 
 def _strip_preamble(source: str) -> tuple[str | None, str]:
@@ -552,10 +590,14 @@ class ScalarBinOpTestGen(TestGen):
         "M": "M64",
         "m": "m64",
         # # abstract numeric
-        "BHIL": "u",  # unsignedinteger
-        "bhil": "i",  # signedinteger
+        # TODO(jorenham): Enable integers once the concrete integer types are there
+        # https://github.com/numpy/numtype/issues/136
+        # "BHIL": "u",  # unsignedinteger
+        # "bhil": "i",  # signedinteger
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
+        # TODO(jorenham): Enable integers once all concrete number types are present
+        # https://github.com/numpy/numtype/issues/136
         # "BHILbhil": "ui",  # integer
         # "efdgFDG": "fc",  # inexact
         # "BHILbhilefdgFDG": "uifc",  # number
@@ -565,22 +607,21 @@ class ScalarBinOpTestGen(TestGen):
         "i": "signedinteger",
         "f": "floating",
         "c": "complexfloating",
-        # "ui": "integer",
-        # "fc": "inexact",
-        # "uifc": "number",
+        "ui": "integer",
+        "fc": "inexact",
+        "uifc": "number",
     }
     INTP_EXPR: ClassVar = np.intp.__name__
 
-    abstract: Final[bool]
+    def _is_builtin(self, key: str, /) -> bool:
+        return len(key) > 1 and self.NAMES[key].endswith("_py")
 
-    def __init__(self, /, *, abstract: bool = True) -> None:
-        self.abstract = abstract
-        super().__init__()
+    def _is_abstract(self, key: str, /) -> bool:
+        return len(key) > 1 and not self.NAMES[key].endswith("_py")
 
     def _decompose(self, key: str, /) -> tuple[_Scalar, ...]:
-        if len(key) == 1 or self.NAMES[key].endswith("_py"):
+        if not self._is_abstract(key):
             return (_scalar(key),)
-
         return tuple(map(_scalar, key))
 
     def _evaluate_concrete(self, op: str, lhs: str, rhs: str, /) -> str | None:
@@ -610,7 +651,7 @@ class ScalarBinOpTestGen(TestGen):
         if len(types_out) == 1:
             return types_out[0]
 
-        return _union(*types_out)
+        return _join(*types_out)
 
     def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
         expr_eval = op.format(self.NAMES[lhs], self.NAMES[rhs])
@@ -650,21 +691,20 @@ class ScalarBinOpTestGen(TestGen):
     def get_names(self) -> Iterable[tuple[str, str]]:
         # builtin scalars
         for builtin, name in self.NAMES.items():
-            if len(builtin) > 1 and name.endswith("_py"):
+            if self._is_builtin(builtin):
                 yield name, builtin
 
-        # numpy scalars
+        # constrete numpy scalars
         yield "", ""
         for char, name in self.NAMES.items():
-            if len(char) == 1 and not name.endswith("_py"):
+            if len(char) == 1:
                 yield name, _sctype_expr(np.dtype(char))
 
-        if self.abstract:
-            # numpy abstract scalars
-            yield "", ""
-            for char, kind in self.NAMES.items():
-                if len(char) > 1 and not kind.endswith("_py"):
-                    yield kind, self.ABSTRACT_TYPES[kind]
+        # abstract numpy scalars
+        yield "", ""
+        for char, kind in self.NAMES.items():
+            if self._is_abstract(char):
+                yield kind, f"{NP}.{self.ABSTRACT_TYPES[kind]}"
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
@@ -673,14 +713,17 @@ class ScalarBinOpTestGen(TestGen):
 
             yield from self._generate_section(f"__[r]{opname}__")
 
-            for lhs, lname in self.NAMES.items():
-                if len(lhs) > 1 and (lname.endswith("py_") or not self.abstract):
+            for lhs in self.NAMES:
+                if self._is_builtin(lhs):
+                    # will cause false positives on pyright; as designed, of course
                     continue
 
                 n = 0
-                for rhs, rname in self.NAMES.items():
-                    if not self.abstract and len(rhs) > 1 and not rname.endswith("_py"):
+                for rhs in self.NAMES:
+                    if fn.__name__ in {"eq", "ne"} and self._is_abstract(rhs):
+                        # will be inferred by mypy as `Any` for some reason
                         continue
+
                     if stmt := self._assert_stmt(symbol, lhs, rhs):
                         yield stmt
                         n += 1
@@ -840,7 +883,7 @@ class BoolBitOpTestGen(TestGen):
 
 TESTGENS: Final[Sequence[TestGen]] = [
     EMathTestGen(binary=False),
-    ScalarBinOpTestGen(abstract=False),  # TODO(jorenham): Enable and fix failures
+    ScalarBinOpTestGen(),
     BoolBitOpTestGen(),
 ]
 
