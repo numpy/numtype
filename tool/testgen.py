@@ -552,10 +552,14 @@ class ScalarBinOpTestGen(TestGen):
         "M": "M64",
         "m": "m64",
         # # abstract numeric
-        "BHIL": "u",  # unsignedinteger
-        "bhil": "i",  # signedinteger
+        # TODO(jorenham): Enable integers once the conrete integer types are there
+        # https://github.com/numpy/numtype/issues/136
+        # "BHIL": "u",  # unsignedinteger
+        # "bhil": "i",  # signedinteger
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
+        # TODO(jorenham): Enable integers once all conrete number types are present
+        # https://github.com/numpy/numtype/issues/136
         # "BHILbhil": "ui",  # integer
         # "efdgFDG": "fc",  # inexact
         # "BHILbhilefdgFDG": "uifc",  # number
@@ -565,9 +569,9 @@ class ScalarBinOpTestGen(TestGen):
         "i": "signedinteger",
         "f": "floating",
         "c": "complexfloating",
-        # "ui": "integer",
-        # "fc": "inexact",
-        # "uifc": "number",
+        "ui": "integer",
+        "fc": "inexact",
+        "uifc": "number",
     }
     INTP_EXPR: ClassVar = np.intp.__name__
 
