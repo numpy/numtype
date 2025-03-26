@@ -32,7 +32,9 @@ from _numtype import (
     Array3D,
     AtLeast1D,
     AtLeast2D,
+    JustComplex,
     JustFloat,
+    JustInt,
     ToBool_0d,
     ToBool_1ds,
     ToBool_2ds,
@@ -48,15 +50,12 @@ from _numtype import (
     ToFloat64_2ds,
     ToFloat64_3ds,
     ToFloat64_nd,
-    ToIntP_0d,
-    ToIntP_1ds,
-    ToIntP_2ds,
-    ToIntP_3ds,
-    ToIntP_nd,
-    cfloating64,
-    floating64,
+    ToInt_0d,
+    ToInt_1ds,
+    ToInt_2ds,
+    ToInt_3ds,
+    ToInt_nd,
 )
-from _numtype._just import JustComplex, JustInt
 from numpy import _AnyShapeT, _CanSeekTellFileNo, _CastingKind, _ModeKind, _OrderCF, _OrderKACF  # noqa: ICN003
 from numpy._globals import _CopyMode
 from numpy._typing import (
@@ -162,8 +161,8 @@ _ShapeLike3D: TypeAlias = tuple[SupportsIndex, SupportsIndex, SupportsIndex]
 
 _DTypeLikeBool: TypeAlias = type[bool] | _DTypeLike[np.bool] | _BoolCodes
 _DTypeLikeIntP: TypeAlias = type[JustInt] | _IntPCodes
-_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[floating64] | _Float64Codes | None
-_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[cfloating64] | _Complex128Codes
+_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[np.float64] | _Float64Codes | None
+_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[np.complex128] | _Complex128Codes
 
 _FlatIterIndex0: TypeAlias = int | np.integer
 _FlatIterIndex: TypeAlias = _FlatIterIndex0 | tuple[_FlatIterIndex0]
@@ -775,7 +774,7 @@ def empty_like(
 ) -> Array3D[np.bool_]: ...
 @overload  # int 0d array-like
 def empty_like(
-    prototype: ToIntP_0d,
+    prototype: ToInt_0d,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -785,7 +784,7 @@ def empty_like(
 ) -> Array0D[np.intp]: ...
 @overload  # int 1d array-like
 def empty_like(
-    prototype: ToIntP_1ds,
+    prototype: ToInt_1ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -795,7 +794,7 @@ def empty_like(
 ) -> Array1D[np.intp]: ...
 @overload  # int 2d array-like
 def empty_like(
-    prototype: ToIntP_2ds,
+    prototype: ToInt_2ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -805,7 +804,7 @@ def empty_like(
 ) -> Array2D[np.intp]: ...
 @overload  # int 3d array-like
 def empty_like(
-    prototype: ToIntP_3ds,
+    prototype: ToInt_3ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -965,7 +964,7 @@ def empty_like(  # type: ignore[overload-overlap]
 ) -> Array[np.bool_]: ...
 @overload  # int array-like
 def empty_like(  # type: ignore[overload-overlap]
-    prototype: ToIntP_nd,
+    prototype: ToInt_nd,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,

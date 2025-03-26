@@ -3,7 +3,7 @@ from typing import Any, Final, Literal as L, TypeAlias, overload
 from typing_extensions import TypeVar
 
 import numpy as np
-from _numtype import ToBool_nd, ToBytes_nd, ToComplex128_nd, ToFloat64_nd, ToIntP_nd, ToObject_nd, ToStr_nd
+from _numtype import ToBool_nd, ToBytes_nd, ToComplex128_nd, ToFloat64_nd, ToInt_nd, ToObject_nd, ToStr_nd
 from numpy._typing import DTypeLike, NDArray, _ArrayLike, _DTypeLike, _SupportsArrayFunc as _Like
 
 __all__ = ["require"]
@@ -46,7 +46,7 @@ def require(
 ) -> NDArray[np.bool]: ...
 @overload
 def require(
-    a: ToIntP_nd,
+    a: ToInt_nd,
     dtype: None = None,
     requirements: _ToReqsE | None = None,
     *,

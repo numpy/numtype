@@ -34,7 +34,7 @@ from _numtype import (
     ToGeneric_2ds,
     ToGeneric_3ds,
     ToGeneric_nd,
-    ToIntP_nd,
+    ToInt_nd,
     ToInteger_1d,
     ToInteger_nd,
     ToObject_nd,
@@ -551,7 +551,7 @@ def ravel(a: ToStr_nd, order: _OrderKACF = "C") -> Array1D[np.str_]: ...
 @overload
 def ravel(a: ToBool_nd, order: _OrderKACF = "C") -> Array1D[np.bool]: ...
 @overload
-def ravel(a: ToIntP_nd, order: _OrderKACF = "C") -> Array1D[np.intp]: ...
+def ravel(a: ToInt_nd, order: _OrderKACF = "C") -> Array1D[np.intp]: ...
 @overload
 def ravel(a: ToFloat64_nd, order: _OrderKACF = "C") -> Array1D[np.float64]: ...
 @overload

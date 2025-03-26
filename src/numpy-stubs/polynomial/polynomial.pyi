@@ -21,7 +21,7 @@ from _numtype import (
     CoFloating_1d,
     CoFloating_1nd,
     CoFloating_nd,
-    CoIntP_0d,
+    CoInt64_0d,
     CoInteger_0d,
     CoInteger_1d,
     CoInteger_nd,
@@ -39,7 +39,7 @@ from _numtype import (
     ToFloating_0d,
     ToFloating_1d,
     ToFloating_nd,
-    ToIntP_0d,
+    ToInt_0d,
     ToObject_0d,
     ToObject_1d,
     ToObject_1nd,
@@ -129,9 +129,9 @@ class Polynomial(ABCPolyBase):
 
 #
 @overload
-def polyline(off: ToIntP_0d, scl: CoIntP_0d) -> Array1D[np.intp]: ...
+def polyline(off: ToInt_0d, scl: CoInt64_0d) -> Array1D[np.intp]: ...
 @overload
-def polyline(off: CoIntP_0d, scl: ToIntP_0d) -> Array1D[np.intp]: ...
+def polyline(off: CoInt64_0d, scl: ToInt_0d) -> Array1D[np.intp]: ...
 @overload
 def polyline(off: CoInteger_0d, scl: CoInteger_0d) -> Array1D[np.integer]: ...
 @overload
