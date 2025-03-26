@@ -3,7 +3,7 @@
 Ensures that `(type|pyright): ignore[...]` comments in Python files have their entries
 sorted alphabetically and formatted with proper spacing between items.
 
-Usage: uv run tool/format_ignores.py [-h] [--pattern PATTERN] [--check] [PATH]
+Usage: uv run tool/format_ignores.py [-h] [--pattern PATTERN] [--check] [PATH...]
 """
 
 import argparse
@@ -159,10 +159,10 @@ def _parse_args(args: Sequence[str] | None = None, /) -> argparse.Namespace:
         description="Format `(type|pyright): ignore[...]` comments in Python files.",
     )
     parser.add_argument(
-        "path",
-        nargs="?",
-        default=".",
-        help="Path to file or directory to process (default: current directory)",
+        "paths",
+        nargs="*",
+        default=["."],
+        help="Path(s) to file or directory to process (default: current directory)",
     )
     parser.add_argument(
         "--pattern",
@@ -197,35 +197,49 @@ def main(args: Sequence[str] | None = None, /) -> int:
         - errno.ENOENT: Path not found
     """
     namespace = _parse_args(args)
-    path = namespace.path
+    paths = namespace.paths
     check_only = namespace.check
     glob_pattern = namespace.pattern
-    path_obj = Path(path)
 
-    if path_obj.is_dir():
-        modified, total = _process_directory(
-            path,
-            glob_pattern=glob_pattern,
-            check_only=check_only,
-        )
-        if check_only:
-            print(
-                f"Found {modified} files that would be modified out of {total} checked",
+    total_modified = 0
+    total_files = 0
+    total_failures = 0
+
+    for path in paths:
+        path_obj = Path(path)
+
+        if path_obj.is_dir():
+            modified, checked = _process_directory(
+                path,
+                glob_pattern=glob_pattern,
+                check_only=check_only,
             )
-            return errno.EAGAIN if modified > 0 else 0
-        print(f"Updated {modified} files out of {total} checked")
-        return 0
-    if path_obj.is_file():
-        modified = _process_file(path, check_only=check_only)
-        if check_only:
-            if modified:
-                print(f"File {path} would be modified")
-                return errno.EAGAIN
-            print(f"File {path} is correctly formatted")
-            return 0
-        return 0
-    print(f"Path not found: {path}", file=sys.stderr)
-    return errno.ENOENT
+            total_modified += modified
+            total_files += checked
+        elif path_obj.is_file():
+            total_files += 1
+            if _process_file(path, check_only=check_only):
+                total_modified += 1
+                if check_only:
+                    print(f"File {path} would be modified")
+        else:
+            print(f"Path not found: {path}", file=sys.stderr)
+            total_failures += 1
+
+    if total_failures > 0 and len(paths) == total_failures:
+        return errno.ENOENT
+
+    if check_only and total_files > 0:
+        print(
+            f"Found {total_modified} files that would be modified "
+            f"out of {total_files} checked",
+        )
+        return errno.EAGAIN if total_modified > 0 else 0
+
+    if total_files > 0:
+        print(f"Updated {total_modified} files out of {total_files} checked")
+
+    return 0
 
 
 if __name__ == "__main__":
