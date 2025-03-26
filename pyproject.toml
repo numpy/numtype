@@ -50,7 +50,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-    "basedpyright>=1.28.3",
+    "basedpyright>=1.28.4",
     "mdformat>=0.7.22",
     "mypy>=1.15.0",
     "pytest>=8.3.5",

@@ -86,8 +86,7 @@ provides-extras = ["numpy"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "basedpyright", specifier = ">=1.28.3" },
-    { name = "lefthook", specifier = ">=1.11.4" },
+    { name = "basedpyright", specifier = ">=1.28.4" },
     { name = "mdformat", specifier = ">=0.7.22" },
     { name = "mypy", specifier = ">=1.15.0" },
     { name = "pytest", specifier = ">=8.3.5" },
