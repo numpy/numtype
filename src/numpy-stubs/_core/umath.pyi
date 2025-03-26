@@ -945,7 +945,7 @@ class _Call21Float(Protocol):
 @type_check_only
 class _UFunc21String(Protocol[_ScalarT_co]):
     @overload
-    def __call__(
+    def __call__(  # (scalar, scalar) -> scalar
         self,
         x1: bytes | str,
         x2: bytes | str,
@@ -960,7 +960,7 @@ class _UFunc21String(Protocol[_ScalarT_co]):
         signature: str | tuple[DTypeLike, _DTypeLikeBool] | None = None,
     ) -> _ScalarT_co: ...
     @overload
-    def __call__(
+    def __call__(  # (array, array) -> array
         self,
         x1: _ToCharStringND,
         x2: _ToCharStringND,
@@ -1838,9 +1838,9 @@ add: Final[_ufunc_2_1] = ...
 
 _expandtabs: _ufunc_2_1
 _expandtabs_length: _ufunc_2_1
-_lstrip_chars: _ufunc_2_1[_UFunc21String[np.str_]]
-_rstrip_chars: _ufunc_2_1[_UFunc21String[np.str_]]
-_strip_chars: _ufunc_2_1[_UFunc21String[np.str_]]
+_lstrip_chars: _ufunc_2_1[_UFunc21String[Any]]
+_rstrip_chars: _ufunc_2_1[_UFunc21String[Any]]
+_strip_chars: _ufunc_2_1[_UFunc21String[Any]]
 _zfill: _ufunc_2_1
 
 ###
