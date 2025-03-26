@@ -943,6 +943,39 @@ class _Call21Float(Protocol):
     ) -> Any: ...
 
 @type_check_only
+class _UFunc21String(Protocol[_ScalarT_co]):
+    @overload
+    def __call__(
+        self,
+        x1: bytes | str,
+        x2: bytes | str,
+        /,
+        out: None = None,
+        *,
+        where: bool = True,
+        casting: _CastingKind = "same_kind",
+        order: _OrderKACF = "K",
+        dtype: _DTypeLikeBool | None = None,
+        subok: bool = True,
+        signature: str | tuple[DTypeLike, _DTypeLikeBool] | None = None,
+    ) -> _ScalarT_co: ...
+    @overload
+    def __call__(
+        self,
+        x1: _ToCharStringND,
+        x2: _ToCharStringND,
+        /,
+        out: None = None,
+        *,
+        where: bool = True,
+        casting: _CastingKind = "same_kind",
+        order: _OrderKACF = "K",
+        dtype: _DTypeLikeBool | None = None,
+        subok: bool = True,
+        signature: str | tuple[DTypeLike, _DTypeLikeBool] | None = None,
+    ) -> NDArray[_ScalarT_co]: ...
+
+@type_check_only
 class _Call21Logical(Protocol):
     @overload  # (scalar, scalar, dtype: np.object_) -> np.object_
     def __call__(
@@ -1805,9 +1838,9 @@ add: Final[_ufunc_2_1] = ...
 
 _expandtabs: _ufunc_2_1
 _expandtabs_length: _ufunc_2_1
-_lstrip_chars: _ufunc_2_1
-_rstrip_chars: _ufunc_2_1
-_strip_chars: _ufunc_2_1
+_lstrip_chars: _ufunc_2_1[_UFunc21String[np.str_]]
+_rstrip_chars: _ufunc_2_1[_UFunc21String[np.str_]]
+_strip_chars: _ufunc_2_1[_UFunc21String[np.str_]]
 _zfill: _ufunc_2_1
 
 ###
