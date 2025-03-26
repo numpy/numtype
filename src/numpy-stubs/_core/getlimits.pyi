@@ -4,25 +4,21 @@ from typing_extensions import Self, TypeVar
 
 import numpy as np
 from _numtype import inexact32, inexact64, inexact64l
-from numpy._typing import _96Bit, _128Bit, _DTypeLike
+from numpy._typing import _DTypeLike
 from numpy._typing._char_codes import (
-    _CLongDoubleCodes,
+    _CLongDoubleCodes as _CFloat64LCodes,
     _Complex64Codes,
     _Complex128Codes,
-    _Complex192Codes,
-    _Complex256Codes,
     _Float16Codes,
     _Float32Codes,
     _Float64Codes,
-    _Float96Codes,
-    _Float128Codes,
     _Int8Codes,
     _Int16Codes,
     _Int32Codes,
     _Int64Codes,
     _IntPCodes,
     _LongCodes,
-    _LongDoubleCodes,
+    _LongDoubleCodes as _Float64LCodes,
     _UInt8Codes,
     _UInt16Codes,
     _UInt32Codes,
@@ -120,20 +116,7 @@ class finfo(Generic[_FloatingT_co]):
     @overload
     def __new__(cls, dtype: inexact64 | _DTypeLike[inexact64] | _Float64Codes | _Complex128Codes) -> finfo[np.float64]: ...
     @overload
-    def __new__(
-        cls,
-        dtype: np.inexact[_96Bit] | _DTypeLike[np.inexact[_96Bit]] | _Float96Codes | _Complex192Codes,
-    ) -> finfo[np.float96]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: np.inexact[_128Bit] | _DTypeLike[np.inexact[_128Bit]] | _Float128Codes | _Complex256Codes,
-    ) -> finfo[np.float128]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: inexact64l | _DTypeLike[inexact64l] | _LongDoubleCodes | _CLongDoubleCodes,
-    ) -> finfo[np.float96 | np.float128]: ...
+    def __new__(cls, dtype: inexact64l | _DTypeLike[inexact64l] | _Float64LCodes | _CFloat64LCodes) -> finfo[np.longdouble]: ...
 
     #
     @classmethod

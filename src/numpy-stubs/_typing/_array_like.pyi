@@ -5,7 +5,6 @@ from typing_extensions import Buffer, TypeVar
 import numpy as np
 from numpy.dtypes import StringDType
 
-from ._nbit_base import _64Bit
 from ._nested_sequence import _NestedSequence
 from ._shape import _Shape
 
@@ -67,8 +66,8 @@ _ArrayLikeBytes_co: TypeAlias = _DualArrayLike[np.dtype[np.bytes_], bytes]
 _ArrayLikeString_co: TypeAlias = _DualArrayLike[StringDType, str]
 _ArrayLikeAnyString_co: TypeAlias = _DualArrayLike[StringDType | np.dtype[np.character], bytes | str]
 
-__Float64_co: TypeAlias = np.floating[_64Bit] | np.float32 | np.float16 | np.integer | np.bool
-__Complex128_co: TypeAlias = np.complexfloating[_64Bit] | np.complex64 | __Float64_co
+__Float64_co: TypeAlias = np.float64 | np.float32 | np.float16 | np.integer | np.bool
+__Complex128_co: TypeAlias = np.complex128 | np.complex64 | __Float64_co
 _ArrayLikeFloat64_co: TypeAlias = _DualArrayLike[np.dtype[__Float64_co], float]
 _ArrayLikeComplex128_co: TypeAlias = _DualArrayLike[np.dtype[__Complex128_co], complex]
 
