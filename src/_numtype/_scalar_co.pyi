@@ -3,9 +3,6 @@ from typing import Any, TypeAlias
 import numpy as np
 
 from ._scalar import (
-    floating16,
-    floating32,
-    floating64,
     inexact32,
     integer8,
     integer16,
@@ -73,9 +70,9 @@ co_ulong: TypeAlias = np.ulong | co_uint32
 co_uintp: TypeAlias = np.uintp | co_ulong
 co_uint64: TypeAlias = np.unsignedinteger | co_bool
 
-co_float16: TypeAlias = floating16 | co_integer8
-co_float32: TypeAlias = floating32 | floating16 | co_integer16
-co_float64: TypeAlias = floating64 | floating32 | floating16 | co_integer64
+co_float16: TypeAlias = np.float16 | co_integer8
+co_float32: TypeAlias = np.float32 | np.float16 | co_integer16
+co_float64: TypeAlias = np.float64 | np.float32 | np.float16 | co_integer64
 co_float: TypeAlias = np.floating | co_integer
 
 co_complex64: TypeAlias = inexact32 | number16 | number8

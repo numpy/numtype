@@ -67,7 +67,6 @@ from _numtype import (
     _ToArray2_1nd,
     _ToArray2_2nd,
     _ToArray_1nd,
-    floating64,
 )
 from numpy import _OrderKACF  # noqa: ICN003
 from numpy._core.multiarray import bincount
@@ -942,22 +941,22 @@ quantile = percentile
 
 @overload
 def trapezoid(
-    y: _ToArray2_1ds[floating64 | np.integer | np.bool[Any], float],
-    x: _ToArray2_1ds[floating64 | np.integer | np.bool[Any], float] | None = None,
+    y: _ToArray2_1ds[np.float64 | np.integer | np.bool[Any], float],
+    x: _ToArray2_1ds[np.float64 | np.integer | np.bool[Any], float] | None = None,
     dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.float64: ...
 @overload
 def trapezoid(
-    y: _ToArray2_2nd[floating64 | np.integer | np.bool[Any], float],
-    x: _ToArray2_1nd[floating64 | np.integer | np.bool[Any], float] | None = None,
+    y: _ToArray2_2nd[np.float64 | np.integer | np.bool[Any], float],
+    x: _ToArray2_1nd[np.float64 | np.integer | np.bool[Any], float] | None = None,
     dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.float64]: ...
 @overload
 def trapezoid(
-    y: _ToArray2_1nd[floating64 | np.integer | np.bool[Any], float],
-    x: _ToArray2_2nd[floating64 | np.integer | np.bool[Any], float],
+    y: _ToArray2_1nd[np.float64 | np.integer | np.bool[Any], float],
+    x: _ToArray2_2nd[np.float64 | np.integer | np.bool[Any], float],
     dx: CoFloat64_0d = 1.0,
     axis: SupportsIndex = -1,
 ) -> Array[np.float64]: ...

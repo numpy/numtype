@@ -76,11 +76,6 @@ from _numtype import (
     ToUInteger_nd,
     _ToArray2_1d,
     _ToArray_1d,
-    cfloating32,
-    cfloating64,
-    floating16,
-    floating32,
-    floating64,
 )
 from numpy._typing import ArrayLike
 
@@ -287,9 +282,9 @@ def polyder(p: poly1d, m: _ToInt = 1) -> poly1d: ...
 @overload
 def polyder(p: CoInteger_1d, m: _ToInt = 1) -> Array1D[np.intp]: ...
 @overload
-def polyder(p: _ToArray2_1d[floating64 | floating32 | floating16, JustFloat], m: _ToInt = 1) -> Array1D[np.float64]: ...  # type: ignore[overload-overlap]
+def polyder(p: _ToArray2_1d[np.float64 | np.float32 | np.float16, JustFloat], m: _ToInt = 1) -> Array1D[np.float64]: ...
 @overload
-def polyder(p: _ToArray2_1d[cfloating64 | cfloating32, JustComplex], m: _ToInt = 1) -> Array1D[np.complex128]: ...  # type: ignore[overload-overlap]
+def polyder(p: _ToArray2_1d[np.complex128 | np.complex64, JustComplex], m: _ToInt = 1) -> Array1D[np.complex128]: ...
 @overload
 def polyder(p: ToLongDouble_1d, m: _ToInt = 1) -> Array1D[np.longdouble]: ...
 @overload
@@ -303,19 +298,11 @@ def polyder(p: CoComplex128_1d, m: _ToInt = 1) -> Array1D[np.complex128 | np.flo
 @overload
 def polyint(p: poly1d, m: _ToInt = 1, k: CoComplex_nd | ToObject_nd | None = None) -> poly1d: ...
 @overload
-def polyint(  # type: ignore[overload-overlap]
-    p: CoFloat64_1d,
-    m: _ToInt = 1,
-    k: CoFloat64_0d | CoFloat64_1d | None = None,
-) -> Array1D[np.float64]: ...
+def polyint(p: CoFloat64_1d, m: _ToInt = 1, k: CoFloat64_0d | CoFloat64_1d | None = None) -> Array1D[np.float64]: ...
+@overload
+def polyint(p: ToLongDouble_1d, m: _ToInt = 1, k: CoFloating_0d | CoFloating_1d | None = None) -> Array1D[np.longdouble]: ...
 @overload
 def polyint(
-    p: ToLongDouble_1d,
-    m: _ToInt = 1,
-    k: CoFloating_0d | CoFloating_1d | None = None,
-) -> Array1D[np.longdouble]: ...
-@overload
-def polyint(  # type: ignore[overload-overlap]
     p: ToComplex128_1d | ToComplex64_1d,
     m: _ToInt = 1,
     k: CoComplex128_0d | CoComplex128_1d | None = None,

@@ -107,7 +107,6 @@ from _numtype import (
     _ToArray_2ds,
     _ToArray_2nd,
     _ToArray_3nd,
-    floating64,
     inexact32,
     inexact64,
     inexact64l,
@@ -175,12 +174,12 @@ _InexactNDT_co = TypeVar("_InexactNDT_co", bound=np.inexact | Array[np.inexact],
 
 _AnyNumberT = TypeVar(
     "_AnyNumberT",
-    np.intp,
     np.int8,
     np.int16,
     np.int32,
     np.int64,
-    np.uint,
+    np.long,
+    np.ulong,
     np.uint8,
     np.uint16,
     np.uint32,
@@ -211,9 +210,9 @@ _ToArray_2nd_ish: TypeAlias = CanLenArrayND[_ScalarT] | Sequence[Sequence1ND[_Sc
 
 _ToInteger: TypeAlias = np.integer | np.bool[Any]
 
-_ToFloat64_1nd: TypeAlias = _ToArray2_1nd[floating64 | _ToInteger, float]
-_ToFloat64_2ds: TypeAlias = _ToArray2_2ds[floating64 | _ToInteger, float]
-_ToFloat64_3nd: TypeAlias = _ToArray2_3nd[floating64 | _ToInteger, float]
+_ToFloat64_1nd: TypeAlias = _ToArray2_1nd[np.float64 | _ToInteger, float]
+_ToFloat64_2ds: TypeAlias = _ToArray2_2ds[np.float64 | _ToInteger, float]
+_ToFloat64_3nd: TypeAlias = _ToArray2_3nd[np.float64 | _ToInteger, float]
 
 _Toinexact32_1nd: TypeAlias = _ToArray_1nd[inexact32]
 _Toinexact32_2ds: TypeAlias = _ToArray_2ds[inexact32]
@@ -465,7 +464,7 @@ def outer(x1: ToIntP_1d, x2: CoIntP_1d, /) -> Array2D[np.intp]: ...
 @overload
 def outer(x1: CoIntP_1d, x2: ToIntP_1d, /) -> Array2D[np.intp]: ...
 @overload
-def outer(x1: ToFloat32_1d, x2: ToFloat32_1d, /) -> Array2D[np.float32]: ...  # type: ignore[overload-overlap]
+def outer(x1: ToFloat32_1d, x2: ToFloat32_1d, /) -> Array2D[np.float32]: ...
 @overload
 def outer(x1: ToFloat64_1d, x2: CoFloat64_1d, /) -> Array2D[np.float64]: ...
 @overload
@@ -517,13 +516,7 @@ def multi_dot(arrays: Iterable[CoComplex_1nd | ToTimeDelta_1nd | ToObject_1nd], 
 
 # pyright false positive in case of typevar constraints
 @overload
-def cross(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
-    x1: _ToArray_1nd[_AnyNumberT],
-    x2: _ToArray_1nd[_AnyNumberT],
-    /,
-    *,
-    axis: int = -1,
-) -> Array[_AnyNumberT]: ...
+def cross(x1: _ToArray_1nd[_AnyNumberT], x2: _ToArray_1nd[_AnyNumberT], /, *, axis: int = -1) -> Array[_AnyNumberT]: ...  # pyright: ignore[reportOverlappingOverload]
 @overload
 def cross(x1: ToBool_1nd, x2: ToBool_1nd, /, *, axis: int = -1) -> Array[np.bool]: ...
 @overload
@@ -555,11 +548,11 @@ def cross(x1: CoComplex_1nd, x2: CoComplex_1nd, /, *, axis: int = -1) -> Array[A
 
 # pyright false positive in case of typevar constraints
 @overload
-def matmul(x1: _ToArray_1ds[_AnyNumberT], x2: _ToArray_1ds[_AnyNumberT], /) -> _AnyNumberT: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def matmul(x1: _ToArray_1ds[_AnyNumberT], x2: _ToArray_1ds[_AnyNumberT], /) -> _AnyNumberT: ...  # pyright: ignore[reportOverlappingOverload]
 @overload
-def matmul(x1: _ToArray_2nd[_AnyNumberT], x2: _ToArray_1nd[_AnyNumberT], /) -> Array[_AnyNumberT]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def matmul(x1: _ToArray_2nd[_AnyNumberT], x2: _ToArray_1nd[_AnyNumberT], /) -> Array[_AnyNumberT]: ...  # pyright: ignore[reportOverlappingOverload]
 @overload
-def matmul(x1: _ToArray_1nd[_AnyNumberT], x2: _ToArray_2nd[_AnyNumberT], /) -> Array[_AnyNumberT]: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def matmul(x1: _ToArray_1nd[_AnyNumberT], x2: _ToArray_2nd[_AnyNumberT], /) -> Array[_AnyNumberT]: ...  # pyright: ignore[reportOverlappingOverload]
 @overload
 def matmul(x1: ToBool_1ds, x2: ToBool_1ds, /) -> np.bool: ...
 @overload
@@ -885,13 +878,13 @@ def lstsq(a: CoFloat64_1nd, b: _ToFloat64_1nd, rcond: float | None = None) -> _L
 @overload  # float32, float32
 def lstsq(a: ToFloat32_1nd, b: ToFloat32_1nd, rcond: float | None = None) -> _LstSqResult[np.float32, np.float32]: ...
 @overload  # complex128, +complex128
-def lstsq(  # type: ignore[overload-overlap]
+def lstsq(
     a: ToComplex128_1nd,
     b: CoComplex128_1nd,
     rcond: float | None = None,
 ) -> _LstSqResult[np.complex128, np.float64]: ...
 @overload  # +complex128, complex128
-def lstsq(  # type: ignore[overload-overlap]
+def lstsq(
     a: CoComplex128_1nd,
     b: ToComplex128_1nd,
     rcond: float | None = None,

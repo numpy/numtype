@@ -26,6 +26,7 @@ from _numtype import (
     CoUInt64_1d,
     CoUInt64_1nd,
     CoUInt64_nd,
+    JustComplex,
     JustFloat,
     JustInt,
     ToBool_0d,
@@ -72,10 +73,7 @@ from _numtype import (
     ToUInteger_1d,
     ToUInteger_1nd,
     ToUInteger_nd,
-    cfloating64,
-    floating64,
 )
-from _numtype._just import JustComplex
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc, _SupportsDType
 from numpy._typing._char_codes import _BoolCodes, _Complex128Codes, _Float64Codes, _IntPCodes
@@ -663,8 +661,8 @@ _ShapeLike3D: TypeAlias = tuple[SupportsIndex, SupportsIndex, SupportsIndex]
 
 _DTypeLikeBool: TypeAlias = type[bool] | _DTypeLike[np.bool] | _BoolCodes
 _DTypeLikeIntP: TypeAlias = type[JustInt] | _IntPCodes
-_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[floating64] | _Float64Codes | None
-_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[cfloating64] | _Complex128Codes
+_DTypeLikeFloat64: TypeAlias = type[JustFloat] | _DTypeLike[np.float64] | _Float64Codes | None
+_DTypeLikeComplex128: TypeAlias = type[JustComplex] | _DTypeLike[np.complex128] | _Complex128Codes
 
 _PyScalar: TypeAlias = complex | str | bytes
 _Device: TypeAlias = L["cpu"]
