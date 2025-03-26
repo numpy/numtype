@@ -95,21 +95,7 @@ from ._dtype_like import (
     _SupportsDType as _SupportsDType,
     _VoidDTypeLike as _VoidDTypeLike,
 )
-from ._nbit import (
-    _NBitIntP as _NBitIntP,
-    _NBitLong as _NBitLong,
-    _NBitLongDouble as _NBitLongDouble,
-    _NBitLongLong as _NBitLongLong,
-)
-from ._nbit_base import (
-    NBitBase as NBitBase,
-    _8Bit as _8Bit,
-    _16Bit as _16Bit,
-    _32Bit as _32Bit,
-    _64Bit as _64Bit,
-    _96Bit as _96Bit,
-    _128Bit as _128Bit,
-)
+from ._nbit_base import NBitBase as NBitBase
 from ._nested_sequence import _NestedSequence as _NestedSequence
 from ._scalars import (
     _BoolLike_co as _BoolLike_co,

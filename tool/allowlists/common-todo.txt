@@ -1,3 +1,0 @@
-# https://github.com/numpy/numtype/issues/136
-numpy(\..+)?\.(un)?signedinteger.__index__
-numpy(\..+)?\.(un)?signedinteger.bit_count
