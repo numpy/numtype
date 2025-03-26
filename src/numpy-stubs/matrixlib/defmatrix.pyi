@@ -19,7 +19,7 @@ from _numtype import (
     ToFloat64_nd,
     ToGeneric_3nd,
     ToGeneric_nd,
-    ToIntP_nd,
+    ToInt_nd,
     ToInteger_1nd,
     ToObject_nd,
     ToStr_nd,
@@ -318,7 +318,7 @@ def asmatrix(data: ToGeneric_nd, dtype: _DTypeLike[_ScalarT]) -> Matrix[_ScalarT
 @overload
 def asmatrix(data: ToBool_nd, dtype: None = None) -> Matrix[np.bool]: ...
 @overload
-def asmatrix(data: ToIntP_nd, dtype: None = None) -> Matrix[np.intp]: ...
+def asmatrix(data: ToInt_nd, dtype: None = None) -> Matrix[np.intp]: ...
 @overload
 def asmatrix(data: ToFloat64_nd, dtype: None = None) -> Matrix[np.float64]: ...
 @overload

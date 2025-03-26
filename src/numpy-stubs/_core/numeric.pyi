@@ -55,11 +55,11 @@ from _numtype import (
     ToGeneric_0d,
     ToGeneric_1nd,
     ToGeneric_nd,
-    ToIntP_0d,
-    ToIntP_1ds,
-    ToIntP_2ds,
-    ToIntP_3ds,
-    ToIntP_nd,
+    ToInt_0d,
+    ToInt_1ds,
+    ToInt_2ds,
+    ToInt_3ds,
+    ToInt_nd,
     ToInteger_1d,
     ToObject_1d,
     ToObject_1nd,
@@ -1134,7 +1134,7 @@ def zeros_like(
 ) -> Array3D[np.bool_]: ...
 @overload  # int 0d array-like
 def zeros_like(
-    a: ToIntP_0d,
+    a: ToInt_0d,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1144,7 +1144,7 @@ def zeros_like(
 ) -> Array0D[np.intp]: ...
 @overload  # int 1d array-like
 def zeros_like(
-    a: ToIntP_1ds,
+    a: ToInt_1ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1154,7 +1154,7 @@ def zeros_like(
 ) -> Array1D[np.intp]: ...
 @overload  # int 2d array-like
 def zeros_like(
-    a: ToIntP_2ds,
+    a: ToInt_2ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1164,7 +1164,7 @@ def zeros_like(
 ) -> Array2D[np.intp]: ...
 @overload  # int 3d array-like
 def zeros_like(
-    a: ToIntP_3ds,
+    a: ToInt_3ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1324,7 +1324,7 @@ def zeros_like(  # type: ignore[overload-overlap]
 ) -> Array[np.bool_]: ...
 @overload  # int array-like
 def zeros_like(  # type: ignore[overload-overlap]
-    a: ToIntP_nd,
+    a: ToInt_nd,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1436,7 +1436,7 @@ def ones_like(
 ) -> Array3D[np.bool_]: ...
 @overload  # int 0d array-like
 def ones_like(
-    a: ToIntP_0d,
+    a: ToInt_0d,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1446,7 +1446,7 @@ def ones_like(
 ) -> Array0D[np.intp]: ...
 @overload  # int 1d array-like
 def ones_like(
-    a: ToIntP_1ds,
+    a: ToInt_1ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1456,7 +1456,7 @@ def ones_like(
 ) -> Array1D[np.intp]: ...
 @overload  # int 2d array-like
 def ones_like(
-    a: ToIntP_2ds,
+    a: ToInt_2ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1466,7 +1466,7 @@ def ones_like(
 ) -> Array2D[np.intp]: ...
 @overload  # int 3d array-like
 def ones_like(
-    a: ToIntP_3ds,
+    a: ToInt_3ds,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1626,7 +1626,7 @@ def ones_like(  # type: ignore[overload-overlap]
 ) -> Array[np.bool_]: ...
 @overload  # int array-like
 def ones_like(  # type: ignore[overload-overlap]
-    a: ToIntP_nd,
+    a: ToInt_nd,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
@@ -1744,7 +1744,7 @@ def full_like(
 ) -> Array3D[np.bool_]: ...
 @overload  # int 0d array-like
 def full_like(
-    a: ToIntP_0d,
+    a: ToInt_0d,
     fill_value: object,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
@@ -1755,7 +1755,7 @@ def full_like(
 ) -> Array0D[np.intp]: ...
 @overload  # int 1d array-like
 def full_like(
-    a: ToIntP_1ds,
+    a: ToInt_1ds,
     fill_value: object,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
@@ -1766,7 +1766,7 @@ def full_like(
 ) -> Array1D[np.intp]: ...
 @overload  # int 2d array-like
 def full_like(
-    a: ToIntP_2ds,
+    a: ToInt_2ds,
     fill_value: object,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
@@ -1777,7 +1777,7 @@ def full_like(
 ) -> Array2D[np.intp]: ...
 @overload  # int 3d array-like
 def full_like(
-    a: ToIntP_3ds,
+    a: ToInt_3ds,
     fill_value: object,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",
@@ -1953,7 +1953,7 @@ def full_like(  # type: ignore[overload-overlap]
 ) -> Array[np.bool_]: ...
 @overload  # int array-like
 def full_like(  # type: ignore[overload-overlap]
-    a: ToIntP_nd,
+    a: ToInt_nd,
     fill_value: object,
     dtype: _DTypeLikeIntP | None = None,
     order: _OrderKACF = "K",

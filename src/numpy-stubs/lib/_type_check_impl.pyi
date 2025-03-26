@@ -14,7 +14,7 @@ from _numtype import (
     ToGeneric_0d,
     ToGeneric_1nd,
     ToGeneric_nd,
-    ToIntP_nd,
+    ToInt_nd,
     ToStr_nd,
     _ToArray_1nd,
     _ToArray_nd,
@@ -73,7 +73,7 @@ def real(val: _HasReal[_T]) -> _T: ...  # type: ignore[overload-overlap]
 @overload
 def real(val: ToBool_nd) -> Array[np.bool]: ...
 @overload
-def real(val: ToIntP_nd) -> Array[np.intp]: ...
+def real(val: ToInt_nd) -> Array[np.intp]: ...
 @overload
 def real(val: ToFloat64_nd) -> Array[np.float64]: ...
 @overload
@@ -93,7 +93,7 @@ def imag(val: _HasImag[_T]) -> _T: ...  # type: ignore[overload-overlap]
 @overload
 def imag(val: ToBool_nd) -> Array[np.bool]: ...
 @overload
-def imag(val: ToIntP_nd) -> Array[np.intp]: ...
+def imag(val: ToInt_nd) -> Array[np.intp]: ...
 @overload
 def imag(val: ToFloat64_nd) -> Array[np.float64]: ...
 @overload

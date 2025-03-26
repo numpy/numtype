@@ -16,8 +16,8 @@ from _numtype import (
     ToFloat64_1nd,
     ToFloat64_2d,
     ToFloating_1d,
-    ToIntP_1d,
-    ToIntP_1nd,
+    ToInt_1d,
+    ToInt_1nd,
     ToInteger_1d,
     ToObject_1d,
     ToStr_1nd,
@@ -176,7 +176,7 @@ def tril(m: ToBool_1nd, k: int = 0) -> Array[np.bool]: ...
 @overload
 def tril(m: _ToArray_1nd[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
 @overload
-def tril(m: ToIntP_1nd, k: int = 0) -> Array[np.intp]: ...
+def tril(m: ToInt_1nd, k: int = 0) -> Array[np.intp]: ...
 @overload
 def tril(m: ToFloat64_1nd, k: int = 0) -> Array[np.float64]: ...
 @overload
@@ -194,7 +194,7 @@ def triu(m: ToBool_1nd, k: int = 0) -> Array[np.bool]: ...
 @overload
 def triu(m: _ToArray_1nd[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
 @overload
-def triu(m: ToIntP_1nd, k: int = 0) -> Array[np.intp]: ...
+def triu(m: ToInt_1nd, k: int = 0) -> Array[np.intp]: ...
 @overload
 def triu(m: ToFloat64_1nd, k: int = 0) -> Array[np.float64]: ...
 @overload
@@ -293,8 +293,8 @@ def histogram2d(
 ) -> tuple[Array[np.float64], Array[_NumericT | _InexactT], Array[_NumericT | _InexactT]]: ...
 @overload
 def histogram2d(
-    x: ToIntP_1d | Sequence[float],
-    y: ToIntP_1d | Sequence[float],
+    x: ToInt_1d | Sequence[float],
+    y: ToInt_1d | Sequence[float],
     bins: Sequence[_ToArray_1d[_NumericT] | int],
     range: ToFloat64_2d | None = None,
     density: bool | None = None,

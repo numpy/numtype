@@ -16,7 +16,7 @@ from _numtype import (
     ToBytes_nd,
     ToComplex128_nd,
     ToFloat64_nd,
-    ToIntP_nd,
+    ToInt_nd,
     ToObject_nd,
     ToStr_nd,
     _ToArray_nd,
@@ -69,7 +69,7 @@ class ndenumerate(Generic[_ScalarT_co]):
     @overload
     def __init__(self: ndenumerate[np.bool], /, arr: ToBool_nd) -> None: ...
     @overload
-    def __init__(self: ndenumerate[np.intp], /, arr: ToIntP_nd) -> None: ...
+    def __init__(self: ndenumerate[np.intp], /, arr: ToInt_nd) -> None: ...
     @overload
     def __init__(self: ndenumerate[np.float64], /, arr: ToFloat64_nd) -> None: ...
     @overload

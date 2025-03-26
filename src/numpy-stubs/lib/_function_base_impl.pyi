@@ -55,7 +55,7 @@ from _numtype import (
     ToFloating_0d,
     ToGeneric_0d,
     ToGeneric_1nd,
-    ToIntP_nd,
+    ToInt_nd,
     ToObject_1nd,
     ToObject_nd,
     ToStr_nd,
@@ -365,7 +365,7 @@ def average(
 @overload
 def asarray_chkfinite(a: ToBool_nd, dtype: None = None, order: _OrderKACF | None = None) -> Array[np.bool]: ...
 @overload
-def asarray_chkfinite(a: ToIntP_nd, dtype: None = None, order: _OrderKACF | None = None) -> Array[np.intp]: ...
+def asarray_chkfinite(a: ToInt_nd, dtype: None = None, order: _OrderKACF | None = None) -> Array[np.intp]: ...
 @overload
 def asarray_chkfinite(a: ToFloat64_0d, dtype: None = None, order: _OrderKACF | None = None) -> Array[np.float64]: ...
 @overload
