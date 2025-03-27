@@ -16,6 +16,8 @@ Thank you for contributing, and happy coding!
 
 ______________________________________________________________________
 
+<!--overview-start-->
+
 ## Setting up the environment
 
 Ensure you have [`uv`](https://docs.astral.sh/uv/getting-started/installation/)
@@ -207,6 +209,8 @@ For `.py` files, NumType follows the `black` style, and the `.pyi` stubs follow
 the official [style guide for stubs][stub-style].
 Both `.py` and `.pyi` are linted and formatted using [`ruff`][ruff], which is
 one of the development dependencies.
+
+<!--overview-end-->
 
 [numpy-commit-style]: https://numpy.org/devdocs/dev/development_workflow.html#writing-the-commit-message
 [ruff]: https://docs.astral.sh/ruff/
