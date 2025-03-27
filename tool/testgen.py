@@ -734,6 +734,13 @@ class ScalarOps(TestGen):
             ):
                 return None
 
+            # mypy special casing
+            if lhs == "b" and self._is_builtin(rhs) and op in self.OPS_BITWISE:
+                mypy_code = "type-var"
+            else:
+                mypy_code = "operator"
+
+            # pyright special casing
             if is_op:
                 pyright_rules = ["OperatorIssue"]
             else:
@@ -742,7 +749,7 @@ class ScalarOps(TestGen):
 
             return "  ".join((
                 expr_eval,
-                "# type: ignore[operator]",
+                f"# type: ignore[{mypy_code}]",
                 f"# pyright: ignore[{pyright_ignore}]",
             ))
 

@@ -1,4 +1,4 @@
-# @generated 2025-03-27T04:33:16Z with tool/testgen.py
+# @generated 2025-03-27T23:46:59Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -165,8 +165,8 @@ u64 << c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i8 << b_py, np.int8)
 assert_type(i8 << i_py, np.int8)
-i8 << f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 << c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 << f_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
+i8 << c_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
 assert_type(i8 << b1, np.int8)
 assert_type(i8 << u8, np.int16)
 assert_type(i8 << u16, np.int32)
@@ -668,8 +668,8 @@ u64 >> c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i8 >> b_py, np.int8)
 assert_type(i8 >> i_py, np.int8)
-i8 >> f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 >> c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 >> f_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
+i8 >> c_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
 assert_type(i8 >> b1, np.int8)
 assert_type(i8 >> u8, np.int16)
 assert_type(i8 >> u16, np.int32)
@@ -1171,8 +1171,8 @@ u64 & c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i8 & b_py, np.int8)
 assert_type(i8 & i_py, np.int8)
-i8 & f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 & c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 & f_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
+i8 & c_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
 assert_type(i8 & b1, np.int8)
 assert_type(i8 & u8, np.int16)
 assert_type(i8 & u16, np.int32)
@@ -1674,8 +1674,8 @@ u64 ^ c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i8 ^ b_py, np.int8)
 assert_type(i8 ^ i_py, np.int8)
-i8 ^ f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 ^ c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 ^ f_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
+i8 ^ c_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
 assert_type(i8 ^ b1, np.int8)
 assert_type(i8 ^ u8, np.int16)
 assert_type(i8 ^ u16, np.int32)
@@ -2177,8 +2177,8 @@ u64 | c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i8 | b_py, np.int8)
 assert_type(i8 | i_py, np.int8)
-i8 | f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-i8 | c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i8 | f_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
+i8 | c_py  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
 assert_type(i8 | b1, np.int8)
 assert_type(i8 | u8, np.int16)
 assert_type(i8 | u16, np.int32)
