@@ -9,12 +9,13 @@ import operator as op
 import sys
 from collections.abc import Callable, Generator, Iterable, Iterator, Sequence
 from pathlib import Path
-from typing import Any, ClassVar, Final, TypeAlias, cast, final
+from typing import Any, ClassVar, Final, Literal, TypeAlias, cast, final
 from typing_extensions import override
 
 import numpy as np
 
 _Scalar: TypeAlias = np.number | np.bool | np.timedelta64 | np.datetime64 | complex
+_BinOp: TypeAlias = Callable[[Any, Any], Any]
 
 ROOT_DIR: Final = Path(__file__).parent.parent
 TARGET_DIR: Final = ROOT_DIR / "test" / "generated"
@@ -45,6 +46,8 @@ DATETIME_OPS: Final = {"+", "-"}
 TIMEDELTA_OPS: Final = DATETIME_OPS | {"*", "/", "//", "%"}
 BITWISE_OPS: Final = {"<<", ">>", "&", "^", "|"}
 BITWISE_CHARS: Final = "?bhilqBHILQ"
+
+INTP_EXPR: Final = f"{NP}.{np.intp.__name__}"
 
 
 def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
@@ -170,7 +173,7 @@ def _strip_preamble(source: str) -> tuple[str | None, str]:
 
 
 class TestGen(abc.ABC):
-    testname: ClassVar[str]  # abstract
+    testname: str  # abstract
 
     _names: Final[dict[str, str]]
     _current_indent: int
@@ -181,6 +184,7 @@ class TestGen(abc.ABC):
 
     @property
     def path(self) -> Path:
+        assert self.testname
         return TARGET_DIR / f"{self.testname}.pyi"
 
     def get_names(self) -> Iterable[tuple[str, str]]:
@@ -320,7 +324,7 @@ class TestGen(abc.ABC):
 
 
 @final
-class EMathTestGen(TestGen):
+class EMath(TestGen):
     testname = "emath"
 
     VALUES: Final[dict[str, list[Any]]] = {
@@ -473,7 +477,7 @@ class EMathTestGen(TestGen):
 
     def _gen_binary(
         self,
-        fn: Callable[[Any, Any], Any],
+        fn: _BinOp,
         /,
     ) -> Generator[tuple[str, str, str] | None]:
         results: dict[tuple[str, str], list[str]] = {}
@@ -536,10 +540,10 @@ class EMathTestGen(TestGen):
 
 
 @final
-class ScalarBinOpTestGen(TestGen):
-    testname = "scalar_binops"
+class ScalarOps(TestGen):
+    testname = "scalar_ops_{}"
 
-    OPS: ClassVar[dict[str, Callable[[Any, Any], Any]]] = {
+    OPS_ARITHMETIC: ClassVar[dict[str, _BinOp]] = {
         "{} + {}": op.__add__,
         "{} - {}": op.__sub__,
         "{} * {}": op.__mul__,
@@ -547,16 +551,21 @@ class ScalarBinOpTestGen(TestGen):
         "{} / {}": op.__truediv__,
         "{} // {}": op.__floordiv__,
         "{} % {}": op.__mod__,
+    }
+    OPS_BITWISE: ClassVar[dict[str, _BinOp]] = {
         "{} << {}": op.__lshift__,
         "{} >> {}": op.__rshift__,
         "{} & {}": op.__and__,
         "{} ^ {}": op.__xor__,
         "{} | {}": op.__or__,
+    }
+    OPS_COMPARISON: ClassVar[dict[str, _BinOp]] = {
         "{} < {}": op.__lt__,
         "{} <= {}": op.__le__,
         "{} >= {}": op.__ge__,
         "{} > {}": op.__gt__,
         "{} == {}": op.__eq__,
+        "{} != {}": op.__ne__,
     }
 
     NAMES: ClassVar = {
@@ -611,7 +620,22 @@ class ScalarBinOpTestGen(TestGen):
         "fc": "inexact",
         "uifc": "number",
     }
-    INTP_EXPR: ClassVar = np.intp.__name__
+
+    ops: Final[dict[str, _BinOp]]
+
+    def __init__(self, kind: Literal["arithmetic", "bitwise", "comparison"], /) -> None:
+        match kind:
+            case "arithmetic":
+                ops = self.OPS_ARITHMETIC
+            case "bitwise":
+                ops = self.OPS_BITWISE
+            case "comparison":
+                ops = self.OPS_COMPARISON
+
+        self.ops = ops
+        self.testname = self.testname.format(kind)
+
+        super().__init__()
 
     def _is_builtin(self, key: str, /) -> bool:
         return len(key) > 1 and self.NAMES[key].endswith("_py")
@@ -631,7 +655,7 @@ class ScalarBinOpTestGen(TestGen):
             self._decompose(rhs),
         ):
             try:
-                val_out = self.OPS[op](val_lhs, val_rhs)
+                val_out = self.ops[op](val_lhs, val_rhs)
             except TypeError:
                 continue
 
@@ -676,10 +700,13 @@ class ScalarBinOpTestGen(TestGen):
 
         # for `builtins.int` input, if the sctype is the alias of `intp`, then assume
         # that it actually originated from `intp`, and use that instead.
-        if "int" in {lhs, rhs} and lhs not in "lLqQ" and rhs not in "lLqQ":
-            expr_name = expr_type.removeprefix(f"{NP}.")
-            if expr_name == self.INTP_EXPR:
-                expr_type = f"{NP}.int_"
+        if (
+            "int" in {lhs, rhs}
+            and lhs not in "lLqQ"
+            and rhs not in "lLqQ"
+            and expr_type == INTP_EXPR
+        ):
+            expr_type = f"{NP}.int_"
 
         return None if expr_type == "bool" else _expr_assert_type(expr_eval, expr_type)
 
@@ -708,7 +735,7 @@ class ScalarBinOpTestGen(TestGen):
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
-        for symbol, fn in self.OPS.items():
+        for symbol, fn in self.ops.items():
             opname = fn.__name__.removesuffix("_")
 
             yield from self._generate_section(f"__[r]{opname}__")
@@ -732,8 +759,8 @@ class ScalarBinOpTestGen(TestGen):
 
 
 @final
-class BoolBitOpTestGen(TestGen):
-    testname = "bool_bitops"
+class LiteralBoolOps(TestGen):
+    testname = "literal_bool_ops"
 
     UNOPS: ClassVar = {
         "{}.__bool__()": bool,
@@ -882,9 +909,11 @@ class BoolBitOpTestGen(TestGen):
 
 
 TESTGENS: Final[Sequence[TestGen]] = [
-    EMathTestGen(binary=False),
-    ScalarBinOpTestGen(),
-    BoolBitOpTestGen(),
+    EMath(binary=False),
+    ScalarOps("arithmetic"),
+    ScalarOps("bitwise"),
+    ScalarOps("comparison"),
+    LiteralBoolOps(),
 ]
 
 

@@ -75,7 +75,7 @@ def __commit_pyi_genocide_for_mypy() -> None:
     """
     package = SITE_DIR / "numpy"
     if not package.is_dir():
-        raise NotADirectoryError(f"{package} does not exist")  # noqa: TRY003
+        raise NotADirectoryError(f"{package} does not exist")
 
     py_typed = package / "py.typed"
     if py_typed.is_file():
