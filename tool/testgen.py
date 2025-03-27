@@ -1,6 +1,6 @@
 """Type-tests generation."""
 
-# ruff: noqa: PLR0916, PLR6301, TD003, ERA001, D101, D102
+# ruff: noqa: PLR0916, PLR6301, TD003, ERA001, D101, D102, DOC201
 
 import abc
 import difflib
@@ -9,13 +9,20 @@ import operator as op
 import sys
 from collections.abc import Callable, Generator, Iterable, Iterator, Sequence
 from pathlib import Path
-from typing import Any, ClassVar, Final, Literal, TypeAlias, cast, final
+from typing import Any, ClassVar, Final, Literal, TypeAlias, TypeVar, cast, final
 from typing_extensions import override
 
 import numpy as np
 
+###
+
+_T = TypeVar("_T")
+
 _Scalar: TypeAlias = np.number | np.bool | np.timedelta64 | np.datetime64 | complex
 _BinOp: TypeAlias = Callable[[Any, Any], Any]
+_BinOpKind: TypeAlias = Literal["arithmetic", "modular", "bitwise", "comparison"]
+
+###
 
 ROOT_DIR: Final = Path(__file__).parent.parent
 TARGET_DIR: Final = ROOT_DIR / "test" / "generated"
@@ -48,6 +55,14 @@ BITWISE_OPS: Final = {"<<", ">>", "&", "^", "|"}
 BITWISE_CHARS: Final = "?bhilqBHILQ"
 
 INTP_EXPR: Final = f"{NP}.{np.intp.__name__}"
+
+###
+
+
+def _ensure_tuple(x: _T | tuple[_T, ...], /) -> tuple[_T, ...]:
+    if isinstance(x, tuple):
+        return cast("tuple[_T, ...]", x)
+    return (x,)
 
 
 def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
@@ -86,6 +101,17 @@ def _sctype_expr(dtype: np.dtype | type[complex]) -> str:
     name = dtype.name
     assert "[" not in name, "units not supported yet"
     return f"{NP}.{name}"
+
+
+def _sctype_expr_from_value(value: _Scalar | tuple[_Scalar, ...], /) -> str:
+    if isinstance(value, tuple):
+        expr_args = ", ".join(map(_sctype_expr_from_value, value))
+        return f"tuple[{expr_args}]"
+
+    if isinstance(value, np.generic):
+        return _sctype_expr(value.dtype)
+
+    return type(value).__qualname__
 
 
 def __group_types(*types: str) -> tuple[dict[str, list[str]], list[str]]:
@@ -140,11 +166,7 @@ def _union(*types: str) -> str:
 
 
 def _join(*types: str) -> str:
-    # find the common base type
-    types = tuple(dict.fromkeys(types))
-    if len(types) == 1:
-        return types[0]
-
+    """Find the common base type, i.e. union + upcast."""
     numbers, other = __group_types(*types)
     if other:
         raise NotImplementedError(f"join of non-number types: {types}")
@@ -170,6 +192,9 @@ def _strip_preamble(source: str) -> tuple[str | None, str]:
             lines.append(line)
 
     return preamble, "".join(lines)
+
+
+###
 
 
 class TestGen(abc.ABC):
@@ -549,8 +574,11 @@ class ScalarOps(TestGen):
         "{} * {}": op.__mul__,
         "{}**{}": op.__pow__,
         "{} / {}": op.__truediv__,
+    }
+    OPS_MODULAR: ClassVar[dict[str, _BinOp]] = {
         "{} // {}": op.__floordiv__,
         "{} % {}": op.__mod__,
+        "divmod({}, {})": divmod,
     }
     OPS_BITWISE: ClassVar[dict[str, _BinOp]] = {
         "{} << {}": op.__lshift__,
@@ -623,10 +651,12 @@ class ScalarOps(TestGen):
 
     ops: Final[dict[str, _BinOp]]
 
-    def __init__(self, kind: Literal["arithmetic", "bitwise", "comparison"], /) -> None:
+    def __init__(self, kind: _BinOpKind, /) -> None:
         match kind:
             case "arithmetic":
                 ops = self.OPS_ARITHMETIC
+            case "modular":
+                ops = self.OPS_MODULAR
             case "bitwise":
                 ops = self.OPS_BITWISE
             case "comparison":
@@ -649,36 +679,42 @@ class ScalarOps(TestGen):
         return tuple(map(_scalar, key))
 
     def _evaluate_concrete(self, op: str, lhs: str, rhs: str, /) -> str | None:
-        types_out: list[str] = []
+        fn = self.ops[op]
+        nout = 2 if fn.__module__ == "builtins" else 1
+
+        exprs_seen: set[tuple[str, ...]] = set()
+        expr_lists: tuple[list[str], ...] = tuple([] for _ in range(nout))
         for val_lhs, val_rhs in itertools.product(
             self._decompose(lhs),
             self._decompose(rhs),
         ):
             try:
-                val_out = self.ops[op](val_lhs, val_rhs)
+                vals_out = fn(val_lhs, val_rhs)
             except TypeError:
                 continue
-
-            if isinstance(val_out, np.generic):
-                # redundant cast is needed for pyright compat
-                dtype = cast("np.generic", val_out).dtype  # type: ignore[redundant-cast]
-                types_out.append(_sctype_expr(dtype))
             else:
-                types_out.append(type(val_out).__qualname__)
+                vals_out = _ensure_tuple(vals_out)
+                exprs_out = tuple(map(_sctype_expr_from_value, vals_out))
+                if exprs_out in exprs_seen:
+                    continue
+                exprs_seen.add(exprs_out)
 
-        if not types_out:
+            for expr_out, expr_list in zip(exprs_out, expr_lists, strict=True):
+                expr_list.append(expr_out)
+
+        if not expr_lists[0]:
             return None
 
-        # dedupe while maintaining order
-        types_out = list(dict.fromkeys(types_out))
+        if len(expr_lists[0]) == 1:
+            result_exprs = [expr_list[0] for expr_list in expr_lists]
+        else:
+            result_exprs = list(itertools.starmap(_join, expr_lists))
 
-        if len(types_out) == 1:
-            return types_out[0]
-
-        return _join(*types_out)
+        return f"tuple[{', '.join(result_exprs)}]" if nout > 1 else result_exprs[0]
 
     def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
         expr_eval = op.format(self.NAMES[lhs], self.NAMES[rhs])
+        is_op = self.ops[op].__module__ != "builtins"  # not the case for divmod
 
         if not (expr_type := self._evaluate_concrete(op, lhs, rhs)):
             # generate rejection test, while avoiding trivial cases
@@ -692,10 +728,16 @@ class ScalarOps(TestGen):
             ):
                 return None
 
-            return "  ".join((  # noqa: FLY002
+            if is_op:
+                pyright_rules = ["OperatorIssue"]
+            else:
+                pyright_rules = ["ArgumentType", "CallIssue"]
+            pyright_ignore = ", ".join(map("report{}".format, pyright_rules))
+
+            return "  ".join((
                 expr_eval,
                 "# type: ignore[operator]",
-                "# pyright: ignore[reportOperatorIssue]",
+                f"# pyright: ignore[{pyright_ignore}]",
             ))
 
         # for `builtins.int` input, if the sctype is the alias of `intp`, then assume
@@ -911,6 +953,7 @@ class LiteralBoolOps(TestGen):
 TESTGENS: Final[Sequence[TestGen]] = [
     EMath(binary=False),
     ScalarOps("arithmetic"),
+    ScalarOps("modular"),
     ScalarOps("bitwise"),
     ScalarOps("comparison"),
     LiteralBoolOps(),
