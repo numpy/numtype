@@ -1,4 +1,4 @@
-# @generated 2025-03-27T04:33:16Z with tool/testgen.py
+# @generated 2025-03-27T10:26:28Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -183,7 +183,7 @@ assert_type(i8 // f64l, np.longdouble)
 i8 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i8 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i8 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 // u, np.number)
+assert_type(i8 // u, np.signedinteger | np.float64)
 assert_type(i8 // i, np.signedinteger)
 assert_type(i8 // f, np.floating)
 i8 // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -208,7 +208,7 @@ assert_type(i16 // f64l, np.longdouble)
 i16 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i16 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i16 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i16 // u, np.number)
+assert_type(i16 // u, np.signedinteger | np.float64)
 assert_type(i16 // i, np.signedinteger)
 assert_type(i16 // f, np.floating)
 i16 // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -233,7 +233,7 @@ assert_type(i32 // f64l, np.longdouble)
 i32 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i32 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i32 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i32 // u, np.number)
+assert_type(i32 // u, np.signedinteger | np.float64)
 assert_type(i32 // i, np.signedinteger)
 assert_type(i32 // f, np.floating)
 i32 // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -258,7 +258,7 @@ assert_type(i64 // f64l, np.longdouble)
 i64 // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i64 // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i64 // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i64 // u, np.number)
+assert_type(i64 // u, np.int64 | np.float64)
 assert_type(i64 // i, np.int64)
 assert_type(i64 // f, np.floating)
 i64 // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -466,10 +466,10 @@ assert_type(u // u8, np.unsignedinteger)
 assert_type(u // u16, np.unsignedinteger)
 assert_type(u // u32, np.unsignedinteger)
 assert_type(u // u64, np.uint64)
-assert_type(u // i8, np.number)
-assert_type(u // i16, np.number)
-assert_type(u // i32, np.number)
-assert_type(u // i64, np.number)
+assert_type(u // i8, np.signedinteger | np.float64)
+assert_type(u // i16, np.signedinteger | np.float64)
+assert_type(u // i32, np.signedinteger | np.float64)
+assert_type(u // i64, np.int64 | np.float64)
 assert_type(u // f16, np.floating)
 assert_type(u // f32, np.floating)
 assert_type(u // f64, np.float64)
@@ -478,7 +478,7 @@ u // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(u // u, np.unsignedinteger)
-assert_type(u // i, np.number)
+assert_type(u // i, np.signedinteger | np.float64)
 assert_type(u // f, np.floating)
 u // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
@@ -502,7 +502,7 @@ assert_type(i // f64l, np.longdouble)
 i // c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i // c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i // c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i // u, np.number)
+assert_type(i // u, np.signedinteger | np.float64)
 assert_type(i // i, np.signedinteger)
 assert_type(i // f, np.floating)
 i // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -705,7 +705,7 @@ assert_type(i8 % f64l, np.longdouble)
 i8 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i8 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i8 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i8 % u, np.number)
+assert_type(i8 % u, np.signedinteger | np.float64)
 assert_type(i8 % i, np.signedinteger)
 assert_type(i8 % f, np.floating)
 i8 % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -730,7 +730,7 @@ assert_type(i16 % f64l, np.longdouble)
 i16 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i16 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i16 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i16 % u, np.number)
+assert_type(i16 % u, np.signedinteger | np.float64)
 assert_type(i16 % i, np.signedinteger)
 assert_type(i16 % f, np.floating)
 i16 % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -755,7 +755,7 @@ assert_type(i32 % f64l, np.longdouble)
 i32 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i32 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i32 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i32 % u, np.number)
+assert_type(i32 % u, np.signedinteger | np.float64)
 assert_type(i32 % i, np.signedinteger)
 assert_type(i32 % f, np.floating)
 i32 % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -780,7 +780,7 @@ assert_type(i64 % f64l, np.longdouble)
 i64 % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i64 % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i64 % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i64 % u, np.number)
+assert_type(i64 % u, np.int64 | np.float64)
 assert_type(i64 % i, np.int64)
 assert_type(i64 % f, np.floating)
 i64 % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -971,10 +971,10 @@ assert_type(u % u8, np.unsignedinteger)
 assert_type(u % u16, np.unsignedinteger)
 assert_type(u % u32, np.unsignedinteger)
 assert_type(u % u64, np.uint64)
-assert_type(u % i8, np.number)
-assert_type(u % i16, np.number)
-assert_type(u % i32, np.number)
-assert_type(u % i64, np.number)
+assert_type(u % i8, np.signedinteger | np.float64)
+assert_type(u % i16, np.signedinteger | np.float64)
+assert_type(u % i32, np.signedinteger | np.float64)
+assert_type(u % i64, np.int64 | np.float64)
 assert_type(u % f16, np.floating)
 assert_type(u % f32, np.floating)
 assert_type(u % f64, np.float64)
@@ -983,7 +983,7 @@ u % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(u % u, np.unsignedinteger)
-assert_type(u % i, np.number)
+assert_type(u % i, np.signedinteger | np.float64)
 assert_type(u % f, np.floating)
 u % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
@@ -1007,7 +1007,7 @@ assert_type(i % f64l, np.longdouble)
 i % c32  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(i % u, np.number)
+assert_type(i % u, np.signedinteger | np.float64)
 assert_type(i % i, np.signedinteger)
 assert_type(i % f, np.floating)
 i % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -1210,7 +1210,7 @@ assert_type(divmod(i8, f64l), tuple[np.longdouble, np.longdouble])
 divmod(i8, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i8, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i8, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
-assert_type(divmod(i8, u), tuple[np.number, np.number])
+assert_type(divmod(i8, u), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
 assert_type(divmod(i8, i), tuple[np.signedinteger, np.signedinteger])
 assert_type(divmod(i8, f), tuple[np.floating, np.floating])
 divmod(i8, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
@@ -1235,7 +1235,7 @@ assert_type(divmod(i16, f64l), tuple[np.longdouble, np.longdouble])
 divmod(i16, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i16, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i16, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
-assert_type(divmod(i16, u), tuple[np.number, np.number])
+assert_type(divmod(i16, u), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
 assert_type(divmod(i16, i), tuple[np.signedinteger, np.signedinteger])
 assert_type(divmod(i16, f), tuple[np.floating, np.floating])
 divmod(i16, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
@@ -1260,7 +1260,7 @@ assert_type(divmod(i32, f64l), tuple[np.longdouble, np.longdouble])
 divmod(i32, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i32, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i32, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
-assert_type(divmod(i32, u), tuple[np.number, np.number])
+assert_type(divmod(i32, u), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
 assert_type(divmod(i32, i), tuple[np.signedinteger, np.signedinteger])
 assert_type(divmod(i32, f), tuple[np.floating, np.floating])
 divmod(i32, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
@@ -1285,7 +1285,7 @@ assert_type(divmod(i64, f64l), tuple[np.longdouble, np.longdouble])
 divmod(i64, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i64, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i64, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
-assert_type(divmod(i64, u), tuple[np.number, np.number])
+assert_type(divmod(i64, u), tuple[np.int64 | np.float64, np.int64 | np.float64])
 assert_type(divmod(i64, i), tuple[np.int64, np.int64])
 assert_type(divmod(i64, f), tuple[np.floating, np.floating])
 divmod(i64, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
@@ -1476,10 +1476,10 @@ assert_type(divmod(u, u8), tuple[np.unsignedinteger, np.unsignedinteger])
 assert_type(divmod(u, u16), tuple[np.unsignedinteger, np.unsignedinteger])
 assert_type(divmod(u, u32), tuple[np.unsignedinteger, np.unsignedinteger])
 assert_type(divmod(u, u64), tuple[np.uint64, np.uint64])
-assert_type(divmod(u, i8), tuple[np.number, np.number])
-assert_type(divmod(u, i16), tuple[np.number, np.number])
-assert_type(divmod(u, i32), tuple[np.number, np.number])
-assert_type(divmod(u, i64), tuple[np.number, np.number])
+assert_type(divmod(u, i8), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
+assert_type(divmod(u, i16), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
+assert_type(divmod(u, i32), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
+assert_type(divmod(u, i64), tuple[np.int64 | np.float64, np.int64 | np.float64])
 assert_type(divmod(u, f16), tuple[np.floating, np.floating])
 assert_type(divmod(u, f32), tuple[np.floating, np.floating])
 assert_type(divmod(u, f64), tuple[np.float64, np.float64])
@@ -1488,7 +1488,7 @@ divmod(u, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, 
 divmod(u, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(u, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(divmod(u, u), tuple[np.unsignedinteger, np.unsignedinteger])
-assert_type(divmod(u, i), tuple[np.number, np.number])
+assert_type(divmod(u, i), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
 assert_type(divmod(u, f), tuple[np.floating, np.floating])
 divmod(u, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
@@ -1512,7 +1512,7 @@ assert_type(divmod(i, f64l), tuple[np.longdouble, np.longdouble])
 divmod(i, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
-assert_type(divmod(i, u), tuple[np.number, np.number])
+assert_type(divmod(i, u), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
 assert_type(divmod(i, i), tuple[np.signedinteger, np.signedinteger])
 assert_type(divmod(i, f), tuple[np.floating, np.floating])
 divmod(i, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]

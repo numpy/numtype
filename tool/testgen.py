@@ -168,21 +168,24 @@ def _union(*types: str) -> str:
 def _join(*types: str) -> str:
     """Find the common base type, i.e. union + upcast."""
     numbers, other = __group_types(*types)
-    if other:
-        if not numbers:
-            return " | ".join(other)
-
+    if other and numbers:
         raise NotImplementedError(f"join of non-number types: {types}")
 
-    kinds = "".join(set(numbers))
-    if len(kinds) == 1 and len(numbers[kinds]) == 1:
-        expr = numbers[kinds][0]
-    elif kinds in _NUMBERS_ABSTRACT:
-        expr = f"{NP}.{_NUMBERS_ABSTRACT[kinds]}"
-    else:
-        expr = f"{NP}.number"
+    # special case to avoid upcasting e.g. `[un]signedinteger | float64` to `number`
+    if len(numbers) > 1 and len(numbers.get("f", [])) == 1 and "c" not in numbers:
+        other.extend(numbers.pop("f"))
 
-    return expr
+    if numbers:
+        kinds = "".join(set(numbers))
+        if len(kinds) == 1 and len(numbers[kinds]) == 1:
+            expr = numbers[kinds][0]
+        elif kinds in _NUMBERS_ABSTRACT:
+            expr = f"{NP}.{_NUMBERS_ABSTRACT[kinds]}"
+        else:
+            expr = f"{NP}.number"
+        other.insert(0, expr)
+
+    return " | ".join(other)
 
 
 def _strip_preamble(source: str) -> tuple[str | None, str]:
