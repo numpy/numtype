@@ -31,7 +31,7 @@ jobs:
       - name: markdownlint
         uses: DavidAnson/markdownlint-cli2-action@v19
         with:
-          config: "doc/.markdownlint.yaml"
+          config: "docs/.markdownlint.yaml"
           globs: "**/*.md"
 
       - uses: uncenter/setup-taplo@v1
