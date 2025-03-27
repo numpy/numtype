@@ -14,8 +14,14 @@ from typing_extensions import override
 
 import numpy as np
 
+###
+
 _Scalar: TypeAlias = np.number | np.bool | np.timedelta64 | np.datetime64 | complex
+
 _BinOp: TypeAlias = Callable[[Any, Any], Any]
+_BinOpKind: TypeAlias = Literal["arithmetic", "modular", "bitwise", "comparison"]
+
+###
 
 ROOT_DIR: Final = Path(__file__).parent.parent
 TARGET_DIR: Final = ROOT_DIR / "test" / "generated"
@@ -48,6 +54,8 @@ BITWISE_OPS: Final = {"<<", ">>", "&", "^", "|"}
 BITWISE_CHARS: Final = "?bhilqBHILQ"
 
 INTP_EXPR: Final = f"{NP}.{np.intp.__name__}"
+
+###
 
 
 def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
@@ -170,6 +178,9 @@ def _strip_preamble(source: str) -> tuple[str | None, str]:
             lines.append(line)
 
     return preamble, "".join(lines)
+
+
+###
 
 
 class TestGen(abc.ABC):
@@ -547,10 +558,13 @@ class ScalarOps(TestGen):
         "{} + {}": op.__add__,
         "{} - {}": op.__sub__,
         "{} * {}": op.__mul__,
-        "{}**{}": op.__pow__,
+        "{}**{}": pow,
         "{} / {}": op.__truediv__,
+    }
+    OPS_MODULAR: ClassVar[dict[str, _BinOp]] = {
         "{} // {}": op.__floordiv__,
         "{} % {}": op.__mod__,
+        # "divmod({}, {})": divmod,
     }
     OPS_BITWISE: ClassVar[dict[str, _BinOp]] = {
         "{} << {}": op.__lshift__,
@@ -623,10 +637,12 @@ class ScalarOps(TestGen):
 
     ops: Final[dict[str, _BinOp]]
 
-    def __init__(self, kind: Literal["arithmetic", "bitwise", "comparison"], /) -> None:
+    def __init__(self, kind: _BinOpKind, /) -> None:
         match kind:
             case "arithmetic":
                 ops = self.OPS_ARITHMETIC
+            case "modular":
+                ops = self.OPS_MODULAR
             case "bitwise":
                 ops = self.OPS_BITWISE
             case "comparison":
@@ -911,6 +927,7 @@ class LiteralBoolOps(TestGen):
 TESTGENS: Final[Sequence[TestGen]] = [
     EMath(binary=False),
     ScalarOps("arithmetic"),
+    ScalarOps("modular"),
     ScalarOps("bitwise"),
     ScalarOps("comparison"),
     LiteralBoolOps(),
