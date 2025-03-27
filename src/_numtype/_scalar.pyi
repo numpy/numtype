@@ -1,7 +1,6 @@
 from typing import TypeAlias
 
 import numpy as np
-from numpy._typing import _nbit_base as bits
 
 __all__ = [
     "inexact32",
@@ -24,8 +23,7 @@ integer8: TypeAlias = np.uint8 | np.int8
 integer16: TypeAlias = np.uint16 | np.int16
 integer32: TypeAlias = np.uint32 | np.int32
 integer_l: TypeAlias = np.ulong | np.long
-# TODO(jorenham): figure out why changing this breaks stuff
-integer64: TypeAlias = np.integer[bits._64]
+integer64: TypeAlias = np.uint64 | np.int64
 
 inexact32: TypeAlias = np.float32 | np.complex64
 inexact64: TypeAlias = np.float64 | np.complex128
