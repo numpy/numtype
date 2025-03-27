@@ -2,16 +2,7 @@ from typing import TypeAlias
 
 import numpy as np
 
-from ._scalar import (
-    inexact32,
-    integer8,
-    integer16,
-    integer32,
-    number8,
-    number16,
-    number32,
-    number64,
-)
+from ._scalar import inexact32, integer8, integer16, integer32, number16, number32, number64
 
 __all__ = [
     "co_complex",
@@ -69,7 +60,7 @@ co_float32: TypeAlias = np.float32 | np.float16 | co_integer16
 co_float64: TypeAlias = np.float64 | np.float32 | np.float16 | co_integer64
 co_float: TypeAlias = np.floating | co_integer
 
-co_complex64: TypeAlias = inexact32 | number16 | number8
+co_complex64: TypeAlias = inexact32 | number16 | integer8
 co_complex128: TypeAlias = number64 | number32 | number16 | co_integer
 co_complex: TypeAlias = np.number | np.bool
 co_number = co_complex

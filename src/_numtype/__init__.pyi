@@ -22,7 +22,6 @@ from ._just import (
     JustStr as JustStr,
 )
 from ._scalar import (
-    inexact16 as inexact16,
     inexact32 as inexact32,
     inexact64 as inexact64,
     inexact64l as inexact64l,
@@ -31,11 +30,9 @@ from ._scalar import (
     integer32 as integer32,
     integer64 as integer64,
     integer_l as integer_l,
-    number8 as number8,
     number16 as number16,
     number32 as number32,
     number64 as number64,
-    number64l as number64l,
 )
 from ._scalar_co import (
     co_complex as co_complex,
