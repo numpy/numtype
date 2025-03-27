@@ -557,6 +557,7 @@ class ScalarBinOpTestGen(TestGen):
         "{} >= {}": op.__ge__,
         "{} > {}": op.__gt__,
         "{} == {}": op.__eq__,
+        "{} != {}": op.__ne__,
     }
 
     NAMES: ClassVar = {
