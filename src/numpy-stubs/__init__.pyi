@@ -5647,7 +5647,7 @@ class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):
     def bit_count(self, /) -> int: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __add__(self, x: _CoInt8, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -5659,7 +5659,7 @@ class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):
     def __add__(self, x: _nt.CanArray0D[_SignedIntegerT], /) -> _SignedIntegerT: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __sub__(self, x: _CoInt8, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -5671,7 +5671,7 @@ class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):
     def __sub__(self, x: _nt.CanArray0D[_SignedIntegerT], /) -> _SignedIntegerT: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __mul__(self, x: _CoInt8, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -5683,7 +5683,7 @@ class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):
     def __mul__(self, x: _nt.CanArray0D[_SignedIntegerT], /) -> _SignedIntegerT: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __pow__(self, x: _CoInt8, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
@@ -5777,7 +5777,7 @@ class uint8(unsignedinteger[_n._8]):
     def bit_count(self, /) -> int: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __add__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -5811,7 +5811,7 @@ class uint8(unsignedinteger[_n._8]):
     def __radd__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __sub__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -5845,7 +5845,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rsub__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __mul__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -5877,7 +5877,9 @@ class uint8(unsignedinteger[_n._8]):
     def __rmul__(self, x: _nt.CanArray0D[int32], /) -> int32: ...
     @overload
     def __rmul__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
-    @overload
+
+    #
+    @overload  # type: ignore[override]
     def __pow__(self, x: _CoUInt8, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
@@ -5913,7 +5915,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rpow__(self, x: _nt.CanArray0D[int16 | int8], mod: None = None, /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __floordiv__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -5943,7 +5945,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rfloordiv__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __mod__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -5973,7 +5975,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rmod__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __divmod__(self, x: _CoUInt8, /) -> _2Tuple[Self]: ...
     @overload
     def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
@@ -6003,7 +6005,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rdivmod__(self, x: _nt.CanArray0D[int16 | int8], /) -> _2Tuple[int16]: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __lshift__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __lshift__(self, x: _nt.CanArray0D[_UnsignedIntegerT] | _nt.Just[unsignedinteger], /) -> _UnsignedIntegerT: ...
@@ -6029,7 +6031,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rlshift__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __rshift__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __rshift__(self, x: _nt.CanArray0D[_UnsignedIntegerT] | _nt.Just[unsignedinteger], /) -> _UnsignedIntegerT: ...
@@ -6055,7 +6057,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rrshift__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __and__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __and__(self, x: _nt.CanArray0D[_UnsignedIntegerT] | _nt.Just[unsignedinteger], /) -> _UnsignedIntegerT: ...
@@ -6081,7 +6083,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rand__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __xor__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __xor__(self, x: _nt.CanArray0D[_UnsignedIntegerT] | _nt.Just[unsignedinteger], /) -> _UnsignedIntegerT: ...
@@ -6107,7 +6109,7 @@ class uint8(unsignedinteger[_n._8]):
     def __rxor__(self, x: _nt.CanArray0D[int16 | int8], /) -> int16: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __or__(self, x: _CoUInt8, /) -> Self: ...
     @overload
     def __or__(self, x: _nt.CanArray0D[_UnsignedIntegerT] | _nt.Just[unsignedinteger], /) -> _UnsignedIntegerT: ...
@@ -6145,7 +6147,7 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):
     def bit_count(self, /) -> int: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __add__(self, x: _CoInt16, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6161,7 +6163,7 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):
     def __add__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __sub__(self, x: _CoInt16, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6177,7 +6179,7 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):
     def __sub__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __mul__(self, x: _CoInt16, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6193,7 +6195,7 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):
     def __mul__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __pow__(self, x: _CoInt16, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
@@ -6209,7 +6211,7 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):
     def __pow__(self, x: _nt.CanArray0D[int64 | uint32], mod: None = None, /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __floordiv__(self, x: _CoInt16, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6223,7 +6225,7 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):
     def __floordiv__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __mod__(self, x: _CoInt16, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6237,7 +6239,7 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):
     def __mod__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __divmod__(self, x: _CoInt16, /) -> _2Tuple[Self]: ...
     @overload
     def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
@@ -6323,7 +6325,7 @@ class uint16(unsignedinteger[_n._16]):
     def bit_count(self, /) -> int: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __add__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6355,7 +6357,7 @@ class uint16(unsignedinteger[_n._16]):
     def __radd__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __sub__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6387,7 +6389,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rsub__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __mul__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6419,7 +6421,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rmul__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __pow__(self, x: _CoUInt16, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
@@ -6451,7 +6453,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rpow__(self, x: _nt.Just[unsignedinteger], mod: None = None, /) -> unsignedinteger: ...
 
     # keep in sync with __add__ (minus complex overload)
-    @overload
+    @overload  # type: ignore[override]
     def __floordiv__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6479,7 +6481,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rfloordiv__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __floordiv__
-    @overload
+    @overload  # type: ignore[override]
     def __mod__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6507,7 +6509,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rmod__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __floordiv__
-    @overload
+    @overload  # type: ignore[override]
     def __divmod__(self, x: _CoUInt16, /) -> _2Tuple[Self]: ...
     @overload
     def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
@@ -6535,7 +6537,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rdivmod__(self, x: _nt.Just[unsignedinteger], /) -> _2Tuple[unsignedinteger]: ...
 
     # keep in sync with __floordiv__ (minus the float overload)
-    @overload
+    @overload  # type: ignore[override]
     def __lshift__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __lshift__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -6559,7 +6561,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rlshift__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __lshift__
-    @overload
+    @overload  # type: ignore[override]
     def __rshift__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __rshift__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -6583,7 +6585,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rrshift__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __lshift__
-    @overload
+    @overload  # type: ignore[override]
     def __and__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __and__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -6607,7 +6609,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rand__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __lshift__
-    @overload
+    @overload  # type: ignore[override]
     def __xor__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __xor__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -6631,7 +6633,7 @@ class uint16(unsignedinteger[_n._16]):
     def __rxor__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     # keep in sync with __lshift__
-    @overload
+    @overload  # type: ignore[override]
     def __or__(self, x: _CoUInt16, /) -> Self: ...
     @overload
     def __or__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -6667,7 +6669,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def bit_count(self, /) -> int: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __add__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6681,7 +6683,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __add__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __sub__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6695,7 +6697,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __sub__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __mul__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6709,7 +6711,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __mul__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __pow__(self, x: _CoInt32, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
@@ -6723,7 +6725,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __pow__(self, x: _nt.CanArray0D[int64 | uint32], mod: None = None, /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __floordiv__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6735,7 +6737,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __floordiv__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __mod__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6747,7 +6749,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __mod__(self, x: _nt.CanArray0D[int64 | uint32], /) -> int64: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __divmod__(self, x: _CoInt32, /) -> _2Tuple[Self]: ...
     @overload
     def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
@@ -6759,7 +6761,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __divmod__(self, x: _nt.CanArray0D[int64 | uint32], /) -> _2Tuple[int64]: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __lshift__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __lshift__(self, x: _nt.Just[signedinteger], /) -> signedinteger: ...
@@ -6769,7 +6771,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __lshift__(self, x: _nt.Just[unsignedinteger], /) -> signedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __rshift__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __rshift__(self, x: _nt.Just[signedinteger], /) -> signedinteger: ...
@@ -6779,7 +6781,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __rshift__(self, x: _nt.Just[unsignedinteger], /) -> signedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __and__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __and__(self, x: _nt.Just[signedinteger], /) -> signedinteger: ...
@@ -6789,7 +6791,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __and__(self, x: _nt.Just[unsignedinteger], /) -> signedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __xor__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __xor__(self, x: _nt.Just[signedinteger], /) -> signedinteger: ...
@@ -6799,7 +6801,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):
     def __xor__(self, x: _nt.Just[unsignedinteger], /) -> signedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __or__(self, x: _CoInt32, /) -> Self: ...
     @overload
     def __or__(self, x: _nt.Just[signedinteger], /) -> signedinteger: ...
@@ -6821,7 +6823,7 @@ class uint32(unsignedinteger[_n._32]):
     def bit_count(self, /) -> int: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __add__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6845,7 +6847,7 @@ class uint32(unsignedinteger[_n._32]):
     def __radd__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __sub__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6869,7 +6871,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rsub__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __mul__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6893,7 +6895,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rmul__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __pow__(self, x: _CoUInt32, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
@@ -6917,7 +6919,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rpow__(self, x: _nt.Just[unsignedinteger], mod: None = None, /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __floordiv__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6937,7 +6939,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rfloordiv__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __mod__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -6957,7 +6959,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rmod__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __divmod__(self, x: _CoUInt32, /) -> _2Tuple[Self]: ...
     @overload
     def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
@@ -6977,7 +6979,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rdivmod__(self, x: _nt.Just[unsignedinteger], /) -> _2Tuple[unsignedinteger]: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __lshift__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __lshift__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -6993,7 +6995,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rlshift__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __rshift__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __rshift__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -7009,7 +7011,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rrshift__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __and__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __and__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -7025,7 +7027,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rand__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __xor__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __xor__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -7041,7 +7043,7 @@ class uint32(unsignedinteger[_n._32]):
     def __rxor__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __or__(self, x: _CoUInt32, /) -> Self: ...
     @overload
     def __or__(self, x: _nt.Just[unsignedinteger], /) -> unsignedinteger: ...
@@ -7070,7 +7072,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):
     def bit_count(self, /) -> int: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __add__(self, x: _CoInt64, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -7080,7 +7082,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):
     def __add__(self, x: _nt.Just[unsignedinteger], /) -> Self | float64: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __sub__(self, x: _CoInt64, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -7090,7 +7092,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):
     def __sub__(self, x: _nt.Just[unsignedinteger], /) -> Self | float64: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __mul__(self, x: _CoInt64, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -7100,7 +7102,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):
     def __mul__(self, x: _nt.Just[unsignedinteger], /) -> Self | float64: ...
 
     # keep in sync with __add__
-    @overload
+    @overload  # type: ignore[override]
     def __pow__(self, x: _CoInt64, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
@@ -7110,7 +7112,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):
     def __pow__(self, x: _nt.Just[unsignedinteger], mod: None = None, /) -> Self | float64: ...
 
     # keep in sync with __add__ (minus the complex overload)
-    @overload
+    @overload  # type: ignore[override]
     def __floordiv__(self, x: _CoInt64, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -7118,7 +7120,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):
     def __floordiv__(self, x: _nt.Just[unsignedinteger], /) -> Self | float64: ...
 
     # keep in sync with __floordiv__
-    @overload
+    @overload  # type: ignore[override]
     def __mod__(self, x: _CoInt64, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -7126,7 +7128,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):
     def __mod__(self, x: _nt.Just[unsignedinteger], /) -> Self | float64: ...
 
     # keep in sync with __floordiv__
-    @overload
+    @overload  # type: ignore[override]
     def __divmod__(self, x: _CoInt64, /) -> _2Tuple[Self]: ...
     @overload
     def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
@@ -7177,7 +7179,7 @@ class uint64(unsignedinteger[_n._64]):
     def bit_count(self, /) -> int: ...
 
     #
-    @overload
+    @overload  # type: ignore[override]
     def __add__(self, x: _CoUInt64, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -7209,7 +7211,7 @@ class uint64(unsignedinteger[_n._64]):
     def __sub__(self, x: _nt.CanArray0D[signedinteger] | _nt.Just[signedinteger], /) -> float64: ...
 
     # keep in sync with __add__
-    @overload  # type: ignore[override]
+    @overload
     def __rsub__(self, x: _CoUInt64, /) -> Self: ...
     @overload
     def __rsub__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -7229,7 +7231,7 @@ class uint64(unsignedinteger[_n._64]):
     def __mul__(self, x: _nt.CanArray0D[signedinteger] | _nt.Just[signedinteger], /) -> float64: ...
 
     # keep in sync with __add__
-    @overload  # type: ignore[override]
+    @overload
     def __rmul__(self, x: _CoUInt64, /) -> Self: ...
     @overload
     def __rmul__(self, x: _nt.JustFloat, /) -> float64: ...
@@ -7249,7 +7251,7 @@ class uint64(unsignedinteger[_n._64]):
     def __pow__(self, x: _nt.CanArray0D[signedinteger] | _nt.Just[signedinteger], mod: None = None, /) -> float64: ...
 
     # keep in sync with __add__
-    @overload  # type: ignore[override]
+    @overload
     def __rpow__(self, x: _CoUInt64, mod: None = None, /) -> Self: ...
     @overload
     def __rpow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
@@ -7299,7 +7301,7 @@ class uint64(unsignedinteger[_n._64]):
     def __divmod__(self, x: _nt.CanArray0D[signedinteger] | _nt.Just[signedinteger], /) -> _2Tuple[float64]: ...
 
     # keep in sync with `__rmod__`
-    @overload  # type: ignore[override]
+    @overload
     def __rdivmod__(self, x: _CoUInt64, /) -> _2Tuple[Self]: ...
     @overload
     def __rdivmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
@@ -7397,7 +7399,7 @@ class float16(floating[_n._16]):
 
     #
     @overload  # type: ignore[override]
-    def __add__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __add__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7409,7 +7411,7 @@ class float16(floating[_n._16]):
 
     #
     @overload  # type: ignore[override]
-    def __radd__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __radd__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __radd__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7421,7 +7423,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __sub__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __sub__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7433,7 +7435,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__radd__`
     @overload  # type: ignore[override]
-    def __rsub__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rsub__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __rsub__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7445,7 +7447,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __mul__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __mul__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7457,7 +7459,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__radd__`
     @overload  # type: ignore[override]
-    def __rmul__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rmul__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __rmul__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7469,7 +7471,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __pow__(self, x: _CoFloat16, k: None = None, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __pow__(self, x: _CoFloat16, k: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], k: None = None, /) -> float64: ...
     @overload
@@ -7481,7 +7483,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__radd__`
     @overload  # type: ignore[override]
-    def __rpow__(self, x: _CoFloat16, k: None = None, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rpow__(self, x: _CoFloat16, k: None = None, /) -> Self: ...
     @overload
     def __rpow__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], k: None = None, /) -> float64: ...
     @overload
@@ -7493,7 +7495,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __truediv__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __truediv__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __truediv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7505,7 +7507,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__radd__`
     @overload  # type: ignore[override]
-    def __rtruediv__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rtruediv__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __rtruediv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7517,7 +7519,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__truediv__`, minus the complex overload
     @overload  # type: ignore[override]
-    def __floordiv__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __floordiv__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7527,7 +7529,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__rtruediv__`, minus the complex overload
     @overload  # type: ignore[override]
-    def __rfloordiv__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rfloordiv__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __rfloordiv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7537,7 +7539,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__floordiv__`
     @overload  # type: ignore[override]
-    def __mod__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __mod__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7547,7 +7549,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__rfloordiv__`
     @overload  # type: ignore[override]
-    def __rmod__(self, x: _CoFloat16, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rmod__(self, x: _CoFloat16, /) -> Self: ...
     @overload
     def __rmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7557,7 +7559,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__mod__`
     @overload  # type: ignore[override]
-    def __divmod__(self, x: _CoFloat16, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
+    def __divmod__(self, x: _CoFloat16, /) -> _2Tuple[Self]: ...
     @overload
     def __divmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> _2Tuple[float64]: ...
     @overload
@@ -7567,7 +7569,7 @@ class float16(floating[_n._16]):
 
     # keep in sync with `__rmod__`
     @overload  # type: ignore[override]
-    def __rdivmod__(self, x: _CoFloat16, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
+    def __rdivmod__(self, x: _CoFloat16, /) -> _2Tuple[Self]: ...
     @overload
     def __rdivmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> _2Tuple[float64]: ...
     @overload
@@ -7591,7 +7593,7 @@ class float32(floating[_n._32]):
 
     #
     @overload  # type: ignore[override]
-    def __add__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __add__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7601,7 +7603,7 @@ class float32(floating[_n._32]):
 
     #
     @overload  # type: ignore[override]
-    def __radd__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __radd__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __radd__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7611,7 +7613,7 @@ class float32(floating[_n._32]):
 
     # keep in sync with __add__
     @overload  # type: ignore[override]
-    def __sub__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __sub__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7621,7 +7623,7 @@ class float32(floating[_n._32]):
 
     # keep in sync with __add__
     @overload  # type: ignore[override]
-    def __rsub__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rsub__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __rsub__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7631,7 +7633,7 @@ class float32(floating[_n._32]):
 
     # keep in sync with __add__
     @overload  # type: ignore[override]
-    def __mul__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __mul__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7641,7 +7643,7 @@ class float32(floating[_n._32]):
 
     # keep in sync with __add__
     @overload  # type: ignore[override]
-    def __rmul__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rmul__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __rmul__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7651,7 +7653,7 @@ class float32(floating[_n._32]):
 
     # keep in sync with __add__
     @overload  # type: ignore[override]
-    def __pow__(self, x: _CoFloat32, mod: None = None, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __pow__(self, x: _CoFloat32, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], mod: None = None, /) -> float64: ...
     @overload
@@ -7661,7 +7663,7 @@ class float32(floating[_n._32]):
 
     # keep in sync with __add__
     @overload  # type: ignore[override]
-    def __rpow__(self, x: _CoFloat32, mod: None = None, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rpow__(self, x: _CoFloat32, mod: None = None, /) -> Self: ...
     @overload
     def __rpow__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], mod: None = None, /) -> float64: ...
     @overload
@@ -7671,7 +7673,7 @@ class float32(floating[_n._32]):
 
     # keep in sync with __add__
     @overload  # type: ignore[override]
-    def __truediv__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __truediv__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __truediv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7681,7 +7683,7 @@ class float32(floating[_n._32]):
 
     # keep in sync with __add__
     @overload  # type: ignore[override]
-    def __rtruediv__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rtruediv__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __rtruediv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7691,13 +7693,13 @@ class float32(floating[_n._32]):
 
     # keep in sync with __truediv__ (minus the complex overload)
     @overload  # type: ignore[override]
-    def __floordiv__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __floordiv__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
     def __floordiv__(self, x: _nt.CanArray0D[integer], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @overload  # type: ignore[override]
-    def __rfloordiv__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rfloordiv__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __rfloordiv__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7705,13 +7707,13 @@ class float32(floating[_n._32]):
 
     # keep in sync with __floordiv__
     @overload  # type: ignore[override]
-    def __mod__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __mod__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
     def __mod__(self, x: _nt.CanArray0D[integer], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @overload  # type: ignore[override]
-    def __rmod__(self, x: _CoFloat32, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rmod__(self, x: _CoFloat32, /) -> Self: ...
     @overload
     def __rmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> float64: ...
     @overload
@@ -7719,13 +7721,13 @@ class float32(floating[_n._32]):
 
     # keep in sync with __mod__
     @overload  # type: ignore[override]
-    def __divmod__(self, x: _CoFloat32, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
+    def __divmod__(self, x: _CoFloat32, /) -> _2Tuple[Self]: ...
     @overload
     def __divmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> _2Tuple[float64]: ...
     @overload
     def __divmod__(self, x: _nt.Just[signedinteger] | _nt.Just[unsignedinteger] | _nt.Just[integer], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @overload  # type: ignore[override]
-    def __rdivmod__(self, x: _CoFloat32, /) -> _2Tuple[Self]: ...  # type: ignore[overload-overlap]
+    def __rdivmod__(self, x: _CoFloat32, /) -> _2Tuple[Self]: ...
     @overload
     def __rdivmod__(self, x: _nt.CanArray0D[_nt.integer64 | _nt.integer32], /) -> _2Tuple[float64]: ...
     @overload
@@ -7950,7 +7952,7 @@ class complex64(complexfloating[_n._32]):
 
     # TODO(jorenham): Figure out these LSP violations
     @overload  # type: ignore[override]
-    def __add__(self, x: _CoComplex64, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __add__(self, x: _CoComplex64, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
     @overload
@@ -7958,7 +7960,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __radd__(self, x: _CoComplex64, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __radd__(self, x: _CoComplex64, /) -> Self: ...
     @overload
     def __radd__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
     @overload
@@ -7966,7 +7968,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __sub__(self, x: _CoComplex64, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __sub__(self, x: _CoComplex64, /) -> Self: ...
     @overload
     def __sub__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
     @overload
@@ -7974,7 +7976,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __rsub__(self, x: _CoComplex64, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rsub__(self, x: _CoComplex64, /) -> Self: ...
     @overload
     def __rsub__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
     @overload
@@ -7982,7 +7984,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __mul__(self, x: _CoComplex64, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __mul__(self, x: _CoComplex64, /) -> Self: ...
     @overload
     def __mul__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
     @overload
@@ -7990,7 +7992,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __rmul__(self, x: _CoComplex64, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rmul__(self, x: _CoComplex64, /) -> Self: ...
     @overload
     def __rmul__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
     @overload
@@ -7998,7 +8000,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __pow__(self, x: _CoComplex64, mod: None = None, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __pow__(self, x: _CoComplex64, mod: None = None, /) -> Self: ...
     @overload
     def __pow__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], mod: None = None, /) -> complex128: ...
     @overload
@@ -8006,7 +8008,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __rpow__(self, x: _CoComplex64, mod: None = None, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rpow__(self, x: _CoComplex64, mod: None = None, /) -> Self: ...
     @overload
     def __rpow__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], mod: None = None, /) -> complex128: ...
     @overload
@@ -8014,7 +8016,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __truediv__(self, x: _CoComplex64, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __truediv__(self, x: _CoComplex64, /) -> Self: ...
     @overload
     def __truediv__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
     @overload
@@ -8022,7 +8024,7 @@ class complex64(complexfloating[_n._32]):
 
     # keep in sync with `__add__`
     @overload  # type: ignore[override]
-    def __rtruediv__(self, x: _CoComplex64, /) -> Self: ...  # type: ignore[overload-overlap]
+    def __rtruediv__(self, x: _CoComplex64, /) -> Self: ...
     @overload
     def __rtruediv__(self, x: _nt.CanArray0D[float64 | _nt.integer64 | _nt.integer32], /) -> complex128: ...
     @overload
