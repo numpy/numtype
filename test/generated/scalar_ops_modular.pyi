@@ -1,4 +1,4 @@
-# @generated 2025-03-27T02:38:39Z with tool/testgen.py
+# @generated 2025-03-27T04:02:44Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -885,3 +885,422 @@ c % c64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c % c64l  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c % f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+###
+# __[r]divmod__
+
+assert_type(divmod(b1, b_py), tuple[np.int8, np.int8])
+assert_type(divmod(b1, i_py), tuple[np.int64, np.int64])
+assert_type(divmod(b1, f_py), tuple[np.float64, np.float64])
+divmod(b1, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(b1, b1), tuple[np.int8, np.int8])
+assert_type(divmod(b1, u8), tuple[np.uint8, np.uint8])
+assert_type(divmod(b1, u16), tuple[np.uint16, np.uint16])
+assert_type(divmod(b1, u32), tuple[np.uint32, np.uint32])
+assert_type(divmod(b1, u64), tuple[np.uint64, np.uint64])
+assert_type(divmod(b1, i8), tuple[np.int8, np.int8])
+assert_type(divmod(b1, i16), tuple[np.int16, np.int16])
+assert_type(divmod(b1, i32), tuple[np.int32, np.int32])
+assert_type(divmod(b1, i64), tuple[np.int64, np.int64])
+assert_type(divmod(b1, f16), tuple[np.float16, np.float16])
+assert_type(divmod(b1, f32), tuple[np.float32, np.float32])
+assert_type(divmod(b1, f64), tuple[np.float64, np.float64])
+assert_type(divmod(b1, f64l), tuple[np.longdouble, np.longdouble])
+divmod(b1, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(b1, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(b1, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(b1, f), tuple[np.floating, np.floating])
+divmod(b1, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(u8, b_py), tuple[np.uint8, np.uint8])
+assert_type(divmod(u8, i_py), tuple[np.uint8, np.uint8])
+assert_type(divmod(u8, f_py), tuple[np.float64, np.float64])
+divmod(u8, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(u8, b1), tuple[np.uint8, np.uint8])
+assert_type(divmod(u8, u8), tuple[np.uint8, np.uint8])
+assert_type(divmod(u8, u16), tuple[np.uint16, np.uint16])
+assert_type(divmod(u8, u32), tuple[np.uint32, np.uint32])
+assert_type(divmod(u8, u64), tuple[np.uint64, np.uint64])
+assert_type(divmod(u8, i8), tuple[np.int16, np.int16])
+assert_type(divmod(u8, i16), tuple[np.int16, np.int16])
+assert_type(divmod(u8, i32), tuple[np.int32, np.int32])
+assert_type(divmod(u8, i64), tuple[np.int64, np.int64])
+assert_type(divmod(u8, f16), tuple[np.float16, np.float16])
+assert_type(divmod(u8, f32), tuple[np.float32, np.float32])
+assert_type(divmod(u8, f64), tuple[np.float64, np.float64])
+assert_type(divmod(u8, f64l), tuple[np.longdouble, np.longdouble])
+divmod(u8, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(u8, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(u8, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(u8, f), tuple[np.floating, np.floating])
+divmod(u8, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(u16, b_py), tuple[np.uint16, np.uint16])
+assert_type(divmod(u16, i_py), tuple[np.uint16, np.uint16])
+assert_type(divmod(u16, f_py), tuple[np.float64, np.float64])
+divmod(u16, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(u16, b1), tuple[np.uint16, np.uint16])
+assert_type(divmod(u16, u8), tuple[np.uint16, np.uint16])
+assert_type(divmod(u16, u16), tuple[np.uint16, np.uint16])
+assert_type(divmod(u16, u32), tuple[np.uint32, np.uint32])
+assert_type(divmod(u16, u64), tuple[np.uint64, np.uint64])
+assert_type(divmod(u16, i8), tuple[np.int32, np.int32])
+assert_type(divmod(u16, i16), tuple[np.int32, np.int32])
+assert_type(divmod(u16, i32), tuple[np.int32, np.int32])
+assert_type(divmod(u16, i64), tuple[np.int64, np.int64])
+assert_type(divmod(u16, f16), tuple[np.float32, np.float32])
+assert_type(divmod(u16, f32), tuple[np.float32, np.float32])
+assert_type(divmod(u16, f64), tuple[np.float64, np.float64])
+assert_type(divmod(u16, f64l), tuple[np.longdouble, np.longdouble])
+divmod(u16, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(u16, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(u16, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(u16, f), tuple[np.floating, np.floating])
+divmod(u16, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(u32, b_py), tuple[np.uint32, np.uint32])
+assert_type(divmod(u32, i_py), tuple[np.uint32, np.uint32])
+assert_type(divmod(u32, f_py), tuple[np.float64, np.float64])
+divmod(u32, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(u32, b1), tuple[np.uint32, np.uint32])
+assert_type(divmod(u32, u8), tuple[np.uint32, np.uint32])
+assert_type(divmod(u32, u16), tuple[np.uint32, np.uint32])
+assert_type(divmod(u32, u32), tuple[np.uint32, np.uint32])
+assert_type(divmod(u32, u64), tuple[np.uint64, np.uint64])
+assert_type(divmod(u32, i8), tuple[np.int64, np.int64])
+assert_type(divmod(u32, i16), tuple[np.int64, np.int64])
+assert_type(divmod(u32, i32), tuple[np.int64, np.int64])
+assert_type(divmod(u32, i64), tuple[np.int64, np.int64])
+assert_type(divmod(u32, f16), tuple[np.float64, np.float64])
+assert_type(divmod(u32, f32), tuple[np.float64, np.float64])
+assert_type(divmod(u32, f64), tuple[np.float64, np.float64])
+assert_type(divmod(u32, f64l), tuple[np.longdouble, np.longdouble])
+divmod(u32, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(u32, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(u32, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(u32, f), tuple[np.floating, np.floating])
+divmod(u32, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(u64, b_py), tuple[np.uint64, np.uint64])
+assert_type(divmod(u64, i_py), tuple[np.uint64, np.uint64])
+assert_type(divmod(u64, f_py), tuple[np.float64, np.float64])
+divmod(u64, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(u64, b1), tuple[np.uint64, np.uint64])
+assert_type(divmod(u64, u8), tuple[np.uint64, np.uint64])
+assert_type(divmod(u64, u16), tuple[np.uint64, np.uint64])
+assert_type(divmod(u64, u32), tuple[np.uint64, np.uint64])
+assert_type(divmod(u64, u64), tuple[np.uint64, np.uint64])
+assert_type(divmod(u64, i8), tuple[np.float64, np.float64])
+assert_type(divmod(u64, i16), tuple[np.float64, np.float64])
+assert_type(divmod(u64, i32), tuple[np.float64, np.float64])
+assert_type(divmod(u64, i64), tuple[np.float64, np.float64])
+assert_type(divmod(u64, f16), tuple[np.float64, np.float64])
+assert_type(divmod(u64, f32), tuple[np.float64, np.float64])
+assert_type(divmod(u64, f64), tuple[np.float64, np.float64])
+assert_type(divmod(u64, f64l), tuple[np.longdouble, np.longdouble])
+divmod(u64, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(u64, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(u64, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(u64, f), tuple[np.floating, np.floating])
+divmod(u64, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(i8, b_py), tuple[np.int8, np.int8])
+assert_type(divmod(i8, i_py), tuple[np.int8, np.int8])
+assert_type(divmod(i8, f_py), tuple[np.float64, np.float64])
+divmod(i8, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(i8, b1), tuple[np.int8, np.int8])
+assert_type(divmod(i8, u8), tuple[np.int16, np.int16])
+assert_type(divmod(i8, u16), tuple[np.int32, np.int32])
+assert_type(divmod(i8, u32), tuple[np.int64, np.int64])
+assert_type(divmod(i8, u64), tuple[np.float64, np.float64])
+assert_type(divmod(i8, i8), tuple[np.int8, np.int8])
+assert_type(divmod(i8, i16), tuple[np.int16, np.int16])
+assert_type(divmod(i8, i32), tuple[np.int32, np.int32])
+assert_type(divmod(i8, i64), tuple[np.int64, np.int64])
+assert_type(divmod(i8, f16), tuple[np.float16, np.float16])
+assert_type(divmod(i8, f32), tuple[np.float32, np.float32])
+assert_type(divmod(i8, f64), tuple[np.float64, np.float64])
+assert_type(divmod(i8, f64l), tuple[np.longdouble, np.longdouble])
+divmod(i8, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(i8, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(i8, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(i8, f), tuple[np.floating, np.floating])
+divmod(i8, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(i16, b_py), tuple[np.int16, np.int16])
+assert_type(divmod(i16, i_py), tuple[np.int16, np.int16])
+assert_type(divmod(i16, f_py), tuple[np.float64, np.float64])
+divmod(i16, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(i16, b1), tuple[np.int16, np.int16])
+assert_type(divmod(i16, u8), tuple[np.int16, np.int16])
+assert_type(divmod(i16, u16), tuple[np.int32, np.int32])
+assert_type(divmod(i16, u32), tuple[np.int64, np.int64])
+assert_type(divmod(i16, u64), tuple[np.float64, np.float64])
+assert_type(divmod(i16, i8), tuple[np.int16, np.int16])
+assert_type(divmod(i16, i16), tuple[np.int16, np.int16])
+assert_type(divmod(i16, i32), tuple[np.int32, np.int32])
+assert_type(divmod(i16, i64), tuple[np.int64, np.int64])
+assert_type(divmod(i16, f16), tuple[np.float32, np.float32])
+assert_type(divmod(i16, f32), tuple[np.float32, np.float32])
+assert_type(divmod(i16, f64), tuple[np.float64, np.float64])
+assert_type(divmod(i16, f64l), tuple[np.longdouble, np.longdouble])
+divmod(i16, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(i16, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(i16, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(i16, f), tuple[np.floating, np.floating])
+divmod(i16, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(i32, b_py), tuple[np.int32, np.int32])
+assert_type(divmod(i32, i_py), tuple[np.int32, np.int32])
+assert_type(divmod(i32, f_py), tuple[np.float64, np.float64])
+divmod(i32, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(i32, b1), tuple[np.int32, np.int32])
+assert_type(divmod(i32, u8), tuple[np.int32, np.int32])
+assert_type(divmod(i32, u16), tuple[np.int32, np.int32])
+assert_type(divmod(i32, u32), tuple[np.int64, np.int64])
+assert_type(divmod(i32, u64), tuple[np.float64, np.float64])
+assert_type(divmod(i32, i8), tuple[np.int32, np.int32])
+assert_type(divmod(i32, i16), tuple[np.int32, np.int32])
+assert_type(divmod(i32, i32), tuple[np.int32, np.int32])
+assert_type(divmod(i32, i64), tuple[np.int64, np.int64])
+assert_type(divmod(i32, f16), tuple[np.float64, np.float64])
+assert_type(divmod(i32, f32), tuple[np.float64, np.float64])
+assert_type(divmod(i32, f64), tuple[np.float64, np.float64])
+assert_type(divmod(i32, f64l), tuple[np.longdouble, np.longdouble])
+divmod(i32, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(i32, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(i32, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(i32, f), tuple[np.floating, np.floating])
+divmod(i32, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(i64, b_py), tuple[np.int64, np.int64])
+assert_type(divmod(i64, i_py), tuple[np.int64, np.int64])
+assert_type(divmod(i64, f_py), tuple[np.float64, np.float64])
+divmod(i64, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(i64, b1), tuple[np.int64, np.int64])
+assert_type(divmod(i64, u8), tuple[np.int64, np.int64])
+assert_type(divmod(i64, u16), tuple[np.int64, np.int64])
+assert_type(divmod(i64, u32), tuple[np.int64, np.int64])
+assert_type(divmod(i64, u64), tuple[np.float64, np.float64])
+assert_type(divmod(i64, i8), tuple[np.int64, np.int64])
+assert_type(divmod(i64, i16), tuple[np.int64, np.int64])
+assert_type(divmod(i64, i32), tuple[np.int64, np.int64])
+assert_type(divmod(i64, i64), tuple[np.int64, np.int64])
+assert_type(divmod(i64, f16), tuple[np.float64, np.float64])
+assert_type(divmod(i64, f32), tuple[np.float64, np.float64])
+assert_type(divmod(i64, f64), tuple[np.float64, np.float64])
+assert_type(divmod(i64, f64l), tuple[np.longdouble, np.longdouble])
+divmod(i64, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(i64, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(i64, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(i64, f), tuple[np.floating, np.floating])
+divmod(i64, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(f16, b_py), tuple[np.float16, np.float16])
+assert_type(divmod(f16, i_py), tuple[np.float16, np.float16])
+assert_type(divmod(f16, f_py), tuple[np.float16, np.float16])
+divmod(f16, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f16, b1), tuple[np.float16, np.float16])
+assert_type(divmod(f16, u8), tuple[np.float16, np.float16])
+assert_type(divmod(f16, u16), tuple[np.float32, np.float32])
+assert_type(divmod(f16, u32), tuple[np.float64, np.float64])
+assert_type(divmod(f16, u64), tuple[np.float64, np.float64])
+assert_type(divmod(f16, i8), tuple[np.float16, np.float16])
+assert_type(divmod(f16, i16), tuple[np.float32, np.float32])
+assert_type(divmod(f16, i32), tuple[np.float64, np.float64])
+assert_type(divmod(f16, i64), tuple[np.float64, np.float64])
+assert_type(divmod(f16, f16), tuple[np.float16, np.float16])
+assert_type(divmod(f16, f32), tuple[np.float32, np.float32])
+assert_type(divmod(f16, f64), tuple[np.float64, np.float64])
+assert_type(divmod(f16, f64l), tuple[np.longdouble, np.longdouble])
+divmod(f16, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f16, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f16, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f16, f), tuple[np.floating, np.floating])
+divmod(f16, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(f32, b_py), tuple[np.float32, np.float32])
+assert_type(divmod(f32, i_py), tuple[np.float32, np.float32])
+assert_type(divmod(f32, f_py), tuple[np.float32, np.float32])
+divmod(f32, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f32, b1), tuple[np.float32, np.float32])
+assert_type(divmod(f32, u8), tuple[np.float32, np.float32])
+assert_type(divmod(f32, u16), tuple[np.float32, np.float32])
+assert_type(divmod(f32, u32), tuple[np.float64, np.float64])
+assert_type(divmod(f32, u64), tuple[np.float64, np.float64])
+assert_type(divmod(f32, i8), tuple[np.float32, np.float32])
+assert_type(divmod(f32, i16), tuple[np.float32, np.float32])
+assert_type(divmod(f32, i32), tuple[np.float64, np.float64])
+assert_type(divmod(f32, i64), tuple[np.float64, np.float64])
+assert_type(divmod(f32, f16), tuple[np.float32, np.float32])
+assert_type(divmod(f32, f32), tuple[np.float32, np.float32])
+assert_type(divmod(f32, f64), tuple[np.float64, np.float64])
+assert_type(divmod(f32, f64l), tuple[np.longdouble, np.longdouble])
+divmod(f32, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f32, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f32, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f32, f), tuple[np.floating, np.floating])
+divmod(f32, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(f64, b_py), tuple[np.float64, np.float64])
+assert_type(divmod(f64, i_py), tuple[np.float64, np.float64])
+assert_type(divmod(f64, f_py), tuple[np.float64, np.float64])
+divmod(f64, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f64, b1), tuple[np.float64, np.float64])
+assert_type(divmod(f64, u8), tuple[np.float64, np.float64])
+assert_type(divmod(f64, u16), tuple[np.float64, np.float64])
+assert_type(divmod(f64, u32), tuple[np.float64, np.float64])
+assert_type(divmod(f64, u64), tuple[np.float64, np.float64])
+assert_type(divmod(f64, i8), tuple[np.float64, np.float64])
+assert_type(divmod(f64, i16), tuple[np.float64, np.float64])
+assert_type(divmod(f64, i32), tuple[np.float64, np.float64])
+assert_type(divmod(f64, i64), tuple[np.float64, np.float64])
+assert_type(divmod(f64, f16), tuple[np.float64, np.float64])
+assert_type(divmod(f64, f32), tuple[np.float64, np.float64])
+assert_type(divmod(f64, f64), tuple[np.float64, np.float64])
+assert_type(divmod(f64, f64l), tuple[np.longdouble, np.longdouble])
+divmod(f64, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f64, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f64, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f64, f), tuple[np.floating, np.floating])
+divmod(f64, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(f64l, b_py), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, i_py), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, f_py), tuple[np.longdouble, np.longdouble])
+divmod(f64l, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f64l, b1), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, u8), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, u16), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, u32), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, u64), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, i8), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, i16), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, i32), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, i64), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, f16), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, f32), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, f64), tuple[np.longdouble, np.longdouble])
+assert_type(divmod(f64l, f64l), tuple[np.longdouble, np.longdouble])
+divmod(f64l, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f64l, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f64l, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f64l, f), tuple[np.longdouble, np.longdouble])
+divmod(f64l, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+divmod(c32, b_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, i_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, f_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, b1)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, u8)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, u16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, u32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, u64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, i8)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, i16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, i32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, i64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, f16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, f32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, f64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, f64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, f)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c32, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+divmod(c64, b_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, i_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, f_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, b1)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, u8)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, u16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, u32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, u64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, i8)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, i16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, i32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, i64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, f16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, f32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, f64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, f64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, f)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+divmod(c64l, b_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, i_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, f_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, b1)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, u8)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, u16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, u32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, u64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, i8)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, i16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, i32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, i64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, f16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, f32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, f64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, f64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, f)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c64l, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+assert_type(divmod(m64, m64), tuple[np.int64, np.timedelta64])
+
+assert_type(divmod(f, b_py), tuple[np.floating, np.floating])
+assert_type(divmod(f, i_py), tuple[np.floating, np.floating])
+assert_type(divmod(f, f_py), tuple[np.floating, np.floating])
+divmod(f, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f, b1), tuple[np.floating, np.floating])
+assert_type(divmod(f, u8), tuple[np.floating, np.floating])
+assert_type(divmod(f, u16), tuple[np.floating, np.floating])
+assert_type(divmod(f, u32), tuple[np.floating, np.floating])
+assert_type(divmod(f, u64), tuple[np.floating, np.floating])
+assert_type(divmod(f, i8), tuple[np.floating, np.floating])
+assert_type(divmod(f, i16), tuple[np.floating, np.floating])
+assert_type(divmod(f, i32), tuple[np.floating, np.floating])
+assert_type(divmod(f, i64), tuple[np.floating, np.floating])
+assert_type(divmod(f, f16), tuple[np.floating, np.floating])
+assert_type(divmod(f, f32), tuple[np.floating, np.floating])
+assert_type(divmod(f, f64), tuple[np.floating, np.floating])
+assert_type(divmod(f, f64l), tuple[np.longdouble, np.longdouble])
+divmod(f, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(f, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+assert_type(divmod(f, f), tuple[np.floating, np.floating])
+divmod(f, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+divmod(c, b_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, i_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, f_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, b1)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, u8)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, u16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, u32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, u64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, i8)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, i16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, i32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, i64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, f16)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, f32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, f64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, f64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, c32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, c64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, c64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, f)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
