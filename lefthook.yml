@@ -11,10 +11,6 @@ pre-commit:
       glob: "*.{py,pyi}"
       run: uv run --no-group=orjson ruff format {staged_files}
       stage_fixed: true
-    markdown-lint:
-      glob: "*.md"
-      run: uv run --no-group=orjson mdformat {staged_files}
-      stage_fixed: true
     ignore-format:
       glob: "*.{py,pyi}"
       run: uv run --no-group=orjson tool/format_ignores.py {staged_files}
