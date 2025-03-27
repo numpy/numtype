@@ -210,10 +210,10 @@ the official [style guide for stubs][stub-style].
 Both `.py` and `.pyi` are linted and formatted using [`ruff`][ruff], which is
 one of the development dependencies.
 
-<!--overview-end-->
-
 [numpy-commit-style]: https://numpy.org/devdocs/dev/development_workflow.html#writing-the-commit-message
 [ruff]: https://docs.astral.sh/ruff/
 [stub-style]: https://typing.python.org/en/latest/guides/writing_stubs.html#style-guide
 [test-docs]: https://github.com/numpy/numtype/tree/main/test
 [tool-docs]: https://github.com/numpy/numtype/tree/main/tool
+
+<!--overview-end-->

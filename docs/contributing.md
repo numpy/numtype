@@ -1,15 +1,12 @@
-______________________________________________________________________
-
+---
 hide:
-
-- navigation
-
-______________________________________________________________________
+  - navigation
+---
 
 # Contributing to NumType
 
 {%
-include-markdown "../CONTRIBUTING.md"
-start="<!--overview-start-->"
-end="<!--overview-end-->"
+   include-markdown "../CONTRIBUTING.md"
+   start="<!--overview-start-->"
+   end="<!--overview-end-->"
 %}
