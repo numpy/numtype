@@ -169,14 +169,20 @@ def _join(*types: str) -> str:
     """Find the common base type, i.e. union + upcast."""
     numbers, other = __group_types(*types)
     if other:
+        if not numbers:
+            return " | ".join(other)
+
         raise NotImplementedError(f"join of non-number types: {types}")
 
     kinds = "".join(set(numbers))
     if len(kinds) == 1 and len(numbers[kinds]) == 1:
-        return numbers[kinds][0]
-    if kinds in _NUMBERS_ABSTRACT:
-        return f"{NP}.{_NUMBERS_ABSTRACT[kinds]}"
-    return f"{NP}.number"
+        expr = numbers[kinds][0]
+    elif kinds in _NUMBERS_ABSTRACT:
+        expr = f"{NP}.{_NUMBERS_ABSTRACT[kinds]}"
+    else:
+        expr = f"{NP}.number"
+
+    return expr
 
 
 def _strip_preamble(source: str) -> tuple[str | None, str]:
@@ -627,14 +633,11 @@ class ScalarOps(TestGen):
         "M": "M64",
         "m": "m64",
         # # abstract numeric
-        # TODO(jorenham): Enable integers once the concrete integer types are there
-        # https://github.com/numpy/numtype/issues/136
-        # "BHIL": "u",  # unsignedinteger
-        # "bhil": "i",  # signedinteger
+        "BHIL": "u",  # unsignedinteger
+        "bhil": "i",  # signedinteger
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
-        # TODO(jorenham): Enable integers once all concrete number types are present
-        # https://github.com/numpy/numtype/issues/136
+        # TODO(jorenham): Enable these
         # "BHILbhil": "ui",  # integer
         # "efdgFDG": "fc",  # inexact
         # "BHILbhilefdgFDG": "uifc",  # number
