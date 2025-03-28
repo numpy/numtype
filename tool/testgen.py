@@ -645,8 +645,7 @@ class ScalarOps(TestGen):
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
         "BHILbhil": "ui",  # integer
-        # TODO(jorenham): Enable these
-        # "efdgFDG": "fc",  # inexact
+        "efdgFDG": "fc",  # inexact
         # "BHILbhilefdgFDG": "uifc",  # number
     }
     ABSTRACT_TYPES: ClassVar = {
