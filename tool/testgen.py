@@ -144,7 +144,7 @@ def _union(*types: str) -> str:
             combined.extend(numbers[kind])
 
     if other:
-        if other[0] == "np.bool":
+        if other[0] == f"{NP}.bool":
             combined = [other[0]] + combined + other[1:]
         else:
             combined.extend(other)
@@ -168,15 +168,28 @@ def _union(*types: str) -> str:
 def _join(*types: str) -> str:
     """Find the common base type, i.e. union + upcast."""
     numbers, other = __group_types(*types)
-    if other:
+    if other and numbers:
         raise NotImplementedError(f"join of non-number types: {types}")
 
-    kinds = "".join(set(numbers))
-    if len(kinds) == 1 and len(numbers[kinds]) == 1:
-        return numbers[kinds][0]
-    if kinds in _NUMBERS_ABSTRACT:
-        return f"{NP}.{_NUMBERS_ABSTRACT[kinds]}"
-    return f"{NP}.number"
+    # special case for accidental `bool` return from `timedelta64.__eq__` on numpy <2.3
+    if not numbers and len(other) == 2 and set(other) == {f"{NP}.bool", "bool"}:  # noqa: PLR2004
+        return f"{NP}.bool"
+
+    # special case to avoid upcasting e.g. `[un]signedinteger | float64` to `number`
+    if len(numbers) > 1 and len(numbers.get("f", [])) == 1 and "c" not in numbers:
+        other.extend(numbers.pop("f"))
+
+    if numbers:
+        kinds = "".join(set(numbers))
+        if len(kinds) == 1 and len(numbers[kinds]) == 1:
+            expr = numbers[kinds][0]
+        elif kinds in _NUMBERS_ABSTRACT:
+            expr = f"{NP}.{_NUMBERS_ABSTRACT[kinds]}"
+        else:
+            expr = f"{NP}.number"
+        other.insert(0, expr)
+
+    return " | ".join(other)
 
 
 def _strip_preamble(source: str) -> tuple[str | None, str]:
@@ -627,14 +640,11 @@ class ScalarOps(TestGen):
         "M": "M64",
         "m": "m64",
         # # abstract numeric
-        # TODO(jorenham): Enable integers once the concrete integer types are there
-        # https://github.com/numpy/numtype/issues/136
-        # "BHIL": "u",  # unsignedinteger
-        # "bhil": "i",  # signedinteger
+        "BHIL": "u",  # unsignedinteger
+        "bhil": "i",  # signedinteger
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
-        # TODO(jorenham): Enable integers once all concrete number types are present
-        # https://github.com/numpy/numtype/issues/136
+        # TODO(jorenham): Enable these
         # "BHILbhil": "ui",  # integer
         # "efdgFDG": "fc",  # inexact
         # "BHILbhilefdgFDG": "uifc",  # number
@@ -728,6 +738,13 @@ class ScalarOps(TestGen):
             ):
                 return None
 
+            # mypy special casing
+            if lhs == "b" and self._is_builtin(rhs) and op in self.OPS_BITWISE:
+                mypy_code = "type-var"
+            else:
+                mypy_code = "operator"
+
+            # pyright special casing
             if is_op:
                 pyright_rules = ["OperatorIssue"]
             else:
@@ -736,7 +753,7 @@ class ScalarOps(TestGen):
 
             return "  ".join((
                 expr_eval,
-                "# type: ignore[operator]",
+                f"# type: ignore[{mypy_code}]",
                 f"# pyright: ignore[{pyright_ignore}]",
             ))
 
