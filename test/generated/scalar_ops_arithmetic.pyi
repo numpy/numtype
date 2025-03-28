@@ -1,4 +1,4 @@
-# @generated 2025-03-28T16:57:13Z with tool/testgen.py
+# @generated 2025-03-28T19:10:47Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -640,7 +640,7 @@ assert_type(ui + u, np.integer | np.float64)
 assert_type(ui + i, np.signedinteger | np.float64)
 assert_type(ui + f, np.floating)
 assert_type(ui + c, np.complexfloating)
-assert_type(ui + ui, np.integer | np.float64)
+assert_type(ui + ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
 
 ###
 # __[r]sub__
@@ -1234,7 +1234,7 @@ assert_type(ui - u, np.integer | np.float64)
 assert_type(ui - i, np.signedinteger | np.float64)
 assert_type(ui - f, np.floating)
 assert_type(ui - c, np.complexfloating)
-assert_type(ui - ui, np.integer | np.float64)
+assert_type(ui - ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
 
 ###
 # __[r]mul__
@@ -1821,7 +1821,7 @@ assert_type(ui * u, np.integer | np.float64)
 assert_type(ui * i, np.signedinteger | np.float64)
 assert_type(ui * f, np.floating)
 assert_type(ui * c, np.complexfloating)
-assert_type(ui * ui, np.integer | np.float64)
+assert_type(ui * ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
 
 ###
 # __[r]pow__
@@ -2370,7 +2370,7 @@ assert_type(ui**u, np.integer | np.float64)
 assert_type(ui**i, np.signedinteger | np.float64)
 assert_type(ui**f, np.floating)
 assert_type(ui**c, np.complexfloating)
-assert_type(ui**ui, np.integer | np.float64)
+assert_type(ui**ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
 
 ###
 # __[r]truediv__

@@ -767,7 +767,20 @@ class ScalarOps(TestGen):
         ):
             expr_type = f"{NP}.int_"
 
-        return None if expr_type == "bool" else _expr_assert_type(expr_eval, expr_type)
+        if expr_type == "bool":
+            return None
+
+        stmt = _expr_assert_type(expr_eval, expr_type)
+
+        # workaround for mypy's lack of support for reflected binary ops like __radd__
+        if lhs == rhs == "BHILbhil" and op in self.OPS_ARITHMETIC and "/" not in op:
+            stmt = "  # ".join((  # noqa: FLY002
+                stmt,
+                "type: ignore[assert-type, operator]",
+                "NOTE: mypy workaround",
+            ))
+
+        return stmt
 
     @override
     def _generate_names_section(self) -> Generator[str]:
