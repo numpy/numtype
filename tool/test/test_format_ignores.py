@@ -1,32 +1,18 @@
+"""Test the format_ignores module."""
+
+# ruff: noqa: PLC2701
 import errno
 import sys
-import tempfile
-from collections.abc import Generator
 from pathlib import Path
 
 import pytest
 
-tool_path = str(Path(__file__).parent.parent.parent)
-if tool_path not in sys.path:
-    sys.path.insert(0, tool_path)
-
-from tool.format_ignores import (  # noqa: E402
-    _process_directory,  # noqa: PLC2701
-    _process_file,  # noqa: PLC2701
-    _sort_ignore_list,  # noqa: PLC2701
+from tool.format_ignores import (
+    _process_directory,
+    _process_file,
+    _sort_ignore_list,
     main,
 )
-
-
-@pytest.fixture
-def temp_dir() -> Generator[Path, None, None]:
-    """Temporary directory for testing
-
-    Yields:
-        Path: The path to the temporary directory.
-    """
-    with tempfile.TemporaryDirectory() as temp_dir_path:
-        yield Path(temp_dir_path)
 
 
 @pytest.mark.parametrize(
@@ -42,22 +28,22 @@ def temp_dir() -> Generator[Path, None, None]:
     ],
 )
 def test_sort_ignore_list(input_text: str, expected_output: str) -> None:
-    """Test _sort_ignore_list function"""
+    """Test _sort_ignore_list function."""
     result = _sort_ignore_list(input_text)
     assert result == expected_output
 
 
-def test_process_file(temp_dir: Path) -> None:
-    """Test _process_file function"""
-    test_file = temp_dir / "test.pyi"
+def test_process_file(tmpdir: pytest.TempdirFactory) -> None:
+    """Test _process_file function."""
+    test_file = Path(str(tmpdir)) / "test.pyi"
     test_content = """def func1() -> None:
     # type: ignore[attr-defined, no-any-return]
     pass
 
-def func2() -> None:
-    # pyright: ignore[reportUnknownMemberType,reportUnknownVariableType]
-    pass
-"""
+    def func2() -> None:
+        # pyright: ignore[reportUnknownMemberType,reportUnknownVariableType]
+        pass
+    """
     test_file.write_text(test_content, encoding="utf-8")
 
     # Check-only mode
@@ -73,10 +59,10 @@ def func2() -> None:
     # type: ignore[attr-defined, no-any-return]
     pass
 
-def func2() -> None:
-    # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
-    pass
-"""
+    def func2() -> None:
+        # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
+        pass
+    """
     assert test_file.read_text(encoding="utf-8") == expected_content
 
     # Re-processing
@@ -84,19 +70,20 @@ def func2() -> None:
     assert modified is False
 
 
-def test_process_directory(temp_dir: Path) -> None:
-    """Test _process_directory function"""
+def test_process_directory(tmpdir: pytest.TempdirFactory) -> None:
+    """Test _process_directory function."""
+    temp_dir = Path(str(tmpdir))
     # Create directory structure
     (temp_dir / "subdir").mkdir()
     (temp_dir / ".hidden_dir").mkdir()
 
     # Create test files
     test_files = [
-        temp_dir / "test1.pyi",  # Already formatted
-        temp_dir / "test2.pyi",  # Already formatted
-        temp_dir / "subdir" / "test3.pyi",  # Needs formatting
-        temp_dir / ".hidden_dir" / "test4.pyi",  # In hidden dir
-        temp_dir / "test5.py",  # Wrong extension
+        temp_dir / "test1_formatted.pyi",
+        temp_dir / "test2_formatted.pyi",
+        temp_dir / "subdir" / "test3_unformatted.pyi",
+        temp_dir / ".hidden_dir" / "test4_hidden.pyi",
+        temp_dir / "test5_wrong_extension.py",
     ]
 
     test_files[0].write_text(
@@ -126,17 +113,23 @@ def test_process_directory(temp_dir: Path) -> None:
         glob_pattern="**/*.pyi",
         check_only=True,
     )
+    correct_total = 3
+
     assert modified == 1  # Only test3.pyi needs modification
-    assert total == 3  # Three files checked
+    assert total == correct_total
 
     # Processing mode
     modified, total = _process_directory(temp_dir, glob_pattern="**/*.pyi")
     assert modified == 1
-    assert total == 3
+    assert total == correct_total
 
     # Verify results
     assert (
         test_files[0].read_text(encoding="utf-8")
+        == "# type: ignore[attr-defined, no-any-return]"
+    )
+    assert (
+        test_files[1].read_text(encoding="utf-8")
         == "# type: ignore[attr-defined, no-any-return]"
     )
     assert (
@@ -153,9 +146,12 @@ def test_process_directory(temp_dir: Path) -> None:
     )
 
 
-def test_main_success(temp_dir: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """Test main function with valid path"""
-    test_file = temp_dir / "test.pyi"
+def test_main_success(
+    tmpdir: pytest.TempdirFactory,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Test main function with valid path."""
+    test_file = Path(str(tmpdir)) / "test.pyi"
     test_file.write_text(
         "# type: ignore[no-any-return, attr-defined]",
         encoding="utf-8",
@@ -172,9 +168,12 @@ def test_main_success(temp_dir: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     )
 
 
-def test_main_check_mode(temp_dir: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """Test main function in check-only mode"""
-    test_file = temp_dir / "test.pyi"
+def test_main_check_mode(
+    tmpdir: pytest.TempdirFactory,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Test main function in check-only mode."""
+    test_file = Path(str(tmpdir)) / "test.pyi"
     test_file.write_text(
         "# type: ignore[no-any-return, attr-defined]",
         encoding="utf-8",
@@ -192,7 +191,7 @@ def test_main_check_mode(temp_dir: Path, monkeypatch: pytest.MonkeyPatch) -> Non
 
 
 def test_main_path_not_found(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Test main function with non-existent path"""
+    """Test main function with non-existent path."""
     non_existent_path = "/non/existent/path"
     monkeypatch.setattr(sys, "argv", ["format_ignores.py", non_existent_path])
 
@@ -200,8 +199,12 @@ def test_main_path_not_found(monkeypatch: pytest.MonkeyPatch) -> None:
     assert exit_code == errno.ENOENT  # Path not found
 
 
-def test_main_custom_pattern(temp_dir: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    """Test main function with custom pattern"""
+def test_main_custom_pattern(
+    tmpdir: pytest.TempdirFactory,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Test main function with custom pattern."""
+    temp_dir = Path(str(tmpdir))
     test_py = temp_dir / "test.py"
     test_py.write_text("# type: ignore[no-any-return, attr-defined]", encoding="utf-8")
 
