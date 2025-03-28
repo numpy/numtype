@@ -644,8 +644,8 @@ class ScalarOps(TestGen):
         "bhil": "i",  # signedinteger
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
+        "BHILbhil": "ui",  # integer
         # TODO(jorenham): Enable these
-        # "BHILbhil": "ui",  # integer
         # "efdgFDG": "fc",  # inexact
         # "BHILbhilefdgFDG": "uifc",  # number
     }
