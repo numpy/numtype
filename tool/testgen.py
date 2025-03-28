@@ -144,7 +144,7 @@ def _union(*types: str) -> str:
             combined.extend(numbers[kind])
 
     if other:
-        if other[0] == "np.bool":
+        if other[0] == f"{NP}.bool":
             combined = [other[0]] + combined + other[1:]
         else:
             combined.extend(other)
@@ -170,6 +170,10 @@ def _join(*types: str) -> str:
     numbers, other = __group_types(*types)
     if other and numbers:
         raise NotImplementedError(f"join of non-number types: {types}")
+
+    # special case for accidental `bool` return from `timedelta64.__eq__` on numpy <2.3
+    if not numbers and len(other) == 2 and set(other) == {f"{NP}.bool", "bool"}:  # noqa: PLR2004
+        return f"{NP}.bool"
 
     # special case to avoid upcasting e.g. `[un]signedinteger | float64` to `number`
     if len(numbers) > 1 and len(numbers.get("f", [])) == 1 and "c" not in numbers:

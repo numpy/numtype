@@ -1,4 +1,4 @@
-# @generated 2025-03-27T10:30:59Z with tool/testgen.py
+# @generated 2025-03-28T03:13:45Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -2532,7 +2532,7 @@ assert_type(u == f64l, np.bool)
 assert_type(u == c32, np.bool)
 assert_type(u == c64, np.bool)
 assert_type(u == c64l, np.bool)
-assert_type(u == m64, np.bool | bool)
+assert_type(u == m64, np.bool)
 
 assert_type(i == b_py, np.bool)
 assert_type(i == i_py, np.bool)
@@ -2979,7 +2979,7 @@ assert_type(u != f64l, np.bool)
 assert_type(u != c32, np.bool)
 assert_type(u != c64, np.bool)
 assert_type(u != c64l, np.bool)
-assert_type(u != m64, np.bool | bool)
+assert_type(u != m64, np.bool)
 
 assert_type(i != b_py, np.bool)
 assert_type(i != i_py, np.bool)
