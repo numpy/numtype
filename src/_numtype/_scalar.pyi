@@ -25,10 +25,10 @@ integer32: TypeAlias = np.uint32 | np.int32
 integer_l: TypeAlias = np.ulong | np.long
 integer64: TypeAlias = np.uint64 | np.int64
 
-inexact32: TypeAlias = np.float32 | np.complex64
-inexact64: TypeAlias = np.float64 | np.complex128
-inexact64l: TypeAlias = np.longdouble | np.clongdouble
+inexact32: TypeAlias = np.complex64 | np.float32
+inexact64: TypeAlias = np.complex128 | np.float64
+inexact64l: TypeAlias = np.clongdouble | np.longdouble
 
-number16: TypeAlias = integer16 | np.float16
-number32: TypeAlias = integer32 | inexact32
+number16: TypeAlias = np.float16 | integer16
+number32: TypeAlias = inexact32 | integer32
 number64: TypeAlias = inexact64 | integer64
