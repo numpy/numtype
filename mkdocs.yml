@@ -4,7 +4,7 @@ strict: true
 
 site_name: NumType
 site_description: Better typing stubs for NumPy
-site_author: Joren Hammudoglu & NumPy Developers
+site_author: Joren Hammudoglu
 
 site_url: https://numpy.org/numtype/
 repo_url: https://github.com/numpy/numtype
@@ -12,9 +12,11 @@ repo_name: numpy/numtype
 edit_uri: blob/main/docs/
 
 nav:
-  - "User Guide": user_guide.md
-  - "API Reference": reference.md
-  - "Development": contributing.md
+  - User Guide:
+      - NumType User Guide: user_guide/index.md
+      - Differences with NumPy: user_guide/differences.md
+  - API Reference: reference.md
+  - Development: contributing.md
 
 theme:
   name: material
@@ -71,6 +73,7 @@ plugins:
   # https://github.com/byrnereese/mkdocs-minify-plugin
   - minify:
       minify_html: true
+      enabled: !ENV [CI, false]
 
   # https://github.com/mkdocstrings/mkdocstrings
   # https://github.com/mkdocstrings/python
@@ -96,15 +99,28 @@ plugins:
       enabled: !ENV [CI, false]
 
 markdown_extensions:
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
   - abbr
   - admonition
   - attr_list
   - def_list
   - footnotes
   - md_in_html
+  - toc:
+      permalink: "🔗"
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/emoji/
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/highlight/
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.superfences
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/
   - pymdownx.magiclink:
       repo_url_shortener: true
       repo_url_shorthand: true
