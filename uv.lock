@@ -600,6 +600,7 @@ dev = [
     { name = "mkdocstrings", extra = ["python"] },
     { name = "mypy", extra = ["faster-cache"] },
     { name = "numtype", extra = ["numpy"] },
+    { name = "pygments" },
     { name = "pytest" },
     { name = "ruff" },
     { name = "types-setuptools" },
@@ -611,6 +612,7 @@ docs = [
     { name = "mkdocs-material" },
     { name = "mkdocs-minify-plugin" },
     { name = "mkdocstrings", extra = ["python"] },
+    { name = "pygments" },
 ]
 lint = [
     { name = "ruff" },
@@ -675,6 +677,7 @@ dev = [
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.0" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
     { name = "numtype", extras = ["numpy"] },
+    { name = "pygments", specifier = ">=2.19.1" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ruff", specifier = ">=0.11.2" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
@@ -686,6 +689,7 @@ docs = [
     { name = "mkdocs-material", specifier = ">=9.6.9" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.0" },
+    { name = "pygments", specifier = ">=2.19.1" },
 ]
 lint = [{ name = "ruff", specifier = ">=0.11.2" }]
 list-and-test = [
