@@ -1,0 +1,209 @@
+/*
+ https://www.figma.com/design/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---ongoing-implementation
+ */
+
+html[data-theme="light"] {
+  --pst-color-primary: #0a7d91;
+  --pst-color-primary-text: #fff;
+  --pst-color-primary-highlight: #086b7c;
+  --pst-color-primary-highlight-text: #fff;
+  --pst-color-primary-bg: #d0ecf1;
+
+  --pst-color-secondary: #8045e5;
+  --pst-color-secondary-text: #fff;
+  --pst-color-secondary-highlight: #651ee0;
+  --pst-color-secondary-highlight-text: #fff;
+  --pst-color-secondary-bg: #e0c7ff;
+
+  --pst-color-success: #00843f;
+  --pst-color-success-text: #fff;
+  --pst-color-success-highlight: #007036;
+  --pst-color-success-highlight-text: #fff;
+
+  --pst-color-info: #276be9;
+  --pst-color-info-text: #fff;
+  --pst-color-info-highlight: #1457d3;
+  --pst-color-info-highlight-text: #fff;
+
+  --pst-color-warning: #f66a0a;
+  --pst-color-warning-text: #14181e;
+  --pst-color-warning-highlight: #d25a07;
+  --pst-color-warning-highlight-text: #14181e;
+  --pst-color-warning-bg: #f8e3d0;
+
+  --pst-color-danger: #d72d47;
+  --pst-color-danger-text: #fff;
+  --pst-color-danger-highlight: #bb2239;
+  --pst-color-danger-highlight-text: #fff;
+  --pst-color-danger-bg: #f9e1e4;
+
+  --pst-color-light: #f3f4f5;
+  --pst-color-light-text: #14181e;
+  --pst-color-light-highlight: #c9cfd6;
+  --pst-color-light-highlight-text: #14181e;
+
+  --pst-color-muted: #29313d;
+  --pst-color-muted-text: #fff;
+  --pst-color-muted-highlight: #212936;
+  --pst-color-muted-highlight-text: #fff;
+
+  --pst-color-dark: #222832;
+  --pst-color-dark-text: #fff;
+  --pst-color-dark-highlight: #1b222c;
+  --pst-color-dark-highlight-text: #fff;
+
+  --pst-color-black: #14181e;
+  --pst-color-black-text: #fff;
+  --pst-color-black-highlight: #10141a;
+  --pst-color-black-highlight-text: #fff;
+
+  --pst-color-white: #fff;
+  --pst-color-white-text: #14181e;
+  --pst-color-white-highlight: #dbd7d7;
+  --pst-color-white-highlight-text: #14181e;
+
+  --pst-color-accent: #c132af;
+  --pst-color-accent-bg: #f8dff5;
+
+  --pst-color-info-bg: #dce7fc;
+  --pst-color-success-bg: #d6ece1;
+
+  --pst-color-text-base: #222832;
+  --pst-color-text-muted: #48566b;
+  --pst-color-heading-color: #fff;
+  --pst-color-shadow: rgba(0, 0, 0, 0.1);
+  --pst-color-border: #d1d5da;
+  --pst-color-border-muted: rgba(23, 23, 26, 0.2);
+  --pst-color-blockquote-notch: #677384;
+  --pst-color-inline-code: #912583;
+  --pst-color-inline-code-links: #085d6c;
+  --pst-color-target: #f3cf95;
+  --pst-color-table: #14181e;
+  --pst-color-table-row-hover-bg: #b780ff;
+  --pst-color-table-inner-border: #e5e7ea;
+  --pst-color-background: #fff;
+  --pst-color-on-background: #fff;
+  --pst-color-surface: #f3f4f5;
+  --pst-color-on-surface: #222832;
+}
+
+html[data-theme="dark"] {
+  --pst-color-primary: #3fb1c5;
+  --pst-color-primary-text: #14181e;
+  --pst-color-primary-highlight: #319aac;
+  --pst-color-primary-highlight-text: #14181e;
+  --pst-color-primary-bg: #042c33;
+
+  --pst-color-secondary: #9c5ffd;
+  --pst-color-secondary-text: #14181e;
+  --pst-color-secondary-highlight: #7c2bfc;
+  --pst-color-secondary-highlight-text: #fff;
+  --pst-color-secondary-bg: #341a61;
+
+  --pst-color-success: #5fb488;
+  --pst-color-success-text: #14181e;
+  --pst-color-success-highlight: #47a373;
+  --pst-color-success-highlight-text: #14181e;
+  --pst-color-success-bg: #002f17;
+
+  --pst-color-info: #79a3f2;
+  --pst-color-info-text: #14181e;
+  --pst-color-info-highlight: #4681ee;
+  --pst-color-info-highlight-text: #14181e;
+  --pst-color-info-bg: #06245d;
+
+  --pst-color-warning: #ff9245;
+  --pst-color-warning-text: #14181e;
+  --pst-color-warning-highlight: #ff7614;
+  --pst-color-warning-highlight-text: #14181e;
+  --pst-color-warning-bg: #652a02;
+
+  --pst-color-danger: #e78894;
+  --pst-color-danger-text: #14181e;
+  --pst-color-danger-highlight-text: #14181e;
+  --pst-color-danger-bg: #4e111b;
+
+  --pst-color-light: #f3f4f5;
+  --pst-color-light-text: #14181e;
+  --pst-color-light-highlight: #c9cfd6;
+  --pst-color-light-highlight-text: #14181e;
+
+  --pst-color-muted: #f3f4f5;
+  --pst-color-muted-text: #14181e;
+  --pst-color-muted-highlight: #c9cfd6;
+  --pst-color-muted-highlight-text: #14181e;
+
+  --pst-color-dark: #222832;
+  --pst-color-dark-text: #fff;
+  --pst-color-dark-highlight: #1b222c;
+  --pst-color-dark-highlight-text: #fff;
+
+  --pst-color-black: #14181e;
+  --pst-color-black-text: #fff;
+  --pst-color-black-highlight: #10141a;
+  --pst-color-black-highlight-text: #fff;
+
+  --pst-color-white: #fff;
+  --pst-color-white-text: #14181e;
+  --pst-color-white-highlight: #dbd7d7;
+  --pst-color-white-highlight-text: #14181e;
+
+  --pst-color-accent: #e47fd7;
+  --pst-color-accent-bg: #46123f;
+
+  --pst-color-text-base: #ced6dd;
+  --pst-color-text-muted: #9ca4af;
+  --pst-color-heading-color: #14181e;
+  --pst-color-shadow: rgba(0, 0, 0, 0.2);
+  --pst-color-border: #48566b;
+  --pst-color-border-muted: #29313d;
+  --pst-color-blockquote-notch: #9ca4af;
+  --pst-color-inline-code: #f3c7ee;
+  --pst-color-inline-code-links: #3fb1c5;
+  --pst-color-target: #675c04;
+  --pst-color-table: #fff;
+  --pst-color-table-row-hover-bg: #6432bd;
+  --pst-color-table-inner-border: #364150;
+  --pst-color-background: #14181e;
+  --pst-color-on-background: #222832;
+  --pst-color-surface: #29313d;
+  --pst-color-on-surface: #f3f4f5;
+}
+
+:root > * {
+  --md-primary-fg-color: #222832;
+  --md-primary-fg-color--light: #d0ecf1;
+  --md-primary-fg-color--dark: #14181e;
+}
+
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #48566b;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #14181e;
+}
+
+/* Overrides */
+
+[dir="ltr"] .md-header__title {
+  margin-left: 0;
+}
+[dir="rtl"] .md-header__title {
+  margin-right: 0;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 2.4rem;
+}
+
+.md-header__button.md-logo,
+.md-header__button.md-logo {
+  margin: 0;
+  padding: 0;
+}
+
+.md-header__topic:first-child {
+  font-weight: 900;
+}
