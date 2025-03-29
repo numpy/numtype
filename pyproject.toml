@@ -83,6 +83,7 @@ docs = [
     "mkdocs-include-markdown-plugin>=7.1.5",
     "mkdocs-minify-plugin>=0.8.0",
     "mkdocstrings[python]>=0.29.0",
+    "pygments>=2.19.1",
 ]
 dev = [
     {include-group = "list_and_test"},
