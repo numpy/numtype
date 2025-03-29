@@ -6,7 +6,7 @@ site_name: NumType
 site_description: Better typing stubs for NumPy
 site_author: Joren Hammudoglu & NumPy Developers
 
-site_url: https://numpy.github.io/numtype
+site_url: https://numpy.org/numtype/
 repo_url: https://github.com/numpy/numtype
 repo_name: numpy/numtype
 edit_uri: blob/main/docs/
