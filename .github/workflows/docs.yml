@@ -1,0 +1,29 @@
+name: deploy docs
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+env:
+  UV_FROZEN: 1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: mkdocs gh-deploy
+        run: uv run --only-group=docs mkdocs gh-deploy --force
