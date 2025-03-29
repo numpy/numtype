@@ -207,3 +207,7 @@ html[data-theme="dark"] {
 .md-header__topic:first-child {
   font-weight: 900;
 }
+
+p a {
+  text-decoration: underline;
+}
