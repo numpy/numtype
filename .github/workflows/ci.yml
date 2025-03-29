@@ -45,18 +45,18 @@ jobs:
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-          python-version: 3.13t
+      - run: uv sync --only-group=list_and_test
 
       - name: ruff
         run: |
-          uv run --no-group=orjson ruff check --output-format=github
-          uv run --no-group=orjson ruff format --check
+          uv run --no-sync ruff check --output-format=github
+          uv run --no-sync ruff format --check
 
       - name: pytest
-        run: uv run --no-group=orjson pytest
+        run: uv run --no-sync pytest
 
       - name: format-ignores
-        run: uv run --no-group=orjson tool/format_ignores.py --check
+        run: uv run --no-sync tool/format_ignores.py --check
 
   basedpyright:
     runs-on: ubuntu-latest
@@ -74,7 +74,7 @@ jobs:
           python-version: ${{ matrix.py }}
 
       - name: basedpyright
-        run: uv run --no-group=orjson basedpyright
+        run: uv run --only-group=basedpyright basedpyright
 
   mypy:
     runs-on: ubuntu-latest
@@ -93,7 +93,7 @@ jobs:
 
       - name: mypy
         run: >
-          uv run --no-group=numpy
+          uv run --only-group=mypy --no-editable
           mypy --no-incremental --cache-dir=/dev/null --soft-error-limit=-1 .
 
   stubtest:
@@ -114,5 +114,5 @@ jobs:
 
       - name: stubtest
         run: >
-          uv run --active -p ${{ matrix.py }}
+          uv run --no-dev --active -p ${{ matrix.py }}
           tool/stubtest.py
