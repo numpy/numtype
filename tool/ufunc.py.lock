@@ -85,18 +85,70 @@ requires-dist = [{ name = "numpy", marker = "extra == 'numpy'", specifier = ">=2
 provides-extras = ["numpy"]
 
 [package.metadata.requires-dev]
+basedpyright = [
+    { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
+    { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.4" },
-    { name = "mdformat", specifier = ">=0.7.22" },
-    { name = "mypy", specifier = ">=1.15.0" },
+    { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
+    { name = "mkdocs-material", specifier = ">=9.6.9" },
+    { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.0" },
+    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
+    { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ruff", specifier = ">=0.11.2" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
+    { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+docs = [
+    { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
+    { name = "mkdocs-material", specifier = ">=9.6.9" },
+    { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.0" },
+]
+lint = [{ name = "ruff", specifier = ">=0.11.2" }]
+list-and-test = [
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "ruff", specifier = ">=0.11.2" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+mypy = [
+    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
+    { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
-orjson = [{ name = "orjson", specifier = ">=3.10.16" }]
-types = [
-    { name = "types-setuptools", specifier = ">=76.0.0.20250313" },
+pytest = [
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+typecheck = [
+    { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+types = [
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
+    { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 
 [[package]]

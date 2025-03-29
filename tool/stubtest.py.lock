@@ -50,16 +50,16 @@ wheels = [
 
 [[package]]
 name = "hypothesis"
-version = "6.130.4"
+version = "6.130.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
     { name = "sortedcontainers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f9/3d/199be3124dac341deb47747354a9e9ae2fa69f644229b5f3d0705a680cfd/hypothesis-6.130.4.tar.gz", hash = "sha256:d0672eb0ac1060b0324b0e43925a50b2bef1c60a32739bb9233000d85838436a", size = 427602 }
+sdist = { url = "https://files.pythonhosted.org/packages/0d/6e/e32a9c896ed621461fc7afcb0e7b61960247c2764d80c341d88ba14f45fa/hypothesis-6.130.5.tar.gz", hash = "sha256:2cdcdd894adc390a688c8a1c08580c345a67ecf73e31d5bb51a7712acf7b747c", size = 428116 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5c/d4/5a0c46cc8d266626cdc8082f07f836fa4a96e8715002de69be46ed406d1d/hypothesis-6.130.4-py3-none-any.whl", hash = "sha256:cda4a57115d10ecbefe0a9cc8d69d20a13eb56ecbfe7c24eaee5d368c2b7c477", size = 491324 },
+    { url = "https://files.pythonhosted.org/packages/99/84/318648e1a0c40aee9fe2140c0bbd507ecfa691bab16ba854bff479967dfe/hypothesis-6.130.5-py3-none-any.whl", hash = "sha256:c13e42ec7df7fdc45c44d0b39f1e429d2253e19a37041d927e092afa7645bfcf", size = 492048 },
 ]
 
 [[package]]
@@ -212,18 +212,70 @@ requires-dist = [{ name = "numpy", marker = "extra == 'numpy'", specifier = ">=2
 provides-extras = ["numpy"]
 
 [package.metadata.requires-dev]
+basedpyright = [
+    { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
+    { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.4" },
-    { name = "mdformat", specifier = ">=0.7.22" },
-    { name = "mypy", specifier = ">=1.15.0" },
+    { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
+    { name = "mkdocs-material", specifier = ">=9.6.9" },
+    { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.0" },
+    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
+    { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ruff", specifier = ">=0.11.2" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
+    { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+docs = [
+    { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
+    { name = "mkdocs-material", specifier = ">=9.6.9" },
+    { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.0" },
+]
+lint = [{ name = "ruff", specifier = ">=0.11.2" }]
+list-and-test = [
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "ruff", specifier = ">=0.11.2" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+mypy = [
+    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
+    { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
-orjson = [{ name = "orjson", specifier = ">=3.10.16" }]
-types = [
-    { name = "types-setuptools", specifier = ">=76.0.0.20250313" },
+pytest = [
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+typecheck = [
+    { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+types = [
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
+    { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
+    { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 
 [[package]]
@@ -441,14 +493,14 @@ wheels = [
 
 [[package]]
 name = "types-setuptools"
-version = "76.0.0.20250313"
+version = "78.1.0.20250329"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "setuptools" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b8/0f/2d1d000c2be3919bcdea15e5da48456bf1e55c18d02c5509ea59dade1408/types_setuptools-76.0.0.20250313.tar.gz", hash = "sha256:b2be66f550f95f3cad2a7d46177b273c7e9c80df7d257fa57addbbcfc8126a9e", size = 43627 }
+sdist = { url = "https://files.pythonhosted.org/packages/e9/6e/c54e6705e5fe67c3606e4c7c91123ecf10d7e1e6d7a9c11b52970cf2196c/types_setuptools-78.1.0.20250329.tar.gz", hash = "sha256:31e62950c38b8cc1c5114b077504e36426860a064287cac11b9666ab3a483234", size = 43942 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/89/ea9669a0a76b160ffb312d0b02b15bad053c1bc81d2a54e42e3a402ca754/types_setuptools-76.0.0.20250313-py3-none-any.whl", hash = "sha256:bf454b2a49b8cfd7ebcf5844d4dd5fe4c8666782df1e3663c5866fd51a47460e", size = 65845 },
+    { url = "https://files.pythonhosted.org/packages/7d/31/85d0264705d8ef47680d28f4dc9bb1e27d8cace785fbe3f8d009fad6cb88/types_setuptools-78.1.0.20250329-py3-none-any.whl", hash = "sha256:ea47eab891afb506f470eee581dcde44d64dc99796665da794da6f83f50f6776", size = 66985 },
 ]
 
 [[package]]

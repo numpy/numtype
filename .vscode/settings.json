@@ -15,5 +15,5 @@
   },
   "git.branchProtection": ["main"],
   "markdownlint.configFile": "docs/.markdownlint.yaml",
-  "mypy-type-checker.path": ["uv", "run", "mypy"]
+  "mypy-type-checker.path": ["uv", "run", "--no-sync", "mypy"]
 }

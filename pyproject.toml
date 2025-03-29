@@ -49,18 +49,34 @@ dependencies = []
 
 
 [dependency-groups]
-dev = [
-    "basedpyright>=1.28.4",
-    "mdformat>=0.7.22",
-    "mypy>=1.15.0",
-    "pytest>=8.3.5",
-    "ruff>=0.11.2",
-]
 numpy = ["numtype[numpy]"]
-orjson = ["orjson>=3.10.16"] # speeds up mypy cache, but is missing 3.13t wheels
+lint = ["ruff>=0.11.2"]
+pytest = [
+    {include-group = "numpy"},
+    "pytest>=8.3.5",
+    "typing_extensions>=4.13.0",
+]
+list_and_test = [
+    {include-group = "lint"},
+    {include-group = "pytest"},
+]
 types = [
-    "types-setuptools>=76.0.0.20250313",
+    {include-group = "pytest"},
+    "types-setuptools>=78.1.0.20250329",
     "types-tabulate>=0.9.0.20241207",
+]
+basedpyright = [
+    {include-group = "numpy"},
+    {include-group = "types"},
+    "basedpyright>=1.28.4",
+]
+mypy = [
+    {include-group = "types"},
+    "mypy[faster-cache]>=1.15.0",
+]
+typecheck = [
+    {include-group = "basedpyright"},
+    {include-group = "mypy"},
 ]
 docs = [
     "mkdocs-material>=9.6.9",
@@ -68,10 +84,11 @@ docs = [
     "mkdocs-minify-plugin>=0.8.0",
     "mkdocstrings[python]>=0.29.0",
 ]
-
-
-[tool.uv]
-default-groups = ["dev", "numpy", "orjson", "types"]
+dev = [
+    {include-group = "list_and_test"},
+    {include-group = "typecheck"},
+    {include-group = "docs"},
+]
 
 
 [tool.hatch.build]
@@ -95,11 +112,6 @@ packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
 [tool.mypy]
 mypy_path = "src"
 explicit_package_bases = true
-
-pretty = false
-show_error_context = false
-show_error_code_links = false
-show_traceback = false
 
 strict = true
 strict_bytes = true
