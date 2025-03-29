@@ -91,6 +91,10 @@ plugins:
   # https://squidfunk.github.io/mkdocs-material/plugins/search/
   - search
 
+  # https://squidfunk.github.io/mkdocs-material/plugins/privacy/
+  - privacy:
+      enabled: !ENV [CI, false]
+
 markdown_extensions:
   - abbr
   - admonition
