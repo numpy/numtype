@@ -127,7 +127,7 @@ All good
 
 See <https://lefthook.dev/> for more information.
 
-### Tox
+## Tox
 
 You can run the linters, type-checkers, runtime tests, and `stubtest`, all at
 once through a single [tox](https://github.com/tox-dev/tox) command.
