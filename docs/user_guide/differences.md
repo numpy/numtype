@@ -1,6 +1,6 @@
 # Differences with NumPy
 
-## Conrete scalar types
+## Concrete scalar types
 
 Since NumPy 2.2, the `float64` and `complex128` scalar types were made into *concrete* types.
 Before that, they were aliases of `#!py floating[_64Bit]` and `#!py complexfloating[_64Bit, _64Bit]`,
@@ -18,7 +18,7 @@ Type-checkers will therefore report this as an error.
 However, many users did not like this, because it often required them to change
 a lot of their code. So for a smooth transition, we kept the other scalar types
 such as `int8` as aliases to `#!py np.integer[_8Bit]` in NumPy. This is, in fact, one of
-the main reaons for why NumType was created.
+the main reasons for why NumType was created.
 
 In NumType all scalar types are annotated as concrete subtypes, or aliases thereof.
 That means that `#!py x: np.integer = int8` is **not** allowed in NumType, which in NumPy you
