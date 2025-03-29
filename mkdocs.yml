@@ -16,9 +16,6 @@ nav:
   - "API Reference": reference.md
   - "Development": contributing.md
 
-extra_css:
-  - style/theme.css
-
 theme:
   name: material
   favicon: img/favicon.ico
@@ -110,5 +107,13 @@ markdown_extensions:
       provider: github
       user: numpy
       repo: numtype
+
+extra:
+  analytics:
+    provider: google
+    property: G-JYJJ7JYLG1
+
+extra_css:
+  - style/theme.css
 
 copyright: Copyright &copy; 2025 Joren Hammudoglu & NumPy Developers.
