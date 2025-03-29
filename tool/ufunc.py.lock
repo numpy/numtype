@@ -88,8 +88,10 @@ provides-extras = ["numpy"]
 basedpyright = [
     { name = "basedpyright", specifier = ">=1.28.4" },
     { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.4" },
@@ -120,8 +122,11 @@ list-and-test = [
 ]
 mypy = [
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
 pytest = [
@@ -133,12 +138,17 @@ typecheck = [
     { name = "basedpyright", specifier = ">=1.28.4" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
     { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 types = [
+    { name = "numtype", extras = ["numpy"] },
+    { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 
 [[package]]
