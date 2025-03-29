@@ -10,21 +10,8 @@ MD031:
 MD033:
   allowed_elements:
     - h1
-    - p
-    - br
-    - a
-    - i
-    - code
-    - sup
-    - sub
     - img
-    - table
-    - tr
-    - th
-    - td
-    - dl
-    - dt
-    - dd
-    - details
-    - summary
+    - a
+    - div
+MD036: false
 MD041: false

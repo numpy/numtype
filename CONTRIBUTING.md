@@ -16,6 +16,8 @@ Thank you for contributing, and happy coding!
 
 ______________________________________________________________________
 
+<!--overview-start-->
+
 ## Setting up the environment
 
 Ensure you have [`uv`](https://docs.astral.sh/uv/getting-started/installation/)
@@ -213,3 +215,5 @@ one of the development dependencies.
 [stub-style]: https://typing.python.org/en/latest/guides/writing_stubs.html#style-guide
 [test-docs]: https://github.com/numpy/numtype/tree/main/test
 [tool-docs]: https://github.com/numpy/numtype/tree/main/tool
+
+<!--overview-end-->

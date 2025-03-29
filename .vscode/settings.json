@@ -14,6 +14,6 @@
     "**/generated/*.pyi": true
   },
   "git.branchProtection": ["main"],
-  "markdownlint.configFile": "doc/.markdownlint.yaml",
+  "markdownlint.configFile": "docs/.markdownlint.yaml",
   "mypy-type-checker.path": ["uv", "run", "mypy"]
 }

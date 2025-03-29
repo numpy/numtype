@@ -1,12 +1,13 @@
 {
   "recommendations": [
     "charliermarsh.ruff",
+    "davidanson.vscode-markdownlint",
     "detachhead.basedpyright",
     "ms-python.mypy-type-checker",
     "ms-python.python",
-    "tamasfe.even-better-toml",
-    "davidanson.vscode-markdownlint",
-    "seatonjiang.gitmoji-vscode"
+    "redhat.vscode-yaml",
+    "seatonjiang.gitmoji-vscode",
+    "tamasfe.even-better-toml"
   ],
   "unwantedRecommendations": ["ms-pyright.pyright", "ms-python.vscode-pylance"]
 }
