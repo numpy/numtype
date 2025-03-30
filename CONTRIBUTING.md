@@ -182,7 +182,7 @@ See the `README.md` in [`numtype/test`][test-docs].
 
 ## Documentation
 
-All [documentation] lives in the `README.md`. Please read it carefully
+All documentation lives in the `README.md`. Please read it carefully
 before proposing any changes. Ensure that the markdown is formatted correctly
 with [markdownlint](https://github.com/DavidAnson/markdownlint/tree/main).
 
