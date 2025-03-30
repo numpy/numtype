@@ -1,4 +1,4 @@
-# @generated 2025-03-30T19:51:31Z with tool/testgen.py
+# @generated 2025-03-30T20:47:08Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -625,7 +625,7 @@ assert_type(ui // u, np.integer | np.float64)
 assert_type(ui // i, np.signedinteger | np.float64)
 assert_type(ui // f, np.floating)
 ui // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(ui // ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
+assert_type(ui // ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
 assert_type(ui // fc, np.floating)
 
 assert_type(fc // b_py, np.floating)
@@ -653,7 +653,7 @@ assert_type(fc // i, np.floating)
 assert_type(fc // f, np.floating)
 fc // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(fc // ui, np.floating)
-assert_type(fc // fc, np.floating)  # type: ignore[operator]  # NOTE: mypy workaround
+assert_type(fc // fc, np.floating)  # type: ignore[operator]  # 🐴
 
 ###
 # __[r]mod__
@@ -1224,7 +1224,7 @@ assert_type(ui % u, np.integer | np.float64)
 assert_type(ui % i, np.signedinteger | np.float64)
 assert_type(ui % f, np.floating)
 ui % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(ui % ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
+assert_type(ui % ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
 assert_type(ui % fc, np.floating)
 
 assert_type(fc % b_py, np.floating)
@@ -1252,7 +1252,7 @@ assert_type(fc % i, np.floating)
 assert_type(fc % f, np.floating)
 fc % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(fc % ui, np.floating)
-assert_type(fc % fc, np.floating)  # type: ignore[operator]  # NOTE: mypy workaround
+assert_type(fc % fc, np.floating)  # type: ignore[operator]  # 🐴
 
 ###
 # __[r]divmod__
@@ -1823,7 +1823,7 @@ assert_type(divmod(ui, u), tuple[np.integer | np.float64, np.integer | np.float6
 assert_type(divmod(ui, i), tuple[np.signedinteger | np.float64, np.signedinteger | np.float64])
 assert_type(divmod(ui, f), tuple[np.floating, np.floating])
 divmod(ui, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
-assert_type(divmod(ui, ui), tuple[np.integer | np.float64, np.integer | np.float64])  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
+assert_type(divmod(ui, ui), tuple[np.integer | np.float64, np.integer | np.float64])  # type: ignore[assert-type, operator]  # 🐴
 assert_type(divmod(ui, fc), tuple[np.floating, np.floating])
 
 assert_type(divmod(fc, b_py), tuple[np.floating, np.floating])
@@ -1851,4 +1851,4 @@ assert_type(divmod(fc, i), tuple[np.floating, np.floating])
 assert_type(divmod(fc, f), tuple[np.floating, np.floating])
 divmod(fc, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(divmod(fc, ui), tuple[np.floating, np.floating])
-assert_type(divmod(fc, fc), tuple[np.floating, np.floating])  # type: ignore[operator]  # NOTE: mypy workaround
+assert_type(divmod(fc, fc), tuple[np.floating, np.floating])  # type: ignore[operator]  # 🐴

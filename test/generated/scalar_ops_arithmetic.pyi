@@ -1,4 +1,4 @@
-# @generated 2025-03-30T19:51:31Z with tool/testgen.py
+# @generated 2025-03-30T20:47:08Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -661,7 +661,7 @@ assert_type(ui + u, np.integer | np.float64)
 assert_type(ui + i, np.signedinteger | np.float64)
 assert_type(ui + f, np.floating)
 assert_type(ui + c, np.complexfloating)
-assert_type(ui + ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
+assert_type(ui + ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
 assert_type(ui + fc, np.inexact)
 
 assert_type(fc + b_py, np.inexact)
@@ -689,7 +689,7 @@ assert_type(fc + i, np.inexact)
 assert_type(fc + f, np.inexact)
 assert_type(fc + c, np.complexfloating)
 assert_type(fc + ui, np.inexact)
-assert_type(fc + fc, np.inexact)  # type: ignore[operator]  # NOTE: mypy workaround
+assert_type(fc + fc, np.inexact)  # type: ignore[operator]  # 🐴
 
 ###
 # __[r]sub__
@@ -1303,7 +1303,7 @@ assert_type(ui - u, np.integer | np.float64)
 assert_type(ui - i, np.signedinteger | np.float64)
 assert_type(ui - f, np.floating)
 assert_type(ui - c, np.complexfloating)
-assert_type(ui - ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
+assert_type(ui - ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
 assert_type(ui - fc, np.inexact)
 
 assert_type(fc - b_py, np.inexact)
@@ -1331,7 +1331,7 @@ assert_type(fc - i, np.inexact)
 assert_type(fc - f, np.inexact)
 assert_type(fc - c, np.complexfloating)
 assert_type(fc - ui, np.inexact)
-assert_type(fc - fc, np.inexact)  # type: ignore[operator]  # NOTE: mypy workaround
+assert_type(fc - fc, np.inexact)  # type: ignore[operator]  # 🐴
 
 ###
 # __[r]mul__
@@ -1939,7 +1939,7 @@ assert_type(ui * u, np.integer | np.float64)
 assert_type(ui * i, np.signedinteger | np.float64)
 assert_type(ui * f, np.floating)
 assert_type(ui * c, np.complexfloating)
-assert_type(ui * ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
+assert_type(ui * ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
 assert_type(ui * fc, np.inexact)
 
 assert_type(fc * b_py, np.inexact)
@@ -1968,7 +1968,7 @@ assert_type(fc * i, np.inexact)
 assert_type(fc * f, np.inexact)
 assert_type(fc * c, np.complexfloating)
 assert_type(fc * ui, np.inexact)
-assert_type(fc * fc, np.inexact)  # type: ignore[operator]  # NOTE: mypy workaround
+assert_type(fc * fc, np.inexact)  # type: ignore[operator]  # 🐴
 
 ###
 # __[r]pow__
@@ -2537,7 +2537,7 @@ assert_type(ui**u, np.integer | np.float64)
 assert_type(ui**i, np.signedinteger | np.float64)
 assert_type(ui**f, np.floating)
 assert_type(ui**c, np.complexfloating)
-assert_type(ui**ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # NOTE: mypy workaround
+assert_type(ui**ui, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
 assert_type(ui**fc, np.inexact)
 
 assert_type(fc**b_py, np.inexact)
@@ -2565,7 +2565,7 @@ assert_type(fc**i, np.inexact)
 assert_type(fc**f, np.inexact)
 assert_type(fc**c, np.complexfloating)
 assert_type(fc**ui, np.inexact)
-assert_type(fc**fc, np.inexact)  # type: ignore[operator]  # NOTE: mypy workaround
+assert_type(fc**fc, np.inexact)  # type: ignore[operator]  # 🐴
 
 ###
 # __[r]truediv__
@@ -3183,4 +3183,4 @@ assert_type(fc / i, np.inexact)
 assert_type(fc / f, np.inexact)
 assert_type(fc / c, np.complexfloating)
 assert_type(fc / ui, np.inexact)
-assert_type(fc / fc, np.inexact)
+assert_type(fc / fc, np.inexact)  # type: ignore[operator]  # 🐴
