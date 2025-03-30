@@ -5,7 +5,11 @@ from typing_extensions import deprecated
 # exported as numpy.typing.NBitBase
 
 @final
-@deprecated("NbitBase is deprecated and should not be used")
+@deprecated(
+    "NBitBase is deprecated and should not be used. "
+    "NumPy scalar types are now concrete and no longer accept generic bounds like np.floating[T]. "
+    "Use abstract types (e.g., np.floating) as bounds instead."
+)
 class NBitBase: ...
 
 ###
