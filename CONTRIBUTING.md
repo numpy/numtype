@@ -224,6 +224,7 @@ one of the development dependencies.
 [gitmoji]: https://gitmoji.dev/
 [lefthook]: https://lefthook.dev/
 [markdownlint]: https://github.com/DavidAnson/markdownlint/tree/main
+[mkdocs]: https://www.mkdocs.org/
 [mypy]: https://github.com/python/mypy
 [numpy-commit-style]: https://numpy.org/devdocs/dev/development_workflow.html#writing-the-commit-message
 [ruff]: https://docs.astral.sh/ruff/
@@ -231,6 +232,5 @@ one of the development dependencies.
 [test-docs]: https://github.com/numpy/numtype/tree/main/test
 [tool-docs]: https://github.com/numpy/numtype/tree/main/tool
 [tox]: https://github.com/tox-dev/tox
-[MkDocs]: https://www.mkdocs.org/
 
 <!--overview-end-->
