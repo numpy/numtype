@@ -645,8 +645,7 @@ class ScalarOps(TestGen):
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
         "BHILbhil": "ui",  # integer
-        # TODO(jorenham): Enable these
-        # "efdgFDG": "fc",  # inexact
+        "efdgFDG": "fc",  # inexact
         # "BHILbhilefdgFDG": "uifc",  # number
     }
     ABSTRACT_TYPES: ClassVar = {
@@ -768,15 +767,19 @@ class ScalarOps(TestGen):
 
         # workaround for mypy's lack of support for reflected binary ops like __radd__
         if (
-            lhs == rhs == "BHILbhil"
-            and op in self.OPS_ARITHMETIC | self.OPS_MODULAR
-            and " / " not in op
+            op in self.OPS_ARITHMETIC | self.OPS_MODULAR
+            and lhs == rhs
+            and (abstract_arg := self.ABSTRACT_TYPES.get(self.NAMES[lhs]))
         ):
-            stmt = "  # ".join((  # noqa: FLY002
-                stmt,
-                "type: ignore[assert-type, operator]",
-                "NOTE: mypy workaround",
-            ))
+            if abstract_arg == "integer" and " / " not in op:
+                mypy_ignore = "assert-type, operator"
+            elif abstract_arg == "inexact":
+                mypy_ignore = "operator"
+            else:
+                mypy_ignore = ""
+
+            if mypy_ignore:
+                stmt = "  # ".join((stmt, f"type: ignore[{mypy_ignore}]", "🐴"))
 
         return stmt
 
