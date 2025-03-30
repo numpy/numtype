@@ -766,16 +766,19 @@ class ScalarOps(TestGen):
         stmt = _expr_assert_type(expr_eval, expr_type)
 
         # workaround for mypy's lack of support for reflected binary ops like __radd__
-        if (
-            lhs == rhs == "BHILbhil"
-            and op in self.OPS_ARITHMETIC | self.OPS_MODULAR
-            and " / " not in op
-        ):
-            stmt = "  # ".join((  # noqa: FLY002
-                stmt,
-                "type: ignore[assert-type, operator]",
-                "NOTE: mypy workaround",
-            ))
+        if op in self.OPS_ARITHMETIC | self.OPS_MODULAR and " / " not in op:
+            if lhs == rhs == "BHILbhil":
+                stmt = "  # ".join((  # noqa: FLY002
+                    stmt,
+                    "type: ignore[assert-type, operator]",
+                    "NOTE: mypy workaround",
+                ))
+            elif lhs == rhs == "efdgFDG":
+                stmt = "  # ".join((  # noqa: FLY002
+                    stmt,
+                    "type: ignore[operator]",
+                    "NOTE: mypy workaround",
+                ))
 
         return stmt
 

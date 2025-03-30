@@ -1,4 +1,4 @@
-# @generated 2025-03-28T20:53:33Z with tool/testgen.py
+# @generated 2025-03-30T19:51:31Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -689,7 +689,7 @@ assert_type(fc + i, np.inexact)
 assert_type(fc + f, np.inexact)
 assert_type(fc + c, np.complexfloating)
 assert_type(fc + ui, np.inexact)
-assert_type(fc + fc, np.inexact)
+assert_type(fc + fc, np.inexact)  # type: ignore[operator]  # NOTE: mypy workaround
 
 ###
 # __[r]sub__
@@ -1331,7 +1331,7 @@ assert_type(fc - i, np.inexact)
 assert_type(fc - f, np.inexact)
 assert_type(fc - c, np.complexfloating)
 assert_type(fc - ui, np.inexact)
-assert_type(fc - fc, np.inexact)
+assert_type(fc - fc, np.inexact)  # type: ignore[operator]  # NOTE: mypy workaround
 
 ###
 # __[r]mul__
@@ -1968,7 +1968,7 @@ assert_type(fc * i, np.inexact)
 assert_type(fc * f, np.inexact)
 assert_type(fc * c, np.complexfloating)
 assert_type(fc * ui, np.inexact)
-assert_type(fc * fc, np.inexact)
+assert_type(fc * fc, np.inexact)  # type: ignore[operator]  # NOTE: mypy workaround
 
 ###
 # __[r]pow__
@@ -2565,7 +2565,7 @@ assert_type(fc**i, np.inexact)
 assert_type(fc**f, np.inexact)
 assert_type(fc**c, np.complexfloating)
 assert_type(fc**ui, np.inexact)
-assert_type(fc**fc, np.inexact)
+assert_type(fc**fc, np.inexact)  # type: ignore[operator]  # NOTE: mypy workaround
 
 ###
 # __[r]truediv__
