@@ -34,17 +34,17 @@ NP: Final = "np"
 PREAMBLE_PREFIX: Final = "@generated"
 
 _NUMBERS_ABSTRACT: Final = {
-    "u": "unsignedinteger",
     "i": "signedinteger",
+    "u": "unsignedinteger",
     "f": "floating",
     "c": "complexfloating",
-    "".join(set("ui")): "integer",
+    "".join(set("iu")): "integer",
     "".join(set("fc")): "inexact",
-    "".join(set("uifc")): "number",
+    "".join(set("iufc")): "number",
 }
 _NUMBERS_CONCRETE: Final = {
-    "u": frozenset({f"{NP}.uint8", f"{NP}.uint16", f"{NP}.uint32", f"{NP}.uint64"}),
     "i": frozenset({f"{NP}.int8", f"{NP}.int16", f"{NP}.int32", f"{NP}.int64"}),
+    "u": frozenset({f"{NP}.uint8", f"{NP}.uint16", f"{NP}.uint32", f"{NP}.uint64"}),
     "f": frozenset({f"{NP}.float32", f"{NP}.float64", f"{NP}.longdouble"}),
     "c": frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"}),
 }
@@ -116,7 +116,7 @@ def _sctype_expr_from_value(value: _Scalar | tuple[_Scalar, ...], /) -> str:
 
 def __group_types(*types: str) -> tuple[dict[str, list[str]], list[str]]:
     # TODO(jorenham): character and flexible
-    numbers: dict[str, list[str]] = {"u": [], "i": [], "f": [], "c": []}
+    numbers: dict[str, list[str]] = {"i": [], "u": [], "f": [], "c": []}
     other: list[str] = []
 
     for tp in dict.fromkeys(types):
@@ -617,16 +617,16 @@ class ScalarOps(TestGen):
         "complex": "c_py",
         # numpy boolean
         "?": "b1",
-        # unsigned integers
-        "B": "u8",
-        "H": "u16",
-        np.dtype("uint32").char: "u32",
-        np.dtype("uint64").char: "u64",
         # signed integers
         "b": "i8",
         "h": "i16",
         np.dtype("int32").char: "i32",
         np.dtype("int64").char: "i64",
+        # unsigned integers
+        "B": "u8",
+        "H": "u16",
+        np.dtype("uint32").char: "u32",
+        np.dtype("uint64").char: "u64",
         # real floating
         "e": "f16",
         "f": "f32",
@@ -640,22 +640,23 @@ class ScalarOps(TestGen):
         "M": "M64",
         "m": "m64",
         # # abstract numeric
-        "BHIL": "u",  # unsignedinteger
         "bhil": "i",  # signedinteger
+        "BHIL": "u",  # unsignedinteger
         "efdg": "f",  # floating
         "FDG": "c",  # complexfloating
-        "BHILbhil": "ui",  # integer
+        "bhilBHIL": "iu",  # integer
         "efdgFDG": "fc",  # inexact
-        # "BHILbhilefdgFDG": "uifc",  # number
+        # TODO(jorenham): enable
+        # "bhilBHILefdgFDG": "iufc",  # number
     }
     ABSTRACT_TYPES: ClassVar = {
-        "u": "unsignedinteger",
         "i": "signedinteger",
+        "u": "unsignedinteger",
         "f": "floating",
         "c": "complexfloating",
-        "ui": "integer",
+        "iu": "integer",
         "fc": "inexact",
-        "uifc": "number",
+        "iufc": "number",
     }
 
     ops: Final[dict[str, _BinOp]]
