@@ -186,6 +186,17 @@ All [documentation] lives in the `README.md`. Please read it carefully
 before proposing any changes. Ensure that the markdown is formatted correctly
 with [markdownlint](https://github.com/DavidAnson/markdownlint/tree/main).
 
+### Previewing Documentation Site
+
+NumType uses [MkDocs] for documentation static site generation. To preview the documentation site locally:
+
+```shell
+uv run mkdocs serve
+```
+
+This will start a local server at <http://127.0.0.1:8000/numtype/> where you can preview your changes.
+The server automatically refreshes when you make changes to the documentation files.
+
 ## Development Tools
 
 NumType provides several development tools to help with development.
@@ -215,5 +226,6 @@ one of the development dependencies.
 [stub-style]: https://typing.python.org/en/latest/guides/writing_stubs.html#style-guide
 [test-docs]: https://github.com/numpy/numtype/tree/main/test
 [tool-docs]: https://github.com/numpy/numtype/tree/main/tool
+[MkDocs]: https://www.mkdocs.org/
 
 <!--overview-end-->
