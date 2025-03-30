@@ -1,19 +1,17 @@
-# lefthook.yml
-
 pre-commit:
   parallel: true
   commands:
     ruff-check:
       glob: "*.{py,pyi}"
-      run: uv run --no-group=orjson ruff check --fix {staged_files}
+      run: uv run --no-sync ruff check --fix {staged_files}
       stage_fixed: true
     ruff-format:
       glob: "*.{py,pyi}"
-      run: uv run --no-group=orjson ruff format {staged_files}
+      run: uv run --no-sync ruff format {staged_files}
       stage_fixed: true
     ignore-format:
       glob: "*.{py,pyi}"
-      run: uv run --no-group=orjson tool/format_ignores.py {staged_files}
+      run: uv run --no-sync tool/format_ignores.py {staged_files}
       stage_fixed: true
 
 post-checkout:
