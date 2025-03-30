@@ -4,6 +4,7 @@ from typing_extensions import deprecated
 
 # exported as numpy.typing.NBitBase
 
+# Documentation: https://numpy.org/numtype/user_guide/differences/#no-more-nbitbase
 @final
 @deprecated(
     "NBitBase is deprecated and should not be used. "
