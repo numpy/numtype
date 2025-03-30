@@ -670,9 +670,9 @@ _SignedIntegerT = TypeVar("_SignedIntegerT", bound=signedinteger)
 _UnsignedIntegerT = TypeVar("_UnsignedIntegerT", bound=unsignedinteger)
 _CharT = TypeVar("_CharT", bound=character)
 
-_BitT = TypeVar("_BitT", bound=NBitBase, default=Any)
-_BitT1 = TypeVar("_BitT1", bound=NBitBase, default=Any)
-_BitT2 = TypeVar("_BitT2", bound=NBitBase, default=_BitT1)
+_BitT = TypeVar("_BitT", bound=NBitBase, default=Any)  # pyright: ignore[reportDeprecated]
+_BitT1 = TypeVar("_BitT1", bound=NBitBase, default=Any)  # pyright: ignore[reportDeprecated]
+_BitT2 = TypeVar("_BitT2", bound=NBitBase, default=_BitT1)  # pyright: ignore[reportDeprecated]
 
 _ItemT_co = TypeVar("_ItemT_co", default=Any, covariant=True)
 _BoolItemT_co = TypeVar("_BoolItemT_co", bound=py_bool, default=py_bool, covariant=True)
