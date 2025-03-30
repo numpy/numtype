@@ -633,9 +633,9 @@ class ScalarOps(TestGen):
         "d": "f64",
         "g": "f64l",
         # complex floating
-        "F": "c32",
-        "D": "c64",
-        "G": "c64l",
+        "F": "c64",
+        "D": "c128",
+        "G": "c128l",
         # temporal
         "M": "M64",
         "m": "m64",
