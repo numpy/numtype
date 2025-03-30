@@ -59,8 +59,7 @@ For more details, see <https://docs.astral.sh/ruff/>.
 ## Type-checking
 
 To validate that the annotations are correct, we use two type-checkers:
-[basedpyright](https://github.com/detachhead/basedpyright) and
-[mypy](https://github.com/python/mypy). Both are included as development
+[basedpyright] and [mypy]. Both are included as development
 dependency, and therefore automatically installed with `uv sync`.
 
 ### basedpyright
@@ -96,7 +95,7 @@ be reported at <https://github.com/python/mypy>.
 
 ## Lefthook
 
-Lefthook is a modern Git hooks manager, which automatically lints and formats
+[Lefthook] is a modern Git hooks manager, which automatically lints and formats
 your code before you committing it. It will also keep your `uv` environment
 up-to-date with the lockfile when you `git pull`.
 
@@ -130,7 +129,7 @@ See <https://lefthook.dev/> for more information.
 ## Tox
 
 You can run the linters, type-checkers, runtime tests, and `stubtest`, all at
-once through a single [tox](https://github.com/tox-dev/tox) command.
+once through a single [tox] command.
 
 It's easiest to install it as a `uv` tool:
 
@@ -182,9 +181,9 @@ See the `README.md` in [`numtype/test`][test-docs].
 
 ## Documentation
 
-All [documentation] lives in the `README.md`. Please read it carefully
+All documentation lives in the `README.md`. Please read it carefully
 before proposing any changes. Ensure that the markdown is formatted correctly
-with [markdownlint](https://github.com/DavidAnson/markdownlint/tree/main).
+with [markdownlint].
 
 ### Previewing Documentation Site
 
@@ -209,7 +208,7 @@ in the [`tool`][tool-docs] directory or the docstrings within each tool.
 For the most part, commit messages in NumType should follow
 [NumPy's guidelines for writing commit messages][numpy-commit-style].
 The main difference is that we don't use the prefix acronyms (e.g. `TYP`).
-Instead, we use [Gitmoji](https://gitmoji.dev/) as a modern alternative.
+Instead, we use [Gitmoji] as a modern alternative.
 Using it gitmoji is not a hard requirement, just a colorful recommendation.
 For VSCode users it's most convenient to use the
 [`gitmoji-vscode` extension](https://github.com/seatonjiang/gitmoji-vscode).
@@ -221,11 +220,17 @@ the official [style guide for stubs][stub-style].
 Both `.py` and `.pyi` are linted and formatted using [`ruff`][ruff], which is
 one of the development dependencies.
 
+[basedpyright]: https://github.com/detachhead/basedpyright
+[gitmoji]: https://gitmoji.dev/
+[lefthook]: https://lefthook.dev/
+[markdownlint]: https://github.com/DavidAnson/markdownlint/tree/main
+[mypy]: https://github.com/python/mypy
 [numpy-commit-style]: https://numpy.org/devdocs/dev/development_workflow.html#writing-the-commit-message
 [ruff]: https://docs.astral.sh/ruff/
 [stub-style]: https://typing.python.org/en/latest/guides/writing_stubs.html#style-guide
 [test-docs]: https://github.com/numpy/numtype/tree/main/test
 [tool-docs]: https://github.com/numpy/numtype/tree/main/tool
+[tox]: https://github.com/tox-dev/tox
 [MkDocs]: https://www.mkdocs.org/
 
 <!--overview-end-->
