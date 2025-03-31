@@ -83,7 +83,9 @@ The following non-existent scalar types have been removed (numpy/numtype#209):
 - `int128` and `int256`
 - `uint128` and `uint256`
 - `float80` and `float256`
-- `complex128` and `complex256`
+- `complex160` and `complex512`
+
+On none of the supported platforms will these types be defined.
 
 ## Aliases of `longdouble`
 
