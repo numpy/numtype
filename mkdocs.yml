@@ -11,61 +11,14 @@ repo_url: https://github.com/numpy/numtype
 repo_name: numpy/numtype
 edit_uri: blob/main/docs/
 
-nav:
-  - User Guide:
-      - NumType User Guide: user_guide/index.md
-      - Differences with NumPy: user_guide/differences.md
-  - API Reference: reference.md
-  - Development: contributing.md
-
-theme:
-  name: material
-  favicon: img/favicon.ico
-  logo: img/icon.svg
-
-  features:
-    - content.tabs.link
-    - content.tooltips
-    - navigation.path
-    - navigation.indexes
-    - navigation.prune
-    - navigation.sections
-    - navigation.tabs
-    - navigation.top
-    - navigation.tracking
-    - search.highlight
-    - search.share
-    - search.suggest
-    - toc.follow
-
-  font:
-    text: Lato
-    code: JetBrains Mono
-
-  palette:
-    - media: "(prefers-color-scheme)"
-      toggle:
-        icon: fontawesome/solid/circle-half-stroke
-        name: Switch to light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: teal
-      accent: pink
-      toggle:
-        icon: fontawesome/regular/moon
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: teal
-      accent: pink
-      toggle:
-        icon: fontawesome/regular/sun
-        name: Switch to system preference
-
 plugins:
   # https://github.com/mkdocstrings/autorefs
   - autorefs:
       resolve_closest: true
+
+  # https://lukasgeiter.github.io/mkdocs-awesome-nav/
+  - awesome-nav:
+      filename: .nav.yml
 
   # https://github.com/mondeja/mkdocs-include-markdown-plugin
   - include-markdown
@@ -129,6 +82,53 @@ markdown_extensions:
       user: numpy
       repo: numtype
 
+theme:
+  name: material
+  favicon: img/favicon.ico
+  logo: img/icon.svg
+
+  features:
+    - content.tabs.link
+    - content.tooltips
+    - navigation.path
+    - navigation.indexes
+    - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+
+  font:
+    text: Lato
+    code: JetBrains Mono
+
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: fontawesome/solid/circle-half-stroke
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: pink
+      toggle:
+        icon: fontawesome/regular/moon
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: pink
+      toggle:
+        icon: fontawesome/regular/sun
+        name: Switch to system preference
+
+extra_css:
+  - style/theme.css
+
 extra:
   analytics:
     provider: google
@@ -141,7 +141,4 @@ extra:
       find what they're searching for. With your consent, you're helping us to
       make our documentation better.
 
-extra_css:
-  - style/theme.css
-
-copyright: Copyright &copy; 2025 NumPy Developers.
+copyright: Copyright &copy;, 2025 NumPy Developers.

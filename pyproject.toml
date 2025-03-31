@@ -79,10 +79,11 @@ typecheck = [
     {include-group = "mypy"},
 ]
 docs = [
-    "mkdocs-material>=9.6.9",
+    "mkdocs-material>=9.6.10",
+    "mkdocs-awesome-nav>=3.1.0",
     "mkdocs-include-markdown-plugin>=7.1.5",
     "mkdocs-minify-plugin>=0.8.0",
-    "mkdocstrings[python]>=0.29.0",
+    "mkdocstrings[python]>=0.29.1",
     "pygments>=2.19.1",
 ]
 dev = [
