@@ -49,9 +49,9 @@ _NUMBERS_CONCRETE: Final = {
     "c": frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"}),
 }
 
-DATETIME_OPS: Final = {"+", "-"}
-TIMEDELTA_OPS: Final = DATETIME_OPS | {"*", "/", "//", "%"}
-BITWISE_OPS: Final = {"<<", ">>", "&", "^", "|"}
+DATETIME_OPS: Final = {"add", "sub"}
+TIMEDELTA_OPS: Final = DATETIME_OPS | {"mul", "truediv", "floordiv", "mod", "divmod"}
+BITWISE_OPS: Final = {"lshift", "rshift", "and", "or", "xor"}
 BITWISE_CHARS: Final = "?bhilqBHILQ"
 
 INTP_EXPR: Final = f"{NP}.{np.intp.__name__}"
@@ -659,8 +659,23 @@ class ScalarOps(TestGen):
     }
 
     ops: Final[dict[str, _BinOp]]
+    names: Final[dict[str, str]]
+    reject: Final[frozenset[str]]
 
     def __init__(self, kind: _BinOpKind, /) -> None:
+        reject: set[str] = set()
+        ignore: set[str] = set()
+
+        if kind in {"modular", "bitwise"}:
+            # TODO(jorenham): Reject `inexact`
+            reject |= {"bhilBHILefdgFDG", "FDG", "F", "D", "G"}
+
+            # ignore the non-standard concrete complex (and float if bitwise) types
+            # to avoid generating many redundant rejection tests
+            ignore |= set("FGM")
+            if kind == "bitwise":
+                ignore |= set("efgm")
+
         match kind:
             case "arithmetic":
                 ops = self.OPS_ARITHMETIC
@@ -668,19 +683,23 @@ class ScalarOps(TestGen):
                 ops = self.OPS_MODULAR
             case "bitwise":
                 ops = self.OPS_BITWISE
+                reject |= {"efdgFDG", "efdg", "e", "f", "d", "g"}
             case "comparison":
                 ops = self.OPS_COMPARISON
 
         self.ops = ops
+        self.names = {k: name for k, name in self.NAMES.items() if k not in ignore}
+        self.reject = frozenset(reject)
+
         self.testname = self.testname.format(kind)
 
         super().__init__()
 
     def _is_builtin(self, key: str, /) -> bool:
-        return len(key) > 1 and self.NAMES[key].endswith("_py")
+        return len(key) > 1 and self.names[key].endswith("_py")
 
     def _is_abstract(self, key: str, /) -> bool:
-        return len(key) > 1 and not self.NAMES[key].endswith("_py")
+        return len(key) > 1 and not self.names[key].endswith("_py")
 
     def _decompose(self, key: str, /) -> tuple[_Scalar, ...]:
         if not self._is_abstract(key):
@@ -688,6 +707,9 @@ class ScalarOps(TestGen):
         return tuple(map(_scalar, key))
 
     def _evaluate_concrete(self, op: str, lhs: str, rhs: str, /) -> str | None:
+        if lhs in self.reject or rhs in self.reject:
+            return None
+
         fn = self.ops[op]
         nout = 2 if fn.__module__ == "builtins" else 1
 
@@ -722,26 +744,26 @@ class ScalarOps(TestGen):
         return f"tuple[{', '.join(result_exprs)}]" if nout > 1 else result_exprs[0]
 
     def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
-        expr_eval = op.format(self.NAMES[lhs], self.NAMES[rhs])
-        is_op = self.ops[op].__module__ != "builtins"  # not the case for divmod
+        expr_eval = op.format(self.names[lhs], self.names[rhs])
 
         if not (expr_type := self._evaluate_concrete(op, lhs, rhs)):
             # generate rejection test, while avoiding trivial cases
+            opname = self.ops[op].__name__.removesuffix("_")
             if (
-                # ignore bitwise ops if either arg is not a bitwise char
-                (op in BITWISE_OPS and {lhs, rhs} - set(BITWISE_CHARS))
+                # ignore bitwise ops if neither arg is a bitwise char
+                (opname in BITWISE_OPS and not {lhs, rhs} & set(BITWISE_CHARS))
                 # ignore if either arg is datetime and and not a datetime op
-                or (op not in DATETIME_OPS and "M" in {lhs, rhs})
+                or (opname not in DATETIME_OPS and "M" in {lhs, rhs})
                 # ignore if either arg is timedelta and and not a timedelta op
-                or (op not in TIMEDELTA_OPS and "m" in {lhs, rhs})
+                or (opname not in TIMEDELTA_OPS and "m" in {lhs, rhs})
             ):
                 return None
 
             # pyright special casing
-            if is_op:
-                pyright_rules = ["OperatorIssue"]
-            else:
+            if opname == "divmod":
                 pyright_rules = ["ArgumentType", "CallIssue"]
+            else:
+                pyright_rules = ["OperatorIssue"]
             pyright_ignore = ", ".join(map("report{}".format, pyright_rules))
 
             return "  ".join((
@@ -769,7 +791,7 @@ class ScalarOps(TestGen):
         if (
             op in self.OPS_ARITHMETIC | self.OPS_MODULAR
             and lhs == rhs
-            and (abstract_arg := self.ABSTRACT_TYPES.get(self.NAMES[lhs]))
+            and (abstract_arg := self.ABSTRACT_TYPES.get(self.names[lhs]))
         ):
             if abstract_arg == "integer" and " / " not in op:
                 mypy_ignore = "assert-type, operator"
@@ -790,19 +812,19 @@ class ScalarOps(TestGen):
     @override
     def get_names(self) -> Iterable[tuple[str, str]]:
         # builtin scalars
-        for builtin, name in self.NAMES.items():
+        for builtin, name in self.names.items():
             if self._is_builtin(builtin):
                 yield name, builtin
 
         # constrete numpy scalars
         yield "", ""
-        for char, name in self.NAMES.items():
+        for char, name in self.names.items():
             if len(char) == 1:
                 yield name, _sctype_expr(np.dtype(char))
 
         # abstract numpy scalars
         yield "", ""
-        for char, kind in self.NAMES.items():
+        for char, kind in self.names.items():
             if self._is_abstract(char):
                 yield kind, f"{NP}.{self.ABSTRACT_TYPES[kind]}"
 
@@ -813,13 +835,13 @@ class ScalarOps(TestGen):
 
             yield from self._generate_section(f"__[r]{opname}__")
 
-            for lhs in self.NAMES:
+            for lhs in self.names:
                 if self._is_builtin(lhs):
                     # will cause false positives on pyright; as designed, of course
                     continue
 
                 n = 0
-                for rhs in self.NAMES:
+                for rhs in self.names:
                     if fn.__name__ in {"eq", "ne"} and self._is_abstract(rhs):
                         # will be inferred by mypy as `Any` for some reason
                         continue
