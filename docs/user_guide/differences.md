@@ -78,7 +78,7 @@ And even though it has gotten more verbose, it requires less mental to interpret
 
 ## Extended precision removals
 
-The following non-extistent scalar types have been removed (numpy/numtype#209):
+The following non-existent scalar types have been removed (numpy/numtype#209):
 
 - `int128` and `int256`
 - `uint128` and `uint256`
@@ -91,6 +91,25 @@ The platform-dependent `float96` and `float128` types are equivalent aliases of
 `longdouble` (numpy/numtype#397):, and their complex analogues, `complex192` and `complex256`,
 alias `clongdouble` (numpy/numtype#391).
 This was done in order to minimize the expected amount of "but it works on my machine".
+
+## Removed `number.__floordiv__`
+
+The abstract `numpy.number` type represents a scalar that's either integer, float, or complex.
+But the builtin "floordiv" operator, `//`  is only supported for integer and floating scalars.
+Complex numpy scalars will raise an error. But in NumPy, type-checkers will allow you to write
+the following type-unsafe code:
+
+```py
+import numpy as np
+
+def half(a: np.number) -> np.number:
+    return a // 2
+
+half(np.complex128(1j))  # accepted
+```
+
+In NumType's `numpy-stubs`, the `numpy.number.__[r]floordiv__` methods don't exist. This means that
+if you have `numtype` installed, your type-checker will report `a // 2` as an error.
 
 ## Mypy plugin
 
