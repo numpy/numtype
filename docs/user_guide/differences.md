@@ -86,6 +86,7 @@ The following non-existent scalar types have been removed (numpy/numtype#209):
 - `complex160` and `complex512`
 
 These types will not be defined on any supported platform.
+
 ## Aliases of `longdouble`
 
 The platform-dependent `float96` and `float128` types are equivalent aliases of
