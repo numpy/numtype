@@ -44,28 +44,92 @@ But the now concrete scalar types will no longer accept *any* `#!py floating[T]`
 
 Type parameters can instead use an abstract scalar type as an upper bound. So instead of
 
+/// tab | Python 3.10 and above
+
 ```py
-def f[T: npt.NBitBase](x: np.floating[T]) -> np.floating[T]: ...
+import numpy as np
+import numpy.typing as npt
+from typing import TypeVar
+
+NT = TypeVar("NT", bound=npt.NBitBase)
+
+def f(x: np.floating[NT]) -> np.floating[NT]: ...
 ```
+
+///
+/// tab | Python 3.12 and above
+    select: True
+
+```py
+import numpy as np
+import numpy.typing as npt
+
+def f[NT: npt.NBitBase](x: np.floating[NT]) -> np.floating[NT]: ...
+```
+
+///
 
 you can write
 
+/// tab | Python 3.10 and above
+
 ```py
+import numpy as np
+from typing import TypeVar
+
+FloatT = TypeVar("FloatT", bound=np.floating)
+
+def f(x: FloatT) -> FloatT: ...
+```
+
+///
+/// tab | Python 3.12 and above
+    select: True
+
+```py
+import numpy as np
+
 def f[FloatT: np.floating](x: FloatT) -> FloatT: ...
 ```
+
+///
 
 As you can see, this also makes the code more readable.
 
 But what if that isn't possible? For instance, you might have the following function:
 
+/// tab | Python 3.10 and above
+
 ```py
-def f[T: npt.NBitBase](x: np.complexfloating[T]) -> np.floating[T]: ...
+import numpy as np
+import numpy.typing as npt
+from typing import TypeVar
+
+NT = TypeVar("NT", bound=npt.NBitBase)
+
+def f(x: np.complexfloating[NT]) -> np.floating[NT]: ...
 ```
+
+///
+/// tab | Python 3.12 and above
+    select: True
+
+```py
+import numpy as np
+import numpy.typing as npt
+
+def f[NT: npt.NBitBase](x: np.complexfloating[NT]) -> np.floating[NT]: ...
+```
+
+///
 
 In that case, you can rewrite it by using
 [`#!py typing.overload`](https://typing.python.org/en/latest/spec/overload.html):
 
 ```py
+import numpy as np
+from typing import overload
+
 @overload
 def f(x: np.complex64) -> np.float32: ...
 @overload
