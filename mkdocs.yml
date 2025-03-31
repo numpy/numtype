@@ -44,23 +44,32 @@ plugins:
             show_source: false
             show_signature_annotations: true
 
-  # https://squidfunk.github.io/mkdocs-material/plugins/search/
-  - search
-
   # https://squidfunk.github.io/mkdocs-material/plugins/privacy/
   - privacy:
       enabled: !ENV [CI, false]
 
+  # https://squidfunk.github.io/mkdocs-material/plugins/search/
+  - search
+
 markdown_extensions:
   # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
   - abbr
-  - admonition
   - attr_list
   - def_list
   - footnotes
   - md_in_html
   - toc:
       permalink: "🔗"
+
+  # https://github.com/oprypin/markdown-callouts
+  - callouts
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/betterem/
+  - pymdownx.betterem:
+      smart_enable: asterisk
+
+  - pymdownx.blocks.tab:
+      alternate_style: true
 
   # https://facelessuser.github.io/pymdown-extensions/extensions/emoji/
   - pymdownx.emoji:
@@ -81,6 +90,24 @@ markdown_extensions:
       provider: github
       user: numpy
       repo: numtype
+
+  # https://facelessuser.github.io/pymdown-extensions/extensions/saneheaders/
+  - pymdownx.saneheaders
+
+extra:
+  analytics:
+    provider: google
+    property: G-JYJJ7JYLG1
+  consent:
+    title: Cookie consent
+    description: >-
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+
+extra_css:
+  - style/theme.css
 
 theme:
   name: material
@@ -125,20 +152,5 @@ theme:
       toggle:
         icon: fontawesome/regular/sun
         name: Switch to system preference
-
-extra_css:
-  - style/theme.css
-
-extra:
-  analytics:
-    provider: google
-    property: G-JYJJ7JYLG1
-  consent:
-    title: Cookie consent
-    description: >-
-      We use cookies to recognize your repeated visits and preferences, as well
-      as to measure the effectiveness of our documentation and whether users
-      find what they're searching for. With your consent, you're helping us to
-      make our documentation better.
 
 copyright: Copyright &copy;, 2025 NumPy Developers.
