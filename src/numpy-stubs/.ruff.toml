@@ -6,7 +6,6 @@ extend-ignore = [
     "A",       # flake8-builtins
     "S404",    # flake8-bandit: suspicious-subprocess-import
     "PYI042",  # flake8-pyi:    snake-case-type-alias       # TODO
-    "PYI046",  # flake8-pyi:    unused-private-protocol     # TODO
     "PYI047",  # flake8-pyi:    unused-private-type-alias   # TODO
     "PYI064",  # flake8-pyi:    redundant-final-literal
     "SLF001",  # flake8-self:   private-member-access

@@ -20,7 +20,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import Buffer, CapsuleType, Self, TypeAliasType, TypeVar, Unpack, deprecated, override
+from typing_extensions import Buffer, CapsuleType, Self, TypeAliasType, TypeVar, Unpack, deprecated
 
 import numpy as np
 import numpy.typing as npt
@@ -91,7 +91,6 @@ from .umath import (
 
 ###
 
-_T = TypeVar("_T")
 _T_contra = TypeVar("_T_contra", default=None, contravariant=True)
 
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
@@ -223,16 +222,6 @@ class _CanWriteErr(Protocol):
 @type_check_only
 class _HasDoc(Protocol):
     __doc__: str | None
-
-@type_check_only
-@final
-class _HasClass(Protocol[_T]):
-    @property
-    @override
-    def __class__(self, /) -> type[_T]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @__class__.setter
-    @override
-    def __class__(self, t: type[_T], /) -> None: ...
 
 ###
 

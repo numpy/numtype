@@ -26,7 +26,7 @@ class _SupportsArray(Protocol[_DType_co]):
     def __array__(self, /) -> np.ndarray[Any, _DType_co]: ...
 
 @runtime_checkable
-class _SupportsArrayFunc(Protocol):
+class _SupportsArrayFunc(Protocol):  # noqa: PYI046
     def __array_function__(
         self,
         func: Callable[..., Any],
