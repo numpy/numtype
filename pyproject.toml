@@ -81,6 +81,7 @@ typecheck = [
 docs = [
     "mkdocs-material>=9.6.10",
     "mkdocs-awesome-nav>=3.1.0",
+    "markdown-callouts>=0.4.0",
     "mkdocs-include-markdown-plugin>=7.1.5",
     "mkdocs-minify-plugin>=0.8.0",
     "mkdocstrings[python]>=0.29.1",

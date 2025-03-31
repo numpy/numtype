@@ -242,6 +242,18 @@ wheels = [
 ]
 
 [[package]]
+name = "markdown-callouts"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markdown" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/87/73/ae5aa379f6f7fea9d0bf4cba888f9a31d451d90f80033ae60ae3045770d5/markdown_callouts-0.4.0.tar.gz", hash = "sha256:7ed2c90486967058a73a547781121983839522d67041ae52c4979616f1b2b746", size = 9768 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1d/b5/7b0a0a52c82bfccd830af2a8cc8add1c5bc932e0204922434954a631dd51/markdown_callouts-0.4.0-py3-none-any.whl", hash = "sha256:ed0da38f29158d93116a0d0c6ecaf9df90b37e0d989b5337d678ee6e6d6550b7", size = 7108 },
+]
+
+[[package]]
 name = "markupsafe"
 version = "3.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -631,6 +643,7 @@ basedpyright = [
 ]
 dev = [
     { name = "basedpyright" },
+    { name = "markdown-callouts" },
     { name = "mkdocs-awesome-nav" },
     { name = "mkdocs-include-markdown-plugin" },
     { name = "mkdocs-material" },
@@ -646,6 +659,7 @@ dev = [
     { name = "typing-extensions" },
 ]
 docs = [
+    { name = "markdown-callouts" },
     { name = "mkdocs-awesome-nav" },
     { name = "mkdocs-include-markdown-plugin" },
     { name = "mkdocs-material" },
@@ -710,6 +724,7 @@ basedpyright = [
 ]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "markdown-callouts", specifier = ">=0.4.0" },
     { name = "mkdocs-awesome-nav", specifier = ">=3.1.0" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
     { name = "mkdocs-material", specifier = ">=9.6.10" },
@@ -725,6 +740,7 @@ dev = [
     { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 docs = [
+    { name = "markdown-callouts", specifier = ">=0.4.0" },
     { name = "mkdocs-awesome-nav", specifier = ">=3.1.0" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
     { name = "mkdocs-material", specifier = ">=9.6.10" },
