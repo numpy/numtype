@@ -95,21 +95,19 @@ dev = [
 
 
 [tool.hatch.build]
-packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
+exclude = [
+    "**/@test",
+    "**/*.yml",
+    "**/.*",
+    "/docs",
+    "/tool",
+    "CONTRIBUTING.md",
+    "uv.lock",
+]
+skip-excluded-dirs = true
 
-    [tool.hatch.build.targets.sdist]
-    exclude = [
-        "/.github",
-        "/.vscode",
-        "/dist",
-        "/doc",
-        "/test",
-        "/tool",
-        ".mypyignore",
-        ".mypyignore-todo",
-        "CONTRIBUTING.md",
-        "uv.lock",
-    ]
+    [tool.hatch.build.targets.wheel]
+    packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
 
 
 [tool.mypy]
@@ -137,11 +135,9 @@ disable_memoryview_promotion = true
 
 
 [tool.pyright]
-include = ["src", "test", "tool"]
+include = ["src", "tool"]
 ignore = [".venv"]
 stubPath = "src"
-venvPath = "."
-venv = ".venv"
 pythonPlatform = "All"
 typeCheckingMode = "strict"
 
@@ -152,7 +148,7 @@ enableReachabilityAnalysis = false
 reportCallInDefaultInitializer = true
 reportImportCycles = true
 reportImplicitOverride = true
-reportInvalidStubStatement = false         # see execution environments
+reportInvalidStubStatement = false         # required for type-testing
 reportMissingSuperCall = false
 reportPrivateUsage = false
 reportPropertyTypeMismatch = false
@@ -162,7 +158,7 @@ reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
 reportUnusedExpression = false
 reportUnusedParameter = false
-reportUnusedVariable = false
+reportUnusedVariable = true
 # basedpyright only
 failOnWarnings = true
 reportIgnoreCommentWithoutRule = true
@@ -174,30 +170,8 @@ reportPrivateLocalImportUsage = true
 reportUnannotatedClassAttribute = false
 strictGenericNarrowing = true
 
-[[executionEnvironments]]
-root = "src"
-reportInvalidStubStatement = true
-reportUnusedCallResult = true
-reportUnusedVariable = true
-
-[[executionEnvironments]]
-root = "test"
-reportAny = true
-reportPrivateUsage = true
-reportUnreachable = true
-# basedpyright only
-reportExplicitAny = true
-reportUnsafeMultipleInheritance = true
-
-[[executionEnvironments]]
-root = "tool"
-reportImplicitOverride = true
-reportInvalidStubStatement = true
-reportUnusedCallResult = true
-
-
 [tool.ruff]
-src = ["src", "test", "tool"]
+src = ["src", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
 force-exclude = true
 # https://typing.python.org/en/latest/guides/writing_stubs.html#maximum-line-length
