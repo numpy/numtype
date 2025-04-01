@@ -1,9 +1,9 @@
 # NumType testing
 
-## basedmypy
+## mypy
 
-Mypy and basedmypy will only recognize the `src/numpy-stubs` if `numtype` is installed in an
-isolated project, and it cannot be editable.
+Mypy will only recognize the `src/numpy-stubs` if `numtype` is installed in an isolated project,
+and it cannot be editable.
 
 The `mypy.py` script creates an isolated environment, that doesn't include numpy, and will run
 basedmypy. If no paths are provided, it will default to `--explicit-package-bases test`.

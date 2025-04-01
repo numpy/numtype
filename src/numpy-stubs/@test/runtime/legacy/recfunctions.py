@@ -25,6 +25,7 @@ def test_get_names() -> None:
 
     adtype = np.dtype([("a", int), ("b", [("b_a", int), ("b_b", int)])])
     names = rfn.get_names(adtype)
+    assert names
 
 
 def test_get_names_flat() -> None:
@@ -34,6 +35,7 @@ def test_get_names_flat() -> None:
 
     adtype = np.dtype([("a", int), ("b", [("b_a", int), ("b_b", int)])])
     names = rfn.get_names_flat(adtype)
+    assert names
 
 
 def test_flatten_descr() -> None:
