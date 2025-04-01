@@ -12,10 +12,10 @@ sys.path.insert(0, str(TEST_DIR))
     "module",
     [
         path.stem
-        for path in (Path(__file__).parent / "accept").iterdir()
+        for path in (Path(__file__).parent / "legacy").iterdir()
         if path.suffix == ".py" and path.stem != "__init__"
     ],
-    ids="test/runtime/accept/{}.py".format,
+    ids="test/runtime/legacy/{}.py".format,
 )
-def test_accept(module: str) -> None:
-    importlib.import_module(f"accept.{module}")
+def test_legacy(module: str) -> None:
+    importlib.import_module(f"legacy.{module}")
