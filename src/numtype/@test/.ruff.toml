@@ -1,0 +1,8 @@
+extend = "../.ruff.toml"
+
+[lint]
+extend-ignore = [
+    "D",       # pydocstyle
+    "S",       # flake8-bandit
+    "PLR2004", # pylint: magic-value-comparisons
+]
