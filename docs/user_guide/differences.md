@@ -158,7 +158,7 @@ The platform-dependent `float96` and `float128` types are equivalent aliases of
 alias `clongdouble` (numpy/numtype#391).
 This was done in order to minimize the expected amount of "but it works on my machine".
 
-## Return type of `[c]longdouble.item()` and `.tolist()`
+## Return types of `[c]longdouble.item()` and `.tolist()`
 
 In Numpy, `longdouble` and `clongdouble` aren't annotated as concrete subclasses of
 `[complex]floating`, but as *aliases*. A consequence of this is that their `item` and `tolist`
