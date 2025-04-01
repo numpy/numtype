@@ -25,7 +25,7 @@ _BinOpKind: TypeAlias = Literal["arithmetic", "modular", "bitwise", "comparison"
 ###
 
 ROOT_DIR: Final = Path(__file__).parent.parent
-TARGET_DIR: Final = ROOT_DIR / "test" / "generated"
+TARGET_DIR: Final = ROOT_DIR / "src" / "numpy-stubs" / "@test" / "generated"
 
 TAB: Final = " " * 4
 BR: Final = "\n"
