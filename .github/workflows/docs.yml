@@ -3,6 +3,11 @@ name: deploy docs
 on:
   push:
     branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - ".github/workflows/docs.yml"
+      - "CONTRIBUTING.md"
 
 permissions:
   contents: write
