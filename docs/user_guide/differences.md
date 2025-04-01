@@ -151,12 +151,29 @@ The following non-existent scalar types have been removed (numpy/numtype#209):
 
 These types will not be defined on any supported platform.
 
-## Aliases of `longdouble`
+## Aliases of `[c]longdouble`
 
 The platform-dependent `float96` and `float128` types are equivalent aliases of
 `longdouble` (numpy/numtype#397):, and their complex analogues, `complex192` and `complex256`,
 alias `clongdouble` (numpy/numtype#391).
 This was done in order to minimize the expected amount of "but it works on my machine".
+
+## Return type of `[c]longdouble.item()` and `.tolist()`
+
+In Numpy, `longdouble` and `clongdouble` aren't annotated as concrete subclasses of
+`[complex]floating`, but as *aliases*. A consequence of this is that their `item` and `tolist`
+methods had to return the same type as that of all other `floating` and `complexfloating` types,
+i.e. `float` and `complex`. But this is incorrect for `longdouble` and `clongdouble`:
+
+```pycon
+>>> import numpy as np
+>>> np.longdouble(1).item()
+np.longdouble('1.0')
+>>> np.clongdouble(1).item()
+np.clongdouble('1+0j')
+```
+
+In NumType, the stubs correctly reflect this runtime behaviour.
 
 ## Removed `number.__floordiv__`
 
