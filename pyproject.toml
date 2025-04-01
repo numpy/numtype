@@ -112,8 +112,6 @@ skip-excluded-dirs = true
 
 [tool.mypy]
 mypy_path = "src"
-explicit_package_bases = true
-
 strict = true
 strict_bytes = true
 strict_concatenate = true
