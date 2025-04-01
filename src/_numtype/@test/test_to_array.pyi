@@ -45,12 +45,6 @@ U_3d: list[list[list[str]]]
 O_3d: list[list[list[object]]]
 
 ###
-# nested sequence
-
-nested_bool_1d: _nt.Sequence1ND[bool] = b_1d
-nested_bool_2d: _nt.Sequence1ND[bool] = b_2d
-
-###
 # bool
 
 b1: np.bool
@@ -118,4 +112,4 @@ bool_3nd_reject_2d: _nt.ToBool_3nd = b1_2d  # type: ignore[assignment]  # pyrigh
 bool_3nd_accept_3d: _nt.ToBool_3nd = b1_3d
 
 ###
-# TODO(jorenham): repeat for all the other `_To` and `_Co` types (codegen)
+# TODO(jorenham): repeat for all the other `_To` array-like types (codegen)
