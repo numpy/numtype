@@ -13,6 +13,14 @@ pre-commit:
       glob: "*.{py,pyi}"
       run: uv run --no-sync tool/format_ignores.py {staged_files}
       stage_fixed: true
+    docs-check:
+      glob:
+        - "docs/**"
+        - "mkdocs.yml"
+        - ".github/workflows/docs.yml"
+        - "CONTRIBUTING.md"
+      run: uv run --no-sync mkdocs build
+      stage_fixed: true
 
 post-checkout:
   commands:
