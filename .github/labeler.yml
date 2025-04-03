@@ -1,0 +1,193 @@
+# numpy-stubs module
+
+numpy.char.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/char/**
+
+numpy._core.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/_core/**
+
+numpy.core.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/core/**
+
+numpy.ctypeslib.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/ctypeslib.pyi
+
+numpy.distutils.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/distutils/**
+
+numpy.dtype:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/core/numerictypes.pyi
+    - src/numpy-stubs/dtypes.pyi
+
+numpy.dtypes.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/dtypes.pyi
+
+numpy.emath.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/lib/emath.pyi
+
+numpy.f2py.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/f2py/**
+
+numpy.fft.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/fft/**
+
+numpy.generic:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/_typing/numeric.pyi
+
+numpy.lib.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/lib/**
+
+numpy.linalg.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/linalg/**
+
+numpy.ma.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/ma/**
+
+numpy.matlib.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/matlib.pyi
+
+numpy.matrixlib.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/matrixlib/**
+
+numpy.ndarray:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/core/multiarray.pyi
+    - src/numpy-stubs/_typing/array.pyi
+
+numpy.poly*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/lib/polynomial.pyi
+
+numpy.polynomial.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/polynomial/**
+
+numpy.random.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/random/**
+
+numpy.rec.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/rec/**
+
+numpy.strings.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/strings/**
+
+numpy.testing.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/testing/**
+
+numpy.ufunc:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/core/umath.pyi
+    - src/numpy-stubs/_typing/ufunc.pyi
+
+numpy._utils:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/_utils/**
+
+numpy.version.*:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/numpy-stubs/version.pyi
+
+# Documentation and Testing
+
+topic: documentation:
+- changed-files:
+  - any-glob-to-any-file:
+    - docs/**
+    - README.md
+    - CONTRIBUTING.md
+    - mkdocs.yml
+
+topic: testing:
+- changed-files:
+  - any-glob-to-any-file:
+    - src/**/@test/**
+
+# Tools and Configuration
+
+tool: mypy:
+- changed-files:
+  - any-glob-to-any-file:
+    - .mypy.ini
+
+tool: stubtest:
+- changed-files:
+  - any-glob-to-any-file:
+    - tool/stubtest/**
+
+tool: github-actions:
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/workflows/**
+
+topic: dependencies:
+- changed-files:
+  - any-glob-to-any-file:
+    - pyproject.toml
+    - uv.lock
+
+topic: developer experience:
+- changed-files:
+  - any-glob-to-any-file:
+    - .vscode/**
+    - .taplo.toml
+    - lefthook.yml
+
+topic: automation:
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/workflows/**
+    - tool/**
+
+topic: code style:
+- changed-files:
+  - any-glob-to-any-file:
+    - .taplo.toml
+    - .ruff.toml
+    - src/**/.ruff.toml
+
