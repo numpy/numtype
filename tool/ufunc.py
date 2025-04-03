@@ -214,7 +214,7 @@ def main(args: Sequence[str] | None = None, /) -> int:
         print(
             tabulate.tabulate(
                 [list(map(as_code, entry.values())) for entry in data],
-                headers=[as_code("ufunc")] + list(map(as_code, data[0]))[1:],
+                headers=[as_code("ufunc"), *list(map(as_code, data[0]))[1:]],
                 tablefmt=namespace.format,
             )
             # needed for consistent ordering of string-like types

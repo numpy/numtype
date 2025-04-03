@@ -50,16 +50,16 @@ wheels = [
 
 [[package]]
 name = "hypothesis"
-version = "6.130.5"
+version = "6.130.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
     { name = "sortedcontainers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0d/6e/e32a9c896ed621461fc7afcb0e7b61960247c2764d80c341d88ba14f45fa/hypothesis-6.130.5.tar.gz", hash = "sha256:2cdcdd894adc390a688c8a1c08580c345a67ecf73e31d5bb51a7712acf7b747c", size = 428116 }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/ae/fa9f4dff4ead766ffd280e710aa06083ee185938526535b808e366871fbc/hypothesis-6.130.8.tar.gz", hash = "sha256:1b719943011375b1d66f01f858181c3c3ae49324cd7d7b359229cbf95a7785ce", size = 427941 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/99/84/318648e1a0c40aee9fe2140c0bbd507ecfa691bab16ba854bff479967dfe/hypothesis-6.130.5-py3-none-any.whl", hash = "sha256:c13e42ec7df7fdc45c44d0b39f1e429d2253e19a37041d927e092afa7645bfcf", size = 492048 },
+    { url = "https://files.pythonhosted.org/packages/b5/74/ff7d6642dd21288947fb9f6e5a767c415326b0a02bc710842f191dab9768/hypothesis-6.130.8-py3-none-any.whl", hash = "sha256:8ddafde382fb96163c2a51c5a7c540d2642b2802a596347c13ac8fbc9de50d70", size = 492487 },
 ]
 
 [[package]]
@@ -222,29 +222,35 @@ basedpyright = [
 ]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "markdown-callouts", specifier = ">=0.4.0" },
+    { name = "mkdocs-awesome-nav", specifier = ">=3.1.0" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
-    { name = "mkdocs-material", specifier = ">=9.6.9" },
+    { name = "mkdocs-material", specifier = ">=9.6.11" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
-    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.1" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
     { name = "numtype", extras = ["numpy"] },
+    { name = "pygments", specifier = ">=2.19.1" },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.2" },
+    { name = "ruff", specifier = ">=0.11.3" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 docs = [
+    { name = "markdown-callouts", specifier = ">=0.4.0" },
+    { name = "mkdocs-awesome-nav", specifier = ">=3.1.0" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
-    { name = "mkdocs-material", specifier = ">=9.6.9" },
+    { name = "mkdocs-material", specifier = ">=9.6.11" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
-    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.1" },
+    { name = "pygments", specifier = ">=2.19.1" },
 ]
-lint = [{ name = "ruff", specifier = ">=0.11.2" }]
+lint = [{ name = "ruff", specifier = ">=0.11.3" }]
 list-and-test = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.2" },
+    { name = "ruff", specifier = ">=0.11.3" },
     { name = "typing-extensions", specifier = ">=4.13.0" },
 ]
 mypy = [
