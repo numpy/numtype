@@ -17,10 +17,8 @@ pre-commit:
       glob:
         - "docs/**"
         - "mkdocs.yml"
-        - ".github/workflows/docs.yml"
         - "CONTRIBUTING.md"
       run: uv run --no-sync mkdocs build
-      stage_fixed: true
 
 post-checkout:
   commands:
