@@ -56,15 +56,15 @@ if you don't.
 
 For more details, see <https://docs.astral.sh/ruff/>.
 
-## Type-checking
+## Type-checking and Testing
 
-To validate that the annotations are correct, we use two type-checkers:
-[basedpyright] and [mypy]. Both are included as development
-dependency, and therefore automatically installed with `uv sync`.
+To validate that the annotations are correct and run tests, we use several tools:
+[basedpyright], [mypy], and [pytest]. All are included as development
+dependency-group, so that `uv sync` will install them by default.
 
 ### basedpyright
 
-You can run basedpyright on the entire project using
+You can run basedpyright on the entire project using:
 
 ```bash
 $ uv run basedpyright
@@ -78,20 +78,35 @@ See <https://docs.basedpyright.com/> for IDE integration and other info.
 
 ### mypy
 
-Mypy requires a bit more effort to run, since it doesn't play well with
-editable dependencies, and it doesn't seem to recognize NumType's `numpy-stubs`
-if `numpy` is also installed. You can get around that by running:
+Mypy is used for type-checking the codebase and the type-tests. It takes more effort to run it on the codebase than `basedpyright`.
+This is primarily a consequence of mypy's inconsequent prioritization of the stubs bundled
+with NumPy over the `numpy-stubs` within a local development environment.
+To get around this, you can delete all `*.pyi` from your **local** `numpy` installation directory by running `uv tool/unstub.py`.
+
+**General Type Checking**
+
+To run mypy generally (excluding the main numpy dependency group):
 
 ```shell
 uv run --no-editable --no-group=numpy mypy .
 ```
 
-In rare cases, the cache can get corrupted, which can lead to incorrect
-results. So in case the CI output of mypy differs from your local output, you
-should delete the `.mypy_cache` directory in the `numtype` root.
+**Cache Issues**
+
+In rare cases, the cache (`.mypy_cache` in the `numtype` root) can get corrupted,
+leading to incorrect results. If CI output differs from your local output, delete
+this directory.
 
 The documentation can be found at <https://mypy.readthedocs.io/>, and issues can
 be reported at <https://github.com/python/mypy>.
+
+### pytest
+
+Pytest runs runtime tests located in `src/*/@test`. It works out-of-the-box:
+
+```bash
+uv run pytest [OPTIONS]
+```
 
 ## Lefthook
 
@@ -175,10 +190,6 @@ about your local or global `pip` or `uv` environments.
 
 See <https://tox.wiki/en/stable/> for more information.
 
-## Testing
-
-See the `README.md` in [`numtype/test`][test-docs].
-
 ## Documentation
 
 The documentation lives in `docs/`, the `README.md`, and `CONTRIBUTING.md`.
@@ -227,9 +238,9 @@ one of the development dependencies.
 [mkdocs]: https://www.mkdocs.org/
 [mypy]: https://github.com/python/mypy
 [numpy-commit-style]: https://numpy.org/devdocs/dev/development_workflow.html#writing-the-commit-message
+[pytest]: https://docs.pytest.org/en/latest/
 [ruff]: https://docs.astral.sh/ruff/
 [stub-style]: https://typing.python.org/en/latest/guides/writing_stubs.html#style-guide
-[test-docs]: https://github.com/numpy/numtype/tree/main/test
 [tool-docs]: https://github.com/numpy/numtype/tree/main/tool
 [tox]: https://github.com/tox-dev/tox
 
