@@ -145,7 +145,7 @@ def _union(*types: str) -> str:
 
     if other:
         if other[0] == f"{NP}.bool":
-            combined = [other[0]] + combined + other[1:]
+            combined = [other[0], *combined, *other[1:]]
         else:
             combined.extend(other)
 
