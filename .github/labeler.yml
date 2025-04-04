@@ -28,7 +28,6 @@ numpy.distutils.*:
 numpy.dtype:
 - changed-files:
   - any-glob-to-any-file:
-    - src/numpy-stubs/core/numerictypes.pyi
     - src/numpy-stubs/dtypes.pyi
 
 numpy.dtypes.*:
@@ -39,7 +38,8 @@ numpy.dtypes.*:
 numpy.emath.*:
 - changed-files:
   - any-glob-to-any-file:
-    - src/numpy-stubs/lib/emath.pyi
+    - src/numpy-stubs/lib/_scimath_impl.pyi
+    - src/numpy-stubs/lib/scimath.pyi
 
 numpy.f2py.*:
 - changed-files:
@@ -90,7 +90,7 @@ numpy.ndarray:
 numpy.poly*:
 - changed-files:
   - any-glob-to-any-file:
-    - src/numpy-stubs/lib/polynomial.pyi
+    - src/numpy-stubs/lib/_polynomial_impl.pyi
 
 numpy.polynomial.*:
 - changed-files:
@@ -110,7 +110,8 @@ numpy.rec.*:
 numpy.strings.*:
 - changed-files:
   - any-glob-to-any-file:
-    - src/numpy-stubs/strings/**
+    - src/numpy-stubs/_core/strings.pyi
+    - src/numpy-stubs/strings/**.pyi
 
 numpy.testing.*:
 - changed-files:
@@ -147,6 +148,7 @@ topic: testing:
 - changed-files:
   - any-glob-to-any-file:
     - src/**/@test/**
+    - tool/test/**
 
 # Tools and Configuration
 
@@ -158,7 +160,8 @@ tool: mypy:
 tool: stubtest:
 - changed-files:
   - any-glob-to-any-file:
-    - tool/stubtest/**
+    - tool/allowlists/**
+    - tool/stubtest.py
 
 tool: github-actions:
 - changed-files:
@@ -168,26 +171,24 @@ tool: github-actions:
 topic: dependencies:
 - changed-files:
   - any-glob-to-any-file:
-    - pyproject.toml
     - uv.lock
+    - tool/*.lock
 
 topic: developer experience:
 - changed-files:
   - any-glob-to-any-file:
     - .vscode/**
-    - .taplo.toml
     - lefthook.yml
 
 topic: automation:
 - changed-files:
   - any-glob-to-any-file:
     - .github/workflows/**
-    - tool/**
+    - tool/testgen.py
 
 topic: code style:
 - changed-files:
   - any-glob-to-any-file:
     - .taplo.toml
-    - .ruff.toml
-    - src/**/.ruff.toml
+    - **/.ruff.toml
 
