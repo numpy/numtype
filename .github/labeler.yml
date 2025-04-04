@@ -1,20 +1,3 @@
-# numpy-stubs module
-
-numpy.char.*:
-- changed-files:
-  - any-glob-to-any-file:
-    - src/numpy-stubs/char/**
-
-numpy._core.*:
-- changed-files:
-  - any-glob-to-any-file:
-    - src/numpy-stubs/_core/**
-
-numpy.core.*:
-- changed-files:
-  - any-glob-to-any-file:
-    - src/numpy-stubs/core/**
-
 numpy.ctypeslib.*:
 - changed-files:
   - any-glob-to-any-file:
@@ -51,11 +34,6 @@ numpy.fft.*:
   - any-glob-to-any-file:
     - src/numpy-stubs/fft/**
 
-numpy.generic:
-- changed-files:
-  - any-glob-to-any-file:
-    - src/numpy-stubs/_typing/numeric.pyi
-
 numpy.lib.*:
 - changed-files:
   - any-glob-to-any-file:
@@ -80,12 +58,6 @@ numpy.matrixlib.*:
 - changed-files:
   - any-glob-to-any-file:
     - src/numpy-stubs/matrixlib/**
-
-numpy.ndarray:
-- changed-files:
-  - any-glob-to-any-file:
-    - src/numpy-stubs/core/multiarray.pyi
-    - src/numpy-stubs/_typing/array.pyi
 
 numpy.poly*:
 - changed-files:
@@ -121,8 +93,7 @@ numpy.testing.*:
 numpy.ufunc:
 - changed-files:
   - any-glob-to-any-file:
-    - src/numpy-stubs/core/umath.pyi
-    - src/numpy-stubs/_typing/ufunc.pyi
+    - src/numpy-stubs/_core/umath.pyi
 
 numpy._utils:
 - changed-files:
@@ -151,11 +122,6 @@ topic: testing:
     - tool/test/**
 
 # Tools and Configuration
-
-tool: mypy:
-- changed-files:
-  - any-glob-to-any-file:
-    - .mypy.ini
 
 tool: stubtest:
 - changed-files:
