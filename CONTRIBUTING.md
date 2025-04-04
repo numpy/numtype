@@ -108,6 +108,8 @@ Pytest runs runtime tests located in `src/*/@test`. It works out-of-the-box:
 uv run pytest [OPTIONS]
 ```
 
+For available options, see the [pytest documentation](https://docs.pytest.org/en/stable/how-to/usage.html#args-from-file).
+
 ## Lefthook
 
 [Lefthook] is a modern Git hooks manager, which automatically lints and formats
