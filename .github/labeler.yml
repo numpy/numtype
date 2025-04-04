@@ -34,11 +34,6 @@ numpy.fft.*:
   - any-glob-to-any-file:
     - src/numpy-stubs/fft/**
 
-numpy.lib.*:
-- changed-files:
-  - any-glob-to-any-file:
-    - src/numpy-stubs/lib/**
-
 numpy.linalg.*:
 - changed-files:
   - any-glob-to-any-file:
