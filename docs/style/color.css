@@ -1,0 +1,153 @@
+/* Assign base colors for the PyData theme */
+:root {
+  /* Primary */
+  --pst-teal-50: #f4fbfc;
+  --pst-teal-100: #e9f6f8;
+  --pst-teal-200: #d0ecf1;
+  --pst-teal-300: #abdde6;
+  --pst-teal-400: #3fb1c5;
+  --pst-teal-500: #0a7d91;
+  --pst-teal-600: #085d6c;
+  --pst-teal-700: #064752;
+  --pst-teal-800: #042c33;
+  --pst-teal-900: #021b1f;
+
+  /* Secondary */
+  --pst-violet-50: #f4eefb;
+  --pst-violet-100: #e0c7ff;
+  --pst-violet-200: #d5b4fd;
+  --pst-violet-300: #b780ff;
+  --pst-violet-400: #9c5ffd;
+  --pst-violet-500: #8045e5;
+  --pst-violet-600: #6432bd;
+  --pst-violet-700: #4b258f;
+  --pst-violet-800: #341a61;
+  --pst-violet-900: #1e0e39;
+
+  /* Accent */
+  --pst-pink-50: #fcf8fd;
+  --pst-pink-100: #fcf0fa;
+  --pst-pink-200: #f8dff5;
+  --pst-pink-300: #f3c7ee;
+  --pst-pink-400: #e47fd7;
+  --pst-pink-500: #c132af;
+  --pst-pink-600: #912583;
+  --pst-pink-700: #6e1c64;
+  --pst-pink-800: #46123f;
+  --pst-pink-900: #2b0b27;
+
+  /* Default shades */
+  --pst-gray-50: #f9f9fa;
+  --pst-gray-100: #f3f4f5;
+  --pst-gray-200: #e5e7ea;
+  --pst-gray-300: #d1d5da;
+  --pst-gray-400: #9ca4af;
+  --pst-gray-500: #677384;
+  --pst-gray-600: #48566b;
+  --pst-gray-700: #29313d;
+  --pst-gray-800: #222832;
+  --pst-gray-900: #14181e;
+
+  --pst-white: #ffffff;
+  --pst-black: var(--pst-gray-900);
+
+  --pst-text-base-light: #ced6dd;
+}
+
+/*******************************************************************************
+* write the color rules for each theme (default=light / slate=dark)
+*/
+
+[data-md-color-scheme="default"] {
+  --pst-color-primary: var(--pst-teal-500);
+  --pst-color-primary-bg: var(--pst-teal-200);
+  --pst-color-secondary: var(--pst-violet-500);
+  --pst-color-secondary-bg: var(--pst-violet-100);
+  --pst-color-accent: var(--pst-pink-500);
+  --pst-color-accent-bg: var(--pst-pink-200);
+  --pst-color-info: #276be9;
+  --pst-color-info-bg: #dce7fc;
+  --pst-color-warning: #f66a0a;
+  --pst-color-warning-bg: #f8e3d0;
+  --pst-color-success: #00843f;
+  --pst-color-success-bg: #d6ece1;
+  --pst-color-attention: var(--pst-color-warning);
+  --pst-color-attention-bg: var(--pst-color-warning-bg);
+  --pst-color-danger: #d72d47;
+  --pst-color-danger-bg: #f9e1e4;
+  --pst-color-text-base: var(--pst-gray-800);
+  --pst-color-text-muted: var(--pst-gray-600);
+  --pst-color-shadow: rgba(0, 0, 0, 0.1);
+  --pst-color-border: var(--pst-gray-300);
+  --pst-color-border-muted: rgba(23, 23, 26, 0.2);
+  --pst-color-blockquote-notch: var(--pst-gray-500);
+  --pst-color-inline-code: var(--pst-pink-600);
+  --pst-color-inline-code-links: var(--pst-teal-600);
+  --pst-color-target: #f3cf95;
+  --pst-color-table: var(--pst-gray-900);
+  --pst-color-table-row-hover-bg: var(--pst-violet-200);
+  --pst-color-table-inner-border: var(--pst-gray-200);
+  --pst-color-background: var(--pst-white);
+  --pst-color-on-background: var(--pst-white);
+  --pst-color-surface: var(--pst-gray-100);
+  --pst-color-on-surface: var(--pst-gray-800);
+
+  --pst-color-heading: var(--pst-color-text-base);
+  --pst-color-link: var(--pst-color-primary);
+  --pst-color-link-hover: var(--pst-color-secondary);
+  --pst-color-table-outer-border: var(--pst-color-surface);
+  --pst-color-table-heading-bg: var(--pst-color-surface);
+  --pst-color-table-row-zebra-high-bg: var(--pst-color-on-background);
+  --pst-color-table-row-zebra-low-bg: var(--pst-color-surface);
+}
+[data-md-color-scheme="default"] img[src$="#only-dark"],
+[data-md-color-scheme="default"] img[src$="#gh-dark-mode-only"] {
+  display: none;
+}
+
+[data-md-color-scheme="slate"] {
+  --pst-color-primary: var(--pst-teal-400);
+  --pst-color-primary-bg: var(--pst-teal-800);
+  --pst-color-secondary: var(--pst-violet-400);
+  --pst-color-secondary-bg: var(--pst-violet-800);
+  --pst-color-accent: var(--pst-pink-400);
+  --pst-color-accent-bg: var(--pst-pink-800);
+  --pst-color-info: #79a3f2;
+  --pst-color-info-bg: #06245d;
+  --pst-color-warning: #ff9245;
+  --pst-color-warning-bg: #652a02;
+  --pst-color-success: #5fb488;
+  --pst-color-success-bg: #002f17;
+  --pst-color-attention: var(--pst-color-warning);
+  --pst-color-attention-bg: var(--pst-color-warning-bg);
+  --pst-color-danger: #e78894;
+  --pst-color-danger-bg: #4e111b;
+  --pst-color-text-base: var(--pst-text-base-light);
+  --pst-color-text-muted: var(--pst-gray-400);
+  --pst-color-shadow: rgba(0, 0, 0, 0.2);
+  --pst-color-border: var(--pst-gray-600);
+  --pst-color-border-muted: var(--pst-gray-700);
+  --pst-color-blockquote-notch: var(--pst-gray-400);
+  --pst-color-inline-code: var(--pst-pink-300);
+  --pst-color-inline-code-links: var(--pst-teal-400);
+  --pst-color-target: #675c04;
+  --pst-color-table: var(--pst-white);
+  --pst-color-table-row-hover-bg: var(--pst-violet-700);
+  --pst-color-table-inner-border: #364150;
+  --pst-color-background: var(--pst-gray-900);
+  --pst-color-on-background: var(--pst-gray-800);
+  --pst-color-surface: var(--pst-gray-700);
+  --pst-color-on-surface: var(--pst-gray-100);
+
+  --pst-color-heading: var(--pst-color-text-base);
+  --pst-color-link: var(--pst-color-primary);
+  --pst-color-link-hover: var(--pst-color-secondary);
+  --pst-color-table-outer-border: var(--pst-color-surface);
+  --pst-color-table-heading-bg: var(--pst-color-surface);
+  --pst-color-table-row-zebra-high-bg: var(--pst-color-on-background);
+  --pst-color-table-row-zebra-low-bg: var(--pst-color-surface);
+}
+[data-md-color-scheme="slate"] img[src$="#only-light"],
+[data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
+  display: none;
+}
