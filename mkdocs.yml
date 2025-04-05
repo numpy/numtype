@@ -94,9 +94,6 @@ markdown_extensions:
   # https://facelessuser.github.io/pymdown-extensions/extensions/saneheaders/
   - pymdownx.saneheaders
 
-extra_css:
-  - style/theme.css
-
 theme:
   name: material
   custom_dir: docs/overrides
@@ -118,10 +115,6 @@ theme:
     - search.suggest
     - toc.follow
 
-  font:
-    text: Lato
-    code: JetBrains Mono
-
   palette:
     - media: "(prefers-color-scheme)"
       toggle:
@@ -129,17 +122,21 @@ theme:
         name: Switch to light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: teal
-      accent: pink
+      primary: custom
       toggle:
         icon: fontawesome/regular/moon
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: teal
-      accent: pink
+      primary: custom
       toggle:
         icon: fontawesome/regular/sun
         name: Switch to system preference
 
-copyright: Copyright &copy;, 2025 NumPy Developers.
+extra_css:
+  - style/color.css
+  - style/font.css
+  - style/overrides.css
+  - style/theme.css
+
+copyright: "&copy; Copyright 2025, NumPy Developers."
