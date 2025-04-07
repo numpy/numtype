@@ -2,7 +2,7 @@
 
 ## Concrete scalar types
 
-Since NumPy 2.2, the `float64` and `complex128` scalar types were made into *concrete* types.
+Since NumPy 2.2, the `float64` and `complex128` scalar types were made into _concrete_ types.
 Before that, they were aliases of `#!py floating[_64Bit]` and `#!py complexfloating[_64Bit, _64Bit]`,
 respectively. But at runtime, `floating` is not the same as `float64`, so this was incorrect.
 
@@ -28,8 +28,8 @@ To be specific, the following scalar types are proper subclasses in NumType:
 
 - `int8`, `int16`, `int32`, and `int64`
 - `uint8`, `uint16`, `uint32`, and `uint64`
-- `float16`, `float32`, *`float64`*, and `longdouble`
-- `complex64`, *`complex128`*, and `clongdouble`
+- `float16`, `float32`, _`float64`_, and `longdouble`
+- `complex64`, _`complex128`_, and `clongdouble`
 
 The other numeric scalar types are defined as aliases, and assume a 64-bit platform.
 
@@ -37,7 +37,7 @@ The other numeric scalar types are defined as aliases, and assume a 64-bit platf
 
 The purpose of [`#!py numpy.typing.NBitBase`][numpy.typing.NBitBase] was as upper bound to
 a type parameter, for use in generic abstract scalar types like `#!py floating[T]`.
-But the now concrete scalar types will no longer accept *any* `#!py floating[T]`.
+But the now concrete scalar types will no longer accept _any_ `#!py floating[T]`.
 `NBitBase` should therefore not be used anymore.
 
 ### Alternatives
@@ -58,7 +58,7 @@ def f(x: np.floating[NT]) -> np.floating[NT]: ...
 
 ///
 /// tab | Python 3.12 and above
-    select: True
+select: True
 
 ```py
 import numpy as np
@@ -84,7 +84,7 @@ def f(x: FloatT) -> FloatT: ...
 
 ///
 /// tab | Python 3.12 and above
-    select: True
+select: True
 
 ```py
 import numpy as np
@@ -112,7 +112,7 @@ def f(x: np.complexfloating[NT]) -> np.floating[NT]: ...
 
 ///
 /// tab | Python 3.12 and above
-    select: True
+select: True
 
 ```py
 import numpy as np
@@ -161,7 +161,7 @@ This was done in order to minimize the expected amount of "but it works on my ma
 ## Return types of `[c]longdouble.item()` and `.tolist()`
 
 In Numpy, `longdouble` and `clongdouble` aren't annotated as concrete subclasses of
-`[complex]floating`, but as *aliases*. A consequence of this is that their `item` and `tolist`
+`[complex]floating`, but as _aliases_. A consequence of this is that their `item` and `tolist`
 methods had to return the same type as that of all other `floating` and `complexfloating` types,
 i.e. `float` and `complex`. But this is incorrect for `longdouble` and `clongdouble`:
 
@@ -178,7 +178,7 @@ In NumType, the stubs correctly reflect this runtime behaviour.
 ## Removed `number.__floordiv__`
 
 The abstract `numpy.number` type represents a scalar that's either integer, float, or complex.
-But the builtin "floordiv" operator, `//`  is only supported for integer and floating scalars.
+But the builtin "floordiv" operator, `//` is only supported for integer and floating scalars.
 Complex numpy scalars will raise an error. But in NumPy, type-checkers will allow you to write
 the following type-unsafe code:
 

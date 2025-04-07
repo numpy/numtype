@@ -51,7 +51,7 @@ body:
     attributes:
       label: "Type-checker version and configuration:"
       description: >
-        Please include the exact version of the type-checker you are using. 
+        Please include the exact version of the type-checker you are using.
         Popular (static) type checkers include Mypy, Pyright / Pylance, Pytype, Pyre, PyCharm, etc.
         Also include the full CLI command used to run the type-checker, and all of the relevant configuration options.
     validations:

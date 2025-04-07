@@ -5,4 +5,4 @@ hide:
 
 # NumType reference
 
-*coming soon*
+_coming soon_

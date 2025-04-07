@@ -3,11 +3,11 @@ line-length = 130
 
 [lint]
 extend-ignore = [
-    "PTH",     # flake8-use-pathlib
-    "B015",    # flake8-bugbear  useless-comparison
-    "PYI015",  # flake8-pyi:     assignment-default-in-stub
-    "PYI017",  # flake8-pyi:     complex-assignment-in-stub
-    "SLF001",  # flake8-self:    private-member-access
-    "PLR0124", # pylint/R:       comparison-with-itself
-    "PLC2801", # pylint/C:       unnecessary-dunder-call
+  "PTH", # flake8-use-pathlib
+  "B015", # flake8-bugbear  useless-comparison
+  "PYI015", # flake8-pyi:     assignment-default-in-stub
+  "PYI017", # flake8-pyi:     complex-assignment-in-stub
+  "SLF001", # flake8-self:    private-member-access
+  "PLR0124", # pylint/R:       comparison-with-itself
+  "PLC2801", # pylint/C:       unnecessary-dunder-call
 ]

@@ -9,6 +9,10 @@ pre-commit:
       glob: "*.{py,pyi}"
       run: uv run --no-sync ruff format {staged_files}
       stage_fixed: true
+    dprint-format:
+      glob: "*.{md,json,yml,yaml,toml}"
+      run: uv run --no-sync dprint fmt {staged_files}
+      stage_fixed: true
     ignore-format:
       glob: "*.{py,pyi}"
       run: uv run --no-sync tool/format_ignores.py {staged_files}
