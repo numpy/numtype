@@ -7902,29 +7902,12 @@ ushort = uint16
 intc = int32
 uintc = uint32
 
-class long(signedinteger[_n._32_64]):
-    @property
-    @override
-    def itemsize(self) -> L[4, 8]: ...
-    @property
-    @override
-    def nbytes(self) -> L[4, 8]: ...
-    @override
-    def __hash__(self, /) -> int: ...
-    def __index__(self, /) -> int: ...
-    def bit_count(self, /) -> int: ...
-
-class ulong(unsignedinteger[_n._32_64]):
-    @property
-    @override
-    def itemsize(self) -> L[4, 8]: ...
-    @property
-    @override
-    def nbytes(self) -> L[4, 8]: ...
-    @override
-    def __hash__(self, /) -> int: ...
-    def __index__(self, /) -> int: ...
-    def bit_count(self, /) -> int: ...
+if sys.platform == "win32":
+    long: TypeAlias = int32  # pyright: ignore[reportRedeclaration]
+    ulong: TypeAlias = uint32  # pyright: ignore[reportRedeclaration]
+else:
+    long: TypeAlias = intp  # pyright: ignore[reportRedeclaration]
+    ulong: TypeAlias = uintp  # pyright: ignore[reportRedeclaration]
 
 longlong = int64
 ulonglong = uint64

@@ -13,7 +13,7 @@ AR_i1: npt.NDArray[np.int8]
 AR_i2: npt.NDArray[np.int16]
 AR_i4: npt.NDArray[np.int32]
 AR_i8: npt.NDArray[np.int64]
-AR_l: npt.NDArray[np.long]
+AR_q: npt.NDArray[np.longlong]
 AR_u1: npt.NDArray[np.uint8]
 AR_u2: npt.NDArray[np.uint16]
 AR_u4: npt.NDArray[np.uint32]
@@ -81,7 +81,3 @@ assert_type(np.ctypeslib.as_array(pointer), npt.NDArray[Any])
 
 assert_type(np.ctypeslib.as_ctypes_type(int), type[ct.c_ssize_t])
 assert_type(np.ctypeslib.as_ctypes_type("N"), type[ct.c_size_t])
-assert_type(np.ctypeslib.as_ctypes(AR_l), ct.Array[ct.c_long])
-assert_type(np.ctypeslib.as_ctypes(AR_l.take(0)), ct.c_long)
-assert_type(np.ctypeslib.as_ctypes(AR_L), ct.Array[ct.c_ulong])
-assert_type(np.ctypeslib.as_ctypes(AR_L.take(0)), ct.c_ulong)

@@ -67,7 +67,7 @@ assert_type(np.dtype(Fraction), np.dtype[np.object_])
 
 # char-codes
 assert_type(np.dtype("u1"), np.dtype[np.uint8])
-assert_type(np.dtype("l"), np.dtype[np.long])
+assert_type(np.dtype("int_"), np.dtype[np.intp])
 assert_type(np.dtype("longlong"), np.dtype[np.longlong])
 assert_type(np.dtype(">g"), np.dtype[np.longdouble])
 assert_type(np.dtype(cs_integer), np.dtype[np.integer])
