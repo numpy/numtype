@@ -145,6 +145,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/f1/2a/8c3ac3d8bc94e6de8d7ae270bb5bc437b210bb9d6d9e46630c98f4abd20c/csscompressor-0.9.5.tar.gz", hash = "sha256:afa22badbcf3120a4f392e4d22f9fff485c044a1feda4a950ecc5eba9dd31a05", size = 237808, upload-time = "2017-11-26T21:13:08.238Z" }
 
 [[package]]
+name = "dprint-py"
+version = "0.50.1.4"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/02/07/357c1a997f13b9a72cb86f654e9cfc087b68856102c3d78bf2a0646f0461/dprint_py-0.50.1.4-py3-none-macosx_11_0_arm64.whl", hash = "sha256:c1bc95f56c832f38a07fd76d7bee438b6e3f64128b9d5c31eed42e2fe79e4b5a", size = 21151554, upload-time = "2025-07-31T13:04:26.013Z" },
+    { url = "https://files.pythonhosted.org/packages/6c/10/25ec06220055a4d38f728bdf26f95b1f7ffc44987cf44a3fefca0911fa31/dprint_py-0.50.1.4-py3-none-macosx_11_0_x86_64.whl", hash = "sha256:02d373d8aee97bfe2b91423351fbd3b5e2efef1c30dcf469599db42725265d67", size = 22366839, upload-time = "2025-07-31T13:04:28.376Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/41/1bcd3f5113bd1818f07ab1889163384aa74db052b1bfe361ab1518cfc5aa/dprint_py-0.50.1.4-py3-none-manylinux_2_17_aarch64.whl", hash = "sha256:a9261c4cdcb1d88d289ded67e3c0f678ea85367464ab99c65e46baaa2c120dd5", size = 23884927, upload-time = "2025-07-31T13:04:30.742Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/86/ab569f5b7203156767e2cd2be60d0febef18043ca9c1d4d37b7c6429b4f7/dprint_py-0.50.1.4-py3-none-manylinux_2_17_x86_64.whl", hash = "sha256:89fd0253fd11d4f80db2c779f056065cd345199684e60fa89494b1876d5485d8", size = 24459510, upload-time = "2025-07-31T13:04:33.901Z" },
+    { url = "https://files.pythonhosted.org/packages/cb/2c/d71cd39383342e0bcfb7b0330ebdc8089c300d535674a1de2ee41c29ba97/dprint_py-0.50.1.4-py3-none-win_amd64.whl", hash = "sha256:7e141c1a0d5dc9793b7029808447c5f648499729ed57e35a3d56e9d608d09610", size = 20604053, upload-time = "2025-07-31T13:04:36.821Z" },
+]
+
+[[package]]
 name = "ghp-import"
 version = "2.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -630,6 +642,7 @@ basedpyright = [
 ]
 dev = [
     { name = "basedpyright" },
+    { name = "dprint-py" },
     { name = "markdown-callouts" },
     { name = "mkdocs-awesome-nav" },
     { name = "mkdocs-include-markdown-plugin" },
@@ -657,9 +670,11 @@ docs = [
     { name = "pygments" },
 ]
 lint = [
+    { name = "dprint-py" },
     { name = "ruff" },
 ]
 list-and-test = [
+    { name = "dprint-py" },
     { name = "numtype", extra = ["numpy"] },
     { name = "pytest" },
     { name = "ruff" },
@@ -713,6 +728,7 @@ basedpyright = [
 ]
 dev = [
     { name = "basedpyright", specifier = ">=1.31.1" },
+    { name = "dprint-py", specifier = ">=0.50.1.4" },
     { name = "markdown-callouts", specifier = ">=0.4.0" },
     { name = "mkdocs-awesome-nav", specifier = ">=3.1.2" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.6" },
@@ -739,8 +755,12 @@ docs = [
     { name = "pydantic", marker = "python_full_version >= '3.14'", specifier = ">=2.12.0a1" },
     { name = "pygments", specifier = ">=2.19.2" },
 ]
-lint = [{ name = "ruff", specifier = ">=0.12.7" }]
+lint = [
+    { name = "dprint-py", specifier = ">=0.50.1.4" },
+    { name = "ruff", specifier = ">=0.12.7" },
+]
 list-and-test = [
+    { name = "dprint-py", specifier = ">=0.50.1.4" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "ruff", specifier = ">=0.12.7" },
