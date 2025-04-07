@@ -15,7 +15,7 @@ permissions:
   pull-requests: write
 
 env:
-  UV_FROZEN: 1
+  UV_LOCKED: 1
 
 jobs:
   lint:

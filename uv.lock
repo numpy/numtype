@@ -720,12 +720,12 @@ basedpyright = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.1" },
 ]
 dev = [
     { name = "basedpyright", specifier = ">=1.28.4" },
     { name = "markdown-callouts", specifier = ">=0.4.0" },
-    { name = "mkdocs-awesome-nav", specifier = ">=3.1.0" },
+    { name = "mkdocs-awesome-nav", specifier = ">=3.1.1" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
     { name = "mkdocs-material", specifier = ">=9.6.11" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
@@ -734,26 +734,26 @@ dev = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pygments", specifier = ">=2.19.1" },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.3" },
+    { name = "ruff", specifier = ">=0.11.4" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.1" },
 ]
 docs = [
     { name = "markdown-callouts", specifier = ">=0.4.0" },
-    { name = "mkdocs-awesome-nav", specifier = ">=3.1.0" },
+    { name = "mkdocs-awesome-nav", specifier = ">=3.1.1" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
     { name = "mkdocs-material", specifier = ">=9.6.11" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.1" },
     { name = "pygments", specifier = ">=2.19.1" },
 ]
-lint = [{ name = "ruff", specifier = ">=0.11.3" }]
+lint = [{ name = "ruff", specifier = ">=0.11.4" }]
 list-and-test = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.3" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "ruff", specifier = ">=0.11.4" },
+    { name = "typing-extensions", specifier = ">=4.13.1" },
 ]
 mypy = [
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
@@ -761,13 +761,13 @@ mypy = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.1" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
 pytest = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.1" },
 ]
 typecheck = [
     { name = "basedpyright", specifier = ">=1.28.4" },
@@ -776,14 +776,14 @@ typecheck = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.1" },
 ]
 types = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.1" },
 ]
 
 [[package]]
