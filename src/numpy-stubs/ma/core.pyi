@@ -5,7 +5,8 @@ from typing_extensions import Never, Self, TypeVar, deprecated, overload, overri
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
 from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
-from numpy._typing import _BoolCodes
+from numpy._globals import _NoValueType
+from numpy._typing import ArrayLike, _ArrayLike, _BoolCodes, _ScalarLike_co, _ShapeLike
 
 __all__ = [
     "MAError",
@@ -188,7 +189,9 @@ __all__ = [
     "zeros_like",
 ]
 
+_ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...], covariant=True)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
@@ -818,13 +821,41 @@ def array(
 ) -> Incomplete: ...
 
 #
+@overload
 def min(
-    obj: Incomplete,
-    axis: Incomplete = ...,
-    out: Incomplete = ...,
-    fill_value: Incomplete = ...,
-    keepdims: Incomplete = ...,
-) -> Incomplete: ...
+    obj: _ArrayLike[_ScalarT],
+    axis: None = None,
+    out: None = None,
+    fill_value: _ScalarLike_co | None = None,
+    keepdims: L[False] | _NoValueType = ...,
+) -> _ScalarT: ...
+@overload
+def min(
+    obj: ArrayLike,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    fill_value: _ScalarLike_co | None = None,
+    keepdims: bool | _NoValueType = ...,
+) -> Any: ...
+@overload
+def min(
+    obj: ArrayLike,
+    axis: None,
+    out: _ArrayT,
+    fill_value: _ScalarLike_co | None = None,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def min(
+    obj: ArrayLike,
+    axis: _ShapeLike | None = None,
+    *,
+    out: _ArrayT,
+    fill_value: _ScalarLike_co | None = None,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+
+#
 def max(
     obj: Incomplete,
     axis: Incomplete = ...,
