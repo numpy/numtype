@@ -52,6 +52,9 @@ jobs:
           uv run --no-sync ruff check --output-format=github
           uv run --no-sync ruff format --check
 
+      - name: dprint
+        run: uv run --no-sync dprint check
+
       - name: pytest
         run: uv run --no-sync pytest
 

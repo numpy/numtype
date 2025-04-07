@@ -50,7 +50,10 @@ dependencies = []
 
 [dependency-groups]
 numpy = ["numtype[numpy]"]
-lint = ["ruff>=0.11.3"]
+lint = [
+    "dprint-py>=0.49.1.2",
+    "ruff>=0.11.3",
+]
 pytest = [
     {include-group = "numpy"},
     "pytest>=8.3.5",
