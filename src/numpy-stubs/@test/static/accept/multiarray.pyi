@@ -7,9 +7,9 @@ import numpy.typing as npt
 
 ###
 
-_SCT_co = TypeVar("_SCT_co", bound=np.generic, covariant=True)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 
-class SubClass(npt.NDArray[_SCT_co]): ...
+class SubClass(npt.NDArray[_ScalarT_co]): ...
 
 subclass: SubClass[np.float64]
 

@@ -4,9 +4,9 @@ from typing_extensions import TypeVar, assert_type
 import numpy as np
 import numpy.typing as npt
 
-_SCT = TypeVar("_SCT", bound=np.generic)
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
-def func1(ar: npt.NDArray[_SCT], a: int) -> npt.NDArray[_SCT]: ...
+def func1(ar: npt.NDArray[_ScalarT], a: int) -> npt.NDArray[_ScalarT]: ...
 def func2(ar: npt.NDArray[np.number], a: str) -> npt.NDArray[np.float64]: ...
 
 AR_b: npt.NDArray[np.bool]

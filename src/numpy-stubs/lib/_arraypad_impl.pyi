@@ -9,7 +9,7 @@ __all__ = ["pad"]
 
 ###
 
-_SCT = TypeVar("_SCT", bound=np.generic)
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
 _ModeKind: TypeAlias = L[
     "constant",
@@ -35,7 +35,7 @@ class _ModeFunc(Protocol):
 # specific modes. Consider adding more overloads to express this in the future.
 @overload
 def pad(
-    array: _ArrayLike[_SCT],
+    array: _ArrayLike[_ScalarT],
     pad_width: _ArrayLikeInt,
     mode: _ModeKind = ...,
     *,
@@ -43,7 +43,7 @@ def pad(
     constant_values: ArrayLike = ...,
     end_values: ArrayLike = ...,
     reflect_type: L["odd", "even"] = ...,
-) -> NDArray[_SCT]: ...
+) -> NDArray[_ScalarT]: ...
 @overload
 def pad(
     array: ArrayLike,
@@ -56,6 +56,6 @@ def pad(
     reflect_type: L["odd", "even"] = ...,
 ) -> NDArray[Any]: ...
 @overload
-def pad(array: _ArrayLike[_SCT], pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> NDArray[_SCT]: ...
+def pad(array: _ArrayLike[_ScalarT], pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> NDArray[_ScalarT]: ...
 @overload
 def pad(array: ArrayLike, pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> NDArray[Any]: ...
