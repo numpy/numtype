@@ -2,7 +2,7 @@ extend = "../.ruff.toml"
 
 [lint]
 extend-ignore = [
-    "PT009",   # flake8-pytest-style: pytest-unittest-assertion
-    "PLR0124", # pylint/R: comparison-with-itself
-    "PLC2801", # pylint/C: unnecessary-dunder-call
+  "PT009", # flake8-pytest-style: pytest-unittest-assertion
+  "PLR0124", # pylint/R: comparison-with-itself
+  "PLC2801", # pylint/C: unnecessary-dunder-call
 ]

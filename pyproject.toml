@@ -2,116 +2,112 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-
 [project]
 name = "numtype"
 version = "2.2.4.0.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
 authors = [
-    {name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com"},
+  { name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com" },
 ]
 maintainers = [
-    {name = "NumPy Developers", email = "numpy-discussion@python.org"},
+  { name = "NumPy Developers", email = "numpy-discussion@python.org" },
 ]
 license = "BSD-3-Clause"
 keywords = ["numpy", "typing", "stubs"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Typing :: Stubs Only",
-    "Typing :: Typed",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Stubs Only",
+  "Typing :: Typed",
 ]
 packages = [
-    {include = "src/_numtype"},
-    {include = "src/numpy-stubs"},
-    {include = "src/numtype"},
+  { include = "src/_numtype" },
+  { include = "src/numpy-stubs" },
+  { include = "src/numtype" },
 ]
 requires-python = ">=3.10"
 dependencies = []
 
-    [project.optional-dependencies]
-    numpy = ["numpy>=2.2.4,<2.3"]
+[project.optional-dependencies]
+numpy = ["numpy>=2.2.4,<2.3"]
 
-    [project.urls]
-    Homepage = "https://numpy.org/"
-    Repository = "https://github.com/numpy/numtype/"
-    Issues = "https://github.com/numpy/numtype/issues"
-    Changelog = "https://github.com/numpy/numtype/releases"
-
+[project.urls]
+Homepage = "https://numpy.org/"
+Repository = "https://github.com/numpy/numtype/"
+Issues = "https://github.com/numpy/numtype/issues"
+Changelog = "https://github.com/numpy/numtype/releases"
 
 [dependency-groups]
 numpy = ["numtype[numpy]"]
 lint = [
-    "dprint-py>=0.49.1.2",
-    "ruff>=0.11.3",
+  "dprint-py>=0.49.1.2",
+  "ruff>=0.11.3",
 ]
 pytest = [
-    {include-group = "numpy"},
-    "pytest>=8.3.5",
-    "typing_extensions>=4.13.0",
+  { include-group = "numpy" },
+  "pytest>=8.3.5",
+  "typing_extensions>=4.13.0",
 ]
 list_and_test = [
-    {include-group = "lint"},
-    {include-group = "pytest"},
+  { include-group = "lint" },
+  { include-group = "pytest" },
 ]
 types = [
-    {include-group = "pytest"},
-    "types-setuptools>=78.1.0.20250329",
-    "types-tabulate>=0.9.0.20241207",
+  { include-group = "pytest" },
+  "types-setuptools>=78.1.0.20250329",
+  "types-tabulate>=0.9.0.20241207",
 ]
 basedpyright = [
-    {include-group = "numpy"},
-    {include-group = "types"},
-    "basedpyright>=1.28.4",
+  { include-group = "numpy" },
+  { include-group = "types" },
+  "basedpyright>=1.28.4",
 ]
 mypy = [
-    {include-group = "types"},
-    "mypy[faster-cache]>=1.15.0",
+  { include-group = "types" },
+  "mypy[faster-cache]>=1.15.0",
 ]
 typecheck = [
-    {include-group = "basedpyright"},
-    {include-group = "mypy"},
+  { include-group = "basedpyright" },
+  { include-group = "mypy" },
 ]
 docs = [
-    "mkdocs-material>=9.6.11",
-    "mkdocs-awesome-nav>=3.1.0",
-    "markdown-callouts>=0.4.0",
-    "mkdocs-include-markdown-plugin>=7.1.5",
-    "mkdocs-minify-plugin>=0.8.0",
-    "mkdocstrings[python]>=0.29.1",
-    "pygments>=2.19.1",
+  "mkdocs-material>=9.6.11",
+  "mkdocs-awesome-nav>=3.1.0",
+  "markdown-callouts>=0.4.0",
+  "mkdocs-include-markdown-plugin>=7.1.5",
+  "mkdocs-minify-plugin>=0.8.0",
+  "mkdocstrings[python]>=0.29.1",
+  "pygments>=2.19.1",
 ]
 dev = [
-    {include-group = "list_and_test"},
-    {include-group = "typecheck"},
-    {include-group = "docs"},
+  { include-group = "list_and_test" },
+  { include-group = "typecheck" },
+  { include-group = "docs" },
 ]
-
 
 [tool.hatch.build]
 exclude = [
-    "**/@test",
-    "**/*.yml",
-    "**/.*",
-    "/docs",
-    "/tool",
-    "CONTRIBUTING.md",
-    "uv.lock",
+  "**/@test",
+  "**/*.yml",
+  "**/.*",
+  "/docs",
+  "/tool",
+  "CONTRIBUTING.md",
+  "uv.lock",
 ]
 skip-excluded-dirs = true
 
-    [tool.hatch.build.targets.wheel]
-    packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
-
+[tool.hatch.build.targets.wheel]
+packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
 
 [tool.mypy]
 mypy_path = "src"
@@ -134,7 +130,6 @@ disable_memoryview_promotion = true
 # bare_literals = false
 # default_return = false
 
-
 [tool.pyright]
 include = ["src", "tool"]
 ignore = [".venv"]
@@ -149,12 +144,12 @@ enableReachabilityAnalysis = false
 reportCallInDefaultInitializer = true
 reportImportCycles = true
 reportImplicitOverride = true
-reportInvalidStubStatement = false         # required for type-testing
+reportInvalidStubStatement = false # required for type-testing
 reportMissingSuperCall = false
 reportPrivateUsage = false
 reportPropertyTypeMismatch = false
 reportSelfClsParameterName = false
-reportShadowedImports = false              # causes a ~35% slowdown
+reportShadowedImports = false # causes a ~35% slowdown
 reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
 reportUnusedExpression = false
@@ -179,65 +174,64 @@ force-exclude = true
 line-length = 130
 preview = true
 
-    [tool.ruff.format]
-    docstring-code-format = true
-    line-ending = "lf"
+[tool.ruff.format]
+docstring-code-format = true
+line-ending = "lf"
 
-    [tool.ruff.lint]
-    select = ["ALL"]
-    ignore = [
-        "FBT",    # flake8-boolean-trap
-        "CPY",    # flake8-copyright
-        "EM",     # flake8-errmsg
-        "FIX",    # flake8-fixme
-        "ANN401", # flake8-annotations: any-type
-        "PYI041", # flake8-pyi:         redundant-numeric-union
-    ]
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "FBT", # flake8-boolean-trap
+  "CPY", # flake8-copyright
+  "EM", # flake8-errmsg
+  "FIX", # flake8-fixme
+  "ANN401", # flake8-annotations: any-type
+  "PYI041", # flake8-pyi:         redundant-numeric-union
+]
 
-        [tool.ruff.lint.per-file-ignores]
-        "*.pyi" = [
-            "N",       # pep8-naming
-            "TD",      # flake8-todo
-            "COM812",  # flake8-commas: missing-trailing-comma
-            "PYI054",  # flake8-pyi:    numeric-literal-too-long
-            "PLC2701", # pylint/C:      import-private-name
-        ]
+[tool.ruff.lint.per-file-ignores]
+"*.pyi" = [
+  "N", # pep8-naming
+  "TD", # flake8-todo
+  "COM812", # flake8-commas: missing-trailing-comma
+  "PYI054", # flake8-pyi:    numeric-literal-too-long
+  "PLC2701", # pylint/C:      import-private-name
+]
 
-        [tool.ruff.lint.flake8-builtins]
-        builtins-allowed-modules = ["random"]
+[tool.ruff.lint.flake8-builtins]
+builtins-allowed-modules = ["random"]
 
-        [tool.ruff.lint.flake8-import-conventions]
-        banned-from = [
-            "abc",
-            "basedtyping",
-            "ctypes",
-            "datetime",
-            "os",
-            "sys",
-            "numpy",
-            "numpy.typing",
-        ]
-            [tool.ruff.lint.flake8-import-conventions.extend-aliases]
-            "ctypes" = "ct"
-            "datetime" = "dt"
-            "numpy" = "np"
-            "numpy.typing" = "npt"
-            "numtype" = "nt"
-            "_numtype" = "_nt"
+[tool.ruff.lint.flake8-import-conventions]
+banned-from = [
+  "abc",
+  "basedtyping",
+  "ctypes",
+  "datetime",
+  "os",
+  "sys",
+  "numpy",
+  "numpy.typing",
+]
+[tool.ruff.lint.flake8-import-conventions.extend-aliases]
+"ctypes" = "ct"
+"datetime" = "dt"
+"numpy" = "np"
+"numpy.typing" = "npt"
+"numtype" = "nt"
+"_numtype" = "_nt"
 
-        [tool.ruff.lint.isort]
-        case-sensitive = true
-        combine-as-imports = true
-        extra-standard-library = ["_typeshed", "typing_extensions"]
-        known-first-party = ["numpy", "numtype", "_numtype"]
-        split-on-trailing-comma = true
+[tool.ruff.lint.isort]
+case-sensitive = true
+combine-as-imports = true
+extra-standard-library = ["_typeshed", "typing_extensions"]
+known-first-party = ["numpy", "numtype", "_numtype"]
+split-on-trailing-comma = true
 
-        [tool.ruff.lint.pydocstyle]
-        convention = "numpy"
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
 
-        [tool.ruff.lint.pylint]
-        allow-dunder-method-names = ["__array__", "__array_ufunc__"]
-
+[tool.ruff.lint.pylint]
+allow-dunder-method-names = ["__array__", "__array_ufunc__"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"
@@ -246,77 +240,75 @@ filterwarnings = ["error"]
 log_cli_level = "INFO"
 xfail_strict = true
 
-
 # install tox with `uv tool install tox --with tox-uv --upgrade`
 # and run with `uvx tox p`
 [tool.tox]
 min_version = "4"
 requires = ["tox-uv>=1"]
 env_list = [
-    "ruff",
-    "pytest",
-    "basedpyright",
-    "mypy",
-    "3.10",
-    "3.11",
-    "3.12",
-    "3.13",
+  "ruff",
+  "pytest",
+  "basedpyright",
+  "mypy",
+  "3.10",
+  "3.11",
+  "3.12",
+  "3.13",
 ]
 
-    [tool.tox.env_run_base]
-    description = "stubtest ({base_python})"
-    commands = [
-        [
-            "uv",
-            "run",
-            "-q",
-            "-p={base_python}",
-            "--active",
-            "tool/stubtest.py",
-            "--concise",
-        ],
-    ]
+[tool.tox.env_run_base]
+description = "stubtest ({base_python})"
+commands = [
+  [
+    "uv",
+    "run",
+    "-q",
+    "-p={base_python}",
+    "--active",
+    "tool/stubtest.py",
+    "--concise",
+  ],
+]
 
-    [tool.tox.env.ruff]
-    description = "ruff"
-    runner = "uv-venv-lock-runner"
-    dependency_groups = ["dev"]
-    commands = [
-        ["ruff", "check", "--show-fixes"],
-        ["ruff", "format", "--check"],
-    ]
+[tool.tox.env.ruff]
+description = "ruff"
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev"]
+commands = [
+  ["ruff", "check", "--show-fixes"],
+  ["ruff", "format", "--check"],
+]
 
-    [tool.tox.env.pytest]
-    description = "pytest"
-    runner = "uv-venv-lock-runner"
-    dependency_groups = ["dev", "numpy"]
-    commands = [["pytest"]]
+[tool.tox.env.pytest]
+description = "pytest"
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev", "numpy"]
+commands = [["pytest"]]
 
-    [tool.tox.env.basedpyright]
-    description = "basedpyright"
-    runner = "uv-venv-lock-runner"
-    dependency_groups = ["dev"]
-    commands = [["basedpyright", {replace = "posargs", default = [], extend = true}]]
+[tool.tox.env.basedpyright]
+description = "basedpyright"
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev"]
+commands = [["basedpyright", { replace = "posargs", default = [], extend = true }]]
 
-    [tool.tox.env.mypy]
-    description = "mypy"
-    runner = "uv-venv-lock-runner"
-    dependency_groups = ["dev", "orjson", "types"]
-    commands = [
-        [
-            "mypy",
-            "--no-incremental",
-            "--cache-dir=/dev/null",
-            "--soft-error-limit=-1",
-            {replace = "posargs", default = ["."], extend = true},
-        ],
-    ]
-
+[tool.tox.env.mypy]
+description = "mypy"
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev", "orjson", "types"]
+commands = [
+  [
+    "mypy",
+    "--no-incremental",
+    "--cache-dir=/dev/null",
+    "--soft-error-limit=-1",
+    { replace = "posargs", default = ["."], extend = true },
+  ],
+]
 
 [tool.typos]
 
-    [tool.typos.default]
-    extend-ignore-identifiers-re = ['ND|nd|nin|NIN|TYP']
+[tool.typos.default]
+extend-ignore-identifiers-re = ['ND|nd|nin|NIN|TYP']
 
-    [tool.typos.files]
-    extend-exclude = ["*.pyi", ".mypyignore"]
+[tool.typos.files]
+extend-exclude = ["*.pyi", ".mypyignore"]
