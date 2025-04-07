@@ -1195,7 +1195,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     ) -> dtype[float64]: ...
 
     # Overload for `dtype` instances, scalar types, and instances that have a
-    # `dtype: dtype[_SCT]` attribute
+    # `dtype: dtype[_ScalarT]` attribute
     @overload
     def __new__(  # type: ignore[overload-overlap]
         cls,

@@ -7,9 +7,9 @@ from typing_extensions import TypeVar, assert_type
 import numpy as np
 import numpy.typing as npt
 
-_SCT_co = TypeVar("_SCT_co", bound=np.generic, covariant=True)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 
-class MyArray(np.ndarray[tuple[int], np.dtype[_SCT_co]]): ...
+class MyArray(np.ndarray[tuple[int], np.dtype[_ScalarT_co]]): ...
 
 i8: np.int64
 

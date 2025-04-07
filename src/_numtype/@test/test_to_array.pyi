@@ -5,12 +5,12 @@ from typing_extensions import TypeVar
 import _numtype as _nt
 import numpy as np
 
-_SCT = TypeVar("_SCT", bound=np.generic)
-_0D: TypeAlias = np.ndarray[tuple[()], np.dtype[_SCT]]
-_1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_SCT]]
-_2D: TypeAlias = np.ndarray[tuple[int, int], np.dtype[_SCT]]
-_3D: TypeAlias = np.ndarray[tuple[int, int, int], np.dtype[_SCT]]
-_ND: TypeAlias = np.ndarray[tuple[int, ...], np.dtype[_SCT]]
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_0D: TypeAlias = np.ndarray[tuple[()], np.dtype[_ScalarT]]
+_1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
+_2D: TypeAlias = np.ndarray[tuple[int, int], np.dtype[_ScalarT]]
+_3D: TypeAlias = np.ndarray[tuple[int, int, int], np.dtype[_ScalarT]]
+_ND: TypeAlias = np.ndarray[tuple[int, ...], np.dtype[_ScalarT]]
 
 b_0d: bool
 i_0d: int
