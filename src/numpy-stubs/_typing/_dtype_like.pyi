@@ -19,7 +19,6 @@ from ._char_codes import (
     _UnsignedIntegerCodes,
     _VoidCodes,
 )
-from ._shape import _ShapeLike
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _DTypeT_co = TypeVar("_DTypeT_co", covariant=True, bound=np.dtype)
@@ -35,7 +34,7 @@ class _DTypeDict(TypedDict, total=False):
     offsets: Sequence[int]
     # Only `str` elements are usable as indexing aliases,
     # but `titles` can in principle accept any object
-    titles: Sequence[str | Any]
+    titles: Sequence[Any]
 
 # A protocol for anything with the dtype attribute
 @runtime_checkable
@@ -47,7 +46,7 @@ class _SupportsDType(Protocol[_DTypeT_co]):
 _DTypeLike: TypeAlias = type[_ScalarT] | np.dtype[_ScalarT] | _SupportsDType[np.dtype[_ScalarT]]
 
 # Would create a dtype[np.void]
-_VoidDTypeLike: TypeAlias = tuple[_DTypeLikeNested, int | _ShapeLike | _DTypeLikeNested] | list[Any] | _DTypeDict
+_VoidDTypeLike: TypeAlias = tuple[Any, Any] | list[Any] | _DTypeDict
 
 # Aliases for commonly used dtype-like objects.
 # Note that the precision of `np.number` subclasses is ignored herein.
@@ -74,4 +73,4 @@ _DTypeLikeComplex_co: TypeAlias = type[complex] | _DTypeLike[np.number] | _Numbe
 
 # Anything that can be coerced into numpy.dtype.
 # Reference: https://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html
-DTypeLike: TypeAlias = str | _DTypeLike[Any] | _VoidDTypeLike | None
+DTypeLike: TypeAlias = str | bytes | _DTypeLike[Any] | _VoidDTypeLike | None
