@@ -73,4 +73,4 @@ _DTypeLikeComplex_co: TypeAlias = type[complex] | _DTypeLike[np.number] | _Numbe
 
 # Anything that can be coerced into numpy.dtype.
 # Reference: https://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html
-DTypeLike: TypeAlias = str | bytes | type | np.dtype | _SupportsDType[np.dtype] | _VoidDTypeLike | None
+DTypeLike: TypeAlias = str | bytes | _DTypeLike[Any] | _VoidDTypeLike | None
