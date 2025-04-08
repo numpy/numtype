@@ -346,7 +346,6 @@ from ._typing import (
     _ArrayLikeDT64_co,
     _ArrayLikeObject_co,
     _ArrayLikeTD64_co,
-    _ComplexFloatingCodes,
     _DTypeLike,
     _DTypeLikeVoid,
     _NestedSequence,
@@ -361,33 +360,20 @@ from ._typing._char_codes import (
     _BoolCodes,
     _BytesCodes,
     _CLongDoubleCodes,
-    _CharacterCodes,
     _Complex64Codes,
     _Complex128Codes,
-    _Complex192Codes,
-    _Complex256Codes,
     _DT64Codes,
-    _FlexibleCodes,
     _Float16Codes,
     _Float32Codes,
     _Float64Codes,
-    _Float96Codes,
-    _Float128Codes,
-    _FloatingCodes,
-    _GenericCodes,
-    _InexactCodes,
     _Int8Codes,
     _Int16Codes,
     _Int32Codes,
     _Int64Codes,
     _IntPCodes,
-    _IntegerCodes,
     _LongCodes,
     _LongDoubleCodes,
-    _LongLongCodes,
-    _NumberCodes,
     _ObjectCodes,
-    _SignedIntegerCodes,
     _StrCodes,
     _StringCodes,
     _TD64Codes,
@@ -397,8 +383,6 @@ from ._typing._char_codes import (
     _UInt64Codes,
     _UIntPCodes,
     _ULongCodes,
-    _ULongLongCodes,
-    _UnsignedIntegerCodes,
     _VoidCodes,
 )
 from .lib import scimath as emath
@@ -1184,177 +1168,19 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @property
     def subdtype(self) -> tuple[dtype, tuple[int, ...]] | None: ...
 
-    # `None` results in the default dtype
+    #
     @overload
     def __new__(
         cls,
-        dtype: type[float64] | None,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[float64]: ...
-
-    # Overload for `dtype` instances, scalar types, and instances that have a
-    # `dtype: dtype[_ScalarT]` attribute
-    @overload
-    def __new__(  # type: ignore[overload-overlap]
-        cls,
-        dtype: _DTypeLike[_ScalarT],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[_ScalarT]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: type[py_bool | bool_ | ct.c_bool] | _BoolCodes,
+        dtype: type[bool_ | py_bool | ct.c_bool] | _BoolCodes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
     ) -> dtype[bool_]: ...
-    # NOTE: `_: type[int]` also accepts `type[int | bool]`
     @overload
     def __new__(
         cls,
-        dtype: type[int | int_ | bool_],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[int_ | bool_]: ...
-    @overload  # NOTE: `_: type[float]` also accepts `type[float64 | int | bool]`
-    def __new__(
-        cls,
-        dtype: type[float | int_ | bool_] | None,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[float64 | int_ | bool_]: ...
-    @overload  # NOTE: `_: type[complex]` also accepts `type[complex128 | float64 | float | ...]`
-    def __new__(
-        cls,
-        dtype: type[complex | int_ | bool_],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[complex128 | float64 | int_ | bool_]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: type[bytes | ct.c_char] | _BytesCodes,  # also includes `type[bytes_]`
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[bytes_]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: type[str] | _StrCodes,  # also includes `type[str_]`
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[str_]: ...
-    # NOTE: These `memoryview` overloads assume PEP 688, which requires mypy to be run with the `--strict-bytes` flag..
-    # Pyright / Pylance requires setting `disableBytesTypePromotions=true` if not in strict mode.
-    @overload
-    def __new__(
-        cls,
-        dtype: type[memoryview | void] | _VoidCodes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[void]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: type[_BuiltinObjectLike | object_ | ct.py_object[Any]] | _ObjectCodes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[object_]: ...
-    @overload  # Unions of builtins.
-    def __new__(
-        cls,
-        dtype: type[bytes | str],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[character]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: type[bytes | str | memoryview],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[flexible]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: type[complex | bytes | str | memoryview | _BuiltinObjectLike],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[bool_ | int_ | float64 | complex128 | flexible | object_]: ...
-    @overload  # `unsignedinteger` string-based representations and ctypes
-    def __new__(
-        cls,
-        dtype: _UInt8Codes | type[ct.c_uint8 | ct.c_ubyte],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[uint8]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _UInt16Codes | type[ct.c_uint16 | ct.c_ushort],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[uint16]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _UInt32Codes | type[ct.c_uint32 | ct.c_uint],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[uint32]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _UInt64Codes | type[ct.c_uint64],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[uint64]: ...
-    @overload  # NOTE: This assumes `uint_ptr_t == size_t`, which almost always holds
-    def __new__(
-        cls,
-        dtype: type[ct.c_void_p | ct.c_size_t] | _UIntPCodes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[uintp]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _ULongCodes | type[ct.c_ulong],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[ulong]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _ULongLongCodes | type[ct.c_ulonglong],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[ulonglong]: ...
-    @overload  # `signedinteger` string-based representations and ctypes
-    def __new__(
-        cls,
-        dtype: _Int8Codes | type[ct.c_int8 | ct.c_byte],
+        dtype: type[int8 | ct.c_int8] | _Int8Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1362,7 +1188,15 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _Int16Codes | type[ct.c_int16 | ct.c_short],
+        dtype: type[uint8 | ct.c_uint8] | _UInt8Codes,
+        align: py_bool = False,
+        copy: py_bool = False,
+        metadata: dict[str, Any] = ...,
+    ) -> dtype[uint8]: ...
+    @overload
+    def __new__(
+        cls,
+        dtype: type[int16 | ct.c_int16 | ct.c_short] | _Int16Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1370,7 +1204,15 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _Int32Codes | type[ct.c_int32 | ct.c_int],
+        dtype: type[uint16 | ct.c_uint16 | ct.c_ushort] | _UInt16Codes,
+        align: py_bool = False,
+        copy: py_bool = False,
+        metadata: dict[str, Any] = ...,
+    ) -> dtype[uint16]: ...
+    @overload
+    def __new__(
+        cls,
+        dtype: type[int32 | ct.c_int32 | ct.c_int] | _Int32Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1378,23 +1220,15 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _Int64Codes | type[ct.c_int64],
+        dtype: type[uint32 | ct.c_uint32 | ct.c_uint] | _UInt32Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
-    ) -> dtype[int64]: ...
+    ) -> dtype[uint32]: ...
     @overload
     def __new__(
         cls,
-        dtype: _IntPCodes | type[ct.c_ssize_t],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[intp]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _LongCodes | type[ct.c_long],
+        dtype: type[ct.c_long] | _LongCodes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1402,15 +1236,31 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _LongLongCodes | type[ct.c_longlong],
+        dtype: type[ct.c_ulong] | _ULongCodes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
-    ) -> dtype[longlong]: ...
-    @overload  # `floating` string-based representations and ctypes
+    ) -> dtype[ulong]: ...
+    @overload
     def __new__(
         cls,
-        dtype: _Float16Codes,
+        dtype: type[int64 | _nt.JustInt | ct.c_int64 | ct.c_longlong | ct.c_ssize_t] | _Int64Codes | _IntPCodes,
+        align: py_bool = False,
+        copy: py_bool = False,
+        metadata: dict[str, Any] = ...,
+    ) -> dtype[int64]: ...
+    @overload
+    def __new__(
+        cls,
+        dtype: type[uint64 | ct.c_uint64 | ct.c_ulonglong | ct.c_size_t | ct.c_void_p] | _UInt64Codes | _UIntPCodes,
+        align: py_bool = False,
+        copy: py_bool = False,
+        metadata: dict[str, Any] = ...,
+    ) -> dtype[uint64]: ...
+    @overload
+    def __new__(
+        cls,
+        dtype: type[float16] | _Float16Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1418,7 +1268,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _Float32Codes | type[ct.c_float],
+        dtype: type[float32 | ct.c_float] | _Float32Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1426,7 +1276,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _Float64Codes | type[ct.c_double],
+        dtype: type[float64 | _nt.JustFloat | ct.c_double] | _Float64Codes | None,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1434,23 +1284,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _Float96Codes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[float96]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _Float128Codes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[float128]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _LongDoubleCodes | type[ct.c_longdouble],
+        dtype: type[longdouble | ct.c_longdouble] | _LongDoubleCodes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1458,7 +1292,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload  # `complexfloating` string-based representations
     def __new__(
         cls,
-        dtype: _Complex64Codes,
+        dtype: type[complex64] | _Complex64Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1466,7 +1300,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _Complex128Codes,
+        dtype: type[complex128 | _nt.JustComplex] | _Complex128Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1474,39 +1308,39 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _Complex192Codes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[complex192]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _Complex256Codes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[complex256]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _CLongDoubleCodes,
+        dtype: type[clongdouble] | _CLongDoubleCodes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
     ) -> dtype[clongdouble]: ...
-    @overload  # miscellaneous string-based representations and ctypes
-    def __new__(
-        cls,
-        dtype: _TD64Codes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[timedelta64]: ...
     @overload
     def __new__(
         cls,
-        dtype: _DT64Codes,
+        dtype: type[bytes_ | _nt.JustBytes | ct.c_char] | _BytesCodes,
+        align: py_bool = False,
+        copy: py_bool = False,
+        metadata: dict[str, Any] = ...,
+    ) -> dtype[bytes_]: ...
+    @overload
+    def __new__(
+        cls,
+        dtype: type[str_ | _nt.JustStr] | _StrCodes,
+        align: py_bool = False,
+        copy: py_bool = False,
+        metadata: dict[str, Any] = ...,
+    ) -> dtype[str_]: ...
+    @overload
+    def __new__(
+        cls,
+        dtype: type[void | memoryview] | _VoidDTypeLike | _VoidCodes,
+        align: py_bool = False,
+        copy: py_bool = False,
+        metadata: dict[str, Any] = ...,
+    ) -> dtype[void]: ...
+    @overload
+    def __new__(
+        cls,
+        dtype: type[datetime64] | _DT64Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
@@ -1514,12 +1348,20 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     @overload
     def __new__(
         cls,
-        dtype: _VoidDTypeLike,
+        dtype: type[timedelta64] | _TD64Codes,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
-    ) -> dtype[void]: ...
-    @overload  # `StringDType` requires special treatment because it has no scalar type
+    ) -> dtype[timedelta64]: ...
+    @overload
+    def __new__(
+        cls,
+        dtype: type[object_ | _nt.JustObject | _BuiltinObjectLike | ct.py_object[Any]] | _ObjectCodes,
+        align: py_bool = False,
+        copy: py_bool = False,
+        metadata: dict[str, Any] = ...,
+    ) -> dtype[object_]: ...
+    @overload
     def __new__(
         cls,
         dtype: dtypes.StringDType | _StringCodes,
@@ -1527,102 +1369,22 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
     ) -> dtypes.StringDType: ...
-    @overload  # combined char-codes and ctypes, analogous to the scalar-type hierarchy
-    def __new__(
-        cls,
-        dtype: _UnsignedIntegerCodes | _UnsignedIntegerCType,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[unsignedinteger]: ...
     @overload
     def __new__(
         cls,
-        dtype: _SignedIntegerCodes | _SignedIntegerCType,
+        dtype: _DTypeLike[_ScalarT_co],
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
-    ) -> dtype[signedinteger]: ...
+    ) -> Self: ...
     @overload
     def __new__(
         cls,
-        dtype: _IntegerCodes | _IntegerCType,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[integer]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _FloatingCodes | _FloatingCType,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[floating]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _ComplexFloatingCodes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[complexfloating]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _InexactCodes | _FloatingCType,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[inexact]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _NumberCodes | _NumberCType,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[number]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _CharacterCodes | type[ct.c_char],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[character]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _FlexibleCodes | type[ct.c_char],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[flexible]: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: _GenericCodes | _GenericCType,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[generic]: ...
-    @overload  # handle strings that can't be expressed as literals; i.e. "S9", "m8[3s]", ...
-    def __new__(
-        cls,
-        dtype: bytes | str,
+        dtype: DTypeLike,
         align: py_bool = False,
         copy: py_bool = False,
         metadata: dict[str, Any] = ...,
     ) -> dtype: ...
-    @overload
-    def __new__(
-        cls,
-        dtype: type[object],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: dict[str, Any] = ...,
-    ) -> dtype[object_ | Any]: ...
 
     #
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
