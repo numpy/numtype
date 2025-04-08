@@ -4,7 +4,7 @@ from typing_extensions import Never, Self, TypeVar, deprecated, overload, overri
 
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
-from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
+from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims, intp  # noqa: ICN003
 from numpy._globals import _NoValueType
 from numpy._typing import ArrayLike, _ArrayLike, _BoolCodes, _ScalarLike_co, _ShapeLike
 
@@ -189,7 +189,12 @@ __all__ = [
     "zeros_like",
 ]
 
+###
+
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
+
+###
+
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
@@ -647,15 +652,44 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         fill_value: Incomplete = ...,
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
-    @override
-    def argmin(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # Keep in-sync with np.ma.argmin
+    @overload  # type: ignore[override]
+    def argmin(
         self,
-        axis: Incomplete = ...,
-        fill_value: Incomplete = ...,
-        out: Incomplete = ...,
+        axis: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
         *,
-        keepdims: Incomplete = ...,
-    ) -> Incomplete: ...
+        keepdims: L[False] | _NoValueType = ...,
+    ) -> intp: ...
+    @overload
+    def argmin(
+        self,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def argmin(
+        self,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def argmin(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: CanIndex | None,
+        fill_value: _ScalarLike_co | None,
+        out: _ArrayT,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
 
     #
     @override
@@ -666,15 +700,44 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         fill_value: Incomplete = ...,
         keepdims: Incomplete = ...,
     ) -> Incomplete: ...
-    @override
-    def argmax(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # Keep in-sync with np.ma.argmax
+    @overload  # type: ignore[override]
+    def argmax(
         self,
-        axis: Incomplete = ...,
-        fill_value: Incomplete = ...,
-        out: Incomplete = ...,
+        axis: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
         *,
-        keepdims: Incomplete = ...,
-    ) -> Incomplete: ...
+        keepdims: L[False] | _NoValueType = ...,
+    ) -> intp: ...
+    @overload
+    def argmax(
+        self,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def argmax(
+        self,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def argmax(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: CanIndex | None,
+        fill_value: _ScalarLike_co | None,
+        out: _ArrayT,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
 
     #
     @override
@@ -1091,8 +1154,81 @@ swapaxes: _frommethod
 trace: _frommethod
 var: _frommethod
 count: _frommethod
-argmin: _frommethod
-argmax: _frommethod
-
 minimum: _extrema_operation
 maximum: _extrema_operation
+
+#
+@overload
+def argmin(
+    a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
+    axis: None = None,
+    fill_value: _ScalarLike_co | None = None,
+    out: None = None,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> intp: ...
+@overload
+def argmin(
+    a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
+    axis: CanIndex | None = None,
+    fill_value: _ScalarLike_co | None = None,
+    out: None = None,
+    *,
+    keepdims: bool | _NoValueType = ...,
+) -> Any: ...
+@overload
+def argmin(
+    a: _ArrayT,
+    axis: CanIndex | None = None,
+    fill_value: _ScalarLike_co | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def argmin(
+    a: _ArrayT,
+    axis: CanIndex | None,
+    fill_value: _ScalarLike_co | None,
+    out: _ArrayT,
+    *,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+
+#
+@overload
+def argmax(
+    a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
+    axis: None = None,
+    fill_value: _ScalarLike_co | None = None,
+    out: None = None,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> intp: ...
+@overload
+def argmax(
+    a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
+    axis: CanIndex | None = None,
+    fill_value: _ScalarLike_co | None = None,
+    out: None = None,
+    *,
+    keepdims: bool | _NoValueType = ...,
+) -> Any: ...
+@overload
+def argmax(
+    a: _ArrayT,
+    axis: CanIndex | None = None,
+    fill_value: _ScalarLike_co | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def argmax(
+    a: _ArrayT,
+    axis: CanIndex | None,
+    fill_value: _ScalarLike_co | None,
+    out: _ArrayT,
+    *,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
