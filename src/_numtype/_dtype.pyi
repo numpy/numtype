@@ -1,6 +1,6 @@
 import ctypes as ct
-from typing import Any, TypeAlias, TypeAliasType, type_check_only
-from typing_extensions import Protocol, TypeVar
+from typing import Any, TypeAlias, type_check_only
+from typing_extensions import Protocol, TypeAliasType, TypeVar
 
 import numpy as np
 from numpy._typing._char_codes import (
