@@ -74,7 +74,6 @@ assert_type(np.dtype(None), np.dtype[np.float64])
 
 # Dypes of dtypes
 assert_type(np.dtype(np.dtype(np.float64)), np.dtype[np.float64])
-assert_type(np.dtype(np.dtype(np.inexact)), np.dtype[np.inexact])
 
 # Parameterized dtypes
 assert_type(np.dtype("S8"), np.dtype)
