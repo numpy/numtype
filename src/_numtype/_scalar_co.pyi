@@ -1,10 +1,12 @@
-from typing import TypeAlias
+from typing import Any, Protocol, TypeAlias, type_check_only
+from typing_extensions import TypeVar
 
 import numpy as np
 
 from ._scalar import inexact32, integer8, integer16, integer32, number16, number32, number64
 
 __all__ = [
+    "CanPromote",
     "co_complex",
     "co_complex64",
     "co_complex128",
@@ -31,6 +33,27 @@ __all__ = [
     "co_uint64",
     "co_ulong",
 ]
+
+_T_co = TypeVar("_T_co", covariant=True)
+_ToT_contra = TypeVar("_ToT_contra", bound=np.generic, contravariant=True)
+_FromT_contra = TypeVar("_FromT_contra", bound=np.generic, contravariant=True, default=Any)
+_SelfT_co = TypeVar("_SelfT_co", bound=np.generic, covariant=True, default=Any)
+
+@type_check_only
+class _HasType(Protocol[_T_co]):
+    @property
+    def type(self, /) -> type[_T_co]: ...
+
+@type_check_only
+class _CanPromote(Protocol[_ToT_contra, _FromT_contra, _SelfT_co]):
+    def __promote__(self, to: _ToT_contra, from_: _FromT_contra, /) -> _SelfT_co: ...
+
+@type_check_only
+class CanPromote(Protocol[_ToT_contra, _FromT_contra, _SelfT_co]):
+    @property
+    def shape(self, /) -> tuple[()]: ...
+    @property
+    def dtype(self, /) -> _HasType[_CanPromote[_ToT_contra, _FromT_contra, _SelfT_co]]: ...
 
 ###
 # Coercible (overlapping) scalar- and array-likes

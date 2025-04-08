@@ -61,6 +61,7 @@ from ._scalar import (
     number64 as number64,
 )
 from ._scalar_co import (
+    CanPromote as CanPromote,
     co_complex as co_complex,
     co_complex64 as co_complex64,
     co_complex128 as co_complex128,
