@@ -135,6 +135,18 @@ disable_memoryview_promotion = true
 [tool.pyright]
 include = ["src", "tool"]
 ignore = [".venv"]
+exclude = [
+    ".cache",
+    ".git",
+    ".github",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tox",
+    ".vscode",
+    "docs",
+    "site",
+]
 stubPath = "src"
 pythonPlatform = "All"
 typeCheckingMode = "strict"
