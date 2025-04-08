@@ -1,0 +1,3 @@
+* text=auto eol=lf
+*.lock -diff merge=ours linguist-generated=true
+src/numpy-stubs/@test/generated/*.pyi -diff merge=ours linguist-generated=true
