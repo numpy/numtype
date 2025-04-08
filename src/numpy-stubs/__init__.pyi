@@ -5090,6 +5090,10 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
 
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
+    @type_check_only
+    def __promote__(self, to: bool_ | number, from_: bool_, /) -> bool_: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[1]: ...
@@ -5632,6 +5636,10 @@ class _IntROpMixin(Generic[_T_co]):
     def __ror__(self, x: _JustSignedInteger | _JustUnsignedInteger | _nt.Just[integer], /) -> _T_co: ...
 
 class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):  # type: ignore[misc]
+    @type_check_only
+    def __promote__(self, to: signedinteger | inexact, from_: int8 | bool_, /) -> int8: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[1]: ...
@@ -5762,6 +5770,15 @@ class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):  # type: ignore[m
     def __or__(self, x: _nt.Just[_SignedIntegerT], /) -> _SignedIntegerT: ...
 
 class uint8(unsignedinteger[_n._8]):
+    @type_check_only
+    def __promote__(
+        self,
+        to: uint8 | int16 | int32 | int64 | unsignedinteger | inexact,
+        from_: uint8 | bool_,
+        /,
+    ) -> uint8: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[1]: ...
@@ -6202,6 +6219,15 @@ class uint8(unsignedinteger[_n._8]):
     def __ror__(self, x: _nt.Just[integer], /) -> integer: ...
 
 class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):  # type: ignore[misc]
+    @type_check_only
+    def __promote__(
+        self,
+        to: int16 | int32 | int64 | float32 | float64 | longdouble | complexfloating,
+        from_: int16 | uint8 | int8 | bool_,
+        /,
+    ) -> int16: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[2]: ...
@@ -6370,6 +6396,15 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):  # type: ignore
     def __or__(self, x: _nt.CanArray0D[int32], /) -> int32: ...
 
 class uint16(unsignedinteger[_n._16]):
+    @type_check_only
+    def __promote__(
+        self,
+        to: uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | longdouble | complexfloating,
+        from_: uint16 | uint8 | bool_,
+        /,
+    ) -> uint16: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[2]: ...
@@ -6762,6 +6797,15 @@ class uint16(unsignedinteger[_n._16]):
     def __ror__(self, x: _nt.Just[integer], /) -> integer: ...
 
 class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):  # type: ignore[misc]
+    @type_check_only
+    def __promote__(
+        self,
+        to: int32 | int64 | float64 | complex128 | longdouble | clongdouble,
+        from_: int32 | uint16 | int16 | uint8 | int8 | bool_,
+        /,
+    ) -> int32: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[4]: ...
@@ -6906,6 +6950,15 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):  # type: ignore
     def __or__(self, x: _nt.CanArray0D[int64], /) -> int64: ...
 
 class uint32(unsignedinteger[_n._32]):
+    @type_check_only
+    def __promote__(
+        self,
+        to: uint32 | int64 | uint64 | float64 | complex128 | longdouble | clongdouble,
+        from_: uint32 | uint16 | uint8 | bool_,
+        /,
+    ) -> uint32: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[4]: ...
@@ -7202,6 +7255,15 @@ class uint32(unsignedinteger[_n._32]):
     def __ror__(self, x: _nt.Just[integer], /) -> integer: ...
 
 class int64(_IntROpMixin[int64], signedinteger[_n._64]):  # type: ignore[misc]
+    @type_check_only
+    def __promote__(
+        self,
+        to: int64 | float64 | complex128 | longdouble | clongdouble,
+        from_: signedinteger | uint32 | uint16 | uint8 | bool_,
+        /,
+    ) -> int64: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[8]: ...
@@ -7309,6 +7371,15 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):  # type: ignore[misc]
     def __or__(self, x: _JustInteger, /) -> int64: ...
 
 class uint64(unsignedinteger[_n._64]):
+    @type_check_only
+    def __promote__(
+        self,
+        to: uint64 | float64 | complex128 | longdouble | clongdouble,
+        from_: unsignedinteger | bool_,
+        /,
+    ) -> uint64: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[8]: ...
@@ -7537,6 +7608,10 @@ longlong = int64
 ulonglong = uint64
 
 class float16(floating[_n._16]):
+    @type_check_only
+    def __promote__(self, to: inexact, from_: float16 | int8 | uint8 | bool_, /) -> float16: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[2]: ...
@@ -7791,6 +7866,15 @@ class float16(floating[_n._16]):
     def __rdivmod__(self, x: _JustInteger | _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
 class float32(floating[_n._32]):
+    @type_check_only
+    def __promote__(
+        self,
+        to: float32 | float64 | longdouble | complexfloating,
+        from_: float32 | float16 | int16 | uint16 | int8 | uint8 | bool_,
+        /,
+    ) -> float32: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[4]: ...
@@ -7987,6 +8071,15 @@ class float32(floating[_n._32]):
     def __rdivmod__(self, x: _JustInteger | _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
 class float64(floating[_n._64], float):  # type: ignore[misc]
+    @type_check_only
+    def __promote__(
+        self,
+        to: float64 | longdouble | complex128 | clongdouble,
+        from_: float64 | float32 | float16 | integer | bool_,
+        /,
+    ) -> float64: ...
+
+    #
     def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
     @classmethod
     def __getformat__(cls, typestr: L["double", "float"], /) -> str: ...
@@ -8180,6 +8273,10 @@ single = float32
 double = float64
 
 class longdouble(floating[_n._64L]):
+    @type_check_only
+    def __promote__(self, to: longdouble | clongdouble, from_: floating | integer | bool_, /) -> longdouble: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[12, 16]: ...
@@ -8303,6 +8400,15 @@ float96 = longdouble
 float128 = longdouble
 
 class complex64(complexfloating[_n._32]):
+    @type_check_only
+    def __promote__(
+        self,
+        to: complexfloating,
+        from_: complex64 | float32 | float16 | int16 | uint16 | int8 | uint8 | bool_,
+        /,
+    ) -> complex64: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[8]: ...
@@ -8426,6 +8532,15 @@ class complex64(complexfloating[_n._32]):
     def __complex__(self, /) -> complex: ...
 
 class complex128(complexfloating[_n._64], complex):
+    @type_check_only
+    def __promote__(
+        self,
+        to: complex128 | clongdouble,
+        from_: complex128 | complex64 | float64 | float32 | float16 | integer | bool_,
+        /,
+    ) -> complex128: ...
+
+    #
     @overload
     def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...
     @overload
@@ -8542,6 +8657,10 @@ csingle = complex64
 cdouble = complex128
 
 class clongdouble(complexfloating[_n._64L]):
+    @type_check_only
+    def __promote__(self, to: clongdouble, from_: number | bool_, /) -> clongdouble: ...
+
+    #
     @property
     @override
     def itemsize(self) -> L[24, 32]: ...
