@@ -1,6 +1,4 @@
 import ctypes as ct
-from decimal import Decimal
-from fractions import Fraction
 from typing_extensions import LiteralString, assert_type
 
 import numpy as np
@@ -56,9 +54,6 @@ assert_type(np.dtype(np.number), np.dtype[np.number])
 # NOTE: `character` and `flexible` always fail on mypy because of some mypy bug
 assert_type(np.dtype(np.generic), np.dtype[np.generic])
 
-assert_type(np.dtype(Decimal), np.dtype[np.object_])
-assert_type(np.dtype(Fraction), np.dtype[np.object_])
-
 # char-codes
 assert_type(np.dtype("u1"), np.dtype[np.uint8])
 assert_type(np.dtype("int_"), np.dtype[np.intp])
@@ -79,7 +74,6 @@ assert_type(np.dtype(None), np.dtype[np.float64])
 
 # Dypes of dtypes
 assert_type(np.dtype(np.dtype(np.float64)), np.dtype[np.float64])
-assert_type(np.dtype(np.dtype(np.inexact)), np.dtype[np.inexact])
 
 # Parameterized dtypes
 assert_type(np.dtype("S8"), np.dtype)

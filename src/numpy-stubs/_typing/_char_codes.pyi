@@ -1,6 +1,6 @@
 from typing import Literal, TypeAlias
 
-_BoolCodes: TypeAlias = Literal["bool", "bool_", "?", "|?", "=?", "<?", ">?", "\x00"]
+_BoolCodes: TypeAlias = Literal["bool", "bool_", "b1", "?", "|?", "=?", "<?", ">?", "\x00"]
 
 _Int8Codes: TypeAlias = Literal["int8", "byte", "i1", "b", "|i1", "|b", "=i1", "=b", "<i1", "<b", ">i1", ">b", "\x01"]
 _UInt8Codes: TypeAlias = Literal["uint8", "ubyte", "u1", "B", "|u1", "|B", "=u1", "=B", "<u1", "<B", ">u1", ">B", "\x02"]

@@ -11,6 +11,32 @@ from typing_extensions import Protocol, TypeAliasType, TypeVar, Unpack
 import numpy as np
 from numpy._typing import _NestedSequence
 
+from ._dtype import (
+    ToDType as ToDType,
+    ToDTypeBool as ToDTypeBool,
+    ToDTypeBytes as ToDTypeBytes,
+    ToDTypeCLongDouble as ToDTypeCLongDouble,
+    ToDTypeComplex64 as ToDTypeComplex64,
+    ToDTypeComplex128 as ToDTypeComplex128,
+    ToDTypeDateTime64 as ToDTypeDateTime64,
+    ToDTypeFloat16 as ToDTypeFloat16,
+    ToDTypeFloat32 as ToDTypeFloat32,
+    ToDTypeFloat64 as ToDTypeFloat64,
+    ToDTypeInt8 as ToDTypeInt8,
+    ToDTypeInt16 as ToDTypeInt16,
+    ToDTypeInt32 as ToDTypeInt32,
+    ToDTypeInt64 as ToDTypeInt64,
+    ToDTypeLongDouble as ToDTypeLongDouble,
+    ToDTypeObject as ToDTypeObject,
+    ToDTypeStr as ToDTypeStr,
+    ToDTypeString as ToDTypeString,
+    ToDTypeTimeDelta64 as ToDTypeTimeDelta64,
+    ToDTypeUInt8 as ToDTypeUInt8,
+    ToDTypeUInt16 as ToDTypeUInt16,
+    ToDTypeUInt32 as ToDTypeUInt32,
+    ToDTypeUInt64 as ToDTypeUInt64,
+    ToDTypeVoid as ToDTypeVoid,
+)
 from ._just import (
     Just as Just,
     JustBytes as JustBytes,
