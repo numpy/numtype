@@ -22,4 +22,3 @@ np.ma.argmin(m, out=1.0)  # type: ignore[call-overload] # pyright: ignore[report
 np.ma.argmin(m, fill_value=lambda x: 27)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue, reportUnknownLambdaType]
 
 m.argmax(axis=1.0)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue]
-

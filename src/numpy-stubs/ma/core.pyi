@@ -863,6 +863,54 @@ class _frommethod:
     def __call__(self, a: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
     def getdoc(self) -> Incomplete: ...
 
+@type_check_only
+class _ArgMinMaxMethod:
+    __name__: str
+    __doc__: str
+    reversed: Incomplete
+    def __init__(self, methodname: Incomplete, reversed: Incomplete = ...) -> None: ...
+    @overload
+    def __call__(
+        self,
+        a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
+        axis: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: L[False] | _NoValueType = ...,
+    ) -> intp: ...
+    @overload
+    def __call__(
+        self,
+        a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def __call__(
+        self,
+        a: _ArrayT,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def __call__(
+        self,
+        a: _ArrayT,
+        axis: CanIndex | None,
+        fill_value: _ScalarLike_co | None,
+        out: _ArrayT,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    def getdoc(self) -> Incomplete: ...
+
 class _convert2ma:
     def __init__(self, /, funcname: str, np_ret: str, np_ma_ret: str, params: dict[str, Any] | None = None) -> None: ...
     def __call__(self, /, *args: object, **params: object) -> Any: ...
@@ -1154,81 +1202,7 @@ swapaxes: _frommethod
 trace: _frommethod
 var: _frommethod
 count: _frommethod
+argmin: _ArgMinMaxMethod
+argmax: _ArgMinMaxMethod
 minimum: _extrema_operation
 maximum: _extrema_operation
-
-#
-@overload
-def argmin(
-    a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
-    axis: None = None,
-    fill_value: _ScalarLike_co | None = None,
-    out: None = None,
-    *,
-    keepdims: L[False] | _NoValueType = ...,
-) -> intp: ...
-@overload
-def argmin(
-    a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
-    axis: CanIndex | None = None,
-    fill_value: _ScalarLike_co | None = None,
-    out: None = None,
-    *,
-    keepdims: bool | _NoValueType = ...,
-) -> Any: ...
-@overload
-def argmin(
-    a: _ArrayT,
-    axis: CanIndex | None = None,
-    fill_value: _ScalarLike_co | None = None,
-    *,
-    out: _ArrayT,
-    keepdims: bool | _NoValueType = ...,
-) -> _ArrayT: ...
-@overload
-def argmin(
-    a: _ArrayT,
-    axis: CanIndex | None,
-    fill_value: _ScalarLike_co | None,
-    out: _ArrayT,
-    *,
-    keepdims: bool | _NoValueType = ...,
-) -> _ArrayT: ...
-
-#
-@overload
-def argmax(
-    a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
-    axis: None = None,
-    fill_value: _ScalarLike_co | None = None,
-    out: None = None,
-    *,
-    keepdims: L[False] | _NoValueType = ...,
-) -> intp: ...
-@overload
-def argmax(
-    a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
-    axis: CanIndex | None = None,
-    fill_value: _ScalarLike_co | None = None,
-    out: None = None,
-    *,
-    keepdims: bool | _NoValueType = ...,
-) -> Any: ...
-@overload
-def argmax(
-    a: _ArrayT,
-    axis: CanIndex | None = None,
-    fill_value: _ScalarLike_co | None = None,
-    *,
-    out: _ArrayT,
-    keepdims: bool | _NoValueType = ...,
-) -> _ArrayT: ...
-@overload
-def argmax(
-    a: _ArrayT,
-    axis: CanIndex | None,
-    fill_value: _ScalarLike_co | None,
-    out: _ArrayT,
-    *,
-    keepdims: bool | _NoValueType = ...,
-) -> _ArrayT: ...
