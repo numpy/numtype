@@ -47,6 +47,11 @@ from ._just import (
     JustObject as JustObject,
     JustStr as JustStr,
 )
+from ._nep50 import (
+    CanCast as CanCast,
+    CanCast0D as CanCast0D,
+    CanCastND as CanCastND,
+)
 from ._scalar import (
     inexact32 as inexact32,
     inexact64 as inexact64,
@@ -61,7 +66,6 @@ from ._scalar import (
     number64 as number64,
 )
 from ._scalar_co import (
-    CanPromote as CanPromote,
     co_complex as co_complex,
     co_complex64 as co_complex64,
     co_complex128 as co_complex128,

@@ -5091,7 +5091,7 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @type_check_only
-    def __promote__(self, to: bool_ | number, from_: bool_, /) -> bool_: ...
+    def __nep50__(self, to: bool_ | number, from_: bool_, /) -> bool_: ...
 
     #
     @property
@@ -5637,7 +5637,7 @@ class _IntROpMixin(Generic[_T_co]):
 
 class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):  # type: ignore[misc]
     @type_check_only
-    def __promote__(self, to: signedinteger | inexact, from_: int8 | bool_, /) -> int8: ...
+    def __nep50__(self, to: signedinteger | inexact, from_: int8 | bool_, /) -> int8: ...
 
     #
     @property
@@ -5771,7 +5771,7 @@ class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):  # type: ignore[m
 
 class uint8(unsignedinteger[_n._8]):
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: uint8 | int16 | int32 | int64 | unsignedinteger | inexact,
         from_: uint8 | bool_,
@@ -6220,7 +6220,7 @@ class uint8(unsignedinteger[_n._8]):
 
 class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):  # type: ignore[misc]
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: int16 | int32 | int64 | float32 | float64 | longdouble | complexfloating,
         from_: int16 | uint8 | int8 | bool_,
@@ -6397,7 +6397,7 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):  # type: ignore
 
 class uint16(unsignedinteger[_n._16]):
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | longdouble | complexfloating,
         from_: uint16 | uint8 | bool_,
@@ -6798,7 +6798,7 @@ class uint16(unsignedinteger[_n._16]):
 
 class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):  # type: ignore[misc]
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: int32 | int64 | float64 | complex128 | longdouble | clongdouble,
         from_: int32 | uint16 | int16 | uint8 | int8 | bool_,
@@ -6951,7 +6951,7 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):  # type: ignore
 
 class uint32(unsignedinteger[_n._32]):
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: uint32 | int64 | uint64 | float64 | complex128 | longdouble | clongdouble,
         from_: uint32 | uint16 | uint8 | bool_,
@@ -7256,7 +7256,7 @@ class uint32(unsignedinteger[_n._32]):
 
 class int64(_IntROpMixin[int64], signedinteger[_n._64]):  # type: ignore[misc]
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: int64 | float64 | complex128 | longdouble | clongdouble,
         from_: signedinteger | uint32 | uint16 | uint8 | bool_,
@@ -7372,7 +7372,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):  # type: ignore[misc]
 
 class uint64(unsignedinteger[_n._64]):
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: uint64 | float64 | complex128 | longdouble | clongdouble,
         from_: unsignedinteger | bool_,
@@ -7609,7 +7609,7 @@ ulonglong = uint64
 
 class float16(floating[_n._16]):
     @type_check_only
-    def __promote__(self, to: inexact, from_: float16 | int8 | uint8 | bool_, /) -> float16: ...
+    def __nep50__(self, to: inexact, from_: float16 | int8 | uint8 | bool_, /) -> float16: ...
 
     #
     @property
@@ -7867,7 +7867,7 @@ class float16(floating[_n._16]):
 
 class float32(floating[_n._32]):
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: float32 | float64 | longdouble | complexfloating,
         from_: float32 | float16 | int16 | uint16 | int8 | uint8 | bool_,
@@ -8072,7 +8072,7 @@ class float32(floating[_n._32]):
 
 class float64(floating[_n._64], float):  # type: ignore[misc]
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: float64 | longdouble | complex128 | clongdouble,
         from_: float64 | float32 | float16 | integer | bool_,
@@ -8274,7 +8274,7 @@ double = float64
 
 class longdouble(floating[_n._64L]):
     @type_check_only
-    def __promote__(self, to: longdouble | clongdouble, from_: floating | integer | bool_, /) -> longdouble: ...
+    def __nep50__(self, to: longdouble | clongdouble, from_: floating | integer | bool_, /) -> longdouble: ...
 
     #
     @property
@@ -8401,7 +8401,7 @@ float128 = longdouble
 
 class complex64(complexfloating[_n._32]):
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: complexfloating,
         from_: complex64 | float32 | float16 | int16 | uint16 | int8 | uint8 | bool_,
@@ -8533,7 +8533,7 @@ class complex64(complexfloating[_n._32]):
 
 class complex128(complexfloating[_n._64], complex):
     @type_check_only
-    def __promote__(
+    def __nep50__(
         self,
         to: complex128 | clongdouble,
         from_: complex128 | complex64 | float64 | float32 | float16 | integer | bool_,
@@ -8658,7 +8658,7 @@ cdouble = complex128
 
 class clongdouble(complexfloating[_n._64L]):
     @type_check_only
-    def __promote__(self, to: clongdouble, from_: number | bool_, /) -> clongdouble: ...
+    def __nep50__(self, to: clongdouble, from_: number | bool_, /) -> clongdouble: ...
 
     #
     @property
