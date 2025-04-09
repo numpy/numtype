@@ -1188,6 +1188,7 @@ TESTGENS: Final[Sequence[TestGen]] = [
     ScalarOps("modular"),
     ScalarOps("bitwise"),
     ScalarOps("comparison"),
+    NDArrayOps("add"),
 ]
 
 
