@@ -3,10 +3,11 @@ line-length = 88
 
 [lint]
 extend-ignore = [
-    "TRY003", # tryceratops:     raise-vanilla-args
-    "TD003",  # flake8-todos:    missing-todo-link
-    "S101",   # flake8-bandit:   assert
-    "S404",   # flake8-bandit:   suspicious-subprocess-import
-    "S603",   # flake8-bandit:   subprocess-without-shell-equals-true
-    "T201",   # flake8-print:    print
+    "TRY003",  # tryceratops:     raise-vanilla-args
+    "TD003",   # flake8-todos:    missing-todo-link
+    "S101",    # flake8-bandit:   assert
+    "S404",    # flake8-bandit:   suspicious-subprocess-import
+    "S603",    # flake8-bandit:   subprocess-without-shell-equals-true
+    "T201",    # flake8-print:    print
+    "PLR2004", # pylint/refactor: magic-value-comparison
 ]
