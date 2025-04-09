@@ -2,17 +2,23 @@
 
 # ruff: noqa: PLR0916, PLR6301, TD003, ERA001, D101, D102, DOC201
 
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 import abc
 import difflib
 import itertools
 import operator as op
-import sys
 from collections.abc import Callable, Generator, Iterable, Iterator, Sequence
-from pathlib import Path
 from typing import Any, ClassVar, Final, Literal, TypeAlias, TypeVar, cast, final
 from typing_extensions import override
 
 import numpy as np
+import numpy.typing as npt
+from tool.promotion import _typename as dtype_label
+from tool.ufunc import _all_types as ufunc_signatures
 
 ###
 
@@ -21,6 +27,23 @@ _T = TypeVar("_T")
 _Scalar: TypeAlias = np.number | np.bool | np.timedelta64 | np.datetime64 | complex
 _BinOp: TypeAlias = Callable[[Any, Any], Any]
 _BinOpKind: TypeAlias = Literal["arithmetic", "modular", "bitwise", "comparison"]
+_BinOpName: TypeAlias = Literal[
+    "add",
+    "sub",
+    "mul",
+    "pow",
+    "truediv",
+    "floordiv",
+    "mod",
+    "divmod",
+    "lshift",
+    "rshift",
+    "and",
+    "or",
+    "xor",
+]
+_UnOpName: TypeAlias = Literal["neg", "pos", "invert", "abs"]
+_OpName: TypeAlias = Literal[_BinOpName, _UnOpName]
 
 ###
 
@@ -49,12 +72,34 @@ _NUMBERS_CONCRETE: Final = {
     "c": frozenset({f"{NP}.complex64", f"{NP}.complex128", f"{NP}.clongdouble"}),
 }
 
+DTYPE_CHARS: Final = "?bhilqBHILQefdgFDGMmOScUVT"  # ordered by personal preference
+
 DATETIME_OPS: Final = {"add", "sub"}
 TIMEDELTA_OPS: Final = DATETIME_OPS | {"mul", "truediv", "floordiv", "mod", "divmod"}
 BITWISE_OPS: Final = {"lshift", "rshift", "and", "or", "xor"}
 BITWISE_CHARS: Final = "?bhilqBHILQ"
 
 INTP_EXPR: Final = f"{NP}.{np.intp.__name__}"
+
+OP_UFUNCS: Final[dict[_OpName, np.ufunc]] = {
+    "add": np.add,
+    "sub": np.subtract,
+    "mul": np.multiply,
+    "pow": np.power,
+    "truediv": np.true_divide,
+    "floordiv": np.floor_divide,
+    "mod": np.mod,
+    "divmod": np.divmod,
+    "lshift": np.left_shift,
+    "rshift": np.right_shift,
+    "and": np.bitwise_and,
+    "or": np.bitwise_or,
+    "xor": np.bitwise_xor,
+    "invert": np.bitwise_not,
+    "neg": np.negative,
+    "pos": np.positive,
+    "abs": np.abs,
+}
 
 ###
 
@@ -67,6 +112,13 @@ def _ensure_tuple(x: _T | tuple[_T, ...], /) -> tuple[_T, ...]:
 
 def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
     return f"assert_type({val_expr}, {type_expr})"
+
+
+def _get_op_types(op: _OpName) -> tuple[np.dtype, ...]:
+    ufunc = OP_UFUNCS[op]
+    in_types = "".join(sig.split("->")[0] for sig in ufunc_signatures(ufunc))
+    in_types = "".join(dict.fromkeys(in_types))  # dedupe in order
+    return tuple(map(np.dtype, in_types))
 
 
 def _scalar(key: str, /) -> _Scalar:
@@ -89,17 +141,18 @@ def _sctype_expr(dtype: np.dtype | type[complex]) -> str:
         assert type.__module__ == "builtins", type
         return dtype.__name__
 
-    # if dtype.char == "q":
-    #     return f"{NP}.longlong"
-    # if dtype.char == "Q":
-    #     return f"{NP}.ulonglong"
-    if dtype.char == "g":
-        return f"{NP}.longdouble"
-    if dtype.char == "G":
-        return f"{NP}.clongdouble"
+    if dtype.char == "T":
+        return "str"
 
-    name = dtype.name
-    assert "[" not in name, "units not supported yet"
+    if dtype.char == "g":
+        name = "longdouble"
+    elif dtype.char == "G":
+        name = "clongdouble"
+    elif dtype.char in "OSUVMm":
+        name = dtype.type.__name__
+    else:
+        name = dtype.name
+
     return f"{NP}.{name}"
 
 
@@ -112,6 +165,34 @@ def _sctype_expr_from_value(value: _Scalar | tuple[_Scalar, ...], /) -> str:
         return _sctype_expr(value.dtype)
 
     return type(value).__qualname__
+
+
+def _dtype_expr(dtype: np.dtype, /) -> str:
+    if dtype.char == "T":
+        return f"{NP}.dtypes.StringDType"
+    sctype_expr = _sctype_expr(dtype)
+    return f"{NP}.dtype[{sctype_expr}]"
+
+
+def _array_expr(
+    dtype: np.dtype,
+    /,
+    *,
+    ndim: int | None = None,
+    npt: bool = False,
+) -> str:
+    if ndim is None and npt and dtype.char != "T":
+        return f"npt.NDArray[{_sctype_expr(dtype)}]"
+
+    if ndim is None:
+        shape_expr = "tuple[int, ...]"
+    else:
+        shape_expr_args = ", ".join(["int"] * ndim) if ndim else "()"
+        shape_expr = f"tuple[{shape_expr_args}]"
+
+    dtype_expr = _dtype_expr(dtype)
+
+    return f"{NP}.ndarray[{shape_expr}, {dtype_expr}]"
 
 
 def __group_types(*types: str) -> tuple[dict[str, list[str]], list[str]]:
@@ -149,7 +230,7 @@ def _union(*types: str) -> str:
         else:
             combined.extend(other)
 
-    if len(kind_expr) == 4:  # noqa: PLR2004
+    if len(kind_expr) == 4:
         expr_map = dict.fromkeys(kind_expr.values(), f"{NP}.number")
         combined = [expr_map.get(expr, expr) for expr in combined]
     elif len(kind_expr) > 1:
@@ -172,7 +253,7 @@ def _join(*types: str) -> str:
         raise NotImplementedError(f"join of non-number types: {types}")
 
     # special case for accidental `bool` return from `timedelta64.__eq__` on numpy <2.3
-    if not numbers and len(other) == 2 and set(other) == {f"{NP}.bool", "bool"}:  # noqa: PLR2004
+    if not numbers and len(other) == 2 and set(other) == {f"{NP}.bool", "bool"}:
         return f"{NP}.bool"
 
     # special case to avoid upcasting e.g. `[un]signedinteger | float64` to `number`
@@ -211,7 +292,14 @@ def _strip_preamble(source: str) -> tuple[str | None, str]:
 
 
 class TestGen(abc.ABC):
+    stdlib_imports: ClassVar[tuple[str, ...]] = (
+        "from typing_extensions import assert_type",
+    )
+    numpy_imports: ClassVar[tuple[str, ...]] = (f"import numpy as {NP}",)
+
     testname: str  # abstract
+    stdlib_imports_extra: tuple[str, ...] = ()
+    numpy_imports_extra: tuple[str, ...] = ()
 
     _names: Final[dict[str, str]]
     _current_indent: int
@@ -257,9 +345,9 @@ class TestGen(abc.ABC):
 
     def _generate_imports(self) -> Generator[str]:
         # NOTE: The trailing newlines are required for ruff compatibility
-        yield "from typing_extensions import assert_type"
+        yield from sorted(self.stdlib_imports + self.stdlib_imports_extra)
         yield ""
-        yield "import numpy as np"
+        yield from sorted(self.numpy_imports + self.numpy_imports_extra)
         yield ""
 
     def _generate_names_section(self) -> Generator[str]:
@@ -513,11 +601,7 @@ class EMath(TestGen):
 
             yield self._names[sct_arg], _union(*types_out)
 
-    def _gen_binary(
-        self,
-        fn: _BinOp,
-        /,
-    ) -> Generator[tuple[str, str, str] | None]:
+    def _gen_binary(self, fn: _BinOp, /) -> Generator[tuple[str, str, str] | None]:
         results: dict[tuple[str, str], list[str]] = {}
         for sct_lhs, vals_lhs in self.VALUES.items():
             for sct_rhs, vals_rhs in self.VALUES.items():
@@ -575,6 +659,156 @@ class EMath(TestGen):
                         yield _expr_assert_type(f"{qualname}({lhs}, {rhs})", expect)
 
         yield ""
+
+
+@final
+class LiteralBoolOps(TestGen):
+    testname = "literal_bool_ops"
+
+    UNOPS: ClassVar = {
+        "{}.__bool__()": bool,
+        "abs({})": abs,
+        "~{}": op.__invert__,
+    }
+    CMPOPS: ClassVar = {
+        "{} == {}": op.__eq__,
+        "{} != {}": op.__ne__,
+        "{} < {}": op.__lt__,
+        "{} <= {}": op.__le__,
+        "{} > {}": op.__gt__,
+        "{} >= {}": op.__ge__,
+    }
+    BINOPS: ClassVar = {
+        "{} + {}": op.__add__,
+        "{} * {}": op.__mul__,
+        "{} & {}": op.__and__,
+        "{} ^ {}": op.__xor__,
+        "{} | {}": op.__or__,
+    }
+
+    NAMES_NP: ClassVar = [f"np{v}" for v in "01_"]
+    NAMES_PY: ClassVar = [f"py{v}" for v in "01_"]
+
+    @staticmethod
+    def values(name: str) -> Generator[bool | np.bool]:
+        tp = {"py": bool, "np": np.bool}[name[:2]]
+        if name[-1] in "_0":
+            yield tp(0)
+        if name[-1] in "_1":
+            yield tp(1)
+
+    @staticmethod
+    def _eval_results_to_str(results: Iterable[bool | np.bool]) -> str:
+        results = set(results)
+        if len(results) == 1:
+            val = results.pop()
+            return f"Literal[{val}]" if isinstance(val, bool) else f"Bool{int(val)}"
+
+        assert len(results) == 2, results
+        return "bool" if isinstance(results.pop(), bool) else "Bool_"
+
+    @classmethod
+    def eval1(cls, fn: Callable[[Any], bool | np.bool], arg: str) -> str:
+        return cls._eval_results_to_str({fn(a) for a in cls.values(arg)})
+
+    @classmethod
+    def eval2(cls, fn: Callable[[Any, Any], np.bool], lhs: str, rhs: str) -> str:
+        results: set[np.bool] = set()
+        for a in cls.values(lhs):
+            for b in cls.values(rhs):
+                out = fn(a, b)
+                assert isinstance(out, np.bool), out
+                results.add(out)
+        return cls._eval_results_to_str(results)
+
+    @override
+    def _generate_imports(self) -> Generator[str]:
+        # NOTE: The trailing newlines are required for ruff compatibility
+        yield "from typing import Literal, TypeAlias"
+        yield from super()._generate_imports()
+
+    @override
+    def _generate_names(self) -> Generator[str]:
+        yield from self._generate_section()
+        yield "Bool_: TypeAlias = np.bool"
+        yield "Bool0: TypeAlias = np.bool[Literal[False]]"
+        yield "Bool1: TypeAlias = np.bool[Literal[True]]"
+
+        yield from self._generate_section()
+        yield "py_: bool"
+        yield "py0: Literal[False]"
+        yield "py1: Literal[True]"
+        yield ""
+        yield "np_: Bool_"
+        yield "np0: Bool0"
+        yield "np1: Bool1"
+
+    def _gen_unary(self) -> Generator[str]:
+        for tmpl, fn in self.UNOPS.items():
+            yield from self._generate_section(f"__{fn.__name__.removesuffix('_')}__")
+
+            for a in self.NAMES_NP:
+                yield _expr_assert_type(tmpl.format(a), self.eval1(fn, a))
+
+    def _gen_comparison(self) -> Generator[str]:
+        for tmpl, fn in self.CMPOPS.items():
+            yield from self._generate_section(f"__{fn.__name__.removesuffix('_')}__")
+
+            # np, np
+            deferred: list[str] = []
+            seen_a: set[str] = set()
+            for a, b in itertools.product(self.NAMES_NP, self.NAMES_NP):
+                # if b in seen_a:
+                #     continue
+                line = _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+                if "_" in {a[-1], b[-1]}:
+                    deferred.append(line)
+                else:
+                    yield line
+                seen_a.add(a)
+
+            # np, np (mixed)
+            yield ""
+            yield from iter(deferred)
+
+            # np, py
+            yield ""
+            for a, b in itertools.product(self.NAMES_NP, self.NAMES_PY):
+                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+
+    def _gen_binary(self) -> Generator[str]:
+        for tmpl, fn in self.BINOPS.items():
+            opname = fn.__name__.removesuffix("_")
+            yield from self._generate_section(f"__[r]{opname}__")
+
+            # np, np (literals)
+            deferred: list[str] = []
+            for a, b in itertools.product(self.NAMES_NP, self.NAMES_NP):
+                line = _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+                if "_" in {a[-1], b[-1]}:
+                    deferred.append(line)
+                else:
+                    yield line
+
+            # np, np (mixed)
+            yield ""
+            yield from iter(deferred)
+
+            # np, py
+            yield ""
+            for a, b in itertools.product(self.NAMES_NP, self.NAMES_PY):
+                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+
+            # py, np
+            yield ""
+            for a, b in itertools.product(self.NAMES_PY, self.NAMES_NP):
+                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+
+    @override
+    def get_testcases(self) -> Iterable[str | None]:
+        yield from self._gen_unary()
+        yield from self._gen_comparison()
+        yield from self._gen_binary()
 
 
 @final
@@ -816,7 +1050,7 @@ class ScalarOps(TestGen):
             if self._is_builtin(builtin):
                 yield name, builtin
 
-        # constrete numpy scalars
+        # concrete numpy scalars
         yield "", ""
         for char, name in self.names.items():
             if len(char) == 1:
@@ -853,169 +1087,113 @@ class ScalarOps(TestGen):
                     yield ""
 
 
-@final
-class LiteralBoolOps(TestGen):
-    testname = "literal_bool_ops"
+class NDArrayOps(TestGen):
+    testname = "ndarray_ops_{}"
+    numpy_imports_extra = ("import numpy.typing as npt",)
 
-    UNOPS: ClassVar = {
-        "{}.__bool__()": bool,
-        "abs({})": abs,
-        "~{}": op.__invert__,
-    }
-    CMPOPS: ClassVar = {
-        "{} == {}": op.__eq__,
-        "{} != {}": op.__ne__,
-        "{} < {}": op.__lt__,
-        "{} <= {}": op.__le__,
-        "{} > {}": op.__gt__,
-        "{} >= {}": op.__ge__,
-    }
-    BINOPS: ClassVar = {
-        "{} + {}": op.__add__,
-        "{} * {}": op.__mul__,
-        "{} & {}": op.__and__,
-        "{} ^ {}": op.__xor__,
-        "{} | {}": op.__or__,
-    }
+    opname: _OpName
+    opfunc: Callable[..., Any]
+    dtypes: list[np.dtype]
 
-    NAMES_NP: ClassVar = [f"np{v}" for v in "01_"]
-    NAMES_PY: ClassVar = [f"py{v}" for v in "01_"]
+    def __init__(self, opname: _OpName, /) -> None:
+        ufunc = OP_UFUNCS[opname]
+        if not ufunc.nin == 2 and not ufunc.nout == 1:
+            raise NotImplementedError("non-binops not supported")
+
+        self.opname = opname
+        if opname == "divmod":
+            self.opfunc = divmod
+        else:
+            self.opfunc = getattr(op, opname, None) or getattr(op, opname + "_")
+        self.testname = self.testname.format(opname)
+
+        dtypes_seen: set[str] = set()
+        self.dtypes = []
+        for dtype in sorted(
+            _get_op_types(opname),
+            key=lambda dt: DTYPE_CHARS.index(dt.char),
+        ):
+            label = dtype_label(dtype)
+            if label in dtypes_seen:
+                continue
+            dtypes_seen.add(label)
+
+            if dtype not in dtypes_seen:
+                self.dtypes.append(dtype)
+
+        super().__init__()
 
     @staticmethod
-    def values(name: str) -> Generator[bool | np.bool]:
-        tp = {"py": bool, "np": np.bool}[name[:2]]
-        if name[-1] in "_0":
-            yield tp(0)
-        if name[-1] in "_1":
-            yield tp(1)
+    def _get_arrays(
+        dtype1: np.dtype,
+        dtype2: np.dtype,
+    ) -> tuple[npt.NDArray[Any], npt.NDArray[Any]]:
+        arr1 = np.ones((1, 1), dtype=dtype1)
+        arr2 = np.ones((1, 1), dtype=dtype2)
 
-    @staticmethod
-    def _eval_results_to_str(results: Iterable[bool | np.bool]) -> str:
-        results = set(results)
-        if len(results) == 1:
-            val = results.pop()
-            return f"Literal[{val}]" if isinstance(val, bool) else f"Bool{int(val)}"
+        if dtype1 != dtype2:
+            # prefer compatible object_ arrays
+            if dtype1.char == "O":
+                arr1 = arr2.astype("O")
+            if dtype2.char == "O":
+                arr2 = arr1.astype("O")
 
-        assert len(results) == 2, results  # noqa: PLR2004
-        return "bool" if isinstance(results.pop(), bool) else "Bool_"
-
-    @classmethod
-    def eval1(cls, fn: Callable[[Any], bool | np.bool], arg: str) -> str:
-        return cls._eval_results_to_str({fn(a) for a in cls.values(arg)})
-
-    @classmethod
-    def eval2(cls, fn: Callable[[Any, Any], np.bool], lhs: str, rhs: str) -> str:
-        results: set[np.bool] = set()
-        for a in cls.values(lhs):
-            for b in cls.values(rhs):
-                out = fn(a, b)
-                assert isinstance(out, np.bool), out
-                results.add(out)
-        return cls._eval_results_to_str(results)
+        return arr1, arr2
 
     @override
-    def _generate_imports(self) -> Generator[str]:
-        # NOTE: The trailing newlines are required for ruff compatibility
-        yield "from typing import Literal, TypeAlias"
-        yield from super()._generate_imports()
-
-    @override
-    def _generate_names(self) -> Generator[str]:
-        yield from self._generate_section()
-        yield "Bool_: TypeAlias = np.bool"
-        yield "Bool0: TypeAlias = np.bool[Literal[False]]"
-        yield "Bool1: TypeAlias = np.bool[Literal[True]]"
-
-        yield from self._generate_section()
-        yield "py_: bool"
-        yield "py0: Literal[False]"
-        yield "py1: Literal[True]"
-        yield ""
-        yield "np_: Bool_"
-        yield "np0: Bool0"
-        yield "np1: Bool1"
-
-    def _gen_unary(self) -> Generator[str]:
-        for tmpl, fn in self.UNOPS.items():
-            yield from self._generate_section(f"__{fn.__name__.removesuffix('_')}__")
-
-            for a in self.NAMES_NP:
-                yield _expr_assert_type(tmpl.format(a), self.eval1(fn, a))
-
-    def _gen_comparison(self) -> Generator[str]:
-        for tmpl, fn in self.CMPOPS.items():
-            yield from self._generate_section(f"__{fn.__name__.removesuffix('_')}__")
-
-            # np, np
-            deferred: list[str] = []
-            seen_a: set[str] = set()
-            for a, b in itertools.product(self.NAMES_NP, self.NAMES_NP):
-                # if b in seen_a:
-                #     continue
-                line = _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
-                if "_" in {a[-1], b[-1]}:
-                    deferred.append(line)
-                else:
-                    yield line
-                seen_a.add(a)
-
-            # np, np (mixed)
-            yield ""
-            yield from iter(deferred)
-
-            # np, py
-            yield ""
-            for a, b in itertools.product(self.NAMES_NP, self.NAMES_PY):
-                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
-
-    def _gen_binary(self) -> Generator[str]:
-        for tmpl, fn in self.BINOPS.items():
-            opname = fn.__name__.removesuffix("_")
-            yield from self._generate_section(f"__[r]{opname}__")
-
-            # np, np (literals)
-            deferred: list[str] = []
-            for a, b in itertools.product(self.NAMES_NP, self.NAMES_NP):
-                line = _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
-                if "_" in {a[-1], b[-1]}:
-                    deferred.append(line)
-                else:
-                    yield line
-
-            # np, np (mixed)
-            yield ""
-            yield from iter(deferred)
-
-            # np, py
-            yield ""
-            for a, b in itertools.product(self.NAMES_NP, self.NAMES_PY):
-                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
-
-            # py, np
-            yield ""
-            for a, b in itertools.product(self.NAMES_PY, self.NAMES_NP):
-                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+    def get_names(self) -> Iterable[tuple[str, str]]:
+        for dtype in self.dtypes:
+            yield f"array_{dtype_label(dtype)}_nd", _array_expr(dtype, npt=True)
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
-        yield from self._gen_unary()
-        yield from self._gen_comparison()
-        yield from self._gen_binary()
+        op_expr_template = str(self.opfunc.__doc__)[8:-1]
+        op_expr_template = op_expr_template.replace("a", "{}").replace("b", "{}")
+
+        yield from self._generate_section()
+
+        for dtype1 in self.dtypes:
+            yielded = 0
+            for dtype2 in self.dtypes:
+                name1 = f"array_{dtype_label(dtype1)}_nd"
+                name2 = f"array_{dtype_label(dtype2)}_nd"
+                op_expr = op_expr_template.format(name1, name2)
+
+                arr1, arr2 = self._get_arrays(dtype1, dtype2)
+
+                try:
+                    out = self.opfunc(arr1, arr2)
+                except TypeError:
+                    testcase = "  ".join((  # noqa: FLY002
+                        op_expr,
+                        "# type: ignore[operator]",
+                        "# pyright: ignore[reportOperatorIssue]",
+                    ))
+                else:
+                    out_type_expr = _array_expr(out.dtype, npt=True)
+                    testcase = _expr_assert_type(op_expr, out_type_expr)
+
+                yield testcase
+                yielded += 1
+
+            if yielded > 2:
+                # avoid inserting excessive newlines
+                yield ""
 
 
 TESTGENS: Final[Sequence[TestGen]] = [
     EMath(binary=False),
+    LiteralBoolOps(),
     ScalarOps("arithmetic"),
     ScalarOps("modular"),
     ScalarOps("bitwise"),
     ScalarOps("comparison"),
-    LiteralBoolOps(),
 ]
 
 
 @np.errstate(all="ignore")
 def main() -> None:
-    """(Re)generate the `test/generated/{}.pyi` type-tests."""
+    """(Re)generate the `src/numpy-stubs/@test/generated/{}.pyi` type-tests."""
     for testgen in TESTGENS:
         sys.stdout.writelines(testgen.regenerate())
 
