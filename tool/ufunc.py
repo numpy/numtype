@@ -22,8 +22,6 @@ from collections.abc import Sequence
 from functools import cache
 from typing import Any, Final, TypeAlias
 
-import tabulate  # pyright: ignore[reportMissingModuleSource]
-
 import numpy as np
 import numpy._core.umath as um  # noqa: PLC2701
 
@@ -59,7 +57,7 @@ def _all_types(u: np.ufunc) -> tuple[str, ...]:
 
     Returns
     -------
-    extra_types : list of string-like type signatures
+    extra_types : tuple of string-like type signatures like "ab->c"
     """
     extra_types: list[str] = []
 
@@ -163,6 +161,8 @@ def _ufunc_list(
 
 
 def _parse_args(args: Sequence[str] | None, /) -> argparse.Namespace:
+    import tabulate  # pyright: ignore[reportMissingModuleSource]  # noqa: PLC0415
+
     parser = argparse.ArgumentParser(prog="ufunc.py")
 
     parser.add_argument("nin", type=int, help="filter by `ufunc.nin`")
@@ -211,6 +211,8 @@ def main(args: Sequence[str] | None = None, /) -> int:
             as_code = "{}".format
 
     if data:
+        import tabulate  # pyright: ignore[reportMissingModuleSource]  # noqa: PLC0415
+
         print(
             tabulate.tabulate(
                 [list(map(as_code, entry.values())) for entry in data],
