@@ -1164,6 +1164,10 @@ class NDArrayOps(TestGen):
                 try:
                     out = self.opfunc(arr1, arr2)
                 except TypeError:
+                    if "O" in dtype1.char + dtype2.char:
+                        # impossible to reject
+                        continue
+
                     testcase = "  ".join((  # noqa: FLY002
                         op_expr,
                         "# type: ignore[operator]",
