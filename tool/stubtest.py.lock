@@ -50,16 +50,16 @@ wheels = [
 
 [[package]]
 name = "hypothesis"
-version = "6.130.8"
+version = "6.131.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
     { name = "sortedcontainers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5c/ae/fa9f4dff4ead766ffd280e710aa06083ee185938526535b808e366871fbc/hypothesis-6.130.8.tar.gz", hash = "sha256:1b719943011375b1d66f01f858181c3c3ae49324cd7d7b359229cbf95a7785ce", size = 427941 }
+sdist = { url = "https://files.pythonhosted.org/packages/73/79/82eaf131f58a5c434830f0c196995a5071531765c51ebc8aaff493002b5e/hypothesis-6.131.0.tar.gz", hash = "sha256:4b807daeeee47852edfd9818ba0e33df14902f1b78a5524f1a3fb71f80c7cec3", size = 430541 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b5/74/ff7d6642dd21288947fb9f6e5a767c415326b0a02bc710842f191dab9768/hypothesis-6.130.8-py3-none-any.whl", hash = "sha256:8ddafde382fb96163c2a51c5a7c540d2642b2802a596347c13ac8fbc9de50d70", size = 492487 },
+    { url = "https://files.pythonhosted.org/packages/01/43/b5e5d397e1ece9b71584c1771214b4a643d81fa8f197d4ff5938295ead25/hypothesis-6.131.0-py3-none-any.whl", hash = "sha256:734959017e3ee4ef8f0ecb4e5169c8f4cf96dc83a997d2edf01fb5350f5bf2f4", size = 495720 },
 ]
 
 [[package]]
@@ -213,17 +213,17 @@ provides-extras = ["numpy"]
 
 [package.metadata.requires-dev]
 basedpyright = [
-    { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "basedpyright", specifier = ">=1.28.5" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 dev = [
-    { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "basedpyright", specifier = ">=1.28.5" },
     { name = "markdown-callouts", specifier = ">=0.4.0" },
-    { name = "mkdocs-awesome-nav", specifier = ">=3.1.0" },
+    { name = "mkdocs-awesome-nav", specifier = ">=3.1.1" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
     { name = "mkdocs-material", specifier = ">=9.6.11" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
@@ -232,26 +232,26 @@ dev = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pygments", specifier = ">=2.19.1" },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.3" },
+    { name = "ruff", specifier = ">=0.11.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 docs = [
     { name = "markdown-callouts", specifier = ">=0.4.0" },
-    { name = "mkdocs-awesome-nav", specifier = ">=3.1.0" },
+    { name = "mkdocs-awesome-nav", specifier = ">=3.1.1" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
     { name = "mkdocs-material", specifier = ">=9.6.11" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.1" },
     { name = "pygments", specifier = ">=2.19.1" },
 ]
-lint = [{ name = "ruff", specifier = ">=0.11.3" }]
+lint = [{ name = "ruff", specifier = ">=0.11.5" }]
 list-and-test = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.3" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "ruff", specifier = ">=0.11.5" },
+    { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 mypy = [
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
@@ -259,29 +259,29 @@ mypy = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 numpy = [{ name = "numtype", extras = ["numpy"] }]
 pytest = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 typecheck = [
-    { name = "basedpyright", specifier = ">=1.28.4" },
+    { name = "basedpyright", specifier = ">=1.28.5" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 types = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "types-setuptools", specifier = ">=78.1.0.20250329" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.13.0" },
+    { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 
 [[package]]
@@ -511,9 +511,9 @@ wheels = [
 
 [[package]]
 name = "typing-extensions"
-version = "4.13.0"
+version = "4.13.2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0e/3e/b00a62db91a83fff600de219b6ea9908e6918664899a2d85db222f4fbf19/typing_extensions-4.13.0.tar.gz", hash = "sha256:0a4ac55a5820789d87e297727d229866c9650f6521b64206413c4fbada24d95b", size = 106520 }
+sdist = { url = "https://files.pythonhosted.org/packages/f6/37/23083fcd6e35492953e8d2aaaa68b860eb422b34627b13f2ce3eb6106061/typing_extensions-4.13.2.tar.gz", hash = "sha256:e6c81219bd689f51865d9e372991c540bda33a0379d5573cddb9a3a23f7caaef", size = 106967 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e0/86/39b65d676ec5732de17b7e3c476e45bb80ec64eb50737a8dce1a4178aba1/typing_extensions-4.13.0-py3-none-any.whl", hash = "sha256:c8dd92cc0d6425a97c18fbb9d1954e5ff92c1ca881a309c45f06ebc0b79058e5", size = 45683 },
+    { url = "https://files.pythonhosted.org/packages/8b/54/b1ae86c0973cc6f0210b53d508ca3641fb6d0c56823f288d108bc7ab3cc8/typing_extensions-4.13.2-py3-none-any.whl", hash = "sha256:a439e7c04b49fec3e5d3e2beaa21755cadbbdc391694e28ccdd36ca4a1408f8c", size = 45806 },
 ]
