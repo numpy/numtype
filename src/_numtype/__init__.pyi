@@ -102,7 +102,9 @@ _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 _ScalarT0 = TypeVar("_ScalarT0", bound=np.generic, default=Any)
-_NaObjectT = TypeVar("_NaObjectT", default=Never)
+_NaT = TypeVar("_NaT", default=Never)
+_NaT0 = TypeVar("_NaT0", default=Any)
+_NaT_co = TypeVar("_NaT_co", covariant=True)
 _ToT = TypeVar("_ToT")
 
 ###
@@ -139,8 +141,8 @@ class CanLenArray(Protocol[_ScalarT_co, _ShapeT_co]):
     def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
 
 @type_check_only
-class _CanStringArray(Protocol[_ShapeT_co]):
-    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtypes.StringDType]: ...
+class _CanStringArray(Protocol[_ShapeT_co, _NaT_co]):
+    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtypes.StringDType[_NaT_co]]: ...
 
 ###
 # Shape aliases
@@ -184,33 +186,33 @@ Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT0]]
 
 StringArray = TypeAliasType(
     "StringArray",
-    np.ndarray[_ShapeT, np.dtypes.StringDType[_NaObjectT]],
-    type_params=(_ShapeT, _NaObjectT),
+    np.ndarray[_ShapeT, np.dtypes.StringDType[_NaT]],
+    type_params=(_ShapeT, _NaT),
 )
 StringArray0D = TypeAliasType(
     "StringArray0D",
-    np.ndarray[tuple[()], np.dtypes.StringDType[_NaObjectT]],
-    type_params=(_NaObjectT,),
+    np.ndarray[tuple[()], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
 )
 StringArray1D = TypeAliasType(
     "StringArray1D",
-    np.ndarray[tuple[int], np.dtypes.StringDType[_NaObjectT]],
-    type_params=(_NaObjectT,),
+    np.ndarray[tuple[int], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
 )
 StringArray2D = TypeAliasType(
     "StringArray2D",
-    np.ndarray[tuple[int, int], np.dtypes.StringDType[_NaObjectT]],
-    type_params=(_NaObjectT,),
+    np.ndarray[tuple[int, int], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
 )
 StringArray3D = TypeAliasType(
     "StringArray3D",
-    np.ndarray[tuple[int, int, int], np.dtypes.StringDType[_NaObjectT]],
-    type_params=(_NaObjectT,),
+    np.ndarray[tuple[int, int, int], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
 )
 StringArrayND = TypeAliasType(
     "StringArrayND",
-    np.ndarray[tuple[int, ...], np.dtypes.StringDType[_NaObjectT]],
-    type_params=(_NaObjectT,),
+    np.ndarray[tuple[int, ...], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
 )
 
 ###
@@ -670,13 +672,13 @@ ToObject_2nd = TypeAliasType("ToObject_2nd", _ToArray2_2nd[np.object_, _PyObject
 ToObject_3nd = TypeAliasType("ToObject_3nd", _ToArray2_3nd[np.object_, _PyObject])
 
 # StringDType
-ToString_nd = TypeAliasType("ToString_nd", _CanStringArray[AtLeast0D])
-ToString_1ds = TypeAliasType("ToString_1ds", _CanStringArray[tuple[int]])
-ToString_2ds = TypeAliasType("ToString_2ds", _CanStringArray[tuple[int, int]])
-ToString_3ds = TypeAliasType("ToString_3ds", _CanStringArray[tuple[int, int, int]])
-ToString_1nd = TypeAliasType("ToString_1nd", _CanStringArray[AtLeast1D])
-ToString_2nd = TypeAliasType("ToString_2nd", _CanStringArray[AtLeast2D])
-ToString_3nd = TypeAliasType("ToString_3nd", _CanStringArray[AtLeast3D])
+ToString_nd = TypeAliasType("ToString_nd", _CanStringArray[AtLeast0D, _NaT0], type_params=(_NaT0,))
+ToString_1ds = TypeAliasType("ToString_1ds", _CanStringArray[tuple[int], _NaT0], type_params=(_NaT0,))
+ToString_2ds = TypeAliasType("ToString_2ds", _CanStringArray[tuple[int, int], _NaT0], type_params=(_NaT0,))
+ToString_3ds = TypeAliasType("ToString_3ds", _CanStringArray[tuple[int, int, int], _NaT0], type_params=(_NaT0,))
+ToString_1nd = TypeAliasType("ToString_1nd", _CanStringArray[AtLeast1D, _NaT0], type_params=(_NaT0,))
+ToString_2nd = TypeAliasType("ToString_2nd", _CanStringArray[AtLeast2D, _NaT0], type_params=(_NaT0,))
+ToString_3nd = TypeAliasType("ToString_3nd", _CanStringArray[AtLeast3D, _NaT0], type_params=(_NaT0,))
 
 # any scalar
 ToGeneric_nd = TypeAliasType("ToGeneric_nd", _ToArray2_nd[np.generic, _PyScalar])
