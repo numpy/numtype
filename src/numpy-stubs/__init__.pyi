@@ -1959,11 +1959,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def __add__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT], /) -> NDArray[_ScalarT]: ...
+    def __add__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT], /) -> NDArray[_ScalarT]: ...  # type: ignore[overload-overlap]
     @overload
-    def __add__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, Any, _ScalarT, _ScalarT2], /) -> NDArray[_ScalarT2]: ...
+    def __add__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, Any, _ScalarT, _ScalarT2], /) -> NDArray[_ScalarT2]: ...  # type: ignore[overload-overlap]
     @overload
-    def __add__(self: NDArray[_ScalarT], x: _nt.MatchND[Any, _nt.PromoteWith[_ScalarT, _ScalarT2]], /) -> NDArray[_ScalarT2]: ...
+    def __add__(self: NDArray[_ScalarT], x: _nt.MatchND[Any, _nt.PromoteWith[_ScalarT, _ScalarT2]], /) -> NDArray[_ScalarT2]: ...  # type: ignore[overload-overlap]
     @overload
     def __add__(self: NDArray[generic[_AnyItemT]], x: _nt.SequenceND[_AnyItemT], /) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
     @overload
@@ -1979,11 +1979,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with __add__
     @overload
-    def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT], /) -> NDArray[_ScalarT]: ...
+    def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT], /) -> NDArray[_ScalarT]: ...  # type: ignore[overload-overlap]
     @overload
-    def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, Any, _ScalarT, _ScalarT2], /) -> NDArray[_ScalarT2]: ...
+    def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, Any, _ScalarT, _ScalarT2], /) -> NDArray[_ScalarT2]: ...  # type: ignore[overload-overlap]
     @overload
-    def __radd__(self: NDArray[_ScalarT], x: _nt.MatchND[Any, _nt.PromoteWith[_ScalarT, _ScalarT2]], /) -> NDArray[_ScalarT2]: ...
+    def __radd__(self: NDArray[_ScalarT], x: _nt.MatchND[Any, _nt.PromoteWith[_ScalarT, _ScalarT2]], /) -> NDArray[_ScalarT2]: ...  # type: ignore[overload-overlap]
     @overload
     def __radd__(self: NDArray[generic[_AnyItemT]], x: _nt.SequenceND[_AnyItemT], /) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
     @overload
@@ -1998,7 +1998,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __radd__(self: _nt.StringArrayND[_T], x: _nt.ToString_nd[_T] | _nt.ToStr_nd, /) -> _nt.StringArrayND[_T]: ...
 
     #
-    @overload
+    @overload  # type: ignore[misc]
     def __iadd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT], /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __iadd__(self: NDArray[generic[_AnyItemT]], x: _nt.SequenceND[_AnyItemT], /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
