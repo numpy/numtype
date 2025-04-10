@@ -93,7 +93,7 @@ class ISeedSequence(abc.ABC):
 
 class ISpawnableSeedSequence(ISeedSequence, abc.ABC):
     @abc.abstractmethod
-    def spawn(self, /, n_children: int) -> list[Self]: ...
+    def spawn(self, /, n_children: int) -> Sequence[Self]: ...
 
 class SeedlessSeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
     @override

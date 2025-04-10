@@ -231,7 +231,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @property
     @override
-    def T(self) -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def T(self) -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]
     def getT(self) -> matrix[_2D, _DTypeT_co]: ...
 
     #

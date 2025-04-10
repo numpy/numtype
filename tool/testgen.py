@@ -1,6 +1,6 @@
 """Type-tests generation."""
 
-# ruff: noqa: PLR0916, PLR6301, TD003, ERA001, D101, D102, DOC201
+# ruff: noqa: PLR0916, PLR6301, ERA001, D101, D102, DOC201
 
 import sys
 from pathlib import Path
