@@ -6,7 +6,7 @@ import decimal
 import fractions
 from collections.abc import Sequence
 from typing import Any, TypeAlias, type_check_only
-from typing_extensions import Protocol, TypeAliasType, TypeVar, Unpack
+from typing_extensions import Never, Protocol, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
 from numpy._typing import _NestedSequence
@@ -97,16 +97,13 @@ from ._scalar_co import (
 # Type parameters
 
 _T = TypeVar("_T")
+_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...], default=tuple[int, ...])
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 _ScalarT0 = TypeVar("_ScalarT0", bound=np.generic, default=Any)
+_NaObjectT = TypeVar("_NaObjectT", default=Never)
 _ToT = TypeVar("_ToT")
-
-###
-# Type constraints (bijective type mappings)
-
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...], default=tuple[int, ...])
 
 ###
 # Protocols
@@ -184,6 +181,37 @@ MArray2D = TypeAliasType("MArray2D", np.ma.MaskedArray[tuple[int, int], np.dtype
 MArray3D = TypeAliasType("MArray3D", np.ma.MaskedArray[tuple[int, int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 
 Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
+
+StringArray = TypeAliasType(
+    "StringArray",
+    np.ndarray[_ShapeT, np.dtypes.StringDType[_NaObjectT]],
+    type_params=(_ShapeT, _NaObjectT),
+)
+StringArray0D = TypeAliasType(
+    "StringArray0D",
+    np.ndarray[tuple[()], np.dtypes.StringDType[_NaObjectT]],
+    type_params=(_NaObjectT,),
+)
+StringArray1D = TypeAliasType(
+    "StringArray1D",
+    np.ndarray[tuple[int], np.dtypes.StringDType[_NaObjectT]],
+    type_params=(_NaObjectT,),
+)
+StringArray2D = TypeAliasType(
+    "StringArray2D",
+    np.ndarray[tuple[int, int], np.dtypes.StringDType[_NaObjectT]],
+    type_params=(_NaObjectT,),
+)
+StringArray3D = TypeAliasType(
+    "StringArray3D",
+    np.ndarray[tuple[int, int, int], np.dtypes.StringDType[_NaObjectT]],
+    type_params=(_NaObjectT,),
+)
+StringArrayND = TypeAliasType(
+    "StringArrayND",
+    np.ndarray[tuple[int, ...], np.dtypes.StringDType[_NaObjectT]],
+    type_params=(_NaObjectT,),
+)
 
 ###
 # helper aliases
