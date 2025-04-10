@@ -1963,39 +1963,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __add__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, Any, _ScalarT, _ScalarT2], /) -> NDArray[_ScalarT2]: ...
     @overload
+    def __add__(self: NDArray[_ScalarT], x: _nt.MatchND[Any, _nt.PromoteWith[_ScalarT, _ScalarT2]], /) -> NDArray[_ScalarT2]: ...
+    @overload
     def __add__(self: NDArray[generic[_AnyItemT]], x: _nt.SequenceND[_AnyItemT], /) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
-    @overload
-    def __add__(self: NDArray[int8], x: _nt.ToUInt8_nd, /) -> NDArray[int16]: ...
-    @overload
-    def __add__(self: NDArray[uint8], x: _nt.ToInt8_nd, /) -> NDArray[int16]: ...
-    @overload
-    def __add__(self: NDArray[_Int16m], x: _nt.ToUInt16_nd, /) -> NDArray[int32]: ...
-    @overload
-    def __add__(self: NDArray[uint16], x: _nt._ToArray_nd[_Int16m], /) -> NDArray[int32]: ...
-    @overload
-    def __add__(self: NDArray[_Int32m], x: _nt.ToUInt32_nd, /) -> NDArray[int64]: ...
-    @overload
-    def __add__(self: NDArray[uint32], x: _nt._ToArray_nd[_Int32m], /) -> NDArray[int64]: ...
-    @overload
-    def __add__(self: NDArray[uint64], x: _nt._ToArray_nd[signedinteger], /) -> NDArray[float64]: ...
-    @overload
-    def __add__(self: NDArray[signedinteger], x: _nt.ToUInt64_nd, /) -> NDArray[float64]: ...
-    @overload
-    def __add__(self: NDArray[_nt.integer16], x: _nt.ToFloat16_nd, /) -> NDArray[float32]: ...
-    @overload
-    def __add__(self: NDArray[float16], x: _nt._ToArray_nd[_nt.integer16], /) -> NDArray[float32]: ...
-    @overload
-    def __add__(self: NDArray[_Integer32p], x: _nt._ToArray_nd[_Float32m], /) -> NDArray[float64]: ...
-    @overload
-    def __add__(self: NDArray[_Float32m], x: _nt._ToArray_nd[_Integer32p], /) -> NDArray[float64]: ...
-    @overload
-    def __add__(self: NDArray[float64 | _Integer32p], x: _nt.ToComplex64_nd, /) -> NDArray[complex128]: ...
-    @overload
-    def __add__(self: NDArray[complex64], x: _nt._ToArray_nd[_nt.inexact64 | float64], /) -> NDArray[complex128]: ...
-    @overload
-    def __add__(self: NDArray[longdouble], x: _nt.ToComplex_nd, /) -> NDArray[clongdouble]: ...
-    @overload
-    def __add__(self: NDArray[complexfloating], x: _nt.ToLongDouble_nd, /) -> NDArray[clongdouble]: ...
     @overload
     def __add__(self: NDArray[datetime64], x: _nt.CoTimeDelta_nd, /) -> NDArray[datetime64]: ...
     @overload
@@ -2009,43 +1979,13 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with __add__
     @overload
-    def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT] | py_bool, /) -> NDArray[_ScalarT]: ...
+    def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT], /) -> NDArray[_ScalarT]: ...
     @overload
     def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, Any, _ScalarT, _ScalarT2], /) -> NDArray[_ScalarT2]: ...
     @overload
+    def __radd__(self: NDArray[_ScalarT], x: _nt.MatchND[Any, _nt.PromoteWith[_ScalarT, _ScalarT2]], /) -> NDArray[_ScalarT2]: ...
+    @overload
     def __radd__(self: NDArray[generic[_AnyItemT]], x: _nt.SequenceND[_AnyItemT], /) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
-    @overload
-    def __radd__(self: NDArray[int8], x: _nt.ToUInt8_nd, /) -> NDArray[int16]: ...
-    @overload
-    def __radd__(self: NDArray[uint8], x: _nt.ToInt8_nd, /) -> NDArray[int16]: ...
-    @overload
-    def __radd__(self: NDArray[_Int16m], x: _nt.ToUInt16_nd, /) -> NDArray[int32]: ...
-    @overload
-    def __radd__(self: NDArray[uint16], x: _nt._ToArray_nd[_Int16m], /) -> NDArray[int32]: ...
-    @overload
-    def __radd__(self: NDArray[_Int32m], x: _nt.ToUInt32_nd, /) -> NDArray[int64]: ...
-    @overload
-    def __radd__(self: NDArray[uint32], x: _nt._ToArray_nd[_Int32m], /) -> NDArray[int64]: ...
-    @overload
-    def __radd__(self: NDArray[uint64], x: _nt._ToArray_nd[signedinteger], /) -> NDArray[float64]: ...
-    @overload
-    def __radd__(self: NDArray[signedinteger], x: _nt.ToUInt64_nd, /) -> NDArray[float64]: ...
-    @overload
-    def __radd__(self: NDArray[_nt.integer16], x: _nt.ToFloat16_nd, /) -> NDArray[float32]: ...
-    @overload
-    def __radd__(self: NDArray[float16], x: _nt._ToArray_nd[_nt.integer16], /) -> NDArray[float32]: ...
-    @overload
-    def __radd__(self: NDArray[_Integer32p], x: _nt._ToArray_nd[_Float32m], /) -> NDArray[float64]: ...
-    @overload
-    def __radd__(self: NDArray[_Float32m], x: _nt._ToArray_nd[_Integer32p], /) -> NDArray[float64]: ...
-    @overload
-    def __radd__(self: NDArray[float64 | _Integer32p], x: _nt.ToComplex64_nd, /) -> NDArray[complex128]: ...
-    @overload
-    def __radd__(self: NDArray[complex64], x: _nt._ToArray_nd[_nt.inexact64 | float64], /) -> NDArray[complex128]: ...
-    @overload
-    def __radd__(self: NDArray[longdouble], x: _nt.ToComplex_nd, /) -> NDArray[clongdouble]: ...
-    @overload
-    def __radd__(self: NDArray[complexfloating], x: _nt.ToLongDouble_nd, /) -> NDArray[clongdouble]: ...
     @overload
     def __radd__(self: NDArray[datetime64], x: _nt.CoTimeDelta_nd, /) -> NDArray[datetime64]: ...
     @overload
@@ -4997,6 +4937,10 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
 # It is used to clarify why `complex128`s precision is `_64Bit`, the latter
 # describing the two 64 bit floats representing its real and imaginary component
 class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
+    @type_check_only
+    def __nep50_complex__(self, other: longdouble, /) -> clongdouble: ...
+
+    #
     @overload
     def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
     @overload
@@ -5100,7 +5044,7 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @type_check_only
-    def __nep50__(self, to: bool_ | number | timedelta64, from_: bool_, /) -> bool_: ...
+    def __nep50__(self, below: bool_ | number | timedelta64, above: bool_, /) -> bool_: ...
 
     #
     @property
@@ -5646,7 +5590,7 @@ class _IntROpMixin(Generic[_T_co]):
 
 class int8(_IntROpMixin[signedinteger], signedinteger[_n._8]):  # type: ignore[misc]
     @type_check_only
-    def __nep50__(self, to: signedinteger | inexact | timedelta64, from_: int8 | bool_, /) -> int8: ...
+    def __nep50__(self, below: signedinteger | inexact | timedelta64, above: bool_, /) -> int8: ...
 
     #
     @property
@@ -5782,10 +5726,12 @@ class uint8(unsignedinteger[_n._8]):
     @type_check_only
     def __nep50__(
         self,
-        to: uint8 | int16 | int32 | int64 | unsignedinteger | inexact | timedelta64,
-        from_: uint8 | bool_,
+        below: uint8 | int16 | int32 | int64 | unsignedinteger | inexact | timedelta64,
+        above: bool_,
         /,
     ) -> uint8: ...
+    @type_check_only
+    def __nep50_int__(self, other: int8, /) -> int16: ...
 
     #
     @property
@@ -6183,10 +6129,12 @@ class int16(_IntROpMixin[signedinteger], signedinteger[_n._16]):  # type: ignore
     @type_check_only
     def __nep50__(
         self,
-        to: int16 | int32 | int64 | float32 | float64 | longdouble | complexfloating | timedelta64,
-        from_: int16 | uint8 | int8 | bool_,
+        below: int16 | int32 | int64 | float32 | float64 | longdouble | complexfloating | timedelta64,
+        above: uint8 | int8 | bool_,
         /,
     ) -> int16: ...
+    @type_check_only
+    def __nep50_float__(self, other: float16, /) -> float32: ...
 
     #
     @property
@@ -6360,10 +6308,14 @@ class uint16(unsignedinteger[_n._16]):
     @type_check_only
     def __nep50__(
         self,
-        to: uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | longdouble | complexfloating | timedelta64,
-        from_: uint16 | uint8 | bool_,
+        below: uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | longdouble | complexfloating | timedelta64,
+        above: uint8 | bool_,
         /,
     ) -> uint16: ...
+    @type_check_only
+    def __nep50_int__(self, other: int8 | int16, /) -> int32: ...
+    @type_check_only
+    def __nep50_float__(self, other: float16, /) -> float32: ...
 
     #
     @property
@@ -6737,10 +6689,14 @@ class int32(_IntROpMixin[signedinteger], signedinteger[_n._32]):  # type: ignore
     @type_check_only
     def __nep50__(
         self,
-        to: int32 | int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
-        from_: int32 | uint16 | int16 | uint8 | int8 | bool_,
+        below: int32 | int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        above: uint16 | int16 | uint8 | int8 | bool_,
         /,
     ) -> int32: ...
+    @type_check_only
+    def __nep50_float__(self, other: float16 | float32, /) -> float64: ...
+    @type_check_only
+    def __nep50_complex__(self, other: complex64, /) -> complex128: ...
 
     #
     @property
@@ -6890,10 +6846,16 @@ class uint32(unsignedinteger[_n._32]):
     @type_check_only
     def __nep50__(
         self,
-        to: uint32 | int64 | uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
-        from_: uint32 | uint16 | uint8 | bool_,
+        below: uint32 | int64 | uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        above: uint16 | uint8 | bool_,
         /,
     ) -> uint32: ...
+    @type_check_only
+    def __nep50_int__(self, other: int8 | int16 | int32, /) -> int64: ...
+    @type_check_only
+    def __nep50_float__(self, other: float16 | float32, /) -> float64: ...
+    @type_check_only
+    def __nep50_complex__(self, other: complex64, /) -> complex128: ...
 
     #
     @property
@@ -7195,10 +7157,14 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):  # type: ignore[misc]
     @type_check_only
     def __nep50__(
         self,
-        to: int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
-        from_: signedinteger | uint32 | uint16 | uint8 | bool_,
+        below: int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        above: int32 | uint32 | int16 | uint16 | int8 | uint8 | bool_,
         /,
     ) -> int64: ...
+    @type_check_only
+    def __nep50_float__(self, other: float16 | float32, /) -> float64: ...
+    @type_check_only
+    def __nep50_complex__(self, other: complex64, /) -> complex128: ...
 
     #
     @property
@@ -7311,10 +7277,14 @@ class uint64(unsignedinteger[_n._64]):
     @type_check_only
     def __nep50__(
         self,
-        to: uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
-        from_: unsignedinteger | bool_,
+        below: uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        above: uint32 | uint16 | uint8 | bool_,
         /,
     ) -> uint64: ...
+    @type_check_only
+    def __nep50_float__(self, other: signedinteger | float16 | float32, /) -> float64: ...
+    @type_check_only
+    def __nep50_complex__(self, other: complex64, /) -> complex128: ...
 
     #
     @property
@@ -7546,7 +7516,11 @@ ulonglong = uint64
 
 class float16(floating[_n._16]):
     @type_check_only
-    def __nep50__(self, to: inexact, from_: float16 | int8 | uint8 | bool_, /) -> float16: ...
+    def __nep50__(self, below: inexact, above: int8 | uint8 | bool_, /) -> float16: ...
+    @type_check_only  # avoid overloads
+    def __nep50_int__(self, other: int16 | uint16, /) -> float32: ...
+    @type_check_only
+    def __nep50_float__(self, other: int32 | uint32 | int64 | uint64, /) -> float64: ...
 
     #
     @property
@@ -7796,10 +7770,12 @@ class float32(floating[_n._32]):
     @type_check_only
     def __nep50__(
         self,
-        to: float32 | float64 | longdouble | complexfloating,
-        from_: _Float32m | int16 | uint16 | int8 | uint8 | bool_,
+        below: float32 | float64 | longdouble | complexfloating,
+        above: float16 | int16 | uint16 | int8 | uint8 | bool_,
         /,
     ) -> float32: ...
+    @type_check_only
+    def __nep50_float__(self, other: int32 | uint32 | int64 | uint64, /) -> float64: ...
 
     #
     @property
@@ -8001,10 +7977,12 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     @type_check_only
     def __nep50__(
         self,
-        to: float64 | longdouble | complex128 | clongdouble,
-        from_: _Float64m | integer | bool_,
+        below: float64 | longdouble | complex128 | clongdouble,
+        above: float32 | float16 | integer | bool_,
         /,
     ) -> float64: ...
+    @type_check_only
+    def __nep50_complex__(self, other: complex64, /) -> complex128: ...
 
     #
     def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
@@ -8201,7 +8179,12 @@ double = float64
 
 class longdouble(floating[_n._64L]):
     @type_check_only
-    def __nep50__(self, to: longdouble | clongdouble, from_: floating | integer | bool_, /) -> longdouble: ...
+    def __nep50__(
+        self,
+        below: longdouble | clongdouble,
+        above: float64 | float32 | float16 | integer | bool_,
+        /,
+    ) -> longdouble: ...
 
     #
     @property
@@ -8330,10 +8313,12 @@ class complex64(complexfloating[_n._32]):
     @type_check_only
     def __nep50__(
         self,
-        to: complexfloating,
-        from_: complex64 | _Float32m | int16 | uint16 | int8 | uint8 | bool_,
+        below: complexfloating,
+        above: float32 | float16 | int16 | uint16 | int8 | uint8 | bool_,
         /,
     ) -> complex64: ...
+    @type_check_only  # __nep_complex__ is already used by complexfloating
+    def __nep50_float__(self, other: int32 | uint32 | int64 | uint64 | float64, /) -> complex128: ...
 
     #
     @property
@@ -8462,8 +8447,8 @@ class complex128(complexfloating[_n._64], complex):
     @type_check_only
     def __nep50__(
         self,
-        to: complex128 | clongdouble,
-        from_: _Complex128m | _Float64m | integer | bool_,
+        below: complex128 | clongdouble,
+        above: complex64 | float64 | float32 | float16 | integer | bool_,
         /,
     ) -> complex128: ...
 
@@ -8585,7 +8570,12 @@ cdouble = complex128
 
 class clongdouble(complexfloating[_n._64L]):
     @type_check_only
-    def __nep50__(self, to: clongdouble, from_: number | bool_, /) -> clongdouble: ...
+    def __nep50__(
+        self,
+        below: clongdouble,
+        above: complex128 | complex64 | floating | integer | bool_,
+        /,
+    ) -> clongdouble: ...
 
     #
     @property
@@ -8649,7 +8639,7 @@ complex256 = clongdouble
 @final
 class object_(_RealMixin, generic[Any]):
     @type_check_only
-    def __nep50__(self, to: object_, from_: bool_ | number | character, /) -> object_: ...
+    def __nep50__(self, below: object_, above: bool_ | number | character, /) -> object_: ...
 
     #
     @overload
@@ -8687,7 +8677,7 @@ class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):  # t
 
 class bytes_(character[bytes], bytes):  # type: ignore[misc]
     @type_check_only
-    def __nep50__(self, to: bytes_, from_: bytes_, /) -> bytes_: ...
+    def __nep50__(self, below: bytes_, above: bytes_, /) -> bytes_: ...
 
     #
     @overload
@@ -8701,7 +8691,7 @@ class bytes_(character[bytes], bytes):  # type: ignore[misc]
 
 class str_(character[str], str):  # type: ignore[misc]
     @type_check_only
-    def __nep50__(self, to: str_, from_: str_, /) -> str_: ...
+    def __nep50__(self, below: str | str_, from_: str_, /) -> str_: ...
 
     #
     @overload
@@ -8714,6 +8704,10 @@ class str_(character[str], str):  # type: ignore[misc]
     def __init__(self, value: bytes, /, encoding: str = "utf-8", errors: str = "strict") -> None: ...
 
 class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
+    @type_check_only
+    def __nep50__(self, below: object_, from_: Never, /) -> void: ...
+
+    #
     @overload
     def __init__(self, value: _nt.CoInteger_0d | bytes, /, dtype: None = None) -> None: ...
     @overload
@@ -8838,7 +8832,7 @@ class timedelta64(
     Generic[_TD64ItemT_co],
 ):
     @type_check_only
-    def __nep50__(self, to: timedelta64, from_: timedelta64, /) -> timedelta64: ...
+    def __nep50__(self, below: timedelta64, above: integer | bool_, /) -> timedelta64: ...
 
     #
     @property

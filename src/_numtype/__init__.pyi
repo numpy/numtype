@@ -48,9 +48,11 @@ from ._just import (
     JustStr as JustStr,
 )
 from ._nep50 import (
-    CanCast as CanCast,
     CanCast0D as CanCast0D,
     CanCastND as CanCastND,
+    CanNEP50 as CanNEP50,
+    MatchND as MatchND,
+    PromoteWith as PromoteWith,
 )
 from ._scalar import (
     inexact32 as inexact32,
