@@ -1,4 +1,3 @@
-# ruff: noqa: PYI042, UP018
 from typing import TypeAlias
 from typing_extensions import TypeVar
 
