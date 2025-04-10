@@ -7,7 +7,7 @@ from typing_extensions import TypeAliasType, TypeVar
 
 import numpy as np
 
-__all__ = ["CanCast0D", "CanCastND", "CanNEP50", "MatchND", "PromoteWith"]
+__all__ = ["CanCast0D", "CanCastND", "CanNEP50", "MatchND", "PromoteWith", "PromoteWith0D"]
 
 _T_co = TypeVar("_T_co", covariant=True)
 _BelowT_contra = TypeVar("_BelowT_contra", bound=np.generic, contravariant=True)
@@ -21,23 +21,45 @@ class CanNEP50(Protocol[_BelowT_contra, _AboveT_contra, _MatchT_co]):
     def __nep50__(self, below: _BelowT_contra, above: _AboveT_contra, /) -> _MatchT_co: ...
 
 @type_check_only
-class _CanNEP50Int(Protocol[_OtherT_contra, _T_co]):
-    def __nep50_int__(self, other: _OtherT_contra, /) -> _T_co: ...
+class _CanNEP50Rule0(Protocol[_OtherT_contra, _T_co]):
+    def __nep50_rule0__(self, other: _OtherT_contra, /) -> _T_co: ...
 
 @type_check_only
-class _CanNEP50Float(Protocol[_OtherT_contra, _T_co]):
-    def __nep50_float__(self, other: _OtherT_contra, /) -> _T_co: ...
+class _CanNEP50Rule1(Protocol[_OtherT_contra, _T_co]):
+    def __nep50_rule1__(self, other: _OtherT_contra, /) -> _T_co: ...
 
 @type_check_only
-class _CanNEP50Complex(Protocol[_OtherT_contra, _T_co]):
-    def __nep50_complex__(self, other: _OtherT_contra, /) -> _T_co: ...
+class _CanNEP50Rule2(Protocol[_OtherT_contra, _T_co]):
+    def __nep50_rule2__(self, other: _OtherT_contra, /) -> _T_co: ...
+
+@type_check_only
+class _CanNEP50Rule3(Protocol[_OtherT_contra, _T_co]):
+    def __nep50_rule3__(self, other: _OtherT_contra, /) -> _T_co: ...
+
+@type_check_only
+class _CanNEP50Rule4(Protocol[_OtherT_contra, _T_co]):
+    def __nep50_rule4__(self, other: _OtherT_contra, /) -> _T_co: ...
+
+@type_check_only
+class _CanNEP50Rule5(Protocol[_OtherT_contra, _T_co]):
+    def __nep50_rule5__(self, other: _OtherT_contra, /) -> _T_co: ...
 
 _WithT = TypeVar("_WithT")
 _OutT = TypeVar("_OutT", bound=np.generic)
 
 PromoteWith = TypeAliasType(
     "PromoteWith",
-    _CanNEP50Int[_WithT, _OutT] | _CanNEP50Float[_WithT, _OutT] | _CanNEP50Complex[_WithT, _OutT],
+    _CanNEP50Rule0[_WithT, _OutT]
+    | _CanNEP50Rule1[_WithT, _OutT]
+    | _CanNEP50Rule2[_WithT, _OutT]
+    | _CanNEP50Rule3[_WithT, _OutT]
+    | _CanNEP50Rule4[_WithT, _OutT]
+    | _CanNEP50Rule5[_WithT, _OutT],
+    type_params=(_WithT, _OutT),
+)
+PromoteWith0D = TypeAliasType(
+    "PromoteWith0D",
+    MatchND[tuple[()], PromoteWith[_WithT, _OutT]],
     type_params=(_WithT, _OutT),
 )
 
