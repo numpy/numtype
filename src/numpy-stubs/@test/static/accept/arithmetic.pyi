@@ -434,7 +434,7 @@ assert_type(c8 + b_, np.complex64)
 assert_type(c8 + b, np.complex64)
 assert_type(c8 + c, np.complex64)
 assert_type(c8 + f, np.complex64)
-assert_type(c8 + AR_f, npt.NDArray[np.complexfloating])
+assert_type(c8 + AR_f, npt.NDArray[np.complex128])
 
 assert_type(f16 + c8, np.clongdouble)
 assert_type(c16 + c8, np.complex128)
@@ -447,7 +447,7 @@ assert_type(b_ + c8, np.complex64)
 assert_type(b + c8, np.complex64)
 assert_type(c + c8, np.complex64)
 assert_type(f + c8, np.complex64)
-assert_type(AR_f + c8, npt.NDArray[np.complexfloating])
+assert_type(AR_f + c8, npt.NDArray[np.complex128])
 
 # Float
 

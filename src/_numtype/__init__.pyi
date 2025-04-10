@@ -6,7 +6,7 @@ import decimal
 import fractions
 from collections.abc import Sequence
 from typing import Any, TypeAlias, type_check_only
-from typing_extensions import Protocol, TypeAliasType, TypeVar, Unpack
+from typing_extensions import Never, Protocol, TypeAliasType, TypeVar, Unpack
 
 import numpy as np
 from numpy._typing import _NestedSequence
@@ -48,9 +48,11 @@ from ._just import (
     JustStr as JustStr,
 )
 from ._nep50 import (
-    CanCast as CanCast,
     CanCast0D as CanCast0D,
     CanCastND as CanCastND,
+    CanNEP50 as CanNEP50,
+    MatchND as MatchND,
+    PromoteWith as PromoteWith,
 )
 from ._scalar import (
     inexact32 as inexact32,
@@ -97,16 +99,15 @@ from ._scalar_co import (
 # Type parameters
 
 _T = TypeVar("_T")
+_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...], default=tuple[int, ...])
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 _ScalarT0 = TypeVar("_ScalarT0", bound=np.generic, default=Any)
+_NaT = TypeVar("_NaT", default=Never)
+_NaT0 = TypeVar("_NaT0", default=Any)
+_NaT_co = TypeVar("_NaT_co", covariant=True)
 _ToT = TypeVar("_ToT")
-
-###
-# Type constraints (bijective type mappings)
-
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...], default=tuple[int, ...])
 
 ###
 # Protocols
@@ -141,6 +142,10 @@ class CanLenArray(Protocol[_ScalarT_co, _ShapeT_co]):
     def __len__(self, /) -> int: ...
     def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
 
+@type_check_only
+class _CanStringArray(Protocol[_ShapeT_co, _NaT_co]):
+    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtypes.StringDType[_NaT_co]]: ...
+
 ###
 # Shape aliases
 
@@ -158,6 +163,7 @@ Sequence2D: TypeAlias = Sequence[Sequence[_T]]
 Sequence3D: TypeAlias = Sequence[Sequence[Sequence[_T]]]
 
 # nested sequences with at least k dims, e.g. `2nd` denotes a dimensionality in the interval [2, n]
+SequenceND: TypeAlias = _T | _NestedSequence[_T]
 Sequence1ND: TypeAlias = _NestedSequence[_T]
 Sequence2ND: TypeAlias = Sequence[_NestedSequence[_T]]
 Sequence3ND: TypeAlias = Sequence[Sequence[_NestedSequence[_T]]]
@@ -180,6 +186,37 @@ MArray3D = TypeAliasType("MArray3D", np.ma.MaskedArray[tuple[int, int, int], np.
 
 Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 
+StringArray = TypeAliasType(
+    "StringArray",
+    np.ndarray[_ShapeT, np.dtypes.StringDType[_NaT]],
+    type_params=(_ShapeT, _NaT),
+)
+StringArray0D = TypeAliasType(
+    "StringArray0D",
+    np.ndarray[tuple[()], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
+)
+StringArray1D = TypeAliasType(
+    "StringArray1D",
+    np.ndarray[tuple[int], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
+)
+StringArray2D = TypeAliasType(
+    "StringArray2D",
+    np.ndarray[tuple[int, int], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
+)
+StringArray3D = TypeAliasType(
+    "StringArray3D",
+    np.ndarray[tuple[int, int, int], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
+)
+StringArrayND = TypeAliasType(
+    "StringArrayND",
+    np.ndarray[tuple[int, ...], np.dtypes.StringDType[_NaT]],
+    type_params=(_NaT,),
+)
+
 ###
 # helper aliases
 
@@ -192,8 +229,8 @@ _PyObject: TypeAlias = decimal.Decimal | fractions.Fraction
 _PyScalar: TypeAlias = complex | _PyCharacter | _PyObject
 
 _ToArray2_0d: TypeAlias = CanArray0D[_ScalarT] | _ToT
-_ToArray_nd: TypeAlias = CanArrayND[_ScalarT] | Sequence1ND[CanArrayND[_ScalarT]]
-_ToArray2_nd: TypeAlias = CanArrayND[_ScalarT] | _ToT | Sequence1ND[_ToT | CanArrayND[_ScalarT]]
+_ToArray_nd: TypeAlias = SequenceND[CanArrayND[_ScalarT]]
+_ToArray2_nd: TypeAlias = SequenceND[CanArrayND[_ScalarT] | _ToT]
 
 # don't require matching shape-types by default
 _ToArray_1d: TypeAlias = CanLenArrayND[_ScalarT] | Sequence[CanArray0D[_ScalarT]]
@@ -635,6 +672,15 @@ ToObject_3ds = TypeAliasType("ToObject_3ds", _ToArray2_3ds[np.object_, _PyObject
 ToObject_1nd = TypeAliasType("ToObject_1nd", _ToArray2_1nd[np.object_, _PyObject])
 ToObject_2nd = TypeAliasType("ToObject_2nd", _ToArray2_2nd[np.object_, _PyObject])
 ToObject_3nd = TypeAliasType("ToObject_3nd", _ToArray2_3nd[np.object_, _PyObject])
+
+# StringDType
+ToString_nd = TypeAliasType("ToString_nd", _CanStringArray[AtLeast0D, _NaT0], type_params=(_NaT0,))
+ToString_1ds = TypeAliasType("ToString_1ds", _CanStringArray[tuple[int], _NaT0], type_params=(_NaT0,))
+ToString_2ds = TypeAliasType("ToString_2ds", _CanStringArray[tuple[int, int], _NaT0], type_params=(_NaT0,))
+ToString_3ds = TypeAliasType("ToString_3ds", _CanStringArray[tuple[int, int, int], _NaT0], type_params=(_NaT0,))
+ToString_1nd = TypeAliasType("ToString_1nd", _CanStringArray[AtLeast1D, _NaT0], type_params=(_NaT0,))
+ToString_2nd = TypeAliasType("ToString_2nd", _CanStringArray[AtLeast2D, _NaT0], type_params=(_NaT0,))
+ToString_3nd = TypeAliasType("ToString_3nd", _CanStringArray[AtLeast3D, _NaT0], type_params=(_NaT0,))
 
 # any scalar
 ToGeneric_nd = TypeAliasType("ToGeneric_nd", _ToArray2_nd[np.generic, _PyScalar])

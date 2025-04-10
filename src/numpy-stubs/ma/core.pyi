@@ -456,7 +456,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def __rpow__(self, other: Incomplete, /) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __iadd__(self, other: Incomplete, /) -> Self: ...
+    def __iadd__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     @override
     def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     @override
