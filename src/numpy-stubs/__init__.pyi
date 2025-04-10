@@ -8147,7 +8147,7 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     @overload
     def __rfloordiv__(self, x: _CoFloat64, /) -> Self: ...
     @overload
-    def __rfloordiv__(self, x: _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rfloordiv__(self, x: _JustFloating | _nt.Just[inexact], /) -> floating: ...
 
     # keep in sync with `__truediv__` (minus the complex overloads)
     @overload
@@ -8159,7 +8159,7 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     @overload
     def __rmod__(self, x: _CoFloat64, /) -> Self: ...
     @overload
-    def __rmod__(self, x: _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rmod__(self, x: _JustFloating | _nt.Just[inexact], /) -> floating: ...
 
     # keep in sync with `__truediv__` (minus the complex overloads)
     @overload

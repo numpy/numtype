@@ -313,7 +313,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def shape(self) -> _ShapeT_co: ...
     @shape.setter
-    def shape(self: MaskedArray[_ShapeT], shape: _ShapeT, /) -> None: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def shape(self: MaskedArray[_ShapeT], shape: _ShapeT, /) -> None: ...
 
     #
     @property
