@@ -141,6 +141,10 @@ class CanLenArray(Protocol[_ScalarT_co, _ShapeT_co]):
     def __len__(self, /) -> int: ...
     def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
 
+@type_check_only
+class _CanStringArray(Protocol[_ShapeT_co]):
+    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtypes.StringDType]: ...
+
 ###
 # Shape aliases
 
@@ -158,6 +162,7 @@ Sequence2D: TypeAlias = Sequence[Sequence[_T]]
 Sequence3D: TypeAlias = Sequence[Sequence[Sequence[_T]]]
 
 # nested sequences with at least k dims, e.g. `2nd` denotes a dimensionality in the interval [2, n]
+SequenceND: TypeAlias = _T | _NestedSequence[_T]
 Sequence1ND: TypeAlias = _NestedSequence[_T]
 Sequence2ND: TypeAlias = Sequence[_NestedSequence[_T]]
 Sequence3ND: TypeAlias = Sequence[Sequence[_NestedSequence[_T]]]
@@ -192,8 +197,8 @@ _PyObject: TypeAlias = decimal.Decimal | fractions.Fraction
 _PyScalar: TypeAlias = complex | _PyCharacter | _PyObject
 
 _ToArray2_0d: TypeAlias = CanArray0D[_ScalarT] | _ToT
-_ToArray_nd: TypeAlias = CanArrayND[_ScalarT] | Sequence1ND[CanArrayND[_ScalarT]]
-_ToArray2_nd: TypeAlias = CanArrayND[_ScalarT] | _ToT | Sequence1ND[_ToT | CanArrayND[_ScalarT]]
+_ToArray_nd: TypeAlias = SequenceND[CanArrayND[_ScalarT]]
+_ToArray2_nd: TypeAlias = SequenceND[CanArrayND[_ScalarT] | _ToT]
 
 # don't require matching shape-types by default
 _ToArray_1d: TypeAlias = CanLenArrayND[_ScalarT] | Sequence[CanArray0D[_ScalarT]]
@@ -635,6 +640,15 @@ ToObject_3ds = TypeAliasType("ToObject_3ds", _ToArray2_3ds[np.object_, _PyObject
 ToObject_1nd = TypeAliasType("ToObject_1nd", _ToArray2_1nd[np.object_, _PyObject])
 ToObject_2nd = TypeAliasType("ToObject_2nd", _ToArray2_2nd[np.object_, _PyObject])
 ToObject_3nd = TypeAliasType("ToObject_3nd", _ToArray2_3nd[np.object_, _PyObject])
+
+# StringDType
+ToString_nd = TypeAliasType("ToString_nd", _CanStringArray[AtLeast0D])
+ToString_1ds = TypeAliasType("ToString_1ds", _CanStringArray[tuple[int]])
+ToString_2ds = TypeAliasType("ToString_2ds", _CanStringArray[tuple[int, int]])
+ToString_3ds = TypeAliasType("ToString_3ds", _CanStringArray[tuple[int, int, int]])
+ToString_1nd = TypeAliasType("ToString_1nd", _CanStringArray[AtLeast1D])
+ToString_2nd = TypeAliasType("ToString_2nd", _CanStringArray[AtLeast2D])
+ToString_3nd = TypeAliasType("ToString_3nd", _CanStringArray[AtLeast3D])
 
 # any scalar
 ToGeneric_nd = TypeAliasType("ToGeneric_nd", _ToArray2_nd[np.generic, _PyScalar])
