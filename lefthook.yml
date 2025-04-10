@@ -13,6 +13,8 @@ pre-commit:
       glob: "*.{py,pyi}"
       run: uv run --no-sync tool/format_ignores.py {staged_files}
       stage_fixed: true
+      exclude:
+        - "tool/test/test_format_ignores.py"
     docs-check:
       glob:
         - "docs/**"

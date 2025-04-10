@@ -13,6 +13,16 @@ from tool.format_ignores import (
     main,
 )
 
+_TEST_SOURCE_TEMPLATE = """
+def func1() -> None:
+    # {}
+    pass
+
+def func2() -> None:
+    # {}
+    pass
+""".lstrip()
+
 
 @pytest.mark.parametrize(
     ("input_text", "expected_output"),
@@ -34,15 +44,16 @@ def test_sort_ignore_list(input_text: str, expected_output: str) -> None:
 
 def test_process_file(tmpdir: pytest.TempdirFactory) -> None:
     """Test _process_file function."""
-    test_file = Path(str(tmpdir)) / "test.pyi"
-    test_content = """def func1() -> None:
-    # type: ignore[attr-defined, no-any-return]
-    pass
+    test_content = _TEST_SOURCE_TEMPLATE.format(
+        "type:  ignore[attr-defined, no-any-return]",
+        "pyright: ignore[reportUnknownMemberType,reportUnknownVariableType]",
+    )
+    expected_content = _TEST_SOURCE_TEMPLATE.format(
+        "type: ignore[attr-defined, no-any-return]",
+        "pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]",
+    )
 
-    def func2() -> None:
-        # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
-        pass
-    """
+    test_file = Path(str(tmpdir)) / "test.pyi"
     test_file.write_text(test_content, encoding="utf-8")
 
     # Check-only mode
@@ -53,15 +64,6 @@ def test_process_file(tmpdir: pytest.TempdirFactory) -> None:
     # Processing mode
     modified = _process_file(test_file)
     assert modified is True
-
-    expected_content = """def func1() -> None:
-    # type: ignore[attr-defined, no-any-return]
-    pass
-
-    def func2() -> None:
-        # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
-        pass
-    """
     assert test_file.read_text(encoding="utf-8") == expected_content
 
     # Re-processing
@@ -94,15 +96,15 @@ def test_process_directory(tmpdir: pytest.TempdirFactory) -> None:
         encoding="utf-8",
     )
     test_files[2].write_text(
-        "# pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]",
+        "# " + "pyright: ignore[reportUnknownVariableType,reportUnknownMemberType]",
         encoding="utf-8",
     )
     test_files[3].write_text(
-        "# type: ignore[attr-defined, no-any-return]",
+        "# type: ignore[no-any-return, attr-defined]",
         encoding="utf-8",
     )
     test_files[4].write_text(
-        "# type: ignore[attr-defined, no-any-return]",
+        "# type: ignore[no-any-return, attr-defined]",
         encoding="utf-8",
     )
 
@@ -133,15 +135,15 @@ def test_process_directory(tmpdir: pytest.TempdirFactory) -> None:
     )
     assert (
         test_files[2].read_text(encoding="utf-8")
-        == "# pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]"
+        == "# " + "pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]"
     )
     assert (
         test_files[3].read_text(encoding="utf-8")
-        == "# type: ignore[attr-defined, no-any-return]"
+        == "# type: ignore[no-any-return, attr-defined]"
     )
     assert (
         test_files[4].read_text(encoding="utf-8")
-        == "# type: ignore[attr-defined, no-any-return]"
+        == "# type: ignore[no-any-return, attr-defined]"
     )
 
 
@@ -152,7 +154,7 @@ def test_main_success(
     """Test main function with valid path."""
     test_file = Path(str(tmpdir)) / "test.pyi"
     test_file.write_text(
-        "# type: ignore[attr-defined, no-any-return]",
+        "# type: ignore[no-any-return, attr-defined]",
         encoding="utf-8",
     )
 
@@ -174,7 +176,7 @@ def test_main_check_mode(
     """Test main function in check-only mode."""
     test_file = Path(str(tmpdir)) / "test.pyi"
     test_file.write_text(
-        "# type: ignore[attr-defined, no-any-return]",
+        "# type: ignore[no-any-return, attr-defined]",
         encoding="utf-8",
     )
 
@@ -185,7 +187,7 @@ def test_main_check_mode(
 
     assert (
         test_file.read_text(encoding="utf-8")
-        == "# type: ignore[attr-defined, no-any-return]"
+        == "# type: ignore[no-any-return, attr-defined]"
     )
 
 
@@ -205,7 +207,10 @@ def test_main_custom_pattern(
     """Test main function with custom pattern."""
     temp_dir = Path(str(tmpdir))
     test_py = temp_dir / "test.py"
-    test_py.write_text("# type: ignore[attr-defined, no-any-return]", encoding="utf-8")
+    test_py.write_text(
+        "# type: ignore[attr-defined, no-any-return]",
+        encoding="utf-8",
+    )
 
     monkeypatch.setattr(
         sys,
