@@ -1,6 +1,6 @@
 from _typeshed import Incomplete
 from typing import Any, ClassVar, Final, Generic, Literal as L, SupportsIndex as CanIndex, TypeAlias, type_check_only
-from typing_extensions import Never, Self, TypeVar, deprecated, overload, override
+from typing_extensions import Never, Protocol, Self, TypeVar, deprecated, overload, override
 
 import numpy as np
 from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
@@ -203,6 +203,7 @@ _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
 _DTypeLikeBool: TypeAlias = type[bool | np.bool] | np.dtype[np.bool] | _BoolCodes
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 
 ###
 
@@ -855,12 +856,51 @@ class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
     @override
     def copy(self, /, *args: object, **kwargs: object) -> Incomplete: ...
 
-class _frommethod:
+class _frommethod(Protocol[_ScalarT_co]):
     __name__: str
     __doc__: str
     reversed: Incomplete
     def __init__(self, methodname: Incomplete, reversed: Incomplete = ...) -> None: ...
-    def __call__(self, a: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
+    @overload
+    def __call__(
+        self,
+        a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
+        axis: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: L[False] | _NoValueType = ...,
+    ) -> _ScalarT_co: ...
+    @overload
+    def __call__(
+        self,
+        a: _ArrayT,  # pyright: ignore[reportInvalidTypeVarUse]
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def __call__(
+        self,
+        a: _ArrayT,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def __call__(
+        self,
+        a: _ArrayT,
+        axis: CanIndex | None,
+        fill_value: _ScalarLike_co | None,
+        out: _ArrayT,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
     def getdoc(self) -> Incomplete: ...
 
 @type_check_only
@@ -1178,31 +1218,31 @@ squeeze: _convert2ma
 zeros: _convert2ma
 zeros_like: _convert2ma
 
-all: _frommethod
-anomalies: _frommethod
-anom: _frommethod
-any: _frommethod
-compress: _frommethod
-cumprod: _frommethod
-cumsum: _frommethod
-copy: _frommethod
-diagonal: _frommethod
-harden_mask: _frommethod
-ids: _frommethod
-mean: _frommethod
-nonzero: _frommethod
-prod: _frommethod
-product: _frommethod
-ravel: _frommethod
-repeat: _frommethod
-soften_mask: _frommethod
-std: _frommethod
-sum: _frommethod
-swapaxes: _frommethod
-trace: _frommethod
-var: _frommethod
-count: _frommethod
-argmin: _ArgMinMaxMethod
-argmax: _ArgMinMaxMethod
+all: _frommethod[Any]
+anomalies: _frommethod[Any]
+anom: _frommethod[Any]
+any: _frommethod[Any]
+compress: _frommethod[Any]
+cumprod: _frommethod[Any]
+cumsum: _frommethod[Any]
+copy: _frommethod[Any]
+diagonal: _frommethod[Any]
+harden_mask: _frommethod[Any]
+ids: _frommethod[Any]
+mean: _frommethod[Any]
+nonzero: _frommethod[Any]
+prod: _frommethod[Any]
+product: _frommethod[Any]
+ravel: _frommethod[Any]
+repeat: _frommethod[Any]
+soften_mask: _frommethod[Any]
+std: _frommethod[Any]
+sum: _frommethod[Any]
+swapaxes: _frommethod[Any]
+trace: _frommethod[Any]
+var: _frommethod[Any]
+count: _frommethod[Any]
+argmin: _frommethod[intp]
+argmax: _frommethod[intp]
 minimum: _extrema_operation
 maximum: _extrema_operation
