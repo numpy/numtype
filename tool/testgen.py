@@ -940,7 +940,7 @@ class ScalarOps(TestGen):
             return (_scalar(key),)
         return tuple(map(_scalar, key))
 
-    def _evaluate_concrete(self, op: str, lhs: str, rhs: str, /) -> str | None:
+    def _evaluate(self, op: str, lhs: str, rhs: str, /) -> str | None:
         if lhs in self.reject or rhs in self.reject:
             return None
 
@@ -956,7 +956,10 @@ class ScalarOps(TestGen):
             try:
                 vals_out = fn(val_lhs, val_rhs)
             except TypeError:
-                continue
+                # TODO(jorenham): also for the other kinds of operators
+                if op not in self.OPS_BITWISE:
+                    continue
+                return None
             else:
                 vals_out = _ensure_tuple(vals_out)
                 exprs_out = tuple(map(_sctype_expr_from_value, vals_out))
@@ -980,7 +983,7 @@ class ScalarOps(TestGen):
     def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
         expr_eval = op.format(self.names[lhs], self.names[rhs])
 
-        if not (expr_type := self._evaluate_concrete(op, lhs, rhs)):
+        if not (expr_type := self._evaluate(op, lhs, rhs)):
             # generate rejection test, while avoiding trivial cases
             opname = self.ops[op].__name__.removesuffix("_")
             if (
@@ -1025,17 +1028,9 @@ class ScalarOps(TestGen):
         if (
             op in self.OPS_ARITHMETIC | self.OPS_MODULAR
             and lhs == rhs
-            and (abstract_arg := self.ABSTRACT_TYPES.get(self.names[lhs]))
+            and self.ABSTRACT_TYPES.get(self.names[lhs]) == "inexact"
         ):
-            if abstract_arg == "integer" and " / " not in op:
-                mypy_ignore = "assert-type, operator"
-            elif abstract_arg == "inexact":
-                mypy_ignore = "operator"
-            else:
-                mypy_ignore = ""
-
-            if mypy_ignore:
-                stmt = "  # ".join((stmt, f"type: ignore[{mypy_ignore}]", "🐴"))
+            stmt = f"{stmt}  # type: ignore[operator]  # 🐴"
 
         return stmt
 

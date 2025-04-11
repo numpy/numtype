@@ -53,6 +53,7 @@ from ._nep50 import (
     CanNEP50 as CanNEP50,
     MatchND as MatchND,
     PromoteWith as PromoteWith,
+    PromoteWith0D as PromoteWith0D,
 )
 from ._scalar import (
     inexact32 as inexact32,
