@@ -1,4 +1,4 @@
-# @generated 2025-03-31T01:46:52Z with tool/testgen.py
+# @generated 2025-04-11T20:51:36Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -574,7 +574,7 @@ assert_type(iu // i, np.signedinteger | np.float64)
 assert_type(iu // u, np.integer | np.float64)
 assert_type(iu // f, np.floating)
 iu // c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(iu // iu, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
+assert_type(iu // iu, np.integer | np.float64)
 assert_type(iu // fc, np.floating)
 iu // iufc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
@@ -1171,7 +1171,7 @@ assert_type(iu % i, np.signedinteger | np.float64)
 assert_type(iu % u, np.integer | np.float64)
 assert_type(iu % f, np.floating)
 iu % c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(iu % iu, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
+assert_type(iu % iu, np.integer | np.float64)
 assert_type(iu % fc, np.floating)
 iu % iufc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
@@ -1768,7 +1768,7 @@ assert_type(divmod(iu, i), tuple[np.signedinteger | np.float64, np.signedinteger
 assert_type(divmod(iu, u), tuple[np.integer | np.float64, np.integer | np.float64])
 assert_type(divmod(iu, f), tuple[np.floating, np.floating])
 divmod(iu, c)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
-assert_type(divmod(iu, iu), tuple[np.integer | np.float64, np.integer | np.float64])  # type: ignore[assert-type, operator]  # 🐴
+assert_type(divmod(iu, iu), tuple[np.integer | np.float64, np.integer | np.float64])
 assert_type(divmod(iu, fc), tuple[np.floating, np.floating])
 divmod(iu, iufc)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
