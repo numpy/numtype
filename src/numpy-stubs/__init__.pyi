@@ -629,6 +629,7 @@ _RealScalarT = TypeVar("_RealScalarT", bound=bool_ | integer | floating | object
 _InexactT = TypeVar("_InexactT", bound=inexact)
 _NumberT = TypeVar("_NumberT", bound=number)
 _CharT = TypeVar("_CharT", bound=character)
+_IntegralT = TypeVar("_IntegralT", bound=bool_ | number | object_)
 
 _BitT = TypeVar("_BitT", bound=NBitBase, default=Any)  # pyright: ignore[reportDeprecated]
 _BitT1 = TypeVar("_BitT1", bound=NBitBase, default=Any)  # pyright: ignore[reportDeprecated]
@@ -648,6 +649,8 @@ _CharacterItemT_co = TypeVar("_CharacterItemT_co", bound=bytes | str, default=by
 _TD64ItemT_co = TypeVar("_TD64ItemT_co", bound=dt.timedelta | int | None, default=dt.timedelta | int | None, covariant=True)
 _DT64ItemT_co = TypeVar("_DT64ItemT_co", bound=dt.date | int | None, default=dt.date | int | None, covariant=True)
 _TD64UnitT = TypeVar("_TD64UnitT", bound=_TD64Unit, default=_TD64Unit)
+
+_Array1D: TypeAlias = ndarray[tuple[int], dtype[_ScalarT]]
 
 ###
 # Type Aliases (for internal use only)
@@ -2217,8 +2220,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __imul__(self: NDArray[object_], rhs: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
 
-    # TODO(jorenham): Support the "1d @ 1d -> scalar" case
-    # https://github.com/numpy/numtype/issues/197
+    #
+    @overload
+    def __matmul__(self: _Array1D[_IntegralT], rhs: _Array1D[_IntegralT], /) -> _IntegralT: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
     @overload
     def __matmul__(self: NDArray[_NumberT], rhs: _nt.ToBool_nd, /) -> NDArray[_NumberT]: ...
     @overload
