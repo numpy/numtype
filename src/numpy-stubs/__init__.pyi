@@ -3884,769 +3884,6 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     @property
     def dtype(self) -> dtype[Self]: ...
 
-class number(
-    _CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd],
-    generic[_NumberItemT_co],
-    Generic[_BitT, _NumberItemT_co],
-):
-    @property
-    @abc.abstractmethod
-    @override
-    def itemsize(self) -> int: ...
-    @property
-    @abc.abstractmethod
-    @override
-    def nbytes(self) -> int: ...
-
-    #
-    @abc.abstractmethod
-    def __init__(self, value: _NumberItemT_co, /) -> None: ...
-    @abc.abstractmethod
-    def __abs__(self, /) -> number[_BitT]: ...
-
-    #
-    def __neg__(self, /) -> Self: ...
-    def __pos__(self, /) -> Self: ...
-
-    #
-    @overload
-    def __add__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __add__(self, x: _nt.CoInteger_0d | _nt.Just[number], /) -> number: ...
-    @overload
-    def __add__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __add__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
-    @overload
-    def __add__(self, x: _nt.ToDateTime_0d, /) -> datetime64: ...
-    @overload
-    def __add__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
-
-    #
-    @overload
-    def __radd__(self, x: _nt.CoInteger_0d, /) -> number: ...
-    @overload
-    def __radd__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __radd__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __radd__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
-    @overload
-    def __radd__(self, x: _nt.ToDateTime_0d, /) -> datetime64: ...
-    @overload
-    def __radd__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
-
-    # keep in sync with __add__
-    @overload
-    def __sub__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __sub__(self, x: _nt.CoInteger_0d | _nt.Just[number], /) -> number: ...
-    @overload
-    def __sub__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __sub__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
-    @overload
-    def __sub__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
-
-    # keep in sync with __radd__
-    @overload
-    def __rsub__(self, x: _nt.CoInteger_0d, /) -> number: ...
-    @overload
-    def __rsub__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __rsub__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __rsub__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
-    @overload
-    def __rsub__(self, x: _nt.ToDateTime_0d, /) -> datetime64: ...
-    @overload
-    def __rsub__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
-
-    # keep in sync with __add__
-    @overload
-    def __mul__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __mul__(self, x: _nt.CoInteger_0d | _nt.Just[number], /) -> number: ...
-    @overload
-    def __mul__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __mul__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
-    @overload
-    def __mul__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
-
-    # keep in sync with __radd__
-    @overload
-    def __rmul__(self, x: _nt.CoInteger_0d, /) -> number: ...
-    @overload
-    def __rmul__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __rmul__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __rmul__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
-    @overload
-    def __rmul__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
-
-    # keep in sync with __add__
-    @overload
-    def __pow__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], mod: None = None, /) -> inexact: ...
-    @overload
-    def __pow__(self, x: _nt.CoInteger_0d | _nt.Just[number], mod: None = None, /) -> number: ...
-    @overload
-    def __pow__(
-        self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, mod: None = None, /
-    ) -> complexfloating: ...
-    @overload
-    def __pow__(self, x: _nt.ToCLongDouble_0d, mod: None = None, /) -> clongdouble: ...
-
-    # keep in sync with __radd__
-    @overload
-    def __rpow__(self, x: _nt.CoInteger_0d, mod: None = None, /) -> number: ...
-    @overload
-    def __rpow__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], mod: None = None, /) -> inexact: ...
-    @overload
-    def __rpow__(
-        self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, mod: None = None, /
-    ) -> complexfloating: ...
-    @overload
-    def __rpow__(self, x: _nt.ToCLongDouble_0d, mod: None = None, /) -> clongdouble: ...
-
-    #
-    @overload
-    def __truediv__(self, x: _nt.CoFloating_0d | _nt.Just[inexact] | _nt.Just[number], /) -> inexact: ...
-    @overload
-    def __truediv__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __truediv__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
-
-    #
-    @overload
-    def __rtruediv__(self, x: _nt.CoFloating_0d | _nt.Just[inexact] | _nt.Just[number], /) -> inexact: ...
-    @overload
-    def __rtruediv__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __rtruediv__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
-    @overload
-    def __rtruediv__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
-
-    #
-    def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
-
-class integer(_IntegralMixin, _RoundMixin, number[_BitT, int]):
-    @type_check_only
-    def __nep50__(
-        self,
-        below: float64 | complex128 | longdouble | clongdouble | timedelta64,
-        above: bool_,
-        /,
-    ) -> integer: ...
-    @type_check_only
-    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger | float64: ...
-    @type_check_only
-    def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer | float64: ...
-
-    #
-    @abc.abstractmethod
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
-
-    #
-    @override
-    def __abs__(self, /) -> Self: ...
-    def __invert__(self, /) -> Self: ...
-
-    #
-    @overload
-    def __add__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __add__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __add__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with __add__
-    @overload
-    def __radd__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __radd__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __radd__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with __add__
-    @overload
-    def __sub__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __sub__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __sub__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with __add__
-    @overload
-    def __rsub__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rsub__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __rsub__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __rsub__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with __add__
-    @overload
-    def __mul__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __mul__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __mul__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with __add__
-    @overload
-    def __rmul__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rmul__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __rmul__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __rmul__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with __add__
-    @overload
-    def __pow__(self, x: _nt.CanCast0D[Self] | int, mod: None = None, /) -> Self: ...
-    @overload
-    def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
-    @overload
-    def __pow__(self, x: _nt.JustComplex, mod: None = None, /) -> complex128: ...
-    @overload
-    def __pow__(self, x: _nt.PromoteWith0D[Self, _ScalarT], mod: None = None, /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with __add__
-    @overload
-    def __rpow__(self, x: _nt.CanCast0D[Self] | int, mod: None = None, /) -> Self: ...
-    @overload
-    def __rpow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
-    @overload
-    def __rpow__(self, x: _nt.JustComplex, mod: None = None, /) -> complex128: ...
-    @overload
-    def __rpow__(self, x: _nt.PromoteWith0D[Self, _ScalarT], mod: None = None, /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __truediv__(self, x: float | _nt.co_integer, /) -> float64: ...
-    @overload  # the  `| complex128` is a workaround for mypy
-    def __truediv__(self, x: _nt.JustComplex | complex128, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __rtruediv__(self, x: float, /) -> float64: ...
-    @overload
-    def __rtruediv__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __rtruediv__(self, x: _nt.Just[integer], /) -> float64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with __add__
-    @overload
-    def __floordiv__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __floordiv__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __floordiv__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _RealScalarT: ...
-
-    # keep in sync with __add__
-    @overload
-    def __rfloordiv__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rfloordiv__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __rfloordiv__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _RealScalarT: ...
-
-    # keep in sync with __floordiv__
-    @overload
-    def __mod__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __mod__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __mod__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _RealScalarT: ...
-
-    # keep in sync with __floordiv__
-    @overload
-    def __rmod__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rmod__(self, x: _nt.JustFloat, /) -> float64: ...
-    @overload
-    def __rmod__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _RealScalarT: ...
-
-    # keep in sync with __floordiv__
-    @overload
-    def __divmod__(self, x: _nt.CanCast0D[Self] | int, /) -> _2Tuple[Self]: ...
-    @overload
-    def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
-    @overload
-    def __divmod__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _2Tuple[_RealScalarT]: ...
-
-    # keep in sync with __floordiv__
-    @overload
-    def __rdivmod__(self, x: _nt.CanCast0D[Self] | int, /) -> _2Tuple[Self]: ...
-    @overload
-    def __rdivmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
-    @overload
-    def __rdivmod__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _2Tuple[_RealScalarT]: ...
-
-    #
-    @overload
-    def __lshift__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __lshift__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-    @overload
-    def __rlshift__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rlshift__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-
-    #
-    @overload
-    def __rshift__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rshift__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-    @overload
-    def __rrshift__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rrshift__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-
-    #
-    @overload
-    def __and__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __and__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-    @overload
-    def __rand__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rand__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-
-    #
-    @overload
-    def __xor__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __xor__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-    @overload
-    def __rxor__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __rxor__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-
-    #
-    @overload
-    def __or__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __or__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-    @overload
-    def __ror__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
-    @overload
-    def __ror__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
-
-class signedinteger(integer[_BitT]):
-    @type_check_only
-    @override
-    def __nep50__(
-        self,
-        below: int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
-        above: bool_,
-        /,
-    ) -> signedinteger: ...
-    @type_check_only
-    def __nep50_rule0__(self, other: uint32 | int64, /) -> int64: ...
-    @type_check_only
-    def __nep50_rule1__(self, other: uint64, /) -> float64: ...
-    @type_check_only
-    @override
-    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger: ...
-    @type_check_only
-    @override
-    def __nep50_rule5__(self, other: _nt.Just[integer] | _JustUnsignedInteger, /) -> signedinteger | float64: ...
-
-    #
-    @property
-    @abc.abstractmethod
-    @override
-    def itemsize(self) -> int: ...
-    @property
-    @abc.abstractmethod
-    @override
-    def nbytes(self) -> int: ...
-
-    #
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
-
-class unsignedinteger(integer[_BitT]):
-    @type_check_only
-    @override
-    def __nep50__(
-        self,
-        below: uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
-        above: bool_,
-        /,
-    ) -> unsignedinteger: ...
-    @type_check_only
-    def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
-
-    #
-    @property
-    @abc.abstractmethod
-    @override
-    def itemsize(self) -> int: ...
-    @property
-    @abc.abstractmethod
-    @override
-    def nbytes(self) -> int: ...
-
-    #
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
-
-class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co]):
-    @abc.abstractmethod
-    def __init__(self, value: _InexactItemT_co | None = ..., /) -> None: ...
-    @abc.abstractmethod
-    @override
-    def __abs__(self, /) -> floating: ...
-
-    #
-    @overload
-    def __add__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __add__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __radd__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __radd__(self, x: integer | _JustFloating, /) -> inexact: ...
-    @overload
-    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __sub__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __sub__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __sub__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __rsub__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __rsub__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __rsub__(self, x: integer | _JustFloating, /) -> inexact: ...
-    @overload
-    def __rsub__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __mul__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __mul__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __mul__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __rmul__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __rmul__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __rmul__(self, x: integer | _JustFloating, /) -> inexact: ...
-    @overload
-    def __rmul__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __pow__(self, x: int | _nt.JustFloat, mod: None = None, /) -> Self: ...
-    @overload
-    def __pow__(self, x: _nt.JustComplex, mod: None = None, /) -> complexfloating: ...
-    @overload
-    def __pow__(self, x: integer | _JustFloating, mod: None = None, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __rpow__(self, x: int | _nt.JustFloat, mod: None = None, /) -> Self: ...
-    @overload
-    def __rpow__(self, x: _nt.JustComplex, mod: None = None, /) -> complexfloating: ...
-    @overload
-    def __rpow__(self, x: integer | _JustFloating, mod: None = None, /) -> inexact: ...
-    @overload
-    def __rpow__(self, x: _nt.Just[inexact], mod: None = None, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __truediv__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __truediv__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __truediv__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __rtruediv__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __rtruediv__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __rtruediv__(self, x: integer | _JustFloating, /) -> inexact: ...
-    @overload
-    def __rtruediv__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __floordiv__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> floating[_BitT]: ...
-    @overload
-    def __floordiv__(self: inexact[Any, float], x: integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rfloordiv__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> floating[_BitT]: ...
-    @overload
-    def __rfloordiv__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rfloordiv__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> floating: ...
-
-    #
-    @overload
-    def __mod__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> floating[_BitT]: ...
-    @overload
-    def __mod__(self: inexact[Any, float], x: integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rmod__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> floating[_BitT]: ...
-    @overload
-    def __rmod__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rmod__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> floating: ...
-
-    #
-    @overload
-    def __divmod__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> _2Tuple[floating[_BitT]]: ...
-    @overload
-    def __divmod__(self: inexact[Any, float], x: integer | _JustFloating, /) -> _2Tuple[floating]: ...
-    @overload
-    def __rdivmod__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> _2Tuple[floating[_BitT]]: ...
-    @overload
-    def __rdivmod__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> _2Tuple[floating]: ...
-    @overload
-    def __rdivmod__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> _2Tuple[floating]: ...
-
-class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
-    @property
-    @abc.abstractmethod
-    @override
-    def itemsize(self) -> int: ...
-    @property
-    @abc.abstractmethod
-    @override
-    def nbytes(self) -> int: ...
-
-    #
-    @override
-    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
-    @override
-    def __abs__(self, /) -> Self: ...
-
-    #
-    @overload
-    def __add__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __add__(self, x: integer | _JustFloating, /) -> floating: ...
-
-    #
-    @overload
-    def __radd__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __radd__(self, x: integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...
-
-    # keep in sync with `__add__`
-    @overload
-    def __sub__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __sub__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __sub__(self, x: integer | _JustFloating, /) -> floating: ...
-
-    # keep in sync with `__radd__`
-    @overload
-    def __rsub__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __rsub__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __rsub__(self, x: integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rsub__(self, x: _nt.Just[inexact], /) -> inexact: ...
-
-    # keep in sync with `__add__`
-    @overload
-    def __mul__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __mul__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __mul__(self, x: integer | _JustFloating, /) -> floating: ...
-
-    # keep in sync with `__radd__`
-    @overload
-    def __rmul__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __rmul__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __rmul__(self, x: integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rmul__(self, x: _nt.Just[inexact], /) -> inexact: ...
-
-    # keep in sync with `__add__`
-    @overload
-    def __pow__(self, x: int | _nt.JustFloat, mod: None = None, /) -> Self: ...
-    @overload
-    def __pow__(self, x: _nt.JustComplex, mod: None = None, /) -> complexfloating: ...
-    @overload
-    def __pow__(self, x: integer | _JustFloating, mod: None = None, /) -> floating: ...
-
-    # keep in sync with `__radd__`
-    @overload
-    def __rpow__(self, x: int | _nt.JustFloat, mod: None = None, /) -> Self: ...
-    @overload
-    def __rpow__(self, x: _nt.JustComplex, mod: None = None, /) -> complexfloating: ...
-    @overload
-    def __rpow__(self, x: integer | _JustFloating, mod: None = None, /) -> floating: ...
-    @overload
-    def __rpow__(self, x: _nt.Just[inexact], mod: None = None, /) -> inexact: ...
-
-    # keep in sync with `__add__`
-    @overload
-    def __truediv__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __truediv__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __truediv__(self, x: integer | _JustFloating, /) -> floating: ...
-
-    # keep in sync with `__radd__`
-    @overload
-    def __rtruediv__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __rtruediv__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __rtruediv__(self, x: integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rtruediv__(self, x: _nt.Just[inexact], /) -> inexact: ...
-
-class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
-    @type_check_only
-    def __nep50_rule3__(self, other: longdouble, /) -> clongdouble: ...
-
-    #
-    @overload
-    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
-    @overload
-    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
-
-    #
-    @property
-    @abc.abstractmethod
-    @override
-    def real(self) -> floating: ...
-    @property
-    @abc.abstractmethod
-    @override
-    def imag(self) -> floating: ...
-
-    #
-    @abc.abstractmethod
-    @override
-    def __abs__(self, /) -> floating: ...
-
-    # NOTE: The reported LSP violation is a false positive
-
-    #
-    @overload
-    def __add__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __add__(self, x: integer | _JustInexact, /) -> complexfloating: ...
-
-    #
-    @overload
-    def __radd__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __radd__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with `__add__`
-    @overload
-    def __sub__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __sub__(self, x: integer | _JustInexact, /) -> complexfloating: ...
-
-    # keep in sync with `__radd__`
-    @overload
-    def __rsub__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __rsub__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with `__add__`
-    @overload
-    def __mul__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __mul__(self, x: integer | _JustInexact, /) -> complexfloating: ...
-
-    # keep in sync with `__radd__`
-    @overload
-    def __rmul__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __rmul__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with `__add__`
-    @overload
-    def __pow__(self, x: int | _nt.JustFloat | _nt.JustComplex, mod: None = None, /) -> Self: ...
-    @overload
-    def __pow__(self, x: integer | _JustInexact, mod: None = None, /) -> complexfloating: ...
-
-    # keep in sync with `__radd__`
-    @overload
-    def __rpow__(self, x: int | _nt.JustFloat | _nt.JustComplex, mod: None = None, /) -> Self: ...
-    @overload
-    def __rpow__(self, x: integer | _JustInexact, mod: None = None, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with `__add__`
-    @overload
-    def __truediv__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __truediv__(self, x: integer | _JustInexact, /) -> complexfloating: ...
-
-    # keep in sync with `__radd__`
-    @overload
-    def __rtruediv__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __rtruediv__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # NOTE: Without these mypy will `[misc]` instead of `[opererator]`
-    @override
-    def __floordiv__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __rfloordiv__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __mod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __rmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __divmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __rdivmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @deprecated("The Python built-in `round` is deprecated for complex scalars, and will raise a `TypeError` in a future release")
-    def __round__(self, /, ndigits: CanIndex | None = None) -> Self: ...
-
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @type_check_only
@@ -5085,6 +4322,386 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
 
 bool = bool_
 
+class number(
+    _CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd],
+    generic[_NumberItemT_co],
+    Generic[_BitT, _NumberItemT_co],
+):
+    @property
+    @override
+    def itemsize(self) -> int: ...
+
+    #
+    @abc.abstractmethod
+    def __init__(self, value: _NumberItemT_co, /) -> None: ...
+
+    #
+    def __abs__(self, /) -> number[_BitT]: ...
+    def __neg__(self, /) -> Self: ...
+    def __pos__(self, /) -> Self: ...
+
+    #
+    @overload
+    def __add__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
+    @overload
+    def __add__(self, x: _nt.CoInteger_0d | _nt.Just[number], /) -> number: ...
+    @overload
+    def __add__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
+    @overload
+    def __add__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
+    @overload
+    def __add__(self, x: _nt.ToDateTime_0d, /) -> datetime64: ...
+    @overload
+    def __add__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
+
+    #
+    @overload
+    def __radd__(self, x: _nt.CoInteger_0d, /) -> number: ...
+    @overload
+    def __radd__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
+    @overload
+    def __radd__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
+    @overload
+    def __radd__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
+    @overload
+    def __radd__(self, x: _nt.ToDateTime_0d, /) -> datetime64: ...
+    @overload
+    def __radd__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
+
+    # keep in sync with __add__
+    @overload
+    def __sub__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
+    @overload
+    def __sub__(self, x: _nt.CoInteger_0d | _nt.Just[number], /) -> number: ...
+    @overload
+    def __sub__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
+    @overload
+    def __sub__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
+    @overload
+    def __sub__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
+
+    # keep in sync with __radd__
+    @overload
+    def __rsub__(self, x: _nt.CoInteger_0d, /) -> number: ...
+    @overload
+    def __rsub__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
+    @overload
+    def __rsub__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
+    @overload
+    def __rsub__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
+    @overload
+    def __rsub__(self, x: _nt.ToDateTime_0d, /) -> datetime64: ...
+    @overload
+    def __rsub__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
+
+    # keep in sync with __add__
+    @overload
+    def __mul__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
+    @overload
+    def __mul__(self, x: _nt.CoInteger_0d | _nt.Just[number], /) -> number: ...
+    @overload
+    def __mul__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
+    @overload
+    def __mul__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
+    @overload
+    def __mul__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
+
+    # keep in sync with __radd__
+    @overload
+    def __rmul__(self, x: _nt.CoInteger_0d, /) -> number: ...
+    @overload
+    def __rmul__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], /) -> inexact: ...
+    @overload
+    def __rmul__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
+    @overload
+    def __rmul__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
+    @overload
+    def __rmul__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
+
+    # keep in sync with __add__
+    @overload
+    def __pow__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], mod: None = None, /) -> inexact: ...
+    @overload
+    def __pow__(self, x: _nt.CoInteger_0d | _nt.Just[number], mod: None = None, /) -> number: ...
+    @overload
+    def __pow__(
+        self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, mod: None = None, /
+    ) -> complexfloating: ...
+    @overload
+    def __pow__(self, x: _nt.ToCLongDouble_0d, mod: None = None, /) -> clongdouble: ...
+
+    # keep in sync with __radd__
+    @overload
+    def __rpow__(self, x: _nt.CoInteger_0d, mod: None = None, /) -> number: ...
+    @overload
+    def __rpow__(self, x: _nt.ToFloating_0d | _nt.Just[inexact], mod: None = None, /) -> inexact: ...
+    @overload
+    def __rpow__(
+        self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, mod: None = None, /
+    ) -> complexfloating: ...
+    @overload
+    def __rpow__(self, x: _nt.ToCLongDouble_0d, mod: None = None, /) -> clongdouble: ...
+
+    #
+    @overload
+    def __truediv__(self, x: _nt.CoFloating_0d | _nt.Just[inexact] | _nt.Just[number], /) -> inexact: ...
+    @overload
+    def __truediv__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
+    @overload
+    def __truediv__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
+
+    #
+    @overload
+    def __rtruediv__(self, x: _nt.CoFloating_0d | _nt.Just[inexact] | _nt.Just[number], /) -> inexact: ...
+    @overload
+    def __rtruediv__(self, x: _nt.ToComplex64_0d | _nt.ToComplex128_0d | _JustComplexFloating, /) -> complexfloating: ...
+    @overload
+    def __rtruediv__(self, x: _nt.ToCLongDouble_0d, /) -> clongdouble: ...
+    @overload
+    def __rtruediv__(self, x: _nt.ToTimeDelta_0d, /) -> timedelta64: ...
+
+    #
+    def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
+
+# NOTE: at least ~95% of the relevant platforms are 64-bit at the moment, and this
+# increases over time. Assuming that this *always* holds significantly reduces the
+# complexity of the `[u]intp` and `[u]long` type definitions.
+
+class integer(_IntegralMixin, _RoundMixin, number[_BitT, int]):
+    @type_check_only
+    @abc.abstractmethod
+    def __nep50__(
+        self,
+        below: float64 | complex128 | longdouble | clongdouble | timedelta64,
+        above: bool_,
+        /,
+    ) -> integer: ...
+    @type_check_only
+    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger | float64: ...
+    @type_check_only
+    def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer | float64: ...
+
+    #
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
+    @override
+    def __abs__(self, /) -> Self: ...
+    def __invert__(self, /) -> Self: ...
+
+    #
+    @overload
+    def __add__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __add__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __add__(self, x: _nt.JustComplex, /) -> complex128: ...
+    @overload
+    def __add__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with __add__
+    @overload
+    def __radd__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __radd__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __radd__(self, x: _nt.JustComplex, /) -> complex128: ...
+    @overload
+    def __radd__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with __add__
+    @overload
+    def __sub__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __sub__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __sub__(self, x: _nt.JustComplex, /) -> complex128: ...
+    @overload
+    def __sub__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with __add__
+    @overload
+    def __rsub__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rsub__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __rsub__(self, x: _nt.JustComplex, /) -> complex128: ...
+    @overload
+    def __rsub__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with __add__
+    @overload
+    def __mul__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __mul__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __mul__(self, x: _nt.JustComplex, /) -> complex128: ...
+    @overload
+    def __mul__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with __add__
+    @overload
+    def __rmul__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rmul__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __rmul__(self, x: _nt.JustComplex, /) -> complex128: ...
+    @overload
+    def __rmul__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with __add__
+    @overload
+    def __pow__(self, x: _nt.CanCast0D[Self] | int, mod: None = None, /) -> Self: ...
+    @overload
+    def __pow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
+    @overload
+    def __pow__(self, x: _nt.JustComplex, mod: None = None, /) -> complex128: ...
+    @overload
+    def __pow__(self, x: _nt.PromoteWith0D[Self, _ScalarT], mod: None = None, /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with __add__
+    @overload
+    def __rpow__(self, x: _nt.CanCast0D[Self] | int, mod: None = None, /) -> Self: ...
+    @overload
+    def __rpow__(self, x: _nt.JustFloat, mod: None = None, /) -> float64: ...
+    @overload
+    def __rpow__(self, x: _nt.JustComplex, mod: None = None, /) -> complex128: ...
+    @overload
+    def __rpow__(self, x: _nt.PromoteWith0D[Self, _ScalarT], mod: None = None, /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __truediv__(self, x: float | _nt.co_integer, /) -> float64: ...
+    @overload  # the  `| complex128` is a workaround for mypy
+    def __truediv__(self, x: _nt.JustComplex | complex128, /) -> complex128: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __rtruediv__(self, x: float, /) -> float64: ...
+    @overload
+    def __rtruediv__(self, x: _nt.JustComplex, /) -> complex128: ...
+    @overload
+    def __rtruediv__(self, x: _nt.Just[integer], /) -> float64: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with __add__
+    @overload
+    def __floordiv__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __floordiv__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __floordiv__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _RealScalarT: ...
+
+    # keep in sync with __add__
+    @overload
+    def __rfloordiv__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rfloordiv__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __rfloordiv__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _RealScalarT: ...
+
+    # keep in sync with __floordiv__
+    @overload
+    def __mod__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __mod__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __mod__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _RealScalarT: ...
+
+    # keep in sync with __floordiv__
+    @overload
+    def __rmod__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rmod__(self, x: _nt.JustFloat, /) -> float64: ...
+    @overload
+    def __rmod__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _RealScalarT: ...
+
+    # keep in sync with __floordiv__
+    @overload
+    def __divmod__(self, x: _nt.CanCast0D[Self] | int, /) -> _2Tuple[Self]: ...
+    @overload
+    def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
+    @overload
+    def __divmod__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _2Tuple[_RealScalarT]: ...
+
+    # keep in sync with __floordiv__
+    @overload
+    def __rdivmod__(self, x: _nt.CanCast0D[Self] | int, /) -> _2Tuple[Self]: ...
+    @overload
+    def __rdivmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
+    @overload
+    def __rdivmod__(self, x: _nt.PromoteWith0D[Self, _RealScalarT], /) -> _2Tuple[_RealScalarT]: ...
+
+    #
+    @overload
+    def __lshift__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __lshift__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+    @overload
+    def __rlshift__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rlshift__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+
+    #
+    @overload
+    def __rshift__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rshift__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+    @overload
+    def __rrshift__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rrshift__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+
+    #
+    @overload
+    def __and__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __and__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+    @overload
+    def __rand__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rand__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+
+    #
+    @overload
+    def __xor__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __xor__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+    @overload
+    def __rxor__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __rxor__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+
+    #
+    @overload
+    def __or__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __or__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+    @overload
+    def __ror__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
+    @overload
+    def __ror__(self, x: _nt.PromoteWith0D[Self, _IntScalarT], /) -> _IntScalarT: ...
+
+class signedinteger(integer[_BitT]):
+    @type_check_only
+    @abc.abstractmethod
+    @override
+    def __nep50__(
+        self,
+        below: int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        above: bool_,
+        /,
+    ) -> signedinteger: ...
+    @type_check_only
+    def __nep50_rule0__(self, other: uint32 | int64, /) -> int64: ...
+    @type_check_only
+    def __nep50_rule1__(self, other: uint64, /) -> float64: ...
+    @type_check_only
+    @override
+    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger: ...
+    @type_check_only
+    @override
+    def __nep50_rule5__(self, other: _nt.Just[integer] | _JustUnsignedInteger, /) -> signedinteger | float64: ...
+
 class int8(signedinteger[_n._8]):
     @type_check_only
     @override
@@ -5101,40 +4718,14 @@ class int8(signedinteger[_n._8]):
     @property
     @override
     def nbytes(self) -> L[1]: ...
-    @override
-    def __hash__(self, /) -> int: ...
-    def __index__(self, /) -> int: ...
-    def bit_count(self, /) -> int: ...
-
-class uint8(unsignedinteger[_n._8]):
-    @type_check_only
-    @override
-    def __nep50__(
-        self,
-        below: uint8 | int16 | int32 | int64 | unsignedinteger | inexact | timedelta64,
-        above: bool_,
-        /,
-    ) -> uint8: ...
-    @type_check_only
-    def __nep50_rule0__(self, other: int8, /) -> int16: ...
-    @type_check_only
-    @override
-    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger: ...
-    @type_check_only
-    @override
-    def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer: ...
 
     #
-    @property
-    @override
-    def itemsize(self) -> L[1]: ...
-    @property
-    @override
-    def nbytes(self) -> L[1]: ...
     @override
     def __hash__(self, /) -> int: ...
     def __index__(self, /) -> int: ...
     def bit_count(self, /) -> int: ...
+
+byte = int8
 
 class int16(signedinteger[_n._16]):
     @type_check_only
@@ -5157,42 +4748,14 @@ class int16(signedinteger[_n._16]):
     @property
     @override
     def nbytes(self) -> L[2]: ...
-    @override
-    def __hash__(self, /) -> int: ...
-    def __index__(self, /) -> int: ...
-    def bit_count(self, /) -> int: ...
-
-class uint16(unsignedinteger[_n._16]):
-    @type_check_only
-    @override
-    def __nep50__(
-        self,
-        below: uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | longdouble | complexfloating | timedelta64,
-        above: uint8 | bool_,
-        /,
-    ) -> uint16: ...
-    @type_check_only
-    def __nep50_rule0__(self, other: int8 | int16, /) -> int32: ...
-    @type_check_only
-    def __nep50_rule1__(self, other: float16, /) -> float32: ...
-    @type_check_only
-    @override
-    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger: ...
-    @type_check_only
-    @override
-    def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer: ...
 
     #
-    @property
-    @override
-    def itemsize(self) -> L[2]: ...
-    @property
-    @override
-    def nbytes(self) -> L[2]: ...
     @override
     def __hash__(self, /) -> int: ...
     def __index__(self, /) -> int: ...
     def bit_count(self, /) -> int: ...
+
+short = int16
 
 class int32(signedinteger[_n._32]):
     @type_check_only
@@ -5212,46 +4775,18 @@ class int32(signedinteger[_n._32]):
     #
     @property
     @override
-    def itemsize(self) -> L[4]: ...
+    def itemsize(self) -> L[8]: ...
     @property
     @override
-    def nbytes(self) -> L[4]: ...
-    @override
-    def __hash__(self, /) -> int: ...
-    def __index__(self, /) -> int: ...
-    def bit_count(self, /) -> int: ...
-
-class uint32(unsignedinteger[_n._32]):
-    @type_check_only
-    @override
-    def __nep50__(
-        self,
-        below: uint32 | int64 | uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
-        above: uint16 | uint8 | bool_,
-        /,
-    ) -> uint32: ...
-    @type_check_only
-    def __nep50_rule1__(self, other: float16 | float32, /) -> float64: ...
-    @type_check_only
-    def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
-    @type_check_only
-    @override
-    def __nep50_rule4__(self, other: signedinteger | _JustSignedInteger, /) -> int64: ...
-    @type_check_only
-    @override
-    def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer: ...
+    def nbytes(self) -> L[8]: ...
 
     #
-    @property
-    @override
-    def itemsize(self) -> L[4]: ...
-    @property
-    @override
-    def nbytes(self) -> L[4]: ...
     @override
     def __hash__(self, /) -> int: ...
     def __index__(self, /) -> int: ...
     def bit_count(self, /) -> int: ...
+
+intc = int32
 
 class int64(signedinteger[_n._64]):
     @type_check_only
@@ -5281,10 +4816,141 @@ class int64(signedinteger[_n._64]):
     @property
     @override
     def nbytes(self) -> L[8]: ...
+
+    #
     @override
     def __hash__(self, /) -> int: ...
     def __index__(self, /) -> int: ...
     def bit_count(self, /) -> int: ...
+
+if sys.platform == "win32":
+    long: TypeAlias = int32  # pyright: ignore[reportRedeclaration]
+else:
+    long: TypeAlias = int64  # pyright: ignore[reportRedeclaration]
+
+longlong = int64
+
+intp = int64
+int_ = intp
+
+class unsignedinteger(integer[_BitT]):
+    @type_check_only
+    @abc.abstractmethod
+    @override
+    def __nep50__(
+        self,
+        below: uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        above: bool_,
+        /,
+    ) -> unsignedinteger: ...
+    @type_check_only
+    def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
+
+class uint8(unsignedinteger[_n._8]):
+    @type_check_only
+    @override
+    def __nep50__(
+        self,
+        below: uint8 | int16 | int32 | int64 | unsignedinteger | inexact | timedelta64,
+        above: bool_,
+        /,
+    ) -> uint8: ...
+    @type_check_only
+    def __nep50_rule0__(self, other: int8, /) -> int16: ...
+    @type_check_only
+    @override
+    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger: ...
+    @type_check_only
+    @override
+    def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer: ...
+
+    #
+    @property
+    @override
+    def itemsize(self) -> L[1]: ...
+    @property
+    @override
+    def nbytes(self) -> L[1]: ...
+
+    #
+    @override
+    def __hash__(self, /) -> int: ...
+    def __index__(self, /) -> int: ...
+    def bit_count(self, /) -> int: ...
+
+ubyte = uint8
+
+class uint16(unsignedinteger[_n._16]):
+    @type_check_only
+    @override
+    def __nep50__(
+        self,
+        below: uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | longdouble | complexfloating | timedelta64,
+        above: uint8 | bool_,
+        /,
+    ) -> uint16: ...
+    @type_check_only
+    def __nep50_rule0__(self, other: int8 | int16, /) -> int32: ...
+    @type_check_only
+    def __nep50_rule1__(self, other: float16, /) -> float32: ...
+    @type_check_only
+    @override
+    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger: ...
+    @type_check_only
+    @override
+    def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer: ...
+
+    #
+    @property
+    @override
+    def itemsize(self) -> L[2]: ...
+    @property
+    @override
+    def nbytes(self) -> L[2]: ...
+
+    #
+    @override
+    def __hash__(self, /) -> int: ...
+    def __index__(self, /) -> int: ...
+    def bit_count(self, /) -> int: ...
+
+ushort = uint16
+
+class uint32(unsignedinteger[_n._32]):
+    @type_check_only
+    @override
+    def __nep50__(
+        self,
+        below: uint32 | int64 | uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        above: uint16 | uint8 | bool_,
+        /,
+    ) -> uint32: ...
+    @type_check_only
+    def __nep50_rule1__(self, other: float16 | float32, /) -> float64: ...
+    @type_check_only
+    def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
+    @type_check_only
+    @override
+    def __nep50_rule4__(self, other: signedinteger | _JustSignedInteger, /) -> int64: ...
+    @type_check_only
+    @override
+    def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer: ...
+
+    #
+    @property
+    @override
+    def itemsize(self) -> L[4]: ...
+    @property
+    @override
+    def nbytes(self) -> L[4]: ...
+
+    #
+    @override
+    def __hash__(self, /) -> int: ...
+    def __index__(self, /) -> int: ...
+    def bit_count(self, /) -> int: ...
+
+uintc = uint32
 
 class uint64(unsignedinteger[_n._64]):
     @type_check_only
@@ -5314,36 +4980,261 @@ class uint64(unsignedinteger[_n._64]):
     @property
     @override
     def nbytes(self) -> L[8]: ...
+
+    #
     @override
     def __hash__(self, /) -> int: ...
     def __index__(self, /) -> int: ...
     def bit_count(self, /) -> int: ...
 
-# most platforms are 64-bit; so this is usually correct
-intp = int64
-uintp = uint64
-
-int_ = intp
-uint = uintp
-
-byte = int8
-ubyte = uint8
-
-short = int16
-ushort = uint16
-
-intc = int32
-uintc = uint32
-
 if sys.platform == "win32":
-    long: TypeAlias = int32  # pyright: ignore[reportRedeclaration]
     ulong: TypeAlias = uint32  # pyright: ignore[reportRedeclaration]
 else:
-    long: TypeAlias = intp  # pyright: ignore[reportRedeclaration]
     ulong: TypeAlias = uintp  # pyright: ignore[reportRedeclaration]
 
-longlong = int64
 ulonglong = uint64
+
+uintp = uint64
+uint = uintp
+
+class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co]):
+    @abc.abstractmethod
+    def __init__(self, value: _InexactItemT_co | None = ..., /) -> None: ...
+    @abc.abstractmethod
+    @override
+    def __abs__(self, /) -> floating: ...
+
+    #
+    @overload
+    def __add__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __add__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __add__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __radd__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __radd__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __radd__(self, x: integer | _JustFloating, /) -> inexact: ...
+    @overload
+    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __sub__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __sub__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __sub__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __rsub__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __rsub__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __rsub__(self, x: integer | _JustFloating, /) -> inexact: ...
+    @overload
+    def __rsub__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __mul__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __mul__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __mul__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __rmul__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __rmul__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __rmul__(self, x: integer | _JustFloating, /) -> inexact: ...
+    @overload
+    def __rmul__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __pow__(self, x: int | _nt.JustFloat, mod: None = None, /) -> Self: ...
+    @overload
+    def __pow__(self, x: _nt.JustComplex, mod: None = None, /) -> complexfloating: ...
+    @overload
+    def __pow__(self, x: integer | _JustFloating, mod: None = None, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __rpow__(self, x: int | _nt.JustFloat, mod: None = None, /) -> Self: ...
+    @overload
+    def __rpow__(self, x: _nt.JustComplex, mod: None = None, /) -> complexfloating: ...
+    @overload
+    def __rpow__(self, x: integer | _JustFloating, mod: None = None, /) -> inexact: ...
+    @overload
+    def __rpow__(self, x: _nt.Just[inexact], mod: None = None, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __truediv__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __truediv__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __truediv__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __rtruediv__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __rtruediv__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __rtruediv__(self, x: integer | _JustFloating, /) -> inexact: ...
+    @overload
+    def __rtruediv__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @overload
+    def __floordiv__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> floating[_BitT]: ...
+    @overload
+    def __floordiv__(self: inexact[Any, float], x: integer | _JustFloating, /) -> floating: ...
+    @overload
+    def __rfloordiv__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> floating[_BitT]: ...
+    @overload
+    def __rfloordiv__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> floating: ...
+    @overload
+    def __rfloordiv__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> floating: ...
+
+    #
+    @overload
+    def __mod__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> floating[_BitT]: ...
+    @overload
+    def __mod__(self: inexact[Any, float], x: integer | _JustFloating, /) -> floating: ...
+    @overload
+    def __rmod__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> floating[_BitT]: ...
+    @overload
+    def __rmod__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> floating: ...
+    @overload
+    def __rmod__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> floating: ...
+
+    #
+    @overload
+    def __divmod__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> _2Tuple[floating[_BitT]]: ...
+    @overload
+    def __divmod__(self: inexact[Any, float], x: integer | _JustFloating, /) -> _2Tuple[floating]: ...
+    @overload
+    def __rdivmod__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> _2Tuple[floating[_BitT]]: ...
+    @overload
+    def __rdivmod__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> _2Tuple[floating]: ...
+    @overload
+    def __rdivmod__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> _2Tuple[floating]: ...
+
+class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
+    @property
+    @abc.abstractmethod
+    @override
+    def itemsize(self) -> int: ...
+    @property
+    @abc.abstractmethod
+    @override
+    def nbytes(self) -> int: ...
+
+    #
+    @override
+    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
+    @override
+    def __abs__(self, /) -> Self: ...
+
+    #
+    @overload
+    def __add__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __add__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __add__(self, x: integer | _JustFloating, /) -> floating: ...
+
+    #
+    @overload
+    def __radd__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __radd__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __radd__(self, x: integer | _JustFloating, /) -> floating: ...
+    @overload
+    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...
+
+    # keep in sync with `__add__`
+    @overload
+    def __sub__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __sub__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __sub__(self, x: integer | _JustFloating, /) -> floating: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rsub__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __rsub__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __rsub__(self, x: integer | _JustFloating, /) -> floating: ...
+    @overload
+    def __rsub__(self, x: _nt.Just[inexact], /) -> inexact: ...
+
+    # keep in sync with `__add__`
+    @overload
+    def __mul__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __mul__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __mul__(self, x: integer | _JustFloating, /) -> floating: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rmul__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __rmul__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __rmul__(self, x: integer | _JustFloating, /) -> floating: ...
+    @overload
+    def __rmul__(self, x: _nt.Just[inexact], /) -> inexact: ...
+
+    # keep in sync with `__add__`
+    @overload
+    def __pow__(self, x: int | _nt.JustFloat, mod: None = None, /) -> Self: ...
+    @overload
+    def __pow__(self, x: _nt.JustComplex, mod: None = None, /) -> complexfloating: ...
+    @overload
+    def __pow__(self, x: integer | _JustFloating, mod: None = None, /) -> floating: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rpow__(self, x: int | _nt.JustFloat, mod: None = None, /) -> Self: ...
+    @overload
+    def __rpow__(self, x: _nt.JustComplex, mod: None = None, /) -> complexfloating: ...
+    @overload
+    def __rpow__(self, x: integer | _JustFloating, mod: None = None, /) -> floating: ...
+    @overload
+    def __rpow__(self, x: _nt.Just[inexact], mod: None = None, /) -> inexact: ...
+
+    # keep in sync with `__add__`
+    @overload
+    def __truediv__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __truediv__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __truediv__(self, x: integer | _JustFloating, /) -> floating: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rtruediv__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __rtruediv__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    @overload
+    def __rtruediv__(self, x: integer | _JustFloating, /) -> floating: ...
+    @overload
+    def __rtruediv__(self, x: _nt.Just[inexact], /) -> inexact: ...
 
 class float16(floating[_n._16]):
     @type_check_only
@@ -5597,6 +5488,8 @@ class float16(floating[_n._16]):
     @overload
     def __rdivmod__(self, x: _JustInteger | _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
+half = float16
+
 class float32(floating[_n._32]):
     @type_check_only
     def __nep50__(
@@ -5804,6 +5697,8 @@ class float32(floating[_n._32]):
     @overload
     def __rdivmod__(self, x: _JustInteger | _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
+single = float32
+
 class float64(floating[_n._64], float):  # type: ignore[misc]
     @type_check_only
     def __nep50__(
@@ -6004,8 +5899,6 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     @overload
     def __rdivmod__(self, x: _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
-half = float16
-single = float32
 double = float64
 
 class longdouble(floating[_n._64L]):
@@ -6142,6 +6035,111 @@ class longdouble(floating[_n._64L]):
 float96 = longdouble
 float128 = longdouble
 
+class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
+    @type_check_only
+    def __nep50_rule3__(self, other: longdouble, /) -> clongdouble: ...
+
+    #
+    @overload
+    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
+    @overload
+    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
+
+    #
+    @property
+    @abc.abstractmethod
+    @override
+    def real(self) -> floating: ...
+    @property
+    @abc.abstractmethod
+    @override
+    def imag(self) -> floating: ...
+
+    #
+    @abc.abstractmethod
+    @override
+    def __abs__(self, /) -> floating: ...
+
+    # NOTE: The reported LSP violation is a false positive
+
+    #
+    @overload
+    def __add__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
+    @overload
+    def __add__(self, x: integer | _JustInexact, /) -> complexfloating: ...
+
+    #
+    @overload
+    def __radd__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
+    @overload
+    def __radd__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with `__add__`
+    @overload
+    def __sub__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
+    @overload
+    def __sub__(self, x: integer | _JustInexact, /) -> complexfloating: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rsub__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
+    @overload
+    def __rsub__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with `__add__`
+    @overload
+    def __mul__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
+    @overload
+    def __mul__(self, x: integer | _JustInexact, /) -> complexfloating: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rmul__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
+    @overload
+    def __rmul__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with `__add__`
+    @overload
+    def __pow__(self, x: int | _nt.JustFloat | _nt.JustComplex, mod: None = None, /) -> Self: ...
+    @overload
+    def __pow__(self, x: integer | _JustInexact, mod: None = None, /) -> complexfloating: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rpow__(self, x: int | _nt.JustFloat | _nt.JustComplex, mod: None = None, /) -> Self: ...
+    @overload
+    def __rpow__(self, x: integer | _JustInexact, mod: None = None, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # keep in sync with `__add__`
+    @overload
+    def __truediv__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
+    @overload
+    def __truediv__(self, x: integer | _JustInexact, /) -> complexfloating: ...
+
+    # keep in sync with `__radd__`
+    @overload
+    def __rtruediv__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
+    @overload
+    def __rtruediv__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    # NOTE: Without these mypy will `[misc]` instead of `[opererator]`
+    @override
+    def __floordiv__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __rfloordiv__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __mod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __rmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __divmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __rdivmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @deprecated("The Python built-in `round` is deprecated for complex scalars, and will raise a `TypeError` in a future release")
+    def __round__(self, /, ndigits: CanIndex | None = None) -> Self: ...
+
 class complex64(complexfloating[_n._32]):
     @type_check_only
     def __nep50__(
@@ -6276,6 +6274,8 @@ class complex64(complexfloating[_n._32]):
     #
     def __complex__(self, /) -> complex: ...
 
+csingle = complex64
+
 class complex128(complexfloating[_n._64], complex):
     @type_check_only
     def __nep50__(
@@ -6398,7 +6398,6 @@ class complex128(complexfloating[_n._64], complex):
     #
     def __getnewargs__(self, /) -> tuple[float, float]: ...
 
-csingle = complex64
 cdouble = complex128
 
 class clongdouble(complexfloating[_n._64L]):
@@ -6463,7 +6462,6 @@ class clongdouble(complexfloating[_n._64L]):
     #
     def __complex__(self, /) -> complex: ...
 
-# These are platform dependent, so there's no need to distinguish between them
 complex192 = clongdouble
 complex256 = clongdouble
 
