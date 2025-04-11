@@ -1,4 +1,4 @@
-# @generated 2025-03-31T01:33:19Z with tool/testgen.py
+# @generated 2025-04-11T01:23:37Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -727,7 +727,7 @@ assert_type(iu + i, np.signedinteger | np.float64)
 assert_type(iu + u, np.integer | np.float64)
 assert_type(iu + f, np.floating)
 assert_type(iu + c, np.complexfloating)
-assert_type(iu + iu, np.integer | np.float64)  # type: ignore[assert-type, operator]  # 🐴
+assert_type(iu + iu, np.integer | np.float64)
 assert_type(iu + fc, np.inexact)
 assert_type(iu + iufc, np.number)
 

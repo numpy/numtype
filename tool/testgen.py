@@ -1027,7 +1027,7 @@ class ScalarOps(TestGen):
             and lhs == rhs
             and (abstract_arg := self.ABSTRACT_TYPES.get(self.names[lhs]))
         ):
-            if abstract_arg == "integer" and " / " not in op:
+            if abstract_arg == "integer" and " + " not in op and " / " not in op:
                 mypy_ignore = "assert-type, operator"
             elif abstract_arg == "inexact":
                 mypy_ignore = "operator"
