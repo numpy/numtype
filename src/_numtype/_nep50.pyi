@@ -11,7 +11,7 @@ __all__ = ["CanCast0D", "CanCastND", "CanNEP50", "MatchND", "PromoteWith", "Prom
 
 _T_co = TypeVar("_T_co", covariant=True)
 _BelowT_contra = TypeVar("_BelowT_contra", bound=np.generic, contravariant=True)
-_AboveT_contra = TypeVar("_AboveT_contra", bound=np.generic, contravariant=True, default=Any)
+_AboveT_contra = TypeVar("_AboveT_contra", contravariant=True, default=Any)
 _OtherT_contra = TypeVar("_OtherT_contra", contravariant=True)
 _MatchT_co = TypeVar("_MatchT_co", bound=np.generic, covariant=True, default=Any)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
@@ -49,7 +49,8 @@ _OutT = TypeVar("_OutT", bound=np.generic)
 
 PromoteWith = TypeAliasType(
     "PromoteWith",
-    _CanNEP50Rule0[_WithT, _OutT]
+    CanNEP50[Any, _WithT, _OutT]
+    | _CanNEP50Rule0[_WithT, _OutT]
     | _CanNEP50Rule1[_WithT, _OutT]
     | _CanNEP50Rule2[_WithT, _OutT]
     | _CanNEP50Rule3[_WithT, _OutT]

@@ -1961,8 +1961,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __add__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT], /) -> NDArray[_ScalarT]: ...  # type: ignore[overload-overlap]
     @overload
-    def __add__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, Any, _ScalarT, _ScalarT2], /) -> NDArray[_ScalarT2]: ...  # type: ignore[overload-overlap]
-    @overload
     def __add__(self: NDArray[_ScalarT], x: _nt.MatchND[Any, _nt.PromoteWith[_ScalarT, _ScalarT2]], /) -> NDArray[_ScalarT2]: ...  # type: ignore[overload-overlap]
     @overload
     def __add__(self: NDArray[generic[_AnyItemT]], x: _nt.SequenceND[_AnyItemT], /) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
@@ -1980,8 +1978,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     # keep in sync with __add__
     @overload
     def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, _ScalarT], /) -> NDArray[_ScalarT]: ...  # type: ignore[overload-overlap]
-    @overload
-    def __radd__(self: NDArray[_ScalarT], x: _nt.CanCastND[Any, Any, _ScalarT, _ScalarT2], /) -> NDArray[_ScalarT2]: ...  # type: ignore[overload-overlap]
     @overload
     def __radd__(self: NDArray[_ScalarT], x: _nt.MatchND[Any, _nt.PromoteWith[_ScalarT, _ScalarT2]], /) -> NDArray[_ScalarT2]: ...  # type: ignore[overload-overlap]
     @overload
@@ -4043,6 +4039,9 @@ class integer(_IntegralMixin, _RoundMixin, number[_BitT, int]):
         above: bool_,
         /,
     ) -> integer: ...
+    @type_check_only
+    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger | float64: ...
+    @type_check_only
     def __nep50_rule5__(self, other: _nt.Just[integer], /) -> integer | float64: ...
 
     #
@@ -4056,35 +4055,23 @@ class integer(_IntegralMixin, _RoundMixin, number[_BitT, int]):
 
     #
     @overload
-    def __add__(self, x: int, /) -> Self: ...
+    def __add__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
     @overload
     def __add__(self, x: _nt.JustFloat, /) -> float64: ...
     @overload
     def __add__(self, x: _nt.JustComplex, /) -> complex128: ...
     @overload
-    def __add__(self, x: _nt.CanCast0D[Self], /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.CanCast0D[Any, Self, _ScalarT], /) -> _ScalarT: ...
-    @overload
-    def __add__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...
-    @overload
-    def __add__(self: _nt.PromoteWith[_ScalarT, _ScalarT2], x: _nt.CanArray0D[_ScalarT], /) -> _ScalarT2: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __add__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @overload
-    def __radd__(self, x: int, /) -> Self: ...
+    def __radd__(self, x: _nt.CanCast0D[Self] | int, /) -> Self: ...
     @overload
     def __radd__(self, x: _nt.JustFloat, /) -> float64: ...
     @overload
     def __radd__(self, x: _nt.JustComplex, /) -> complex128: ...
     @overload
-    def __radd__(self, x: _nt.CanCast0D[Self], /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.CanCast0D[Any, Self, _ScalarT], /) -> _ScalarT: ...
-    @overload
-    def __radd__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...
-    @overload
-    def __radd__(self: _nt.PromoteWith[_ScalarT, _ScalarT2], x: _nt.CanArray0D[_ScalarT], /) -> _ScalarT2: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __radd__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with __add__
     @overload
@@ -4250,10 +4237,11 @@ class signedinteger(integer[_BitT]):
         /,
     ) -> signedinteger: ...
     @type_check_only
-    def __nep50_rule0__(self, other: uint32, /) -> int64: ...
+    def __nep50_rule0__(self, other: uint32 | int64, /) -> int64: ...
     @type_check_only
     def __nep50_rule1__(self, other: uint64, /) -> float64: ...
     @type_check_only
+    @override
     def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger: ...
     @type_check_only
     @override
@@ -4453,8 +4441,6 @@ class unsignedinteger(integer[_BitT]):
     ) -> unsignedinteger: ...
     @type_check_only
     def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
-    @type_check_only
-    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger | float64: ...
 
     #
     @property
@@ -7042,7 +7028,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):  # type: ignore[misc]
     def __nep50__(
         self,
         below: int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
-        above: signedinteger | uint32 | uint16 | uint8 | bool_,
+        above: int32 | uint32 | int16 | uint16 | int8 | uint8 | bool_,
         /,
     ) -> int64: ...
     @type_check_only
@@ -7052,7 +7038,7 @@ class int64(_IntROpMixin[int64], signedinteger[_n._64]):  # type: ignore[misc]
     def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
     @type_check_only
     @override
-    def __nep50_rule4__(self, other: _JustSignedInteger, /) -> Self: ...
+    def __nep50_rule4__(self, other: _JustSignedInteger | signedinteger, /) -> Self: ...
     @type_check_only
     @override
     def __nep50_rule5__(self, other: _nt.Just[integer] | _JustUnsignedInteger, /) -> Self | float64: ...
