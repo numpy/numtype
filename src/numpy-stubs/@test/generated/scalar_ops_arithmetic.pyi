@@ -1,4 +1,4 @@
-# @generated 2025-04-12T18:53:13Z with tool/testgen.py
+# @generated 2025-04-12T18:56:40Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -758,7 +758,7 @@ assert_type(fc + u, np.inexact)
 assert_type(fc + f, np.inexact)
 assert_type(fc + c, np.complexfloating)
 assert_type(fc + iu, np.inexact)
-assert_type(fc + fc, np.inexact)  # type: ignore[operator]  # 🐴
+assert_type(fc + fc, np.inexact)
 assert_type(fc + iufc, np.inexact)
 
 assert_type(iufc + b_py, np.number)
@@ -1511,7 +1511,7 @@ assert_type(fc - u, np.inexact)
 assert_type(fc - f, np.inexact)
 assert_type(fc - c, np.complexfloating)
 assert_type(fc - iu, np.inexact)
-assert_type(fc - fc, np.inexact)  # type: ignore[operator]  # 🐴
+assert_type(fc - fc, np.inexact)
 assert_type(fc - iufc, np.inexact)
 
 assert_type(iufc - b_py, np.number)
@@ -2211,7 +2211,7 @@ assert_type(fc * u, np.inexact)
 assert_type(fc * f, np.inexact)
 assert_type(fc * c, np.complexfloating)
 assert_type(fc * iu, np.inexact)
-assert_type(fc * fc, np.inexact)  # type: ignore[operator]  # 🐴
+assert_type(fc * fc, np.inexact)
 assert_type(fc * iufc, np.inexact)
 
 assert_type(iufc * b_py, np.number)
@@ -2859,7 +2859,7 @@ assert_type(fc**u, np.inexact)
 assert_type(fc**f, np.inexact)
 assert_type(fc**c, np.complexfloating)
 assert_type(fc**iu, np.inexact)
-assert_type(fc**fc, np.inexact)  # type: ignore[operator]  # 🐴
+assert_type(fc**fc, np.inexact)
 assert_type(fc**iufc, np.inexact)
 
 assert_type(iufc**b_py, np.number)
@@ -3557,7 +3557,7 @@ assert_type(fc / u, np.inexact)
 assert_type(fc / f, np.inexact)
 assert_type(fc / c, np.complexfloating)
 assert_type(fc / iu, np.inexact)
-assert_type(fc / fc, np.inexact)  # type: ignore[operator]  # 🐴
+assert_type(fc / fc, np.inexact)
 assert_type(fc / iufc, np.inexact)
 
 assert_type(iufc / b_py, np.inexact)

@@ -1019,17 +1019,7 @@ class ScalarOps(TestGen):
         if expr_type == "bool":
             return None
 
-        stmt = _expr_assert_type(expr_eval, expr_type)
-
-        # workaround for mypy's lack of support for reflected binary ops like __radd__
-        if (
-            op in self.OPS_ARITHMETIC | self.OPS_MODULAR
-            and lhs == rhs
-            and self.ABSTRACT_TYPES.get(self.names[lhs]) == "inexact"
-        ):
-            stmt = f"{stmt}  # type: ignore[operator]  # 🐴"
-
-        return stmt
+        return _expr_assert_type(expr_eval, expr_type)
 
     @override
     def _generate_names_section(self) -> Generator[str]:
