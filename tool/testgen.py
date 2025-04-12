@@ -11,8 +11,17 @@ import abc
 import difflib
 import itertools
 import operator as op
-from collections.abc import Callable, Generator, Iterable, Iterator, Sequence
-from typing import Any, ClassVar, Final, Literal, TypeAlias, TypeVar, cast, final
+from collections.abc import Callable, Generator, Iterable, Iterator, Mapping, Sequence
+from typing import (
+    Any,
+    ClassVar,
+    Final,
+    Literal,
+    TypeAlias,
+    TypeVar,
+    cast,
+    final,
+)
 from typing_extensions import override
 
 import numpy as np
@@ -1105,6 +1114,17 @@ class NDArrayOps(TestGen):
 
         super().__init__()
 
+    @property
+    def _scalars_py(self) -> Mapping[str, type[complex | bytes | str]]:
+        kindmap = {"b": bool, "i": int, "f": float, "c": complex, "S": bytes, "U": str}
+        kinds = {dtype.kind: "" for dtype in self.dtypes}
+        return {f"{kind}_py": kindmap[kind] for kind in kinds if kind in kindmap}
+
+    def _op_expr(self, lhs: str, rhs: str, /) -> str:
+        if self.opfunc.__name__ == "divmod":
+            return f"divmod({lhs}, {rhs})"
+        return lhs + str(self.opfunc.__doc__)[9:-2] + rhs
+
     @staticmethod
     def _get_arrays(
         dtype1: np.dtype,
@@ -1124,47 +1144,89 @@ class NDArrayOps(TestGen):
 
     @override
     def get_names(self) -> Iterable[tuple[str, str]]:
+        # ndarays
         for dtype in self.dtypes:
-            yield f"array_{dtype_label(dtype)}_nd", _array_expr(dtype, npt=True)
+            yield f"{dtype_label(dtype)}_nd", _array_expr(dtype, npt=True)
+
+        yield "", ""  # linebreak
+
+        # python scalars
+        for name, pytype in self._scalars_py.items():
+            yield name, pytype.__name__
+
+    def _gen_testcases_np_nd(self, dtype1: np.dtype, /) -> Generator[str | None]:
+        name1 = f"{dtype_label(dtype1)}_nd"
+
+        for dtype2 in self.dtypes:
+            name2 = f"{dtype_label(dtype2)}_nd"
+            expr = self._op_expr(name1, name2)
+
+            arr1, arr2 = self._get_arrays(dtype1, dtype2)
+
+            try:
+                out = self.opfunc(arr1, arr2)
+            except TypeError:
+                if "O" in dtype1.char + dtype2.char:
+                    # impossible to reject
+                    continue
+
+                testcase = "  ".join((  # noqa: FLY002
+                    expr,
+                    "# type: ignore[operator]",
+                    "# pyright: ignore[reportOperatorIssue]",
+                ))
+            else:
+                out_type_expr = _array_expr(out.dtype, npt=True)
+                testcase = _expr_assert_type(expr, out_type_expr)
+
+            yield testcase
+
+    def _gen_testcases_py_0d(
+        self,
+        dtype: np.dtype,
+        /,
+        *,
+        reflect: bool = False,
+    ) -> Generator[str | None]:
+        name_np = f"{dtype_label(dtype)}_nd"
+
+        for name_py, pytype in self._scalars_py.items():
+            name1, name2 = (name_py, name_np) if reflect else (name_np, name_py)
+
+            val_np, val_py = self._get_arrays(dtype, np.dtype(pytype))[0], pytype(1)
+            val1, val2 = (val_py, val_np) if reflect else (val_np, val_py)
+
+            expr = self._op_expr(name1, name2)
+
+            try:
+                out = self.opfunc(val1, val2)
+            except TypeError:
+                if reflect and pytype is bytes:
+                    # impossible to reject
+                    continue
+
+                testcase = "  ".join((  # noqa: FLY002
+                    expr,
+                    "# type: ignore[operator]",
+                    "# pyright: ignore[reportOperatorIssue]",
+                ))
+            else:
+                out_type_expr = _array_expr(out.dtype, npt=True)
+                testcase = _expr_assert_type(expr, out_type_expr)
+
+            yield testcase
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
-        op_expr_template = str(self.opfunc.__doc__)[8:-1]
-        op_expr_template = op_expr_template.replace("a", "{}").replace("b", "{}")
-
         yield from self._generate_section()
 
-        for dtype1 in self.dtypes:
-            yielded = 0
-            for dtype2 in self.dtypes:
-                name1 = f"array_{dtype_label(dtype1)}_nd"
-                name2 = f"array_{dtype_label(dtype2)}_nd"
-                op_expr = op_expr_template.format(name1, name2)
-
-                arr1, arr2 = self._get_arrays(dtype1, dtype2)
-
-                try:
-                    out = self.opfunc(arr1, arr2)
-                except TypeError:
-                    if "O" in dtype1.char + dtype2.char:
-                        # impossible to reject
-                        continue
-
-                    testcase = "  ".join((  # noqa: FLY002
-                        op_expr,
-                        "# type: ignore[operator]",
-                        "# pyright: ignore[reportOperatorIssue]",
-                    ))
-                else:
-                    out_type_expr = _array_expr(out.dtype, npt=True)
-                    testcase = _expr_assert_type(op_expr, out_type_expr)
-
-                yield testcase
-                yielded += 1
-
-            if yielded > 2:
-                # avoid inserting excessive newlines
-                yield ""
+        for dtype in self.dtypes:
+            yield from self._gen_testcases_np_nd(dtype)
+            yield ""
+            yield from self._gen_testcases_py_0d(dtype)
+            yield ""
+            yield from self._gen_testcases_py_0d(dtype, reflect=True)
+            yield ""
 
 
 TESTGENS: Final[Sequence[TestGen]] = [
