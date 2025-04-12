@@ -1,5 +1,16 @@
 from _typeshed import Incomplete, StrOrBytesPath, SupportsWrite
-from typing import Any, ClassVar, Final, Generic, Literal as L, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
+from typing import (
+    Any,
+    ClassVar,
+    Final,
+    Generic,
+    Literal as L,
+    Protocol,
+    SupportsIndex,
+    TypeAlias,
+    overload,
+    type_check_only,
+)
 from typing_extensions import Self, TypeVar
 
 import numpy as np

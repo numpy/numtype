@@ -185,7 +185,11 @@ MArray = TypeAliasType("MArray", np.ma.MaskedArray[_ShapeT, np.dtype[_ScalarT0]]
 MArray0D = TypeAliasType("MArray0D", np.ma.MaskedArray[tuple[()], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 MArray1D = TypeAliasType("MArray1D", np.ma.MaskedArray[tuple[int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 MArray2D = TypeAliasType("MArray2D", np.ma.MaskedArray[tuple[int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-MArray3D = TypeAliasType("MArray3D", np.ma.MaskedArray[tuple[int, int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
+MArray3D = TypeAliasType(
+    "MArray3D",
+    np.ma.MaskedArray[tuple[int, int, int], np.dtype[_ScalarT0]],
+    type_params=(_ScalarT0,),
+)
 
 Matrix = TypeAliasType("Matrix", np.matrix[tuple[int, int], np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
 

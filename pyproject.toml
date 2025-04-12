@@ -185,7 +185,7 @@ src = ["src", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
 force-exclude = true
 # https://typing.python.org/en/latest/guides/writing_stubs.html#maximum-line-length
-line-length = 130
+line-length = 120
 preview = true
 
     [tool.ruff.format]

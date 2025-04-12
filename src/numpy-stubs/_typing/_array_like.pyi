@@ -36,7 +36,11 @@ class _SupportsArrayFunc(Protocol):  # noqa: PYI046
     ) -> object: ...
 
 _FiniteNestedSequence: TypeAlias = (
-    _T | Sequence[_T] | Sequence[Sequence[_T]] | Sequence[Sequence[Sequence[_T]]] | Sequence[Sequence[Sequence[Sequence[_T]]]]
+    _T
+    | Sequence[_T]
+    | Sequence[Sequence[_T]]
+    | Sequence[Sequence[Sequence[_T]]]
+    | Sequence[Sequence[Sequence[Sequence[_T]]]]
 )
 
 # A subset of `npt.ArrayLike` that can be parametrized w.r.t. `np.generic`

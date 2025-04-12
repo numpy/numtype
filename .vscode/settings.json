@@ -1,9 +1,14 @@
 {
   "[markdown]": {
-    "editor.rulers": [130]
+    "editor.rulers": [
+      120
+    ]
   },
   "[python]": {
-    "editor.rulers": [88, 130]
+    "editor.rulers": [
+      88,
+      120
+    ]
   },
   "[toml]": {
     "editor.rulers": [88]

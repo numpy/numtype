@@ -1,5 +1,5 @@
 extend = "../.ruff.toml"
-line-length = 130
+line-length = 120
 
 [lint]
 extend-ignore = [

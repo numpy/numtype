@@ -21,7 +21,9 @@ _RealContainerT = TypeVar(
     "_RealContainerT",
     bound=container[Any, np.dtype[np.bool | np.integer | np.floating | np.timedelta64 | np.object_]],
 )
-_NumericContainerT = TypeVar("_NumericContainerT", bound=container[Any, np.dtype[np.number | np.timedelta64 | np.object_]])
+_NumericContainerT = TypeVar(
+    "_NumericContainerT", bound=container[Any, np.dtype[np.number | np.timedelta64 | np.object_]]
+)
 
 _ArrayInt_co: TypeAlias = npt.NDArray[np.integer | np.bool]
 
@@ -92,7 +94,9 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __getitem__(self, key: _ToIndices, /) -> Any: ...
     @overload
-    def __getitem__(self: container[Any, np.dtype[np.void]], key: list[str], /) -> container[_ShapeT_co, np.dtype[np.void]]: ...
+    def __getitem__(
+        self: container[Any, np.dtype[np.void]], key: list[str], /
+    ) -> container[_ShapeT_co, np.dtype[np.void]]: ...
     @overload
     def __getitem__(self: container[Any, np.dtype[np.void]], key: str, /) -> container[_ShapeT_co, np.dtype]: ...
 
@@ -108,7 +112,9 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __abs__(self: container[_ShapeT, np.dtype[np.complex128]], /) -> container[_ShapeT, np.dtype[np.float64]]: ...
     @overload
-    def __abs__(self: container[_ShapeT, np.dtype[np.clongdouble]], /) -> container[_ShapeT, np.dtype[np.longdouble]]: ...
+    def __abs__(
+        self: container[_ShapeT, np.dtype[np.clongdouble]], /
+    ) -> container[_ShapeT, np.dtype[np.longdouble]]: ...
     @overload
     def __abs__(self: _RealContainerT, /) -> _RealContainerT: ...
 
@@ -165,7 +171,9 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def __and__(self: container[Any, np.dtype[np.bool]], other: _ArrayLikeBool_co, /) -> container[Any, np.dtype[np.bool]]: ...
+    def __and__(
+        self: container[Any, np.dtype[np.bool]], other: _ArrayLikeBool_co, /
+    ) -> container[Any, np.dtype[np.bool]]: ...
     @overload
     def __and__(self, other: _ArrayLikeInt_co, /) -> container[Any, np.dtype[np.bool | np.integer]]: ...
     __rand__ = __and__
@@ -176,7 +184,9 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def __xor__(self: container[Any, np.dtype[np.bool]], other: _ArrayLikeBool_co, /) -> container[Any, np.dtype[np.bool]]: ...
+    def __xor__(
+        self: container[Any, np.dtype[np.bool]], other: _ArrayLikeBool_co, /
+    ) -> container[Any, np.dtype[np.bool]]: ...
     @overload
     def __xor__(self, other: _ArrayLikeInt_co, /) -> container[Any, np.dtype[np.bool | np.integer]]: ...
     __rxor__ = __xor__
@@ -187,7 +197,9 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def __or__(self: container[Any, np.dtype[np.bool]], other: _ArrayLikeBool_co, /) -> container[Any, np.dtype[np.bool]]: ...
+    def __or__(
+        self: container[Any, np.dtype[np.bool]], other: _ArrayLikeBool_co, /
+    ) -> container[Any, np.dtype[np.bool]]: ...
     @overload
     def __or__(self, other: _ArrayLikeInt_co, /) -> container[Any, np.dtype[np.bool | np.integer]]: ...
     __ror__ = __or__
@@ -206,7 +218,9 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __array_wrap__(self, arg0: npt.ArrayLike, /) -> container[_ShapeT_co, _DTypeT_co]: ...
     @overload
-    def __array_wrap__(self, a: np.ndarray[_ShapeT, _DTypeT], c: Any = ..., s: Any = ..., /) -> container[_ShapeT, _DTypeT]: ...
+    def __array_wrap__(
+        self, a: np.ndarray[_ShapeT, _DTypeT], c: Any = ..., s: Any = ..., /
+    ) -> container[_ShapeT, _DTypeT]: ...
 
     #
     def copy(self, /) -> Self: ...

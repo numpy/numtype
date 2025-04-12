@@ -214,7 +214,9 @@ class RandomState:
     @overload  # size: None  (default)
     def uniform(self, /, low: float = 0.0, high: float = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
-    def uniform(self, /, low: _ArrayLikeFloat_co, high: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def uniform(
+        self, /, low: _ArrayLikeFloat_co, high: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def uniform(
         self,
@@ -294,7 +296,9 @@ class RandomState:
     @overload  # size: None  (default)
     def laplace(self, /, loc: float = 0.0, scale: float = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
-    def laplace(self, /, loc: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def laplace(
+        self, /, loc: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def laplace(
         self,
@@ -317,7 +321,9 @@ class RandomState:
     @overload  # size: None  (default)
     def logistic(self, /, loc: float = 0.0, scale: float = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
-    def logistic(self, /, loc: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def logistic(
+        self, /, loc: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def logistic(
         self,
@@ -356,7 +362,9 @@ class RandomState:
     @overload  # size: None  (default)
     def gumbel(self, /, loc: float = 0.0, scale: float = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
-    def gumbel(self, /, loc: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def gumbel(
+        self, /, loc: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def gumbel(
         self,
@@ -391,7 +399,9 @@ class RandomState:
     @overload  # size: (int, ...)  (keyword)
     def rayleigh(self, /, scale: _ArrayLikeFloat_co = 1.0, *, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
     @overload  # fallback
-    def rayleigh(self, /, scale: _ArrayLikeFloat_co = 1.0, size: _ShapeLike | None = None) -> float | npt.NDArray[np.float64]: ...
+    def rayleigh(
+        self, /, scale: _ArrayLikeFloat_co = 1.0, size: _ShapeLike | None = None
+    ) -> float | npt.NDArray[np.float64]: ...
 
     #
     @overload  # size: None  (default)
@@ -399,7 +409,9 @@ class RandomState:
     @overload  # size: (int, ...)
     def chisquare(self, /, df: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
     @overload  # fallback
-    def chisquare(self, /, df: _ArrayLikeFloat_co, size: _ShapeLike | None = None) -> float | npt.NDArray[np.float64]: ...
+    def chisquare(
+        self, /, df: _ArrayLikeFloat_co, size: _ShapeLike | None = None
+    ) -> float | npt.NDArray[np.float64]: ...
 
     #
     @overload  # size: None  (default)
@@ -431,7 +443,9 @@ class RandomState:
     @overload  # size: None  (default)
     def normal(self, /, loc: float = 0.0, scale: float = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
-    def normal(self, /, loc: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def normal(
+        self, /, loc: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def normal(
         self,
@@ -454,7 +468,9 @@ class RandomState:
     @overload  # size: None  (default)
     def lognormal(self, /, mean: float = 0.0, sigma: float = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
-    def lognormal(self, /, mean: _ArrayLikeFloat_co, sigma: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def lognormal(
+        self, /, mean: _ArrayLikeFloat_co, sigma: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def lognormal(
         self,
@@ -477,7 +493,9 @@ class RandomState:
     @overload  # size: None  (default)
     def vonmises(self, /, mu: float, kappa: float, size: None = None) -> float: ...
     @overload  # size: (int, ...)
-    def vonmises(self, /, mu: _ArrayLikeFloat_co, kappa: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def vonmises(
+        self, /, mu: _ArrayLikeFloat_co, kappa: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # fallback
     def vonmises(
         self,
@@ -499,7 +517,9 @@ class RandomState:
     @overload  # size: (int, ...)
     def standard_t(self, /, df: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
     @overload  # fallback
-    def standard_t(self, /, df: _ArrayLikeFloat_co, size: _ShapeLike | None = None) -> float | npt.NDArray[np.float64]: ...
+    def standard_t(
+        self, /, df: _ArrayLikeFloat_co, size: _ShapeLike | None = None
+    ) -> float | npt.NDArray[np.float64]: ...
 
     #
     @overload  # size: None  (default)
@@ -507,13 +527,17 @@ class RandomState:
     @overload  # size: (int, ...)
     def standard_gamma(self, /, shape: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
     @overload  # fallback
-    def standard_gamma(self, /, shape: _ArrayLikeFloat_co, size: _ShapeLike | None = None) -> float | npt.NDArray[np.float64]: ...
+    def standard_gamma(
+        self, /, shape: _ArrayLikeFloat_co, size: _ShapeLike | None = None
+    ) -> float | npt.NDArray[np.float64]: ...
 
     #
     @overload  # size: None  (default)
     def gamma(self, /, shape: float, scale: float = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
-    def gamma(self, /, shape: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def gamma(
+        self, /, shape: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def gamma(
         self,
@@ -536,7 +560,9 @@ class RandomState:
     @overload  # size: None  (default)
     def f(self, /, dfnum: float, dfden: float, size: None = None) -> float: ...
     @overload  # size: (int, ...)
-    def f(self, /, dfnum: _ArrayLikeFloat_co, dfden: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def f(
+        self, /, dfnum: _ArrayLikeFloat_co, dfden: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # fallback
     def f(
         self,
@@ -572,7 +598,9 @@ class RandomState:
     @overload  # size: None  (default)
     def wald(self, /, mean: float, scale: float, size: None = None) -> float: ...
     @overload  # size: (int, ...)
-    def wald(self, /, mean: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.float64]: ...
+    def wald(
+        self, /, mean: _ArrayLikeFloat_co, scale: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.float64]: ...
     @overload  # fallback
     def wald(
         self,
@@ -628,7 +656,9 @@ class RandomState:
     @overload
     def randint(self, /, low: int, high: int | None = None, size: None = None, *, dtype: type[int]) -> int: ...  # type: ignore[overload-overlap]
     @overload
-    def randint(self, /, low: int, high: int | None = None, size: None = None, *, dtype: _DTypeLike[_IntegerT]) -> _IntegerT: ...
+    def randint(
+        self, /, low: int, high: int | None = None, size: None = None, *, dtype: _DTypeLike[_IntegerT]
+    ) -> _IntegerT: ...
     @overload
     def randint(self, /, low: int, high: int | None = None, size: None = None, *, dtype: _BoolCodes) -> np.bool: ...
     @overload
@@ -1076,7 +1106,9 @@ class RandomState:
     @overload  # size: None  (default)
     def negative_binomial(self, /, n: float, p: float, size: None = None) -> int: ...
     @overload  # size: (int, ...)
-    def negative_binomial(self, /, n: _ArrayLikeFloat_co, p: _ArrayLikeFloat_co, size: _ShapeLike) -> npt.NDArray[np.int_]: ...
+    def negative_binomial(
+        self, /, n: _ArrayLikeFloat_co, p: _ArrayLikeFloat_co, size: _ShapeLike
+    ) -> npt.NDArray[np.int_]: ...
     @overload  # fallback
     def negative_binomial(
         self,
@@ -1094,7 +1126,9 @@ class RandomState:
     @overload  # size: (int, ...)  (keyword)
     def poisson(self, /, lam: _ArrayLikeFloat_co = 1.0, *, size: _ShapeLike) -> npt.NDArray[np.int_]: ...
     @overload  # fallback
-    def poisson(self, /, lam: _ArrayLikeFloat_co = 1.0, size: _ShapeLike | None = None) -> int | npt.NDArray[np.int_]: ...
+    def poisson(
+        self, /, lam: _ArrayLikeFloat_co = 1.0, size: _ShapeLike | None = None
+    ) -> int | npt.NDArray[np.int_]: ...
 
     #
     @overload  # size: None  (default)

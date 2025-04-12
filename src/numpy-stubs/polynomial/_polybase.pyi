@@ -6,7 +6,16 @@ from typing_extensions import Self, TypeIs, TypeVar, override
 
 import numpy as np
 import numpy.typing as npt
-from _numtype import Array1D, CoComplex_0d, CoComplex_1d, CoComplex_1nd, CoInteger_0d, CoInteger_1d, ToObject_0d, ToObject_1nd
+from _numtype import (
+    Array1D,
+    CoComplex_0d,
+    CoComplex_1d,
+    CoComplex_1nd,
+    CoInteger_0d,
+    CoInteger_1d,
+    ToObject_0d,
+    ToObject_1nd,
+)
 from numpy._typing import _FloatLike_co
 
 from .polynomial import _ToNumeric_0d, _ToNumeric_nd
@@ -122,9 +131,13 @@ class ABCPolyBase(abc.ABC):
 
     #
     @overload
-    def convert(self, /, domain: CoComplex_1d | None = None, kind: None = None, window: CoComplex_1d | None = None) -> Self: ...
+    def convert(
+        self, /, domain: CoComplex_1d | None = None, kind: None = None, window: CoComplex_1d | None = None
+    ) -> Self: ...
     @overload
-    def convert(self, /, domain: CoComplex_1d | None, kind: type[_PolyT], window: CoComplex_1d | None = None) -> _PolyT: ...
+    def convert(
+        self, /, domain: CoComplex_1d | None, kind: type[_PolyT], window: CoComplex_1d | None = None
+    ) -> _PolyT: ...
     @overload
     def convert(
         self,
@@ -137,7 +150,9 @@ class ABCPolyBase(abc.ABC):
 
     #
     def mapparms(self, /) -> tuple[Any, Any]: ...
-    def integ(self, /, m: SupportsIndex = 1, k: _ToNumeric_0d | CoComplex_1d = [], lbnd: _ToNumeric_0d | None = None) -> Self: ...
+    def integ(
+        self, /, m: SupportsIndex = 1, k: _ToNumeric_0d | CoComplex_1d = [], lbnd: _ToNumeric_0d | None = None
+    ) -> Self: ...
     def deriv(self, /, m: SupportsIndex = 1) -> Self: ...
     def roots(self, /) -> Array1D[np.float64] | Array1D[np.complex128]: ...
     def linspace(

@@ -1,9 +1,7 @@
-from typing import Any, Literal, TypeAlias
+from typing import Any, Literal
 from typing_extensions import Unpack, assert_type
 
 import numpy as np
-
-_1: TypeAlias = Literal[1]  # noqa: PYI042
 
 b: np.bool
 u8: np.uint64
@@ -111,17 +109,17 @@ assert_type(S.flatten(), np.ndarray[tuple[int], np.dtype[np.bytes_]])
 
 assert_type(b.reshape(()), np.bool)
 assert_type(i8.reshape([]), np.int64)
-assert_type(b.reshape(1), np.ndarray[tuple[_1], np.dtype[np.bool]])
-assert_type(i8.reshape(-1), np.ndarray[tuple[_1], np.dtype[np.int64]])
-assert_type(u8.reshape(1, 1), np.ndarray[tuple[_1, _1], np.dtype[np.uint64]])
-assert_type(f8.reshape(1, -1), np.ndarray[tuple[_1, _1], np.dtype[np.float64]])
-assert_type(c16.reshape(1, 1, 1), np.ndarray[tuple[_1, _1, _1], np.dtype[np.complex128]])
-assert_type(U.reshape(1, 1, 1, 1), np.ndarray[tuple[_1, _1, _1, _1], np.dtype[np.str_]])
+assert_type(b.reshape(1), np.ndarray[tuple[int], np.dtype[np.bool]])
+assert_type(i8.reshape(-1), np.ndarray[tuple[int], np.dtype[np.int64]])
+assert_type(u8.reshape(1, 1), np.ndarray[tuple[int, int], np.dtype[np.uint64]])
+assert_type(f8.reshape(1, -1), np.ndarray[tuple[int, int], np.dtype[np.float64]])
+assert_type(c16.reshape(1, 1, 1), np.ndarray[tuple[int, int, int], np.dtype[np.complex128]])
+assert_type(U.reshape(1, 1, 1, 1), np.ndarray[tuple[int, int, int, int], np.dtype[np.str_]])
 assert_type(
     S.reshape(1, 1, 1, 1, 1),
     np.ndarray[
-        # len(shape) >= 5
-        tuple[_1, _1, _1, _1, _1, Unpack[tuple[_1, ...]]],
+        # len(shape) >= 4
+        tuple[int, int, int, int, Unpack[tuple[int, ...]]],
         np.dtype[np.bytes_],
     ],
 )

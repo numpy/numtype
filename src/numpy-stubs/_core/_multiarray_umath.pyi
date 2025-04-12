@@ -97,7 +97,9 @@ _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _NumericT = TypeVar("_NumericT", bound=np.bool | np.number | np.timedelta64 | np.object_)
-_SafeScalarT = TypeVar("_SafeScalarT", bound=np.bool | np.number | np.flexible | np.timedelta64 | np.datetime64)  # no `object_`
+_SafeScalarT = TypeVar(
+    "_SafeScalarT", bound=np.bool | np.number | np.flexible | np.timedelta64 | np.datetime64
+)  # no `object_`
 
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 
@@ -476,7 +478,9 @@ class nditer:
 
     #
     def __enter__(self) -> Self: ...
-    def __exit__(self, cls: type[BaseException] | None, exc: BaseException | None, tb: TracebackType | None, /) -> None: ...
+    def __exit__(
+        self, cls: type[BaseException] | None, exc: BaseException | None, tb: TracebackType | None, /
+    ) -> None: ...
     def close(self) -> None: ...
     def reset(self) -> None: ...
 

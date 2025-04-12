@@ -288,7 +288,9 @@ def apply_along_fields(
 ) -> np.ndarray[_ShapeT, np.dtype[np.void]]: ...
 
 #
-def assign_fields_by_name(dst: npt.NDArray[np.void], src: npt.NDArray[np.void], zero_unassigned: bool = True) -> None: ...
+def assign_fields_by_name(
+    dst: npt.NDArray[np.void], src: npt.NDArray[np.void], zero_unassigned: bool = True
+) -> None: ...
 
 #
 def require_fields(

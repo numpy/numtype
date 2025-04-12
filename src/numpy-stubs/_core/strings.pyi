@@ -82,7 +82,9 @@ __all__ = [
 
 ###
 
-_StringArrayLike: TypeAlias = _SupportsArray[np.dtypes.StringDType] | _NestedSequence[_SupportsArray[np.dtypes.StringDType]]
+_StringArrayLike: TypeAlias = (
+    _SupportsArray[np.dtypes.StringDType] | _NestedSequence[_SupportsArray[np.dtypes.StringDType]]
+)
 
 _BoolArray: TypeAlias = NDArray[np.bool]
 _IntArray: TypeAlias = NDArray[np.int_]

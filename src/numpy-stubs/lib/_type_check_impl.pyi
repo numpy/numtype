@@ -65,7 +65,9 @@ class _HasDType(Protocol[_ScalarT_co]):
 ###
 
 #
-def mintypecode(typechars: Iterable[str | ToGeneric_nd], typeset: str | Container[str] = "GDFgdf", default: str = "d") -> str: ...
+def mintypecode(
+    typechars: Iterable[str | ToGeneric_nd], typeset: str | Container[str] = "GDFgdf", default: str = "d"
+) -> str: ...
 
 #
 @overload
