@@ -956,16 +956,13 @@ class ScalarOps(TestGen):
             try:
                 vals_out = fn(val_lhs, val_rhs)
             except TypeError:
-                # TODO(jorenham): also for the other kinds of operators
-                if op not in self.OPS_BITWISE:
-                    continue
                 return None
-            else:
-                vals_out = _ensure_tuple(vals_out)
-                exprs_out = tuple(map(_sctype_expr_from_value, vals_out))
-                if exprs_out in exprs_seen:
-                    continue
-                exprs_seen.add(exprs_out)
+
+            vals_out = _ensure_tuple(vals_out)
+            exprs_out = tuple(map(_sctype_expr_from_value, vals_out))
+            if exprs_out in exprs_seen:
+                continue
+            exprs_seen.add(exprs_out)
 
             for expr_out, expr_list in zip(exprs_out, expr_lists, strict=True):
                 expr_list.append(expr_out)

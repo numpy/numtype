@@ -1,4 +1,4 @@
-# @generated 2025-04-11T20:51:36Z with tool/testgen.py
+# @generated 2025-04-12T18:53:13Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -549,7 +549,7 @@ M64 + f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 M64 + c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(M64 + iu, np.datetime64)
 M64 + fc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(M64 + iufc, np.datetime64)
+M64 + iufc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(m64 + b_py, np.timedelta64)
 assert_type(m64 + i_py, np.timedelta64)
@@ -579,7 +579,7 @@ m64 + f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 m64 + c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(m64 + iu, np.timedelta64)
 m64 + fc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m64 + iufc, np.timedelta64)
+m64 + iufc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i + b_py, np.signedinteger)
 assert_type(i + i_py, np.signedinteger)
@@ -781,8 +781,8 @@ assert_type(iufc + f64l, np.inexact)
 assert_type(iufc + c64, np.complexfloating)
 assert_type(iufc + c128, np.complexfloating)
 assert_type(iufc + c128l, np.clongdouble)
-assert_type(iufc + M64, np.datetime64)
-assert_type(iufc + m64, np.timedelta64)
+iufc + M64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+iufc + m64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(iufc + i, np.number)
 assert_type(iufc + u, np.number)
 assert_type(iufc + f, np.inexact)
@@ -1302,7 +1302,7 @@ M64 - f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 M64 - c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(M64 - iu, np.datetime64)
 M64 - fc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(M64 - iufc, np.datetime64)
+M64 - iufc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(m64 - b_py, np.timedelta64)
 assert_type(m64 - i_py, np.timedelta64)
@@ -1332,7 +1332,7 @@ m64 - f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 m64 - c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(m64 - iu, np.timedelta64)
 m64 - fc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(m64 - iufc, np.timedelta64)
+m64 - iufc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i - b_py, np.signedinteger)
 assert_type(i - i_py, np.signedinteger)
@@ -1535,7 +1535,7 @@ assert_type(iufc - c64, np.complexfloating)
 assert_type(iufc - c128, np.complexfloating)
 assert_type(iufc - c128l, np.clongdouble)
 iufc - M64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(iufc - m64, np.timedelta64)
+iufc - m64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(iufc - i, np.number)
 assert_type(iufc - u, np.number)
 assert_type(iufc - f, np.inexact)
@@ -2037,8 +2037,8 @@ assert_type(m64 * u, np.timedelta64)
 assert_type(m64 * f, np.timedelta64)
 m64 * c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(m64 * iu, np.timedelta64)
-assert_type(m64 * fc, np.timedelta64)
-assert_type(m64 * iufc, np.timedelta64)
+m64 * fc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+m64 * iufc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i * b_py, np.signedinteger)
 assert_type(i * i_py, np.signedinteger)
@@ -2205,7 +2205,7 @@ assert_type(fc * f64l, np.inexact)
 assert_type(fc * c64, np.complexfloating)
 assert_type(fc * c128, np.complexfloating)
 assert_type(fc * c128l, np.clongdouble)
-assert_type(fc * m64, np.timedelta64)
+fc * m64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(fc * i, np.inexact)
 assert_type(fc * u, np.inexact)
 assert_type(fc * f, np.inexact)
@@ -2234,7 +2234,7 @@ assert_type(iufc * f64l, np.inexact)
 assert_type(iufc * c64, np.complexfloating)
 assert_type(iufc * c128, np.complexfloating)
 assert_type(iufc * c128l, np.clongdouble)
-assert_type(iufc * m64, np.timedelta64)
+iufc * m64  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(iufc * i, np.number)
 assert_type(iufc * u, np.number)
 assert_type(iufc * f, np.inexact)
@@ -3383,8 +3383,8 @@ assert_type(m64 / u, np.timedelta64)
 assert_type(m64 / f, np.timedelta64)
 m64 / c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(m64 / iu, np.timedelta64)
-assert_type(m64 / fc, np.timedelta64)
-assert_type(m64 / iufc, np.timedelta64)
+m64 / fc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+m64 / iufc  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(i / b_py, np.float64)
 assert_type(i / i_py, np.float64)
