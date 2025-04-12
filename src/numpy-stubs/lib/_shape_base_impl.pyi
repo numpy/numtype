@@ -58,10 +58,14 @@ class _CanArrayWrap(Protocol):
 ###
 
 #
-def take_along_axis(arr: _ScalarT | NDArray[_ScalarT], indices: NDArray[np.integer], axis: int | None) -> NDArray[_ScalarT]: ...
+def take_along_axis(
+    arr: _ScalarT | NDArray[_ScalarT], indices: NDArray[np.integer], axis: int | None
+) -> NDArray[_ScalarT]: ...
 
 #
-def put_along_axis(arr: NDArray[_ScalarT], indices: NDArray[np.integer], values: ArrayLike, axis: int | None) -> None: ...
+def put_along_axis(
+    arr: NDArray[_ScalarT], indices: NDArray[np.integer], values: ArrayLike, axis: int | None
+) -> None: ...
 
 #
 @overload
@@ -127,7 +131,9 @@ def array_split(ary: ArrayLike, indices_or_sections: _ShapeLike, axis: SupportsI
 
 #
 @overload
-def split(ary: _ArrayLike[_ScalarT], indices_or_sections: _ShapeLike, axis: SupportsIndex = 0) -> list[NDArray[_ScalarT]]: ...
+def split(
+    ary: _ArrayLike[_ScalarT], indices_or_sections: _ShapeLike, axis: SupportsIndex = 0
+) -> list[NDArray[_ScalarT]]: ...
 @overload
 def split(ary: ArrayLike, indices_or_sections: _ShapeLike, axis: SupportsIndex = 0) -> list[NDArray[Any]]: ...
 

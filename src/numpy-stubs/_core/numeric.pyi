@@ -1,6 +1,17 @@
 from builtins import bool as py_bool
 from collections.abc import Callable, Sequence
-from typing import Any, Final, Literal as L, NoReturn, Protocol, SupportsAbs, SupportsIndex, TypeAlias, overload, type_check_only
+from typing import (
+    Any,
+    Final,
+    Literal as L,
+    NoReturn,
+    Protocol,
+    SupportsAbs,
+    SupportsIndex,
+    TypeAlias,
+    overload,
+    type_check_only,
+)
 from typing_extensions import TypeIs, TypeVar
 
 import numpy as np
@@ -2294,7 +2305,9 @@ def identity(n: int, dtype: _DTypeLike[_ScalarT], *, like: _SupportsArrayFunc | 
 def identity(n: int, dtype: DTypeLike, *, like: _SupportsArrayFunc | None = None) -> Array2D: ...
 
 #
-def allclose(a: ArrayLike, b: ArrayLike, rtol: ArrayLike = ..., atol: ArrayLike = ..., equal_nan: py_bool = ...) -> py_bool: ...
+def allclose(
+    a: ArrayLike, b: ArrayLike, rtol: ArrayLike = ..., atol: ArrayLike = ..., equal_nan: py_bool = ...
+) -> py_bool: ...
 
 #
 @overload

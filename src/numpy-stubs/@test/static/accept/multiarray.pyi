@@ -147,7 +147,9 @@ assert_type(np.frompyfunc(func12, 1, 2).ntypes, int)
 assert_type(np.frompyfunc(func12, 1, 2).identity, Any | None)
 assert_type(np.frompyfunc(func12, 1, 2).signature, str | None)
 assert_type(np.frompyfunc(func12, 1, 2)(f8, f8), tuple[complex, str])
-assert_type(np.frompyfunc(func12, 1, 2)(AR_f8, f8), tuple[complex | npt.NDArray[np.object_], str | npt.NDArray[np.object_]])
+assert_type(
+    np.frompyfunc(func12, 1, 2)(AR_f8, f8), tuple[complex | npt.NDArray[np.object_], str | npt.NDArray[np.object_]]
+)
 
 assert_type(np.datetime_data("m8[D]"), tuple[str, int])
 assert_type(np.datetime_data(np.datetime64), tuple[str, int])

@@ -27,7 +27,9 @@ _ModeKind: TypeAlias = L[
 
 @type_check_only
 class _ModeFunc(Protocol):
-    def __call__(self, vector: NDArray[Any], pad: tuple[int, int], iaxis: int, kwargs: Mapping[str, object], /) -> None: ...
+    def __call__(
+        self, vector: NDArray[Any], pad: tuple[int, int], iaxis: int, kwargs: Mapping[str, object], /
+    ) -> None: ...
 
 ###
 
@@ -56,6 +58,8 @@ def pad(
     reflect_type: L["odd", "even"] = ...,
 ) -> NDArray[Any]: ...
 @overload
-def pad(array: _ArrayLike[_ScalarT], pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> NDArray[_ScalarT]: ...
+def pad(
+    array: _ArrayLike[_ScalarT], pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object
+) -> NDArray[_ScalarT]: ...
 @overload
 def pad(array: ArrayLike, pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> NDArray[Any]: ...

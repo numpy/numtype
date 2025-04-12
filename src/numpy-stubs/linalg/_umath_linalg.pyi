@@ -4,7 +4,17 @@ from typing_extensions import TypeVar, Unpack
 
 import numpy as np
 from _numtype import Array
-from numpy._core.umath import _AccumulateE, _AtE, _KwargsCommon, _Out1, _OuterE, _ReduceAtE, _ReduceE, _Tuple2, _gufunc_2_1
+from numpy._core.umath import (
+    _AccumulateE,
+    _AtE,
+    _KwargsCommon,
+    _Out1,
+    _OuterE,
+    _ReduceAtE,
+    _ReduceE,
+    _Tuple2,
+    _gufunc_2_1,
+)
 from numpy._typing import ArrayLike, DTypeLike
 
 ###

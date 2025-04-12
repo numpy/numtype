@@ -20,8 +20,8 @@ _AnyIndex: TypeAlias = EllipsisType | int | slice | tuple[EllipsisType | int | s
 
 ###
 
-# NOTE: In reality `Arrayterator` does not actually inherit from `ndarray`, # but its `__getattr__ method does wrap around the
-# former and thus has access to all its methods
+# NOTE: In reality `Arrayterator` does not actually inherit from `ndarray`, but its `__getattr__ method does wrap
+# around the former and thus has access to all its methods
 class Arrayterator(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTypeT_co]):
     var: np.ndarray[_ShapeT_co, _DTypeT_co]  # type: ignore[assignment]
     buf_size: Final[int | None]
@@ -45,6 +45,11 @@ class Arrayterator(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTyp
 
     #
     @overload  # type: ignore[override]
-    def __array__(self, /, dtype: _DTypeT_co | None = None, copy: bool | None = None) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...
+    def __array__(
+        self,
+        /,
+        dtype: _DTypeT_co | None = None,
+        copy: bool | None = None,
+    ) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __array__(self, /, dtype: _DTypeT, copy: bool | None = None) -> np.ndarray[_ShapeT_co, _DTypeT]: ...

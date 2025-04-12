@@ -14,7 +14,18 @@ from numpy.ma.mrecords import MaskedRecords
 
 from ._datasource import DataSource as DataSource
 
-__all__ = ["fromregex", "genfromtxt", "load", "loadtxt", "packbits", "save", "savetxt", "savez", "savez_compressed", "unpackbits"]
+__all__ = [
+    "fromregex",
+    "genfromtxt",
+    "load",
+    "loadtxt",
+    "packbits",
+    "save",
+    "savetxt",
+    "savez",
+    "savez_compressed",
+    "unpackbits",
+]
 
 ###
 
@@ -71,7 +82,9 @@ class NpzFile(Mapping[str, NDArray[_ScalarT_co]]):
 
     #
     def __enter__(self) -> Self: ...
-    def __exit__(self, cls: type[BaseException] | None, e: BaseException | None, tb: types.TracebackType | None, /) -> None: ...
+    def __exit__(
+        self, cls: type[BaseException] | None, e: BaseException | None, tb: types.TracebackType | None, /
+    ) -> None: ...
 
     #
     @override
@@ -291,12 +304,16 @@ def genfromtxt(
 
 #
 @overload
-def recfromtxt(fname: _FName, *, usemask: L[False] = False, **kwargs: object) -> np.recarray[Any, np.dtype[np.record]]: ...
+def recfromtxt(
+    fname: _FName, *, usemask: L[False] = False, **kwargs: object
+) -> np.recarray[Any, np.dtype[np.record]]: ...
 @overload
 def recfromtxt(fname: _FName, *, usemask: L[True], **kwargs: object) -> MaskedRecords[Any, np.dtype[np.void]]: ...
 
 #
 @overload
-def recfromcsv(fname: _FName, *, usemask: L[False] = False, **kwargs: object) -> np.recarray[Any, np.dtype[np.record]]: ...
+def recfromcsv(
+    fname: _FName, *, usemask: L[False] = False, **kwargs: object
+) -> np.recarray[Any, np.dtype[np.record]]: ...
 @overload
 def recfromcsv(fname: _FName, *, usemask: L[True], **kwargs: object) -> MaskedRecords[Any, np.dtype[np.void]]: ...

@@ -177,4 +177,6 @@ stack: _fromnxfunction_seq
 hsplit: _fromnxfunction_single
 diagflat: _fromnxfunction_single
 
-def mask_rowcols(a: Incomplete, axis: Incomplete | None = None) -> MaskedArray[tuple[int, ...], np.dtype[Incomplete]]: ...
+def mask_rowcols(
+    a: Incomplete, axis: Incomplete | None = None
+) -> MaskedArray[tuple[int, ...], np.dtype[Incomplete]]: ...

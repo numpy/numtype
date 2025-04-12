@@ -24,7 +24,9 @@ __all__ = ["as_series", "format_float", "getdomain", "mapdomain", "mapparms", "t
 ###
 
 _T = TypeVar("_T")
-_T_seq = TypeVar("_T_seq", bound=Array[np.number | np.bool | np.object_] | SupportsLenAndGetItem[CoComplex_0d | ToObject_0d])
+_T_seq = TypeVar(
+    "_T_seq", bound=Array[np.number | np.bool | np.object_] | SupportsLenAndGetItem[CoComplex_0d | ToObject_0d]
+)
 
 _Tuple2: TypeAlias = tuple[_T, _T]
 
@@ -103,11 +105,17 @@ def mapdomain(x: CoComplex_0d | ToObject_0d, old: ToObject_1d, new: CoComplex_1d
 @overload
 def mapdomain(x: CoComplex_0d | ToObject_0d, old: CoComplex_1d | ToObject_1d, new: ToObject_1d) -> Any: ...
 @overload
-def mapdomain(x: ToObject_1d, old: CoComplex_1d | ToObject_1d, new: CoComplex_1d | ToObject_1d) -> Array1D[np.object_]: ...
+def mapdomain(
+    x: ToObject_1d, old: CoComplex_1d | ToObject_1d, new: CoComplex_1d | ToObject_1d
+) -> Array1D[np.object_]: ...
 @overload
-def mapdomain(x: CoComplex_1d | ToObject_1d, old: ToObject_1d, new: CoComplex_1d | ToObject_1d) -> Array1D[np.object_]: ...
+def mapdomain(
+    x: CoComplex_1d | ToObject_1d, old: ToObject_1d, new: CoComplex_1d | ToObject_1d
+) -> Array1D[np.object_]: ...
 @overload
-def mapdomain(x: CoComplex_1d | ToObject_1d, old: CoComplex_1d | ToObject_1d, new: ToObject_1d) -> Array1D[np.object_]: ...
+def mapdomain(
+    x: CoComplex_1d | ToObject_1d, old: CoComplex_1d | ToObject_1d, new: ToObject_1d
+) -> Array1D[np.object_]: ...
 
 #
 def format_float(x: _FloatLike_co, parens: bool = False) -> str: ...

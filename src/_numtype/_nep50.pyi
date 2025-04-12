@@ -7,7 +7,16 @@ from typing_extensions import TypeAliasType, TypeVar
 
 import numpy as np
 
-__all__ = ["CanCast0D", "CanCastND", "CanNEP50", "CanNEP50Complex", "CanNEP50Float", "MatchND", "PromoteWith", "PromoteWith0D"]
+__all__ = [
+    "CanCast0D",
+    "CanCastND",
+    "CanNEP50",
+    "CanNEP50Complex",
+    "CanNEP50Float",
+    "MatchND",
+    "PromoteWith",
+    "PromoteWith0D",
+]
 
 _T_co = TypeVar("_T_co", covariant=True)
 _BelowT_contra = TypeVar("_BelowT_contra", bound=np.generic, contravariant=True)
