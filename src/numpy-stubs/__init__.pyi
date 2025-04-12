@@ -5050,7 +5050,22 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __rdivmod__(self, x: _nt.PromoteWith0D[Self, _FloatingT], /) -> _2Tuple[_FloatingT]: ...
 
-class float16(floating[_n._16]):
+_FloatSizeT_co = TypeVar("_FloatSizeT_co", bound=L[2, 4, 8, 12, 16], covariant=True)
+
+@type_check_only
+class _FloatMixin(Generic[_FloatSizeT_co]):
+    @property
+    def itemsize(self) -> _FloatSizeT_co: ...
+    @property
+    def nbytes(self) -> _FloatSizeT_co: ...
+
+    #
+    @override
+    def __hash__(self, /) -> int: ...
+    def is_integer(self, /) -> py_bool: ...
+    def as_integer_ratio(self, /) -> tuple[int, int]: ...
+
+class float16(_FloatMixin[L[2]], floating[_n._16]):
     @override
     @type_check_only
     def __nep50__(self, below: inexact, above: int8 | uint8 | bool_, /) -> float16: ...
@@ -5064,23 +5079,9 @@ class float16(floating[_n._16]):
     @type_check_only
     def __nep50_rule2__(self, other: _JustInteger, /) -> floating: ...
 
-    #
-    @property
-    @override
-    def itemsize(self) -> L[2]: ...
-    @property
-    @override
-    def nbytes(self) -> L[2]: ...
-
-    #
-    @override
-    def __hash__(self, /) -> int: ...
-    def is_integer(self, /) -> py_bool: ...
-    def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
 half = float16
 
-class float32(floating[_n._32]):
+class float32(_FloatMixin[L[4]], floating[_n._32]):
     @override
     @type_check_only
     def __nep50__(
@@ -5097,23 +5098,9 @@ class float32(floating[_n._32]):
     @type_check_only
     def __nep50_rule2__(self, other: _JustInteger, /) -> floating: ...
 
-    #
-    @property
-    @override
-    def itemsize(self) -> L[4]: ...
-    @property
-    @override
-    def nbytes(self) -> L[4]: ...
-
-    #
-    @override
-    def __hash__(self, /) -> int: ...
-    def is_integer(self, /) -> py_bool: ...
-    def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
 single = float32
 
-class float64(floating[_n._64], float):  # type: ignore[misc]
+class float64(_FloatMixin[L[8]], floating[_n._64], float):  # type: ignore[misc]
     @override
     @type_check_only
     def __nep50__(
@@ -5136,12 +5123,6 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     #
     @property
     @override
-    def itemsize(self) -> L[8]: ...
-    @property
-    @override
-    def nbytes(self) -> L[8]: ...
-    @property
-    @override
     def real(self) -> Self: ...
     @property
     @override
@@ -5154,14 +5135,10 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     def __abs__(self, /) -> float64: ...
     @override
     def conjugate(self) -> Self: ...
-    @override
-    def is_integer(self, /) -> py_bool: ...
-    @override
-    def as_integer_ratio(self, /) -> tuple[int, int]: ...
 
 double = float64
 
-class longdouble(floating[_n._64L]):
+class longdouble(_FloatMixin[L[12, 16]], floating[_n._64L]):
     @override
     @type_check_only
     def __nep50__(
@@ -5179,20 +5156,6 @@ class longdouble(floating[_n._64L]):
     @override
     @type_check_only
     def __nep50_rule4__(self, other: complexfloating | _JustComplexFloating, /) -> clongdouble: ...
-
-    #
-    @property
-    @override
-    def itemsize(self) -> L[12, 16]: ...
-    @property
-    @override
-    def nbytes(self) -> L[12, 16]: ...
-
-    #
-    @override
-    def __hash__(self, /) -> int: ...
-    def is_integer(self, /) -> py_bool: ...
-    def as_integer_ratio(self, /) -> tuple[int, int]: ...
 
     #
     @overload
