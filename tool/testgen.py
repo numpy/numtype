@@ -956,16 +956,13 @@ class ScalarOps(TestGen):
             try:
                 vals_out = fn(val_lhs, val_rhs)
             except TypeError:
-                # TODO(jorenham): also for the other kinds of operators
-                if op not in self.OPS_BITWISE:
-                    continue
                 return None
-            else:
-                vals_out = _ensure_tuple(vals_out)
-                exprs_out = tuple(map(_sctype_expr_from_value, vals_out))
-                if exprs_out in exprs_seen:
-                    continue
-                exprs_seen.add(exprs_out)
+
+            vals_out = _ensure_tuple(vals_out)
+            exprs_out = tuple(map(_sctype_expr_from_value, vals_out))
+            if exprs_out in exprs_seen:
+                continue
+            exprs_seen.add(exprs_out)
 
             for expr_out, expr_list in zip(exprs_out, expr_lists, strict=True):
                 expr_list.append(expr_out)
@@ -1022,17 +1019,7 @@ class ScalarOps(TestGen):
         if expr_type == "bool":
             return None
 
-        stmt = _expr_assert_type(expr_eval, expr_type)
-
-        # workaround for mypy's lack of support for reflected binary ops like __radd__
-        if (
-            op in self.OPS_ARITHMETIC | self.OPS_MODULAR
-            and lhs == rhs
-            and self.ABSTRACT_TYPES.get(self.names[lhs]) == "inexact"
-        ):
-            stmt = f"{stmt}  # type: ignore[operator]  # 🐴"
-
-        return stmt
+        return _expr_assert_type(expr_eval, expr_type)
 
     @override
     def _generate_names_section(self) -> Generator[str]:

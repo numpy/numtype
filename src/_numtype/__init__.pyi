@@ -51,6 +51,8 @@ from ._nep50 import (
     CanCast0D as CanCast0D,
     CanCastND as CanCastND,
     CanNEP50 as CanNEP50,
+    CanNEP50Complex as CanNEP50Complex,
+    CanNEP50Float as CanNEP50Float,
     MatchND as MatchND,
     PromoteWith as PromoteWith,
     PromoteWith0D as PromoteWith0D,
