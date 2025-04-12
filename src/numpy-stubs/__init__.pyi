@@ -5295,7 +5295,7 @@ class complex64(complexfloating[_n._32]):
 
 csingle = complex64
 
-class complex128(complexfloating[_n._64], complex):
+class complex128(complexfloating[_n._64], complex):  # type: ignore[misc]
     @override
     @type_check_only
     def __nep50__(
