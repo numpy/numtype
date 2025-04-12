@@ -626,6 +626,7 @@ _IntScalarT = TypeVar("_IntScalarT", bound=bool_ | integer | object_)
 _RealNumberT = TypeVar("_RealNumberT", bound=integer | floating)
 _RealScalarT = TypeVar("_RealScalarT", bound=bool_ | integer | floating | object_)
 _IntegerT = TypeVar("_IntegerT", bound=integer)
+_FloatingT = TypeVar("_FloatingT", bound=floating)
 _ComplexFloatingT = TypeVar("_ComplexFloatingT", bound=complexfloating)
 _ComplexFloatingT_co = TypeVar("_ComplexFloatingT_co", bound=complexfloating, covariant=True)
 _InexactT = TypeVar("_InexactT", bound=inexact)
@@ -4998,45 +4999,6 @@ class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co])
     @overload
     def __rtruediv__(self, x: _nt.PromoteWith0D[Self, _InexactT], /) -> _InexactT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
-    #
-    @overload
-    def __floordiv__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> floating[_BitT]: ...
-    @overload
-    def __floordiv__(self: inexact[Any, float], x: integer | _JustFloating, /) -> floating: ...
-    #
-    @overload
-    def __rfloordiv__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> floating[_BitT]: ...
-    @overload
-    def __rfloordiv__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rfloordiv__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> floating: ...
-
-    #
-    @overload
-    def __mod__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> floating[_BitT]: ...
-    @overload
-    def __mod__(self: inexact[Any, float], x: integer | _JustFloating, /) -> floating: ...
-    #
-    @overload
-    def __rmod__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> floating[_BitT]: ...
-    @overload
-    def __rmod__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __rmod__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> floating: ...
-
-    #
-    @overload
-    def __divmod__(self: inexact[Any, float], x: int | _nt.JustFloat | bool_, /) -> _2Tuple[floating[_BitT]]: ...
-    @overload
-    def __divmod__(self: inexact[Any, float], x: integer | _JustFloating, /) -> _2Tuple[floating]: ...
-    #
-    @overload
-    def __rdivmod__(self: inexact[Any, float], x: int | _nt.JustFloat, /) -> _2Tuple[floating[_BitT]]: ...
-    @overload
-    def __rdivmod__(self: inexact[Any, float], x: bool_ | integer | _JustFloating, /) -> _2Tuple[floating]: ...
-    @overload
-    def __rdivmod__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> _2Tuple[floating]: ...
-
 class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @abc.abstractmethod
     @override
@@ -5054,6 +5016,39 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
     @override
     def __abs__(self, /) -> Self: ...
+
+    #
+    @overload
+    def __floordiv__(self, x: _nt.CanCast0D[Self] | int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __floordiv__(self, x: _nt.PromoteWith0D[Self, _FloatingT], /) -> _FloatingT: ...
+    #
+    @overload
+    def __rfloordiv__(self, x: _nt.CanCast0D[Self] | int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __rfloordiv__(self, x: _nt.PromoteWith0D[Self, _FloatingT], /) -> _FloatingT: ...
+
+    #
+    @overload
+    def __mod__(self, x: _nt.CanCast0D[Self] | int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __mod__(self, x: _nt.PromoteWith0D[Self, _FloatingT], /) -> _FloatingT: ...
+    #
+    @overload
+    def __rmod__(self, x: _nt.CanCast0D[Self] | int | _nt.JustFloat, /) -> Self: ...
+    @overload
+    def __rmod__(self, x: _nt.PromoteWith0D[Self, _FloatingT], /) -> _FloatingT: ...
+
+    #
+    @overload
+    def __divmod__(self, x: _nt.CanCast0D[Self] | int | _nt.JustFloat, /) -> _2Tuple[Self]: ...
+    @overload
+    def __divmod__(self, x: _nt.PromoteWith0D[Self, _FloatingT], /) -> _2Tuple[_FloatingT]: ...
+    #
+    @overload
+    def __rdivmod__(self, x: _nt.CanCast0D[Self] | int | _nt.JustFloat, /) -> _2Tuple[Self]: ...
+    @overload
+    def __rdivmod__(self, x: _nt.PromoteWith0D[Self, _FloatingT], /) -> _2Tuple[_FloatingT]: ...
 
 class float16(floating[_n._16]):
     @override
@@ -5082,63 +5077,6 @@ class float16(floating[_n._16]):
     def __hash__(self, /) -> int: ...
     def is_integer(self, /) -> py_bool: ...
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
-    #
-    @overload
-    def __floordiv__(self, x: _CoFloat16, /) -> Self: ...
-    @overload
-    def __floordiv__(self, x: _nt.CanArray0D[_nt.integer16], /) -> float32: ...
-    @overload
-    def __floordiv__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __floordiv__(self, x: _nt.ToInteger_0d | _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rfloordiv__(self, x: _CoFloat16, /) -> Self: ...
-    @overload
-    def __rfloordiv__(self, x: _nt.CanArray0D[_nt.integer16], /) -> float32: ...
-    @overload
-    def __rfloordiv__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __rfloordiv__(self, x: _nt.ToInteger_0d | _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __mod__(self, x: _CoFloat16, /) -> Self: ...
-    @overload
-    def __mod__(self, x: _nt.CanArray0D[_nt.integer16], /) -> float32: ...
-    @overload
-    def __mod__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __mod__(self, x: _nt.ToInteger_0d | _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rmod__(self, x: _CoFloat16, /) -> Self: ...
-    @overload
-    def __rmod__(self, x: _nt.CanArray0D[_nt.integer16], /) -> float32: ...
-    @overload
-    def __rmod__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __rmod__(self, x: _nt.ToInteger_0d | _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __divmod__(self, x: _CoFloat16, /) -> _2Tuple[Self]: ...
-    @overload
-    def __divmod__(self, x: _nt.CanArray0D[_nt.integer16], /) -> _2Tuple[float32]: ...
-    @overload
-    def __divmod__(self, x: _nt.CanArray0D[_Integer32p], /) -> _2Tuple[float64]: ...
-    @overload
-    def __divmod__(self, x: _JustInteger | _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rdivmod__(self, x: _CoFloat16, /) -> _2Tuple[Self]: ...
-    @overload
-    def __rdivmod__(self, x: _nt.CanArray0D[_nt.integer16], /) -> _2Tuple[float32]: ...
-    @overload
-    def __rdivmod__(self, x: _nt.CanArray0D[_Integer32p], /) -> _2Tuple[float64]: ...
-    @overload
-    def __rdivmod__(self, x: _JustInteger | _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
 half = float16
 
@@ -5172,51 +5110,6 @@ class float32(floating[_n._32]):
     def __hash__(self, /) -> int: ...
     def is_integer(self, /) -> py_bool: ...
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
-    #
-    @overload
-    def __floordiv__(self, x: _CoFloat32, /) -> Self: ...
-    @overload
-    def __floordiv__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __floordiv__(self, x: _nt.ToInteger_0d | _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rfloordiv__(self, x: _CoFloat32, /) -> Self: ...
-    @overload
-    def __rfloordiv__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __rfloordiv__(self, x: _nt.ToInteger_0d | _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __mod__(self, x: _CoFloat32, /) -> Self: ...
-    @overload
-    def __mod__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __mod__(self, x: _nt.ToInteger_0d | _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rmod__(self, x: _CoFloat32, /) -> Self: ...
-    @overload
-    def __rmod__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __rmod__(self, x: _nt.ToInteger_0d | _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __divmod__(self, x: _CoFloat32, /) -> _2Tuple[Self]: ...
-    @overload
-    def __divmod__(self, x: _nt.CanArray0D[_Integer32p], /) -> _2Tuple[float64]: ...
-    @overload
-    def __divmod__(self, x: _JustInteger | _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rdivmod__(self, x: _CoFloat32, /) -> _2Tuple[Self]: ...
-    @overload
-    def __rdivmod__(self, x: _nt.CanArray0D[_Integer32p], /) -> _2Tuple[float64]: ...
-    @overload
-    def __rdivmod__(self, x: _JustInteger | _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
 single = float32
 
@@ -5266,39 +5159,6 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     @override
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
 
-    #
-    @overload
-    def __floordiv__(self, x: _CoFloat64, /) -> Self: ...
-    @overload
-    def __floordiv__(self, x: _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rfloordiv__(self, x: _CoFloat64, /) -> Self: ...
-    @overload
-    def __rfloordiv__(self, x: _JustFloating | _nt.Just[inexact], /) -> floating: ...
-
-    #
-    @overload
-    def __mod__(self, x: _CoFloat64, /) -> Self: ...
-    @overload
-    def __mod__(self, x: _JustFloating | _nt.Just[inexact], /) -> floating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rmod__(self, x: _CoFloat64, /) -> Self: ...
-    @overload
-    def __rmod__(self, x: _JustFloating | _nt.Just[inexact], /) -> floating: ...
-
-    #
-    @overload
-    def __divmod__(self, x: _nt.CoFloat64_0d, /) -> _2Tuple[Self]: ...
-    @overload
-    def __divmod__(self, x: _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    #
-    @overload
-    def __rdivmod__(self, x: _nt.CoFloat64_0d, /) -> _2Tuple[Self]: ...
-    @overload
-    def __rdivmod__(self, x: _JustFloating | _nt.Just[inexact], /) -> _2Tuple[floating]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
 double = float64
 
 class longdouble(floating[_n._64L]):
@@ -5341,24 +5201,6 @@ class longdouble(floating[_n._64L]):
     def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
     def tolist(self, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @override
-    def __floordiv__(self, x: _nt.CoFloating_0d | _JustFloating | _nt.Just[inexact] | _nt.JustFloat, /) -> Self: ...
-    @override
-    def __rfloordiv__(self, x: _nt.CoFloating_0d | _JustFloating | _nt.Just[inexact] | _nt.JustFloat, /) -> Self: ...
-
-    #
-    @override
-    def __mod__(self, x: _nt.CoFloating_0d | _JustFloating | _nt.Just[inexact] | _nt.JustFloat, /) -> Self: ...
-    @override
-    def __rmod__(self, x: _nt.CoFloating_0d | _JustFloating | _nt.Just[inexact] | _nt.JustFloat, /) -> Self: ...
-
-    #
-    @override
-    def __divmod__(self, x: _nt.CoFloating_0d | _JustFloating | _nt.Just[inexact] | _nt.JustFloat, /) -> _2Tuple[Self]: ...
-    @override
-    def __rdivmod__(self, x: _nt.CoFloating_0d | _JustFloating | _nt.Just[inexact] | _nt.JustFloat, /) -> _2Tuple[Self]: ...
 
 float96 = longdouble
 float128 = longdouble
@@ -5409,20 +5251,6 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
     @abc.abstractmethod
     @override
     def __abs__(self, /) -> floating: ...
-
-    # NOTE: Without these mypy will `[misc]` instead of `[opererator]`
-    @override
-    def __floordiv__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __rfloordiv__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __mod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __rmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __divmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __rdivmod__(self, x: Never, /) -> Never: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @deprecated("The Python built-in `round` is deprecated for complex scalars, and will raise a `TypeError` in a future release")
