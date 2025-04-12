@@ -44,6 +44,10 @@ class _CanNEP50Rule4(Protocol[_OtherT_contra, _T_co]):
 class _CanNEP50Rule5(Protocol[_OtherT_contra, _T_co]):
     def __nep50_rule5__(self, other: _OtherT_contra, /) -> _T_co: ...
 
+@type_check_only
+class _CanNEP50Rule6(Protocol[_OtherT_contra, _T_co]):
+    def __nep50_rule6__(self, other: _OtherT_contra, /) -> _T_co: ...
+
 _WithT = TypeVar("_WithT")
 _OutT = TypeVar("_OutT", bound=np.generic)
 
@@ -55,7 +59,8 @@ PromoteWith = TypeAliasType(
     | _CanNEP50Rule2[_WithT, _OutT]
     | _CanNEP50Rule3[_WithT, _OutT]
     | _CanNEP50Rule4[_WithT, _OutT]
-    | _CanNEP50Rule5[_WithT, _OutT],
+    | _CanNEP50Rule5[_WithT, _OutT]
+    | _CanNEP50Rule6[_WithT, _OutT],
     type_params=(_WithT, _OutT),
 )
 PromoteWith0D = TypeAliasType(
