@@ -4472,7 +4472,7 @@ class integer(_IntegralMixin, _RoundMixin, number[_BitT, int]):
     @abc.abstractmethod
     def __nep50__(
         self,
-        below: float64 | complex128 | longdouble | clongdouble | timedelta64,
+        below: timedelta64 | float64 | complex128 | longdouble | clongdouble | _JustFloating | _nt.Just[inexact],
         above: bool_,
         /,
     ) -> integer: ...
@@ -4687,7 +4687,7 @@ class signedinteger(integer[_BitT]):
     @override
     def __nep50__(
         self,
-        below: int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        below: int64 | timedelta64 | float64 | complex128 | longdouble | clongdouble | _JustFloating | _nt.Just[inexact],
         above: bool_,
         /,
     ) -> signedinteger: ...
@@ -4705,7 +4705,12 @@ class signedinteger(integer[_BitT]):
 class int8(signedinteger[_n._8]):
     @type_check_only
     @override
-    def __nep50__(self, below: signedinteger | inexact | timedelta64, above: bool_, /) -> int8: ...
+    def __nep50__(
+        self,
+        below: signedinteger | timedelta64 | inexact | _JustFloating | _nt.Just[inexact],
+        above: bool_,
+        /,
+    ) -> int8: ...
     @type_check_only
     def __nep50_rule2__(self, other: uint8, /) -> int16: ...
     @type_check_only
@@ -4732,7 +4737,16 @@ class int16(signedinteger[_n._16]):
     @override
     def __nep50__(
         self,
-        below: int16 | int32 | int64 | float32 | float64 | longdouble | complexfloating | timedelta64,
+        below: int16
+        | int32
+        | int64
+        | timedelta64
+        | float32
+        | float64
+        | longdouble
+        | _JustFloating
+        | complexfloating
+        | _nt.Just[inexact],
         above: uint8 | int8 | bool_,
         /,
     ) -> int16: ...
@@ -4762,7 +4776,7 @@ class int32(signedinteger[_n._32]):
     @override
     def __nep50__(
         self,
-        below: int32 | int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        below: int32 | int64 | timedelta64 | float64 | complex128 | longdouble | clongdouble | _JustFloating | _nt.Just[inexact],
         above: uint16 | int16 | uint8 | int8 | bool_,
         /,
     ) -> int32: ...
@@ -4771,6 +4785,8 @@ class int32(signedinteger[_n._32]):
     def __nep50_rule1__(self, other: uint64 | float16 | float32, /) -> float64: ...
     @type_check_only
     def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
+    @type_check_only
+    def __nep50_rule3__(self, other: _JustComplexFloating, /) -> complexfloating: ...
 
     #
     @property
@@ -4793,7 +4809,7 @@ class int64(signedinteger[_n._64]):
     @override
     def __nep50__(
         self,
-        below: int64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        below: int64 | timedelta64 | float64 | complex128 | longdouble | clongdouble | _JustFloating | _nt.Just[inexact],
         above: int32 | uint32 | int16 | uint16 | int8 | uint8 | bool_,
         /,
     ) -> int64: ...
@@ -4802,6 +4818,8 @@ class int64(signedinteger[_n._64]):
     def __nep50_rule1__(self, other: uint64 | float16 | float32, /) -> float64: ...
     @type_check_only
     def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
+    @type_check_only
+    def __nep50_rule3__(self, other: _JustComplexFloating, /) -> complexfloating: ...
     @type_check_only
     @override
     def __nep50_rule4__(self, other: _JustSignedInteger | signedinteger, /) -> Self: ...
@@ -4839,7 +4857,7 @@ class unsignedinteger(integer[_BitT]):
     @override
     def __nep50__(
         self,
-        below: uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        below: uint64 | timedelta64 | float64 | complex128 | longdouble | clongdouble | _JustFloating | _nt.Just[inexact],
         above: bool_,
         /,
     ) -> unsignedinteger: ...
@@ -4851,7 +4869,7 @@ class uint8(unsignedinteger[_n._8]):
     @override
     def __nep50__(
         self,
-        below: uint8 | int16 | int32 | int64 | unsignedinteger | inexact | timedelta64,
+        below: uint8 | int16 | int32 | int64 | timedelta64 | unsignedinteger | _JustFloating | inexact | _nt.Just[inexact],
         above: bool_,
         /,
     ) -> uint8: ...
@@ -4885,7 +4903,20 @@ class uint16(unsignedinteger[_n._16]):
     @override
     def __nep50__(
         self,
-        below: uint16 | int32 | uint32 | int64 | uint64 | float32 | float64 | longdouble | complexfloating | timedelta64,
+        below: (
+            uint16
+            | int32
+            | uint32
+            | int64
+            | uint64
+            | float32
+            | float64
+            | longdouble
+            | timedelta64
+            | _JustFloating
+            | complexfloating
+            | _nt.Just[inexact]
+        ),
         above: uint8 | bool_,
         /,
     ) -> uint16: ...
@@ -4921,7 +4952,9 @@ class uint32(unsignedinteger[_n._32]):
     @override
     def __nep50__(
         self,
-        below: uint32 | int64 | uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        below: (
+            uint32 | int64 | uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64 | _JustFloating | _JustInexact
+        ),
         above: uint16 | uint8 | bool_,
         /,
     ) -> uint32: ...
@@ -4957,7 +4990,7 @@ class uint64(unsignedinteger[_n._64]):
     @override
     def __nep50__(
         self,
-        below: uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64,
+        below: uint64 | float64 | complex128 | longdouble | clongdouble | timedelta64 | _JustFloating | _JustInexact,
         above: uint32 | uint16 | uint8 | bool_,
         /,
     ) -> uint64: ...
@@ -4997,7 +5030,26 @@ ulonglong = uint64
 uintp = uint64
 uint = uintp
 
+# TODO(jorenham): Move to _numtype
+@type_check_only
+class _CanNEP50Complex(Protocol[_ScalarT_co]):
+    def __nep50_complex__(self, /) -> _ScalarT_co: ...
+
 class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co]):
+    @type_check_only
+    @abc.abstractmethod
+    def __nep50__(self, below: clongdouble, above: int8 | uint8 | bool_, /) -> inexact: ...
+    @type_check_only
+    @abc.abstractmethod
+    def __nep50_complex__(self, /) -> complexfloating: ...
+    @type_check_only
+    def __nep50_rule3__(self, other: _JustFloating, /) -> inexact: ...
+    @type_check_only
+    def __nep50_rule4__(self, other: _JustComplexFloating, /) -> complexfloating: ...
+    @type_check_only
+    def __nep50_rule5__(self, other: _nt.Just[inexact], /) -> inexact: ...
+
+    #
     @abc.abstractmethod
     def __init__(self, value: _InexactItemT_co | None = ..., /) -> None: ...
     @abc.abstractmethod
@@ -5006,21 +5058,19 @@ class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co])
 
     #
     @overload
-    def __add__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    def __add__(self, x: _nt.CanCast0D[Self] | int | _nt.JustFloat, /) -> Self: ...
     @overload
-    def __add__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    def __add__(self: _CanNEP50Complex[_ScalarT], x: _nt.JustComplex, /) -> _ScalarT: ...
     @overload
-    def __add__(self, x: integer | _JustFloating, /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __add__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @overload
-    def __radd__(self, x: int | _nt.JustFloat, /) -> Self: ...
+    def __radd__(self, x: _nt.CanCast0D[Self] | int | _nt.JustFloat, /) -> Self: ...
     @overload
-    def __radd__(self, x: _nt.JustComplex, /) -> complexfloating: ...
+    def __radd__(self: _CanNEP50Complex[_ScalarT], x: _nt.JustComplex, /) -> _ScalarT: ...
     @overload
-    def __radd__(self, x: integer | _JustFloating, /) -> inexact: ...
-    @overload
-    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __radd__(self, x: _nt.PromoteWith0D[Self, _ScalarT], /) -> _ScalarT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @overload
@@ -5131,38 +5181,24 @@ class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co])
     def __rdivmod__(self: inexact[Any, float], x: _nt.Just[inexact], /) -> _2Tuple[floating]: ...
 
 class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
-    @property
+    @type_check_only
     @abc.abstractmethod
     @override
-    def itemsize(self) -> int: ...
-    @property
-    @abc.abstractmethod
+    def __nep50__(
+        self,
+        below: longdouble | clongdouble,
+        above: int8 | uint8 | bool_,
+        /,
+    ) -> floating: ...
+    @type_check_only
     @override
-    def nbytes(self) -> int: ...
+    def __nep50_rule3__(self, other: _JustFloating, /) -> floating: ...
 
     #
     @override
     def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
     @override
     def __abs__(self, /) -> Self: ...
-
-    #
-    @overload
-    def __add__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __add__(self, x: integer | _JustFloating, /) -> floating: ...
-
-    #
-    @overload
-    def __radd__(self, x: int | _nt.JustFloat, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.JustComplex, /) -> complexfloating: ...
-    @overload
-    def __radd__(self, x: integer | _JustFloating, /) -> floating: ...
-    @overload
-    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...
 
     # keep in sync with `__add__`
     @overload
@@ -5238,11 +5274,17 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
 
 class float16(floating[_n._16]):
     @type_check_only
+    @override
     def __nep50__(self, below: inexact, above: int8 | uint8 | bool_, /) -> float16: ...
     @type_check_only
-    def __nep50_rule1__(self, other: int16 | uint16, /) -> float32: ...
+    @override
+    def __nep50_complex__(self, /) -> complex64: ...
     @type_check_only
-    def __nep50_rule2__(self, other: int32 | uint32 | int64 | uint64, /) -> float64: ...
+    def __nep50_rule0__(self, other: int16 | uint16, /) -> float32: ...
+    @type_check_only
+    def __nep50_rule1__(self, other: int32 | uint32 | int64 | uint64, /) -> float64: ...
+    @type_check_only
+    def __nep50_rule2__(self, other: _JustInteger, /) -> floating: ...
 
     #
     @property
@@ -5257,40 +5299,6 @@ class float16(floating[_n._16]):
     def __hash__(self, /) -> int: ...
     def is_integer(self, /) -> py_bool: ...
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
-    #
-    @overload
-    def __add__(self, x: _CoFloat16, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.JustComplex, /) -> complex64: ...
-    @overload
-    def __add__(self, x: _JustInteger | _JustFloating, /) -> floating: ...
-    @overload
-    def __add__(self, x: _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __add__(self, x: _nt.CanArray0D[_nt.integer16], /) -> float32: ...
-    @overload
-    def __add__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-    @overload
-    def __add__(self, x: _nt.ToInteger_0d, /) -> floating: ...
-    @overload
-    def __add__(self, x: _JustComplexFloating, /) -> complexfloating: ...
-
-    #
-    @overload
-    def __radd__(self, x: _CoFloat16, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.JustComplex, /) -> complex64: ...
-    @overload
-    def __radd__(self, x: _JustInteger | _JustFloating, /) -> floating: ...
-    @overload
-    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __radd__(self, x: _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __radd__(self, x: _nt.CanArray0D[_nt.integer16], /) -> float32: ...
-    @overload
-    def __radd__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
 
     # keep in sync with __add__
     @overload
@@ -5492,6 +5500,7 @@ half = float16
 
 class float32(floating[_n._32]):
     @type_check_only
+    @override
     def __nep50__(
         self,
         below: float32 | float64 | longdouble | complexfloating,
@@ -5499,7 +5508,12 @@ class float32(floating[_n._32]):
         /,
     ) -> float32: ...
     @type_check_only
+    @override
+    def __nep50_complex__(self, /) -> complex64: ...
+    @type_check_only
     def __nep50_rule1__(self, other: int32 | uint32 | int64 | uint64, /) -> float64: ...
+    @type_check_only
+    def __nep50_rule2__(self, other: _JustInteger, /) -> floating: ...
 
     #
     @property
@@ -5514,34 +5528,6 @@ class float32(floating[_n._32]):
     def __hash__(self, /) -> int: ...
     def is_integer(self, /) -> py_bool: ...
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
-    #
-    @overload
-    def __add__(self, x: _CoFloat32, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.JustComplex, /) -> complex64: ...
-    @overload
-    def __add__(self, x: _JustInteger | _JustFloating, /) -> floating: ...
-    @overload
-    def __add__(self, x: _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __add__(self, x: _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __add__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
-
-    #
-    @overload
-    def __radd__(self, x: _CoFloat32, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.JustComplex, /) -> complex64: ...
-    @overload
-    def __radd__(self, x: _JustInteger | _JustFloating, /) -> floating: ...
-    @overload
-    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __radd__(self, x: _JustComplexFloating, /) -> complexfloating: ...
-    @overload
-    def __radd__(self, x: _nt.CanArray0D[_Integer32p], /) -> float64: ...
 
     # keep in sync with __add__
     @overload
@@ -5701,6 +5687,7 @@ single = float32
 
 class float64(floating[_n._64], float):  # type: ignore[misc]
     @type_check_only
+    @override
     def __nep50__(
         self,
         below: float64 | longdouble | complex128 | clongdouble,
@@ -5708,7 +5695,10 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
         /,
     ) -> float64: ...
     @type_check_only
-    def __nep50_rule1__(self, other: complex64, /) -> complex128: ...
+    @override
+    def __nep50_complex__(self, /) -> complex128: ...
+    @type_check_only
+    def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
 
     #
     def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
@@ -5740,32 +5730,6 @@ class float64(floating[_n._64], float):  # type: ignore[misc]
     def is_integer(self, /) -> py_bool: ...
     @override
     def as_integer_ratio(self, /) -> tuple[int, int]: ...
-
-    # NOTE: the reported LSP violations below are false positives
-
-    #
-    @overload
-    def __add__(self, x: _CoFloat64, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __add__(self, x: _JustFloating, /) -> floating: ...
-    @overload
-    def __add__(self, x: _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __add__(self, x: _JustComplexFloating, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __radd__(self, x: _CoFloat64, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.JustComplex, /) -> complex128: ...
-    @overload
-    def __radd__(self, x: _JustFloating, /) -> floating: ...
-    @overload
-    def __radd__(self, x: _nt.Just[inexact], /) -> inexact: ...
-    @overload
-    def __radd__(self, x: _JustComplexFloating, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__add__`
     @overload
@@ -5903,6 +5867,7 @@ double = float64
 
 class longdouble(floating[_n._64L]):
     @type_check_only
+    @override
     def __nep50__(
         self,
         below: longdouble | clongdouble,
@@ -5910,7 +5875,14 @@ class longdouble(floating[_n._64L]):
         /,
     ) -> longdouble: ...
     @type_check_only
-    def __nep50_rule1__(self, other: complex64 | complex128, /) -> clongdouble: ...
+    @override
+    def __nep50_complex__(self, /) -> clongdouble: ...
+    @type_check_only
+    @override
+    def __nep50_rule3__(self, other: _JustFloating, /) -> longdouble: ...
+    @type_check_only
+    @override
+    def __nep50_rule4__(self, other: complexfloating | _JustComplexFloating, /) -> clongdouble: ...
 
     #
     @property
@@ -5933,22 +5905,6 @@ class longdouble(floating[_n._64L]):
     def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
     def tolist(self, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @overload
-    def __add__(self, x: _nt.ToComplex_0d, /) -> clongdouble: ...
-    @overload
-    def __add__(self, x: _nt.CoFloating_0d | _JustFloating, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.Just[inexact], /) -> inexact: ...
-
-    #
-    @overload
-    def __radd__(self, x: _nt.ToComplex_0d, /) -> clongdouble: ...
-    @overload
-    def __radd__(self, x: _nt.CoFloating_0d | _JustFloating, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.Just[number] | _nt.Just[inexact], /) -> inexact: ...
 
     # keep in sync with `__add__`
     @overload
@@ -6037,7 +5993,28 @@ float128 = longdouble
 
 class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
     @type_check_only
-    def __nep50_rule3__(self, other: longdouble, /) -> clongdouble: ...
+    @abc.abstractmethod
+    @override
+    def __nep50__(
+        self,
+        below: clongdouble,
+        above: float32 | float16 | int16 | uint16 | int8 | uint8 | bool_,
+        /,
+    ) -> complexfloating: ...
+    @type_check_only
+    @override
+    def __nep50_complex__(self, /) -> Self: ...
+    @type_check_only
+    def __nep50_rule2__(self, other: _JustInteger, /) -> complexfloating: ...
+    @type_check_only
+    @override
+    def __nep50_rule3__(self, other: _JustFloating, /) -> complexfloating: ...
+    @type_check_only
+    @override
+    def __nep50_rule4__(self, other: _JustComplexFloating, /) -> complexfloating: ...
+    @type_check_only
+    @override
+    def __nep50_rule5__(self, other: _nt.Just[inexact], /) -> complexfloating: ...
 
     #
     @overload
@@ -6059,20 +6036,6 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
     @abc.abstractmethod
     @override
     def __abs__(self, /) -> floating: ...
-
-    # NOTE: The reported LSP violation is a false positive
-
-    #
-    @overload
-    def __add__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __add__(self, x: integer | _JustInexact, /) -> complexfloating: ...
-
-    #
-    @overload
-    def __radd__(self, x: int | _nt.JustFloat | _nt.JustComplex, /) -> Self: ...
-    @overload
-    def __radd__(self, x: integer | _JustInexact, /) -> complexfloating: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__add__`
     @overload
@@ -6142,14 +6105,17 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
 
 class complex64(complexfloating[_n._32]):
     @type_check_only
+    @override
     def __nep50__(
         self,
         below: complexfloating,
         above: float32 | float16 | int16 | uint16 | int8 | uint8 | bool_,
         /,
     ) -> complex64: ...
-    @type_check_only  # __nep_complex__ is already used by complexfloating
-    def __nep50_rule2__(self, other: int32 | uint32 | int64 | uint64 | float64, /) -> complex128: ...
+    @type_check_only
+    def __nep50_rule0__(self, other: int32 | uint32 | int64 | uint64 | float64, /) -> complex128: ...
+    @type_check_only
+    def __nep50_rule1__(self, other: longdouble, /) -> clongdouble: ...
 
     #
     @property
@@ -6170,26 +6136,6 @@ class complex64(complexfloating[_n._32]):
     def __abs__(self, /) -> float32: ...
     @override
     def __hash__(self, /) -> int: ...
-
-    #
-    @overload
-    def __add__(self, x: _CoComplex64, /) -> Self: ...
-    @overload
-    def __add__(self, x: _JustNumber, /) -> complexfloating: ...
-    @overload
-    def __add__(self, x: _nt.CanArray0D[float64 | _Integer32p], /) -> complex128: ...
-    @overload
-    def __add__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
-
-    # the redundant overload is a workaround for a pyright bug
-    @overload
-    def __radd__(self, x: _CoComplex64, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _JustNumber, /) -> complexfloating: ...
-    @overload
-    def __radd__(self, x: _nt.CanArray0D[float64 | _Integer32p], /) -> complex128: ...
-    @overload
-    def __radd__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...
 
     # keep in sync with `__add__`
     @overload
@@ -6278,12 +6224,18 @@ csingle = complex64
 
 class complex128(complexfloating[_n._64], complex):
     @type_check_only
+    @override
     def __nep50__(
         self,
         below: complex128 | clongdouble,
         above: complex64 | float64 | float32 | float16 | integer | bool_,
         /,
     ) -> complex128: ...
+    @type_check_only
+    def __nep50_rule1__(self, other: longdouble, /) -> clongdouble: ...
+    @type_check_only
+    @override
+    def __nep50_rule2__(self, other: integer | _JustInteger, /) -> complex128: ...
 
     #
     @overload
@@ -6314,22 +6266,6 @@ class complex128(complexfloating[_n._64], complex):
     def conjugate(self) -> Self: ...
 
     # NOTE: The reported LSP violations below are false positives
-
-    #
-    @overload
-    def __add__(self, x: _CoComplex128, /) -> Self: ...
-    @overload
-    def __add__(self, x: _nt.Just[number] | _JustInexact, /) -> complexfloating: ...
-    @overload
-    def __add__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    # keep in sync with `__add__`
-    @overload
-    def __radd__(self, x: _CoComplex128, /) -> Self: ...
-    @overload
-    def __radd__(self, x: _nt.Just[number] | _JustInexact, /) -> complexfloating: ...
-    @overload
-    def __radd__(self, x: _nt.ToLongDouble_0d, /) -> clongdouble: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # keep in sync with `__add__`
     @overload
@@ -6402,12 +6338,20 @@ cdouble = complex128
 
 class clongdouble(complexfloating[_n._64L]):
     @type_check_only
-    def __nep50__(
-        self,
-        below: clongdouble,
-        above: complex128 | complex64 | floating | integer | bool_,
-        /,
-    ) -> clongdouble: ...
+    @override
+    def __nep50__(self, below: clongdouble, above: number | bool_, /) -> clongdouble: ...
+    @type_check_only
+    @override
+    def __nep50_rule2__(self, other: _JustInteger, /) -> clongdouble: ...
+    @type_check_only
+    @override
+    def __nep50_rule3__(self, other: _JustFloating, /) -> clongdouble: ...
+    @type_check_only
+    @override
+    def __nep50_rule4__(self, other: _JustComplexFloating, /) -> clongdouble: ...
+    @type_check_only
+    @override
+    def __nep50_rule5__(self, other: _nt.Just[inexact], /) -> clongdouble: ...
 
     #
     @property
@@ -6437,11 +6381,7 @@ class clongdouble(complexfloating[_n._64L]):
     @override
     def __hash__(self, /) -> int: ...
 
-    # TODO(jorenham): Figure out these LSP violations
-    @override
-    def __add__(self, x: _nt.CoComplex_0d, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def __radd__(self, x: _nt.CoComplex_0d, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    #
     @override
     def __sub__(self, x: _nt.CoComplex_0d, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @override

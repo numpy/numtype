@@ -565,4 +565,4 @@ cld_to_f8: CanCast0D[Any, np.clongdouble] = f8  # type: ignore[assignment]  # py
 cld_to_ld: CanCast0D[Any, np.clongdouble] = ld  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 cld_to_c8: CanCast0D[Any, np.clongdouble] = c8  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
 cld_to_c16: CanCast0D[Any, np.clongdouble] = c16  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
-cld_to_cld: CanCast0D[Any, np.clongdouble] = cld  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
+cld_to_cld: CanCast0D[Any, np.clongdouble] = cld  # NOTE: allowing this simplifies the __nep50__ definition
