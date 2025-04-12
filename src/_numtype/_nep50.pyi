@@ -7,7 +7,7 @@ from typing_extensions import TypeAliasType, TypeVar
 
 import numpy as np
 
-__all__ = ["CanCast0D", "CanCastND", "CanNEP50", "MatchND", "PromoteWith", "PromoteWith0D"]
+__all__ = ["CanCast0D", "CanCastND", "CanNEP50", "CanNEP50Complex", "CanNEP50Float", "MatchND", "PromoteWith", "PromoteWith0D"]
 
 _T_co = TypeVar("_T_co", covariant=True)
 _BelowT_contra = TypeVar("_BelowT_contra", bound=np.generic, contravariant=True)
@@ -15,6 +15,9 @@ _AboveT_contra = TypeVar("_AboveT_contra", contravariant=True, default=Any)
 _OtherT_contra = TypeVar("_OtherT_contra", contravariant=True)
 _MatchT_co = TypeVar("_MatchT_co", bound=np.generic, covariant=True, default=Any)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
+
+_ComplexFloatingT_co = TypeVar("_ComplexFloatingT_co", bound=np.complexfloating, covariant=True)
+_InexactT_co = TypeVar("_InexactT_co", bound=np.inexact, covariant=True)
 
 @type_check_only
 class CanNEP50(Protocol[_BelowT_contra, _AboveT_contra, _MatchT_co]):
@@ -47,6 +50,14 @@ class _CanNEP50Rule5(Protocol[_OtherT_contra, _T_co]):
 @type_check_only
 class _CanNEP50Rule6(Protocol[_OtherT_contra, _T_co]):
     def __nep50_rule6__(self, other: _OtherT_contra, /) -> _T_co: ...
+
+@type_check_only
+class CanNEP50Float(Protocol[_InexactT_co]):
+    def __nep50_float__(self, /) -> _InexactT_co: ...
+
+@type_check_only
+class CanNEP50Complex(Protocol[_ComplexFloatingT_co]):
+    def __nep50_complex__(self, /) -> _ComplexFloatingT_co: ...
 
 _WithT = TypeVar("_WithT")
 _OutT = TypeVar("_OutT", bound=np.generic)
