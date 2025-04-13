@@ -13,6 +13,7 @@ __all__ = [
     "CastsScalar",
     "CastsWith",
     "CastsWithArray",
+    "CastsWithBuiltin",
     "CastsWithComplex",
     "CastsWithFloat",
     "CastsWithInt",
@@ -22,6 +23,9 @@ __all__ = [
 ###
 
 _LikeT_co = TypeVar("_LikeT_co", covariant=True)
+
+_BuitinT = TypeVar("_BuitinT")
+_BuitinT_co = TypeVar("_BuitinT_co", covariant=True)
 
 _ScalarIn: TypeAlias = np.generic | str
 _ScalarInT = TypeVar("_ScalarInT", bound=_ScalarIn)
@@ -71,6 +75,10 @@ class _CanNEP50Rule6(Protocol[_ScalarInT_contra, _ScalarOutT_co]):
     def __nep50_rule6__(self, other: _ScalarInT_contra, /) -> _ScalarOutT_co: ...
 
 #
+@type_check_only
+class _CanNEP50Builtin(Protocol[_BuitinT_co, _ScalarOutT_co]):
+    def __nep50_builtin__(self, /) -> tuple[_BuitinT_co, _ScalarOutT_co]: ...
+
 @type_check_only
 class _CanNEP50Bool(Protocol[_ScalarOutT_co]):
     def __nep50_bool__(self, /) -> _ScalarOutT_co: ...
@@ -161,7 +169,8 @@ CastsWithScalar = TypeAliasType(
 )
 
 #
-CastsWithBool: TypeAlias = _CanNEP50Bool[_ScalarOutT]
-CastsWithInt: TypeAlias = _CanNEP50Int[_ScalarOutT]
-CastsWithFloat: TypeAlias = _CanNEP50Float[_ScalarOutT]
-CastsWithComplex: TypeAlias = _CanNEP50Complex[_ScalarOutT]
+CastsWithBuiltin: TypeAlias = _LikeNumeric[_CanNEP50Builtin[_BuitinT, _ScalarOutT], _ShapeT]
+CastsWithBool: TypeAlias = _LikeNumeric[_CanNEP50Bool[_ScalarOutT], _ShapeT]
+CastsWithInt: TypeAlias = _LikeNumeric[_CanNEP50Int[_ScalarOutT], _ShapeT]
+CastsWithFloat: TypeAlias = _LikeNumeric[_CanNEP50Float[_ScalarOutT], _ShapeT]
+CastsWithComplex: TypeAlias = _LikeNumeric[_CanNEP50Complex[_ScalarOutT], _ShapeT]
