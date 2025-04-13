@@ -53,7 +53,7 @@ from ._nep50 import (
     CastsScalar as CastsScalar,
     CastsWith as CastsWith,
     CastsWithArray as CastsWithArray,
-    CastsWithBool as CastsWithBool,
+    CastsWithBuiltin as CastsWithBuiltin,
     CastsWithComplex as CastsWithComplex,
     CastsWithFloat as CastsWithFloat,
     CastsWithInt as CastsWithInt,
