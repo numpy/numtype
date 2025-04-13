@@ -1,4 +1,4 @@
-# @generated 2025-04-13T21:19:18Z with tool/testgen.py
+# @generated 2025-04-13T23:42:04Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -28,6 +28,10 @@ O_nd: npt.NDArray[np.object_]
 S_nd: npt.NDArray[np.bytes_]
 U_nd: npt.NDArray[np.str_]
 T_nd: np.ndarray[tuple[int, ...], np.dtypes.StringDType]
+i_nd: npt.NDArray[np.signedinteger]
+u_nd: npt.NDArray[np.unsignedinteger]
+f_nd: npt.NDArray[np.floating]
+c_nd: npt.NDArray[np.complexfloating]
 
 b_py: bool
 i_py: int
@@ -60,6 +64,10 @@ assert_type(b1_nd + O_nd, npt.NDArray[np.object_])
 b1_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 b1_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 b1_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(b1_nd + i_nd, npt.NDArray[np.signedinteger])
+assert_type(b1_nd + u_nd, npt.NDArray[np.unsignedinteger])
+assert_type(b1_nd + f_nd, npt.NDArray[np.floating])
+assert_type(b1_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(b1_nd + b_py, npt.NDArray[np.bool])
 assert_type(b1_nd + i_py, npt.NDArray[np.int64])
@@ -96,6 +104,10 @@ assert_type(i1_nd + O_nd, npt.NDArray[np.object_])
 i1_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i1_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i1_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i1_nd + i_nd, npt.NDArray[np.signedinteger])
+assert_type(i1_nd + u_nd, npt.NDArray[np.signedinteger | np.float64])
+assert_type(i1_nd + f_nd, npt.NDArray[np.floating])
+assert_type(i1_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(i1_nd + b_py, npt.NDArray[np.int8])
 assert_type(i1_nd + i_py, npt.NDArray[np.int8])
@@ -132,6 +144,10 @@ assert_type(i2_nd + O_nd, npt.NDArray[np.object_])
 i2_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i2_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i2_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i2_nd + i_nd, npt.NDArray[np.signedinteger])
+assert_type(i2_nd + u_nd, npt.NDArray[np.signedinteger | np.float64])
+assert_type(i2_nd + f_nd, npt.NDArray[np.floating])
+assert_type(i2_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(i2_nd + b_py, npt.NDArray[np.int16])
 assert_type(i2_nd + i_py, npt.NDArray[np.int16])
@@ -168,6 +184,10 @@ assert_type(i4_nd + O_nd, npt.NDArray[np.object_])
 i4_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i4_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i4_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i4_nd + i_nd, npt.NDArray[np.signedinteger])
+assert_type(i4_nd + u_nd, npt.NDArray[np.signedinteger | np.float64])
+assert_type(i4_nd + f_nd, npt.NDArray[np.floating])
+assert_type(i4_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(i4_nd + b_py, npt.NDArray[np.int32])
 assert_type(i4_nd + i_py, npt.NDArray[np.int32])
@@ -204,6 +224,10 @@ assert_type(i8_nd + O_nd, npt.NDArray[np.object_])
 i8_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i8_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i8_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i8_nd + i_nd, npt.NDArray[np.int64])
+assert_type(i8_nd + u_nd, npt.NDArray[np.int64 | np.float64])
+assert_type(i8_nd + f_nd, npt.NDArray[np.floating])
+assert_type(i8_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(i8_nd + b_py, npt.NDArray[np.int64])
 assert_type(i8_nd + i_py, npt.NDArray[np.int64])
@@ -240,6 +264,10 @@ assert_type(u1_nd + O_nd, npt.NDArray[np.object_])
 u1_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u1_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u1_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u1_nd + i_nd, npt.NDArray[np.signedinteger])
+assert_type(u1_nd + u_nd, npt.NDArray[np.unsignedinteger])
+assert_type(u1_nd + f_nd, npt.NDArray[np.floating])
+assert_type(u1_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(u1_nd + b_py, npt.NDArray[np.uint8])
 assert_type(u1_nd + i_py, npt.NDArray[np.uint8])
@@ -276,6 +304,10 @@ assert_type(u2_nd + O_nd, npt.NDArray[np.object_])
 u2_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u2_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u2_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u2_nd + i_nd, npt.NDArray[np.signedinteger])
+assert_type(u2_nd + u_nd, npt.NDArray[np.unsignedinteger])
+assert_type(u2_nd + f_nd, npt.NDArray[np.floating])
+assert_type(u2_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(u2_nd + b_py, npt.NDArray[np.uint16])
 assert_type(u2_nd + i_py, npt.NDArray[np.uint16])
@@ -312,6 +344,10 @@ assert_type(u4_nd + O_nd, npt.NDArray[np.object_])
 u4_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u4_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u4_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u4_nd + i_nd, npt.NDArray[np.int64])
+assert_type(u4_nd + u_nd, npt.NDArray[np.unsignedinteger])
+assert_type(u4_nd + f_nd, npt.NDArray[np.floating])
+assert_type(u4_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(u4_nd + b_py, npt.NDArray[np.uint32])
 assert_type(u4_nd + i_py, npt.NDArray[np.uint32])
@@ -348,6 +384,10 @@ assert_type(u8_nd + O_nd, npt.NDArray[np.object_])
 u8_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 u8_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u8_nd + i_nd, npt.NDArray[np.float64])
+assert_type(u8_nd + u_nd, npt.NDArray[np.uint64])
+assert_type(u8_nd + f_nd, npt.NDArray[np.floating])
+assert_type(u8_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(u8_nd + b_py, npt.NDArray[np.uint64])
 assert_type(u8_nd + i_py, npt.NDArray[np.uint64])
@@ -384,6 +424,10 @@ assert_type(f2_nd + O_nd, npt.NDArray[np.object_])
 f2_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f2_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f2_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f2_nd + i_nd, npt.NDArray[np.floating])
+assert_type(f2_nd + u_nd, npt.NDArray[np.floating])
+assert_type(f2_nd + f_nd, npt.NDArray[np.floating])
+assert_type(f2_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(f2_nd + b_py, npt.NDArray[np.float16])
 assert_type(f2_nd + i_py, npt.NDArray[np.float16])
@@ -420,6 +464,10 @@ assert_type(f4_nd + O_nd, npt.NDArray[np.object_])
 f4_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f4_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f4_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f4_nd + i_nd, npt.NDArray[np.floating])
+assert_type(f4_nd + u_nd, npt.NDArray[np.floating])
+assert_type(f4_nd + f_nd, npt.NDArray[np.floating])
+assert_type(f4_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(f4_nd + b_py, npt.NDArray[np.float32])
 assert_type(f4_nd + i_py, npt.NDArray[np.float32])
@@ -456,6 +504,10 @@ assert_type(f8_nd + O_nd, npt.NDArray[np.object_])
 f8_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f8_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f8_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f8_nd + i_nd, npt.NDArray[np.float64])
+assert_type(f8_nd + u_nd, npt.NDArray[np.float64])
+assert_type(f8_nd + f_nd, npt.NDArray[np.floating])
+assert_type(f8_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(f8_nd + b_py, npt.NDArray[np.float64])
 assert_type(f8_nd + i_py, npt.NDArray[np.float64])
@@ -492,6 +544,10 @@ assert_type(fld_nd + O_nd, npt.NDArray[np.object_])
 fld_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 fld_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 fld_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(fld_nd + i_nd, npt.NDArray[np.longdouble])
+assert_type(fld_nd + u_nd, npt.NDArray[np.longdouble])
+assert_type(fld_nd + f_nd, npt.NDArray[np.longdouble])
+assert_type(fld_nd + c_nd, npt.NDArray[np.clongdouble])
 
 assert_type(fld_nd + b_py, npt.NDArray[np.longdouble])
 assert_type(fld_nd + i_py, npt.NDArray[np.longdouble])
@@ -528,6 +584,10 @@ assert_type(c8_nd + O_nd, npt.NDArray[np.object_])
 c8_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c8_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c8_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c8_nd + i_nd, npt.NDArray[np.complexfloating])
+assert_type(c8_nd + u_nd, npt.NDArray[np.complexfloating])
+assert_type(c8_nd + f_nd, npt.NDArray[np.complexfloating])
+assert_type(c8_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(c8_nd + b_py, npt.NDArray[np.complex64])
 assert_type(c8_nd + i_py, npt.NDArray[np.complex64])
@@ -564,6 +624,10 @@ assert_type(c16_nd + O_nd, npt.NDArray[np.object_])
 c16_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c16_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c16_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c16_nd + i_nd, npt.NDArray[np.complex128])
+assert_type(c16_nd + u_nd, npt.NDArray[np.complex128])
+assert_type(c16_nd + f_nd, npt.NDArray[np.complexfloating])
+assert_type(c16_nd + c_nd, npt.NDArray[np.complexfloating])
 
 assert_type(c16_nd + b_py, npt.NDArray[np.complex128])
 assert_type(c16_nd + i_py, npt.NDArray[np.complex128])
@@ -600,6 +664,10 @@ assert_type(cld_nd + O_nd, npt.NDArray[np.object_])
 cld_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 cld_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 cld_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(cld_nd + i_nd, npt.NDArray[np.clongdouble])
+assert_type(cld_nd + u_nd, npt.NDArray[np.clongdouble])
+assert_type(cld_nd + f_nd, npt.NDArray[np.clongdouble])
+assert_type(cld_nd + c_nd, npt.NDArray[np.clongdouble])
 
 assert_type(cld_nd + b_py, npt.NDArray[np.clongdouble])
 assert_type(cld_nd + i_py, npt.NDArray[np.clongdouble])
@@ -635,6 +703,10 @@ assert_type(M8_nd + m8_nd, npt.NDArray[np.datetime64])
 M8_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 M8_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 M8_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(M8_nd + i_nd, npt.NDArray[np.datetime64])
+assert_type(M8_nd + u_nd, npt.NDArray[np.datetime64])
+M8_nd + f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+M8_nd + c_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(M8_nd + b_py, npt.NDArray[np.datetime64])
 assert_type(M8_nd + i_py, npt.NDArray[np.datetime64])
@@ -670,6 +742,10 @@ assert_type(m8_nd + m8_nd, npt.NDArray[np.timedelta64])
 m8_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 m8_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 m8_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(m8_nd + i_nd, npt.NDArray[np.timedelta64])
+assert_type(m8_nd + u_nd, npt.NDArray[np.timedelta64])
+m8_nd + f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+m8_nd + c_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 assert_type(m8_nd + b_py, npt.NDArray[np.timedelta64])
 assert_type(m8_nd + i_py, npt.NDArray[np.timedelta64])
@@ -703,6 +779,10 @@ assert_type(O_nd + cld_nd, npt.NDArray[np.object_])
 assert_type(O_nd + O_nd, npt.NDArray[np.object_])
 assert_type(O_nd + S_nd, npt.NDArray[np.object_])
 assert_type(O_nd + U_nd, npt.NDArray[np.object_])
+assert_type(O_nd + i_nd, npt.NDArray[np.object_])
+assert_type(O_nd + u_nd, npt.NDArray[np.object_])
+assert_type(O_nd + f_nd, npt.NDArray[np.object_])
+assert_type(O_nd + c_nd, npt.NDArray[np.object_])
 
 assert_type(O_nd + b_py, npt.NDArray[np.object_])
 assert_type(O_nd + i_py, npt.NDArray[np.object_])
@@ -739,6 +819,10 @@ assert_type(S_nd + O_nd, npt.NDArray[np.object_])
 assert_type(S_nd + S_nd, npt.NDArray[np.bytes_])
 S_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 S_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+S_nd + i_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+S_nd + u_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+S_nd + f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+S_nd + c_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 S_nd + b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 S_nd + i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -775,6 +859,10 @@ assert_type(U_nd + O_nd, npt.NDArray[np.object_])
 U_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(U_nd + U_nd, npt.NDArray[np.str_])
 assert_type(U_nd + T_nd, np.ndarray[tuple[int, ...], np.dtypes.StringDType])
+U_nd + i_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+U_nd + u_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+U_nd + f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+U_nd + c_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 U_nd + b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 U_nd + i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -810,6 +898,10 @@ T_nd + m8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(T_nd + U_nd, np.ndarray[tuple[int, ...], np.dtypes.StringDType])
 assert_type(T_nd + T_nd, np.ndarray[tuple[int, ...], np.dtypes.StringDType])
+T_nd + i_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+T_nd + u_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+T_nd + f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+T_nd + c_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 T_nd + b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -823,3 +915,163 @@ i_py + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f_py + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c_py + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(U_py + T_nd, np.ndarray[tuple[int, ...], np.dtypes.StringDType])
+
+assert_type(i_nd + b1_nd, npt.NDArray[np.signedinteger])
+assert_type(i_nd + i1_nd, npt.NDArray[np.signedinteger])
+assert_type(i_nd + i2_nd, npt.NDArray[np.signedinteger])
+assert_type(i_nd + i4_nd, npt.NDArray[np.signedinteger])
+assert_type(i_nd + i8_nd, npt.NDArray[np.int64])
+assert_type(i_nd + u1_nd, npt.NDArray[np.signedinteger])
+assert_type(i_nd + u2_nd, npt.NDArray[np.signedinteger])
+assert_type(i_nd + u4_nd, npt.NDArray[np.int64])
+assert_type(i_nd + u8_nd, npt.NDArray[np.float64])
+assert_type(i_nd + f2_nd, npt.NDArray[np.floating])
+assert_type(i_nd + f4_nd, npt.NDArray[np.floating])
+assert_type(i_nd + f8_nd, npt.NDArray[np.float64])
+assert_type(i_nd + fld_nd, npt.NDArray[np.longdouble])
+assert_type(i_nd + c8_nd, npt.NDArray[np.complexfloating])
+assert_type(i_nd + c16_nd, npt.NDArray[np.complex128])
+assert_type(i_nd + cld_nd, npt.NDArray[np.clongdouble])
+assert_type(i_nd + M8_nd, npt.NDArray[np.datetime64])
+assert_type(i_nd + m8_nd, npt.NDArray[np.timedelta64])
+assert_type(i_nd + O_nd, npt.NDArray[np.object_])
+i_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(i_nd + i_nd, npt.NDArray[np.signedinteger])
+assert_type(i_nd + u_nd, npt.NDArray[np.signedinteger | np.float64])
+assert_type(i_nd + f_nd, npt.NDArray[np.floating])
+assert_type(i_nd + c_nd, npt.NDArray[np.complexfloating])
+
+assert_type(i_nd + b_py, npt.NDArray[np.signedinteger])
+assert_type(i_nd + i_py, npt.NDArray[np.signedinteger])
+assert_type(i_nd + f_py, npt.NDArray[np.float64])
+assert_type(i_nd + c_py, npt.NDArray[np.complex128])
+i_nd + S_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+i_nd + U_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+assert_type(b_py + i_nd, npt.NDArray[np.signedinteger])
+assert_type(i_py + i_nd, npt.NDArray[np.signedinteger])
+assert_type(f_py + i_nd, npt.NDArray[np.float64])
+assert_type(c_py + i_nd, npt.NDArray[np.complex128])
+U_py + i_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+assert_type(u_nd + b1_nd, npt.NDArray[np.unsignedinteger])
+assert_type(u_nd + i1_nd, npt.NDArray[np.signedinteger | np.float64])
+assert_type(u_nd + i2_nd, npt.NDArray[np.signedinteger | np.float64])
+assert_type(u_nd + i4_nd, npt.NDArray[np.signedinteger | np.float64])
+assert_type(u_nd + i8_nd, npt.NDArray[np.int64 | np.float64])
+assert_type(u_nd + u1_nd, npt.NDArray[np.unsignedinteger])
+assert_type(u_nd + u2_nd, npt.NDArray[np.unsignedinteger])
+assert_type(u_nd + u4_nd, npt.NDArray[np.unsignedinteger])
+assert_type(u_nd + u8_nd, npt.NDArray[np.uint64])
+assert_type(u_nd + f2_nd, npt.NDArray[np.floating])
+assert_type(u_nd + f4_nd, npt.NDArray[np.floating])
+assert_type(u_nd + f8_nd, npt.NDArray[np.float64])
+assert_type(u_nd + fld_nd, npt.NDArray[np.longdouble])
+assert_type(u_nd + c8_nd, npt.NDArray[np.complexfloating])
+assert_type(u_nd + c16_nd, npt.NDArray[np.complex128])
+assert_type(u_nd + cld_nd, npt.NDArray[np.clongdouble])
+assert_type(u_nd + M8_nd, npt.NDArray[np.datetime64])
+assert_type(u_nd + m8_nd, npt.NDArray[np.timedelta64])
+assert_type(u_nd + O_nd, npt.NDArray[np.object_])
+u_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(u_nd + i_nd, npt.NDArray[np.signedinteger | np.float64])
+assert_type(u_nd + u_nd, npt.NDArray[np.unsignedinteger])
+assert_type(u_nd + f_nd, npt.NDArray[np.floating])
+assert_type(u_nd + c_nd, npt.NDArray[np.complexfloating])
+
+assert_type(u_nd + b_py, npt.NDArray[np.unsignedinteger])
+assert_type(u_nd + i_py, npt.NDArray[np.unsignedinteger])
+assert_type(u_nd + f_py, npt.NDArray[np.float64])
+assert_type(u_nd + c_py, npt.NDArray[np.complex128])
+u_nd + S_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+u_nd + U_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+assert_type(b_py + u_nd, npt.NDArray[np.unsignedinteger])
+assert_type(i_py + u_nd, npt.NDArray[np.unsignedinteger])
+assert_type(f_py + u_nd, npt.NDArray[np.float64])
+assert_type(c_py + u_nd, npt.NDArray[np.complex128])
+U_py + u_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+assert_type(f_nd + b1_nd, npt.NDArray[np.floating])
+assert_type(f_nd + i1_nd, npt.NDArray[np.floating])
+assert_type(f_nd + i2_nd, npt.NDArray[np.floating])
+assert_type(f_nd + i4_nd, npt.NDArray[np.floating])
+assert_type(f_nd + i8_nd, npt.NDArray[np.floating])
+assert_type(f_nd + u1_nd, npt.NDArray[np.floating])
+assert_type(f_nd + u2_nd, npt.NDArray[np.floating])
+assert_type(f_nd + u4_nd, npt.NDArray[np.floating])
+assert_type(f_nd + u8_nd, npt.NDArray[np.floating])
+assert_type(f_nd + f2_nd, npt.NDArray[np.floating])
+assert_type(f_nd + f4_nd, npt.NDArray[np.floating])
+assert_type(f_nd + f8_nd, npt.NDArray[np.floating])
+assert_type(f_nd + fld_nd, npt.NDArray[np.longdouble])
+assert_type(f_nd + c8_nd, npt.NDArray[np.complexfloating])
+assert_type(f_nd + c16_nd, npt.NDArray[np.complexfloating])
+assert_type(f_nd + cld_nd, npt.NDArray[np.clongdouble])
+f_nd + M8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f_nd + m8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f_nd + O_nd, npt.NDArray[np.object_])
+f_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(f_nd + i_nd, npt.NDArray[np.floating])
+assert_type(f_nd + u_nd, npt.NDArray[np.floating])
+assert_type(f_nd + f_nd, npt.NDArray[np.floating])
+assert_type(f_nd + c_nd, npt.NDArray[np.complexfloating])
+
+assert_type(f_nd + b_py, npt.NDArray[np.floating])
+assert_type(f_nd + i_py, npt.NDArray[np.floating])
+assert_type(f_nd + f_py, npt.NDArray[np.floating])
+assert_type(f_nd + c_py, npt.NDArray[np.complexfloating])
+f_nd + S_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+f_nd + U_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+assert_type(b_py + f_nd, npt.NDArray[np.floating])
+assert_type(i_py + f_nd, npt.NDArray[np.floating])
+assert_type(f_py + f_nd, npt.NDArray[np.floating])
+assert_type(c_py + f_nd, npt.NDArray[np.complexfloating])
+U_py + f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+assert_type(c_nd + b1_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + i1_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + i2_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + i4_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + i8_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + u1_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + u2_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + u4_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + u8_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + f2_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + f4_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + f8_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + fld_nd, npt.NDArray[np.clongdouble])
+assert_type(c_nd + c8_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + c16_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + cld_nd, npt.NDArray[np.clongdouble])
+c_nd + M8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c_nd + m8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c_nd + O_nd, npt.NDArray[np.object_])
+c_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c_nd + U_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c_nd + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+assert_type(c_nd + i_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + u_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + f_nd, npt.NDArray[np.complexfloating])
+assert_type(c_nd + c_nd, npt.NDArray[np.complexfloating])
+
+assert_type(c_nd + b_py, npt.NDArray[np.complexfloating])
+assert_type(c_nd + i_py, npt.NDArray[np.complexfloating])
+assert_type(c_nd + f_py, npt.NDArray[np.complexfloating])
+assert_type(c_nd + c_py, npt.NDArray[np.complexfloating])
+c_nd + S_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+c_nd + U_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+
+assert_type(b_py + c_nd, npt.NDArray[np.complexfloating])
+assert_type(i_py + c_nd, npt.NDArray[np.complexfloating])
+assert_type(f_py + c_nd, npt.NDArray[np.complexfloating])
+assert_type(c_py + c_nd, npt.NDArray[np.complexfloating])
+U_py + c_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
