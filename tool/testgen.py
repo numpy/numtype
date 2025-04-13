@@ -1191,6 +1191,10 @@ class NDArrayOps(TestGen):
         name_np = f"{dtype_label(dtype)}_nd"
 
         for name_py, pytype in self._scalars_py.items():
+            if reflect and pytype is bytes:
+                # impossible to reject because of `ndarray.__buffer__`
+                continue
+
             name1, name2 = (name_py, name_np) if reflect else (name_np, name_py)
 
             val_np, val_py = self._get_arrays(dtype, np.dtype(pytype))[0], pytype(1)
@@ -1201,10 +1205,6 @@ class NDArrayOps(TestGen):
             try:
                 out = self.opfunc(val1, val2)
             except TypeError:
-                if reflect and pytype is bytes:
-                    # impossible to reject
-                    continue
-
                 testcase = "  ".join((  # noqa: FLY002
                     expr,
                     "# type: ignore[operator]",
