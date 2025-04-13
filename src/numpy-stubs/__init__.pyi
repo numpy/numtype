@@ -623,7 +623,6 @@ _AnyShapeT = TypeVar(
     tuple[int, int, int, int],
     tuple[int, ...],
 )
-_AnyItemT = TypeVar("_AnyItemT", bool, int, float, complex, bytes, str)
 
 ###
 # Type parameters (for internal use only)
@@ -775,6 +774,7 @@ _JustFloating: TypeAlias = _nt.Just[floating]
 _JustComplexFloating: TypeAlias = _nt.Just[complexfloating]
 _JustInexact: TypeAlias = _nt.Just[inexact]
 _JustNumber: TypeAlias = _nt.Just[number]
+_JustBuiltinScalar: TypeAlias = int | _nt.JustFloat | _nt.JustComplex | _nt.JustBytes | _nt.JustStr
 
 _AbstractInexact: TypeAlias = _JustInexact | _JustFloating | _JustComplexFloating
 _AbstractInteger: TypeAlias = _JustInteger | _JustSignedInteger | _JustUnsignedInteger
@@ -2141,17 +2141,21 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __add__(self: NDArray[_ScalarT], x: _nt.CastsWith[_ScalarT, _ScalarOutT], /) -> NDArray[_ScalarOutT]: ...  # type: ignore[overload-overlap]
     @overload
+    def __add__(self: _nt.CastsWithBuiltin[_T, _ScalarOutT], x: _nt.SequenceND[_T], /) -> NDArray[_ScalarOutT]: ...
+    @overload
+    def __add__(self: _nt.CastsWithInt[_ScalarOutT], x: _nt.SequenceND[_nt.JustInt], /) -> NDArray[_ScalarOutT]: ...
+    @overload
+    def __add__(self: _nt.CastsWithFloat[_ScalarOutT], x: _nt.SequenceND[_nt.JustFloat], /) -> NDArray[_ScalarOutT]: ...
+    @overload
     def __add__(
-        self: NDArray[generic[_AnyItemT]],
-        x: _nt.SequenceND[_AnyItemT],
-        /,
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
+        self: _nt.CastsWithComplex[_ScalarOutT], x: _nt.SequenceND[_nt.JustComplex], /
+    ) -> NDArray[_ScalarOutT]: ...
     @overload
     def __add__(self: NDArray[datetime64], x: _nt.CoTimeDelta_nd, /) -> NDArray[datetime64]: ...
     @overload
     def __add__(self: NDArray[_nt.co_timedelta], x: _nt.ToDateTime_nd, /) -> NDArray[datetime64]: ...
     @overload
-    def __add__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...
+    def __add__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...  # type: ignore[overload-cannot-match]
     @overload
     def __add__(self: NDArray[str_], x: _nt.ToString_nd[_T], /) -> _nt.StringArrayND[_T]: ...
     @overload
@@ -2163,17 +2167,23 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __radd__(self: NDArray[_ScalarT], x: _nt.CastsWith[_ScalarT, _ScalarOutT], /) -> NDArray[_ScalarOutT]: ...  # type: ignore[overload-overlap]
     @overload
+    def __radd__(self: _nt.CastsWithBuiltin[_T, _ScalarOutT], x: _nt.SequenceND[_T], /) -> NDArray[_ScalarOutT]: ...
+    @overload
+    def __radd__(self: _nt.CastsWithInt[_ScalarOutT], x: _nt.SequenceND[_nt.JustInt], /) -> NDArray[_ScalarOutT]: ...
+    @overload
     def __radd__(
-        self: NDArray[generic[_AnyItemT]],
-        x: _nt.SequenceND[_AnyItemT],
-        /,
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
+        self: _nt.CastsWithFloat[_ScalarOutT], x: _nt.SequenceND[_nt.JustFloat], /
+    ) -> NDArray[_ScalarOutT]: ...
+    @overload
+    def __radd__(
+        self: _nt.CastsWithComplex[_ScalarOutT], x: _nt.SequenceND[_nt.JustComplex], /
+    ) -> NDArray[_ScalarOutT]: ...
     @overload
     def __radd__(self: NDArray[datetime64], x: _nt.CoTimeDelta_nd, /) -> NDArray[datetime64]: ...
     @overload
     def __radd__(self: NDArray[_nt.co_timedelta], x: _nt.ToDateTime_nd, /) -> NDArray[datetime64]: ...
     @overload
-    def __radd__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...
+    def __radd__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...  # type: ignore[overload-cannot-match]
     @overload
     def __radd__(self: NDArray[str_], x: _nt.ToString_nd[_T], /) -> _nt.StringArrayND[_T]: ...
     @overload
@@ -2183,11 +2193,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[misc]
     def __iadd__(self: NDArray[_ScalarT], x: _nt.Casts[_ScalarT], /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
-    def __iadd__(
-        self: NDArray[generic[_AnyItemT]],
-        x: _nt.SequenceND[_AnyItemT],
-        /,
-    ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
+    def __iadd__(self: _nt.CastsWithBuiltin[_T, Any], x: _nt.SequenceND[_T], /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __iadd__(self: NDArray[datetime64], x: _nt.ToTimeDelta_nd, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
@@ -4156,7 +4162,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @type_check_only
     def __nep50__(self, below: _nt.co_number | timedelta64, above: Never, /) -> bool_: ...
     @type_check_only
-    def __nep50_bool__(self, /) -> bool_: ...
+    def __nep50_builtin__(self, /) -> tuple[py_bool, bool_]: ...
     @type_check_only
     def __nep50_int__(self, /) -> intp: ...
     @type_check_only
@@ -4604,9 +4610,8 @@ class number(
     generic[_NumberItemT_co],
     Generic[_BitT, _NumberItemT_co],
 ):
-    @final
     @type_check_only
-    def __nep50_bool__(self, /) -> Self: ...
+    def __nep50_builtin__(self, /) -> tuple[int, Self]: ...
     @final
     @type_check_only
     def __nep50_int__(self, /) -> Self: ...
@@ -5463,6 +5468,8 @@ complex256 = clongdouble
 class object_(_RealMixin, generic[Any]):
     @type_check_only
     def __nep50__(self, below: object_, above: _nt.co_number | character, /) -> object_: ...
+    @type_check_only
+    def __nep50_builtin__(self, /) -> tuple[_JustBuiltinScalar, object_]: ...
 
     #
     @overload
@@ -5500,7 +5507,9 @@ class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):  # t
 
 class bytes_(character[bytes], bytes):  # type: ignore[misc]
     @type_check_only
-    def __nep50__(self, below: bytes_, above: bytes_, /) -> bytes_: ...
+    def __nep50__(self, below: bytes_ | object_, above: Never, /) -> bytes_: ...
+    @type_check_only
+    def __nep50_builtin__(self, /) -> tuple[_nt.JustBytes, bytes_]: ...
 
     #
     @overload
@@ -5514,7 +5523,9 @@ class bytes_(character[bytes], bytes):  # type: ignore[misc]
 
 class str_(character[str], str):  # type: ignore[misc]
     @type_check_only
-    def __nep50__(self, below: str | str_, from_: str_, /) -> str_: ...
+    def __nep50__(self, below: str_ | object_, above: Never, /) -> str_: ...
+    @type_check_only
+    def __nep50_builtin__(self, /) -> tuple[_nt.JustStr, str_]: ...
 
     #
     @overload
@@ -5544,7 +5555,10 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
     def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
 
 class datetime64(
-    _RealMixin, _CmpOpMixin[datetime64, _ArrayLikeDT64_co], generic[_DT64ItemT_co], Generic[_DT64ItemT_co]
+    _RealMixin,
+    _CmpOpMixin[datetime64, _ArrayLikeDT64_co],
+    generic[_DT64ItemT_co],
+    Generic[_DT64ItemT_co],
 ):
     @property
     @override
@@ -5681,6 +5695,8 @@ class timedelta64(
 ):
     @type_check_only
     def __nep50__(self, below: timedelta64, above: _nt.co_integer, /) -> timedelta64: ...
+    @type_check_only
+    def __nep50_builtin__(self, /) -> tuple[int, timedelta64]: ...
 
     #
     @property
