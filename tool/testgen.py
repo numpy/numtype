@@ -180,8 +180,8 @@ def _array_expr(*dtypes: np.dtype, ndim: int | None = None, npt: bool = False) -
     assert dtypes
 
     chars = {dtype.char for dtype in dtypes}
-    kinds = {dtype.char for dtype in dtypes}
-    assert len(chars) == 1 or kinds - {"i", "u", "f", "c", "ui", "fc", "iufc"}, (
+    kinds = {dtype.kind for dtype in dtypes}
+    assert len(chars) == 1 or not kinds - {"i", "u", "f", "c"}, (
         "unsupported multiple dtypes"
     )
 
@@ -1103,48 +1103,8 @@ class NDArrayOps(TestGen):
             self.opfunc = getattr(op, opname, None) or getattr(op, opname + "_")
         self.testname = self.testname.format(opname)
 
-        seen_dtypes: set[str] = set()
-
-        unseen_abstract = {
-            "i": {dtype_label(np.dtype(f"i{nbit}")) for nbit in (1, 2, 4, 8)},
-            "u": {dtype_label(np.dtype(f"u{nbit}")) for nbit in (1, 2, 4, 8)},
-            "f": {dtype_label(np.dtype(char)) for char in "efdg"},
-            "c": {dtype_label(np.dtype(char)) for char in "FDG"},
-        }
-        seen_abstract: dict[str, list[np.dtype]] = {
-            kind: [] for kind in unseen_abstract
-        }
-
         self.dtypes = {}
-
-        # concrete dtypes
-        for dtype in sorted(
-            _get_op_types(opname),
-            key=lambda dt: DTYPE_CHARS.index(dt.char),
-        ):
-            label = dtype_label(dtype)
-            if label in seen_dtypes:
-                continue
-            seen_dtypes.add(label)
-
-            kind = dtype.kind
-            if kind in "SU":
-                kind = "w"
-            if kind in unseen_abstract and label in unseen_abstract[kind]:
-                unseen_abstract[kind].remove(label)
-                seen_abstract[kind].append(dtype)
-
-            self.dtypes[label] = (dtype,)
-
-        # abstract dtypes
-        for kind, dtypes in seen_abstract.items():
-            if unseen_abstract[kind]:
-                continue
-
-            assert dtypes
-            assert kind not in self.dtypes
-
-            self.dtypes[kind] = tuple(dtypes)
+        self.__init_dtypes()
 
         super().__init__()
 
@@ -1185,6 +1145,52 @@ class NDArrayOps(TestGen):
             "iufc": "number",
         }[label]
         return f"{NP}.{sctype_name}"
+
+    def __init_dtypes(self) -> None:
+        seen_dtypes: set[str] = set()
+        unseen_abstract = {
+            "i": {dtype_label(np.dtype(f"i{nbit}")) for nbit in (1, 2, 4, 8)},
+            "u": {dtype_label(np.dtype(f"u{nbit}")) for nbit in (1, 2, 4, 8)},
+            "f": {dtype_label(np.dtype(char)) for char in "efdg"},
+            "c": {dtype_label(np.dtype(char)) for char in "FDG"},
+        }
+        seen_abstract: dict[str, list[np.dtype]] = {
+            kind: [] for kind in unseen_abstract
+        }
+
+        for dtype in sorted(
+            _get_op_types(self.opname),
+            key=lambda dt: DTYPE_CHARS.index(dt.char),
+        ):
+            label = dtype_label(dtype)
+            if label in seen_dtypes:
+                continue
+            seen_dtypes.add(label)
+
+            kind = dtype.kind
+            if kind in "SU":
+                kind = "w"
+            if kind in unseen_abstract and label in unseen_abstract[kind]:
+                unseen_abstract[kind].remove(label)
+                seen_abstract[kind].append(dtype)
+
+            self.dtypes[label] = (dtype,)
+
+        for kindkind in "iu", "fc", "iufc":
+            unseen_abstract[kindkind] = set()
+            seen_abstract[kindkind] = []
+            for kind in kindkind:
+                unseen_abstract[kindkind] |= unseen_abstract[kind]
+                seen_abstract[kindkind] += seen_abstract[kind]
+
+        for kind, dtypes in seen_abstract.items():
+            if unseen_abstract[kind]:
+                continue
+
+            assert dtypes
+            assert kind not in self.dtypes
+
+            self.dtypes[kind] = tuple(dtypes)
 
     def _op_expr(self, lhs: str, rhs: str, /) -> str:
         if self.opfunc.__name__ == "divmod":
