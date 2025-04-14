@@ -4714,7 +4714,7 @@ class number(
 
     #
     @overload
-    def __truediv__(self, x: _nt.CoFloating_0d | _nt.CastsScalar[Self] | _JustNumber, /) -> inexact: ...
+    def __truediv__(self, x: _nt.CoFloat64_0d | _nt.CastsScalar[Self] | _JustNumber, /) -> inexact: ...
     @overload
     def __truediv__(self, x: _nt.CastsWithScalar[Self, _InexactT], /) -> _InexactT: ...
     @overload
@@ -4722,7 +4722,7 @@ class number(
 
     #
     @overload
-    def __rtruediv__(self, x: _nt.CoFloating_0d | _nt.CastsScalar[Self] | _JustNumber, /) -> inexact: ...
+    def __rtruediv__(self, x: _nt.CoFloat64_0d | _nt.CastsScalar[Self] | _JustNumber, /) -> inexact: ...
     @overload
     def __rtruediv__(self, x: _nt.CastsWithScalar[Self, _InexactT], /) -> _InexactT: ...
     @overload
@@ -5136,9 +5136,6 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @override
     @type_check_only
     def __nep50_rule3__(self, other: _JustFloating, /) -> floating: ...
-    @override
-    @type_check_only
-    def __nep50_rule4__(self, other: _JustComplexFloating, /) -> complexfloating: ...
 
     #
     @override
@@ -5245,7 +5242,12 @@ double = float64
 class longdouble(_FloatMixin[L[12, 16]], floating[_n._64L]):
     @override
     @type_check_only
-    def __nep50__(self, below: _nt.inexact64l, above: _float64_max | _nt.co_integer, /) -> longdouble: ...
+    def __nep50__(
+        self,
+        below: longdouble | clongdouble,
+        above: _nt.co_float64,
+        /,
+    ) -> longdouble: ...
     @override
     @type_check_only
     def __nep50_complex__(self, /) -> clongdouble: ...
@@ -5255,6 +5257,9 @@ class longdouble(_FloatMixin[L[12, 16]], floating[_n._64L]):
     @override
     @type_check_only
     def __nep50_rule4__(self, other: complexfloating | _JustComplexFloating, /) -> clongdouble: ...
+    @override
+    @type_check_only
+    def __nep50_rule6__(self, other: _JustInexact | _JustNumber, /) -> longdouble | clongdouble: ...
 
     #
     @overload
