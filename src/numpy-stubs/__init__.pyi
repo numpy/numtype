@@ -353,7 +353,6 @@ from ._typing import (
     DTypeLike,
     NBitBase,
     NDArray,
-    _ArrayLike,
     _ArrayLikeDT64_co,
     _ArrayLikeObject_co,
     _ArrayLikeTD64_co,
@@ -2672,79 +2671,59 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __imod__(self: NDArray[object_], x: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
 
-    # TODO(jorenham): rewrite the binops below
+    #
+    @overload
+    def __divmod__(self: NDArray[bool_], x: _nt.ToBool_nd, /) -> _2Tuple[NDArray[int8]]: ...
+    @overload
+    def __divmod__(self: NDArray[_RealNumberT], x: _nt.Casts[_RealNumberT], /) -> _2Tuple[NDArray[_RealNumberT]]: ...
+    @overload
+    def __divmod__(
+        self: NDArray[_RealT], x: _nt.CastsWith[_RealT, _RealScalarT], /
+    ) -> _2Tuple[NDArray[_RealScalarT]]: ...
+    @overload
+    def __divmod__(self: NDArray[_RealNumberT], x: _nt.SequenceND[py_bool], /) -> _2Tuple[NDArray[_RealNumberT]]: ...
+    @overload
+    def __divmod__(
+        self: _nt.CastsWithInt[_RealScalarT], x: _nt.SequenceND[_nt.JustInt], /
+    ) -> _2Tuple[NDArray[_RealScalarT]]: ...
+    @overload
+    def __divmod__(
+        self: _nt.CastsWithFloat[_RealScalarT], x: _nt.SequenceND[_nt.JustFloat], /
+    ) -> _2Tuple[NDArray[_RealScalarT]]: ...
+    @overload
+    def __divmod__(
+        self: NDArray[timedelta64], x: _nt.ToTimeDelta_nd, /
+    ) -> tuple[NDArray[int64], NDArray[timedelta64]]: ...
+    @overload
+    def __divmod__(self: NDArray[object_], x: object, /) -> _2Tuple[NDArray[object_]]: ...
 
     #
     @overload
-    def __divmod__(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
-        self: NDArray[_RealNumberT],
-        rhs: int | bool_,
-        /,
-    ) -> _2Tuple[_nt.Array[_RealNumberT, _ShapeT_co]]: ...
+    def __rdivmod__(self: NDArray[bool_], x: _nt.ToBool_nd, /) -> _2Tuple[NDArray[int8]]: ...
     @overload
-    def __divmod__(self: NDArray[_RealNumberT], rhs: _nt.ToBool_nd, /) -> _2Tuple[NDArray[_RealNumberT]]: ...  # type: ignore[overload-overlap]
-    @overload
-    def __divmod__(self: NDArray[bool_], rhs: _ArrayLike[_RealNumberT], /) -> _2Tuple[NDArray[_RealNumberT]]: ...
-    @overload
-    def __divmod__(self: NDArray[bool_], rhs: _nt.ToBool_nd, /) -> _2Tuple[NDArray[int8]]: ...
-    @overload
-    def __divmod__(self: NDArray[float64], rhs: _nt.CoFloat64_nd, /) -> _2Tuple[NDArray[float64]]: ...
-    @overload
-    def __divmod__(self: _ArrayFloat64_co, rhs: _nt.ToFloat64_nd, /) -> _2Tuple[NDArray[float64]]: ...
-    @overload
-    def __divmod__(self: NDArray[unsignedinteger], rhs: _nt.CoUInt64_nd, /) -> _2Tuple[NDArray[unsignedinteger]]: ...
-    @overload
-    def __divmod__(self: _ArrayUInt_co, rhs: _nt.ToUInteger_nd, /) -> _2Tuple[NDArray[unsignedinteger]]: ...
-    @overload
-    def __divmod__(self: NDArray[signedinteger], rhs: _nt.CoInt64_nd, /) -> _2Tuple[NDArray[signedinteger]]: ...
-    @overload
-    def __divmod__(self: _ArrayInt_co, rhs: _nt.ToSInteger_nd, /) -> _2Tuple[NDArray[signedinteger]]: ...
-    @overload
-    def __divmod__(self: NDArray[floating], rhs: _nt.CoFloating_nd, /) -> _2Tuple[NDArray[floating]]: ...
-    @overload
-    def __divmod__(self: NDArray[floating | integer], rhs: _nt.ToFloating_nd, /) -> _2Tuple[NDArray[floating]]: ...
-    @overload
-    def __divmod__(
-        self: NDArray[timedelta64],
-        rhs: _ArrayLike[timedelta64],
-        /,
-    ) -> tuple[NDArray[int64], NDArray[timedelta64]]: ...
-
-    # keep in sync with __divmod__
-    @overload
-    def __rdivmod__(  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
-        self: NDArray[_RealNumberT],
-        lhs: int | bool_,
-        /,
-    ) -> _2Tuple[_nt.Array[_RealNumberT, _ShapeT_co]]: ...
-    @overload
-    def __rdivmod__(self: NDArray[_RealNumberT], lhs: _nt.ToBool_nd, /) -> _2Tuple[NDArray[_RealNumberT]]: ...  # type: ignore[overload-overlap]
-    @overload
-    def __rdivmod__(self: NDArray[bool_], lhs: _ArrayLike[_RealNumberT], /) -> _2Tuple[NDArray[_RealNumberT]]: ...
-    @overload
-    def __rdivmod__(self: NDArray[bool_], lhs: _nt.ToBool_nd, /) -> _2Tuple[NDArray[int8]]: ...
-    @overload
-    def __rdivmod__(self: NDArray[float64], lhs: _nt.CoFloat64_nd, /) -> _2Tuple[NDArray[float64]]: ...
-    @overload
-    def __rdivmod__(self: _ArrayFloat64_co, lhs: _nt.ToFloat64_nd, /) -> _2Tuple[NDArray[float64]]: ...
-    @overload
-    def __rdivmod__(self: NDArray[unsignedinteger], lhs: _nt.CoUInt64_nd, /) -> _2Tuple[NDArray[unsignedinteger]]: ...
-    @overload
-    def __rdivmod__(self: _ArrayUInt_co, lhs: _nt.ToUInteger_nd, /) -> _2Tuple[NDArray[unsignedinteger]]: ...
-    @overload
-    def __rdivmod__(self: NDArray[signedinteger], lhs: _nt.CoInt64_nd, /) -> _2Tuple[NDArray[signedinteger]]: ...
-    @overload
-    def __rdivmod__(self: _ArrayInt_co, lhs: _nt.ToSInteger_nd, /) -> _2Tuple[NDArray[signedinteger]]: ...
-    @overload
-    def __rdivmod__(self: NDArray[floating], lhs: _nt.CoFloating_nd, /) -> _2Tuple[NDArray[floating]]: ...
-    @overload
-    def __rdivmod__(self: NDArray[floating | integer], lhs: _nt.ToFloating_nd, /) -> _2Tuple[NDArray[floating]]: ...
+    def __rdivmod__(self: NDArray[_RealNumberT], x: _nt.Casts[_RealNumberT], /) -> _2Tuple[NDArray[_RealNumberT]]: ...
     @overload
     def __rdivmod__(
-        self: NDArray[timedelta64],
-        lhs: _ArrayLike[timedelta64],
-        /,
+        self: NDArray[_RealT], x: _nt.CastsWith[_RealT, _RealScalarT], /
+    ) -> _2Tuple[NDArray[_RealScalarT]]: ...
+    @overload
+    def __rdivmod__(self: NDArray[_RealNumberT], x: _nt.SequenceND[py_bool], /) -> _2Tuple[NDArray[_RealNumberT]]: ...
+    @overload
+    def __rdivmod__(
+        self: _nt.CastsWithInt[_RealScalarT], x: _nt.SequenceND[_nt.JustInt], /
+    ) -> _2Tuple[NDArray[_RealScalarT]]: ...
+    @overload
+    def __rdivmod__(
+        self: _nt.CastsWithFloat[_RealScalarT], x: _nt.SequenceND[_nt.JustFloat], /
+    ) -> _2Tuple[NDArray[_RealScalarT]]: ...
+    @overload
+    def __rdivmod__(
+        self: NDArray[timedelta64], x: _nt.ToTimeDelta_nd, /
     ) -> tuple[NDArray[int64], NDArray[timedelta64]]: ...
+    @overload
+    def __rdivmod__(self: NDArray[object_], x: object, /) -> _2Tuple[NDArray[object_]]: ...
+
+    # TODO(jorenham): rewrite the binops below
 
     #
     @overload
