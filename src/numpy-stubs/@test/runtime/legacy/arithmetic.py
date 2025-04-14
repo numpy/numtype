@@ -271,7 +271,7 @@ AR_LIKE_O // AR_o
 
 # Inplace multiplication
 
-AR_b *= AR_LIKE_b  # type: ignore[arg-type]  # mypy bug
+AR_b *= AR_LIKE_b
 
 AR_u *= AR_LIKE_b
 AR_u *= AR_LIKE_u
