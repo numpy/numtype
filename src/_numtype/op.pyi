@@ -1,5 +1,5 @@
-from typing import Any, Protocol, override
-from typing_extensions import TypeVar
+from typing import Any, Protocol
+from typing_extensions import TypeVar, override
 
 __all__ = [  # noqa: RUF022
     "CanEq",
