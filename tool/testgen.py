@@ -12,6 +12,7 @@ import abc
 import difflib
 import itertools
 import operator as op
+import textwrap
 from collections.abc import Callable, Generator, Iterable, Iterator, Mapping, Sequence
 from typing import (
     Any,
@@ -123,8 +124,19 @@ def _ensure_tuple(x: _T | tuple[_T, ...], /) -> tuple[_T, ...]:
     return (x,)
 
 
-def _expr_assert_type(val_expr: str, type_expr: str, /) -> str:
-    return f"assert_type({val_expr}, {type_expr})"
+def _expr_assert_type(
+    val_expr: str,
+    type_expr: str,
+    /,
+    *,
+    wrap: int = 120,
+) -> str:
+    out = f"assert_type({val_expr}, {type_expr})"
+    if len(out) > wrap or "\n" in out:
+        val_expr = textwrap.indent(val_expr, TAB)
+        type_expr = textwrap.indent(type_expr, TAB)
+        out = f"assert_type(\n{val_expr},\n{type_expr},\n)"
+    return out
 
 
 def _get_op_types(op: _OpName) -> tuple[np.dtype, ...]:
@@ -180,7 +192,11 @@ def _sctype_expr_from_value(value: _Scalar | tuple[_Scalar, ...], /) -> str:
     return type(value).__qualname__
 
 
-def _array_expr(*dtypes: np.dtype, ndim: int | None = None, npt: bool = False) -> str:
+def _array_expr_single(
+    *dtypes: np.dtype,
+    ndim: int | None = None,
+    npt: bool = False,
+) -> str:
     assert dtypes
 
     chars = {dtype.char for dtype in dtypes}
@@ -211,6 +227,32 @@ def _array_expr(*dtypes: np.dtype, ndim: int | None = None, npt: bool = False) -
         shape_expr = f"tuple[{shape_expr_args}]"
 
     return f"{NP}.ndarray[{shape_expr}, {dtype_expr}]"
+
+
+def _array_expr(
+    *dtypess: tuple[np.dtype, ...],
+    ndim: int | None = None,
+    npt: bool = False,
+) -> str:
+    assert dtypess
+
+    ntypes = len(dtypess[0])
+    assert ntypes in {1, 2}
+
+    expr1 = _array_expr_single(*(dts[0] for dts in dtypess), ndim=ndim, npt=npt)
+
+    if ntypes == 1:
+        return expr1
+
+    expr2 = _array_expr_single(*(dts[1] for dts in dtypess), ndim=ndim, npt=npt)
+
+    expr = f"tuple[{expr1}, {expr2}]"
+    if "\n" in expr or "|" in expr:
+        expr1 = textwrap.indent(expr1, TAB)
+        expr2 = textwrap.indent(expr2, TAB)
+        expr = f"tuple[\n{expr1},\n{expr2},\n]"
+
+    return expr
 
 
 def __group_types(*types: str) -> tuple[dict[str, list[str]], list[str]]:
@@ -1111,10 +1153,6 @@ class NDArrayOps(TestGen):
         self.shape = shape
 
         ufunc = OP_UFUNCS[opname]
-        if ufunc.nout != 1:
-            # TODO(jorenham): divmod
-            raise NotImplementedError
-        self.n_out = 1
 
         if ufunc.nin == 1:
             self.n_in = 1
@@ -1122,6 +1160,13 @@ class NDArrayOps(TestGen):
             self.n_in = 2
         else:
             raise TypeError("operator must be unary or binary")
+
+        if ufunc.nout == 1:
+            self.n_out = 1
+        elif ufunc.nout == 2:
+            self.n_out = 2
+        else:
+            raise TypeError("operator must return either one or two values")
 
         self.opname = opname
         if opname == "abs":
@@ -1282,18 +1327,23 @@ class NDArrayOps(TestGen):
         lhs: npt.ArrayLike,
         rhs: npt.ArrayLike,
         /,
-        *,
         reflect: bool = False,
-    ) -> np.dtype | None:
+    ) -> tuple[np.dtype, ...]:
         if reflect:
             lhs, rhs = rhs, lhs
 
         try:
-            dtype: np.dtype = self.opfunc(lhs, rhs).dtype
+            out = self.opfunc(lhs, rhs)
         except TypeError:
-            return None
+            return ()
 
-        return dtype
+        match out:
+            case np.ndarray(dtype=dtype):
+                return (dtype,)
+            case (np.ndarray(dtype=dtype1), np.ndarray(dtype=dtype2)):
+                return (dtype1, dtype2)
+            case _:
+                raise AssertionError(repr(out))
 
     def _gen_unop(self, /) -> Generator[str | None]:
         for label, dtypes in self.dtypes.items():
@@ -1307,7 +1357,7 @@ class NDArrayOps(TestGen):
 
             expr = self._op_expr(f"{label}_nd")
             if out_dtypes:
-                out_type_expr = _array_expr(*out_dtypes, npt=True)
+                out_type_expr = _array_expr_single(*out_dtypes, npt=True)
                 yield _expr_assert_type(expr, out_type_expr)
             else:
                 yield "  ".join((
@@ -1324,17 +1374,17 @@ class NDArrayOps(TestGen):
             name2 = f"{label2}_nd"
             expr = self._op_expr(name1, name2)
 
-            out_dtypes: set[np.dtype] = set()
+            out_dtypes_set: set[tuple[np.dtype, ...]] = set()
             for dtype1, dtype2 in itertools.product(dtypes1, dtypes2):
                 arr1, arr2 = self._get_arrays(dtype1, dtype2)
 
-                if (out_dtype := self._evaluate_binop(arr1, arr2)) is None:
-                    out_dtypes.clear()
+                if not (out_dtypes := self._evaluate_binop(arr1, arr2)):
+                    out_dtypes_set.clear()
                     break
-                out_dtypes.add(out_dtype)
+                out_dtypes_set.add(out_dtypes)
 
-            if out_dtypes:
-                out_type_expr = _array_expr(*out_dtypes, npt=True)
+            if out_dtypes_set:
+                out_type_expr = _array_expr(*out_dtypes_set, npt=True)
                 yield _expr_assert_type(expr, out_type_expr)
             elif "O" not in {dtypes1[0].char, dtypes2[0].char}:  # impossible to reject
                 # 🐴
@@ -1377,21 +1427,19 @@ class NDArrayOps(TestGen):
                 for n in self.shape[::-1]:
                     val_py = [val_py] * n
 
-            out_dtypes: set[np.dtype] = set()
+            out_dtypes_set: set[tuple[np.dtype, ...]] = set()
             for dtype_np in dtypes_np:
                 arr = self._get_arrays(dtype_np, dtype_py)[0]
 
-                if (
-                    out_dtype := self._evaluate_binop(arr, val_py, reflect=reflect)
-                ) is None:
-                    out_dtypes.clear()
+                if not (out_dtypes := self._evaluate_binop(arr, val_py, reflect)):
+                    out_dtypes_set.clear()
                     break
-                out_dtypes.add(out_dtype)
+                out_dtypes_set.add(out_dtypes)
 
             expr = self._op_expr(name1, name2)
 
-            if out_dtypes:
-                out_type_expr = _array_expr(*out_dtypes, npt=True)
+            if out_dtypes_set:
+                out_type_expr = _array_expr(*out_dtypes_set, npt=True)
                 testcase = _expr_assert_type(expr, out_type_expr)
             elif label_np == "O":
                 # impossible to reject
@@ -1428,7 +1476,7 @@ class NDArrayOps(TestGen):
         # ndarays
         for label, dtypes in self.dtypes.items():
             if len(dtypes) == 1:
-                array_expr = _array_expr(dtypes[0], npt=True)
+                array_expr = _array_expr_single(dtypes[0], npt=True)
             else:
                 array_expr = f"npt.NDArray[{self._abstract_expr(label)}]"
 
@@ -1448,6 +1496,10 @@ class NDArrayOps(TestGen):
     @override
     def get_testcases(self) -> Iterable[str | None]:
         yield from self._generate_section()
+        if self.n_out == 2:
+            yield ""
+            yield from self._generate_section()
+
         yield from self._gen_unop() if self.n_in == 1 else self._gen_binop()
 
 
@@ -1470,7 +1522,7 @@ TESTGENS: Final[Sequence[TestGen]] = [
     NDArrayOps("truediv"),
     NDArrayOps("floordiv"),
     NDArrayOps("mod"),
-    # NDArrayOps("divmod"),
+    NDArrayOps("divmod"),
 ]
 
 
