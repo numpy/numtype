@@ -1540,9 +1540,9 @@ TESTGENS: Final[Sequence[TestGen]] = [
     NDArrayOps("divmod"),
     NDArrayOps("lshift"),
     NDArrayOps("rshift"),
-    # NDArrayOps("and"),
-    # NDArrayOps("xor"),
-    # NDArrayOps("or"),
+    NDArrayOps("and"),
+    NDArrayOps("xor"),
+    NDArrayOps("or"),
 ]
 
 
