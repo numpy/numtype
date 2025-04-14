@@ -1167,7 +1167,7 @@ class NDArrayOps(TestGen):
                 continue
             seen_dtypes.add(label)
 
-            kind = dtype.kind
+            kind: str = dtype.kind
             if kind in "SU":
                 kind = "w"
             if kind in unseen_abstract and label in unseen_abstract[kind]:
@@ -1209,9 +1209,11 @@ class NDArrayOps(TestGen):
             lhs, rhs = rhs, lhs
 
         try:
-            return self.opfunc(lhs, rhs).dtype
+            dtype: np.dtype = self.opfunc(lhs, rhs).dtype
         except TypeError:
             return None
+
+        return dtype
 
     def _gen_testcases_np_nd(self, label1: str, /) -> Generator[str | None]:
         name1 = f"{label1}_nd"
