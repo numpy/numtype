@@ -457,16 +457,17 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __pow__(self, other: Incomplete, /) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
     def __rpow__(self, other: Incomplete, /) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
     def __iadd__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     @override
     def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     @override
-    def __imul__(self, other: Incomplete, /) -> Self: ...
+    def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __idiv__(self, other: Incomplete, /) -> Self: ...
     @override
     def __ifloordiv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     @override
-    def __itruediv__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    def __itruediv__(self, other: Incomplete, /) -> Self: ...
     @override
     def __ipow__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 
