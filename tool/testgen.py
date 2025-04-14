@@ -262,9 +262,17 @@ def _union(*types: str) -> str:
 
 def _join(*types: str) -> str:
     """Find the common base type, i.e. union + upcast."""
+    if len(types) == 1:
+        return types[0]
+
     numbers, other = __group_types(*types)
     if other and numbers:
         raise NotImplementedError(f"join of non-number types: {types}")
+
+    if len(types) == len(numbers) == 2 and not other:
+        # union two types if they're different kinds, e.g. `np.int8 | np.uint8` instead
+        # of `np.integer`
+        return " | ".join(kind_types[0] for kind_types in numbers.values())
 
     # special case for accidental `bool` return from `timedelta64.__eq__` on numpy <2.3
     if not numbers and len(other) == 2 and set(other) == {f"{NP}.bool", "bool"}:
