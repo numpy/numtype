@@ -1,4 +1,4 @@
-# @generated 2025-04-13T23:57:03Z with tool/testgen.py
+# @generated 2025-04-14T00:28:38Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -588,8 +588,8 @@ assert_type(fld_nd + u_nd, npt.NDArray[np.longdouble])
 assert_type(fld_nd + f_nd, npt.NDArray[np.longdouble])
 assert_type(fld_nd + c_nd, npt.NDArray[np.clongdouble])
 assert_type(fld_nd + iu_nd, npt.NDArray[np.longdouble])
-assert_type(fld_nd + fc_nd, npt.NDArray[np.inexact])
-assert_type(fld_nd + iufc_nd, npt.NDArray[np.inexact])
+assert_type(fld_nd + fc_nd, npt.NDArray[np.longdouble | np.clongdouble])
+assert_type(fld_nd + iufc_nd, npt.NDArray[np.longdouble | np.clongdouble])
 
 assert_type(fld_nd + b_py, npt.NDArray[np.longdouble])
 assert_type(fld_nd + i_py, npt.NDArray[np.longdouble])
@@ -1212,7 +1212,7 @@ assert_type(fc_nd + u8_nd, npt.NDArray[np.inexact])
 assert_type(fc_nd + f2_nd, npt.NDArray[np.inexact])
 assert_type(fc_nd + f4_nd, npt.NDArray[np.inexact])
 assert_type(fc_nd + f8_nd, npt.NDArray[np.inexact])
-assert_type(fc_nd + fld_nd, npt.NDArray[np.inexact])
+assert_type(fc_nd + fld_nd, npt.NDArray[np.longdouble | np.clongdouble])
 assert_type(fc_nd + c8_nd, npt.NDArray[np.complexfloating])
 assert_type(fc_nd + c16_nd, npt.NDArray[np.complexfloating])
 assert_type(fc_nd + cld_nd, npt.NDArray[np.clongdouble])
@@ -1255,7 +1255,7 @@ assert_type(iufc_nd + u8_nd, npt.NDArray[np.number])
 assert_type(iufc_nd + f2_nd, npt.NDArray[np.inexact])
 assert_type(iufc_nd + f4_nd, npt.NDArray[np.inexact])
 assert_type(iufc_nd + f8_nd, npt.NDArray[np.inexact])
-assert_type(iufc_nd + fld_nd, npt.NDArray[np.inexact])
+assert_type(iufc_nd + fld_nd, npt.NDArray[np.longdouble | np.clongdouble])
 assert_type(iufc_nd + c8_nd, npt.NDArray[np.complexfloating])
 assert_type(iufc_nd + c16_nd, npt.NDArray[np.complexfloating])
 assert_type(iufc_nd + cld_nd, npt.NDArray[np.clongdouble])
