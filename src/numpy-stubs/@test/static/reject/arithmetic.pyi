@@ -51,7 +51,7 @@ AR_M // AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIss
 AR_M // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_b // AR_LIKE_M  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
+AR_b // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_u // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_i // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_f // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -59,10 +59,10 @@ AR_c // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIss
 AR_m // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-_3 = AR_m // AR_LIKE_b  # type: ignore[var-annotated]
+AR_m // AR_LIKE_b  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_m // AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_b // AR_LIKE_m  # type: ignore[type-var]  # pyright: ignore[reportOperatorIssue]
+AR_b // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_u // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_i // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_f // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
