@@ -1,4 +1,4 @@
-# @generated 2025-04-14T20:51:13Z with tool/testgen.py
+# @generated 2025-04-14T21:12:15Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -499,12 +499,12 @@ divmod(c16_nd, u_nd)  # type: ignore[operator]  # pyright: ignore[reportArgument
 divmod(c16_nd, f_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(c16_nd, iu_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-divmod(c16_nd, b_py)  # 🐴  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(c16_nd, b_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(c16_nd, i_py)  # 🐴  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(c16_nd, f_py)  # 🐴  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(c16_nd, c_py)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-divmod(b_py, c16_nd)  # 🐴  # pyright: ignore[reportArgumentType, reportCallIssue]
+divmod(b_py, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i_py, c16_nd)  # 🐴  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(f_py, c16_nd)  # 🐴  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(c_py, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]

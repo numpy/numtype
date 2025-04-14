@@ -1446,7 +1446,8 @@ class NDArrayOps(TestGen):
                 testcase = None
             elif (
                 (self.opname == "sub" and label_np == "b1" and name_py[0] == "b")
-                or (label_np == "c16" and name_py[0] in "bif")
+                or (self.opname != "divmod" and label_np == "c16" and name_py[0] == "b")
+                or (label_np == "c16" and name_py[0] in "if")
             ):  # fmt: skip
                 testcase = "  ".join((
                     expr,
