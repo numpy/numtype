@@ -1254,9 +1254,16 @@ class NDArrayOps(TestGen):
             kind: [] for kind in unseen_abstract
         }
 
+        extra_defaults: tuple[str, ...]  # irony
+        if self.opname in {"lshift", "rshift", "and", "xor", "or"}:
+            # 🐴
+            extra_defaults = ()
+        else:
+            extra_defaults = "f8", "c16"
+
         dtypes_default = map(
             np.dtype,
-            ("b1", "i1", "i2", "i4", "i8", "u1", "u2", "u4", "u8", "f8", "c16"),
+            ("b1", "i1", "i2", "i4", "i8", "u1", "u2", "u4", "u8", *extra_defaults),
         )
         dtypes_op = *dtypes_default, *_get_op_types(self.opname)
         for dtype in sorted(dtypes_op, key=lambda dt: DTYPE_CHARS.index(dt.char)):
@@ -1445,8 +1452,16 @@ class NDArrayOps(TestGen):
                 # impossible to reject
                 testcase = None
             elif (
-                (self.opname == "sub" and label_np == "b1" and name_py[0] == "b")
-                or (label_np == "c16" and name_py[0] in "if")
+                (
+                    self.opname == "sub"
+                    and label_np == "b1"
+                    and name_py[0] == "b"
+                )
+                or (
+                    self.opname in {"floordiv", "mod", "divmod"}
+                    and label_np == "c16"
+                    and name_py[0] in "if"
+                )
             ):  # fmt: skip
                 testcase = "  ".join((
                     expr,
@@ -1523,11 +1538,11 @@ TESTGENS: Final[Sequence[TestGen]] = [
     NDArrayOps("floordiv"),
     NDArrayOps("mod"),
     NDArrayOps("divmod"),
-    # NDArrayOps("lshift"),
-    # NDArrayOps("rshift"),
-    # NDArrayOps("and"),
-    # NDArrayOps("xor"),
-    # NDArrayOps("or"),
+    NDArrayOps("lshift"),
+    NDArrayOps("rshift"),
+    NDArrayOps("and"),
+    NDArrayOps("xor"),
+    NDArrayOps("or"),
 ]
 
 
