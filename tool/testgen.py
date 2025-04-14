@@ -1393,6 +1393,13 @@ class NDArrayOps(TestGen):
             if out_dtypes:
                 out_type_expr = _array_expr(*out_dtypes, npt=True)
                 testcase = _expr_assert_type(expr, out_type_expr)
+            elif self.opname == "sub" and label_np == "b1" and name_py == "b_py":
+                # 🐴
+                testcase = "  ".join((
+                    expr,
+                    "# 🐴",
+                    f"# pyright: ignore[{self._pyright_rules}]",
+                ))
             else:
                 testcase = "  ".join((
                     expr,

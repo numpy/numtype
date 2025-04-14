@@ -1,4 +1,4 @@
-# @generated 2025-04-14T17:00:04Z with tool/testgen.py
+# @generated 2025-04-14T18:20:07Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -67,12 +67,12 @@ assert_type(b1_nd - iu_nd, npt.NDArray[np.integer])
 assert_type(b1_nd - fc_nd, npt.NDArray[np.inexact])
 assert_type(b1_nd - iufc_nd, npt.NDArray[np.number])
 
-b1_nd - b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b1_nd - b_py  # 🐴  # pyright: ignore[reportOperatorIssue]
 assert_type(b1_nd - i_py, npt.NDArray[np.int64])
 assert_type(b1_nd - f_py, npt.NDArray[np.float64])
 assert_type(b1_nd - c_py, npt.NDArray[np.complex128])
 
-b_py - b1_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+b_py - b1_nd  # 🐴  # pyright: ignore[reportOperatorIssue]
 assert_type(i_py - b1_nd, npt.NDArray[np.int64])
 assert_type(f_py - b1_nd, npt.NDArray[np.float64])
 assert_type(c_py - b1_nd, npt.NDArray[np.complex128])
