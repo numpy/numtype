@@ -460,7 +460,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def __iadd__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     @override
-    def __isub__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
+    def __isub__(self, other: Incomplete, /) -> Self: ...
     @override
     def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
     def __idiv__(self, other: Incomplete, /) -> Self: ...

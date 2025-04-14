@@ -666,6 +666,7 @@ _BitT2 = TypeVar("_BitT2", bound=NBitBase, default=_BitT1)  # pyright: ignore[re
 
 _ItemT_co = TypeVar("_ItemT_co", default=Any, covariant=True)
 _BoolItemT_co = TypeVar("_BoolItemT_co", bound=py_bool, default=py_bool, covariant=True)
+_NumberItemT = TypeVar("_NumberItemT", bound=complex)
 _NumberItemT_co = TypeVar("_NumberItemT_co", bound=complex, default=Any, covariant=True)
 _InexactItemT_co = TypeVar("_InexactItemT_co", bound=complex, default=Any, covariant=True)
 _FlexItemT_co = TypeVar(
@@ -2212,9 +2213,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def __sub__(self: NDArray[_NumericT], x: _nt.Casts[_NumericT], /) -> NDArray[_NumericT]: ...  # type: ignore[overload-overlap]
+    def __sub__(self: NDArray[_NumericT], x: _nt.Casts[_NumericT], /) -> NDArray[_NumericT]: ...
     @overload
-    def __sub__(self: NDArray[_SelfScalarT], x: _nt.CastsWith[_SelfScalarT, _ScalarT], /) -> NDArray[_ScalarT]: ...  # type: ignore[overload-overlap]
+    def __sub__(self: NDArray[_CoNumberT], x: _nt.CastsWith[_CoNumberT, _ScalarT], /) -> NDArray[_ScalarT]: ...
     @overload
     def __sub__(self: _nt.CastsWithBuiltin[_T, _NumericT], x: _nt.SequenceND[_T], /) -> NDArray[_NumericT]: ...
     @overload
@@ -2228,15 +2229,17 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __sub__(self: NDArray[datetime64], x: _nt.CoTimeDelta_nd, /) -> NDArray[datetime64]: ...
     @overload
-    def __sub__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...  # type: ignore[overload-cannot-match]
+    def __sub__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...
     @overload
-    def __sub__(self: NDArray[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRSub[_T]], /) -> NDArray[Incomplete]: ...
+    def __sub__(
+        self: NDArray[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRSub[_NumberItemT]], /
+    ) -> NDArray[Incomplete]: ...
 
     #
     @overload
-    def __rsub__(self: NDArray[_NumericT], x: _nt.Casts[_NumericT], /) -> NDArray[_NumericT]: ...  # type: ignore[overload-overlap]
+    def __rsub__(self: NDArray[_NumericT], x: _nt.Casts[_NumericT], /) -> NDArray[_NumericT]: ...
     @overload
-    def __rsub__(self: NDArray[_SelfScalarT], x: _nt.CastsWith[_SelfScalarT, _ScalarT], /) -> NDArray[_ScalarT]: ...  # type: ignore[overload-overlap]
+    def __rsub__(self: NDArray[_CoNumberT], x: _nt.CastsWith[_CoNumberT, _ScalarT], /) -> NDArray[_ScalarT]: ...
     @overload
     def __rsub__(self: _nt.CastsWithBuiltin[_T, _NumericT], x: _nt.SequenceND[_T], /) -> NDArray[_NumericT]: ...
     @overload
@@ -2250,15 +2253,15 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rsub__(self: NDArray[_nt.co_timedelta], x: _nt.ToDateTime_nd, /) -> NDArray[datetime64]: ...
     @overload
-    def __rsub__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...  # type: ignore[overload-cannot-match]
+    def __rsub__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...
     @overload
-    def __rsub__(self: NDArray[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanSub[_T]], /) -> NDArray[Incomplete]: ...
+    def __rsub__(
+        self: NDArray[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanSub[_NumberItemT]], /
+    ) -> NDArray[Incomplete]: ...
 
     #
     @overload  # type: ignore[misc]
     def __isub__(self: NDArray[_ScalarT], x: _nt.Casts[_ScalarT], /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
-    @overload
-    def __isub__(self: NDArray[bool_], x: _nt.SequenceND[bool], /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __isub__(self: NDArray[number], x: _nt.SequenceND[int], /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
@@ -2271,7 +2274,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __isub__(self: NDArray[object_], x: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __isub__(
-        self: NDArray[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRSub[_T, _T]], /
+        self: NDArray[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRSub[_T, _T]], /
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
 
     #
@@ -2410,17 +2413,13 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __pow__(self: NDArray[_NumberT], x: _nt.Casts[_NumberT], k: None = None, /) -> NDArray[_NumberT]: ...
     @overload
-    def __pow__(
-        self: NDArray[_CoNumberT], x: _nt.CastsWith[_CoNumberT, _ScalarT], k: None = None, /
-    ) -> NDArray[_ScalarT]: ...
+    def __pow__(self: NDArray[bool_], x: _nt.ToBool_nd, k: None = None, /) -> NDArray[int8]: ...
     @overload
     def __pow__(
-        self: _nt.CastsWithBuiltin[_T, _NumberT], x: _nt.SequenceND[_T], k: None = None, /
-    ) -> NDArray[_NumberT]: ...
-    @overload
-    def __pow__(
-        self: _nt.CastsWithInt[_ScalarT], x: _nt.SequenceND[_nt.JustInt], k: None = None, /
+        self: NDArray[_NumberT], x: _nt.CastsWith[_NumberT, _ScalarT], k: None = None, /
     ) -> NDArray[_ScalarT]: ...
+    @overload
+    def __pow__(self: _nt.CastsWithInt[_NumberT], x: _nt.SequenceND[int], k: None = None, /) -> NDArray[_NumberT]: ...
     @overload
     def __pow__(
         self: _nt.CastsWithFloat[_ScalarT], x: _nt.SequenceND[_nt.JustFloat], k: None = None, /
@@ -2429,8 +2428,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __pow__(
         self: _nt.CastsWithComplex[_ScalarT], x: _nt.SequenceND[_nt.JustComplex], k: None = None, /
     ) -> NDArray[_ScalarT]: ...
-    @overload
-    def __pow__(self: NDArray[bool_], x: _nt.ToBool_nd, k: None = None, /) -> NDArray[int8]: ...
     @overload
     def __pow__(self: NDArray[object_], x: object, k: None = None, /) -> NDArray[object_]: ...
 
@@ -2438,17 +2435,13 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rpow__(self: NDArray[_NumberT], x: _nt.Casts[_NumberT], k: None = None, /) -> NDArray[_NumberT]: ...
     @overload
-    def __rpow__(
-        self: NDArray[_CoNumberT], x: _nt.CastsWith[_CoNumberT, _ScalarT], k: None = None, /
-    ) -> NDArray[_ScalarT]: ...
+    def __rpow__(self: NDArray[bool_], x: _nt.ToBool_nd, k: None = None, /) -> NDArray[int8]: ...
     @overload
     def __rpow__(
-        self: _nt.CastsWithBuiltin[_T, _NumberT], x: _nt.SequenceND[_T], k: None = None, /
-    ) -> NDArray[_NumberT]: ...
-    @overload
-    def __rpow__(
-        self: _nt.CastsWithInt[_ScalarT], x: _nt.SequenceND[_nt.JustInt], k: None = None, /
+        self: NDArray[_NumberT], x: _nt.CastsWith[_NumberT, _ScalarT], k: None = None, /
     ) -> NDArray[_ScalarT]: ...
+    @overload
+    def __rpow__(self: _nt.CastsWithInt[_NumberT], x: _nt.SequenceND[int], k: None = None, /) -> NDArray[_NumberT]: ...
     @overload
     def __rpow__(
         self: _nt.CastsWithFloat[_ScalarT], x: _nt.SequenceND[_nt.JustFloat], k: None = None, /
@@ -2457,8 +2450,6 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __rpow__(
         self: _nt.CastsWithComplex[_ScalarT], x: _nt.SequenceND[_nt.JustComplex], k: None = None, /
     ) -> NDArray[_ScalarT]: ...
-    @overload
-    def __rpow__(self: NDArray[bool_], x: _nt.ToBool_nd, k: None = None, /) -> NDArray[int8]: ...
     @overload
     def __rpow__(self: NDArray[object_], x: object, k: None = None, /) -> NDArray[object_]: ...
 
@@ -2476,9 +2467,13 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
+    def __truediv__(
+        self: _HasDType[_HasType[_JustNumber]], x: _nt.CoFloat64_nd | _HasDType[_HasType[_JustNumber]], /
+    ) -> NDArray[inexact]: ...
+    @overload
     def __truediv__(self: NDArray[_InexactT], x: _nt.Casts[_InexactT], /) -> NDArray[_InexactT]: ...
     @overload
-    def __truediv__(self: NDArray[_ScalarT], x: _nt.CastsWith[_ScalarT, _InexactT], /) -> NDArray[_InexactT]: ...
+    def __truediv__(self: NDArray[_ScalarT], x: _nt.CastsWith[_ScalarT, _InexactT], /) -> NDArray[_InexactT]: ...  # type: ignore[overload-overlap]
     @overload
     def __truediv__(self: _nt.CastsWithFloat[_ScalarT], x: _nt.SequenceND[float], /) -> NDArray[_ScalarT]: ...
     @overload
@@ -2486,27 +2481,27 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         self: _nt.CastsWithComplex[_ScalarT], x: _nt.SequenceND[_nt.JustComplex], /
     ) -> NDArray[_ScalarT]: ...
     @overload
-    def __truediv__(
-        self: _HasDType[_HasType[_JustNumber]], x: _nt.CoFloat64_nd | _HasDType[_HasType[_JustNumber]], /
-    ) -> NDArray[inexact]: ...
-    @overload
     def __truediv__(self: NDArray[_nt.co_integer], x: _nt.CoInteger_nd, /) -> NDArray[float64]: ...
     @overload
     def __truediv__(self: NDArray[timedelta64], x: _nt.ToTimeDelta_nd, /) -> NDArray[float64]: ...
     @overload
     def __truediv__(self: NDArray[timedelta64], x: _nt.ToInteger_nd | _nt.ToFloating_nd, /) -> NDArray[timedelta64]: ...
     @overload
-    def __truediv__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...
-    @overload
     def __truediv__(
-        self: NDArray[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRTruediv[_T]], /
+        self: NDArray[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRTruediv[_NumberItemT]], /
     ) -> NDArray[Incomplete]: ...
+    @overload
+    def __truediv__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...
 
     #
     @overload
+    def __rtruediv__(
+        self: _HasDType[_HasType[_JustNumber]], x: _nt.CoFloat64_nd | _HasDType[_HasType[_JustNumber]], /
+    ) -> NDArray[inexact]: ...
+    @overload
     def __rtruediv__(self: NDArray[_InexactT], x: _nt.Casts[_InexactT], /) -> NDArray[_InexactT]: ...
     @overload
-    def __rtruediv__(self: NDArray[_ScalarT], x: _nt.CastsWith[_ScalarT, _InexactT], /) -> NDArray[_InexactT]: ...
+    def __rtruediv__(self: NDArray[_ScalarT], x: _nt.CastsWith[_ScalarT, _InexactT], /) -> NDArray[_InexactT]: ...  # type: ignore[overload-overlap]
     @overload
     def __rtruediv__(self: _nt.CastsWithFloat[_ScalarT], x: _nt.SequenceND[float], /) -> NDArray[_ScalarT]: ...
     @overload
@@ -2514,21 +2509,17 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         self: _nt.CastsWithComplex[_ScalarT], x: _nt.SequenceND[_nt.JustComplex], /
     ) -> NDArray[_ScalarT]: ...
     @overload
-    def __rtruediv__(
-        self: _HasDType[_HasType[_JustNumber]], x: _nt.CoFloat64_nd | _HasDType[_HasType[_JustNumber]], /
-    ) -> NDArray[inexact]: ...
-    @overload
     def __rtruediv__(self: NDArray[_nt.co_integer], x: _nt.CoInteger_nd, /) -> NDArray[float64]: ...
     @overload
     def __rtruediv__(self: NDArray[timedelta64], x: _nt.ToTimeDelta_nd, /) -> NDArray[float64]: ...
     @overload
     def __rtruediv__(self: NDArray[integer | floating], x: _nt.ToTimeDelta_nd, /) -> NDArray[timedelta64]: ...
     @overload
-    def __rtruediv__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...
-    @overload
     def __rtruediv__(
-        self: NDArray[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanTruediv[_T]], /
+        self: NDArray[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanTruediv[_NumberItemT]], /
     ) -> NDArray[Incomplete]: ...
+    @overload
+    def __rtruediv__(self: NDArray[object_], x: object, /) -> NDArray[object_]: ...
 
     #
     @overload  # type: ignore[misc]
@@ -2544,11 +2535,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         self: NDArray[timedelta64], x: _nt.ToInteger_nd | _nt.ToFloating_nd, /
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
-    def __itruediv__(self: NDArray[object_], x: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
-    @overload
     def __itruediv__(
-        self: NDArray[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRTruediv[_T, _T]], /
+        self: NDArray[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRTruediv[_NumberItemT, _NumberItemT]], /
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
+    @overload
+    def __itruediv__(self: NDArray[object_], x: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
 
     # TODO(jorenham): rewrite the modular and bitwise binops below
 
