@@ -1142,6 +1142,8 @@ class NDArrayOps(TestGen):
     def __op_expr_template(self) -> str:
         if self.opname == "abs":
             return "abs({})"
+        if self.opname == "pow":
+            return "{}**{}"
         if self.opname == "divmod":
             return "divmod({}, {})"
 
@@ -1171,6 +1173,10 @@ class NDArrayOps(TestGen):
             dtypes[0].kind: "" for dtypes in self.dtypes.values() if len(dtypes) == 1
         }
         return {f"{kind}_py": kindmap[kind] for kind in kinds if kind in kindmap}
+
+    @property
+    def _mypy_rules(self) -> str:
+        return "misc" if self.n_in == 1 else "operator"
 
     @property
     def _pyright_rules(self) -> str:
@@ -1306,7 +1312,7 @@ class NDArrayOps(TestGen):
             else:
                 yield "  ".join((
                     expr,
-                    "# type: ignore[operator]",
+                    f"# type: ignore[{self._mypy_rules}]",
                     f"# pyright: ignore[{self._pyright_rules}]",
                 ))
 
@@ -1331,9 +1337,20 @@ class NDArrayOps(TestGen):
                 out_type_expr = _array_expr(*out_dtypes, npt=True)
                 yield _expr_assert_type(expr, out_type_expr)
             elif "O" not in {dtypes1[0].char, dtypes2[0].char}:  # impossible to reject
+                # 🐴
+                if (
+                    self.opname == "truediv"
+                    and label2 == "m8"
+                    and label1[0] in "biu"
+                    and label1 != "iufc"
+                ):
+                    mypy_rules = "type-var"
+                else:
+                    mypy_rules = self._mypy_rules
+
                 yield "  ".join((
                     expr,
-                    "# type: ignore[operator]",
+                    f"# type: ignore[{mypy_rules}]",
                     f"# pyright: ignore[{self._pyright_rules}]",
                 ))
 
@@ -1379,7 +1396,7 @@ class NDArrayOps(TestGen):
             else:
                 testcase = "  ".join((
                     expr,
-                    "# type: ignore[operator]",
+                    f"# type: ignore[{self._mypy_rules}]",
                     f"# pyright: ignore[{self._pyright_rules}]",
                 ))
 

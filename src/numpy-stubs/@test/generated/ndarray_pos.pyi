@@ -1,4 +1,4 @@
-# @generated 2025-04-14T17:00:04Z with tool/testgen.py
+# @generated 2025-04-14T18:08:28Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -34,7 +34,7 @@ iufc_nd: npt.NDArray[np.number]
 
 ###
 
-+b1_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
++b1_nd  # type: ignore[misc]  # pyright: ignore[reportOperatorIssue]
 assert_type(+i1_nd, npt.NDArray[np.int8])
 assert_type(+i2_nd, npt.NDArray[np.int16])
 assert_type(+i4_nd, npt.NDArray[np.int32])

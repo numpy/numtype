@@ -90,7 +90,7 @@ AR_f *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportOperatorIss
 # Array power
 
 AR_b **= AR_LIKE_b  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_u  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_u  # type: ignore[arg-type]  # pyright: ignore[reportOperatorIssue, reportUnknownVariableType]
 AR_b **= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 AR_b **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 AR_b **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]

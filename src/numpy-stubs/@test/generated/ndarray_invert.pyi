@@ -1,4 +1,4 @@
-# @generated 2025-04-14T17:00:04Z with tool/testgen.py
+# @generated 2025-04-14T18:08:28Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -33,8 +33,8 @@ assert_type(~u1_nd, npt.NDArray[np.uint8])
 assert_type(~u2_nd, npt.NDArray[np.uint16])
 assert_type(~u4_nd, npt.NDArray[np.uint32])
 assert_type(~u8_nd, npt.NDArray[np.uint64])
-~f8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-~c16_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+~f8_nd  # type: ignore[misc]  # pyright: ignore[reportOperatorIssue]
+~c16_nd  # type: ignore[misc]  # pyright: ignore[reportOperatorIssue]
 assert_type(~O_nd, npt.NDArray[np.object_])
 assert_type(~i_nd, npt.NDArray[np.signedinteger])
 assert_type(~u_nd, npt.NDArray[np.unsignedinteger])
