@@ -1352,6 +1352,7 @@ class NDArrayOps(TestGen):
 
             name1, name2 = (name_py, name_np) if reflect else (name_np, name_py)
 
+            val_py: Any
             dtype_py, val_py = np.dtype(pytype), pytype(1)
             if self.opname == "matmul":
                 for n in self.shape[::-1]:

@@ -47,11 +47,11 @@ _T_co = TypeVar("_T_co", covariant=True, default=Any)
 
 class CanEq(Protocol[_T_contra, _T_co]):
     @override
-    def __eq__(self, x: _T_contra, /) -> _T_co: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __eq__(self, x: _T_contra, /) -> _T_co: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 class CanNe(Protocol[_T_contra, _T_co]):
     @override
-    def __ne__(self, x: _T_contra, /) -> _T_co: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __ne__(self, x: _T_contra, /) -> _T_co: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 class CanLt(Protocol[_T_contra, _T_co]):
     def __lt__(self, x: _T_contra, /) -> _T_co: ...
