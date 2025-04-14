@@ -42,6 +42,7 @@ _BinOpName: TypeAlias = Literal[
     "add",
     "sub",
     "mul",
+    "matmul",
     "pow",
     "truediv",
     "floordiv",
@@ -96,6 +97,7 @@ OP_UFUNCS: Final[dict[_OpName, np.ufunc]] = {
     "add": np.add,
     "sub": np.subtract,
     "mul": np.multiply,
+    "matmul": np.matmul,
     "pow": np.power,
     "truediv": np.true_divide,
     "floordiv": np.floor_divide,
@@ -1097,6 +1099,7 @@ class NDArrayOps(TestGen):
     testname = "ndarray_{}"
     numpy_imports_extra = ("import numpy.typing as npt",)
 
+    shape: Final[tuple[int, ...]]
     opname: _OpName
     opfunc: Callable[..., Any]
     n_in: Literal[1, 2]
@@ -1104,7 +1107,9 @@ class NDArrayOps(TestGen):
 
     dtypes: dict[str, tuple[np.dtype, ...]]
 
-    def __init__(self, opname: _OpName, /) -> None:
+    def __init__(self, opname: _OpName, /, *, shape: tuple[int, ...] = (1, 1)) -> None:
+        self.shape = shape
+
         ufunc = OP_UFUNCS[opname]
         if ufunc.nout != 1:
             # TODO(jorenham): divmod
@@ -1174,23 +1179,6 @@ class NDArrayOps(TestGen):
         return "reportOperatorIssue"
 
     @staticmethod
-    def _get_arrays(
-        dtype1: np.dtype,
-        dtype2: np.dtype,
-    ) -> tuple[npt.NDArray[Any], npt.NDArray[Any]]:
-        arr1 = np.ones((1, 1), dtype=dtype1)
-        arr2 = np.ones((1, 1), dtype=dtype2)
-
-        if dtype1 != dtype2:
-            # prefer compatible object_ arrays
-            if dtype1.char == "O":
-                arr1 = arr2.astype("O")
-            if dtype2.char == "O":
-                arr2 = arr1.astype("O")
-
-        return arr1, arr2
-
-    @staticmethod
     def _abstract_expr(label: str, /) -> str:
         sctype_name = {
             "i": "signedinteger",
@@ -1248,6 +1236,23 @@ class NDArrayOps(TestGen):
             assert kind not in self.dtypes
 
             self.dtypes[kind] = tuple(dtypes)
+
+    def _get_arrays(
+        self,
+        dtype1: np.dtype,
+        dtype2: np.dtype,
+    ) -> tuple[npt.NDArray[Any], npt.NDArray[Any]]:
+        arr1 = np.ones(self.shape, dtype=dtype1)
+        arr2 = np.ones(self.shape, dtype=dtype2)
+
+        if dtype1 != dtype2:
+            # prefer compatible object_ arrays
+            if dtype1.char == "O":
+                arr1 = arr2.astype("O")
+            if dtype2.char == "O":
+                arr2 = arr1.astype("O")
+
+        return arr1, arr2
 
     @overload
     def _op_expr(self, arg_expr: str, /) -> str: ...
@@ -1348,6 +1353,9 @@ class NDArrayOps(TestGen):
             name1, name2 = (name_py, name_np) if reflect else (name_np, name_py)
 
             dtype_py, val_py = np.dtype(pytype), pytype(1)
+            if self.opname == "matmul":
+                for n in self.shape[::-1]:
+                    val_py = [val_py] * n
 
             out_dtypes: set[np.dtype] = set()
             for dtype_np in dtypes_np:
@@ -1400,9 +1408,10 @@ class NDArrayOps(TestGen):
         # linebreak
         yield "", ""
 
-        # python scalars
+        # builtin types
+        py_template = "list[list[{}]]" if self.opname == "matmul" else "{}"
         for name, pytype in self._scalars_py.items():
-            yield name, pytype.__name__
+            yield name, py_template.format(pytype.__name__)
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
@@ -1422,6 +1431,11 @@ TESTGENS: Final[Sequence[TestGen]] = [
     NDArrayOps("abs"),
     NDArrayOps("invert"),
     NDArrayOps("add"),
+    NDArrayOps("sub"),
+    NDArrayOps("mul"),
+    NDArrayOps("matmul"),
+    NDArrayOps("pow"),
+    NDArrayOps("truediv"),
 ]
 
 
