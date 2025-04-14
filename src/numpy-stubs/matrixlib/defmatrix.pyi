@@ -1,3 +1,4 @@
+from _typeshed import Incomplete
 from collections.abc import Mapping
 from types import EllipsisType
 from typing import Any, ClassVar, SupportsIndex as CanIndex, TypeAlias, overload
@@ -66,19 +67,19 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
-    def __mul__(self, other: ArrayLike, /) -> Matrix: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __mul__(self, other: ArrayLike, /) -> Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rmul__(self, other: ArrayLike, /) -> Matrix: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rmul__(self, other: ArrayLike, /) -> Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __imul__(self, other: ArrayLike, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 
     #
     @override
-    def __pow__(self, other: ArrayLike, /) -> Matrix: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __pow__(self, other: ArrayLike, /) -> Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rpow__(self, other: ArrayLike, /) -> Matrix: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rpow__(self, other: ArrayLike, /) -> Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __ipow__(self, other: ArrayLike, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __ipow__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 
     #
     @overload  # type: ignore[override]

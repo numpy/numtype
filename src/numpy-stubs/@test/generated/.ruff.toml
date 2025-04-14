@@ -5,6 +5,7 @@ line-length = 120
 extend-ignore = [
     "PTH",     # flake8-use-pathlib
     "B015",    # flake8-bugbear  useless-comparison
+    "B018",    # flake8-bugbear  useless-expression
     "PYI015",  # flake8-pyi:     assignment-default-in-stub
     "PYI017",  # flake8-pyi:     complex-assignment-in-stub
     "SLF001",  # flake8-self:    private-member-access

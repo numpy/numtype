@@ -26,9 +26,6 @@ i4_nd: npt.NDArray[np.int32]
 
 # Array subtraction
 
-# NOTE: mypys `NoReturn` errors are, unfortunately, not that great
-_1 = AR_b - AR_LIKE_b  # type: ignore[var-annotated]
-_2 = AR_LIKE_b - AR_b  # type: ignore[var-annotated]
 AR_i - b""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 AR_f - AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -88,15 +85,15 @@ AR_i *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentT
 AR_i *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
 AR_f *= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-AR_f *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_f *= AR_LIKE_m  # type: ignore[arg-type]  # pyright: ignore[reportOperatorIssue, reportUnknownVariableType]
 
 # Array power
 
-AR_b **= AR_LIKE_b  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_u  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_i  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_f  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
-AR_b **= AR_LIKE_c  # type: ignore[misc]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_b  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_u  # type: ignore[arg-type]  # pyright: ignore[reportOperatorIssue, reportUnknownVariableType]
+AR_b **= AR_LIKE_i  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
+AR_b **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
 AR_u **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 AR_u **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
@@ -105,21 +102,6 @@ AR_i **= AR_LIKE_f  # type: ignore[arg-type]  # pyright: ignore[reportAssignment
 AR_i **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
 
 AR_f **= AR_LIKE_c  # type: ignore[arg-type]  # pyright: ignore[reportAssignmentType]
-
-# Scalars
-
-b_ - b_  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-dt + dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-td - dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-td % 1  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-td / dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-td % dt  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
--b_  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-+b_  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-
-# Scalar and array
 
 # will raise `TypeError` at runtime
 u8 << i4_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]

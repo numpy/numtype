@@ -42,6 +42,7 @@ _BinOpName: TypeAlias = Literal[
     "add",
     "sub",
     "mul",
+    "matmul",
     "pow",
     "truediv",
     "floordiv",
@@ -96,6 +97,7 @@ OP_UFUNCS: Final[dict[_OpName, np.ufunc]] = {
     "add": np.add,
     "sub": np.subtract,
     "mul": np.multiply,
+    "matmul": np.matmul,
     "pow": np.power,
     "truediv": np.true_divide,
     "floordiv": np.floor_divide,
@@ -1097,6 +1099,7 @@ class NDArrayOps(TestGen):
     testname = "ndarray_{}"
     numpy_imports_extra = ("import numpy.typing as npt",)
 
+    shape: Final[tuple[int, ...]]
     opname: _OpName
     opfunc: Callable[..., Any]
     n_in: Literal[1, 2]
@@ -1104,7 +1107,9 @@ class NDArrayOps(TestGen):
 
     dtypes: dict[str, tuple[np.dtype, ...]]
 
-    def __init__(self, opname: _OpName, /) -> None:
+    def __init__(self, opname: _OpName, /, *, shape: tuple[int, ...] = (1, 1)) -> None:
+        self.shape = shape
+
         ufunc = OP_UFUNCS[opname]
         if ufunc.nout != 1:
             # TODO(jorenham): divmod
@@ -1137,6 +1142,8 @@ class NDArrayOps(TestGen):
     def __op_expr_template(self) -> str:
         if self.opname == "abs":
             return "abs({})"
+        if self.opname == "pow":
+            return "{}**{}"
         if self.opname == "divmod":
             return "divmod({}, {})"
 
@@ -1168,27 +1175,14 @@ class NDArrayOps(TestGen):
         return {f"{kind}_py": kindmap[kind] for kind in kinds if kind in kindmap}
 
     @property
+    def _mypy_rules(self) -> str:
+        return "misc" if self.n_in == 1 else "operator"
+
+    @property
     def _pyright_rules(self) -> str:
         if self.opname in {"abs", "divmod"}:
             return "reportArgumentType, reportCallIssue"
         return "reportOperatorIssue"
-
-    @staticmethod
-    def _get_arrays(
-        dtype1: np.dtype,
-        dtype2: np.dtype,
-    ) -> tuple[npt.NDArray[Any], npt.NDArray[Any]]:
-        arr1 = np.ones((1, 1), dtype=dtype1)
-        arr2 = np.ones((1, 1), dtype=dtype2)
-
-        if dtype1 != dtype2:
-            # prefer compatible object_ arrays
-            if dtype1.char == "O":
-                arr1 = arr2.astype("O")
-            if dtype2.char == "O":
-                arr2 = arr1.astype("O")
-
-        return arr1, arr2
 
     @staticmethod
     def _abstract_expr(label: str, /) -> str:
@@ -1215,10 +1209,12 @@ class NDArrayOps(TestGen):
             kind: [] for kind in unseen_abstract
         }
 
-        for dtype in sorted(
-            _get_op_types(self.opname),
-            key=lambda dt: DTYPE_CHARS.index(dt.char),
-        ):
+        dtypes_default = map(
+            np.dtype,
+            ("b1", "i1", "i2", "i4", "i8", "u1", "u2", "u4", "u8", "f8", "c16"),
+        )
+        dtypes_op = *dtypes_default, *_get_op_types(self.opname)
+        for dtype in sorted(dtypes_op, key=lambda dt: DTYPE_CHARS.index(dt.char)):
             label = dtype_label(dtype)
             if label in seen_dtypes:
                 continue
@@ -1248,6 +1244,23 @@ class NDArrayOps(TestGen):
             assert kind not in self.dtypes
 
             self.dtypes[kind] = tuple(dtypes)
+
+    def _get_arrays(
+        self,
+        dtype1: np.dtype,
+        dtype2: np.dtype,
+    ) -> tuple[npt.NDArray[Any], npt.NDArray[Any]]:
+        arr1 = np.ones(self.shape, dtype=dtype1)
+        arr2 = np.ones(self.shape, dtype=dtype2)
+
+        if dtype1 != dtype2:
+            # prefer compatible object_ arrays
+            if dtype1.char == "O":
+                arr1 = arr2.astype("O")
+            if dtype2.char == "O":
+                arr2 = arr1.astype("O")
+
+        return arr1, arr2
 
     @overload
     def _op_expr(self, arg_expr: str, /) -> str: ...
@@ -1299,7 +1312,7 @@ class NDArrayOps(TestGen):
             else:
                 yield "  ".join((
                     expr,
-                    "# type: ignore[operator]",
+                    f"# type: ignore[{self._mypy_rules}]",
                     f"# pyright: ignore[{self._pyright_rules}]",
                 ))
 
@@ -1324,9 +1337,20 @@ class NDArrayOps(TestGen):
                 out_type_expr = _array_expr(*out_dtypes, npt=True)
                 yield _expr_assert_type(expr, out_type_expr)
             elif "O" not in {dtypes1[0].char, dtypes2[0].char}:  # impossible to reject
+                # 🐴
+                if (
+                    self.opname == "truediv"
+                    and label2 == "m8"
+                    and label1[0] in "biu"
+                    and label1 != "iufc"
+                ):
+                    mypy_rules = "type-var"
+                else:
+                    mypy_rules = self._mypy_rules
+
                 yield "  ".join((
                     expr,
-                    "# type: ignore[operator]",
+                    f"# type: ignore[{mypy_rules}]",
                     f"# pyright: ignore[{self._pyright_rules}]",
                 ))
 
@@ -1347,7 +1371,11 @@ class NDArrayOps(TestGen):
 
             name1, name2 = (name_py, name_np) if reflect else (name_np, name_py)
 
+            val_py: Any
             dtype_py, val_py = np.dtype(pytype), pytype(1)
+            if self.opname == "matmul":
+                for n in self.shape[::-1]:
+                    val_py = [val_py] * n
 
             out_dtypes: set[np.dtype] = set()
             for dtype_np in dtypes_np:
@@ -1365,10 +1393,17 @@ class NDArrayOps(TestGen):
             if out_dtypes:
                 out_type_expr = _array_expr(*out_dtypes, npt=True)
                 testcase = _expr_assert_type(expr, out_type_expr)
+            elif self.opname == "sub" and label_np == "b1" and name_py == "b_py":
+                # 🐴
+                testcase = "  ".join((
+                    expr,
+                    "# 🐴",
+                    f"# pyright: ignore[{self._pyright_rules}]",
+                ))
             else:
                 testcase = "  ".join((
                     expr,
-                    "# type: ignore[operator]",
+                    f"# type: ignore[{self._mypy_rules}]",
                     f"# pyright: ignore[{self._pyright_rules}]",
                 ))
 
@@ -1400,9 +1435,10 @@ class NDArrayOps(TestGen):
         # linebreak
         yield "", ""
 
-        # python scalars
+        # builtin types
+        py_template = "list[list[{}]]" if self.opname == "matmul" else "{}"
         for name, pytype in self._scalars_py.items():
-            yield name, pytype.__name__
+            yield name, py_template.format(pytype.__name__)
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
@@ -1422,6 +1458,11 @@ TESTGENS: Final[Sequence[TestGen]] = [
     NDArrayOps("abs"),
     NDArrayOps("invert"),
     NDArrayOps("add"),
+    NDArrayOps("sub"),
+    NDArrayOps("mul"),
+    NDArrayOps("matmul"),
+    NDArrayOps("pow"),
+    NDArrayOps("truediv"),
 ]
 
 

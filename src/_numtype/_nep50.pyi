@@ -6,6 +6,7 @@ from typing import Any, Protocol, TypeAlias, type_check_only
 from typing_extensions import TypeAliasType, TypeVar
 
 import numpy as np
+from numpy._typing import _NestedSequence
 
 __all__ = [
     "Casts",
@@ -22,6 +23,7 @@ __all__ = [
 
 ###
 
+_LikeT = TypeVar("_LikeT")
 _LikeT_co = TypeVar("_LikeT_co", covariant=True)
 
 _BuitinT = TypeVar("_BuitinT")
@@ -125,14 +127,16 @@ class _LikeScalar(Protocol[_LikeT_co]):
 
 ###
 
+_SequenceND: TypeAlias = _LikeT | _NestedSequence[_LikeT]
+
 Casts = TypeAliasType(
     "Casts",
-    _LikeNumeric[_CanNEP50[_ScalarOutT, Any, Any], _ShapeT],
+    _SequenceND[_LikeNumeric[_CanNEP50[_ScalarOutT, Any, Any], _ShapeT]],
     type_params=(_ScalarOutT, _ShapeT),
 )
 CastsArray = TypeAliasType(
     "CastsArray",
-    _LikeArray[_CanNEP50[_ScalarOutT, Any, Any], _ShapeT],
+    _SequenceND[_LikeArray[_CanNEP50[_ScalarOutT, Any, Any], _ShapeT]],
     type_params=(_ScalarOutT, _ShapeT),
 )
 CastsScalar = TypeAliasType(
@@ -154,12 +158,12 @@ _CastWith: TypeAlias = (
 )
 CastsWith = TypeAliasType(
     "CastsWith",
-    _LikeNumeric[_CastWith[_ScalarInT, _ScalarOutT], _ShapeT],
+    _SequenceND[_LikeNumeric[_CastWith[_ScalarInT, _ScalarOutT], _ShapeT]],
     type_params=(_ScalarInT, _ScalarOutT, _ShapeT),
 )
 CastsWithArray = TypeAliasType(
     "CastsWithArray",
-    _LikeArray[_CastWith[_ScalarInT, _ScalarOutT], _ShapeT],
+    _SequenceND[_LikeArray[_CastWith[_ScalarInT, _ScalarOutT], _ShapeT]],
     type_params=(_ScalarInT, _ScalarOutT, _ShapeT),
 )
 CastsWithScalar = TypeAliasType(

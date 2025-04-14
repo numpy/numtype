@@ -11,6 +11,7 @@ from typing_extensions import Never, Protocol, TypeAliasType, TypeVar, Unpack
 import numpy as np
 from numpy._typing import _NestedSequence
 
+from . import op as op
 from ._dtype import (
     ToDType as ToDType,
     ToDTypeBool as ToDTypeBool,
