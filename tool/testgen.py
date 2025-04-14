@@ -1393,8 +1393,13 @@ class NDArrayOps(TestGen):
             if out_dtypes:
                 out_type_expr = _array_expr(*out_dtypes, npt=True)
                 testcase = _expr_assert_type(expr, out_type_expr)
-            elif self.opname == "sub" and label_np == "b1" and name_py == "b_py":
-                # 🐴
+            elif label_np == "O":
+                # impossible to reject
+                testcase = None
+            elif (
+                (self.opname == "sub" and label_np == "b1" and name_py[0] == "b")
+                or (label_np == "c16" and name_py[0] in "bif")
+            ):  # fmt: skip
                 testcase = "  ".join((
                     expr,
                     "# 🐴",
@@ -1463,6 +1468,9 @@ TESTGENS: Final[Sequence[TestGen]] = [
     NDArrayOps("matmul"),
     NDArrayOps("pow"),
     NDArrayOps("truediv"),
+    NDArrayOps("floordiv"),
+    NDArrayOps("mod"),
+    # NDArrayOps("divmod"),
 ]
 
 
