@@ -1097,12 +1097,12 @@ class NDArrayOps(TestGen):
     testname = "ndarray_{}"
     numpy_imports_extra = ("import numpy.typing as npt",)
 
-    opname: Final[_OpName]
-    opfunc: Final[Callable[..., Any]]
-    n_in: Final[Literal[1, 2]]
-    n_out: Final[Literal[1, 2]]
+    opname: _OpName
+    opfunc: Callable[..., Any]
+    n_in: Literal[1, 2]
+    n_out: Literal[1, 2]
 
-    dtypes: Final[dict[str, tuple[np.dtype, ...]]]
+    dtypes: dict[str, tuple[np.dtype, ...]]
 
     def __init__(self, opname: _OpName, /) -> None:
         ufunc = OP_UFUNCS[opname]
