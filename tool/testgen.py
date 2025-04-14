@@ -2,6 +2,7 @@
 
 # ruff: noqa: PLR0916, PLR6301, ERA001, D101, D102, DOC201
 
+import functools
 import sys
 from pathlib import Path
 
@@ -21,6 +22,7 @@ from typing import (
     TypeVar,
     cast,
     final,
+    overload,
 )
 from typing_extensions import override
 
@@ -51,7 +53,7 @@ _BinOpName: TypeAlias = Literal[
     "or",
     "xor",
 ]
-_UnOpName: TypeAlias = Literal["neg", "pos", "invert", "abs"]
+_UnOpName: TypeAlias = Literal["abs", "neg", "pos", "invert"]
 _OpName: TypeAlias = Literal[_BinOpName, _UnOpName]
 
 ###
@@ -1092,29 +1094,70 @@ class ScalarOps(TestGen):
 
 
 class NDArrayOps(TestGen):
-    testname = "ndarray_ops_{}"
+    testname = "ndarray_{}"
     numpy_imports_extra = ("import numpy.typing as npt",)
 
     opname: _OpName
     opfunc: Callable[..., Any]
+    n_in: Literal[1, 2]
+    n_out: Literal[1, 2]
+
     dtypes: dict[str, tuple[np.dtype, ...]]
 
     def __init__(self, opname: _OpName, /) -> None:
         ufunc = OP_UFUNCS[opname]
-        if not ufunc.nin == 2 and not ufunc.nout == 1:
-            raise NotImplementedError("non-binops not supported")
+        if ufunc.nout != 1:
+            # TODO(jorenham): divmod
+            raise NotImplementedError
+        self.n_out = 1
+
+        if ufunc.nin == 1:
+            self.n_in = 1
+        elif ufunc.nin == 2:
+            self.n_in = 2
+        else:
+            raise TypeError("operator must be unary or binary")
 
         self.opname = opname
-        if opname == "divmod":
+        if opname == "abs":
+            self.opfunc = abs
+        elif opname == "divmod":
             self.opfunc = divmod
         else:
             self.opfunc = getattr(op, opname, None) or getattr(op, opname + "_")
+
         self.testname = self.testname.format(opname)
 
         self.dtypes = {}
         self.__init_dtypes()
 
         super().__init__()
+
+    @functools.cached_property
+    def __op_expr_template(self) -> str:
+        if self.opname == "abs":
+            return "abs({})"
+        if self.opname == "divmod":
+            return "divmod({}, {})"
+
+        doc = self.opfunc.__doc__
+        assert doc, "running python with -OO is not supported"
+        assert doc.startswith("Same as "), doc
+        assert doc.endswith("."), doc
+
+        doc_expr = doc[8:-1]
+
+        placeholder = "{}"
+        if doc_expr[-1] == "a":
+            # unary
+            assert "b" not in doc_expr, doc_expr
+            template = doc_expr[:-1] + placeholder
+        else:
+            # binary
+            assert doc_expr[0] == "a", doc_expr
+            assert doc_expr[-1] == "b", doc_expr
+            template = placeholder + doc_expr[1:-1] + placeholder
+        return template
 
     @property
     def _scalars_py(self) -> Mapping[str, type[complex | bytes | str]]:
@@ -1123,6 +1166,12 @@ class NDArrayOps(TestGen):
             dtypes[0].kind: "" for dtypes in self.dtypes.values() if len(dtypes) == 1
         }
         return {f"{kind}_py": kindmap[kind] for kind in kinds if kind in kindmap}
+
+    @property
+    def _pyright_rules(self) -> str:
+        if self.opname in {"abs", "divmod"}:
+            return "reportArgumentType, reportCallIssue"
+        return "reportOperatorIssue"
 
     @staticmethod
     def _get_arrays(
@@ -1200,12 +1249,22 @@ class NDArrayOps(TestGen):
 
             self.dtypes[kind] = tuple(dtypes)
 
-    def _op_expr(self, lhs: str, rhs: str, /) -> str:
-        if self.opfunc.__name__ == "divmod":
-            return f"divmod({lhs}, {rhs})"
-        return lhs + str(self.opfunc.__doc__)[9:-2] + rhs
+    @overload
+    def _op_expr(self, arg_expr: str, /) -> str: ...
+    @overload
+    def _op_expr(self, arg_expr_a: str, arg_expr_b: str, /) -> str: ...
+    def _op_expr(self, /, *arg_exprs: str) -> str:
+        return self.__op_expr_template.format(*arg_exprs)
 
-    def _evaluate(
+    def _evaluate_unnop(self, arg: npt.ArrayLike, /) -> np.dtype | None:
+        try:
+            dtype: np.dtype = self.opfunc(arg).dtype
+        except TypeError:
+            return None
+
+        return dtype
+
+    def _evaluate_binop(
         self,
         lhs: npt.ArrayLike,
         rhs: npt.ArrayLike,
@@ -1223,7 +1282,28 @@ class NDArrayOps(TestGen):
 
         return dtype
 
-    def _gen_testcases_np_nd(self, label1: str, /) -> Generator[str | None]:
+    def _gen_unop(self, /) -> Generator[str | None]:
+        for label, dtypes in self.dtypes.items():
+            out_dtypes: set[np.dtype] = set()
+            for dtype in dtypes:
+                arr = np.ones((1, 1), dtype=dtype)
+                if (out_dtype := self._evaluate_unnop(arr)) is None:
+                    out_dtypes.clear()
+                    break
+                out_dtypes.add(out_dtype)
+
+            expr = self._op_expr(f"{label}_nd")
+            if out_dtypes:
+                out_type_expr = _array_expr(*out_dtypes, npt=True)
+                yield _expr_assert_type(expr, out_type_expr)
+            else:
+                yield "  ".join((
+                    expr,
+                    "# type: ignore[operator]",
+                    f"# pyright: ignore[{self._pyright_rules}]",
+                ))
+
+    def _gen_testcases_binop_np_nd(self, label1: str, /) -> Generator[str | None]:
         name1 = f"{label1}_nd"
         dtypes1 = self.dtypes[label1]
 
@@ -1235,7 +1315,7 @@ class NDArrayOps(TestGen):
             for dtype1, dtype2 in itertools.product(dtypes1, dtypes2):
                 arr1, arr2 = self._get_arrays(dtype1, dtype2)
 
-                if (out_dtype := self._evaluate(arr1, arr2)) is None:
+                if (out_dtype := self._evaluate_binop(arr1, arr2)) is None:
                     out_dtypes.clear()
                     break
                 out_dtypes.add(out_dtype)
@@ -1244,13 +1324,13 @@ class NDArrayOps(TestGen):
                 out_type_expr = _array_expr(*out_dtypes, npt=True)
                 yield _expr_assert_type(expr, out_type_expr)
             elif "O" not in {dtypes1[0].char, dtypes2[0].char}:  # impossible to reject
-                yield "  ".join((  # noqa: FLY002
+                yield "  ".join((
                     expr,
                     "# type: ignore[operator]",
-                    "# pyright: ignore[reportOperatorIssue]",
+                    f"# pyright: ignore[{self._pyright_rules}]",
                 ))
 
-    def _gen_testcases_py_0d(
+    def _gen_testcases_binop_py_0d(
         self,
         label_np: str,
         /,
@@ -1273,7 +1353,9 @@ class NDArrayOps(TestGen):
             for dtype_np in dtypes_np:
                 arr = self._get_arrays(dtype_np, dtype_py)[0]
 
-                if (out_dtype := self._evaluate(arr, val_py, reflect=reflect)) is None:
+                if (
+                    out_dtype := self._evaluate_binop(arr, val_py, reflect=reflect)
+                ) is None:
                     out_dtypes.clear()
                     break
                 out_dtypes.add(out_dtype)
@@ -1284,18 +1366,26 @@ class NDArrayOps(TestGen):
                 out_type_expr = _array_expr(*out_dtypes, npt=True)
                 testcase = _expr_assert_type(expr, out_type_expr)
             else:
-                testcase = "  ".join((  # noqa: FLY002
+                testcase = "  ".join((
                     expr,
                     "# type: ignore[operator]",
-                    "# pyright: ignore[reportOperatorIssue]",
+                    f"# pyright: ignore[{self._pyright_rules}]",
                 ))
 
             yield testcase
 
+    def _gen_binop(self, /) -> Generator[str | None]:
+        for label in self.dtypes:
+            yield from self._gen_testcases_binop_np_nd(label)
+            yield ""
+            yield from self._gen_testcases_binop_py_0d(label)
+            yield ""
+            yield from self._gen_testcases_binop_py_0d(label, reflect=True)
+            yield ""
+
     @override
     def get_names(self) -> Iterable[tuple[str, str]]:
         # ndarays
-
         for label, dtypes in self.dtypes.items():
             if len(dtypes) == 1:
                 array_expr = _array_expr(dtypes[0], npt=True)
@@ -1304,7 +1394,11 @@ class NDArrayOps(TestGen):
 
             yield f"{label}_nd", array_expr
 
-        yield "", ""  # linebreak
+        if self.n_in == 1:
+            return
+
+        # linebreak
+        yield "", ""
 
         # python scalars
         for name, pytype in self._scalars_py.items():
@@ -1313,14 +1407,7 @@ class NDArrayOps(TestGen):
     @override
     def get_testcases(self) -> Iterable[str | None]:
         yield from self._generate_section()
-
-        for label in self.dtypes:
-            yield from self._gen_testcases_np_nd(label)
-            yield ""
-            yield from self._gen_testcases_py_0d(label)
-            yield ""
-            yield from self._gen_testcases_py_0d(label, reflect=True)
-            yield ""
+        yield from self._gen_unop() if self.n_in == 1 else self._gen_binop()
 
 
 TESTGENS: Final[Sequence[TestGen]] = [
@@ -1330,6 +1417,10 @@ TESTGENS: Final[Sequence[TestGen]] = [
     ScalarOps("modular"),
     ScalarOps("bitwise"),
     ScalarOps("comparison"),
+    NDArrayOps("pos"),
+    NDArrayOps("neg"),
+    NDArrayOps("abs"),
+    NDArrayOps("invert"),
     NDArrayOps("add"),
 ]
 
