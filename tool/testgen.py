@@ -1203,10 +1203,12 @@ class NDArrayOps(TestGen):
             kind: [] for kind in unseen_abstract
         }
 
-        for dtype in sorted(
-            _get_op_types(self.opname),
-            key=lambda dt: DTYPE_CHARS.index(dt.char),
-        ):
+        dtypes_default = map(
+            np.dtype,
+            ("b1", "i1", "i2", "i4", "i8", "u1", "u2", "u4", "u8", "f8", "c16"),
+        )
+        dtypes_op = *dtypes_default, *_get_op_types(self.opname)
+        for dtype in sorted(dtypes_op, key=lambda dt: DTYPE_CHARS.index(dt.char)):
             label = dtype_label(dtype)
             if label in seen_dtypes:
                 continue
