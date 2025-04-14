@@ -1,4 +1,4 @@
-# @generated 2025-04-14T19:47:23Z with tool/testgen.py
+# @generated 2025-04-14T21:26:10Z with tool/testgen.py
 from typing_extensions import assert_type
 
 import numpy as np
@@ -457,12 +457,12 @@ c16_nd % u_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c16_nd % f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c16_nd % iu_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-c16_nd % b_py  # 🐴  # pyright: ignore[reportOperatorIssue]
+c16_nd % b_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c16_nd % i_py  # 🐴  # pyright: ignore[reportOperatorIssue]
 c16_nd % f_py  # 🐴  # pyright: ignore[reportOperatorIssue]
 c16_nd % c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-b_py % c16_nd  # 🐴  # pyright: ignore[reportOperatorIssue]
+b_py % c16_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i_py % c16_nd  # 🐴  # pyright: ignore[reportOperatorIssue]
 f_py % c16_nd  # 🐴  # pyright: ignore[reportOperatorIssue]
 c_py % c16_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
