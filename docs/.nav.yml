@@ -1,6 +1,6 @@
 flatten_single_child_sections: true
 
 nav:
-  - User Guide: user_guide
+  - User Guide: user
   - API Reference: reference.md
   - Development: contributing.md
