@@ -21,7 +21,7 @@ plugins:
       filename: .nav.yml
 
   # https://github.com/mondeja/mkdocs-include-markdown-plugin
-  - include-markdown
+  - include-markdown:
 
   # https://github.com/byrnereese/mkdocs-minify-plugin
   - minify:
@@ -92,7 +92,7 @@ markdown_extensions:
       repo: numtype
 
   # https://facelessuser.github.io/pymdown-extensions/extensions/saneheaders/
-  - pymdownx.saneheaders
+  - pymdownx.saneheaders:
 
 theme:
   name: material
