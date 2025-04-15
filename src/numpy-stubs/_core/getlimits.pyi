@@ -2,37 +2,15 @@ from types import GenericAlias
 from typing import Final, Generic, Literal as L, overload
 from typing_extensions import Self, TypeVar
 
+import _numtype as _nt
 import numpy as np
-from _numtype import inexact32, inexact64, inexact64l
-from numpy._typing import _DTypeLike
-from numpy._typing._char_codes import (
-    _CLongDoubleCodes as _CFloat64LCodes,
-    _Complex64Codes,
-    _Complex128Codes,
-    _Float16Codes,
-    _Float32Codes,
-    _Float64Codes,
-    _Int8Codes,
-    _Int16Codes,
-    _Int32Codes,
-    _Int64Codes,
-    _IntPCodes,
-    _LongCodes,
-    _LongDoubleCodes as _Float64LCodes,
-    _UInt8Codes,
-    _UInt16Codes,
-    _UInt32Codes,
-    _UInt64Codes,
-    _UIntPCodes,
-    _ULongCodes,
-)
 
 __all__ = ["finfo", "iinfo"]
 
 ###
 
-_FloatingT_co = TypeVar("_FloatingT_co", bound=np.floating, default=np.floating, covariant=True)
 _IntegerT_co = TypeVar("_IntegerT_co", bound=np.integer, default=np.integer, covariant=True)
+_FloatingT_co = TypeVar("_FloatingT_co", bound=np.floating, default=np.floating, covariant=True)
 
 ###
 
@@ -49,31 +27,23 @@ class iinfo(Generic[_IntegerT_co]):
 
     #
     @overload
-    def __init__(self, /, int_type: _IntegerT_co | _DTypeLike[_IntegerT_co]) -> None: ...
+    def __init__(self, /, int_type: _IntegerT_co | _nt._ToDType[_IntegerT_co]) -> None: ...
     @overload
-    def __init__(self: iinfo[np.int8], /, int_type: _Int8Codes) -> None: ...
+    def __init__(self: iinfo[np.int8], /, int_type: _nt.ToDTypeInt8) -> None: ...
     @overload
-    def __init__(self: iinfo[np.uint8], /, int_type: _UInt8Codes) -> None: ...
+    def __init__(self: iinfo[np.uint8], /, int_type: _nt.ToDTypeUInt8) -> None: ...
     @overload
-    def __init__(self: iinfo[np.int16], /, int_type: _Int16Codes) -> None: ...
+    def __init__(self: iinfo[np.int16], /, int_type: _nt.ToDTypeInt16) -> None: ...
     @overload
-    def __init__(self: iinfo[np.uint16], /, int_type: _UInt16Codes) -> None: ...
+    def __init__(self: iinfo[np.uint16], /, int_type: _nt.ToDTypeUInt16) -> None: ...
     @overload
-    def __init__(self: iinfo[np.int32], /, int_type: _Int32Codes) -> None: ...
+    def __init__(self: iinfo[np.int32], /, int_type: _nt.ToDTypeInt32) -> None: ...
     @overload
-    def __init__(self: iinfo[np.uint32], /, int_type: _UInt32Codes) -> None: ...
+    def __init__(self: iinfo[np.uint32], /, int_type: _nt.ToDTypeUInt32) -> None: ...
     @overload
-    def __init__(self: iinfo[np.int64], /, int_type: _Int64Codes) -> None: ...
+    def __init__(self: iinfo[np.int64], /, int_type: _nt.ToDTypeInt64 | int) -> None: ...
     @overload
-    def __init__(self: iinfo[np.uint64], /, int_type: _UInt64Codes) -> None: ...
-    @overload
-    def __init__(self: iinfo[np.long], /, int_type: _LongCodes) -> None: ...
-    @overload
-    def __init__(self: iinfo[np.ulong], /, int_type: _ULongCodes) -> None: ...
-    @overload
-    def __init__(self: iinfo[np.intp], /, int_type: int | type[int] | _IntPCodes) -> None: ...
-    @overload
-    def __init__(self: iinfo[np.uintp], /, int_type: _UIntPCodes) -> None: ...
+    def __init__(self: iinfo[np.uint64], /, int_type: _nt.ToDTypeUInt64) -> None: ...
 
     #
     @classmethod
@@ -106,23 +76,15 @@ class finfo(Generic[_FloatingT_co]):
 
     #
     @overload
-    def __new__(cls, dtype: _FloatingT_co | _DTypeLike[_FloatingT_co]) -> Self: ...
+    def __new__(cls, dtype: _nt.ToDTypeFloat16) -> finfo[np.float16]: ...
     @overload
-    def __new__(cls, dtype: type[complex] | complex) -> finfo[np.float64]: ...
+    def __new__(cls, dtype: _nt.ToDTypeFloat32 | _nt.ToDTypeComplex64) -> finfo[np.float32]: ...
     @overload
-    def __new__(cls, dtype: np.float16 | _DTypeLike[np.float16] | _Float16Codes) -> finfo[np.float16]: ...
+    def __new__(cls, dtype: _nt.ToDTypeFloat64 | _nt.ToDTypeComplex128 | complex) -> finfo[np.float64]: ...
     @overload
-    def __new__(
-        cls, dtype: inexact32 | _DTypeLike[inexact32] | _Float32Codes | _Complex64Codes
-    ) -> finfo[np.float32]: ...
+    def __new__(cls, dtype: _nt.ToDTypeLongDouble | _nt.ToDTypeCLongDouble) -> finfo[np.longdouble]: ...
     @overload
-    def __new__(
-        cls, dtype: inexact64 | _DTypeLike[inexact64] | _Float64Codes | _Complex128Codes
-    ) -> finfo[np.float64]: ...
-    @overload
-    def __new__(
-        cls, dtype: inexact64l | _DTypeLike[inexact64l] | _Float64LCodes | _CFloat64LCodes
-    ) -> finfo[np.longdouble]: ...
+    def __new__(cls, dtype: _FloatingT_co | _nt._ToDType[_FloatingT_co]) -> Self: ...
 
     #
     @classmethod
