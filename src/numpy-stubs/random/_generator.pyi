@@ -782,7 +782,7 @@ class Generator:
         endpoint: bool = False,
     ) -> int: ...
     @overload
-    def integers(
+    def integers(  # type: ignore[overload-overlap]
         self,
         /,
         low: int,
@@ -924,7 +924,7 @@ class Generator:
         endpoint: bool = False,
     ) -> npt.NDArray[np.int64]: ...
     @overload
-    def integers(
+    def integers(  # type: ignore[overload-overlap]
         self,
         /,
         low: _ArrayLikeInt_co,
@@ -1065,7 +1065,7 @@ class Generator:
         endpoint: bool = False,
     ) -> npt.NDArray[np.int64]: ...
     @overload
-    def integers(
+    def integers(  # type: ignore[overload-overlap]
         self,
         /,
         low: _ArrayLikeInt_co,

@@ -95,7 +95,6 @@ from ._dtype_like import (
     _SupportsDType as _SupportsDType,
     _VoidDTypeLike as _VoidDTypeLike,
 )
-from ._nbit_base import NBitBase as NBitBase
 from ._nested_sequence import _NestedSequence as _NestedSequence
 from ._scalars import (
     _BoolLike_co as _BoolLike_co,

@@ -351,7 +351,6 @@ from ._pytesttester import PytestTester
 from ._typing import (
     ArrayLike,
     DTypeLike,
-    NBitBase,
     NDArray,
     _ArrayLikeDT64_co,
     _ArrayLikeObject_co,
@@ -363,7 +362,6 @@ from ._typing import (
     _ScalarLike_co,
     _ShapeLike,
     _TD64Like_co,
-    _nbit_base as _n,
 )
 from ._typing._char_codes import _LongCodes, _ULongCodes
 from .lib import scimath as emath
@@ -660,10 +658,6 @@ _NumberT = TypeVar("_NumberT", bound=number)
 _NumericT = TypeVar("_NumericT", bound=number | timedelta64)
 _CoNumberT = TypeVar("_CoNumberT", bound=bool_ | number)
 _CharT = TypeVar("_CharT", bound=character)
-
-_BitT = TypeVar("_BitT", bound=NBitBase, default=Any)  # pyright: ignore[reportDeprecated]
-_BitT1 = TypeVar("_BitT1", bound=NBitBase, default=Any)  # pyright: ignore[reportDeprecated]
-_BitT2 = TypeVar("_BitT2", bound=NBitBase, default=_BitT1)  # pyright: ignore[reportDeprecated]
 
 _ItemT_co = TypeVar("_ItemT_co", default=Any, covariant=True)
 _BoolItemT_co = TypeVar("_BoolItemT_co", bound=py_bool, default=py_bool, covariant=True)
@@ -4380,11 +4374,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
 
 bool = bool_
 
-class number(
-    _CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd],
-    generic[_NumberItemT_co],
-    Generic[_BitT, _NumberItemT_co],
-):
+class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberItemT_co], Generic[_NumberItemT_co]):
     @type_check_only
     def __nep50_builtin__(self, /) -> tuple[int, Self]: ...
     @final
@@ -4411,7 +4401,7 @@ class number(
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
-    def __abs__(self, /) -> number[_BitT]: ...
+    def __abs__(self, /) -> number: ...
     def __neg__(self, /) -> Self: ...
     def __pos__(self, /) -> Self: ...
 
@@ -4525,7 +4515,7 @@ class number(
 # increases over time. Assuming that this *always* holds significantly reduces the
 # complexity of the `[u]intp` and `[u]long` type definitions.
 
-class integer(_IntegralMixin, _RoundMixin, number[_BitT, int]):
+class integer(_IntegralMixin, _RoundMixin, number[int]):
     @abc.abstractmethod
     @type_check_only
     def __nep50__(
@@ -4670,7 +4660,7 @@ class integer(_IntegralMixin, _RoundMixin, number[_BitT, int]):
     @overload
     def __ror__(self, x: _nt.CastsWithScalar[Self, _IntegralT], /) -> _IntegralT: ...
 
-class signedinteger(integer[_BitT]):
+class signedinteger(integer):
     @abc.abstractmethod
     @type_check_only
     @override
@@ -4691,7 +4681,7 @@ class signedinteger(integer[_BitT]):
     @type_check_only
     def __nep50_rule5__(self, other: _JustInteger | _JustUnsignedInteger, /) -> signedinteger | float64: ...
 
-class int8(_IntMixin[L[1]], signedinteger[_n._8]):
+class int8(_IntMixin[L[1]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
@@ -4712,7 +4702,7 @@ class int8(_IntMixin[L[1]], signedinteger[_n._8]):
 
 byte = int8
 
-class int16(_IntMixin[L[2]], signedinteger[_n._16]):
+class int16(_IntMixin[L[2]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
@@ -4733,7 +4723,7 @@ class int16(_IntMixin[L[2]], signedinteger[_n._16]):
 
 short = int16
 
-class int32(_IntMixin[L[4]], signedinteger[_n._32]):
+class int32(_IntMixin[L[4]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
@@ -4757,7 +4747,7 @@ class int32(_IntMixin[L[4]], signedinteger[_n._32]):
 
 intc = int32
 
-class int64(_IntMixin[L[8]], signedinteger[_n._64]):
+class int64(_IntMixin[L[8]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
@@ -4795,7 +4785,7 @@ longlong = int64
 intp = int64
 int_ = intp
 
-class unsignedinteger(integer[_BitT]):
+class unsignedinteger(integer):
     @abc.abstractmethod
     @type_check_only
     @override
@@ -4808,7 +4798,7 @@ class unsignedinteger(integer[_BitT]):
     @type_check_only
     def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
 
-class uint8(_IntMixin[L[1]], unsignedinteger[_n._8]):
+class uint8(_IntMixin[L[1]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
@@ -4833,7 +4823,7 @@ class uint8(_IntMixin[L[1]], unsignedinteger[_n._8]):
 
 ubyte = uint8
 
-class uint16(_IntMixin[L[2]], unsignedinteger[_n._16]):
+class uint16(_IntMixin[L[2]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
@@ -4860,7 +4850,7 @@ class uint16(_IntMixin[L[2]], unsignedinteger[_n._16]):
 
 ushort = uint16
 
-class uint32(_IntMixin[L[4]], unsignedinteger[_n._32]):
+class uint32(_IntMixin[L[4]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
@@ -4887,7 +4877,7 @@ class uint32(_IntMixin[L[4]], unsignedinteger[_n._32]):
 
 uintc = uint32
 
-class uint64(_IntMixin[L[8]], unsignedinteger[_n._64]):
+class uint64(_IntMixin[L[8]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
@@ -4923,7 +4913,7 @@ ulonglong = uint64
 uintp = uint64
 uint = uintp
 
-class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co]):
+class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
     @abc.abstractmethod
     @type_check_only
     def __nep50__(self, below: clongdouble, above: _nt.co_integer8, /) -> inexact: ...
@@ -4961,7 +4951,7 @@ class inexact(number[_BitT, _InexactItemT_co], Generic[_BitT, _InexactItemT_co])
     @overload
     def __rtruediv__(self: _nt.CastsWithComplex[_ComplexFloatingT], x: _nt.JustComplex, /) -> _ComplexFloatingT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
-class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
+class floating(_RealMixin, _RoundMixin, inexact[float]):
     @abc.abstractmethod
     @override
     @type_check_only
@@ -5009,7 +4999,7 @@ class floating(_RealMixin, _RoundMixin, inexact[_BitT, float]):
     @overload
     def __rdivmod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _2Tuple[_FloatingT]: ...
 
-class float16(_FloatMixin[L[2]], floating[_n._16]):
+class float16(_FloatMixin[L[2]], floating):
     @override
     @type_check_only
     def __nep50__(self, below: inexact, above: _nt.co_integer8, /) -> float16: ...
@@ -5030,7 +5020,7 @@ class float16(_FloatMixin[L[2]], floating[_n._16]):
 
 half = float16
 
-class float32(_FloatMixin[L[4]], floating[_n._32]):
+class float32(_FloatMixin[L[4]], floating):
     @override
     @type_check_only
     def __nep50__(self, below: _float32_min | complexfloating, above: float16 | _nt.co_integer16, /) -> float32: ...
@@ -5049,7 +5039,7 @@ class float32(_FloatMixin[L[4]], floating[_n._32]):
 
 single = float32
 
-class float64(_FloatMixin[L[8]], floating[_n._64], float):  # type: ignore[misc]
+class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
     @override
     @type_check_only
     def __nep50__(self, below: _inexact64_min, above: _float32_max | _nt.co_integer, /) -> float64: ...
@@ -5085,7 +5075,7 @@ class float64(_FloatMixin[L[8]], floating[_n._64], float):  # type: ignore[misc]
 
 double = float64
 
-class longdouble(_FloatMixin[L[12, 16]], floating[_n._64L]):
+class longdouble(_FloatMixin[L[12, 16]], floating):
     @override
     @type_check_only
     def __nep50__(
@@ -5123,7 +5113,7 @@ class longdouble(_FloatMixin[L[12, 16]], floating[_n._64L]):
 float96 = longdouble
 float128 = longdouble
 
-class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
+class complexfloating(inexact[complex]):
     @abc.abstractmethod
     @override
     @type_check_only
@@ -5172,7 +5162,7 @@ class complexfloating(inexact[_BitT1, complex], Generic[_BitT1, _BitT2]):
     )
     def __round__(self, /, ndigits: CanIndex | None = None) -> Self: ...
 
-class complex64(complexfloating[_n._32]):
+class complex64(complexfloating):
     @override
     @type_check_only
     def __nep50__(self, below: complexfloating, above: _float32_max | _nt.co_integer16, /) -> complex64: ...
@@ -5209,7 +5199,7 @@ class complex64(complexfloating[_n._32]):
 
 csingle = complex64
 
-class complex128(complexfloating[_n._64], complex):  # type: ignore[misc]
+class complex128(complexfloating, complex):  # type: ignore[misc]
     @override
     @type_check_only
     def __nep50__(self, below: _complex128_min, above: complex64 | _float64_max | _nt.co_integer, /) -> complex128: ...
@@ -5255,7 +5245,7 @@ class complex128(complexfloating[_n._64], complex):  # type: ignore[misc]
 
 cdouble = complex128
 
-class clongdouble(complexfloating[_n._64L]):
+class clongdouble(complexfloating):
     @override
     @type_check_only
     def __nep50__(self, below: clongdouble, above: _nt.co_number, /) -> clongdouble: ...

@@ -37,6 +37,7 @@ from ._dtype import (
     ToDTypeUInt32 as ToDTypeUInt32,
     ToDTypeUInt64 as ToDTypeUInt64,
     ToDTypeVoid as ToDTypeVoid,
+    _ToDType as _ToDType,
 )
 from ._just import (
     Just as Just,
@@ -578,17 +579,17 @@ ToNumber_2nd = TypeAliasType("ToNumber_2nd", _ToArray2_2nd[np.number, _PyNumber]
 ToNumber_3nd = TypeAliasType("ToNumber_3nd", _ToArray2_3nd[np.number, _PyNumber])
 
 # integers and real floats
-ToReal_nd = TypeAliasType("ToReal_nd", _ToArray2_nd[np.number[Any, float], _PyReal])
-ToReal_0d = TypeAliasType("ToReal_0d", _ToArray2_0d[np.number[Any, float], _PyReal])
-ToReal_1d = TypeAliasType("ToReal_1d", _ToArray2_1d[np.number[Any, float], _PyReal])
-ToReal_2d = TypeAliasType("ToReal_2d", _ToArray2_2d[np.number[Any, float], _PyReal])
-ToReal_3d = TypeAliasType("ToReal_3d", _ToArray2_3d[np.number[Any, float], _PyReal])
-ToReal_1ds = TypeAliasType("ToReal_1ds", _ToArray2_1ds[np.number[Any, float], _PyReal])
-ToReal_2ds = TypeAliasType("ToReal_2ds", _ToArray2_2ds[np.number[Any, float], _PyReal])
-ToReal_3ds = TypeAliasType("ToReal_3ds", _ToArray2_3ds[np.number[Any, float], _PyReal])
-ToReal_1nd = TypeAliasType("ToReal_1nd", _ToArray2_1nd[np.number[Any, float], _PyReal])
-ToReal_2nd = TypeAliasType("ToReal_2nd", _ToArray2_2nd[np.number[Any, float], _PyReal])
-ToReal_3nd = TypeAliasType("ToReal_3nd", _ToArray2_3nd[np.number[Any, float], _PyReal])
+ToReal_nd = TypeAliasType("ToReal_nd", _ToArray2_nd[np.number[float], _PyReal])
+ToReal_0d = TypeAliasType("ToReal_0d", _ToArray2_0d[np.number[float], _PyReal])
+ToReal_1d = TypeAliasType("ToReal_1d", _ToArray2_1d[np.number[float], _PyReal])
+ToReal_2d = TypeAliasType("ToReal_2d", _ToArray2_2d[np.number[float], _PyReal])
+ToReal_3d = TypeAliasType("ToReal_3d", _ToArray2_3d[np.number[float], _PyReal])
+ToReal_1ds = TypeAliasType("ToReal_1ds", _ToArray2_1ds[np.number[float], _PyReal])
+ToReal_2ds = TypeAliasType("ToReal_2ds", _ToArray2_2ds[np.number[float], _PyReal])
+ToReal_3ds = TypeAliasType("ToReal_3ds", _ToArray2_3ds[np.number[float], _PyReal])
+ToReal_1nd = TypeAliasType("ToReal_1nd", _ToArray2_1nd[np.number[float], _PyReal])
+ToReal_2nd = TypeAliasType("ToReal_2nd", _ToArray2_2nd[np.number[float], _PyReal])
+ToReal_3nd = TypeAliasType("ToReal_3nd", _ToArray2_3nd[np.number[float], _PyReal])
 
 # real- and complex floats
 ToInexact_nd = TypeAliasType("ToInexact_nd", _ToArray2_nd[np.inexact, _PyInexact])
