@@ -40,6 +40,6 @@ algebra, basic statistical operations, random simulation and much more.
     Want to add to the codebase? The contributing guidelines will guide you
     through the process of improving NumType.
 
-    [:octicons-arrow-right-24: To the contributor's guide](contributing.md)
+    [:octicons-arrow-right-24: To the contributor's guide](dev/index.md)
 
 </div>
