@@ -4,18 +4,9 @@ from collections.abc import Iterator, Mapping, Sequence
 from typing import Any, ClassVar, Final, Literal, SupportsIndex, TypeAlias, overload
 from typing_extensions import Self, TypeIs, TypeVar, override
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
-from _numtype import (
-    Array1D,
-    CoComplex_0d,
-    CoComplex_1d,
-    CoComplex_1nd,
-    CoInteger_0d,
-    CoInteger_1d,
-    ToObject_0d,
-    ToObject_1nd,
-)
 from numpy._typing import _FloatLike_co
 
 from .polynomial import _ToNumeric_0d, _ToNumeric_nd
@@ -24,9 +15,11 @@ __all__: Final[Sequence[str]] = ("ABCPolyBase",)
 
 ###
 
+_T = TypeVar("_T")
 _PolyT = TypeVar("_PolyT", bound=ABCPolyBase)
 
-_AnyOther: TypeAlias = ABCPolyBase | _ToNumeric_0d | CoComplex_1d
+_Tuple2: TypeAlias = tuple[_T, _T]
+_AnyOther: TypeAlias = ABCPolyBase | _ToNumeric_0d | _nt.CoComplex_1d
 _Hundred: TypeAlias = Literal[100]
 
 ###
@@ -41,7 +34,7 @@ class ABCPolyBase(abc.ABC):
     _use_unicode: ClassVar[bool]
     _symbol: str
 
-    coef: Array1D[np.inexact | np.object_]
+    coef: _nt.Array1D[np.inexact | np.object_]
 
     @property
     def symbol(self, /) -> str: ...
@@ -52,18 +45,18 @@ class ABCPolyBase(abc.ABC):
     def basis_name(self, /) -> str | None: ...
     @property
     @abc.abstractmethod
-    def domain(self, /) -> Array1D[np.inexact]: ...
+    def domain(self, /) -> _nt.Array1D[np.inexact]: ...
     @property
     @abc.abstractmethod
-    def window(self, /) -> Array1D[np.inexact]: ...
+    def window(self, /) -> _nt.Array1D[np.inexact]: ...
 
     #
     def __init__(
         self,
         /,
-        coef: CoComplex_1d,
-        domain: CoComplex_1d | None = None,
-        window: CoComplex_1d | None = None,
+        coef: _nt.CoComplex_1d,
+        domain: _nt.CoComplex_1d | None = None,
+        window: _nt.CoComplex_1d | None = None,
         symbol: str = "x",
     ) -> None: ...
 
@@ -71,13 +64,13 @@ class ABCPolyBase(abc.ABC):
     @overload
     def __call__(self, /, arg: _PolyT) -> _PolyT: ...
     @overload
-    def __call__(self, /, arg: CoComplex_0d) -> np.float64 | np.complex128: ...
+    def __call__(self, /, arg: _nt.CoComplex_0d) -> _nt.inexact64: ...
     @overload
-    def __call__(self, /, arg: CoComplex_1nd) -> npt.NDArray[np.float64 | np.complex128]: ...
+    def __call__(self, /, arg: _nt.CoComplex_1nd) -> npt.NDArray[_nt.inexact64]: ...
     @overload
-    def __call__(self, /, arg: ToObject_0d) -> Any: ...
+    def __call__(self, /, arg: _nt.ToObject_0d) -> Any: ...
     @overload
-    def __call__(self, /, arg: ToObject_1nd) -> npt.NDArray[np.object_]: ...
+    def __call__(self, /, arg: _nt.ToObject_1nd) -> npt.NDArray[np.object_]: ...
 
     #
     @override
@@ -132,78 +125,90 @@ class ABCPolyBase(abc.ABC):
     #
     @overload
     def convert(
-        self, /, domain: CoComplex_1d | None = None, kind: None = None, window: CoComplex_1d | None = None
+        self,
+        /,
+        domain: _nt.CoComplex_1d | None = None,
+        kind: None = None,
+        window: _nt.CoComplex_1d | None = None,
     ) -> Self: ...
     @overload
     def convert(
-        self, /, domain: CoComplex_1d | None, kind: type[_PolyT], window: CoComplex_1d | None = None
+        self,
+        /,
+        domain: _nt.CoComplex_1d | None,
+        kind: type[_PolyT],
+        window: _nt.CoComplex_1d | None = None,
     ) -> _PolyT: ...
     @overload
     def convert(
         self,
         /,
-        domain: CoComplex_1d | None = None,
+        domain: _nt.CoComplex_1d | None = None,
         *,
         kind: type[_PolyT],
-        window: CoComplex_1d | None = None,
+        window: _nt.CoComplex_1d | None = None,
     ) -> _PolyT: ...
 
     #
     def mapparms(self, /) -> tuple[Any, Any]: ...
     def integ(
-        self, /, m: SupportsIndex = 1, k: _ToNumeric_0d | CoComplex_1d = [], lbnd: _ToNumeric_0d | None = None
+        self,
+        /,
+        m: SupportsIndex = 1,
+        k: _ToNumeric_0d | _nt.CoComplex_1d = [],
+        lbnd: _ToNumeric_0d | None = None,
     ) -> Self: ...
     def deriv(self, /, m: SupportsIndex = 1) -> Self: ...
-    def roots(self, /) -> Array1D[np.float64] | Array1D[np.complex128]: ...
+    def roots(self, /) -> _nt.Array1D[_nt.inexact64]: ...
     def linspace(
         self,
         /,
         n: SupportsIndex = 100,
-        domain: CoComplex_1d | None = None,
-    ) -> tuple[Array1D[np.float64 | np.complex128], Array1D[np.float64 | np.complex128]]: ...
+        domain: _nt.CoComplex_1d | None = None,
+    ) -> _Tuple2[_nt.Array1D[_nt.inexact64]]: ...
 
     #
     @overload
     @classmethod
     def fit(
         cls,
-        x: CoComplex_1d,
-        y: CoComplex_1d,
-        deg: CoInteger_0d | CoInteger_1d,
-        domain: CoComplex_1d | None = None,
+        x: _nt.CoComplex_1d,
+        y: _nt.CoComplex_1d,
+        deg: _nt.CoInteger_0d | _nt.CoInteger_1d,
+        domain: _nt.CoComplex_1d | None = None,
         rcond: _FloatLike_co | None = None,
         full: Literal[False] = False,
-        w: CoComplex_1d | None = None,
-        window: CoComplex_1d | None = None,
+        w: _nt.CoComplex_1d | None = None,
+        window: _nt.CoComplex_1d | None = None,
         symbol: str = "x",
     ) -> Self: ...
     @overload
     @classmethod
     def fit(
         cls,
-        x: CoComplex_1d,
-        y: CoComplex_1d,
-        deg: CoInteger_0d | CoInteger_1d,
-        domain: CoComplex_1d | None,
+        x: _nt.CoComplex_1d,
+        y: _nt.CoComplex_1d,
+        deg: _nt.CoInteger_0d | _nt.CoInteger_1d,
+        domain: _nt.CoComplex_1d | None,
         rcond: _FloatLike_co | None,
         full: Literal[True],
-        w: CoComplex_1d | None = None,
-        window: CoComplex_1d | None = None,
+        w: _nt.CoComplex_1d | None = None,
+        window: _nt.CoComplex_1d | None = None,
         symbol: str = "x",
     ) -> tuple[Self, Sequence[np.inexact | np.int32]]: ...
     @overload
     @classmethod
     def fit(
         cls,
-        x: CoComplex_1d,
-        y: CoComplex_1d,
-        deg: CoInteger_0d | CoInteger_1d,
-        domain: CoComplex_1d | None = None,
+        x: _nt.CoComplex_1d,
+        y: _nt.CoComplex_1d,
+        deg: _nt.CoInteger_0d | _nt.CoInteger_1d,
+        domain: _nt.CoComplex_1d | None = None,
         rcond: _FloatLike_co | None = None,
         *,
         full: Literal[True],
-        w: CoComplex_1d | None = None,
-        window: CoComplex_1d | None = None,
+        w: _nt.CoComplex_1d | None = None,
+        window: _nt.CoComplex_1d | None = None,
         symbol: str = "x",
     ) -> tuple[Self, Sequence[np.inexact | np.int32]]: ...
 
@@ -212,31 +217,31 @@ class ABCPolyBase(abc.ABC):
     def fromroots(
         cls,
         roots: _ToNumeric_nd,
-        domain: CoComplex_1d | None = [],
-        window: CoComplex_1d | None = None,
+        domain: _nt.CoComplex_1d | None = [],
+        window: _nt.CoComplex_1d | None = None,
         symbol: str = "x",
     ) -> Self: ...
     @classmethod
     def identity(
         cls,
-        domain: CoComplex_1d | None = None,
-        window: CoComplex_1d | None = None,
+        domain: _nt.CoComplex_1d | None = None,
+        window: _nt.CoComplex_1d | None = None,
         symbol: str = "x",
     ) -> Self: ...
     @classmethod
     def basis(
         cls,
         deg: SupportsIndex,
-        domain: CoComplex_1d | None = None,
-        window: CoComplex_1d | None = None,
+        domain: _nt.CoComplex_1d | None = None,
+        window: _nt.CoComplex_1d | None = None,
         symbol: str = "x",
     ) -> Self: ...
     @classmethod
     def cast(
         cls,
         series: ABCPolyBase,
-        domain: CoComplex_1d | None = None,
-        window: CoComplex_1d | None = None,
+        domain: _nt.CoComplex_1d | None = None,
+        window: _nt.CoComplex_1d | None = None,
     ) -> Self: ...
 
     #
