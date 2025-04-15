@@ -3947,6 +3947,9 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     #
     @property
     @override
+    def dtype(self) -> dtypes.BoolDType: ...
+    @property
+    @override
     def itemsize(self) -> L[1]: ...
     @property
     @override
@@ -4377,8 +4380,6 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
 
 bool = bool_
 
-# TODO(jorenham): Move these protocols to _numtype
-
 class number(
     _CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd],
     generic[_NumberItemT_co],
@@ -4704,6 +4705,11 @@ class int8(_IntMixin[L[1]], signedinteger[_n._8]):
     @type_check_only
     def __nep50_rule3__(self, other: uint16, /) -> int32: ...
 
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.Int8DType: ...
+
 byte = int8
 
 class int16(_IntMixin[L[2]], signedinteger[_n._16]):
@@ -4719,6 +4725,11 @@ class int16(_IntMixin[L[2]], signedinteger[_n._16]):
     def __nep50_rule2__(self, other: uint16, /) -> int32: ...
     @type_check_only
     def __nep50_rule3__(self, other: float16, /) -> float32: ...
+
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.Int16DType: ...
 
 short = int16
 
@@ -4738,6 +4749,11 @@ class int32(_IntMixin[L[4]], signedinteger[_n._32]):
     def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
     @type_check_only
     def __nep50_rule3__(self, other: _JustComplexFloating, /) -> complexfloating: ...
+
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.Int32DType: ...
 
 intc = int32
 
@@ -4763,6 +4779,11 @@ class int64(_IntMixin[L[8]], signedinteger[_n._64]):
     @override
     @type_check_only
     def __nep50_rule5__(self, other: _JustInteger | _JustUnsignedInteger, /) -> Self | float64: ...
+
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.Int64DType: ...
 
 if sys.platform == "win32":
     long: TypeAlias = int32  # pyright: ignore[reportRedeclaration]
@@ -4805,6 +4826,11 @@ class uint8(_IntMixin[L[1]], unsignedinteger[_n._8]):
     @type_check_only
     def __nep50_rule5__(self, other: _JustInteger, /) -> integer: ...
 
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.UInt8DType: ...
+
 ubyte = uint8
 
 class uint16(_IntMixin[L[2]], unsignedinteger[_n._16]):
@@ -4826,6 +4852,11 @@ class uint16(_IntMixin[L[2]], unsignedinteger[_n._16]):
     @override
     @type_check_only
     def __nep50_rule5__(self, other: _JustInteger, /) -> integer: ...
+
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.UInt16DType: ...
 
 ushort = uint16
 
@@ -4849,6 +4880,11 @@ class uint32(_IntMixin[L[4]], unsignedinteger[_n._32]):
     @type_check_only
     def __nep50_rule5__(self, other: _JustInteger, /) -> integer: ...
 
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.UInt32DType: ...
+
 uintc = uint32
 
 class uint64(_IntMixin[L[8]], unsignedinteger[_n._64]):
@@ -4871,6 +4907,11 @@ class uint64(_IntMixin[L[8]], unsignedinteger[_n._64]):
     @override
     @type_check_only
     def __nep50_rule5__(self, other: _JustInteger, /) -> uint64 | float64: ...
+
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.UInt64DType: ...
 
 if sys.platform == "win32":
     ulong: TypeAlias = uint32  # pyright: ignore[reportRedeclaration]
@@ -4982,6 +5023,11 @@ class float16(_FloatMixin[L[2]], floating[_n._16]):
     @type_check_only
     def __nep50_rule2__(self, other: _AbstractInteger, /) -> floating: ...
 
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.Float16DType: ...
+
 half = float16
 
 class float32(_FloatMixin[L[4]], floating[_n._32]):
@@ -4995,6 +5041,11 @@ class float32(_FloatMixin[L[4]], floating[_n._32]):
     def __nep50_rule1__(self, other: _nt.integer32 | _nt.integer64, /) -> float64: ...
     @type_check_only
     def __nep50_rule2__(self, other: _AbstractInteger, /) -> floating: ...
+
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.Float32DType: ...
 
 single = float32
 
@@ -5014,6 +5065,9 @@ class float64(_FloatMixin[L[8]], floating[_n._64], float):  # type: ignore[misc]
     def __getformat__(cls, typestr: L["double", "float"], /) -> str: ...
 
     #
+    @property
+    @override
+    def dtype(self) -> dtypes.Float64DType: ...
     @property
     @override
     def real(self) -> Self: ...
@@ -5052,6 +5106,11 @@ class longdouble(_FloatMixin[L[12, 16]], floating[_n._64L]):
     @override
     @type_check_only
     def __nep50_rule6__(self, other: _JustInexact | _JustNumber, /) -> longdouble | clongdouble: ...
+
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.LongDoubleDType: ...
 
     #
     @overload
@@ -5125,6 +5184,9 @@ class complex64(complexfloating[_n._32]):
     #
     @property
     @override
+    def dtype(self) -> dtypes.Complex64DType: ...
+    @property
+    @override
     def itemsize(self) -> L[8]: ...
     @property
     @override
@@ -5164,6 +5226,9 @@ class complex128(complexfloating[_n._64], complex):  # type: ignore[misc]
     def __new__(cls, real: _ToReal = 0, imag: _ToImag = 0, /) -> Self: ...
 
     #
+    @property
+    @override
+    def dtype(self) -> dtypes.Complex128DType: ...
     @property
     @override
     def itemsize(self) -> L[16]: ...
@@ -5208,6 +5273,9 @@ class clongdouble(complexfloating[_n._64L]):
     def __nep50_rule6__(self, other: _JustInexact | _JustNumber, /) -> clongdouble: ...
 
     #
+    @property
+    @override
+    def dtype(self) -> dtypes.CLongDoubleDType: ...
     @property
     @override
     def itemsize(self) -> L[24, 32]: ...
@@ -5276,6 +5344,10 @@ class object_(_RealMixin, generic[Any]):
     if sys.version_info >= (3, 12):
         def __release_buffer__(self, buffer: memoryview, /) -> None: ...
 
+    @property
+    @override
+    def dtype(self) -> dtypes.ObjectDType: ...
+
 @final
 class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):  # type: ignore[misc]
     @abc.abstractmethod
@@ -5301,6 +5373,11 @@ class bytes_(character[bytes], bytes):  # type: ignore[misc]
     @overload
     def __init__(self, o: object = b"", /) -> None: ...
 
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.BytesDType: ...
+
 class str_(character[str], str):  # type: ignore[misc]
     @type_check_only
     def __nep50__(self, below: str_ | object_, above: Never, /) -> str_: ...
@@ -5316,6 +5393,11 @@ class str_(character[str], str):  # type: ignore[misc]
     def __init__(self, value: object = "", /) -> None: ...
     @overload
     def __init__(self, value: bytes, /, encoding: str = "utf-8", errors: str = "strict") -> None: ...
+
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.StrDType: ...
 
 class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
     @type_check_only
@@ -5334,12 +5416,20 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
     @override
     def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
 
+    #
+    @property
+    @override
+    def dtype(self) -> dtypes.VoidDType: ...
+
 class datetime64(
     _RealMixin,
     _CmpOpMixin[datetime64, _ArrayLikeDT64_co],
     generic[_DT64ItemT_co],
     Generic[_DT64ItemT_co],
 ):
+    @property
+    @override
+    def dtype(self) -> dtypes.DateTime64DType: ...
     @property
     @override
     def itemsize(self) -> L[8]: ...
@@ -5479,6 +5569,9 @@ class timedelta64(
     def __nep50_builtin__(self, /) -> tuple[int, timedelta64]: ...
 
     #
+    @property
+    @override
+    def dtype(self) -> dtypes.TimeDelta64DType: ...
     @property
     @override
     def itemsize(self) -> L[8]: ...
