@@ -1,6 +1,6 @@
 <h1 align="center">
     <img
-        src="https://raw.githubusercontent.com/numpy/numtype/main/docs/img/logo-numtype.svg"
+        src="https://raw.githubusercontent.com/numpy/numtype/main/docs/theme/img/logo-numtype.svg"
         width="384"
         alt="NumType"
     />
