@@ -22,7 +22,7 @@ algebra, basic statistical operations, random simulation and much more.
     The user guide provides in-depth information on the key concepts of
     NumType with useful background information and explanation.
 
-    [:octicons-arrow-right-24: To the user guide](user_guide/index.md)
+    [:octicons-arrow-right-24: To the user guide](user/index.md)
 
 - :material-code-brackets:{ .lg .middle } &nbsp; __API reference__
 
@@ -40,6 +40,6 @@ algebra, basic statistical operations, random simulation and much more.
     Want to add to the codebase? The contributing guidelines will guide you
     through the process of improving NumType.
 
-    [:octicons-arrow-right-24: To the contributor's guide](contributing.md)
+    [:octicons-arrow-right-24: To the contributor's guide](dev/index.md)
 
 </div>

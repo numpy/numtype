@@ -21,7 +21,7 @@ plugins:
       filename: .nav.yml
 
   # https://github.com/mondeja/mkdocs-include-markdown-plugin
-  - include-markdown
+  - include-markdown:
 
   # https://github.com/byrnereese/mkdocs-minify-plugin
   - minify:
@@ -59,7 +59,7 @@ markdown_extensions:
   - footnotes
   - md_in_html
   - toc:
-      permalink: "🔗"
+      permalink: "#"
 
   # https://github.com/oprypin/markdown-callouts
   - callouts
@@ -92,13 +92,13 @@ markdown_extensions:
       repo: numtype
 
   # https://facelessuser.github.io/pymdown-extensions/extensions/saneheaders/
-  - pymdownx.saneheaders
+  - pymdownx.saneheaders:
 
 theme:
   name: material
-  custom_dir: docs/overrides
-  favicon: img/favicon.ico
-  logo: img/icon.svg
+  custom_dir: docs/theme/overrides
+  favicon: theme/img/favicon.ico
+  logo: theme/img/icon.svg
 
   features:
     - content.tabs.link
@@ -134,9 +134,9 @@ theme:
         name: Switch to system preference
 
 extra_css:
-  - style/color.css
-  - style/font.css
-  - style/overrides.css
-  - style/theme.css
+  - theme/style/color.css
+  - theme/style/font.css
+  - theme/style/overrides.css
+  - theme/style/theme.css
 
 copyright: "&copy; Copyright 2025, NumPy Developers."
