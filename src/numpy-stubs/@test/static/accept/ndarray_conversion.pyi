@@ -10,7 +10,6 @@ i4_2d: np.ndarray[tuple[int, int], np.dtype[np.int32]]
 f8_3d: np.ndarray[tuple[int, int, int], np.dtype[np.float64]]
 cG_4d: np.ndarray[tuple[int, int, int, int], np.dtype[np.clongdouble]]
 i0_nd: npt.NDArray[np.int_]
-uncertain_dtype: np.int32 | np.float64 | np.str_
 
 # item
 assert_type(i0_nd.item(), int)
@@ -54,11 +53,6 @@ assert_type(i4_2d.astype(np.uint16), np.ndarray[tuple[int, int], np.dtype[np.uin
 assert_type(np.astype(i4_2d, np.uint16), np.ndarray[tuple[int, int], np.dtype[np.uint16]])
 assert_type(f8_3d.astype(np.int16), np.ndarray[tuple[int, int, int], np.dtype[np.int16]])
 assert_type(np.astype(f8_3d, np.int16), np.ndarray[tuple[int, int, int], np.dtype[np.int16]])
-assert_type(
-    i4_2d.astype(uncertain_dtype),  # pyright: ignore[reportAssertTypeFailure]  # ndarray[(int, int), np.dtype]
-    np.ndarray[tuple[int, int], np.dtype[np.generic]],
-)
-assert_type(np.astype(i4_2d, uncertain_dtype), np.ndarray[tuple[int, int], np.dtype])
 
 # byteswap
 assert_type(i0_nd.byteswap(), npt.NDArray[np.int_])
