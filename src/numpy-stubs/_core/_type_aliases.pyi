@@ -7,30 +7,30 @@ import numpy as np
 
 @type_check_only
 class _CNamesDict(TypedDict):
-    BOOL: np.dtype[np.bool]
-    HALF: np.dtype[np.half]
-    FLOAT: np.dtype[np.single]
-    DOUBLE: np.dtype[np.double]
-    LONGDOUBLE: np.dtype[np.longdouble]
-    CFLOAT: np.dtype[np.csingle]
-    CDOUBLE: np.dtype[np.cdouble]
-    CLONGDOUBLE: np.dtype[np.clongdouble]
-    STRING: np.dtype[np.bytes_]
-    UNICODE: np.dtype[np.str_]
-    VOID: np.dtype[np.void]
-    OBJECT: np.dtype[np.object_]
-    DATETIME: np.dtype[np.datetime64]
-    TIMEDELTA: np.dtype[np.timedelta64]
-    BYTE: np.dtype[np.byte]
-    UBYTE: np.dtype[np.ubyte]
-    SHORT: np.dtype[np.short]
-    USHORT: np.dtype[np.ushort]
-    INT: np.dtype[np.intc]
-    UINT: np.dtype[np.uintc]
-    LONG: np.dtype[np.long]
-    ULONG: np.dtype[np.ulong]
-    LONGLONG: np.dtype[np.longlong]
-    ULONGLONG: np.dtype[np.ulonglong]
+    BOOL: np.dtypes.BoolDType
+    BYTE: np.dtypes.ByteDType
+    UBYTE: np.dtypes.UByteDType
+    SHORT: np.dtypes.ShortDType
+    USHORT: np.dtypes.UShortDType
+    INT: np.dtypes.IntDType
+    UINT: np.dtypes.UIntDType
+    LONG: np.dtypes.LongDType
+    ULONG: np.dtypes.ULongDType
+    LONGLONG: np.dtypes.LongLongDType
+    ULONGLONG: np.dtypes.ULongLongDType
+    HALF: np.dtypes.Float16DType
+    FLOAT: np.dtypes.Float32DType
+    DOUBLE: np.dtypes.Float64DType
+    LONGDOUBLE: np.dtypes.LongDoubleDType
+    CFLOAT: np.dtypes.Complex64DType
+    CDOUBLE: np.dtypes.Complex128DType
+    CLONGDOUBLE: np.dtypes.CLongDoubleDType
+    STRING: np.dtypes.BytesDType
+    UNICODE: np.dtypes.StrDType
+    VOID: np.dtypes.VoidDType
+    OBJECT: np.dtypes.ObjectDType
+    DATETIME: np.dtypes.DateTime64DType
+    TIMEDELTA: np.dtypes.TimeDelta64DType
 
 _AbstractTypeName: TypeAlias = L[
     "generic",

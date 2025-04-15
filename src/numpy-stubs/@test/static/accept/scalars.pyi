@@ -36,7 +36,7 @@ assert_type(c8.squeeze(), np.complex64)
 assert_type(c8.byteswap(), np.complex64)
 assert_type(c8.transpose(), np.complex64)
 
-assert_type(c8.dtype, np.dtype[np.complex64])
+assert_type(c8.dtype, np.dtypes.Complex64DType)
 
 assert_type(c8.real, np.float32)
 assert_type(c16.imag, np.float64)
