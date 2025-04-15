@@ -1,6 +1,7 @@
 # intentional type-check-only deviations from runtime
 numpy\.__numtype__
 numpy\._typing.*
+numpy\.typing\.NBitBase
 
 # internal testing code
 numpy\.conftest
