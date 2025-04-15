@@ -59,7 +59,7 @@ markdown_extensions:
   - footnotes
   - md_in_html
   - toc:
-      permalink: "🔗"
+      permalink: "#"
 
   # https://github.com/oprypin/markdown-callouts
   - callouts
@@ -96,9 +96,9 @@ markdown_extensions:
 
 theme:
   name: material
-  custom_dir: docs/overrides
-  favicon: img/favicon.ico
-  logo: img/icon.svg
+  custom_dir: docs/theme/overrides
+  favicon: theme/img/favicon.ico
+  logo: theme/img/icon.svg
 
   features:
     - content.tabs.link
@@ -134,9 +134,9 @@ theme:
         name: Switch to system preference
 
 extra_css:
-  - style/color.css
-  - style/font.css
-  - style/overrides.css
-  - style/theme.css
+  - theme/style/color.css
+  - theme/style/font.css
+  - theme/style/overrides.css
+  - theme/style/theme.css
 
 copyright: "&copy; Copyright 2025, NumPy Developers."
