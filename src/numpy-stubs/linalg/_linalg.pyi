@@ -845,9 +845,9 @@ def norm(
 @overload  # float64 | complex128 | character, axis=<given> (positional)
 def norm(x: _ToUnsafe64_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]
 @overload  # float64 | complex128 | character, axis=<given> (keyword)
-def norm(
+def norm(  # type: ignore[overload-overlap]
     x: _ToUnsafe64_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False
-) -> _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]
+) -> _nt.Array[np.float64]: ...
 @overload  # float16, axis=None, keepdims=False
 def norm(x: _nt.ToFloat16_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.float16: ...
 @overload  # float16, keepdims=True (keyword)
@@ -862,11 +862,7 @@ def norm(
 def norm(x: _Toinexact32_1nd, ord: _Ord | None = None, axis: None = None, keepdims: _False = False) -> np.float32: ...
 @overload  # float32 | complex64, keepdims=True (keyword)
 def norm(
-    x: _Toinexact32_1nd,
-    ord: _Ord | None = None,
-    axis: _Ax2 | None = None,
-    *,
-    keepdims: _True,
+    x: _Toinexact32_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, *, keepdims: _True
 ) -> _Array_2nd[np.float32]: ...
 @overload  # float32 | complex64, axis=<given> (positional)
 def norm(x: _Toinexact32_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> _nt.Array[np.float32]: ...
@@ -880,11 +876,7 @@ def norm(
 ) -> np.longdouble: ...
 @overload  # longdouble | clongdouble, keepdims=True (keyword)
 def norm(
-    x: _Toinexact64l_1nd,
-    ord: _Ord | None = None,
-    axis: _Ax2 | None = None,
-    *,
-    keepdims: _True,
+    x: _Toinexact64l_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, *, keepdims: _True
 ) -> _Array_2nd[np.longdouble]: ...
 @overload  # longdouble | clongdouble, axis=<given> (positional)
 def norm(x: _Toinexact64l_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> _nt.Array[np.longdouble]: ...

@@ -738,7 +738,7 @@ def ones(
 # NOTE: The mypy [overload-overlap] errors are false-positives that are caused by a
 #   bug that's related to constrained type-vars.
 @overload  # 1d shape, known fill scalar-type
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike1D,
     fill_value: _ScalarT,
     dtype: None = None,
@@ -748,7 +748,7 @@ def full(  # type: ignore[overload-overlap]
     like: _SupportsArrayFunc | None = None,
 ) -> _nt.Array1D[_ScalarT]: ...
 @overload  # 1d shape, bool fill
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike1D,
     fill_value: py_bool,
     dtype: None = None,
@@ -758,7 +758,7 @@ def full(  # type: ignore[overload-overlap]
     like: _SupportsArrayFunc | None = None,
 ) -> _nt.Array1D[np.bool]: ...
 @overload  # 1d shape, int fill
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike1D,
     fill_value: _nt.JustInt,
     dtype: None = None,
@@ -778,7 +778,7 @@ def full(
     like: _SupportsArrayFunc | None = None,
 ) -> _nt.Array1D[np.float64]: ...
 @overload  # 1d shape, complex fill
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike1D,
     fill_value: _nt.JustComplex,
     dtype: None = None,
@@ -808,7 +808,7 @@ def full(
     like: _SupportsArrayFunc | None = None,
 ) -> _nt.Array1D[_ScalarT]: ...
 @overload  # 1d shape, float64 dtype
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike1D,
     fill_value: object,
     dtype: _nt.ToDTypeFloat64,
@@ -918,7 +918,7 @@ def full(
     like: _SupportsArrayFunc | None = None,
 ) -> _nt.Array[Any, _AnyShapeT]: ...
 @overload  # unknown shape, known fill scalar-type
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike,
     fill_value: _ScalarT,
     dtype: None = None,
@@ -928,7 +928,7 @@ def full(  # type: ignore[overload-overlap]
     like: _SupportsArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, bool fill
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike,
     fill_value: py_bool,
     dtype: None = None,
@@ -938,7 +938,7 @@ def full(  # type: ignore[overload-overlap]
     like: _SupportsArrayFunc | None = None,
 ) -> _nt.Array[np.bool]: ...
 @overload  # unknown shape, int fill
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike,
     fill_value: _nt.JustInt,
     dtype: None = None,
@@ -958,7 +958,7 @@ def full(
     like: _SupportsArrayFunc | None = None,
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, complex fill
-def full(  # type: ignore[overload-overlap]
+def full(
     shape: _ShapeLike,
     fill_value: _nt.JustComplex,
     dtype: None = None,
