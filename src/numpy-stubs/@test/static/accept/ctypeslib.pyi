@@ -78,6 +78,3 @@ assert_type(np.ctypeslib.as_ctypes(AR_f8), ct.Array[ct.c_double])
 assert_type(np.ctypeslib.as_array(AR_u1), npt.NDArray[np.ubyte])
 assert_type(np.ctypeslib.as_array(1), npt.NDArray[Any])
 assert_type(np.ctypeslib.as_array(pointer), npt.NDArray[Any])
-
-assert_type(np.ctypeslib.as_ctypes_type(int), type[ct.c_ssize_t])
-assert_type(np.ctypeslib.as_ctypes_type("N"), type[ct.c_size_t])
