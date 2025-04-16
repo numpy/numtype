@@ -2,8 +2,8 @@ from collections.abc import Callable, Sequence
 from typing import Any, Concatenate, Final, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
 from typing_extensions import TypeVar, Unpack
 
+import _numtype as _nt
 import numpy as np
-from _numtype import Array
 from numpy._core.umath import (
     _AccumulateE,
     _AtE,
@@ -19,9 +19,9 @@ from numpy._typing import ArrayLike, DTypeLike
 
 ###
 
-_ArrayT = TypeVar("_ArrayT", bound=Array)
-_ArrayT1 = TypeVar("_ArrayT1", bound=Array)
-_ArrayT2 = TypeVar("_ArrayT2", bound=Array)
+_ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
+_ArrayT1 = TypeVar("_ArrayT1", bound=_nt.Array)
+_ArrayT2 = TypeVar("_ArrayT2", bound=_nt.Array)
 
 _CallT11G = TypeVar("_CallT11G", bound=Callable[Concatenate[Any, ...], object], default=_Call11)
 _CallT12G = TypeVar("_CallT12G", bound=Callable[Concatenate[Any, ...], object], default=_Call12)
@@ -55,7 +55,7 @@ class _Call11(Protocol):
         self,
         x: ArrayLike,
         /,
-        out: _Out1[Array | None] = None,
+        out: _Out1[_nt.Array | None] = None,
         *,
         dtype: DTypeLike | None = None,
         **kwds: Unpack[_Kwargs2],

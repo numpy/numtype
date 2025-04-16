@@ -4,29 +4,8 @@ from types import EllipsisType
 from typing import Any, ClassVar, SupportsIndex as CanIndex, TypeAlias, overload
 from typing_extensions import Self, TypeVar, override
 
+import _numtype as _nt
 import numpy as np
-from _numtype import (
-    Array,
-    JustBytes,
-    JustComplex,
-    JustFloat,
-    JustInt,
-    JustStr,
-    Matrix,
-    Sequence3ND,
-    ToBool_nd,
-    ToBytes_nd,
-    ToComplex128_nd,
-    ToFloat64_nd,
-    ToGeneric_3nd,
-    ToGeneric_nd,
-    ToInt_nd,
-    ToInteger_1nd,
-    ToObject_nd,
-    ToStr_nd,
-    _ToArray_1nd,
-    _ToArray_nd,
-)
 from numpy import _CanItem, _OrderKACF  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLikeInt_co, _DTypeLike
 
@@ -35,14 +14,14 @@ __all__ = ["asmatrix", "bmat", "matrix"]
 ###
 
 _T = TypeVar("_T")
-_ArrayT = TypeVar("_ArrayT", bound=Array)
+_ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_2D, default=_2D, covariant=True)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
 _2D: TypeAlias = tuple[int, int]
 
-_ToIndex1: TypeAlias = slice | EllipsisType | ToInteger_1nd | None
+_ToIndex1: TypeAlias = slice | EllipsisType | _nt.ToInteger_1nd | None
 _ToIndex2: TypeAlias = tuple[_ToIndex1, _ToIndex1 | CanIndex] | tuple[_ToIndex1 | CanIndex, _ToIndex1]
 
 _ToAxis: TypeAlias = CanIndex | tuple[()] | tuple[CanIndex] | tuple[CanIndex, CanIndex]
@@ -53,7 +32,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     __array_priority__: ClassVar[float] = 10.0  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    def __new__(subtype, data: ArrayLike, dtype: DTypeLike | None = None, copy: bool = ...) -> Matrix: ...
+    def __new__(subtype, data: ArrayLike, dtype: DTypeLike | None = None, copy: bool = ...) -> _nt.Matrix: ...
 
     #
     @overload  # type: ignore[override]
@@ -61,23 +40,23 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def __getitem__(self, key: _ToIndex1 | _ToIndex2, /) -> matrix[_2D, _DTypeT_co]: ...
     @overload
-    def __getitem__(self: Array[np.void], key: str, /) -> matrix[_ShapeT_co, np.dtype]: ...
+    def __getitem__(self: _nt.Array[np.void], key: str, /) -> matrix[_ShapeT_co, np.dtype]: ...
     @overload
-    def __getitem__(self: Array[np.void], key: list[str], /) -> matrix[_ShapeT_co, np.dtype[np.void]]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __getitem__(self: _nt.Array[np.void], key: list[str], /) -> matrix[_ShapeT_co, np.dtype[np.void]]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @override
-    def __mul__(self, other: ArrayLike, /) -> Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __mul__(self, other: ArrayLike, /) -> _nt.Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rmul__(self, other: ArrayLike, /) -> Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rmul__(self, other: ArrayLike, /) -> _nt.Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
     def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 
     #
     @override
-    def __pow__(self, other: ArrayLike, /) -> Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __pow__(self, other: ArrayLike, /) -> _nt.Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rpow__(self, other: ArrayLike, /) -> Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rpow__(self, other: ArrayLike, /) -> _nt.Matrix[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
     def __ipow__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
 
@@ -85,7 +64,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def sum(self, /, axis: None = None, dtype: DTypeLike | None = None, out: None = None) -> Any: ...
     @overload
-    def sum(self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None) -> Matrix: ...
+    def sum(self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None) -> _nt.Matrix: ...
     @overload
     def sum(self, /, axis: _ToAxis | None, dtype: DTypeLike, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -95,7 +74,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def mean(self, /, axis: None = None, dtype: DTypeLike | None = None, out: None = None) -> Any: ...
     @overload
-    def mean(self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None) -> Matrix: ...
+    def mean(self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None) -> _nt.Matrix: ...
     @overload
     def mean(self, /, axis: _ToAxis | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -105,43 +84,35 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def std(self, /, axis: None = None, dtype: DTypeLike | None = None, out: None = None, ddof: float = 0) -> Any: ...
     @overload
-    def std(self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None, ddof: float = 0) -> Matrix: ...
+    def std(
+        self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None, ddof: float = 0
+    ) -> _nt.Matrix: ...
     @overload
     def std(self, /, axis: _ToAxis | None, dtype: DTypeLike | None, out: _ArrayT, ddof: float = 0) -> _ArrayT: ...
     @overload
     def std(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self,
-        /,
-        axis: _ToAxis | None = None,
-        dtype: DTypeLike | None = None,
-        *,
-        out: _ArrayT,
-        ddof: float = 0,
+        self, /, axis: _ToAxis | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT, ddof: float = 0
     ) -> _ArrayT: ...
 
     #
     @overload  # type: ignore[override]
     def var(self, /, axis: None = None, dtype: DTypeLike | None = None, out: None = None, ddof: float = 0) -> Any: ...
     @overload
-    def var(self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None, ddof: float = 0) -> Matrix: ...
+    def var(
+        self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None, ddof: float = 0
+    ) -> _nt.Matrix: ...
     @overload
     def var(self, /, axis: _ToAxis | None, dtype: DTypeLike | None, out: _ArrayT, ddof: float = 0) -> _ArrayT: ...
     @overload
     def var(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self,
-        /,
-        axis: _ToAxis | None = None,
-        dtype: DTypeLike | None = None,
-        *,
-        out: _ArrayT,
-        ddof: float = 0,
+        self, /, axis: _ToAxis | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT, ddof: float = 0
     ) -> _ArrayT: ...
 
     #
     @overload  # type: ignore[override]
     def prod(self, /, axis: None = None, dtype: DTypeLike | None = None, out: None = None) -> Any: ...
     @overload
-    def prod(self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None) -> Matrix: ...
+    def prod(self, /, axis: _ToAxis, dtype: DTypeLike | None = None, out: None = None) -> _nt.Matrix: ...
     @overload
     def prod(self, /, axis: _ToAxis | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -151,7 +122,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def any(self, /, axis: None = None, out: None = None) -> np.bool: ...
     @overload
-    def any(self, /, axis: _ToAxis, out: None = None) -> Matrix[np.bool]: ...
+    def any(self, /, axis: _ToAxis, out: None = None) -> _nt.Matrix[np.bool]: ...
     @overload
     def any(self, /, axis: _ToAxis | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -161,7 +132,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def all(self, /, axis: None = None, out: None = None) -> np.bool: ...
     @overload
-    def all(self, /, axis: _ToAxis, out: None = None) -> Matrix[np.bool]: ...
+    def all(self, /, axis: _ToAxis, out: None = None) -> _nt.Matrix[np.bool]: ...
     @overload
     def all(self, /, axis: _ToAxis | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -169,7 +140,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload  # type: ignore[override]
-    def max(self: Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
+    def max(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
     @overload
     def max(self, /, axis: _ToAxis, out: None = None) -> matrix[_2D, _DTypeT_co]: ...
     @overload
@@ -179,7 +150,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload  # type: ignore[override]
-    def min(self: Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
+    def min(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
     @overload
     def min(self, /, axis: _ToAxis, out: None = None) -> matrix[_2D, _DTypeT_co]: ...
     @overload
@@ -189,9 +160,9 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload  # type: ignore[override]
-    def argmax(self: Array[_ScalarT], /, axis: None = None, out: None = None) -> np.intp: ...
+    def argmax(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> np.intp: ...
     @overload
-    def argmax(self, /, axis: _ToAxis, out: None = None) -> Matrix[np.intp]: ...
+    def argmax(self, /, axis: _ToAxis, out: None = None) -> _nt.Matrix[np.intp]: ...
     @overload
     def argmax(self, /, axis: _ToAxis | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -199,9 +170,9 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload  # type: ignore[override]
-    def argmin(self: Array[_ScalarT], /, axis: None = None, out: None = None) -> np.intp: ...
+    def argmin(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> np.intp: ...
     @overload
-    def argmin(self, /, axis: _ToAxis, out: None = None) -> Matrix[np.intp]: ...
+    def argmin(self, /, axis: _ToAxis, out: None = None) -> _nt.Matrix[np.intp]: ...
     @overload
     def argmin(self, /, axis: _ToAxis | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -209,7 +180,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload  # type: ignore[override]
-    def ptp(self: Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
+    def ptp(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
     @overload
     def ptp(self, /, axis: _ToAxis, out: None = None) -> matrix[_2D, _DTypeT_co]: ...
     @overload
@@ -242,8 +213,8 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
-    def I(self) -> Matrix: ...
-    def getI(self) -> Matrix: ...
+    def I(self) -> _nt.Matrix: ...
+    def getI(self) -> _nt.Matrix: ...
 
     #
     @property
@@ -261,74 +232,74 @@ def bmat(
     obj: str,
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix: ...
+) -> _nt.Matrix: ...
 @overload
 def bmat(
-    obj: _ToArray_1nd[_ScalarT],
+    obj: _nt._ToArray_1nd[_ScalarT],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix[_ScalarT]: ...
+) -> _nt.Matrix[_ScalarT]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[bool],
+    obj: _nt.Sequence3ND[bool],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix[np.bool]: ...
+) -> _nt.Matrix[np.bool]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[JustInt],
+    obj: _nt.Sequence3ND[_nt.JustInt],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix[np.intp]: ...
+) -> _nt.Matrix[np.intp]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[JustFloat],
+    obj: _nt.Sequence3ND[_nt.JustFloat],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix[np.float64]: ...
+) -> _nt.Matrix[np.float64]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[JustComplex],
+    obj: _nt.Sequence3ND[_nt.JustComplex],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix[np.complex128]: ...
+) -> _nt.Matrix[np.complex128]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[JustBytes],
+    obj: _nt.Sequence3ND[_nt.JustBytes],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix[np.bytes_]: ...
+) -> _nt.Matrix[np.bytes_]: ...
 @overload
 def bmat(
-    obj: Sequence3ND[JustStr],
+    obj: _nt.Sequence3ND[_nt.JustStr],
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix[np.str_]: ...
+) -> _nt.Matrix[np.str_]: ...
 @overload
 def bmat(
-    obj: ToGeneric_3nd,
+    obj: _nt.ToGeneric_3nd,
     ldict: Mapping[str, Any] | None = None,
     gdict: Mapping[str, Any] | None = None,
-) -> Matrix: ...
+) -> _nt.Matrix: ...
 
 #
 @overload
-def asmatrix(data: _ToArray_nd[_ScalarT], dtype: None = None) -> Matrix[_ScalarT]: ...  # type: ignore[overload-overlap]
+def asmatrix(data: _nt._ToArray_nd[_ScalarT], dtype: None = None) -> _nt.Matrix[_ScalarT]: ...  # type: ignore[overload-overlap]
 @overload
-def asmatrix(data: ToGeneric_nd, dtype: _DTypeLike[_ScalarT]) -> Matrix[_ScalarT]: ...
+def asmatrix(data: _nt.ToGeneric_nd, dtype: _DTypeLike[_ScalarT]) -> _nt.Matrix[_ScalarT]: ...
 @overload
-def asmatrix(data: ToBool_nd, dtype: None = None) -> Matrix[np.bool]: ...
+def asmatrix(data: _nt.ToBool_nd, dtype: None = None) -> _nt.Matrix[np.bool]: ...
 @overload
-def asmatrix(data: ToInt_nd, dtype: None = None) -> Matrix[np.intp]: ...
+def asmatrix(data: _nt.ToInt_nd, dtype: None = None) -> _nt.Matrix[np.intp]: ...
 @overload
-def asmatrix(data: ToFloat64_nd, dtype: None = None) -> Matrix[np.float64]: ...
+def asmatrix(data: _nt.ToFloat64_nd, dtype: None = None) -> _nt.Matrix[np.float64]: ...
 @overload
-def asmatrix(data: ToObject_nd, dtype: None = None) -> Matrix[np.object_]: ...
+def asmatrix(data: _nt.ToObject_nd, dtype: None = None) -> _nt.Matrix[np.object_]: ...
 @overload
-def asmatrix(data: ToComplex128_nd, dtype: None = None) -> Matrix[np.complex128]: ...
+def asmatrix(data: _nt.ToComplex128_nd, dtype: None = None) -> _nt.Matrix[np.complex128]: ...
 @overload
-def asmatrix(data: ToBytes_nd, dtype: None = None) -> Matrix[np.bytes_]: ...
+def asmatrix(data: _nt.ToBytes_nd, dtype: None = None) -> _nt.Matrix[np.bytes_]: ...
 @overload
-def asmatrix(data: ToStr_nd, dtype: None = None) -> Matrix[np.str_]: ...
+def asmatrix(data: _nt.ToStr_nd, dtype: None = None) -> _nt.Matrix[np.str_]: ...
 @overload
-def asmatrix(data: ToGeneric_nd, dtype: DTypeLike | None) -> Matrix: ...
+def asmatrix(data: _nt.ToGeneric_nd, dtype: DTypeLike | None) -> _nt.Matrix: ...

@@ -2,8 +2,8 @@ from _typeshed import Incomplete
 from typing import Any, ClassVar, Final, Generic, Literal as L, SupportsIndex as CanIndex, TypeAlias, type_check_only
 from typing_extensions import Never, Self, TypeVar, deprecated, overload, override
 
+import _numtype as _nt
 import numpy as np
-from _numtype import Array, ToGeneric_0d, ToGeneric_1nd, ToGeneric_nd
 from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
 from numpy._globals import _NoValueType
 from numpy._typing import ArrayLike, _ArrayLike, _BoolCodes, _ScalarLike_co, _ShapeLike
@@ -197,12 +197,12 @@ _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
-_DTypeLikeBool: TypeAlias = type[bool | np.bool] | np.dtype[np.bool] | _BoolCodes
+_DTypeLikeBool: TypeAlias = type[bool | np.bool_] | np.dtype[np.bool_] | _BoolCodes
 
 ###
 
-MaskType: Final[type[np.bool]] = ...
-nomask: np.bool[L[False]] = ...
+MaskType: Final[type[np.bool_]] = ...
+nomask: np.bool_[L[False]] = ...
 masked_print_option: Final[_MaskedPrintOption] = ...
 
 ###
@@ -216,9 +216,9 @@ class MaskError(MAError): ...
 @type_check_only
 class _DomainBase:
     @overload
-    def __call__(self, /, x: ToGeneric_0d) -> np.bool: ...
+    def __call__(self, /, x: _nt.ToGeneric_0d) -> np.bool_: ...
     @overload
-    def __call__(self, /, x: ToGeneric_1nd) -> Array[np.bool]: ...
+    def __call__(self, /, x: _nt.ToGeneric_1nd) -> _nt.Array[np.bool_]: ...
 
 class _DomainCheckInterval(_DomainBase):
     a: Final[float]
@@ -240,7 +240,7 @@ class _DomainGreaterEqual(_DomainBase):
 class _DomainSafeDivide:
     tolerance: float
     def __init__(self, /, tolerance: float | None = None) -> None: ...
-    def __call__(self, /, a: ToGeneric_nd, b: ToGeneric_nd) -> Array[Incomplete]: ...
+    def __call__(self, /, a: _nt.ToGeneric_nd, b: _nt.ToGeneric_nd) -> _nt.Array[Incomplete]: ...
 
 ###
 
@@ -332,7 +332,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
-    def recordmask(self) -> Array[np.bool]: ...
+    def recordmask(self) -> _nt.Array[np.bool_]: ...
     @recordmask.setter
     def recordmask(self, mask: Never, /) -> None: ...
 
@@ -1040,11 +1040,13 @@ less: _MaskedBinaryOperation
 greater: _MaskedBinaryOperation
 logical_and: _MaskedBinaryOperation
 
-def alltrue(target: ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
+def alltrue(target: _nt.ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
 
 logical_or: _MaskedBinaryOperation
 
-def sometrue(target: ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
+def sometrue(
+    target: _nt.ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None
+) -> Incomplete: ...
 
 logical_xor: _MaskedBinaryOperation
 bitwise_and: _MaskedBinaryOperation

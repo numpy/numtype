@@ -28,7 +28,7 @@ np.piecewise(AR_f8, AR_b_list, [fn_ar_i], 42, _=None)  # pyright: ignore[reportC
 
 np.interp(AR_f8, AR_c16, AR_f8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.interp(AR_c16, AR_f8, AR_f8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
-np.interp(AR_f8, AR_f8, AR_f8, period=AR_c16)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.interp(AR_f8, AR_f8, AR_f8, period=AR_c16)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.interp(AR_f8, AR_f8, AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.average(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]

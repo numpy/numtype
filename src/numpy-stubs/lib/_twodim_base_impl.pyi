@@ -2,30 +2,10 @@ from collections.abc import Callable, Sequence
 from typing import Literal as L, TypeAlias, overload
 from typing_extensions import TypeVar
 
+import _numtype as _nt
 import numpy as np
-from _numtype import (
-    Array,
-    CoComplex_1d,
-    CoFloat64_1d,
-    JustFloat,
-    ToBool_1d,
-    ToBool_1nd,
-    ToBytes_1nd,
-    ToComplex128_1nd,
-    ToComplex_1d,
-    ToFloat64_1nd,
-    ToFloat64_2d,
-    ToFloating_1d,
-    ToInt_1d,
-    ToInt_1nd,
-    ToInteger_1d,
-    ToObject_1d,
-    ToStr_1nd,
-    _ToArray_1d,
-    _ToArray_1nd,
-)
 from numpy import _OrderCF  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _SupportsArrayFunc as _CanArrayFunc
+from numpy._typing import _SupportsArrayFunc as _Like
 
 __all__ = [
     "diag",
@@ -49,30 +29,31 @@ _T = TypeVar("_T")
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ComplexT = TypeVar("_ComplexT", bound=np.complexfloating)
 _InexactT = TypeVar("_InexactT", bound=np.inexact)
-_NumericT = TypeVar("_NumericT", bound=_CoComplex)
+_CoComplexT = TypeVar("_CoComplexT", bound=_nt.co_complex)
 
 # The returned arrays dtype must be compatible with `np.equal`
+_Device: TypeAlias = L["cpu"]
 _MaskFunc: TypeAlias = Callable[
-    [Array[np.intp], _T],
-    Array[np.number | np.bool | np.timedelta64 | np.datetime64 | np.object_],
+    [_nt.Array[np.intp], _T],
+    _nt.Array[_nt.co_complex | np.datetime64 | np.timedelta64 | np.object_],
 ]
 
-_CoInt: TypeAlias = np.integer | np.bool
-_CoFloat: TypeAlias = np.floating | _CoInt
-_CoComplex: TypeAlias = np.number | np.bool
+_Sequence01D: TypeAlias = _T | Sequence[_T]
+_Indices2D: TypeAlias = tuple[_nt.Array[np.intp], _nt.Array[np.intp]]
+_Histogram2D: TypeAlias = tuple[_nt.Array[np.float64], _nt.Array[_ScalarT], _nt.Array[_ScalarT]]
 
 ###
 
 @overload
-def fliplr(m: _ArrayLike[_ScalarT]) -> Array[_ScalarT]: ...
+def fliplr(m: _nt._ToArray_nd[_ScalarT]) -> _nt.Array[_ScalarT]: ...
 @overload
-def fliplr(m: ArrayLike) -> Array: ...
+def fliplr(m: _nt.ToGeneric_nd) -> _nt.Array: ...
 
 #
 @overload
-def flipud(m: _ArrayLike[_ScalarT]) -> Array[_ScalarT]: ...
+def flipud(m: _nt._ToArray_nd[_ScalarT]) -> _nt.Array[_ScalarT]: ...
 @overload
-def flipud(m: ArrayLike) -> Array: ...
+def flipud(m: _nt.ToGeneric_nd) -> _nt.Array: ...
 
 #
 @overload
@@ -80,292 +61,264 @@ def eye(
     N: int,
     M: int | None = None,
     k: int = 0,
-    dtype: type[JustFloat] | None = ...,
+    dtype: _nt.ToDTypeFloat64 | None = ...,
     order: _OrderCF = "C",
     *,
-    device: L["cpu"] | None = None,
-    like: _CanArrayFunc | None = None,
-) -> Array[np.float64]: ...
+    device: _Device | None = None,
+    like: _Like | None = None,
+) -> _nt.Array[np.float64]: ...
 @overload
 def eye(
     N: int,
     M: int | None,
     k: int,
-    dtype: _DTypeLike[_ScalarT],
+    dtype: _nt._ToDType[_ScalarT],
     order: _OrderCF = "C",
     *,
-    device: L["cpu"] | None = None,
-    like: _CanArrayFunc | None = None,
-) -> Array[_ScalarT]: ...
+    device: _Device | None = None,
+    like: _Like | None = None,
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def eye(
     N: int,
     M: int | None = None,
     k: int = 0,
     *,
-    dtype: _DTypeLike[_ScalarT],
+    dtype: _nt._ToDType[_ScalarT],
     order: _OrderCF = "C",
-    device: L["cpu"] | None = None,
-    like: _CanArrayFunc | None = None,
-) -> Array[_ScalarT]: ...
+    device: _Device | None = None,
+    like: _Like | None = None,
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def eye(
     N: int,
     M: int | None = None,
     k: int = 0,
-    dtype: DTypeLike = ...,
+    dtype: _nt.ToDType = ...,
     order: _OrderCF = "C",
     *,
-    device: L["cpu"] | None = None,
-    like: _CanArrayFunc | None = None,
-) -> Array: ...
+    device: _Device | None = None,
+    like: _Like | None = None,
+) -> _nt.Array: ...
 
 #
 @overload
-def diag(v: _ArrayLike[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
+def diag(v: _nt._ToArray_nd[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...
 @overload
-def diag(v: ArrayLike, k: int = 0) -> Array: ...
+def diag(v: _nt.ToGeneric_nd, k: int = 0) -> _nt.Array: ...
 
 #
 @overload
-def diagflat(v: _ArrayLike[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
+def diagflat(v: _nt._ToArray_nd[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...
 @overload
-def diagflat(v: ArrayLike, k: int = 0) -> Array: ...
+def diagflat(v: _nt.ToGeneric_nd, k: int = 0) -> _nt.Array: ...
 
 #
 @overload
 def tri(
-    N: int,
-    M: int | None = None,
-    k: int = 0,
-    dtype: type[JustFloat] | None = ...,
-    *,
-    like: _CanArrayFunc | None = None,
-) -> Array[np.float64]: ...
+    N: int, M: int | None = None, k: int = 0, dtype: _nt.ToDTypeFloat64 | None = ..., *, like: _Like | None = None
+) -> _nt.Array[np.float64]: ...
 @overload
 def tri(
-    N: int,
-    M: int | None,
-    k: int,
-    dtype: _DTypeLike[_ScalarT],
-    *,
-    like: _CanArrayFunc | None = None,
-) -> Array[_ScalarT]: ...
+    N: int, M: int | None, k: int, dtype: _nt._ToDType[_ScalarT], *, like: _Like | None = None
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def tri(
-    N: int,
-    M: int | None = None,
-    k: int = 0,
-    *,
-    dtype: _DTypeLike[_ScalarT],
-    like: _CanArrayFunc | None = None,
-) -> Array[_ScalarT]: ...
+    N: int, M: int | None = None, k: int = 0, *, dtype: _nt._ToDType[_ScalarT], like: _Like | None = None
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def tri(
-    N: int,
-    M: int | None = None,
-    k: int = 0,
-    dtype: DTypeLike = ...,
-    *,
-    like: _CanArrayFunc | None = None,
-) -> Array: ...
+    N: int, M: int | None = None, k: int = 0, dtype: _nt.ToDType = ..., *, like: _Like | None = None
+) -> _nt.Array: ...
 
 #
 @overload
-def tril(m: ToBool_1nd, k: int = 0) -> Array[np.bool]: ...
+def tril(m: _nt.ToBool_1nd, k: int = 0) -> _nt.Array[np.bool]: ...
 @overload
-def tril(m: _ToArray_1nd[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
+def tril(m: _nt._ToArray_1nd[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...
 @overload
-def tril(m: ToInt_1nd, k: int = 0) -> Array[np.intp]: ...
+def tril(m: _nt.ToInt_1nd, k: int = 0) -> _nt.Array[np.intp]: ...
 @overload
-def tril(m: ToFloat64_1nd, k: int = 0) -> Array[np.float64]: ...
+def tril(m: _nt.ToFloat64_1nd, k: int = 0) -> _nt.Array[np.float64]: ...
 @overload
-def tril(m: ToComplex128_1nd, k: int = 0) -> Array[np.complex128]: ...
+def tril(m: _nt.ToComplex128_1nd, k: int = 0) -> _nt.Array[np.complex128]: ...
 @overload
-def tril(m: ToBytes_1nd, k: int = 0) -> Array[np.bytes_]: ...
+def tril(m: _nt.ToBytes_1nd, k: int = 0) -> _nt.Array[np.bytes_]: ...
 @overload
-def tril(m: ToStr_1nd, k: int = 0) -> Array[np.str_]: ...
+def tril(m: _nt.ToStr_1nd, k: int = 0) -> _nt.Array[np.str_]: ...
 @overload
-def tril(m: ArrayLike, k: int = 0) -> Array: ...
+def tril(m: _nt.ToGeneric_nd, k: int = 0) -> _nt.Array: ...
 
 #
 @overload
-def triu(m: ToBool_1nd, k: int = 0) -> Array[np.bool]: ...
+def triu(m: _nt.ToBool_1nd, k: int = 0) -> _nt.Array[np.bool]: ...
 @overload
-def triu(m: _ToArray_1nd[_ScalarT], k: int = 0) -> Array[_ScalarT]: ...
+def triu(m: _nt._ToArray_1nd[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...
 @overload
-def triu(m: ToInt_1nd, k: int = 0) -> Array[np.intp]: ...
+def triu(m: _nt.ToInt_1nd, k: int = 0) -> _nt.Array[np.intp]: ...
 @overload
-def triu(m: ToFloat64_1nd, k: int = 0) -> Array[np.float64]: ...
+def triu(m: _nt.ToFloat64_1nd, k: int = 0) -> _nt.Array[np.float64]: ...
 @overload
-def triu(m: ToComplex128_1nd, k: int = 0) -> Array[np.complex128]: ...
+def triu(m: _nt.ToComplex128_1nd, k: int = 0) -> _nt.Array[np.complex128]: ...
 @overload
-def triu(m: ToBytes_1nd, k: int = 0) -> Array[np.bytes_]: ...
+def triu(m: _nt.ToBytes_1nd, k: int = 0) -> _nt.Array[np.bytes_]: ...
 @overload
-def triu(m: ToStr_1nd, k: int = 0) -> Array[np.str_]: ...
+def triu(m: _nt.ToStr_1nd, k: int = 0) -> _nt.Array[np.str_]: ...
 @overload
-def triu(m: ArrayLike, k: int = 0) -> Array: ...
+def triu(m: _nt.ToGeneric_nd, k: int = 0) -> _nt.Array: ...
 
 #
 @overload
-def vander(x: ToBool_1d, N: int | None = None, increasing: bool = False) -> Array[np.intp]: ...
+def vander(x: _nt.ToBool_1d, N: int | None = None, increasing: bool = False) -> _nt.Array[np.intp]: ...
 @overload
-def vander(x: ToInteger_1d, N: int | None = None, increasing: bool = False) -> Array[np.signedinteger]: ...
+def vander(x: _nt.ToInteger_1d, N: int | None = None, increasing: bool = False) -> _nt.Array[np.signedinteger]: ...
 @overload
-def vander(x: ToFloating_1d, N: int | None = None, increasing: bool = False) -> Array[np.floating]: ...
+def vander(x: _nt.ToFloating_1d, N: int | None = None, increasing: bool = False) -> _nt.Array[np.floating]: ...
 @overload
-def vander(x: ToComplex_1d, N: int | None = None, increasing: bool = False) -> Array[np.complexfloating]: ...
+def vander(x: _nt.ToComplex_1d, N: int | None = None, increasing: bool = False) -> _nt.Array[np.complexfloating]: ...
 @overload
-def vander(x: ToObject_1d, N: int | None = None, increasing: bool = False) -> Array[np.object_]: ...
+def vander(x: _nt.ToObject_1d, N: int | None = None, increasing: bool = False) -> _nt.Array[np.object_]: ...
 
 #
 @overload
 def histogram2d(
-    x: _ToArray_1d[_ComplexT],
-    y: _ToArray_1d[_ComplexT | _CoFloat],
-    bins: int | Sequence[int] = 10,
-    range: ToFloat64_2d | None = None,
+    x: _nt._ToArray_1d[_ComplexT],
+    y: _nt._ToArray_1d[_ComplexT | _nt.co_float],
+    bins: _Sequence01D[int] = 10,
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[_ComplexT], Array[_ComplexT]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_ComplexT]: ...
 @overload
 def histogram2d(
-    x: _ToArray_1d[_ComplexT | _CoFloat],
-    y: _ToArray_1d[_ComplexT],
-    bins: int | Sequence[int] = 10,
-    range: ToFloat64_2d | None = None,
+    x: _nt._ToArray_1d[_ComplexT | _nt.co_float],
+    y: _nt._ToArray_1d[_ComplexT],
+    bins: _Sequence01D[int] = 10,
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[_ComplexT], Array[_ComplexT]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_ComplexT]: ...
 @overload
 def histogram2d(
-    x: _ToArray_1d[_InexactT],
-    y: _ToArray_1d[_InexactT | _CoInt],
-    bins: int | Sequence[int] = 10,
-    range: ToFloat64_2d | None = None,
+    x: _nt._ToArray_1d[_InexactT],
+    y: _nt._ToArray_1d[_InexactT | _nt.co_integer],
+    bins: _Sequence01D[int] = 10,
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[_InexactT], Array[_InexactT]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_InexactT]: ...
 @overload
 def histogram2d(
-    x: _ToArray_1d[_InexactT | _CoInt],
-    y: _ToArray_1d[_InexactT],
-    bins: int | Sequence[int] = 10,
-    range: ToFloat64_2d | None = None,
+    x: _nt._ToArray_1d[_InexactT | _nt.co_integer],
+    y: _nt._ToArray_1d[_InexactT],
+    bins: _Sequence01D[int] = 10,
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[_InexactT], Array[_InexactT]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_InexactT]: ...
 @overload
 def histogram2d(
-    x: CoFloat64_1d,
-    y: CoFloat64_1d,
-    bins: int | Sequence[int] = 10,
-    range: ToFloat64_2d | None = None,
+    x: _nt.CoFloat64_1d,
+    y: _nt.CoFloat64_1d,
+    bins: _Sequence01D[int] = 10,
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[np.float64], Array[np.float64]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[np.float64]: ...
 @overload
 def histogram2d(
     x: Sequence[complex],
     y: Sequence[complex],
-    bins: int | Sequence[int] = 10,
-    range: ToFloat64_2d | None = None,
+    bins: _Sequence01D[int] = 10,
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[np.complex128 | np.float64], Array[np.complex128 | np.float64]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_nt.inexact64]: ...
 @overload
 def histogram2d(
-    x: CoComplex_1d,
-    y: CoComplex_1d,
-    bins: _ToArray_1d[_NumericT] | Sequence[_ToArray_1d[_NumericT]],
-    range: ToFloat64_2d | None = None,
+    x: _nt.CoComplex_1d,
+    y: _nt.CoComplex_1d,
+    bins: _Sequence01D[_nt._ToArray_1d[_CoComplexT]],
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[_NumericT], Array[_NumericT]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_CoComplexT]: ...
 @overload
 def histogram2d(
-    x: _ToArray_1d[_InexactT],
-    y: _ToArray_1d[_InexactT],
-    bins: Sequence[_ToArray_1d[_NumericT] | int],
-    range: ToFloat64_2d | None = None,
+    x: _nt._ToArray_1d[_InexactT],
+    y: _nt._ToArray_1d[_InexactT],
+    bins: Sequence[_nt._ToArray_1d[_CoComplexT] | int],
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[_NumericT | _InexactT], Array[_NumericT | _InexactT]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_CoComplexT | _InexactT]: ...
 @overload
 def histogram2d(
-    x: ToInt_1d | Sequence[float],
-    y: ToInt_1d | Sequence[float],
-    bins: Sequence[_ToArray_1d[_NumericT] | int],
-    range: ToFloat64_2d | None = None,
+    x: _nt.ToInt_1d | Sequence[float],
+    y: _nt.ToInt_1d | Sequence[float],
+    bins: Sequence[_nt._ToArray_1d[_CoComplexT] | int],
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[_NumericT | np.float64], Array[_NumericT | np.float64]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_CoComplexT | np.float64]: ...
 @overload
 def histogram2d(
     x: Sequence[complex],
     y: Sequence[complex],
-    bins: Sequence[_ToArray_1d[_NumericT] | int],
-    range: ToFloat64_2d | None = None,
+    bins: Sequence[_nt._ToArray_1d[_CoComplexT] | int],
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[
-    Array[np.float64],
-    Array[_NumericT | np.complex128 | np.float64],
-    Array[_NumericT | np.complex128 | np.float64],
-]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[_CoComplexT | _nt.inexact64]: ...
 @overload
 def histogram2d(
-    x: CoComplex_1d,
-    y: CoComplex_1d,
-    bins: Sequence[Sequence[bool]],
-    range: ToFloat64_2d | None = None,
+    x: _nt.CoComplex_1d,
+    y: _nt.CoComplex_1d,
+    bins: _nt.Sequence2D[bool],
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[np.bool], Array[np.bool]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[np.bool]: ...
 @overload
 def histogram2d(
-    x: CoComplex_1d,
-    y: CoComplex_1d,
-    bins: Sequence[Sequence[int]],
-    range: ToFloat64_2d | None = None,
+    x: _nt.CoComplex_1d,
+    y: _nt.CoComplex_1d,
+    bins: _nt.Sequence2D[_nt.JustInt],
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[np.intp | np.bool], Array[np.intp | np.bool]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[np.intp]: ...
 @overload
 def histogram2d(
-    x: CoComplex_1d,
-    y: CoComplex_1d,
-    bins: Sequence[Sequence[float]],
-    range: ToFloat64_2d | None = None,
+    x: _nt.CoComplex_1d,
+    y: _nt.CoComplex_1d,
+    bins: _nt.Sequence2D[_nt.JustFloat],
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[Array[np.float64], Array[np.float64 | np.intp | np.bool], Array[np.float64 | np.intp | np.bool]]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[np.float64]: ...
 @overload
 def histogram2d(
-    x: CoComplex_1d,
-    y: CoComplex_1d,
-    bins: Sequence[Sequence[complex]],
-    range: ToFloat64_2d | None = None,
+    x: _nt.CoComplex_1d,
+    y: _nt.CoComplex_1d,
+    bins: _nt.Sequence2D[_nt.JustComplex],
+    range: _nt.ToFloat64_2d | None = None,
     density: bool | None = None,
-    weights: CoFloat64_1d | None = None,
-) -> tuple[
-    Array[np.float64],
-    Array[np.complex128 | np.float64 | np.intp | np.bool],
-    Array[np.complex128 | np.float64 | np.intp | np.bool],
-]: ...
+    weights: _nt.CoFloat64_1d | None = None,
+) -> _Histogram2D[np.complex128]: ...
 
 # NOTE: we're assuming/demanding here the `mask_func` returns
 # an ndarray of shape `(n, n)`; otherwise there is the possibility
 # of the output tuple having more or less than 2 elements
 @overload
-def mask_indices(n: int, mask_func: _MaskFunc[int], k: int = 0) -> tuple[Array[np.intp], Array[np.intp]]: ...
+def mask_indices(n: int, mask_func: _MaskFunc[int], k: int = 0) -> _Indices2D: ...
 @overload
-def mask_indices(n: int, mask_func: _MaskFunc[_T], k: _T) -> tuple[Array[np.intp], Array[np.intp]]: ...
+def mask_indices(n: int, mask_func: _MaskFunc[_T], k: _T) -> _Indices2D: ...
 
 #
-def tril_indices(n: int, k: int = 0, m: int | None = None) -> tuple[Array[np.intp], Array[np.intp]]: ...
-def triu_indices(n: int, k: int = 0, m: int | None = None) -> tuple[Array[np.intp], Array[np.intp]]: ...
+def tril_indices(n: int, k: int = 0, m: int | None = None) -> _Indices2D: ...
+def triu_indices(n: int, k: int = 0, m: int | None = None) -> _Indices2D: ...
 
 #
-def tril_indices_from(arr: Array, k: int = 0) -> tuple[Array[np.intp], Array[np.intp]]: ...
-def triu_indices_from(arr: Array, k: int = 0) -> tuple[Array[np.intp], Array[np.intp]]: ...
+def tril_indices_from(arr: _nt.Array, k: int = 0) -> _Indices2D: ...
+def triu_indices_from(arr: _nt.Array, k: int = 0) -> _Indices2D: ...

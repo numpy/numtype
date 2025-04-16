@@ -225,6 +225,7 @@ preview = true
             "sys",
             "numpy",
             "numpy.typing",
+            "_numtype",
         ]
             [tool.ruff.lint.flake8-import-conventions.extend-aliases]
             "ctypes" = "ct"

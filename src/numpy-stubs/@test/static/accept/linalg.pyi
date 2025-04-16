@@ -1,14 +1,14 @@
 from typing import Any, Literal, TypeAlias
 from typing_extensions import TypeVar, assert_type
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
-from _numtype import Array, AtLeast2D
 from numpy.linalg._linalg import EigResult, EighResult, QRResult, SVDResult, SlogdetResult
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_Array_2d: TypeAlias = Array[_ScalarT, tuple[int, int]]
-_Array_2nd: TypeAlias = Array[_ScalarT, AtLeast2D]
+_Array_2d: TypeAlias = _nt.Array[_ScalarT, tuple[int, int]]
+_Array_2nd: TypeAlias = _nt.Array[_ScalarT, _nt.AtLeast2D]
 
 ###
 

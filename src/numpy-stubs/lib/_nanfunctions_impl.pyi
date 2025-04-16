@@ -1,20 +1,9 @@
+from _typeshed import Incomplete
 from typing import Any, Literal as L, overload
 from typing_extensions import TypeVar
 
+import _numtype as _nt
 import numpy as np
-from _numtype import (
-    Array,
-    CoComplex_nd,
-    CoDateTime_nd,
-    CoFloating_0d,
-    CoFloating_1nd,
-    CoFloating_nd,
-    CoTimeDelta_nd,
-    ToComplex_nd,
-    ToDateTime_nd,
-    ToObject_nd,
-    ToTimeDelta_nd,
-)
 from numpy._core.fromnumeric import (
     amax as nanmax,
     amin as nanmin,
@@ -52,14 +41,14 @@ __all__ = [
 
 ###
 
-_ArrayT = TypeVar("_ArrayT", bound=Array)
+_ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
 
 ###
 
 # keep in sync with `lib._function_base_impl.median`
 @overload
 def nanmedian(
-    a: CoFloating_nd,
+    a: _nt.CoFloating_nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
@@ -67,7 +56,7 @@ def nanmedian(
 ) -> np.floating: ...
 @overload
 def nanmedian(
-    a: ToComplex_nd,
+    a: _nt.ToComplex_nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
@@ -75,7 +64,7 @@ def nanmedian(
 ) -> np.complexfloating: ...
 @overload
 def nanmedian(
-    a: ToTimeDelta_nd,
+    a: _nt.ToTimeDelta_nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
@@ -83,23 +72,23 @@ def nanmedian(
 ) -> np.timedelta64: ...
 @overload
 def nanmedian(
-    a: ToObject_nd,
+    a: _nt.ToObject_nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     keepdims: _NoValueType | L[False] = ...,
-) -> Any: ...
+) -> Incomplete: ...
 @overload
 def nanmedian(
-    a: CoComplex_nd | CoTimeDelta_nd | ToObject_nd,
+    a: _nt.CoComplex_nd | _nt.CoTimeDelta_nd | _nt.ToObject_nd,
     axis: _ShapeLike | None = None,
     out: None = None,
     overwrite_input: bool = False,
     keepdims: _NoValueType | bool = ...,
-) -> Any: ...
+) -> Incomplete: ...
 @overload
 def nanmedian(
-    a: CoComplex_nd | CoTimeDelta_nd | ToObject_nd,
+    a: _nt.CoComplex_nd | _nt.CoTimeDelta_nd | _nt.ToObject_nd,
     axis: _ShapeLike | None,
     out: _ArrayT,
     overwrite_input: bool = False,
@@ -107,7 +96,7 @@ def nanmedian(
 ) -> _ArrayT: ...
 @overload
 def nanmedian(
-    a: CoComplex_nd | CoTimeDelta_nd | ToObject_nd,
+    a: _nt.CoComplex_nd | _nt.CoTimeDelta_nd | _nt.ToObject_nd,
     axis: _ShapeLike | None = None,
     *,
     out: _ArrayT,
@@ -118,171 +107,171 @@ def nanmedian(
 # keep in sync with `lib._function_base_impl.percentile`
 @overload
 def nanpercentile(
-    a: CoFloating_nd,
-    q: CoFloating_0d,
+    a: _nt.CoFloating_nd,
+    q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
 ) -> np.floating: ...
 @overload
 def nanpercentile(
-    a: CoFloating_nd,
-    q: CoFloating_1nd,
+    a: _nt.CoFloating_nd,
+    q: _nt.CoFloating_1nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
-) -> Array[np.floating]: ...
+) -> _nt.Array[np.floating]: ...
 @overload
 def nanpercentile(
-    a: ToComplex_nd,
-    q: CoFloating_0d,
+    a: _nt.ToComplex_nd,
+    q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
 ) -> np.complexfloating: ...
 @overload
 def nanpercentile(
-    a: ToComplex_nd,
-    q: CoFloating_1nd,
+    a: _nt.ToComplex_nd,
+    q: _nt.CoFloating_1nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
-) -> Array[np.complexfloating]: ...
+) -> _nt.Array[np.complexfloating]: ...
 @overload
 def nanpercentile(
-    a: ToTimeDelta_nd,
-    q: CoFloating_0d,
+    a: _nt.ToTimeDelta_nd,
+    q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
 ) -> np.timedelta64: ...
 @overload
 def nanpercentile(
-    a: ToTimeDelta_nd,
-    q: CoFloating_1nd,
+    a: _nt.ToTimeDelta_nd,
+    q: _nt.CoFloating_1nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
-) -> Array[np.timedelta64]: ...
+) -> _nt.Array[np.timedelta64]: ...
 @overload
 def nanpercentile(
-    a: ToDateTime_nd,
-    q: CoFloating_0d,
+    a: _nt.ToDateTime_nd,
+    q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
 ) -> np.datetime64: ...
 @overload
 def nanpercentile(
-    a: ToDateTime_nd,
-    q: CoFloating_1nd,
+    a: _nt.ToDateTime_nd,
+    q: _nt.CoFloating_1nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
-) -> Array[np.datetime64]: ...
+) -> _nt.Array[np.datetime64]: ...
 @overload
 def nanpercentile(
-    a: ToObject_nd,
-    q: CoFloating_0d,
+    a: _nt.ToObject_nd,
+    q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
 ) -> Any: ...
 @overload
 def nanpercentile(
-    a: ToObject_nd,
-    q: CoFloating_1nd,
+    a: _nt.ToObject_nd,
+    q: _nt.CoFloating_1nd,
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | L[False] = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
-) -> Array[np.object_]: ...
+) -> _nt.Array[np.object_]: ...
 @overload
 def nanpercentile(
-    a: CoComplex_nd | CoDateTime_nd | ToObject_nd,
-    q: CoFloating_1nd,
+    a: _nt.CoComplex_nd | _nt.CoDateTime_nd | _nt.ToObject_nd,
+    q: _nt.CoFloating_1nd,
     axis: _ShapeLike | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | bool = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
 ) -> Any: ...
 @overload
 def nanpercentile(
-    a: CoComplex_nd | CoDateTime_nd | ToObject_nd,
-    q: CoFloating_1nd,
+    a: _nt.CoComplex_nd | _nt.CoDateTime_nd | _nt.ToObject_nd,
+    q: _nt.CoFloating_1nd,
     axis: _ShapeLike | None = None,
     *,
     out: _ArrayT,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | bool = ...,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
 ) -> _ArrayT: ...
 @overload
 def nanpercentile(
-    a: CoComplex_nd | CoDateTime_nd | ToObject_nd,
-    q: CoFloating_1nd,
+    a: _nt.CoComplex_nd | _nt.CoDateTime_nd | _nt.ToObject_nd,
+    q: _nt.CoFloating_1nd,
     axis: _ShapeLike | None,
     out: _ArrayT,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: _NoValueType | bool = ...,
     *,
-    weights: CoFloating_1nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     interpolation: None = None,
 ) -> _ArrayT: ...
 

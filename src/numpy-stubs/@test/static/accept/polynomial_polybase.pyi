@@ -122,7 +122,7 @@ assert_type(PS_lag.integ(SC_i_co, SC_f_co), npp.Laguerre)
 assert_type(PS_poly.deriv(), npp.Polynomial)
 assert_type(PS_herm.deriv(SC_i_co), npp.Hermite)
 
-assert_type(PS_poly.roots(), _Array1D[np.float64] | _Array1D[np.complex128])
+assert_type(PS_poly.roots(), _Array1D[np.float64 | np.complex128])
 
 assert_type(
     PS_poly.linspace(),

@@ -2,28 +2,8 @@ from collections.abc import Container, Iterable
 from typing import Any, Literal as L, overload, type_check_only
 from typing_extensions import Protocol, TypeVar
 
+import _numtype as _nt
 import numpy as np
-from _numtype import (
-    Array,
-    ToBool_nd,
-    ToBytes_nd,
-    ToCLongDouble_nd,
-    ToComplex64_nd,
-    ToComplex128_nd,
-    ToFloat64_nd,
-    ToGeneric_0d,
-    ToGeneric_1nd,
-    ToGeneric_nd,
-    ToInt_nd,
-    ToStr_nd,
-    _ToArray_1nd,
-    _ToArray_nd,
-    co_number,
-    inexact32,
-    number16,
-    number32,
-    number64,
-)
 
 __all__ = [
     "common_type",
@@ -43,8 +23,9 @@ __all__ = [
 
 _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
+
+_RealT = TypeVar("_RealT", bound=_nt.co_number)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_RealT = TypeVar("_RealT", bound=co_number)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 
 @type_check_only
@@ -66,64 +47,66 @@ class _HasDType(Protocol[_ScalarT_co]):
 
 #
 def mintypecode(
-    typechars: Iterable[str | ToGeneric_nd], typeset: str | Container[str] = "GDFgdf", default: str = "d"
+    typechars: Iterable[_nt.ToGeneric_nd],
+    typeset: str | Container[str] = "GDFgdf",
+    default: str = "d",
 ) -> str: ...
 
 #
 @overload
 def real(val: _HasReal[_T]) -> _T: ...  # type: ignore[overload-overlap]
 @overload
-def real(val: ToBool_nd) -> Array[np.bool]: ...
+def real(val: _nt.ToBool_nd) -> _nt.Array[np.bool]: ...
 @overload
-def real(val: ToInt_nd) -> Array[np.intp]: ...
+def real(val: _nt.ToInt_nd) -> _nt.Array[np.intp]: ...
 @overload
-def real(val: ToFloat64_nd) -> Array[np.float64]: ...
+def real(val: _nt.ToFloat64_nd) -> _nt.Array[np.float64]: ...
 @overload
-def real(val: ToComplex128_nd) -> Array[np.complex128]: ...
+def real(val: _nt.ToComplex128_nd) -> _nt.Array[np.complex128]: ...
 @overload
-def real(val: ToBytes_nd) -> Array[np.bytes_]: ...
+def real(val: _nt.ToBytes_nd) -> _nt.Array[np.bytes_]: ...
 @overload
-def real(val: ToStr_nd) -> Array[np.str_]: ...
+def real(val: _nt.ToStr_nd) -> _nt.Array[np.str_]: ...
 @overload
-def real(val: _ToArray_nd[_ScalarT]) -> Array[_ScalarT]: ...
+def real(val: _nt._ToArray_nd[_ScalarT]) -> _nt.Array[_ScalarT]: ...
 @overload
-def real(val: ToGeneric_nd) -> Array: ...
+def real(val: _nt.ToGeneric_nd) -> _nt.Array: ...
 
 #
 @overload
 def imag(val: _HasImag[_T]) -> _T: ...  # type: ignore[overload-overlap]
 @overload
-def imag(val: ToBool_nd) -> Array[np.bool]: ...
+def imag(val: _nt.ToBool_nd) -> _nt.Array[np.bool]: ...
 @overload
-def imag(val: ToInt_nd) -> Array[np.intp]: ...
+def imag(val: _nt.ToInt_nd) -> _nt.Array[np.intp]: ...
 @overload
-def imag(val: ToFloat64_nd) -> Array[np.float64]: ...
+def imag(val: _nt.ToFloat64_nd) -> _nt.Array[np.float64]: ...
 @overload
-def imag(val: ToComplex128_nd) -> Array[np.complex128]: ...
+def imag(val: _nt.ToComplex128_nd) -> _nt.Array[np.complex128]: ...
 @overload
-def imag(val: ToBytes_nd) -> Array[np.bytes_]: ...
+def imag(val: _nt.ToBytes_nd) -> _nt.Array[np.bytes_]: ...
 @overload
-def imag(val: ToStr_nd) -> Array[np.str_]: ...
+def imag(val: _nt.ToStr_nd) -> _nt.Array[np.str_]: ...
 @overload
-def imag(val: _ToArray_nd[_ScalarT]) -> Array[_ScalarT]: ...
+def imag(val: _nt._ToArray_nd[_ScalarT]) -> _nt.Array[_ScalarT]: ...
 @overload
-def imag(val: ToGeneric_nd) -> Array: ...
+def imag(val: _nt.ToGeneric_nd) -> _nt.Array: ...
 
 #
 @overload
-def iscomplex(x: ToGeneric_0d) -> np.bool: ...
+def iscomplex(x: _nt.ToGeneric_0d) -> np.bool: ...
 @overload
-def iscomplex(x: ToGeneric_1nd) -> Array[np.bool]: ...
+def iscomplex(x: _nt.ToGeneric_1nd) -> _nt.Array[np.bool]: ...
 
 #
 @overload
-def isreal(x: ToGeneric_0d) -> np.bool: ...
+def isreal(x: _nt.ToGeneric_0d) -> np.bool: ...
 @overload
-def isreal(x: ToGeneric_1nd) -> Array[np.bool]: ...
+def isreal(x: _nt.ToGeneric_1nd) -> _nt.Array[np.bool]: ...
 
 #
-def iscomplexobj(x: _HasDType[Any] | ToGeneric_nd) -> bool: ...
-def isrealobj(x: _HasDType[Any] | ToGeneric_nd) -> bool: ...
+def iscomplexobj(x: _HasDType[Any] | _nt.ToGeneric_nd) -> bool: ...
+def isrealobj(x: _HasDType[Any] | _nt.ToGeneric_nd) -> bool: ...
 
 #
 @overload
@@ -136,15 +119,15 @@ def nan_to_num(
 ) -> _ScalarT: ...
 @overload
 def nan_to_num(
-    x: _ToArray_1nd[_ScalarT],
+    x: _nt._ToArray_1nd[_ScalarT],
     copy: bool = True,
     nan: float = 0.0,
     posinf: float | None = None,
     neginf: float | None = None,
-) -> Array[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def nan_to_num(
-    x: ToGeneric_0d,
+    x: _nt.ToGeneric_0d,
     copy: bool = True,
     nan: float = 0.0,
     posinf: float | None = None,
@@ -152,26 +135,26 @@ def nan_to_num(
 ) -> Any: ...
 @overload
 def nan_to_num(
-    x: ToGeneric_1nd,
+    x: _nt.ToGeneric_1nd,
     copy: bool = True,
     nan: float = 0.0,
     posinf: float | None = None,
     neginf: float | None = None,
-) -> Array: ...
+) -> _nt.Array: ...
 
 # If one passes a complex array to `real_if_close`, then one is reasonably
 # expected to verify the output dtype (so we can return an unsafe union here)
 
 @overload
-def real_if_close(a: ToCLongDouble_nd, tol: float = 100) -> Array[np.longdouble | np.clongdouble]: ...
+def real_if_close(a: _nt.ToCLongDouble_nd, tol: float = 100) -> _nt.Array[_nt.inexact64l]: ...
 @overload
-def real_if_close(a: ToComplex128_nd, tol: float = 100) -> Array[np.float64 | np.complex128]: ...
+def real_if_close(a: _nt.ToComplex128_nd, tol: float = 100) -> _nt.Array[_nt.inexact64]: ...
 @overload
-def real_if_close(a: ToComplex64_nd, tol: float = 100) -> Array[np.float32 | np.complex64]: ...
+def real_if_close(a: _nt.ToComplex64_nd, tol: float = 100) -> _nt.Array[_nt.inexact32]: ...
 @overload
-def real_if_close(a: _ToArray_nd[_RealT], tol: float = 100) -> Array[_RealT]: ...
+def real_if_close(a: _nt._ToArray_nd[_RealT], tol: float = 100) -> _nt.Array[_RealT]: ...
 @overload
-def real_if_close(a: ToGeneric_nd, tol: float = 100) -> Array: ...
+def real_if_close(a: _nt.ToGeneric_nd, tol: float = 100) -> _nt.Array: ...
 
 #
 @overload
@@ -242,13 +225,13 @@ def common_type(
 def common_type(
     a0: _HasDType[np.complex64],
     /,
-    *ai: _HasDType[inexact32 | np.float16],
+    *ai: _HasDType[_nt.inexact32 | np.float16],
 ) -> type[np.complex64]: ...
 @overload
 def common_type(
     a0: _HasDType[np.complex128],
     /,
-    *ai: _HasDType[number64 | number32 | number16 | np.integer],
+    *ai: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
@@ -279,45 +262,45 @@ def common_type(
 ) -> type[np.longdouble]: ...
 @overload
 def common_type(
-    a0: _HasDType[inexact32 | np.float16],
+    a0: _HasDType[_nt.inexact32 | np.float16],
     array1: _HasDType[np.complex64],
     /,
-    *ai: _HasDType[inexact32 | np.float16],
+    *ai: _HasDType[_nt.inexact32 | np.float16],
 ) -> type[np.complex64]: ...
 @overload
 def common_type(
     a0: _HasDType[np.float64],
     array1: _HasDType[np.complex128 | np.complex64],
     /,
-    *ai: _HasDType[number64 | number32 | number16 | np.integer],
+    *ai: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
     a0: _HasDType[np.complex128 | np.complex64],
     array1: _HasDType[np.float64],
     /,
-    *ai: _HasDType[number64 | number32 | number16 | np.integer],
+    *ai: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
-    a0: _HasDType[number64 | number32 | number16 | np.integer],
+    a0: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer],
     array1: _HasDType[np.complex128],
     /,
-    *ai: _HasDType[number64 | number32 | number16 | np.integer],
+    *ai: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
     a0: _HasDType[np.complex128 | np.complex64],
     array1: _HasDType[np.complex128 | np.integer],
     /,
-    *ai: _HasDType[number64 | number32 | number16 | np.integer],
+    *ai: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
     a0: _HasDType[np.complex128 | np.integer],
     array1: _HasDType[np.complex128 | np.complex64],
     /,
-    *ai: _HasDType[number64 | number32 | number16 | np.integer],
+    *ai: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer],
 ) -> type[np.complex128]: ...
 @overload
 def common_type(

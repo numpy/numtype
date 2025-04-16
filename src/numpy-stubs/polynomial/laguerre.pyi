@@ -1,7 +1,7 @@
 from typing import Final, Literal as L
 
+import _numtype as _nt
 import numpy as np
-from _numtype import Array1D
 
 from ._polybase import ABCPolyBase
 from .legendre import (
@@ -69,12 +69,12 @@ __all__ = [
 
 ###
 
-lagdomain: Final[Array1D[np.float64]] = ...
-lagzero: Final[Array1D[np.int_]] = ...
-lagone: Final[Array1D[np.int_]] = ...
-lagx: Final[Array1D[np.int_]] = ...
+lagdomain: Final[_nt.Array1D[np.float64]] = ...
+lagzero: Final[_nt.Array1D[np.intp]] = ...
+lagone: Final[_nt.Array1D[np.intp]] = ...
+lagx: Final[_nt.Array1D[np.intp]] = ...
 
 class Laguerre(ABCPolyBase):
-    domain: Array1D[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    window: Array1D[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    domain: _nt.Array1D[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    window: _nt.Array1D[np.float64] = ...  # pyright: ignore[reportIncompatibleMethodOverride]
     basis_name: L["L"] = "L"  # pyright: ignore[reportIncompatibleMethodOverride]
