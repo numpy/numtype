@@ -1017,6 +1017,14 @@ _HasDTypeWithItem: TypeAlias = _HasDType[_HasTypeWithItem[_T]]
 _HasDTypeWithReal: TypeAlias = _HasDType[_HasTypeWithReal[_T]]
 _HasDTypeWithImag: TypeAlias = _HasDType[_HasTypeWithImag[_T]]
 
+_CT = TypeVar("_CT", bound=ct._SimpleCData[Any])
+_CT_co = TypeVar("_CT_co", bound=ct._SimpleCData[Any], covariant=True)
+
+@type_check_only
+class _HasCType(Protocol[_CT_co]):
+    @property
+    def __ctype__(self, /) -> _CT_co: ...
+
 @type_check_only
 class _HasDateAttributes(Protocol):
     # The `datetime64` constructors requires an object with the three attributes below,
@@ -1027,22 +1035,6 @@ class _HasDateAttributes(Protocol):
     def month(self) -> int: ...
     @property
     def year(self) -> int: ...
-
-@type_check_only
-class _CanLT(Protocol):
-    def __lt__(self, x: Any, /) -> Any: ...
-
-@type_check_only
-class _CanLE(Protocol):
-    def __le__(self, x: Any, /) -> Any: ...
-
-@type_check_only
-class _CanGT(Protocol):
-    def __gt__(self, x: Any, /) -> Any: ...
-
-@type_check_only
-class _CanGE(Protocol):
-    def __ge__(self, x: Any, /) -> Any: ...
 
 ###
 # Mixins (for internal use only)
@@ -1077,33 +1069,33 @@ class _CmpOpMixin(Generic[_ScalarLikeT_contra, _ArrayLikeT_contra]):
     @overload
     def __lt__(self, x: _ScalarLikeT_contra, /) -> bool_: ...
     @overload
-    def __lt__(self, x: _ArrayLikeT_contra | _NestedSequence[_CanGT], /) -> NDArray[bool_]: ...
+    def __lt__(self, x: _ArrayLikeT_contra | _NestedSequence[_nt.op.CanGt], /) -> NDArray[bool_]: ...
     @overload
-    def __lt__(self, x: _CanGT, /) -> bool_: ...
+    def __lt__(self, x: _nt.op.CanGt, /) -> bool_: ...
 
     #
     @overload
     def __le__(self, x: _ScalarLikeT_contra, /) -> bool_: ...
     @overload
-    def __le__(self, x: _ArrayLikeT_contra | _NestedSequence[_CanGE], /) -> NDArray[bool_]: ...
+    def __le__(self, x: _ArrayLikeT_contra | _NestedSequence[_nt.op.CanGe], /) -> NDArray[bool_]: ...
     @overload
-    def __le__(self, x: _CanGE, /) -> bool_: ...
+    def __le__(self, x: _nt.op.CanGe, /) -> bool_: ...
 
     #
     @overload
     def __gt__(self, x: _ScalarLikeT_contra, /) -> bool_: ...
     @overload
-    def __gt__(self, x: _ArrayLikeT_contra | _NestedSequence[_CanLT], /) -> NDArray[bool_]: ...
+    def __gt__(self, x: _ArrayLikeT_contra | _NestedSequence[_nt.op.CanLt], /) -> NDArray[bool_]: ...
     @overload
-    def __gt__(self, x: _CanLT, /) -> bool_: ...
+    def __gt__(self, x: _nt.op.CanLt, /) -> bool_: ...
 
     #
     @overload
     def __ge__(self, x: _ScalarLikeT_contra, /) -> bool_: ...
     @overload
-    def __ge__(self, x: _ArrayLikeT_contra | _NestedSequence[_CanLE], /) -> NDArray[bool_]: ...
+    def __ge__(self, x: _ArrayLikeT_contra | _NestedSequence[_nt.op.CanLe], /) -> NDArray[bool_]: ...
     @overload
-    def __ge__(self, x: _CanLE, /) -> bool_: ...
+    def __ge__(self, x: _nt.op.CanLe, /) -> bool_: ...
 
 @type_check_only
 class _IntMixin(Generic[_IntSizeT_co]):
@@ -1907,6 +1899,11 @@ class _ArrayOrScalarCommon:
 #
 class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     __hash__: ClassVar[None]  # type: ignore[assignment]  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
+    @property
+    @type_check_only
+    def __ctype__(self: _HasDType[_HasType[_HasCType[_CT]]], /) -> ct.Array[_CT]: ...
 
     #
     @property
@@ -3927,6 +3924,11 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_bool: ...
+
+    #
     @type_check_only
     def __nep50__(self, below: _nt.co_number | timedelta64, above: Never, /) -> bool_: ...
     @type_check_only
@@ -4386,7 +4388,6 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
     @abc.abstractmethod
     @type_check_only
     def __nep50_complex__(self, /) -> complexfloating: ...
-    #
     @type_check_only
     def __nep50_rule6__(self, other: _JustNumber, /) -> number: ...
 
@@ -4682,6 +4683,11 @@ class signedinteger(integer):
     def __nep50_rule5__(self, other: _JustInteger | _JustUnsignedInteger, /) -> signedinteger | float64: ...
 
 class int8(_IntMixin[L[1]], signedinteger):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_int8: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(
@@ -4703,6 +4709,11 @@ class int8(_IntMixin[L[1]], signedinteger):
 byte = int8
 
 class int16(_IntMixin[L[2]], signedinteger):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_int16: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(
@@ -4724,6 +4735,11 @@ class int16(_IntMixin[L[2]], signedinteger):
 short = int16
 
 class int32(_IntMixin[L[4]], signedinteger):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_int32: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(
@@ -4748,6 +4764,11 @@ class int32(_IntMixin[L[4]], signedinteger):
 intc = int32
 
 class int64(_IntMixin[L[8]], signedinteger):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_int64: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(
@@ -4799,6 +4820,11 @@ class unsignedinteger(integer):
     def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
 
 class uint8(_IntMixin[L[1]], unsignedinteger):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_uint8: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(
@@ -4824,6 +4850,11 @@ class uint8(_IntMixin[L[1]], unsignedinteger):
 ubyte = uint8
 
 class uint16(_IntMixin[L[2]], unsignedinteger):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_uint16: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(
@@ -4851,6 +4882,11 @@ class uint16(_IntMixin[L[2]], unsignedinteger):
 ushort = uint16
 
 class uint32(_IntMixin[L[4]], unsignedinteger):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_uint32: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(
@@ -4878,6 +4914,11 @@ class uint32(_IntMixin[L[4]], unsignedinteger):
 uintc = uint32
 
 class uint64(_IntMixin[L[8]], unsignedinteger):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_uint64: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(
@@ -5021,6 +5062,11 @@ class float16(_FloatMixin[L[2]], floating):
 half = float16
 
 class float32(_FloatMixin[L[4]], floating):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_float: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(self, below: _float32_min | complexfloating, above: float16 | _nt.co_integer16, /) -> float32: ...
@@ -5040,6 +5086,11 @@ class float32(_FloatMixin[L[4]], floating):
 single = float32
 
 class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_double: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(self, below: _inexact64_min, above: _float32_max | _nt.co_integer, /) -> float64: ...
@@ -5076,6 +5127,11 @@ class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
 double = float64
 
 class longdouble(_FloatMixin[L[12, 16]], floating):
+    @property
+    @type_check_only
+    def __ctype__(self) -> ct.c_longdouble: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(

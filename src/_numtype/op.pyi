@@ -40,7 +40,7 @@ __all__ = [  # noqa: RUF022
 
 ###
 
-_T_contra = TypeVar("_T_contra", contravariant=True, default=object)
+_T_contra = TypeVar("_T_contra", contravariant=True, default=Any)
 _T_co = TypeVar("_T_co", covariant=True, default=Any)
 
 ###
