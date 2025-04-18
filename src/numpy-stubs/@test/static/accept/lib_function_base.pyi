@@ -126,15 +126,15 @@ assert_type(np.extract(AR_i8, AR_LIKE_f8), npt.NDArray[Any])
 
 assert_type(np.place(AR_f8, mask=AR_i8, vals=5.0), None)
 
-assert_type(np.cov(AR_f8, bias=True), npt.NDArray[np.floating])
-assert_type(np.cov(AR_f8, AR_c16, ddof=1), npt.NDArray[np.complexfloating])
+assert_type(np.cov(AR_f8, bias=True), npt.NDArray[np.float64])
+assert_type(np.cov(AR_f8, AR_c16, ddof=1), npt.NDArray[np.complex128])
 assert_type(np.cov(AR_f8, aweights=AR_f8, dtype=np.float32), npt.NDArray[np.float32])
-assert_type(np.cov(AR_f8, fweights=AR_f8, dtype=float), npt.NDArray[Any])
+assert_type(np.cov(AR_f8, fweights=AR_i8, dtype=float), npt.NDArray[np.float64])
 
-assert_type(np.corrcoef(AR_f8, rowvar=True), npt.NDArray[np.floating])
-assert_type(np.corrcoef(AR_f8, AR_c16), npt.NDArray[np.complexfloating])
+assert_type(np.corrcoef(AR_f8, rowvar=True), npt.NDArray[np.float64])
+assert_type(np.corrcoef(AR_f8, AR_c16), npt.NDArray[np.complex128])
 assert_type(np.corrcoef(AR_f8, dtype=np.float32), npt.NDArray[np.float32])
-assert_type(np.corrcoef(AR_f8, dtype=float), npt.NDArray[Any])
+assert_type(np.corrcoef(AR_f8, dtype=float), npt.NDArray[np.float64])
 
 assert_type(np.blackman(5), _Array1D[np.floating])
 assert_type(np.bartlett(6), _Array1D[np.floating])
