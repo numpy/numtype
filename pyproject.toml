@@ -50,7 +50,7 @@ dependencies = []
 
 [dependency-groups]
 numpy = ["numtype[numpy]"]
-lint = ["ruff>=0.11.5"]
+lint = ["ruff>=0.11.6"]
 pytest = [
     {include-group = "numpy"},
     "pytest>=8.3.5",
@@ -79,7 +79,7 @@ typecheck = [
     {include-group = "mypy"},
 ]
 docs = [
-    "mkdocs-material>=9.6.11",
+    "mkdocs-material>=9.6.12",
     "mkdocs-awesome-nav>=3.1.1",
     "markdown-callouts>=0.4.0",
     "mkdocs-include-markdown-plugin>=7.1.5",
