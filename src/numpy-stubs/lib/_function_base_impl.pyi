@@ -545,40 +545,88 @@ def place(arr: _nt.Array[Incomplete], mask: ArrayLike, vals: Incomplete) -> None
 #
 @overload
 def cov(
-    m: _nt.CoFloating_1nd,
+    m: _nt.CoFloat64_1nd,
+    y: _nt.CoFloat64_1nd | None = None,
+    rowvar: bool = True,
+    bias: bool = False,
+    ddof: _ToInt | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
+    *,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload
+def cov(
+    m: _nt.ToLongDouble_1nd,
     y: _nt.CoFloating_1nd | None = None,
     rowvar: bool = True,
     bias: bool = False,
     ddof: _ToInt | None = None,
-    fweights: ArrayLike | None = None,
-    aweights: ArrayLike | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
     *,
-    dtype: None = None,
-) -> _nt.Array[np.floating]: ...
+    dtype: _nt.ToDTypeLongDouble | None = None,
+) -> _nt.Array[np.longdouble]: ...
 @overload
 def cov(
-    m: _nt.ToComplex_1nd,
+    m: _nt.CoFloating_1nd,
+    y: _nt.ToLongDouble_1nd,
+    rowvar: bool = True,
+    bias: bool = False,
+    ddof: _ToInt | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
+    *,
+    dtype: _nt.ToDTypeLongDouble | None = None,
+) -> _nt.Array[np.longdouble]: ...
+@overload
+def cov(
+    m: _nt.ToComplex128_1nd | _nt.ToComplex64_1nd,
+    y: _nt.CoComplex128_1nd | None = None,
+    rowvar: bool = True,
+    bias: bool = False,
+    ddof: _ToInt | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
+    *,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload
+def cov(
+    m: _nt.CoComplex128_1nd,
+    y: _nt.ToComplex128_1nd | _nt.ToComplex64_1nd,
+    rowvar: bool = True,
+    bias: bool = False,
+    ddof: _ToInt | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
+    *,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload
+def cov(
+    m: _nt.ToCLongDouble_1nd,
     y: _nt.CoComplex_1nd | None = None,
     rowvar: bool = True,
     bias: bool = False,
     ddof: _ToInt | None = None,
-    fweights: ArrayLike | None = None,
-    aweights: ArrayLike | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
     *,
-    dtype: None = None,
-) -> _nt.Array[np.complexfloating]: ...
+    dtype: _nt.ToDTypeCLongDouble | None = None,
+) -> _nt.Array[np.clongdouble]: ...
 @overload
 def cov(
     m: _nt.CoComplex_1nd,
-    y: _nt.ToComplex_1nd,
+    y: _nt.ToCLongDouble_1nd,
     rowvar: bool = True,
     bias: bool = False,
     ddof: _ToInt | None = None,
-    fweights: ArrayLike | None = None,
-    aweights: ArrayLike | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
     *,
-    dtype: None = None,
-) -> _nt.Array[np.complexfloating]: ...
+    dtype: _nt.ToDTypeCLongDouble | None = None,
+) -> _nt.Array[np.clongdouble]: ...
 @overload
 def cov(
     m: _nt.CoComplex_1nd,
@@ -586,8 +634,8 @@ def cov(
     rowvar: bool = True,
     bias: bool = False,
     ddof: _ToInt | None = None,
-    fweights: ArrayLike | None = None,
-    aweights: ArrayLike | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
     *,
     dtype: _DTypeLike[_ScalarT],
 ) -> _nt.Array[_ScalarT]: ...
@@ -598,8 +646,8 @@ def cov(
     rowvar: bool = True,
     bias: bool = False,
     ddof: _ToInt | None = None,
-    fweights: ArrayLike | None = None,
-    aweights: ArrayLike | None = None,
+    fweights: _nt.ToInteger_1d | None = None,
+    aweights: _nt.CoFloating_1d | None = None,
     *,
     dtype: DTypeLike,
 ) -> _nt.Array[Incomplete]: ...
@@ -607,34 +655,74 @@ def cov(
 # NOTE `bias` and `ddof` are deprecated and ignored
 @overload
 def corrcoef(
-    x: _nt.CoFloating_1nd,
+    x: _nt.CoFloat64_1nd,
+    y: _nt.CoFloat64_1nd | None = None,
+    rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
+    *,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload
+def corrcoef(
+    x: _nt.ToLongDouble_1nd,
     y: _nt.CoFloating_1nd | None = None,
     rowvar: bool = True,
     bias: _NoValueType = ...,
     ddof: _NoValueType = ...,
     *,
-    dtype: None = None,
-) -> _nt.Array[np.floating]: ...
+    dtype: _nt.ToDTypeLongDouble | None = None,
+) -> _nt.Array[np.longdouble]: ...
 @overload
 def corrcoef(
-    x: _nt.ToComplex_1nd,
+    x: _nt.CoFloating_1nd,
+    y: _nt.ToLongDouble_1nd,
+    rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
+    *,
+    dtype: _nt.ToDTypeLongDouble | None = None,
+) -> _nt.Array[np.longdouble]: ...
+@overload
+def corrcoef(
+    x: _nt.ToComplex128_1nd | _nt.ToComplex64_1nd,
+    y: _nt.CoComplex128_1nd | None = None,
+    rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
+    *,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload
+def corrcoef(
+    x: _nt.CoComplex128_1nd,
+    y: _nt.ToComplex128_1nd | _nt.ToComplex64_1nd,
+    rowvar: bool = True,
+    bias: _NoValueType = ...,
+    ddof: _NoValueType = ...,
+    *,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload
+def corrcoef(
+    x: _nt.ToCLongDouble_1nd,
     y: _nt.CoComplex_1nd | None = None,
     rowvar: bool = True,
     bias: _NoValueType = ...,
     ddof: _NoValueType = ...,
     *,
-    dtype: None = None,
-) -> _nt.Array[np.complexfloating]: ...
+    dtype: _nt.ToDTypeCLongDouble | None = None,
+) -> _nt.Array[np.clongdouble]: ...
 @overload
 def corrcoef(
     x: _nt.CoComplex_1nd,
-    y: _nt.ToComplex_1nd,
+    y: _nt.ToCLongDouble_1nd,
     rowvar: bool = True,
     bias: _NoValueType = ...,
     ddof: _NoValueType = ...,
     *,
-    dtype: None = None,
-) -> _nt.Array[np.complexfloating]: ...
+    dtype: _nt.ToDTypeCLongDouble | None = None,
+) -> _nt.Array[np.clongdouble]: ...
 @overload
 def corrcoef(
     x: _nt.CoComplex_1nd,
