@@ -1139,7 +1139,7 @@ class ScalarOps(TestGen):
 
 class NDArrayOps(TestGen):
     testname = "ndarray_{}"
-    numpy_imports_extra = ("import numpy.typing as npt",)
+    numpy_imports_extra: tuple[str, ...] = ("import numpy.typing as npt",)
 
     shape: Final[tuple[int, ...]]
     opname: _OpName

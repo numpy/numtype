@@ -1,4 +1,3 @@
-import abc
 from typing import Any, Generic, Literal as L, TypeAlias, type_check_only
 from typing_extensions import Self, TypeVar, override
 
@@ -22,7 +21,6 @@ _AnyArray: TypeAlias = np.ndarray[Any, np.dtype]
 class NDArrayOperatorsMixin(Generic[_T_contra, _T_co]):
     __slots__ = ()
 
-    @abc.abstractmethod
     @type_check_only
     def __array_ufunc__(
         self,
