@@ -1,7 +1,6 @@
 # mypy: disable-error-code=override
 # ^ there are >100 false positives; we'll just rely on pyright in
 
-import abc
 import ctypes as ct
 import datetime as dt
 import sys
@@ -3576,7 +3575,6 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def flat(self) -> flatiter[_nt.Array1D[Self]]: ...
 
     #
-    @abc.abstractmethod
     def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
 
     #
@@ -4382,10 +4380,8 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
     @final
     @type_check_only
     def __nep50_int__(self, /) -> Self: ...
-    @abc.abstractmethod
     @type_check_only
     def __nep50_float__(self, /) -> inexact: ...
-    @abc.abstractmethod
     @type_check_only
     def __nep50_complex__(self, /) -> complexfloating: ...
     @type_check_only
@@ -4397,7 +4393,6 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
     def itemsize(self) -> int: ...
 
     #
-    @abc.abstractmethod
     def __init__(self, value: _NumberItemT_co, /) -> None: ...
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
@@ -4517,7 +4512,6 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
 # complexity of the `[u]intp` and `[u]long` type definitions.
 
 class integer(_IntegralMixin, _RoundMixin, number[int]):
-    @abc.abstractmethod
     @type_check_only
     def __nep50__(
         self,
@@ -4662,7 +4656,6 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __ror__(self, x: _nt.CastsWithScalar[Self, _IntegralT], /) -> _IntegralT: ...
 
 class signedinteger(integer):
-    @abc.abstractmethod
     @type_check_only
     @override
     def __nep50__(
@@ -4807,7 +4800,6 @@ intp = int64
 int_ = intp
 
 class unsignedinteger(integer):
-    @abc.abstractmethod
     @type_check_only
     @override
     def __nep50__(
@@ -4955,7 +4947,6 @@ uintp = uint64
 uint = uintp
 
 class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
-    @abc.abstractmethod
     @type_check_only
     def __nep50__(self, below: clongdouble, above: _nt.co_integer8, /) -> inexact: ...
     @final
@@ -4971,9 +4962,7 @@ class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
     def __nep50_rule6__(self, other: _JustInexact | _JustNumber, /) -> inexact: ...
 
     #
-    @abc.abstractmethod
     def __init__(self, value: _InexactItemT_co | None = ..., /) -> None: ...
-    @abc.abstractmethod
     @override
     def __abs__(self, /) -> floating: ...
 
@@ -4993,7 +4982,6 @@ class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
     def __rtruediv__(self: _nt.CastsWithComplex[_ComplexFloatingT], x: _nt.JustComplex, /) -> _ComplexFloatingT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
 class floating(_RealMixin, _RoundMixin, inexact[float]):
-    @abc.abstractmethod
     @override
     @type_check_only
     def __nep50__(self, below: _nt.inexact64l, above: _nt.co_integer8, /) -> floating: ...
@@ -5170,7 +5158,6 @@ float96 = longdouble
 float128 = longdouble
 
 class complexfloating(inexact[complex]):
-    @abc.abstractmethod
     @override
     @type_check_only
     def __nep50__(self, below: clongdouble, above: _float32_max | _nt.co_integer16, /) -> complexfloating: ...
@@ -5198,16 +5185,13 @@ class complexfloating(inexact[complex]):
 
     #
     @property
-    @abc.abstractmethod
     @override
     def real(self) -> floating: ...
     @property
-    @abc.abstractmethod
     @override
     def imag(self) -> floating: ...
 
     #
-    @abc.abstractmethod
     @override
     def __abs__(self, /) -> floating: ...
 
@@ -5395,12 +5379,9 @@ class object_(_RealMixin, generic[Any]):
     def dtype(self) -> dtypes.ObjectDType: ...
 
 @final
-class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):  # type: ignore[misc]
-    @abc.abstractmethod
-    def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
+class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]): ...  # type: ignore[misc]
 
 class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @abc.abstractmethod
     def __init__(self, value: _CharacterItemT_co = ..., /) -> None: ...
 
 class bytes_(character[bytes], bytes):  # type: ignore[misc]
