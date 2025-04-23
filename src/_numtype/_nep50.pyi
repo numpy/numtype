@@ -8,6 +8,8 @@ from typing_extensions import TypeAliasType, TypeVar
 import numpy as np
 from numpy._typing import _NestedSequence
 
+from . import _shape
+
 __all__ = [
     "Casts",
     "CastsArray",
@@ -38,9 +40,8 @@ _ScalarOutT = TypeVar("_ScalarOutT", bound=_ScalarOut, default=Any)
 _ScalarOutT_co = TypeVar("_ScalarOutT_co", bound=_ScalarOut, covariant=True)
 _ScalarOutT_contra = TypeVar("_ScalarOutT_contra", bound=_ScalarOut, contravariant=True)
 
-_Shape: TypeAlias = tuple[int, ...]
-_ShapeT = TypeVar("_ShapeT", bound=_Shape, default=_Shape)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_Shape, covariant=True)
+_ShapeT = TypeVar("_ShapeT", bound=_shape.Shape, default=_shape.Shape)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_shape.Shape, covariant=True)
 
 ###
 
@@ -121,7 +122,7 @@ class _LikeArray(Protocol[_LikeT_co, _ShapeT_co]):
 @type_check_only
 class _LikeScalar(Protocol[_LikeT_co]):
     @property
-    def shape(self, /) -> tuple[()]: ...
+    def shape(self, /) -> _shape.Shape0: ...
     @property
     def dtype(self, /) -> _HasType[_LikeT_co]: ...
 

@@ -7,8 +7,7 @@ import numpy.typing as npt
 from numpy.linalg._linalg import EigResult, EighResult, QRResult, SVDResult, SlogdetResult
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_Array_2d: TypeAlias = _nt.Array[_ScalarT, tuple[int, int]]
-_Array_2nd: TypeAlias = _nt.Array[_ScalarT, _nt.AtLeast2D]
+_Array2ND: TypeAlias = _nt.Array[_ScalarT, _nt.Shape2_]
 
 ###
 
@@ -55,29 +54,29 @@ assert_type(np.linalg.solve(AR_i8, AR_i8), npt.NDArray[np.float64])
 assert_type(np.linalg.solve(AR_i8, AR_f8), npt.NDArray[np.float64])
 assert_type(np.linalg.solve(AR_c16, AR_f8), npt.NDArray[np.complex128])
 
-assert_type(np.linalg.tensorinv(AR_i8), _Array_2nd[np.float64])
-assert_type(np.linalg.tensorinv(AR_f8), _Array_2nd[np.float64])
-assert_type(np.linalg.tensorinv(AR_c16), _Array_2nd[np.complex128])
+assert_type(np.linalg.tensorinv(AR_i8), _Array2ND[np.float64])
+assert_type(np.linalg.tensorinv(AR_f8), _Array2ND[np.float64])
+assert_type(np.linalg.tensorinv(AR_c16), _Array2ND[np.complex128])
 
-assert_type(np.linalg.inv(AR_i8), _Array_2nd[np.float64])
-assert_type(np.linalg.inv(AR_f8), _Array_2nd[np.float64])
-assert_type(np.linalg.inv(AR_c16), _Array_2nd[np.complex128])
+assert_type(np.linalg.inv(AR_i8), _Array2ND[np.float64])
+assert_type(np.linalg.inv(AR_f8), _Array2ND[np.float64])
+assert_type(np.linalg.inv(AR_c16), _Array2ND[np.complex128])
 
-assert_type(np.linalg.matrix_power(AR_i8, -1), _Array_2nd[np.float64])
-assert_type(np.linalg.matrix_power(AR_f8, 0), _Array_2nd[np.float64])
-assert_type(np.linalg.matrix_power(AR_c16, 1), _Array_2nd[np.complex128])
-assert_type(np.linalg.matrix_power(AR_O, 2), _Array_2nd[np.object_])
+assert_type(np.linalg.matrix_power(AR_i8, -1), _Array2ND[np.float64])
+assert_type(np.linalg.matrix_power(AR_f8, 0), _Array2ND[np.float64])
+assert_type(np.linalg.matrix_power(AR_c16, 1), _Array2ND[np.complex128])
+assert_type(np.linalg.matrix_power(AR_O, 2), _Array2ND[np.object_])
 
-assert_type(np.linalg.cholesky(AR_i8), _Array_2nd[np.float64])
-assert_type(np.linalg.cholesky(AR_f8), _Array_2nd[np.float64])
-assert_type(np.linalg.cholesky(AR_c16), _Array_2nd[np.complex128])
+assert_type(np.linalg.cholesky(AR_i8), _Array2ND[np.float64])
+assert_type(np.linalg.cholesky(AR_f8), _Array2ND[np.float64])
+assert_type(np.linalg.cholesky(AR_c16), _Array2ND[np.complex128])
 
-assert_type(np.linalg.outer(AR_i8, AR_i8), _Array_2d[np.int64])
-assert_type(np.linalg.outer(AR_f8, AR_f8), _Array_2d[np.float64])
-assert_type(np.linalg.outer(AR_c16, AR_c16), _Array_2d[np.complex128])
-assert_type(np.linalg.outer(AR_b, AR_b), _Array_2d[np.bool])
-assert_type(np.linalg.outer(AR_O, AR_O), _Array_2d[np.object_])
-assert_type(np.linalg.outer(AR_i8, AR_m), _Array_2d[np.timedelta64])
+assert_type(np.linalg.outer(AR_i8, AR_i8), _nt.Array2D[np.int64])
+assert_type(np.linalg.outer(AR_f8, AR_f8), _nt.Array2D[np.float64])
+assert_type(np.linalg.outer(AR_c16, AR_c16), _nt.Array2D[np.complex128])
+assert_type(np.linalg.outer(AR_b, AR_b), _nt.Array2D[np.bool])
+assert_type(np.linalg.outer(AR_O, AR_O), _nt.Array2D[np.object_])
+assert_type(np.linalg.outer(AR_i8, AR_m), _nt.Array2D[np.timedelta64])
 
 assert_type(np.linalg.qr(AR_i8), QRResult[np.float64])
 assert_type(np.linalg.qr(AR_f8), QRResult[np.float64])
@@ -121,9 +120,9 @@ assert_type(np.linalg.matrix_rank(AR_i8), Any)
 assert_type(np.linalg.matrix_rank(AR_f8), Any)
 assert_type(np.linalg.matrix_rank(AR_c16), Any)
 
-assert_type(np.linalg.pinv(AR_i8), _Array_2nd[np.float64])
-assert_type(np.linalg.pinv(AR_f8), _Array_2nd[np.float64])
-assert_type(np.linalg.pinv(AR_c16), _Array_2nd[np.complex128])
+assert_type(np.linalg.pinv(AR_i8), _Array2ND[np.float64])
+assert_type(np.linalg.pinv(AR_f8), _Array2ND[np.float64])
+assert_type(np.linalg.pinv(AR_c16), _Array2ND[np.complex128])
 
 assert_type(np.linalg.slogdet(i_2d), SlogdetResult[np.float64, np.float64])
 assert_type(np.linalg.slogdet([f_1d]), SlogdetResult[np.float64, np.float64])
@@ -181,7 +180,7 @@ assert_type(np.linalg.norm(AR_f8), np.float64)
 assert_type(np.linalg.norm(AR_c16), np.float64)
 assert_type(np.linalg.norm(AR_S), np.float64)
 assert_type(np.linalg.norm(AR_f8, axis=0), npt.NDArray[np.float64])
-assert_type(np.linalg.norm(AR_f8, keepdims=True), _Array_2nd[np.float64])
+assert_type(np.linalg.norm(AR_f8, keepdims=True), _Array2ND[np.float64])
 
 assert_type(np.linalg.matrix_norm(b_2d), np.float64)
 assert_type(np.linalg.matrix_norm(i_2d), np.float64)

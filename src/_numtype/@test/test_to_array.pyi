@@ -1,15 +1,5 @@
-from typing import TypeAlias
-from typing_extensions import TypeVar
-
 import _numtype as _nt
 import numpy as np
-
-_ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_0D: TypeAlias = np.ndarray[tuple[()], np.dtype[_ScalarT]]
-_1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
-_2D: TypeAlias = np.ndarray[tuple[int, int], np.dtype[_ScalarT]]
-_3D: TypeAlias = np.ndarray[tuple[int, int, int], np.dtype[_ScalarT]]
-_ND: TypeAlias = np.ndarray[tuple[int, ...], np.dtype[_ScalarT]]
 
 b_0d: bool
 i_0d: int
@@ -47,17 +37,22 @@ O_3d: list[list[list[object]]]
 # bool
 
 b1: np.bool
-b1_0d: _0D[np.bool]
-b1_1d: _1D[np.bool]
-b1_2d: _2D[np.bool]
-b1_3d: _3D[np.bool]
-b1_nd: _ND[np.bool]
+b1_0d: _nt.Array0D[np.bool]
+b1_1d: _nt.Array1D[np.bool]
+b1_2d: _nt.Array2D[np.bool]
+b1_3d: _nt.Array3D[np.bool]
+b1_nd: _nt.Array[np.bool]
 
-like_bool_0d: bool | np.bool | _0D[np.bool]
-like_bool_1d: list[bool | np.bool] | _1D[np.bool]
-like_bool_2d: list[list[bool | np.bool]] | list[_1D[np.bool]] | _2D[np.bool]
-like_bool_3d: list[list[list[bool | np.bool]]] | list[_2D[np.bool]] | list[list[_1D[np.bool]]] | _3D[np.bool]
-like_bool_nd: list[list[list[list[bool | np.bool]]]] | list[_2D[np.bool]] | _ND[np.bool]
+like_bool_0d: bool | np.bool | _nt.Array0D[np.bool]
+like_bool_1d: list[bool | np.bool] | _nt.Array1D[np.bool]
+like_bool_2d: list[list[bool | np.bool]] | list[_nt.Array1D[np.bool]] | _nt.Array2D[np.bool]
+like_bool_3d: (
+    list[list[list[bool | np.bool]]]
+    | list[_nt.Array2D[np.bool]]
+    | list[list[_nt.Array1D[np.bool]]]
+    | _nt.Array3D[np.bool]
+)
+like_bool_nd: list[list[list[list[bool | np.bool]]]] | list[_nt.Array2D[np.bool]] | _nt.Array[np.bool]
 
 bool_0d_accept: _nt.ToBool_0d = like_bool_0d
 bool_0d_reject_sc: _nt.ToBool_0d = f_0d  # type: ignore[assignment]  # pyright: ignore[reportAssignmentType]
