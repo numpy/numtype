@@ -610,15 +610,7 @@ __all__ = [  # noqa: RUF022
 ###
 # Constrained types (for internal use only)
 
-_AnyShapeT = TypeVar(
-    "_AnyShapeT",
-    tuple[()],
-    tuple[int],
-    tuple[int, int],
-    tuple[int, int, int],
-    tuple[int, int, int, int],
-    tuple[int, ...],
-)
+_AnyShapeT = TypeVar("_AnyShapeT", _nt.Shape0, _nt.Shape1, _nt.Shape2, _nt.Shape3, _nt.Shape4, _nt.Shape)
 
 ###
 # Type parameters (for internal use only)
@@ -1992,11 +1984,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         self,
         key: _ArrayInteger_co | tuple[_ArrayInteger_co, ...],
         /,
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape, _DTypeT_co]: ...
     @overload
     def __getitem__(self, key: CanIndex | tuple[CanIndex, ...], /) -> Any: ...
     @overload
-    def __getitem__(self, key: _ToIndices, /) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
+    def __getitem__(self, key: _ToIndices, /) -> ndarray[_nt.Shape, _DTypeT_co]: ...
     @overload
     def __getitem__(self: NDArray[void], key: str, /) -> ndarray[_ShapeT_co, dtype]: ...
     @overload
@@ -2060,11 +2052,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload  # == 1-d & object_
-    def __iter__(self: ndarray[tuple[int], dtype[object_]], /) -> Iterator[Any]: ...
+    def __iter__(self: _nt.Array1D[object_], /) -> Iterator[Any]: ...
     @overload  # == 1-d
-    def __iter__(self: ndarray[tuple[int], dtype[_ScalarT]], /) -> Iterator[_ScalarT]: ...
+    def __iter__(self: _nt.Array1D[_ScalarT], /) -> Iterator[_ScalarT]: ...
     @overload  # >= 2-d
-    def __iter__(self: ndarray[_nt.AtLeast2D, dtype[_ScalarT]], /) -> Iterator[NDArray[_ScalarT]]: ...
+    def __iter__(self: ndarray[_nt.Shape2_, dtype[_ScalarT]], /) -> Iterator[NDArray[_ScalarT]]: ...
     @overload  # ?-d
     def __iter__(self, /) -> Iterator[Any]: ...
 
@@ -2918,39 +2910,19 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def resize(self: ndarray[_ShapeT, Any], new_shape: _ShapeT, /, *, refcheck: py_bool = True) -> None: ...
     @overload
-    def resize(self: ndarray[tuple[int], Any], n0: CanIndex, /, *, refcheck: py_bool = True) -> None: ...
+    def resize(self: _nt.Array1D[Any], n0: CanIndex, /, *, refcheck: py_bool = True) -> None: ...
+    @overload
+    def resize(self: _nt.Array2D[Any], n0: CanIndex, n1: CanIndex, /, *, refcheck: py_bool = True) -> None: ...
     @overload
     def resize(
-        self: _nt.Array2D[Any],
-        n0: CanIndex,
-        n1: CanIndex,
-        /,
-        *,
-        refcheck: py_bool = True,
-    ) -> None: ...
-    @overload
-    def resize(
-        self: ndarray[tuple[int, int, int], Any],
-        n0: CanIndex,
-        n1: CanIndex,
-        n2: CanIndex,
-        /,
-        *,
-        refcheck: py_bool = True,
+        self: _nt.Array3D[Any], n0: CanIndex, n1: CanIndex, n2: CanIndex, /, *, refcheck: py_bool = True
     ) -> None: ...
 
     #
     def swapaxes(
-        self: ndarray[_AnyShapeT, _DTypeT],
-        /,
-        axis1: CanIndex,
-        axis2: CanIndex,
+        self: ndarray[_AnyShapeT, _DTypeT], /, axis1: CanIndex, axis2: CanIndex
     ) -> ndarray[_AnyShapeT, _DTypeT]: ...
-    def squeeze(
-        self,
-        /,
-        axis: CanIndex | tuple[CanIndex, ...] | None = None,
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
+    def squeeze(self, /, axis: CanIndex | tuple[CanIndex, ...] | None = None) -> ndarray[_nt.Shape, _DTypeT_co]: ...
     def byteswap(self, /, inplace: py_bool = False) -> Self: ...
 
     #
@@ -2962,36 +2934,20 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     # NOTE: always raises when called on `generic`.
     @overload
     def diagonal(
-        self: ndarray[tuple[int, int], _DTypeT],
-        /,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int], _DTypeT]: ...
+        self: ndarray[_nt.Shape2, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> ndarray[_nt.Shape1, _DTypeT]: ...
     @overload
     def diagonal(
-        self: ndarray[tuple[int, int, int], _DTypeT],
-        /,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int, int], _DTypeT]: ...
+        self: ndarray[_nt.Shape3, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> ndarray[_nt.Shape2, _DTypeT]: ...
     @overload
     def diagonal(
-        self: ndarray[tuple[int, int, int, int], _DTypeT],
-        /,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int, int, int], _DTypeT]: ...
+        self: ndarray[_nt.Shape4, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> ndarray[_nt.Shape3, _DTypeT]: ...
     @overload
     def diagonal(
-        self: ndarray[tuple[int, ...], _DTypeT],
-        /,
-        offset: CanIndex = 0,
-        axis1: CanIndex = 0,
-        axis2: CanIndex = 1,
-    ) -> ndarray[tuple[int, ...], _DTypeT]: ...
+        self: ndarray[_nt.Shape, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> ndarray[_nt.Shape, _DTypeT]: ...
 
     #
     @overload
@@ -3293,7 +3249,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         axis: CanIndex | None = None,
         out: None = None,
         mode: _ModeKind = "raise",
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape, _DTypeT_co]: ...
     @overload
     def take(
         self,
@@ -3316,18 +3272,15 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def repeat(self, /, repeats: _nt.CoInteger_nd, axis: None = None) -> ndarray[tuple[int], _DTypeT_co]: ...
+    def repeat(self, /, repeats: _nt.CoInteger_nd, axis: None = None) -> ndarray[_nt.Shape1, _DTypeT_co]: ...
     @overload
     def repeat(
-        self: ndarray[_AnyShapeT, _DTypeT],
-        /,
-        repeats: _nt.CoInteger_nd,
-        axis: CanIndex,
+        self: ndarray[_AnyShapeT, _DTypeT], /, repeats: _nt.CoInteger_nd, axis: CanIndex
     ) -> ndarray[_AnyShapeT, _DTypeT]: ...
 
     #
-    def flatten(self, /, order: _OrderKACF = "C") -> ndarray[tuple[int], _DTypeT_co]: ...
-    def ravel(self, /, order: _OrderKACF = "C") -> ndarray[tuple[int], _DTypeT_co]: ...
+    def flatten(self, /, order: _OrderKACF = "C") -> ndarray[_nt.Shape1, _DTypeT_co]: ...
+    def ravel(self, /, order: _OrderKACF = "C") -> ndarray[_nt.Shape1, _DTypeT_co]: ...
 
     #
     @overload  # (None)
@@ -3340,7 +3293,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         *,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> ndarray[tuple[()], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape0, _DTypeT_co]: ...
     @overload  # (() | (int) | (int, int) | ....)  # up to 8-d
     def reshape(
         self,
@@ -3358,7 +3311,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         *,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> ndarray[tuple[int], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape1, _DTypeT_co]: ...
     @overload  # (index, index)
     def reshape(
         self,
@@ -3368,7 +3321,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         *,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> ndarray[tuple[int, int], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape2, _DTypeT_co]: ...
     @overload  # (index, index, index)
     def reshape(
         self,
@@ -3379,7 +3332,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         *,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> ndarray[tuple[int, int, int], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape3, _DTypeT_co]: ...
     @overload  # (index, index, index, index)
     def reshape(
         self,
@@ -3391,7 +3344,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         *,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> ndarray[tuple[int, int, int, int], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape4, _DTypeT_co]: ...
     @overload  # (int, *(index, ...))
     def reshape(
         self,
@@ -3400,7 +3353,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         *shape: CanIndex,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape, _DTypeT_co]: ...
     @overload  # (sequence[index])
     def reshape(
         self,
@@ -3409,7 +3362,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         *,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> ndarray[tuple[int, ...], _DTypeT_co]: ...
+    ) -> ndarray[_nt.Shape, _DTypeT_co]: ...
 
     #
     @overload
@@ -3441,23 +3394,23 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload  # (dtype: dtype[T])
     def view(self, /, dtype: _DTypeLike[_ScalarT]) -> _nt.Array[_ScalarT, _ShapeT_co]: ...
     @overload  # (type: matrix)
-    def view(self, /, *, type: type[matrix[Any, Any]]) -> matrix[tuple[int, int], _DTypeT_co]: ...
+    def view(self, /, *, type: type[matrix[Any, Any]]) -> matrix[_nt.Shape2, _DTypeT_co]: ...
     @overload  # (_: matrix)
-    def view(self, /, dtype: type[matrix[Any, Any]]) -> matrix[tuple[int, int], _DTypeT_co]: ...
+    def view(self, /, dtype: type[matrix[Any, Any]]) -> matrix[_nt.Shape2, _DTypeT_co]: ...
     @overload  # (dtype: T, type: matrix)
     def view(
         self,
         /,
         dtype: _DTypeT | _HasDType[_DTypeT],
         type: type[matrix[Any, Any]],
-    ) -> matrix[tuple[int, int], _DTypeT]: ...
+    ) -> matrix[_nt.Shape2, _DTypeT]: ...
     @overload  # (dtype: dtype[T], type: matrix)
     def view(
         self,
         /,
         dtype: _DTypeLike[_ScalarT],
         type: type[matrix[Any, Any]],
-    ) -> matrix[tuple[int, int], dtype[_ScalarT]]: ...
+    ) -> matrix[_nt.Shape2, dtype[_ScalarT]]: ...
     @overload  # (type: recarray)
     def view(
         self,
@@ -3596,9 +3549,9 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
     #
     @overload
-    def __array__(self, dtype: None = None, /) -> ndarray[tuple[()], dtype[Self]]: ...
+    def __array__(self, dtype: None = None, /) -> ndarray[_nt.Shape0, dtype[Self]]: ...
     @overload
-    def __array__(self, dtype: _DTypeT, /) -> ndarray[tuple[()], _DTypeT]: ...
+    def __array__(self, dtype: _DTypeT, /) -> ndarray[_nt.Shape0, _DTypeT]: ...
 
     #
     @overload
@@ -3838,7 +3791,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         *sizes5_: CanIndex,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> _nt.Array[Self, _nt.AtLeast4D]: ...
+    ) -> _nt.Array[Self, _nt.Shape4_]: ...
 
     #
     @overload

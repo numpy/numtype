@@ -61,17 +61,17 @@ from .umath import (
 
 _T_contra = TypeVar("_T_contra", default=None, contravariant=True)
 
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _NumericT = TypeVar("_NumericT", bound=_nt.co_complex | np.timedelta64 | np.object_)
-_SafeScalarT = TypeVar("_SafeScalarT", bound=_nt.co_complex | np.flexible | np.timedelta64 | np.datetime64)
+_SafeScalarT = TypeVar("_SafeScalarT", bound=_nt.co_complex | np.timedelta64 | np.datetime64 | np.flexible)
 
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
 _ArrayT_co = TypeVar("_ArrayT_co", bound=_nt.Array, default=_nt.Array, covariant=True)
-_Array1T = TypeVar("_Array1T", bound=_nt.Array[Any, _nt.AtLeast1D])
-_Array2T = TypeVar("_Array2T", bound=_nt.Array[Any, _nt.AtLeast2D])
+_Array1T = TypeVar("_Array1T", bound=_nt.Array[Any, _nt.Shape1_])
+_Array2T = TypeVar("_Array2T", bound=_nt.Array[Any, _nt.Shape2_])
 
 ###
 
@@ -330,7 +330,7 @@ class broadcast:
     @property
     def size(self) -> int: ...
     @property
-    def shape(self) -> tuple[int, ...]: ...
+    def shape(self) -> _nt.Shape: ...
 
     #
     def __new__(cls, *args: npt.ArrayLike) -> Self: ...
@@ -383,7 +383,7 @@ class nditer:
     @property
     def dtypes(self) -> tuple[np.dtype, ...]: ...
     @property
-    def shape(self) -> tuple[int, ...]: ...
+    def shape(self) -> _nt.Shape: ...
     @property
     def ndim(self) -> int: ...
 
@@ -560,7 +560,7 @@ def empty(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+) -> np.ndarray[_nt.Shape, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def empty(
     shape: _ShapeLike,
@@ -646,7 +646,7 @@ def zeros(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+) -> np.ndarray[_nt.Shape, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def zeros(
     shape: _ShapeLike,
@@ -882,7 +882,7 @@ def empty_like(  # type: ignore[overload-overlap]
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ndarray[tuple[int, ...], _DTypeT]: ...
+) -> np.ndarray[_nt.Shape, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def empty_like(
     prototype: object,
