@@ -31,12 +31,12 @@ np.void("test")  # type: ignore[call-overload]  # pyright: ignore[reportArgument
 np.void("test", dtype=None)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 # pyright doesn't care?
-np.generic(1)  # type: ignore[abstract]
-np.number(1)  # type: ignore[abstract]
-np.integer(1)  # type: ignore[abstract]
-np.inexact(1)  # type: ignore[abstract]
-np.character("test")  # type: ignore[abstract]
-np.flexible(b"test")  # type: ignore[abstract]
+np.generic(1)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+np.number(1)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+np.integer(1)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+np.inexact(1)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+np.character("test")  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
+np.flexible(b"test")  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
 
 np.float64(value=0.0)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
 np.int64(value=0)  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
