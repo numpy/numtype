@@ -1,7 +1,6 @@
 # mypy: disable-error-code=override
-# ^ there are >100 false positives; we'll just rely on pyright in
+# ^ there are >100 false positives; we'll just rely on pyright
 
-import abc
 import ctypes as ct
 import datetime as dt
 import sys
@@ -3576,10 +3575,6 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def flat(self) -> flatiter[_nt.Array1D[Self]]: ...
 
     #
-    @abc.abstractmethod
-    def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
-
-    #
     @overload
     def __eq__(self, other: _nt.ToGeneric_0d, /) -> bool_: ...
     @overload
@@ -3924,6 +3919,14 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
+    @overload
+    def __init__(self: _Bool0, value: L[False, 0] | _Bool0 = ..., /) -> None: ...
+    @overload
+    def __init__(self: _Bool1, value: L[True, 1] | _Bool1, /) -> None: ...
+    @overload
+    def __init__(self, value: object, /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_bool: ...
@@ -3956,14 +3959,6 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @property
     @override
     def imag(self) -> _Bool0: ...
-
-    #
-    @overload
-    def __init__(self: _Bool0, value: L[False, 0] | _Bool0 = ..., /) -> None: ...
-    @overload
-    def __init__(self: _Bool1, value: L[True, 1] | _Bool1, /) -> None: ...
-    @overload
-    def __init__(self, value: object, /) -> None: ...
 
     #
     @override
@@ -4382,10 +4377,8 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
     @final
     @type_check_only
     def __nep50_int__(self, /) -> Self: ...
-    @abc.abstractmethod
     @type_check_only
     def __nep50_float__(self, /) -> inexact: ...
-    @abc.abstractmethod
     @type_check_only
     def __nep50_complex__(self, /) -> complexfloating: ...
     @type_check_only
@@ -4397,8 +4390,6 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
     def itemsize(self) -> int: ...
 
     #
-    @abc.abstractmethod
-    def __init__(self, value: _NumberItemT_co, /) -> None: ...
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
@@ -4517,7 +4508,6 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
 # complexity of the `[u]intp` and `[u]long` type definitions.
 
 class integer(_IntegralMixin, _RoundMixin, number[int]):
-    @abc.abstractmethod
     @type_check_only
     def __nep50__(
         self,
@@ -4537,9 +4527,6 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __nep50_rule4__(self, other: _JustSignedInteger, /) -> signedinteger | float64: ...
     @type_check_only
     def __nep50_rule5__(self, other: _JustInteger, /) -> integer | float64: ...
-
-    #
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
 
     #
     @override
@@ -4662,7 +4649,6 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __ror__(self, x: _nt.CastsWithScalar[Self, _IntegralT], /) -> _IntegralT: ...
 
 class signedinteger(integer):
-    @abc.abstractmethod
     @type_check_only
     @override
     def __nep50__(
@@ -4683,6 +4669,9 @@ class signedinteger(integer):
     def __nep50_rule5__(self, other: _JustInteger | _JustUnsignedInteger, /) -> signedinteger | float64: ...
 
 class int8(_IntMixin[L[1]], signedinteger):
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_int8: ...
@@ -4709,6 +4698,9 @@ class int8(_IntMixin[L[1]], signedinteger):
 byte = int8
 
 class int16(_IntMixin[L[2]], signedinteger):
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_int16: ...
@@ -4735,6 +4727,9 @@ class int16(_IntMixin[L[2]], signedinteger):
 short = int16
 
 class int32(_IntMixin[L[4]], signedinteger):
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_int32: ...
@@ -4764,6 +4759,9 @@ class int32(_IntMixin[L[4]], signedinteger):
 intc = int32
 
 class int64(_IntMixin[L[8]], signedinteger):
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_int64: ...
@@ -4807,7 +4805,6 @@ intp = int64
 int_ = intp
 
 class unsignedinteger(integer):
-    @abc.abstractmethod
     @type_check_only
     @override
     def __nep50__(
@@ -4820,6 +4817,9 @@ class unsignedinteger(integer):
     def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
 
 class uint8(_IntMixin[L[1]], unsignedinteger):
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_uint8: ...
@@ -4850,6 +4850,9 @@ class uint8(_IntMixin[L[1]], unsignedinteger):
 ubyte = uint8
 
 class uint16(_IntMixin[L[2]], unsignedinteger):
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_uint16: ...
@@ -4882,6 +4885,9 @@ class uint16(_IntMixin[L[2]], unsignedinteger):
 ushort = uint16
 
 class uint32(_IntMixin[L[4]], unsignedinteger):
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_uint32: ...
@@ -4914,6 +4920,9 @@ class uint32(_IntMixin[L[4]], unsignedinteger):
 uintc = uint32
 
 class uint64(_IntMixin[L[8]], unsignedinteger):
+    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_uint64: ...
@@ -4955,7 +4964,6 @@ uintp = uint64
 uint = uintp
 
 class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
-    @abc.abstractmethod
     @type_check_only
     def __nep50__(self, below: clongdouble, above: _nt.co_integer8, /) -> inexact: ...
     @final
@@ -4971,9 +4979,6 @@ class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
     def __nep50_rule6__(self, other: _JustInexact | _JustNumber, /) -> inexact: ...
 
     #
-    @abc.abstractmethod
-    def __init__(self, value: _InexactItemT_co | None = ..., /) -> None: ...
-    @abc.abstractmethod
     @override
     def __abs__(self, /) -> floating: ...
 
@@ -4993,7 +4998,6 @@ class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
     def __rtruediv__(self: _nt.CastsWithComplex[_ComplexFloatingT], x: _nt.JustComplex, /) -> _ComplexFloatingT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
 class floating(_RealMixin, _RoundMixin, inexact[float]):
-    @abc.abstractmethod
     @override
     @type_check_only
     def __nep50__(self, below: _nt.inexact64l, above: _nt.co_integer8, /) -> floating: ...
@@ -5002,8 +5006,6 @@ class floating(_RealMixin, _RoundMixin, inexact[float]):
     def __nep50_rule3__(self, other: _JustFloating, /) -> floating: ...
 
     #
-    @override
-    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
     @override
     def __abs__(self, /) -> Self: ...
 
@@ -5041,6 +5043,9 @@ class floating(_RealMixin, _RoundMixin, inexact[float]):
     def __rdivmod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _2Tuple[_FloatingT]: ...
 
 class float16(_FloatMixin[L[2]], floating):
+    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(self, below: inexact, above: _nt.co_integer8, /) -> float16: ...
@@ -5062,6 +5067,9 @@ class float16(_FloatMixin[L[2]], floating):
 half = float16
 
 class float32(_FloatMixin[L[4]], floating):
+    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_float: ...
@@ -5086,6 +5094,10 @@ class float32(_FloatMixin[L[4]], floating):
 single = float32
 
 class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
+    def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
+    def __init__(self, value: _ConvertibleToFloat | None = 0, /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_double: ...
@@ -5099,9 +5111,6 @@ class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
     def __nep50_complex__(self, /) -> complex128: ...
     @type_check_only
     def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
-
-    #
-    def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
     @classmethod
     def __getformat__(cls, typestr: L["double", "float"], /) -> str: ...
 
@@ -5127,6 +5136,9 @@ class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
 double = float64
 
 class longdouble(_FloatMixin[L[12, 16]], floating):
+    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
+
+    #
     @property
     @type_check_only
     def __ctype__(self) -> ct.c_longdouble: ...
@@ -5134,12 +5146,7 @@ class longdouble(_FloatMixin[L[12, 16]], floating):
     #
     @override
     @type_check_only
-    def __nep50__(
-        self,
-        below: longdouble | clongdouble,
-        above: _nt.co_float64,
-        /,
-    ) -> longdouble: ...
+    def __nep50__(self, below: longdouble | clongdouble, above: _nt.co_float64, /) -> longdouble: ...
     @override
     @type_check_only
     def __nep50_complex__(self, /) -> clongdouble: ...
@@ -5170,7 +5177,6 @@ float96 = longdouble
 float128 = longdouble
 
 class complexfloating(inexact[complex]):
-    @abc.abstractmethod
     @override
     @type_check_only
     def __nep50__(self, below: clongdouble, above: _float32_max | _nt.co_integer16, /) -> complexfloating: ...
@@ -5191,23 +5197,14 @@ class complexfloating(inexact[complex]):
     def __nep50_rule6__(self, other: _JustInexact | _JustNumber, /) -> complexfloating: ...
 
     #
-    @overload
-    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
-    @overload
-    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
-
-    #
     @property
-    @abc.abstractmethod
     @override
     def real(self) -> floating: ...
     @property
-    @abc.abstractmethod
     @override
     def imag(self) -> floating: ...
 
     #
-    @abc.abstractmethod
     @override
     def __abs__(self, /) -> floating: ...
 
@@ -5219,6 +5216,12 @@ class complexfloating(inexact[complex]):
     def __round__(self, /, ndigits: CanIndex | None = None) -> Self: ...
 
 class complex64(complexfloating):
+    @overload
+    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
+    @overload
+    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(self, below: complexfloating, above: _float32_max | _nt.co_integer16, /) -> complex64: ...
@@ -5256,6 +5259,19 @@ class complex64(complexfloating):
 csingle = complex64
 
 class complex128(complexfloating, complex):  # type: ignore[misc]
+    #
+    @overload
+    def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...
+    @overload
+    def __new__(cls, real: _ToReal = 0, imag: _ToImag = 0, /) -> Self: ...
+
+    #
+    @overload
+    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
+    @overload
+    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(self, below: _complex128_min, above: complex64 | _float64_max | _nt.co_integer, /) -> complex128: ...
@@ -5264,12 +5280,6 @@ class complex128(complexfloating, complex):  # type: ignore[misc]
     @override
     @type_check_only
     def __nep50_rule2__(self, other: integer | _AbstractInteger, /) -> complex128: ...
-
-    #
-    @overload
-    def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...
-    @overload
-    def __new__(cls, real: _ToReal = 0, imag: _ToImag = 0, /) -> Self: ...
 
     #
     @property
@@ -5302,6 +5312,12 @@ class complex128(complexfloating, complex):  # type: ignore[misc]
 cdouble = complex128
 
 class clongdouble(complexfloating):
+    @overload
+    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
+    @overload
+    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
+
+    #
     @override
     @type_check_only
     def __nep50__(self, below: clongdouble, above: _nt.co_number, /) -> clongdouble: ...
@@ -5382,6 +5398,8 @@ class object_(_RealMixin, generic[Any]):
 
     #
     def __init__(self, value: object = ..., /) -> None: ...
+
+    #
     @override
     def __hash__(self, /) -> int: ...
     def __abs__(self, /) -> object_: ...
@@ -5395,13 +5413,9 @@ class object_(_RealMixin, generic[Any]):
     def dtype(self) -> dtypes.ObjectDType: ...
 
 @final
-class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]):  # type: ignore[misc]
-    @abc.abstractmethod
-    def __init__(self, /, *args: Any, **kwargs: Any) -> None: ...
+class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]): ...
 
-class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
-    @abc.abstractmethod
-    def __init__(self, value: _CharacterItemT_co = ..., /) -> None: ...
+class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]): ...  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
 
 class bytes_(character[bytes], bytes):  # type: ignore[misc]
     @type_check_only
