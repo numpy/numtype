@@ -32,6 +32,7 @@ TOOL_DIR = Path(__file__).parent
 SITE_DIR = Path(sysconfig.get_paths()["purelib"])
 
 ROOT_DIR = TOOL_DIR.parent
+__root_site: Path | None
 if (ROOT_DIR / ".venv").is_dir():
     __root_venv = ROOT_DIR / ".venv"
     __root_site = (
