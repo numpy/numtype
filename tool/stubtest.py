@@ -30,14 +30,18 @@ VERBOSE = True
 CWD = Path.cwd()
 TOOL_DIR = Path(__file__).parent
 SITE_DIR = Path(sysconfig.get_paths()["purelib"])
+
 ROOT_DIR = TOOL_DIR.parent
-
-
-ROOT_SITE_DIR = (
-    ROOT_DIR / ".venv" / "Lib" / "site-packages"
-    if sys.platform == "win32"
-    else next((ROOT_DIR / ".venv" / "lib").glob("*/site-packages"))
-)
+if (ROOT_DIR / ".venv").is_dir():
+    __root_venv = ROOT_DIR / ".venv"
+    __root_site = (
+        __root_venv / "Lib" / "site-packages"
+        if sys.platform == "win32"
+        else next((__root_venv / "lib").glob("*/site-packages"))
+    )
+else:
+    __root_site = None
+ROOT_SITE_DIR = __root_site
 
 ALLOWLISTS = [
     "common.txt",
@@ -130,9 +134,10 @@ def _rewrite_mypy_output(line: bytes, /) -> bytes:
         if package_lib in line:
             line = line.replace(package_lib, package_src)
 
-    site_dir = str(SITE_DIR).encode()
-    if site_dir in line:
-        line = line.replace(site_dir, str(ROOT_SITE_DIR.relative_to(CWD)).encode())
+    if ROOT_SITE_DIR is not None:
+        site_dir = str(SITE_DIR).encode()
+        if site_dir in line:
+            line = line.replace(site_dir, str(ROOT_SITE_DIR.relative_to(CWD)).encode())
 
     return line
 
