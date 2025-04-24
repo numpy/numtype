@@ -42,9 +42,7 @@ jobs:
           taplo validate --colors never --no-schema
           taplo fmt --colors never --check
 
-      - uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
+      - uses: astral-sh/setup-uv@v6
       - run: uv sync --only-group=list_and_test
 
       - name: ruff
@@ -68,7 +66,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           python-version: ${{ matrix.py }}
@@ -86,9 +84,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v6
         with:
-          enable-cache: true
           python-version: ${{ matrix.py }}
 
       - name: mypy
@@ -107,12 +104,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v6
         with:
-          enable-cache: true
           python-version: ${{ matrix.py }}
 
       - name: stubtest
-        run: >
-          uv run --no-dev --active -p ${{ matrix.py }}
-          tool/stubtest.py
+        run: uv run --active -p ${{ matrix.py }} tool/stubtest.py
