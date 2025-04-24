@@ -109,6 +109,4 @@ jobs:
           python-version: ${{ matrix.py }}
 
       - name: stubtest
-        run: >
-          uv run --no-dev --active -p ${{ matrix.py }}
-          tool/stubtest.py
+        run: uv run --active -p ${{ matrix.py }} tool/stubtest.py
