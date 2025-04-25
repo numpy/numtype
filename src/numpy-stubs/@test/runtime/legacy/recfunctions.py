@@ -1,11 +1,14 @@
 """These tests are based on the doctests from `numpy/lib/recfunctions.py`."""
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from typing_extensions import assert_type
 
 import numpy as np
 import numpy.typing as npt
 from numpy.lib import recfunctions as rfn
+
+if TYPE_CHECKING:
+    import _numtype as _nt  # noqa: F401, PLC2701
 
 
 def test_recursive_fill_fields() -> None:
@@ -15,7 +18,7 @@ def test_recursive_fill_fields() -> None:
     )
     b = np.zeros((int(3),), dtype=a.dtype)
     out = rfn.recursive_fill_fields(a, b)
-    assert_type(out, np.ndarray[tuple[int], np.dtype[np.void]])
+    assert_type(out, "np.ndarray[_nt.Shape1, np.dtype[np.void]]")
 
 
 def test_get_names() -> None:
@@ -57,7 +60,7 @@ def test_merge_arrays() -> None:
             np.ones((int(2),), np.int_),
             np.ones((int(3),), np.float64),
         )),
-        np.recarray[tuple[int], np.dtype[np.void]],
+        "np.recarray[_nt.Shape1, np.dtype[np.void]]",
     )
 
 
@@ -67,15 +70,15 @@ def test_drop_fields() -> None:
 
     assert_type(
         rfn.drop_fields(a, "a"),
-        np.ndarray[tuple[int], np.dtype[np.void]],
+        "np.ndarray[_nt.Shape1, np.dtype[np.void]]",
     )
     assert_type(
         rfn.drop_fields(a, "a", asrecarray=True),
-        np.rec.recarray[tuple[int], np.dtype[np.void]],
+        "np.rec.recarray[_nt.Shape1, np.dtype[np.void]]",
     )
     assert_type(
         rfn.rec_drop_fields(a, "a"),
-        np.rec.recarray[tuple[int], np.dtype[np.void]],
+        "np.rec.recarray[_nt.Shape1, np.dtype[np.void]]",
     )
 
 
@@ -85,7 +88,7 @@ def test_rename_fields() -> None:
 
     assert_type(
         rfn.rename_fields(a, {"a": "A", "b_b": "B_B"}),
-        np.ndarray[tuple[int], np.dtype[np.void]],
+        "np.ndarray[_nt.Shape1, np.dtype[np.void]]",
     )
 
 
@@ -96,7 +99,7 @@ def test_repack_fields() -> None:
     assert_type(rfn.repack_fields(dt.type(0)), np.void)
     assert_type(
         rfn.repack_fields(np.ones((3,), dtype=dt)),
-        np.ndarray[tuple[int], np.dtype[np.void]],
+        "np.ndarray[_nt.Shape1, np.dtype[np.void]]",
     )
 
 
@@ -115,7 +118,7 @@ def test_apply_along_fields() -> None:
     b = np.ones(4, dtype=[("x", "i4"), ("y", "f4"), ("z", "f8")])
     assert_type(
         rfn.apply_along_fields(np.mean, b),
-        np.ndarray[tuple[int], np.dtype[np.void]],
+        "np.ndarray[_nt.Shape1, np.dtype[np.void]]",
     )
 
 
@@ -123,7 +126,7 @@ def test_assign_fields_by_name() -> None:
     b = np.ones(4, dtype=[("x", "i4"), ("y", "f4"), ("z", "f8")])
     assert_type(
         rfn.apply_along_fields(np.mean, b),
-        np.ndarray[tuple[int], np.dtype[np.void]],
+        "np.ndarray[_nt.Shape1, np.dtype[np.void]]",
     )
 
 
@@ -131,7 +134,7 @@ def test_require_fields() -> None:
     a = np.ones(4, dtype=[("a", "i4"), ("b", "f8"), ("c", "u1")])
     assert_type(
         rfn.require_fields(a, [("b", "f4"), ("c", "u1")]),
-        np.ndarray[tuple[int], np.dtype[np.void]],
+        "np.ndarray[_nt.Shape1, np.dtype[np.void]]",
     )
 
 
@@ -139,14 +142,14 @@ def test_stack_arrays() -> None:
     x = np.zeros((int(2),), np.int32)
     assert_type(
         rfn.stack_arrays(x),
-        np.ndarray[tuple[int], np.dtype[np.int32]],
+        "np.ndarray[_nt.Shape1, np.dtype[np.int32]]",
     )
 
     z = np.ones((int(2),), [("A", "|S3"), ("B", float)])
     zz = np.ones((int(2),), [("A", "|S3"), ("B", np.float64), ("C", np.float64)])
     assert_type(
         rfn.stack_arrays((z, zz)),
-        np.ma.MaskedArray[tuple[int, ...], np.dtype[np.void]],
+        "np.ma.MaskedArray[_nt.Shape, np.dtype[np.void]]",
     )
 
 

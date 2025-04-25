@@ -1,3 +1,4 @@
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 from numpy.testing import TestCase, assert_, assert_allclose, assert_array_almost_equal_nulp, assert_raises
@@ -26,18 +27,9 @@ __all__ = [
 ]
 
 def approx(
-    a: object,
-    b: object,
-    fill_value: bool = True,
-    rtol: float = 1e-5,
-    atol: float = 1e-8,
-) -> np.ndarray[tuple[int], np.dtype[np.bool]]: ...
-def almost(
-    a: object,
-    b: object,
-    decimal: int = 6,
-    fill_value: bool = True,
-) -> np.ndarray[tuple[int], np.dtype[np.bool]]: ...
+    a: object, b: object, fill_value: bool = True, rtol: float = 1e-5, atol: float = 1e-8
+) -> _nt.Array1D[np.bool_]: ...
+def almost(a: object, b: object, decimal: int = 6, fill_value: bool = True) -> _nt.Array1D[np.bool_]: ...
 
 #
 def assert_equal_records(a: npt.NDArray[np.void], b: npt.NDArray[np.void]) -> None: ...

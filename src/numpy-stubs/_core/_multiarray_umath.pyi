@@ -504,7 +504,7 @@ def empty(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> np.ndarray[tuple[int], _DTypeT]: ...
+) -> np.ndarray[_nt.Shape1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def empty(
     shape: _ShapeLike1D,
@@ -590,7 +590,7 @@ def zeros(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> np.ndarray[tuple[int], _DTypeT]: ...
+) -> np.ndarray[_nt.Shape1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def zeros(
     shape: _ShapeLike1D,

@@ -1,7 +1,8 @@
 from _typeshed import ConvertibleToInt
 from typing import Any, Literal as L, SupportsIndex, TypeAlias, overload
-from typing_extensions import Buffer, Never, Self, TypeVar, override
+from typing_extensions import Buffer, Never, Self, TypeAliasType, TypeVar, override
 
+import _numtype as _nt
 import numpy as np
 from numpy import _OrderKACF as _Order, _SortKind  # noqa: ICN003
 from numpy._typing import (
@@ -14,7 +15,6 @@ from numpy._typing import (
     _ArrayLikeString_co as _ToStringND,
     _IntLike_co as _ToInt,
     _ShapeLike as _ToShape,
-    _SupportsArray as _CanArray,
 )
 
 from ._multiarray_umath import compare_chararrays
@@ -126,25 +126,18 @@ __all__ = [
 
 ###
 
-_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape, default=_nt.Shape)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, covariant=True)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[np.character], covariant=True)
 _CharT = TypeVar("_CharT", bound=np.character, default=Any)
 
-_CharArray: TypeAlias = chararray[tuple[int, ...], np.dtype[_CharT]]
-_CharArray1D: TypeAlias = chararray[tuple[int], np.dtype[_CharT]]
-
-_BytesArray: TypeAlias = _CharArray[np.bytes_]
-_StrArray: TypeAlias = _CharArray[np.str_]
+_CharArray = TypeAliasType("_CharArray", chararray[_ShapeT, np.dtype[_CharT]], type_params=(_CharT, _ShapeT))
+_BytesArray: TypeAlias = chararray[_ShapeT, np.dtype[np.bytes_]]
+_StrArray: TypeAlias = chararray[_ShapeT, np.dtype[np.str_]]
 
 _BoolND: TypeAlias = NDArray[np.bool]
 _IntND: TypeAlias = NDArray[np.intp]
-_BytesND: TypeAlias = NDArray[np.bytes_]
-_StrND: TypeAlias = NDArray[np.str_]
 _ObjectND: TypeAlias = NDArray[np.object_]
-_StringND: TypeAlias = np.ndarray[tuple[int, ...], np.dtypes.StringDType]
-_CanStringND: TypeAlias = _CanArray[np.dtypes.StringDType]
-
-_ToCharND: TypeAlias = _ToStrND | _ToBytesND
 
 ###
 
@@ -189,17 +182,17 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
-    def __eq__(self, other: _ToCharND, /) -> _BoolND: ...  # type: ignore[override] # pyright: ignore[reportIncompatibleMethodOverride]
+    def __eq__(self, other: _nt.ToCharacter_nd, /) -> _BoolND: ...  # type: ignore[override] # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __ne__(self, other: _ToCharND, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __ne__(self, other: _nt.ToCharacter_nd, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __ge__(self, other: _ToCharND, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __ge__(self, other: _nt.ToCharacter_nd, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __gt__(self, other: _ToCharND, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __gt__(self, other: _nt.ToCharacter_nd, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __lt__(self, other: _ToCharND, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __lt__(self, other: _nt.ToCharacter_nd, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __le__(self, other: _ToCharND, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __le__(self, other: _nt.ToCharacter_nd, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @overload  # type: ignore[override]
@@ -214,9 +207,9 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
-    def __mul__(self, rhs: _ToIntND, /) -> chararray[tuple[int, ...], _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __mul__(self, rhs: _ToIntND, /) -> chararray[_nt.Shape, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __rmul__(self, lhs: _ToIntND, /) -> chararray[tuple[int, ...], _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rmul__(self, lhs: _ToIntND, /) -> chararray[_nt.Shape, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @override
@@ -232,7 +225,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         axis: SupportsIndex = -1,
         kind: _SortKind | None = None,
         order: None = None,
-    ) -> np.ndarray[_ShapeT_co, np.dtype[np.intp]]: ...
+    ) -> _nt.Array[np.intp, _ShapeT_co]: ...
     @overload
     def argsort(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
@@ -240,7 +233,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         axis: None,
         kind: _SortKind | None = None,
         order: None = None,
-    ) -> np.ndarray[tuple[int], np.dtype[np.intp]]: ...
+    ) -> _nt.Array1D[np.intp]: ...
 
     #
     def decode(
@@ -248,13 +241,13 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         /,
         encoding: str | None = None,
         errors: str | None = None,
-    ) -> chararray[_ShapeT_co, np.dtype[np.str_]]: ...
+    ) -> _StrArray[_ShapeT_co]: ...
     def encode(
         self: _StrArray,
         /,
         encoding: str | None = None,
         errors: str | None = None,
-    ) -> chararray[_ShapeT_co, np.dtype[np.bytes_]]: ...
+    ) -> _BytesArray[_ShapeT_co]: ...
 
     #
     @overload
@@ -280,7 +273,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def expandtabs(self, /, tabsize: _ToInt = 8) -> chararray[_ShapeT_co, _DTypeT_co]: ...
     @overload
-    def expandtabs(self, /, tabsize: _ToIntND) -> chararray[tuple[int, ...], _DTypeT_co]: ...
+    def expandtabs(self, /, tabsize: _ToIntND) -> chararray[_nt.Shape, _DTypeT_co]: ...
 
     #
     @overload
@@ -394,7 +387,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def translate(self: _BytesArray, /, table: _ToBytesND, deletechars: _ToBytesND | None = None) -> _BytesArray: ...
 
     #
-    def zfill(self, /, width: _ToIntND) -> chararray[tuple[int, ...], _DTypeT_co]: ...
+    def zfill(self, /, width: _ToIntND) -> chararray[_nt.Shape, _DTypeT_co]: ...
     def capitalize(self) -> chararray[_ShapeT_co, _DTypeT_co]: ...
     def title(self) -> chararray[_ShapeT_co, _DTypeT_co]: ...
     def swapcase(self) -> chararray[_ShapeT_co, _DTypeT_co]: ...
@@ -414,13 +407,13 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
 #
 @overload
-def join(sep: _ToStrND, seq: _ToStrND) -> _StrND: ...  # type: ignore[overload-overlap]
+def join(sep: _ToStrND, seq: _ToStrND) -> NDArray[np.str_]: ...
 @overload
-def join(sep: _ToBytesND, seq: _ToBytesND) -> _BytesND: ...
+def join(sep: _ToBytesND, seq: _ToBytesND) -> NDArray[np.bytes_]: ...
 @overload
-def join(sep: _CanStringND, seq: _CanStringND) -> _StringND: ...
+def join(sep: _nt.ToString_nd, seq: _nt.ToString_nd) -> _nt.StringArrayND: ...
 @overload
-def join(sep: _ToStringND, seq: _ToStringND) -> _StrND | _StringND: ...
+def join(sep: _ToStringND, seq: _ToStringND) -> NDArray[np.str_] | _nt.StringArrayND: ...
 
 #
 @overload
@@ -428,7 +421,7 @@ def split(a: _ToStrND, sep: _ToStrND | None = None, maxsplit: _ToIntND | None = 
 @overload
 def split(a: _ToBytesND, sep: _ToBytesND | None = None, maxsplit: _ToIntND | None = None) -> _ObjectND: ...
 @overload
-def split(a: _CanStringND, sep: _CanStringND | None = None, maxsplit: _ToIntND | None = None) -> _ObjectND: ...
+def split(a: _nt.ToString_nd, sep: _nt.ToString_nd | None = None, maxsplit: _ToIntND | None = None) -> _ObjectND: ...
 @overload
 def split(a: _ToStringND, sep: _ToStringND | None = None, maxsplit: _ToIntND | None = None) -> _ObjectND: ...
 
@@ -438,7 +431,7 @@ def rsplit(a: _ToStrND, sep: _ToStrND | None = None, maxsplit: _ToIntND | None =
 @overload
 def rsplit(a: _ToBytesND, sep: _ToBytesND | None = None, maxsplit: _ToIntND | None = None) -> _ObjectND: ...
 @overload
-def rsplit(a: _CanStringND, sep: _CanStringND | None = None, maxsplit: _ToIntND | None = None) -> _ObjectND: ...
+def rsplit(a: _nt.ToString_nd, sep: _nt.ToString_nd | None = None, maxsplit: _ToIntND | None = None) -> _ObjectND: ...
 @overload
 def rsplit(a: _ToStringND, sep: _ToStringND | None = None, maxsplit: _ToIntND | None = None) -> _ObjectND: ...
 
@@ -492,17 +485,11 @@ def array(
 #
 @overload  # str array-like
 def asarray(  # type: ignore[overload-overlap]
-    obj: _ToStrND,
-    itemsize: int | None = None,
-    unicode: bool | None = None,
-    order: _Order | None = None,
+    obj: _ToStrND, itemsize: int | None = None, unicode: bool | None = None, order: _Order | None = None
 ) -> _StrArray: ...
 @overload  # bytes array-like
 def asarray(  # type: ignore[overload-overlap]
-    obj: _ToBytesND,
-    itemsize: int | None = None,
-    unicode: bool | None = None,
-    order: _Order | None = None,
+    obj: _ToBytesND, itemsize: int | None = None, unicode: bool | None = None, order: _Order | None = None
 ) -> _BytesArray: ...
 @overload  # unicode=False
 def asarray(

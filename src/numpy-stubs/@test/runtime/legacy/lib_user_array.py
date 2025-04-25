@@ -2,21 +2,26 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import numpy as np
 from numpy.lib.user_array import container
+
+if TYPE_CHECKING:
+    import _numtype as _nt
 
 N = 10_000
 W = H = int(N**0.5)
 
-a: np.ndarray[tuple[int, int], np.dtype[np.int32]]
-ua: container[tuple[int, int], np.dtype[np.int32]]
+a: np.ndarray[_nt.Shape2, np.dtype[np.int32]]
+ua: container[_nt.Shape2, np.dtype[np.int32]]
 
 a = np.arange(N, dtype=np.int32).reshape(W, H)
 ua = container(a)
 
-ua_small: container[tuple[int, int], np.dtype[np.int32]] = ua[:3, :5]
+ua_small: container[_nt.Shape2, np.dtype[np.int32]] = ua[:3, :5]
 ua_small[0, 0] = 10
 
-ua_bool: container[tuple[int, int], np.dtype[np.bool]] = ua_small > 1
+ua_bool: container[_nt.Shape2, np.dtype[np.bool]] = ua_small > 1
 
 # shape: tuple[int, int] = np.shape(ua)

@@ -1,8 +1,13 @@
-from typing import cast
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, cast
 
 import numpy as np
 
-nd1 = cast("np.ndarray[tuple[int, int], np.dtype[np.intp]]", np.array([[1, 2], [3, 4]]))
+if TYPE_CHECKING:
+    import _numtype as _nt
+
+nd1 = cast("np.ndarray[_nt.Shape2, np.dtype[np.intp]]", np.array([[1, 2], [3, 4]]))
 
 # reshape
 nd1.reshape(4)

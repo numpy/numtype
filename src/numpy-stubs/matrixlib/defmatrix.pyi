@@ -16,10 +16,8 @@ __all__ = ["asmatrix", "bmat", "matrix"]
 _T = TypeVar("_T")
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_2D, default=_2D, covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape2, default=_nt.Shape2, covariant=True)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
-
-_2D: TypeAlias = tuple[int, int]
 
 _ToIndex1: TypeAlias = slice | EllipsisType | _nt.ToInteger_1nd | None
 _ToIndex2: TypeAlias = tuple[_ToIndex1, _ToIndex1 | CanIndex] | tuple[_ToIndex1 | CanIndex, _ToIndex1]
@@ -38,7 +36,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def __getitem__(self, key: CanIndex | _ArrayLikeInt_co | tuple[CanIndex | _ArrayLikeInt_co, ...], /) -> Any: ...
     @overload
-    def __getitem__(self, key: _ToIndex1 | _ToIndex2, /) -> matrix[_2D, _DTypeT_co]: ...
+    def __getitem__(self, key: _ToIndex1 | _ToIndex2, /) -> matrix[_nt.Shape2, _DTypeT_co]: ...
     @overload
     def __getitem__(self: _nt.Array[np.void], key: str, /) -> matrix[_ShapeT_co, np.dtype]: ...
     @overload
@@ -142,7 +140,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def max(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
     @overload
-    def max(self, /, axis: _ToAxis, out: None = None) -> matrix[_2D, _DTypeT_co]: ...
+    def max(self, /, axis: _ToAxis, out: None = None) -> matrix[_nt.Shape2, _DTypeT_co]: ...
     @overload
     def max(self, /, axis: _ToAxis | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -152,7 +150,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def min(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
     @overload
-    def min(self, /, axis: _ToAxis, out: None = None) -> matrix[_2D, _DTypeT_co]: ...
+    def min(self, /, axis: _ToAxis, out: None = None) -> matrix[_nt.Shape2, _DTypeT_co]: ...
     @overload
     def min(self, /, axis: _ToAxis | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -182,7 +180,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def ptp(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
     @overload
-    def ptp(self, /, axis: _ToAxis, out: None = None) -> matrix[_2D, _DTypeT_co]: ...
+    def ptp(self, /, axis: _ToAxis, out: None = None) -> matrix[_nt.Shape2, _DTypeT_co]: ...
     @overload
     def ptp(self, /, axis: _ToAxis | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -194,22 +192,22 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
-    def squeeze(self, /, axis: _ToAxis | None = None) -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def squeeze(self, /, axis: _ToAxis | None = None) -> matrix[_nt.Shape2, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def ravel(self, /, order: _OrderKACF = "C") -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def ravel(self, /, order: _OrderKACF = "C") -> matrix[_nt.Shape2, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def flatten(self, /, order: _OrderKACF = "C") -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def flatten(self, /, order: _OrderKACF = "C") -> matrix[_nt.Shape2, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @property
     @override
-    def T(self) -> matrix[_2D, _DTypeT_co]: ...  # type: ignore[override]
-    def getT(self) -> matrix[_2D, _DTypeT_co]: ...
+    def T(self) -> matrix[_nt.Shape2, _DTypeT_co]: ...  # type: ignore[override]
+    def getT(self) -> matrix[_nt.Shape2, _DTypeT_co]: ...
 
     #
     @property
-    def H(self) -> matrix[_2D, _DTypeT_co]: ...
-    def getH(self) -> matrix[_2D, _DTypeT_co]: ...
+    def H(self) -> matrix[_nt.Shape2, _DTypeT_co]: ...
+    def getH(self) -> matrix[_nt.Shape2, _DTypeT_co]: ...
 
     #
     @property
@@ -223,8 +221,8 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
-    def A1(self) -> np.ndarray[tuple[int], _DTypeT_co]: ...
-    def getA1(self) -> np.ndarray[tuple[int], _DTypeT_co]: ...
+    def A1(self) -> np.ndarray[_nt.Shape1, _DTypeT_co]: ...
+    def getA1(self) -> np.ndarray[_nt.Shape1, _DTypeT_co]: ...
 
 #
 @overload

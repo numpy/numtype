@@ -20,12 +20,15 @@ import itertools
 import sys
 from collections.abc import Sequence
 from functools import cache
-from typing import Any, Final, TypeAlias
+from typing import TYPE_CHECKING, Any, Final, TypeAlias
+
+if TYPE_CHECKING:
+    import _numtype as _nt
 
 import numpy as np
 import numpy._core.umath as um  # noqa: PLC2701
 
-_ScalarLike: TypeAlias = np.generic | np.ndarray[tuple[()], np.dtype]
+_ScalarLike: TypeAlias = np.generic | np.ndarray["_nt.Shape0", np.dtype]
 
 _EXTRA_SCALARS: Final[tuple[_ScalarLike, ...]] = (
     np.str_(""),

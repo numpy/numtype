@@ -3,6 +3,7 @@ from collections.abc import Callable, Iterable, Mapping, Sequence
 from typing import Any, Literal, TypeAlias, overload
 from typing_extensions import TypeVar
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 from numpy._typing import _DTypeLike, _DTypeLikeVoid
@@ -35,7 +36,7 @@ __all__ = [
 ###
 
 _T = TypeVar("_T")
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _ArrayT = TypeVar("_ArrayT", bound=npt.NDArray[Any])
@@ -332,7 +333,7 @@ def stack_arrays(
     usemask: Literal[False],
     asrecarray: Literal[True],
     autoconvert: bool = False,
-) -> np.recarray[tuple[int, ...], np.dtype[np.void]]: ...
+) -> np.recarray[_nt.Shape, np.dtype[np.void]]: ...
 @overload
 def stack_arrays(
     arrays: Sequence[npt.NDArray[Any]],
@@ -340,7 +341,7 @@ def stack_arrays(
     usemask: Literal[True] = True,
     asrecarray: Literal[False] = False,
     autoconvert: bool = False,
-) -> np.ma.MaskedArray[tuple[int, ...], np.dtype[np.void]]: ...
+) -> np.ma.MaskedArray[_nt.Shape, np.dtype[np.void]]: ...
 @overload
 def stack_arrays(
     arrays: Sequence[npt.NDArray[Any]],
@@ -348,7 +349,7 @@ def stack_arrays(
     usemask: Literal[True],
     asrecarray: Literal[True],
     autoconvert: bool = False,
-) -> MaskedRecords[tuple[int, ...], np.dtype[np.void]]: ...
+) -> MaskedRecords[_nt.Shape, np.dtype[np.void]]: ...
 @overload
 def stack_arrays(
     arrays: Sequence[npt.NDArray[Any]],
@@ -357,7 +358,7 @@ def stack_arrays(
     *,
     asrecarray: Literal[True],
     autoconvert: bool = False,
-) -> MaskedRecords[tuple[int, ...], np.dtype[np.void]]: ...
+) -> MaskedRecords[_nt.Shape, np.dtype[np.void]]: ...
 
 #
 @overload
@@ -396,7 +397,7 @@ def join_by(
     *,
     usemask: Literal[False],
     asrecarray: Literal[False] = False,
-) -> np.ndarray[tuple[int], np.dtype[np.void]]: ...
+) -> np.ndarray[_nt.Shape1, np.dtype[np.void]]: ...
 @overload
 def join_by(
     key: str | Sequence[str],
@@ -409,7 +410,7 @@ def join_by(
     *,
     usemask: Literal[False],
     asrecarray: Literal[True],
-) -> np.recarray[tuple[int], np.dtype[np.void]]: ...
+) -> np.recarray[_nt.Shape1, np.dtype[np.void]]: ...
 @overload
 def join_by(
     key: str | Sequence[str],
@@ -421,7 +422,7 @@ def join_by(
     defaults: Mapping[str, object] | None = None,
     usemask: Literal[True] = True,
     asrecarray: Literal[False] = False,
-) -> np.ma.MaskedArray[tuple[int], np.dtype[np.void]]: ...
+) -> np.ma.MaskedArray[_nt.Shape1, np.dtype[np.void]]: ...
 @overload
 def join_by(
     key: str | Sequence[str],
@@ -434,7 +435,7 @@ def join_by(
     usemask: Literal[True] = True,
     *,
     asrecarray: Literal[True],
-) -> MaskedRecords[tuple[int], np.dtype[np.void]]: ...
+) -> MaskedRecords[_nt.Shape1, np.dtype[np.void]]: ...
 
 #
 def rec_join(
@@ -445,4 +446,4 @@ def rec_join(
     r1postfix: str = "1",
     r2postfix: str = "2",
     defaults: Mapping[str, object] | None = None,
-) -> np.recarray[tuple[int], np.dtype[np.void]]: ...
+) -> np.recarray[_nt.Shape1, np.dtype[np.void]]: ...
