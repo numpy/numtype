@@ -1,7 +1,8 @@
+import _numtype as _nt
 import numpy as np
 
-AR_U: np.char.chararray[tuple[int, ...], np.dtype[np.str_]]
-AR_S: np.char.chararray[tuple[int, ...], np.dtype[np.bytes_]]
+AR_U: np.char.chararray[_nt.Shape, np.dtype[np.str_]]
+AR_S: np.char.chararray[_nt.Shape, np.dtype[np.bytes_]]
 
 ###
 

@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import numpy as np
+import numpy.typing as npt
 
-AR_i8: np.ndarray[tuple[int, ...], np.dtype[np.int_]] = np.arange(10)
+AR_i8: npt.NDArray[np.int_] = np.arange(10)
 ar_iter = np.lib.Arrayterator(AR_i8)
 
 ar_iter.var

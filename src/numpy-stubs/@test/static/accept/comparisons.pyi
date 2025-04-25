@@ -3,6 +3,7 @@ import fractions
 from typing import TypeAlias
 from typing_extensions import assert_type
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 
@@ -33,7 +34,7 @@ c16: np.complex128
 dt: np.datetime64
 td: np.timedelta64
 
-i8_1d: np.ndarray[tuple[int], np.dtype[np.int64]]
+i8_1d: np.ndarray[_nt.Shape1, np.dtype[np.int64]]
 
 ###
 # object-like comparisons

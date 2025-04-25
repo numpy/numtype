@@ -2,11 +2,12 @@ import io
 from typing import Any
 from typing_extensions import assert_type
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 
 AR_i8: npt.NDArray[np.int64]
-REC_AR_V: np.recarray[tuple[int, ...], np.dtype[np.record]]
+REC_AR_V: np.recarray[_nt.Shape, np.dtype[np.record]]
 AR_LIST: list[npt.NDArray[np.int64]]
 
 record: np.record

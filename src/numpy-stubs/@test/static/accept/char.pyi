@@ -1,12 +1,13 @@
 from typing import TypeAlias
 from typing_extensions import assert_type
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 
 BytesArray: TypeAlias = npt.NDArray[np.bytes_]
 StrArray: TypeAlias = npt.NDArray[np.str_]
-StringArray: TypeAlias = np.ndarray[tuple[int, ...], np.dtypes.StringDType]
+StringArray: TypeAlias = np.ndarray[_nt.Shape, np.dtypes.StringDType]
 
 AR_S: BytesArray
 AR_U: StrArray

@@ -684,10 +684,18 @@ ToObject_2nd = TypeAliasType("ToObject_2nd", _ToArray2_2nd[np.object_, _PyObject
 ToObject_3nd = TypeAliasType("ToObject_3nd", _ToArray2_3nd[np.object_, _PyObject])
 
 # StringDType
-ToString_nd = TypeAliasType("ToString_nd", _CanStringArray[Shape, _NaT0], type_params=(_NaT0,))
+ToString_nd = TypeAliasType("ToString_nd", SequenceND[_CanStringArray[Shape, _NaT0]], type_params=(_NaT0,))
 ToString_1ds = TypeAliasType("ToString_1ds", _CanStringArray[Shape1, _NaT0], type_params=(_NaT0,))
-ToString_2ds = TypeAliasType("ToString_2ds", _CanStringArray[Shape2, _NaT0], type_params=(_NaT0,))
-ToString_3ds = TypeAliasType("ToString_3ds", _CanStringArray[Shape3, _NaT0], type_params=(_NaT0,))
+ToString_2ds = TypeAliasType(
+    "ToString_2ds",
+    _CanStringArray[Shape2, _NaT0] | Sequence[ToString_1ds[_NaT0]],
+    type_params=(_NaT0,),
+)
+ToString_3ds = TypeAliasType(
+    "ToString_3ds",
+    _CanStringArray[Shape3, _NaT0] | Sequence[ToString_2ds[_NaT0]],
+    type_params=(_NaT0,),
+)
 ToString_1nd = TypeAliasType("ToString_1nd", _CanStringArray[Shape1_, _NaT0], type_params=(_NaT0,))
 ToString_2nd = TypeAliasType("ToString_2nd", _CanStringArray[Shape2_, _NaT0], type_params=(_NaT0,))
 ToString_3nd = TypeAliasType("ToString_3nd", _CanStringArray[Shape3_, _NaT0], type_params=(_NaT0,))

@@ -1,6 +1,7 @@
 from typing import TypeAlias
 from typing_extensions import TypeVar, assert_type
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 
@@ -13,7 +14,7 @@ AR_LIKE_f: list[float]
 ###
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_Array1D: TypeAlias = np.ndarray[tuple[int], np.dtype[_ScalarT]]
+_Array1D: TypeAlias = np.ndarray[_nt.Shape1, np.dtype[_ScalarT]]
 
 ###
 

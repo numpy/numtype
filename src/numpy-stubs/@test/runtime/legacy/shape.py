@@ -1,6 +1,9 @@
-from typing import Any, NamedTuple
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 import numpy as np
+
+if TYPE_CHECKING:
+    import _numtype as _nt
 
 
 # Subtype of tuple[int, int]
@@ -10,7 +13,7 @@ class XYGrid(NamedTuple):
 
 
 # Test variance of _ShapeType_co
-def accepts_2d(a: np.ndarray[tuple[int, int], Any]) -> None:
+def accepts_2d(a: "np.ndarray[_nt.Shape2, Any]") -> None:
     return None
 
 
