@@ -2,8 +2,7 @@ import pathlib
 import re
 import zipfile
 from collections.abc import Mapping
-from typing import IO, Any
-from typing_extensions import assert_type
+from typing import IO, Any, assert_type
 
 import numpy as np
 import numpy.typing as npt

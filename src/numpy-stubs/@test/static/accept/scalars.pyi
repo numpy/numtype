@@ -1,5 +1,4 @@
-from typing import Any, Literal
-from typing_extensions import assert_type
+from typing import Any, Literal, assert_type
 
 import _numtype as _nt
 import numpy as np

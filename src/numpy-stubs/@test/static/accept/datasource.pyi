@@ -1,6 +1,5 @@
 from pathlib import Path
-from typing import IO, Any
-from typing_extensions import assert_type
+from typing import IO, Any, assert_type
 
 import numpy as np
 

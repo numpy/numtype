@@ -1,5 +1,5 @@
-from typing import Protocol, TypeAlias
-from typing_extensions import TypeVar, assert_type
+from typing import Protocol, TypeAlias, assert_type
+from typing_extensions import TypeVar
 
 import numpy as np
 

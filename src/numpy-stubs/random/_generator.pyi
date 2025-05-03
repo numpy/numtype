@@ -1,5 +1,4 @@
 import builtins
-import sys
 from collections.abc import Callable
 from typing import Any, Literal, TypeAlias, overload
 from typing_extensions import TypeVar, override
@@ -62,14 +61,8 @@ _ToRNG: TypeAlias = (
 
 class Generator:
     def __init__(self, /, bit_generator: BitGenerator[Any]) -> None: ...
-
-    if sys.version_info >= (3, 11):
-        @override
-        def __getstate__(self) -> None: ...
-
-    else:
-        def __getstate__(self) -> None: ...
-
+    @override
+    def __getstate__(self) -> None: ...
     def __setstate__(self, state: dict[str, Any] | None) -> None: ...
     @override
     def __reduce__(self) -> tuple[Callable[[BitGenerator], Generator], tuple[BitGenerator], None]: ...

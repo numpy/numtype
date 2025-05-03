@@ -1,4 +1,4 @@
-from typing_extensions import TypeAliasType, Unpack
+from typing_extensions import TypeAliasType
 
 __all__ = [
     "Shape",
@@ -20,7 +20,7 @@ Shape2 = TypeAliasType("Shape2", tuple[int, int])
 Shape3 = TypeAliasType("Shape3", tuple[int, int, int])
 Shape4 = TypeAliasType("Shape4", tuple[int, int, int, int])
 
-Shape1_ = TypeAliasType("Shape1_", tuple[int, Unpack[tuple[int, ...]]])
-Shape2_ = TypeAliasType("Shape2_", tuple[int, int, Unpack[tuple[int, ...]]])
-Shape3_ = TypeAliasType("Shape3_", tuple[int, int, int, Unpack[tuple[int, ...]]])
-Shape4_ = TypeAliasType("Shape4_", tuple[int, int, int, int, Unpack[tuple[int, ...]]])
+Shape1_ = TypeAliasType("Shape1_", tuple[int, *tuple[int, ...]])
+Shape2_ = TypeAliasType("Shape2_", tuple[int, int, *tuple[int, ...]])
+Shape3_ = TypeAliasType("Shape3_", tuple[int, int, int, *tuple[int, ...]])
+Shape4_ = TypeAliasType("Shape4_", tuple[int, int, int, int, *tuple[int, ...]])

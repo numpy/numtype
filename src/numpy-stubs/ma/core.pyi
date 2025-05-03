@@ -1,6 +1,18 @@
 from _typeshed import Incomplete
-from typing import Any, ClassVar, Final, Generic, Literal as L, SupportsIndex as CanIndex, TypeAlias, type_check_only
-from typing_extensions import Never, Self, TypeVar, deprecated, overload, override
+from typing import (
+    Any,
+    ClassVar,
+    Final,
+    Generic,
+    Literal as L,
+    Never,
+    Self,
+    SupportsIndex as CanIndex,
+    TypeAlias,
+    overload,
+    type_check_only,
+)
+from typing_extensions import TypeVar, deprecated, override
 
 import _numtype as _nt
 import numpy as np

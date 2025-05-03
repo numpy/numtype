@@ -1,6 +1,6 @@
 from collections.abc import Callable, Iterable
-from typing import Concatenate, Final, Literal as L, SupportsIndex as CanIndex, TypeAlias, overload
-from typing_extensions import Self, TypeVar
+from typing import Concatenate, Final, Literal as L, Self, SupportsIndex as CanIndex, TypeAlias, overload
+from typing_extensions import TypeVar
 
 import _numtype as _nt
 import numpy as np

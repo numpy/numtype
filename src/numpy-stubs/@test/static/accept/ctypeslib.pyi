@@ -1,7 +1,6 @@
 import _ctypes as _ct
 import ctypes as ct
-from typing import Any
-from typing_extensions import assert_type
+from typing import Any, assert_type
 
 import numpy as np
 import numpy.typing as npt

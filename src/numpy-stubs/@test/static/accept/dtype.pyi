@@ -1,5 +1,5 @@
 import ctypes as ct
-from typing_extensions import LiteralString, assert_type
+from typing import LiteralString, assert_type
 
 import numpy as np
 

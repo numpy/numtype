@@ -1,8 +1,8 @@
 from _typeshed import FileDescriptorOrPath
 from collections.abc import Callable, Mapping
 from pprint import pprint as show
-from typing import Any, Final, Literal as L, TypeAlias, overload
-from typing_extensions import Never, TypeVar
+from typing import Any, Final, Literal as L, Never, TypeAlias, overload
+from typing_extensions import TypeVar
 
 from .cfuncs import errmess
 

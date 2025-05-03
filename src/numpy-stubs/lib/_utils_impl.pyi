@@ -1,5 +1,6 @@
 from _typeshed import SupportsWrite as CanWrite
-from typing_extensions import LiteralString, TypeVar
+from typing import LiteralString
+from typing_extensions import TypeVar
 
 import numpy as np
 

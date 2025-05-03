@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Sequence
-from typing import Any, Protocol, TypeAlias, TypedDict, runtime_checkable
-from typing_extensions import Required, TypeVar
+from typing import Any, Protocol, Required, TypeAlias, TypedDict, runtime_checkable
+from typing_extensions import TypeVar
 
 import numpy as np
 

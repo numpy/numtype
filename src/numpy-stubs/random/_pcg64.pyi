@@ -1,5 +1,4 @@
-from typing import TypedDict, type_check_only
-from typing_extensions import Self
+from typing import Self, TypedDict, type_check_only
 
 from numpy.random.bit_generator import BitGenerator
 

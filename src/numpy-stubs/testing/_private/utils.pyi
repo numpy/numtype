@@ -18,11 +18,12 @@ from typing import (
     Generic,
     Literal as L,
     NoReturn,
+    Self,
     SupportsIndex,
     TypeAlias,
     overload,
 )
-from typing_extensions import ParamSpec, Self, TypeVar, TypeVarTuple, Unpack
+from typing_extensions import ParamSpec, TypeVar, TypeVarTuple, Unpack
 from unittest.case import SkipTest
 
 import numpy as np
@@ -482,7 +483,7 @@ def run_threaded(
     pass_count: bool,
     pass_barrier: bool,
     outer_iterations: int,
-    prepare_args: tuple[Unpack[_Ts]],
+    prepare_args: tuple[*_Ts],
 ) -> None: ...
 @overload
 def run_threaded(
@@ -492,7 +493,7 @@ def run_threaded(
     pass_barrier: bool = False,
     outer_iterations: int = 1,
     *,
-    prepare_args: tuple[Unpack[_Ts]],
+    prepare_args: tuple[*_Ts],
 ) -> None: ...
 
 #

@@ -1,7 +1,6 @@
 import decimal
 import fractions
-from typing import TypeAlias
-from typing_extensions import assert_type
+from typing import TypeAlias, assert_type
 
 import _numtype as _nt
 import numpy as np

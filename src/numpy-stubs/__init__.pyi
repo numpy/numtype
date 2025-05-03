@@ -17,6 +17,9 @@ from typing import (
     Final,
     Generic,
     Literal as L,
+    LiteralString,
+    Never,
+    Self,
     SupportsAbs,
     SupportsComplex as CanComplex,
     SupportsFloat as CanFloat,
@@ -31,12 +34,8 @@ from typing import (
 from typing_extensions import (
     Buffer,
     CapsuleType,
-    LiteralString,
-    Never,
     Protocol,
-    Self,
     TypeVar,
-    Unpack,
     deprecated,
     override,
 )
@@ -630,8 +629,8 @@ _NumericArrayT = TypeVar("_NumericArrayT", bound=NDArray[number | timedelta64 | 
 
 _ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
-_ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=tuple[int, Unpack[tuple[int, ...]]])
-_1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], Unpack[tuple[L[1], ...]]])  # (1,) | (1, 1) | (1, 1, 1) | ...
+_ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=tuple[int, *tuple[int, ...]])
+_1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], *tuple[L[1], ...]])  # (1,) | (1, 1) | (1, 1, 1) | ...
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
 _SelfScalarT = TypeVar("_SelfScalarT", bound=generic)

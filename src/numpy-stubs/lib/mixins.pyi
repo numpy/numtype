@@ -1,5 +1,5 @@
-from typing import Any, Generic, Literal as L, TypeAlias, type_check_only
-from typing_extensions import Self, TypeVar, override
+from typing import Any, Generic, Literal as L, Self, TypeAlias, type_check_only
+from typing_extensions import TypeVar, override
 
 import numpy as np
 

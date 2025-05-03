@@ -1,4 +1,4 @@
-from typing_extensions import Never
+from typing import Never
 
 from numpy._typing import ArrayLike, DTypeLike, NDArray
 

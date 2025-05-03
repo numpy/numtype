@@ -1,7 +1,6 @@
 from _typeshed import SupportsWrite
 from collections.abc import Callable
-from typing import Any
-from typing_extensions import assert_type
+from typing import Any, assert_type
 
 import numpy as np
 from numpy._core._ufunc_config import _ErrDict

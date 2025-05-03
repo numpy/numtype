@@ -12,6 +12,7 @@ from typing import (
     Generic,
     Literal as L,
     Protocol,
+    Self,
     SupportsIndex as CanIndex,
     SupportsInt as CanInt,
     TypeAlias,
@@ -20,7 +21,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import Buffer, CapsuleType, Self, TypeAliasType, TypeVar, Unpack, deprecated
+from typing_extensions import Buffer, CapsuleType, TypeAliasType, TypeVar, Unpack, deprecated
 
 import _numtype as _nt
 import numpy as np

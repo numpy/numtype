@@ -5,6 +5,7 @@ from typing import (
     Concatenate,
     Final,
     Literal as L,
+    LiteralString,
     Protocol,
     SupportsIndex as CanIndex,
     SupportsInt,
@@ -12,7 +13,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import LiteralString, ParamSpec, TypeIs, TypeVar, deprecated
+from typing_extensions import ParamSpec, TypeIs, TypeVar, deprecated
 
 import _numtype as _nt
 import numpy as np

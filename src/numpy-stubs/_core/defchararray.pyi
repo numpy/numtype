@@ -1,6 +1,6 @@
 from _typeshed import ConvertibleToInt
-from typing import Any, Literal as L, SupportsIndex, TypeAlias, overload
-from typing_extensions import Buffer, Never, Self, TypeAliasType, TypeVar, override
+from typing import Any, Literal as L, Never, Self, SupportsIndex, TypeAlias, overload
+from typing_extensions import Buffer, TypeAliasType, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
