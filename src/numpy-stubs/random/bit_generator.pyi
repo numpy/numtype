@@ -2,8 +2,19 @@ import abc
 from _typeshed import Incomplete
 from collections.abc import Callable, Mapping, Sequence
 from threading import Lock
-from typing import Any, ClassVar, Generic, Literal as L, NamedTuple, TypeAlias, TypedDict, overload, type_check_only
-from typing_extensions import CapsuleType, Self, TypeVar, override
+from typing import (
+    Any,
+    ClassVar,
+    Generic,
+    Literal as L,
+    NamedTuple,
+    Self,
+    TypeAlias,
+    TypedDict,
+    overload,
+    type_check_only,
+)
+from typing_extensions import CapsuleType, TypeVar, override
 
 import numpy as np
 from numpy._typing import NDArray, _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes

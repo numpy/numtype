@@ -5,8 +5,8 @@
 import decimal
 import fractions
 from collections.abc import Sequence
-from typing import Any, TypeAlias, type_check_only
-from typing_extensions import Never, Protocol, TypeAliasType, TypeVar
+from typing import Any, Never, TypeAlias, type_check_only
+from typing_extensions import Protocol, TypeAliasType, TypeVar
 
 import numpy as np
 from numpy._typing import _NestedSequence

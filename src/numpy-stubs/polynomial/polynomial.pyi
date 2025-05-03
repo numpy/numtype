@@ -1,6 +1,16 @@
 from collections.abc import Sequence
-from typing import Any, Final, Literal as L, Protocol, SupportsIndex as _Index, TypeAlias, overload, type_check_only
-from typing_extensions import Self, TypeVar, override
+from typing import (
+    Any,
+    Final,
+    Literal as L,
+    Protocol,
+    Self,
+    SupportsIndex as _Index,
+    TypeAlias,
+    overload,
+    type_check_only,
+)
+from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np

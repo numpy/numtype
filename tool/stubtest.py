@@ -1,5 +1,5 @@
 # /// script
-# requires-python = ">=3.10"
+# requires-python = ">=3.11"
 # dependencies = [
 #     "numtype[numpy]",
 #     "mypy[faster-cache]>=1.15.0",  # keep in sync with pyproject.toml

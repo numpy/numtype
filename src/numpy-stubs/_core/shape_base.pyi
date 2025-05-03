@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, SupportsIndex, TypeAlias, overload
-from typing_extensions import TypeVar, Unpack
+from typing_extensions import TypeVar
 
 import numpy as np
 from numpy._typing import ArrayLike, DTypeLike, NDArray, _ArrayLike, _DTypeLike
@@ -27,9 +27,9 @@ _Array3T = TypeVar("_Array3T", bound=np.ndarray[_AtLeast3D, np.dtype])
 _Array3T0 = TypeVar("_Array3T0", bound=np.ndarray[_AtLeast3D, np.dtype])
 _Array3T1 = TypeVar("_Array3T1", bound=np.ndarray[_AtLeast3D, np.dtype])
 
-_AtLeast1D: TypeAlias = tuple[int, Unpack[tuple[int, ...]]]
-_AtLeast2D: TypeAlias = tuple[int, int, Unpack[tuple[int, ...]]]
-_AtLeast3D: TypeAlias = tuple[int, int, int, Unpack[tuple[int, ...]]]
+_AtLeast1D: TypeAlias = tuple[int, *tuple[int, ...]]
+_AtLeast2D: TypeAlias = tuple[int, int, *tuple[int, ...]]
+_AtLeast3D: TypeAlias = tuple[int, int, int, *tuple[int, ...]]
 
 ###
 

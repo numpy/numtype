@@ -4,6 +4,7 @@ from typing import (
     Concatenate,
     Final,
     Literal as L,
+    Never,
     Protocol,
     SupportsIndex,
     TypeAlias,
@@ -11,7 +12,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import Never, TypeAliasType, TypeVar, Unpack
+from typing_extensions import TypeAliasType, TypeVar, Unpack
 
 import _numtype as _nt
 import numpy as np
@@ -176,9 +177,9 @@ _OutT2_co = TypeVar("_OutT2_co", covariant=True)
 _Tuple2: TypeAlias = tuple[_T, _T]
 _Tuple3: TypeAlias = tuple[_T, _T, _T]
 _Tuple4: TypeAlias = tuple[_T, _T, _T, _T]
-_Tuple2_: TypeAlias = tuple[_T, _T, Unpack[tuple[_T, ...]]]
-_Tuple3_: TypeAlias = tuple[_T, _T, _T, Unpack[tuple[_T, ...]]]
-_Tuple4_: TypeAlias = tuple[_T, _T, _T, _T, Unpack[tuple[_T, ...]]]
+_Tuple2_: TypeAlias = tuple[_T, _T, *tuple[_T, ...]]
+_Tuple3_: TypeAlias = tuple[_T, _T, _T, *tuple[_T, ...]]
+_Tuple4_: TypeAlias = tuple[_T, _T, _T, _T, *tuple[_T, ...]]
 
 _Out1: TypeAlias = _T | tuple[_T]
 _AnyArray: TypeAlias = NDArray[Any]
@@ -2162,7 +2163,7 @@ def frompyfunc(  # type: ignore[overload-overlap]  # mypy-only false positive
 ) -> _pyfunc_1n_2[_T1, _T2]: ...
 @overload  # (a, ...) -> (T1, T2, *(T, ...))
 def frompyfunc(
-    f: Callable[..., tuple[_T1, _T2, Unpack[tuple[_T, ...]]]],
+    f: Callable[..., tuple[_T1, _T2, *tuple[_T, ...]]],
     /,
     nin: _1P,
     nout: _2P,

@@ -1,6 +1,5 @@
-# @generated 2025-03-16T15:52:15Z with tool/testgen.py
-from typing import Literal, TypeAlias
-from typing_extensions import assert_type
+# @generated 2025-05-03T21:26:25Z with tool/testgen.py
+from typing import Literal, TypeAlias, assert_type
 
 import numpy as np
 

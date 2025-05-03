@@ -1,6 +1,17 @@
 from collections.abc import Iterator
-from typing import Any, ClassVar, Generic, Literal as L, SupportsIndex, SupportsInt, TypeAlias, overload
-from typing_extensions import LiteralString, Self, TypeVar
+from typing import (
+    Any,
+    ClassVar,
+    Generic,
+    Literal as L,
+    LiteralString,
+    Self,
+    SupportsIndex,
+    SupportsInt,
+    TypeAlias,
+    overload,
+)
+from typing_extensions import TypeVar
 
 import _numtype as _nt
 import numpy as np

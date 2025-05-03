@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from fractions import Fraction
-from typing import Any, TypeAlias
-from typing_extensions import LiteralString, TypeVar, assert_type
+from typing import Any, LiteralString, TypeAlias, assert_type
+from typing_extensions import TypeVar
 
 import numpy as np
 import numpy.typing as npt

@@ -1,5 +1,17 @@
-from typing import Any, Generic, Literal as L, NoReturn, TypeAlias, final, overload, type_check_only
-from typing_extensions import LiteralString, Never, Self, TypeVar, override
+from typing import (
+    Any,
+    Generic,
+    Literal as L,
+    LiteralString,
+    Never,
+    NoReturn,
+    Self,
+    TypeAlias,
+    final,
+    overload,
+    type_check_only,
+)
+from typing_extensions import TypeVar, override
 
 import numpy as np
 

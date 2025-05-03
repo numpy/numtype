@@ -1,7 +1,18 @@
 from _typeshed import Incomplete
 from collections.abc import Sequence
-from typing import Any, ClassVar, Final, Generic, Literal as L, SupportsIndex as CanIndex, TypeAlias, final, overload
-from typing_extensions import Self, TypeVar, deprecated
+from typing import (
+    Any,
+    ClassVar,
+    Final,
+    Generic,
+    Literal as L,
+    Self,
+    SupportsIndex as CanIndex,
+    TypeAlias,
+    final,
+    overload,
+)
+from typing_extensions import TypeVar, deprecated
 
 import _numtype as _nt
 import numpy as np

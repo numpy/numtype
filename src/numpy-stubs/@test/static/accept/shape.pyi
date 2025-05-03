@@ -1,5 +1,4 @@
-from typing import Any, NamedTuple
-from typing_extensions import assert_type
+from typing import Any, NamedTuple, assert_type
 
 import numpy as np
 

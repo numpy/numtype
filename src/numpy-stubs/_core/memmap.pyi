@@ -6,12 +6,13 @@ from typing import (
     Generic,
     Literal as L,
     Protocol,
+    Self,
     SupportsIndex,
     TypeAlias,
     overload,
     type_check_only,
 )
-from typing_extensions import Self, TypeVar
+from typing_extensions import TypeVar
 
 import numpy as np
 import numpy.typing as npt

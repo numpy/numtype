@@ -1,6 +1,5 @@
 from collections.abc import Mapping
-from typing import Any, SupportsIndex
-from typing_extensions import assert_type
+from typing import Any, SupportsIndex, assert_type
 
 import numpy as np
 import numpy.typing as npt

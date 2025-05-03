@@ -1,5 +1,5 @@
-# @generated 2025-04-14T02:08:07Z with tool/testgen.py
-from typing_extensions import assert_type
+# @generated 2025-05-03T21:24:40Z with tool/testgen.py
+from typing import assert_type
 
 import numpy as np
 import numpy.typing as npt

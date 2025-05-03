@@ -44,7 +44,7 @@ But the now concrete scalar types will no longer accept *any* `#!py floating[T]`
 
 Type parameters can instead use an abstract scalar type as an upper bound. So instead of
 
-/// tab | Python 3.10 and above
+/// tab | Python 3.11 and above
 
 ```py
 import numpy as np
@@ -71,7 +71,7 @@ def f[NT: npt.NBitBase](x: np.floating[NT]) -> np.floating[NT]: ...
 
 you can write
 
-/// tab | Python 3.10 and above
+/// tab | Python 3.11 and above
 
 ```py
 import numpy as np
@@ -98,7 +98,7 @@ As you can see, this also makes the code more readable.
 
 But what if that isn't possible? For instance, you might have the following function:
 
-/// tab | Python 3.10 and above
+/// tab | Python 3.11 and above
 
 ```py
 import numpy as np

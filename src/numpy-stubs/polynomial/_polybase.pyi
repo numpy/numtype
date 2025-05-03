@@ -1,8 +1,7 @@
 import abc
-import sys
 from collections.abc import Iterator, Mapping, Sequence
-from typing import Any, ClassVar, Final, Literal, SupportsIndex, TypeAlias, overload
-from typing_extensions import Self, TypeIs, TypeVar, override
+from typing import Any, ClassVar, Final, Literal, Self, SupportsIndex, TypeAlias, overload
+from typing_extensions import TypeIs, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
@@ -99,14 +98,8 @@ class ABCPolyBase(abc.ABC):
     def __rdivmod__(self, x: _AnyOther, /) -> tuple[Self, Self]: ...
     def __len__(self, /) -> int: ...
     def __iter__(self, /) -> Iterator[np.inexact | object]: ...
-
-    if sys.version_info >= (3, 11):
-        @override
-        def __getstate__(self, /) -> dict[str, Any]: ...
-
-    else:
-        def __getstate__(self, /) -> dict[str, Any]: ...
-
+    @override
+    def __getstate__(self, /) -> dict[str, Any]: ...
     def __setstate__(self, dict: dict[str, Any], /) -> None: ...
 
     #

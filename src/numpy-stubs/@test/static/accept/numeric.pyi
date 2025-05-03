@@ -1,5 +1,5 @@
-from typing import Any, TypeAlias, type_check_only
-from typing_extensions import TypeVar, assert_type
+from typing import Any, TypeAlias, assert_type, type_check_only
+from typing_extensions import TypeVar
 
 import numpy as np
 import numpy.typing as npt

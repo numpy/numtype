@@ -1,5 +1,4 @@
-from typing import Any, TypeAlias, TypeVar
-from typing_extensions import assert_type
+from typing import Any, TypeAlias, TypeVar, assert_type
 
 import numpy as np
 from numpy._typing import _Shape

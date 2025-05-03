@@ -1,8 +1,8 @@
 from _typeshed import Incomplete
 from collections.abc import Mapping
 from types import EllipsisType
-from typing import Any, ClassVar, SupportsIndex as CanIndex, TypeAlias, overload
-from typing_extensions import Self, TypeVar, override
+from typing import Any, ClassVar, Self, SupportsIndex as CanIndex, TypeAlias, overload
+from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np

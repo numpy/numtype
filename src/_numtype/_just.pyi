@@ -2,8 +2,8 @@
 # pyright: reportIncompatibleMethodOverride=false
 
 import datetime as dt
-from typing import Protocol, SupportsFloat, SupportsIndex, TypeAlias, final, type_check_only
-from typing_extensions import Self, TypeVar, override
+from typing import Protocol, Self, SupportsFloat, SupportsIndex, TypeAlias, final, type_check_only
+from typing_extensions import TypeVar, override
 
 __all__ = ["Just", "JustBytes", "JustComplex", "JustFloat", "JustInt", "JustObject", "JustStr"]
 

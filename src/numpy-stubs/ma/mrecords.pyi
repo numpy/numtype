@@ -1,6 +1,6 @@
 from _typeshed import Incomplete
-from typing import Any
-from typing_extensions import Self, TypeVar, override
+from typing import Any, Self
+from typing_extensions import TypeVar, override
 
 import numpy as np
 

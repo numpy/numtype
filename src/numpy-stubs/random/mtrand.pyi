@@ -1,5 +1,4 @@
 import builtins
-import sys
 from collections.abc import Callable
 from typing import Any, Final, Literal, TypeAlias, overload
 from typing_extensions import TypeVar, override
@@ -95,14 +94,8 @@ class RandomState:
     _bit_generator: Final[BitGenerator]
 
     def __init__(self, /, seed: _ArrayLikeInt_co | BitGenerator[Any] | None = ...) -> None: ...
-
-    if sys.version_info >= (3, 11):
-        @override
-        def __getstate__(self) -> dict[str, Any]: ...
-
-    else:
-        def __getstate__(self) -> dict[str, Any]: ...
-
+    @override
+    def __getstate__(self) -> dict[str, Any]: ...
     def __setstate__(self, /, state: dict[str, Any]) -> None: ...
     @override
     def __reduce__(self) -> tuple[Callable[[BitGenerator], RandomState], tuple[BitGenerator], dict[str, Any]]: ...
