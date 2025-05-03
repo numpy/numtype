@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.7.2,<0.8"]
+build-backend = "uv_build"
 
 
 [project]
@@ -93,8 +93,8 @@ dev = [
 ]
 
 
-[tool.hatch.build]
-exclude = [
+[tool.uv.build-backend]
+source-exclude = [
     "**/@test",
     "**/*.yml",
     "**/.*",
@@ -103,10 +103,15 @@ exclude = [
     "CONTRIBUTING.md",
     "uv.lock",
 ]
-skip-excluded-dirs = true
-
-    [tool.hatch.build.targets.wheel]
-    packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
+wheel-exclude = [
+    "**/@test",
+    "**/*.yml",
+    "**/.*",
+    "/docs",
+    "/tool",
+    "CONTRIBUTING.md",
+    "uv.lock",
+]
 
 
 [tool.mypy]
