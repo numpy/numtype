@@ -9,10 +9,10 @@ installed. Now you can install the project with the dev dependencies:
 uv sync
 ```
 
-You can also install it with a specific Python version, e.g. `3.10`, as
+You can also install it with a specific Python version, e.g. `3.11`, as
 
 ```shell
-uv sync --python 3.10
+uv sync --python 3.11
 ```
 
 ## Linting and formatting with `ruff`
@@ -154,7 +154,6 @@ If all is good, then you should see something like this appear:
 ruff: OK ✔ in 0.05 seconds
 pytest: OK ✔ in 0.34 seconds
 3.11: OK ✔ in 20.44 seconds
-3.10: OK ✔ in 21.53 seconds
 3.12: OK ✔ in 22.32 seconds
 3.13: OK ✔ in 26.41 seconds
 basedpyright: OK ✔ in 27.33 seconds
@@ -162,7 +161,6 @@ basedpyright: OK ✔ in 27.33 seconds
   pytest: OK (0.34=setup[0.02]+cmd[0.32] seconds)
   basedpyright: OK (27.33=setup[0.02]+cmd[27.31] seconds)
   mypy: OK (36.39=setup[0.02]+cmd[36.37] seconds)
-  3.10: OK (21.53=setup[0.43]+cmd[21.10] seconds)
   3.11: OK (20.44=setup[0.42]+cmd[20.01] seconds)
   3.12: OK (22.32=setup[0.44]+cmd[21.88] seconds)
   3.13: OK (26.41=setup[0.48]+cmd[25.93] seconds)
