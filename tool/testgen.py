@@ -2,18 +2,15 @@
 
 # ruff: noqa: PLR0916, PLR6301, ERA001, D101, D102, DOC201
 
-import functools
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
 import abc
 import difflib
+import functools
 import itertools
 import operator as op
+import sys
 import textwrap
 from collections.abc import Callable, Generator, Iterable, Iterator, Mapping, Sequence
+from pathlib import Path
 from typing import (
     Any,
     ClassVar,
@@ -29,6 +26,9 @@ from typing_extensions import override
 
 import numpy as np
 import numpy.typing as npt
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from tool.promotion import _typename as dtype_label
 from tool.ufunc import _all_types as ufunc_signatures
 
@@ -360,9 +360,7 @@ def _strip_preamble(source: str) -> tuple[str | None, str]:
 
 
 class TestGen(abc.ABC):
-    stdlib_imports: ClassVar[tuple[str, ...]] = (
-        "from typing_extensions import assert_type",
-    )
+    stdlib_imports: ClassVar[tuple[str, ...]] = ("from typing import assert_type",)
     numpy_imports: ClassVar[tuple[str, ...]] = (f"import numpy as {NP}",)
 
     testname: str  # abstract
@@ -792,8 +790,10 @@ class LiteralBoolOps(TestGen):
     @override
     def _generate_imports(self) -> Generator[str]:
         # NOTE: The trailing newlines are required for ruff compatibility
-        yield "from typing import Literal, TypeAlias"
-        yield from super()._generate_imports()
+        yield "from typing import Literal, TypeAlias, assert_type"
+        yield ""
+        yield from sorted(self.numpy_imports + self.numpy_imports_extra)
+        yield ""
 
     @override
     def _generate_names(self) -> Generator[str]:
