@@ -58,10 +58,10 @@ __all__ = [
 
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
 _NumberT = TypeVar("_NumberT", bound=np.number | np.object_)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
 _IndT_contra = TypeVar("_IndT_contra", contravariant=True)
 _VT_contra = TypeVar("_VT_contra", contravariant=True)
 _RT_co = TypeVar("_RT_co", covariant=True)

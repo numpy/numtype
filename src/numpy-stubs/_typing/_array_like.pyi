@@ -2,19 +2,19 @@ from collections.abc import Callable, Collection, Sequence
 from typing import Any, Protocol, TypeAlias, runtime_checkable
 from typing_extensions import Buffer, TypeVar
 
+import _numtype as _nt
 import numpy as np
 from numpy.dtypes import StringDType
 
 from ._nested_sequence import _NestedSequence
-from ._shape import _Shape
 
 _T = TypeVar("_T")
-_ScalarType = TypeVar("_ScalarType", bound=np.generic)
-_ScalarType_co = TypeVar("_ScalarType_co", bound=np.generic, covariant=True)
-_DType = TypeVar("_DType", bound=np.dtype)
-_DType_co = TypeVar("_DType_co", covariant=True, bound=np.dtype)
+_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, covariant=True)
 
-NDArray: TypeAlias = np.ndarray[_Shape, np.dtype[_ScalarType_co]]
+NDArray: TypeAlias = np.ndarray[_nt.Shape, np.dtype[_ScalarT_co]]
 
 # The `_SupportsArray` protocol only cares about the default dtype
 # (i.e. `dtype=None` or no `dtype` parameter at all) of the to-be returned
@@ -22,8 +22,8 @@ NDArray: TypeAlias = np.ndarray[_Shape, np.dtype[_ScalarType_co]]
 # Concrete implementations of the protocol are responsible for adding
 # any and all remaining overloads
 @runtime_checkable
-class _SupportsArray(Protocol[_DType_co]):
-    def __array__(self, /) -> np.ndarray[Any, _DType_co]: ...
+class _SupportsArray(Protocol[_DTypeT_co]):
+    def __array__(self, /) -> np.ndarray[Any, _DTypeT_co]: ...
 
 @runtime_checkable
 class _SupportsArrayFunc(Protocol):  # noqa: PYI046
@@ -44,12 +44,14 @@ _FiniteNestedSequence: TypeAlias = (
 )
 
 # A subset of `npt.ArrayLike` that can be parametrized w.r.t. `np.generic`
-_ArrayLike: TypeAlias = _SupportsArray[np.dtype[_ScalarType]] | _NestedSequence[_SupportsArray[np.dtype[_ScalarType]]]
+_ArrayLike: TypeAlias = _SupportsArray[np.dtype[_ScalarT]] | _NestedSequence[_SupportsArray[np.dtype[_ScalarT]]]
 
 # A union representing array-like objects; consists of two typevars:
 # One representing types that can be parametrized w.r.t. `np.dtype`
 # and another one for the rest
-_DualArrayLike: TypeAlias = _SupportsArray[_DType] | _T | _NestedSequence[_T] | _NestedSequence[_SupportsArray[_DType]]
+_DualArrayLike: TypeAlias = (
+    _SupportsArray[_DTypeT] | _T | _NestedSequence[_T] | _NestedSequence[_SupportsArray[_DTypeT]]
+)
 
 ArrayLike: TypeAlias = _DualArrayLike[np.dtype, complex | str | bytes] | Buffer
 

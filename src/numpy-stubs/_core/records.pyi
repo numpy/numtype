@@ -3,6 +3,7 @@ from collections.abc import Iterable, Sequence
 from typing import IO, Any, ClassVar, Literal as L, Protocol, SupportsIndex, TypeAlias, overload, type_check_only
 from typing_extensions import Buffer, TypeVar, override
 
+import _numtype as _nt
 import numpy as np
 from numpy import _ByteOrder, _OrderKACF  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, NDArray, _ArrayLikeVoid_co, _NestedSequence, _ShapeLike
@@ -22,7 +23,7 @@ __all__ = [
 _T = TypeVar("_T")
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, covariant=True)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, covariant=True)
 
 _RecArray: TypeAlias = recarray[Any, np.dtype[_ScalarT]]
 

@@ -593,7 +593,7 @@ __all__ = [
 _T = TypeVar("_T")
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _ArrayT_co = TypeVar("_ArrayT_co", bound=np.ndarray[Any, Any], covariant=True)
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 

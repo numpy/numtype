@@ -1025,7 +1025,7 @@ def array(
     subok: bool = False,
     ndmin: L[0] = 0,
     **kwargs: Unpack[_KwargsCL],
-) -> _nt.Array[_ScalarT, tuple[()]]: ...
+) -> _nt.Array0D[_ScalarT]: ...
 @overload
 def array(
     object: _ScalarLike_co,
@@ -1035,7 +1035,7 @@ def array(
     subok: bool = False,
     ndmin: L[0] = 0,
     **kwargs: Unpack[_KwargsCL],
-) -> _nt.Array[Any, tuple[()]]: ...
+) -> _nt.Array0D[Any]: ...
 @overload
 def array(
     object: object,
@@ -1078,14 +1078,14 @@ def asarray(
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = None,
     **kwargs: Unpack[_KwargsDCL],
-) -> _nt.Array[_ScalarT, tuple[()]]: ...
+) -> _nt.Array0D[_ScalarT]: ...
 @overload
 def asarray(
     a: _ScalarLike_co,
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = None,
     **kwargs: Unpack[_KwargsDCL],
-) -> _nt.Array[Any, tuple[()]]: ...
+) -> _nt.Array0D[Any]: ...
 @overload
 def asarray(
     a: object,

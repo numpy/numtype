@@ -9,7 +9,7 @@ __all__ = ["fftfreq", "fftshift", "ifftshift", "rfftfreq"]
 
 ###
 
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
 _Device: TypeAlias = L["cpu"]

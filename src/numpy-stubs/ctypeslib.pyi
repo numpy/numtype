@@ -9,7 +9,7 @@ import _numtype as _nt
 import numpy as np
 from numpy._core._internal import _ctypes
 from numpy._core.multiarray import flagsobj
-from numpy._typing import _ArrayLike, _DTypeLike, _Shape, _ShapeLike, _VoidDTypeLike
+from numpy._typing import _ArrayLike, _DTypeLike, _ShapeLike, _VoidDTypeLike
 from numpy._typing._char_codes import _LongCodes, _ULongCodes
 
 __all__ = ["as_array", "as_ctypes", "as_ctypes_type", "c_intp", "load_library", "ndpointer"]
@@ -18,11 +18,11 @@ __all__ = ["as_array", "as_ctypes", "as_ctypes_type", "c_intp", "load_library", 
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
-_ShapeT = TypeVar("_ShapeT", bound=_Shape)
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, covariant=True)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_Shape, default=_Shape, covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.Shape, covariant=True)
 _DTypeT0_co = TypeVar("_DTypeT0_co", bound=np.dtype | None, default=None, covariant=True)
-_ShapeT0_co = TypeVar("_ShapeT0_co", bound=_Shape | None, default=None, covariant=True)
+_ShapeT0_co = TypeVar("_ShapeT0_co", bound=_nt.Shape | None, default=None, covariant=True)
 
 _FlagsKind: TypeAlias = L[
     "C", "C_CONTIGUOUS", "CONTIGUOUS",

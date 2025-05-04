@@ -14,6 +14,7 @@ from typing import (
 )
 from typing_extensions import TypeVar
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 from numpy import _OrderKACF  # noqa: ICN003
@@ -23,7 +24,7 @@ __all__ = ["memmap"]
 
 ###
 
-_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=Any, covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=Any, covariant=True)
 _DType_co = TypeVar("_DType_co", bound=np.dtype, default=np.dtype, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 

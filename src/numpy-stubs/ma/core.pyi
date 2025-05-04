@@ -204,8 +204,8 @@ __all__ = [
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
-_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=tuple[int, ...], covariant=True)
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.Shape, covariant=True)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
@@ -769,7 +769,7 @@ class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
     def tolist(self) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 # 0D float64 array
-class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
+class MaskedConstant(MaskedArray[_nt.Shape0, np.dtype[np.float64]]):
     def __new__(cls) -> Self: ...
     @override
     def __array_wrap__(  # type: ignore[override]
@@ -778,7 +778,7 @@ class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
         obj: Incomplete,
         context: Incomplete | None = None,
         return_scalar: bool = False,
-    ) -> MaskedArray[tuple[()], np.dtype[np.float64]]: ...
+    ) -> MaskedArray[_nt.Shape0, np.dtype[np.float64]]: ...
     @override
     def __format__(self, format_spec: str, /) -> str: ...
 

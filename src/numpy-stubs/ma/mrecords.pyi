@@ -2,16 +2,17 @@ from _typeshed import Incomplete
 from typing import Any, Self
 from typing_extensions import TypeVar, override
 
+import _numtype as _nt
 import numpy as np
 
 from . import MaskedArray
 
 __all__ = ["MaskedRecords", "addfield", "fromarrays", "fromrecords", "fromtextfile", "mrecarray"]
 
-_ShapeType_co = TypeVar("_ShapeType_co", covariant=True, bound=tuple[int, ...])
-_DType_co = TypeVar("_DType_co", bound=np.dtype, covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, covariant=True)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, covariant=True)
 
-class MaskedRecords(MaskedArray[_ShapeType_co, _DType_co]):
+class MaskedRecords(MaskedArray[_ShapeT_co, _DTypeT_co]):
     _mask: Any
     _fill_value: Any
     def __new__(

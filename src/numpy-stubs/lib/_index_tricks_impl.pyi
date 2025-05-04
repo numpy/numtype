@@ -117,7 +117,7 @@ class OGridClass(nd_grid[L[True]]):
 class AxisConcatenator(Generic[_AxisT_co, _MatrixT_co, _NDMinT_co, _Trans1DT_co]):
     __slots__ = "axis", "matrix", "ndmin", "trans1d"
 
-    makemat: ClassVar[type[np.matrix[tuple[int, int], np.dtype]]]
+    makemat: ClassVar[type[_nt.Matrix]]
 
     axis: _AxisT_co
     matrix: _MatrixT_co

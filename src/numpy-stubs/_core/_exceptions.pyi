@@ -2,6 +2,7 @@ from collections.abc import Iterable
 from typing import Any, Final, overload
 from typing_extensions import TypeVar
 
+import _numtype as _nt
 import numpy as np
 from numpy import _CastingKind  # noqa: ICN003
 from numpy._utils import set_module as set_module
@@ -57,9 +58,9 @@ class _UFuncOutputCastingError(_UFuncCastingError):
     ) -> None: ...
 
 class _ArrayMemoryError(MemoryError):
-    shape: tuple[int, ...]
+    shape: _nt.Shape
     dtype: np.dtype
-    def __init__(self, /, shape: tuple[int, ...], dtype: np.dtype) -> None: ...
+    def __init__(self, /, shape: _nt.Shape, dtype: np.dtype) -> None: ...
     @property
     def _total_size(self) -> int: ...
     @staticmethod
