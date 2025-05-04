@@ -95,7 +95,7 @@ dev = [
 
 [tool.hatch.build]
 exclude = [
-    "**/@test",
+    "src/**/@test/**",
     "**/*.yml",
     "**/.*",
     "/docs",
