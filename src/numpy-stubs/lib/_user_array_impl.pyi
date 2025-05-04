@@ -3,6 +3,7 @@ from types import EllipsisType
 from typing import Any, Generic, Self, SupportsIndex, TypeAlias, TypeVar, overload
 from typing_extensions import deprecated, override
 
+import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 from numpy._typing import _ArrayLike, _ArrayLikeBool_co, _ArrayLikeInt_co, _DTypeLike
@@ -10,8 +11,8 @@ from numpy._typing import _ArrayLike, _ArrayLikeBool_co, _ArrayLikeInt_co, _DTyp
 ###
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
-_ShapeT_co = TypeVar("_ShapeT_co", bound=tuple[int, ...], default=Any, covariant=True)
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=Any, covariant=True)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 

@@ -70,7 +70,7 @@ __all__ = [
 
 ###
 
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 
 ###
 

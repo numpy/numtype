@@ -9,7 +9,7 @@ __all__ = ["fix", "isneginf", "isposinf"]
 ###
 
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
-_ShapeT = TypeVar("_ShapeT", bound=tuple[int, ...])
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _RealT = TypeVar("_RealT", bound=np.integer | np.floating | np.object_)
 
 ###

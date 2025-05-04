@@ -108,4 +108,4 @@ from ._scalars import (
     _UIntLike_co as _UIntLike_co,
     _VoidLike_co as _VoidLike_co,
 )
-from ._shape import _Shape as _Shape, _ShapeLike as _ShapeLike
+from ._shape import _ShapeLike as _ShapeLike

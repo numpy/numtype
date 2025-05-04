@@ -5,6 +5,7 @@ from collections.abc import Mapping, Sequence
 from typing import Any, Final, Literal as L, TypeAlias, TypeGuard, TypedDict, overload, type_check_only
 from typing_extensions import TypeVar
 
+import _numtype as _nt
 import numpy as np
 from numpy import _AnyShapeT, _DTypeDescr  # noqa: ICN003
 from numpy._typing import DTypeLike, _DTypeLike
@@ -24,7 +25,7 @@ _ArrayHeader: TypeAlias = tuple[tuple[int, ...], bool, np.dtype]
 
 @type_check_only
 class _HeaderDict_1_0(TypedDict):
-    shape: tuple[int, ...]
+    shape: _nt.Shape
     fortran_order: bool
     descr: _DTypeDescr
 
