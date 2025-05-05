@@ -15,10 +15,6 @@ S: np.bytes_
 V: np.void
 O: np.object_  # cannot exists at runtime
 
-array_any: np.ndarray[Any, Any]
-array_0: np.ndarray[_nt.Shape0, Any]
-array_2: np.ndarray[_nt.Shape2, Any]
-
 assert_type(c8.real, np.float32)
 assert_type(c8.imag, np.float32)
 
@@ -171,9 +167,9 @@ assert_type(complex(O), complex)
 # assert_type(np.object_(), None)
 # assert_type(np.object_(None), None)
 # assert_type(np.object_(array_nd), np.ndarray[Any, np.dtype[np.object_]])
-# assert_type(np.object_([]), npt.NDArray[np.object_])
-# assert_type(np.object_(()), npt.NDArray[np.object_])
-# assert_type(np.object_(range(4)), npt.NDArray[np.object_])
+# assert_type(np.object_([]), _nt.Array[np.object_])
+# assert_type(np.object_(()), _nt.Array[np.object_])
+# assert_type(np.object_(range(4)), _nt.Array[np.object_])
 # assert_type(np.object_(+42), int)
 # assert_type(np.object_(1 / 137), float)
 # assert_type(np.object_('Developers! ' * (1 << 6)), str)

@@ -1,9 +1,9 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-AR_f8: npt.NDArray[np.float64]
-AR_O: npt.NDArray[np.object_]
-AR_M: npt.NDArray[np.datetime64]
+AR_f8: _nt.Array[np.float64]
+AR_O: _nt.Array[np.object_]
+AR_M: _nt.Array[np.datetime64]
 
 ###
 

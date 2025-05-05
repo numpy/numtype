@@ -3,18 +3,17 @@ from typing import Any, assert_type
 
 import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-AR_i8: npt.NDArray[np.int64]
-REC_AR_V: np.recarray[_nt.Shape, np.dtype[np.record]]
-AR_LIST: list[npt.NDArray[np.int64]]
+AR_i8: _nt.Array[np.int64]
+REC_AR_V: np.recarray[Any, np.dtype[np.record]]
+AR_LIST: list[_nt.Array[np.int64]]
 
 record: np.record
 file_obj: io.BufferedIOBase
 
 assert_type(
     np.rec.format_parser(
-        formats=[np.float64, np.int64, np.bool],
+        formats=[np.float64, np.int64, np.bool_],
         names=["f8", "i8", "?"],
         titles=None,
         aligned=True,
@@ -34,14 +33,14 @@ assert_type(REC_AR_V.field(0), Any)
 assert_type(REC_AR_V.field("field_a"), Any)
 assert_type(REC_AR_V.field(0, AR_i8), None)
 assert_type(REC_AR_V.field("field_a", AR_i8), None)
-assert_type(REC_AR_V["field_a"], npt.NDArray[Any])
+assert_type(REC_AR_V["field_a"], _nt.Array[Any, Any])
 assert_type(REC_AR_V.field_a, Any)
 assert_type(REC_AR_V.__array_finalize__(object()), None)
 
 assert_type(
     np.recarray(
         shape=(10, 5),
-        formats=[np.float64, np.int64, np.bool],
+        formats=[np.float64, np.int64, np.bool_],
         order="K",
         byteorder="|",
     ),

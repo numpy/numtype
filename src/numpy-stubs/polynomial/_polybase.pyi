@@ -1,16 +1,14 @@
 import abc
 from collections.abc import Iterator, Mapping, Sequence
-from typing import Any, ClassVar, Final, Literal, Self, SupportsIndex, TypeAlias, overload
+from typing import Any, ClassVar, Literal, Self, SupportsIndex, TypeAlias, overload
 from typing_extensions import TypeIs, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
-from numpy._typing import _FloatLike_co
 
 from .polynomial import _ToNumeric_0d, _ToNumeric_nd
 
-__all__: Final[Sequence[str]] = ("ABCPolyBase",)
+__all__ = ["ABCPolyBase"]
 
 ###
 
@@ -65,11 +63,11 @@ class ABCPolyBase(abc.ABC):
     @overload
     def __call__(self, /, arg: _nt.CoComplex_0d) -> _nt.inexact64: ...
     @overload
-    def __call__(self, /, arg: _nt.CoComplex_1nd) -> npt.NDArray[_nt.inexact64]: ...
+    def __call__(self, /, arg: _nt.CoComplex_1nd) -> _nt.Array[_nt.inexact64]: ...
     @overload
     def __call__(self, /, arg: _nt.ToObject_0d) -> Any: ...
     @overload
-    def __call__(self, /, arg: _nt.ToObject_1nd) -> npt.NDArray[np.object_]: ...
+    def __call__(self, /, arg: _nt.ToObject_1nd) -> _nt.Array[np.object_]: ...
 
     #
     @override
@@ -112,7 +110,7 @@ class ABCPolyBase(abc.ABC):
     def copy(self, /) -> Self: ...
     def degree(self, /) -> int: ...
     def cutdeg(self, /, deg: int) -> Self: ...
-    def trim(self, /, tol: _FloatLike_co = 0) -> Self: ...
+    def trim(self, /, tol: _nt.CoFloating_nd = 0) -> Self: ...
     def truncate(self, /, size: SupportsIndex) -> Self: ...
 
     #
@@ -169,7 +167,7 @@ class ABCPolyBase(abc.ABC):
         y: _nt.CoComplex_1d,
         deg: _nt.CoInteger_0d | _nt.CoInteger_1d,
         domain: _nt.CoComplex_1d | None = None,
-        rcond: _FloatLike_co | None = None,
+        rcond: _nt.CoFloating_nd | None = None,
         full: Literal[False] = False,
         w: _nt.CoComplex_1d | None = None,
         window: _nt.CoComplex_1d | None = None,
@@ -183,7 +181,7 @@ class ABCPolyBase(abc.ABC):
         y: _nt.CoComplex_1d,
         deg: _nt.CoInteger_0d | _nt.CoInteger_1d,
         domain: _nt.CoComplex_1d | None,
-        rcond: _FloatLike_co | None,
+        rcond: _nt.CoFloating_nd | None,
         full: Literal[True],
         w: _nt.CoComplex_1d | None = None,
         window: _nt.CoComplex_1d | None = None,
@@ -197,7 +195,7 @@ class ABCPolyBase(abc.ABC):
         y: _nt.CoComplex_1d,
         deg: _nt.CoInteger_0d | _nt.CoInteger_1d,
         domain: _nt.CoComplex_1d | None = None,
-        rcond: _FloatLike_co | None = None,
+        rcond: _nt.CoFloating_nd | None = None,
         *,
         full: Literal[True],
         w: _nt.CoComplex_1d | None = None,

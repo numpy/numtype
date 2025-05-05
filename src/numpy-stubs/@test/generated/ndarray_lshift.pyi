@@ -1,9 +1,8 @@
-# @generated 2025-05-05T19:48:41Z with tool/testgen.py
+# @generated 2025-05-05T23:12:15Z with tool/testgen.py
 from typing import assert_type
 
 import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 ###
 
@@ -17,9 +16,9 @@ u2_nd: _nt.Array[np.uint16]
 u4_nd: _nt.Array[np.uint32]
 u8_nd: _nt.Array[np.uint64]
 O_nd: _nt.Array[np.object_]
-i_nd: npt.NDArray[np.signedinteger]
-u_nd: npt.NDArray[np.unsignedinteger]
-iu_nd: npt.NDArray[np.integer]
+i_nd: _nt.Array[np.signedinteger]
+u_nd: _nt.Array[np.unsignedinteger]
+iu_nd: _nt.Array[np.integer]
 
 b_py: bool
 i_py: int

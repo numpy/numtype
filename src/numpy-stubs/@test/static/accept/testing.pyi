@@ -8,13 +8,13 @@ from pathlib import Path
 from typing import Any, assert_type
 from typing_extensions import TypeVar
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 _FT = TypeVar("_FT", bound=Callable[..., object])
 
-AR_i8: npt.NDArray[np.int64]
-AR_f8: npt.NDArray[np.float64]
+AR_i8: _nt.Array[np.int64]
+AR_f8: _nt.Array[np.float64]
 
 bool_obj: bool
 suppress_obj: np.testing.suppress_warnings
@@ -22,7 +22,7 @@ func: Callable[[], int]
 
 class Test: ...
 
-def func2(x: npt.NDArray[np.number], y: npt.NDArray[np.number]) -> npt.NDArray[np.bool]: ...
+def func2(x: _nt.Array[np.number], y: _nt.Array[np.number]) -> _nt.Array[np.bool]: ...
 def func3(a: int) -> bool: ...
 def func4(a: int, b: str) -> bool: ...
 def decorate(a: _FT) -> _FT: ...
@@ -167,8 +167,8 @@ assert_type(np.testing.assert_allclose(AR_i8, AR_f8, verbose=False), None)
 
 assert_type(np.testing.assert_array_almost_equal_nulp(AR_i8, AR_f8, nulp=2), None)
 
-assert_type(np.testing.assert_array_max_ulp(AR_i8, AR_f8, maxulp=2), npt.NDArray[np.floating])
-assert_type(np.testing.assert_array_max_ulp(AR_i8, AR_f8, dtype=np.float32), npt.NDArray[np.floating])
+assert_type(np.testing.assert_array_max_ulp(AR_i8, AR_f8, maxulp=2), _nt.Array[np.floating])
+assert_type(np.testing.assert_array_max_ulp(AR_i8, AR_f8, dtype=np.float32), _nt.Array[np.floating])
 
 assert_type(np.testing.assert_warns(RuntimeWarning), contextlib._GeneratorContextManager[None])
 assert_type(np.testing.assert_warns(RuntimeWarning, func3, 5), bool)

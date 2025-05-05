@@ -1,7 +1,7 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-AR_i8: npt.NDArray[np.int64]
+AR_i8: _nt.Array[np.int64]
 ar_iter = np.lib.Arrayterator(AR_i8)
 
 np.lib.Arrayterator(np.int64())  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]

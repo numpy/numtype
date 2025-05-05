@@ -1,11 +1,11 @@
 # ruff: noqa: PYI010
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 f8: np.float64
-AR_f8: npt.NDArray[np.float64]
-AR_M: npt.NDArray[np.datetime64]
-AR_b: npt.NDArray[np.bool]
+AR_f8: _nt.Array[np.float64]
+AR_M: _nt.Array[np.datetime64]
+AR_b: _nt.Array[np.bool]
 
 f_0d: float
 U_0d: str

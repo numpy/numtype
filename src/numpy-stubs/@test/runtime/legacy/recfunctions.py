@@ -1,17 +1,18 @@
 """These tests are based on the doctests from `numpy/lib/recfunctions.py`."""
 
+from __future__ import annotations
+
 from typing import TYPE_CHECKING, Any, assert_type
 
 import numpy as np
-import numpy.typing as npt
 from numpy.lib import recfunctions as rfn
 
 if TYPE_CHECKING:
-    import _numtype as _nt  # noqa: F401, PLC2701
+    import _numtype as _nt
 
 
 def test_recursive_fill_fields() -> None:
-    a: npt.NDArray[np.void] = np.array(
+    a: _nt.Array[np.void] = np.array(
         [(1, 10.0), (2, 20.0)],
         dtype=[("A", np.int64), ("B", np.float64)],
     )
@@ -101,13 +102,13 @@ def test_repack_fields() -> None:
 
 def test_structured_to_unstructured() -> None:
     a = np.zeros(4, dtype=[("a", "i4"), ("b", "f4,u2"), ("c", "f4", 2)])
-    assert_type(rfn.structured_to_unstructured(a), npt.NDArray[Any])
+    assert_type(rfn.structured_to_unstructured(a), "_nt.Array")
 
 
 def unstructured_to_structured() -> None:
     dt: np.dtype[np.void] = np.dtype([("a", "i4"), ("b", "f4,u2"), ("c", "f4", 2)])
     a = np.arange(20, dtype=np.int32).reshape((4, 5))
-    assert_type(rfn.unstructured_to_structured(a, dt), npt.NDArray[np.void])
+    assert_type(rfn.unstructured_to_structured(a, dt), "_nt.Array[np.void]")
 
 
 def test_apply_along_fields() -> None:
@@ -134,21 +135,15 @@ def test_stack_arrays() -> None:
 
     z = np.ones((int(2),), [("A", "|S3"), ("B", float)])
     zz = np.ones((int(2),), [("A", "|S3"), ("B", np.float64), ("C", np.float64)])
-    assert_type(
-        rfn.stack_arrays((z, zz)),
-        "_nt.MArray[np.void]",
-    )
+    assert_type(rfn.stack_arrays((z, zz)), "_nt.MArray[np.void]")
 
 
 def test_find_duplicates() -> None:
     ndtype = np.dtype([("a", int)])
 
     a = np.ma.ones(7, mask=[0, 0, 1, 0, 0, 0, 1]).view(ndtype)
-    assert_type(rfn.find_duplicates(a), np.ma.MaskedArray[Any, np.dtype[np.void]])
+    assert_type(rfn.find_duplicates(a), "_nt.MArray[np.void, Any]")
     assert_type(
         rfn.find_duplicates(a, ignoremask=True, return_index=True),
-        tuple[
-            np.ma.MaskedArray[Any, np.dtype[np.void]],
-            np.ndarray[Any, np.dtype[np.int_]],
-        ],
+        "tuple[_nt.MArray[np.void, Any], _nt.Array[np.intp, Any]]",
     )

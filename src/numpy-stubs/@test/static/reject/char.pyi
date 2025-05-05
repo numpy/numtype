@@ -1,8 +1,8 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-AR_U: npt.NDArray[np.str_]
-AR_S: npt.NDArray[np.bytes_]
+AR_U: _nt.Array[np.str_]
+AR_S: _nt.Array[np.bytes_]
 
 # TODO(jorenham)
 # np.char.equal(AR_U, AR_S)

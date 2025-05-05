@@ -1,12 +1,12 @@
+import _numtype as _nt
 import numpy as np
-import numpy._typing as npt
 
 class Index:
     def __index__(self) -> int: ...
 
 ix: Index
-a: np.flatiter[npt.NDArray[np.float64]]
-supports_array: npt._SupportsArray[np.dtype[np.float64]]
+a: np.flatiter[_nt.Array[np.float64]]
+supports_array: _nt.CanArrayND[np.float64]
 
 ###
 
