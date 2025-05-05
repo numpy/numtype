@@ -85,7 +85,7 @@ class _HasRank(Protocol[_ShapeT_co]):
 
 _FromT_contra = TypeVar("_FromT_contra", default=Any, contravariant=True)
 _ToT_contra = TypeVar("_ToT_contra", bound=Shape, default=Any, contravariant=True)
-_RankT_co = TypeVar("_RankT_co", default=Any, covariant=True)
+_RankT_co = TypeVar("_RankT_co", bound=Shape, default=Any, covariant=True)
 
 @final
 @type_check_only
@@ -98,7 +98,7 @@ class _CanBroadcastTo(Protocol[_ToT_contra, _RankT_co]):
     def __broadcast_to__(self, to: _ToT_contra, /) -> _RankT_co: ...
 
 # This double shape-type parameter is a sneaky way to annotate a doubly-bound nominal type range,
-# e.g. `_HasShape[Shape2ToN, Shape0ToN]` accepts `Shape2ToN`, `Shape1ToN`, and `Shape0ToN`, but
+# e.g. `_HasOwnShape[Shape2ToN, Shape0ToN]` accepts `Shape2ToN`, `Shape1ToN`, and `Shape0ToN`, but
 # rejects `Shape3ToN` and `Shape1`. Besides brevity, it also works around several mypy bugs that
 # are related to "unions vs joins".
 
