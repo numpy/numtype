@@ -1,19 +1,7 @@
 from typing import Any, Generic, Protocol, Self, TypeAlias, final, type_check_only
 from typing_extensions import TypeAliasType, TypeVar
 
-from ._shape import (
-    Shape,
-    Shape as Shape0ToN,
-    Shape0,
-    Shape1,
-    Shape1N as Shape1ToN,
-    Shape2,
-    Shape2N as Shape2ToN,
-    Shape3,
-    Shape3N as Shape3ToN,
-    Shape4,
-    Shape4N as Shape4ToN,
-)
+from ._shape import Shape, Shape0, Shape0N, Shape1, Shape1N, Shape2, Shape2N, Shape3, Shape3N, Shape4, Shape4N
 
 __all__ = [
     "Broadcasts",
@@ -33,11 +21,11 @@ __all__ = [
 
 ###
 
-_Shape0To0: TypeAlias = Shape0
-_Shape0To1: TypeAlias = _Shape0To0 | Shape1
-_Shape0To2: TypeAlias = _Shape0To1 | Shape2
-_Shape0To3: TypeAlias = _Shape0To2 | Shape3
-_Shape0To4: TypeAlias = _Shape0To3 | Shape4
+_Shape00: TypeAlias = Shape0
+_Shape01: TypeAlias = _Shape00 | Shape1
+_Shape02: TypeAlias = _Shape01 | Shape2
+_Shape03: TypeAlias = _Shape02 | Shape3
+_Shape04: TypeAlias = _Shape03 | Shape4
 
 ###
 
@@ -51,37 +39,17 @@ _BroadcastableShape = TypeAliasType(
     type_params=(_FromT, _RankT),
 )
 
-BroadcastsTo = TypeAliasType(
-    "BroadcastsTo",
-    _HasRank[_CanBroadcastTo[_ToT, _RankT]],
-    type_params=(_ToT, _RankT),
-)
-Broadcasts = TypeAliasType(
-    "Broadcasts",
-    _HasRank[_BroadcastableShape[_FromT, _RankT]],
-    type_params=(_FromT, _RankT),
-)
+BroadcastsTo = TypeAliasType("BroadcastsTo", _HasShape[_CanBroadcastTo[_ToT, _RankT]], type_params=(_ToT, _RankT))
+Broadcasts = TypeAliasType("Broadcasts", _HasShape[_BroadcastableShape[_FromT, _RankT]], type_params=(_FromT, _RankT))
 
 ###
 
-_ShapeT_co = TypeVar(
-    "_ShapeT_co",
-    bound=Shape | _HasOwnShape | _CanBroadcastFrom | _CanBroadcastTo,
-    covariant=True,
-)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=Shape | _HasOwnShape | _CanBroadcastFrom | _CanBroadcastTo, covariant=True)
 
 @type_check_only
 class _HasShape(Protocol[_ShapeT_co]):
     @property
     def shape(self, /) -> _ShapeT_co: ...
-
-_ShapeT = TypeVar("_ShapeT", bound=Shape)
-
-@final
-@type_check_only
-class _HasRank(Protocol[_ShapeT_co]):
-    @property
-    def shape(self: _HasShape[_ShapeT], /) -> _ShapeT: ...
 
 _FromT_contra = TypeVar("_FromT_contra", default=Any, contravariant=True)
 _ToT_contra = TypeVar("_ToT_contra", bound=Shape, default=Any, contravariant=True)
@@ -98,8 +66,8 @@ class _CanBroadcastTo(Protocol[_ToT_contra, _RankT_co]):
     def __broadcast_to__(self, to: _ToT_contra, /) -> _RankT_co: ...
 
 # This double shape-type parameter is a sneaky way to annotate a doubly-bound nominal type range,
-# e.g. `_HasOwnShape[Shape2ToN, Shape0ToN]` accepts `Shape2ToN`, `Shape1ToN`, and `Shape0ToN`, but
-# rejects `Shape3ToN` and `Shape1`. Besides brevity, it also works around several mypy bugs that
+# e.g. `_HasOwnShape[Shape2N, Shape0N]` accepts `Shape2N`, `Shape1N`, and `Shape0N`, but
+# rejects `Shape3N` and `Shape1`. Besides brevity, it also works around several mypy bugs that
 # are related to "unions vs joins".
 
 _OwnShapeT_contra = TypeVar("_OwnShapeT_contra", bound=Shape, default=Any, contravariant=True)
@@ -129,46 +97,46 @@ class _BaseRankM(
 
 @final
 @type_check_only
-class Rank0(_BaseRankM[_Shape0To0, Shape0ToN, Shape0], tuple[()]): ...
+class Rank0(_BaseRankM[_Shape00, Shape0N, Shape0], tuple[()]): ...
 
 @final
 @type_check_only
-class Rank1(_BaseRankM[_Shape0To1, Shape1ToN, Shape1], tuple[int]): ...
+class Rank1(_BaseRankM[_Shape01, Shape1N, Shape1], tuple[int]): ...
 
 @final
 @type_check_only
-class Rank2(_BaseRankM[_Shape0To2, Shape2ToN, Shape2], tuple[int, int]): ...
+class Rank2(_BaseRankM[_Shape02, Shape2N, Shape2], tuple[int, int]): ...
 
 @final
 @type_check_only
-class Rank3(_BaseRankM[_Shape0To3, Shape3ToN, Shape3], tuple[int, int, int]): ...
+class Rank3(_BaseRankM[_Shape03, Shape3N, Shape3], tuple[int, int, int]): ...
 
 @final
 @type_check_only
-class Rank4(_BaseRankM[_Shape0To4, Shape4ToN, Shape4], tuple[int, int, int, int]): ...
+class Rank4(_BaseRankM[_Shape04, Shape4N, Shape4], tuple[int, int, int, int]): ...
 
 # this emulates `AnyOf`, rather than a `Union`.
 @type_check_only
-class _BaseRankMToN(_BaseRank[Shape0ToN, _OwnShapeT, _OwnShapeT], Generic[_OwnShapeT]): ...
+class _BaseRankMToN(_BaseRank[Shape0N, _OwnShapeT, _OwnShapeT], Generic[_OwnShapeT]): ...
 
 @final
 @type_check_only
-class Rank(_BaseRankMToN[Shape0ToN], tuple[int, ...]): ...
+class Rank(_BaseRankMToN[Shape0N], tuple[int, ...]): ...
 
 @final
 @type_check_only
-class Rank1N(_BaseRankMToN[Shape1ToN], tuple[int, *tuple[int, ...]]): ...
+class Rank1N(_BaseRankMToN[Shape1N], tuple[int, *tuple[int, ...]]): ...
 
 @final
 @type_check_only
-class Rank2N(_BaseRankMToN[Shape2ToN], tuple[int, int, *tuple[int, ...]]): ...
+class Rank2N(_BaseRankMToN[Shape2N], tuple[int, int, *tuple[int, ...]]): ...
 
 @final
 @type_check_only
-class Rank3N(_BaseRankMToN[Shape3ToN], tuple[int, int, int, *tuple[int, ...]]): ...
+class Rank3N(_BaseRankMToN[Shape3N], tuple[int, int, int, *tuple[int, ...]]): ...
 
 @final
 @type_check_only
-class Rank4N(_BaseRankMToN[Shape4ToN], tuple[int, int, int, int, *tuple[int, ...]]): ...
+class Rank4N(_BaseRankMToN[Shape4N], tuple[int, int, int, int, *tuple[int, ...]]): ...
 
 Rank0N: TypeAlias = Rank
