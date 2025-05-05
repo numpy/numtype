@@ -1,10 +1,10 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 b1: np.bool
-AR_b1: npt.NDArray[np.bool]
-AR_U: npt.NDArray[np.str_]
-AR_M: npt.NDArray[np.datetime64]
+AR_b1: _nt.Array[np.bool]
+AR_U: _nt.Array[np.str_]
+AR_M: _nt.Array[np.datetime64]
 
 f_0d: float
 U_0d: str

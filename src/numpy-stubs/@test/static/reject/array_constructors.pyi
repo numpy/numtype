@@ -1,7 +1,7 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-a: npt.NDArray[np.float64]
+a: _nt.Array[np.float64]
 generator = (i for i in range(10))
 
 np.require(a, requirements=1)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]

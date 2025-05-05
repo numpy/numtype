@@ -2,25 +2,25 @@ import _ctypes as _ct
 import ctypes as ct
 from typing import Any, assert_type
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 ###
 
-AR_b1: npt.NDArray[np.bool]
-AR_i1: npt.NDArray[np.int8]
-AR_i2: npt.NDArray[np.int16]
-AR_i4: npt.NDArray[np.int32]
-AR_i8: npt.NDArray[np.int64]
-AR_q: npt.NDArray[np.longlong]
-AR_u1: npt.NDArray[np.uint8]
-AR_u2: npt.NDArray[np.uint16]
-AR_u4: npt.NDArray[np.uint32]
-AR_u8: npt.NDArray[np.uint64]
-AR_L: npt.NDArray[np.ulong]
-AR_f4: npt.NDArray[np.float32]
-AR_f8: npt.NDArray[np.float64]
-AR_g: npt.NDArray[np.longdouble]
+AR_b1: _nt.Array[np.bool]
+AR_i1: _nt.Array[np.int8]
+AR_i2: _nt.Array[np.int16]
+AR_i4: _nt.Array[np.int32]
+AR_i8: _nt.Array[np.int64]
+AR_q: _nt.Array[np.longlong]
+AR_u1: _nt.Array[np.uint8]
+AR_u2: _nt.Array[np.uint16]
+AR_u4: _nt.Array[np.uint32]
+AR_u8: _nt.Array[np.uint64]
+AR_L: _nt.Array[np.ulong]
+AR_f4: _nt.Array[np.float32]
+AR_f8: _nt.Array[np.float64]
+AR_g: _nt.Array[np.longdouble]
 
 pointer: ct._Pointer[Any]
 
@@ -74,6 +74,6 @@ assert_type(np.ctypeslib.as_ctypes(AR_i8), ct.Array[ct.c_int64])
 assert_type(np.ctypeslib.as_ctypes(AR_f4), ct.Array[ct.c_float])
 assert_type(np.ctypeslib.as_ctypes(AR_f8), ct.Array[ct.c_double])
 
-assert_type(np.ctypeslib.as_array(AR_u1), npt.NDArray[np.ubyte])
-assert_type(np.ctypeslib.as_array(1), npt.NDArray[Any])
-assert_type(np.ctypeslib.as_array(pointer), npt.NDArray[Any])
+assert_type(np.ctypeslib.as_array(AR_u1), _nt.Array[np.ubyte])
+assert_type(np.ctypeslib.as_array(1), _nt.Array[Any])
+assert_type(np.ctypeslib.as_array(pointer), _nt.Array[Any])

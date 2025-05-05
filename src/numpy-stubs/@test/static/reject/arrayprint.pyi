@@ -1,10 +1,10 @@
 from collections.abc import Callable
 from typing import Any
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-AR: npt.NDArray[np.float64]
+AR: _nt.Array[np.float64]
 func1: Callable[[Any], str]
 func2: Callable[[np.integer], str]
 

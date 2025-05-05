@@ -1,8 +1,8 @@
 import datetime as dt
-from typing import Any, assert_type
+from typing import assert_type
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 i: int
 i8: np.int64
@@ -18,7 +18,7 @@ m8_int: np.timedelta64[int]
 m8_delta: np.timedelta64[dt.timedelta]
 delta: dt.timedelta
 
-AR_Any: npt.NDArray[Any]
+AR_Any: _nt.Array
 
 # Time structures
 
@@ -59,4 +59,4 @@ assert_type(m8_delta.__divmod__(delta), tuple[int, dt.timedelta])
 
 # Any
 
-assert_type(AR_Any + 2, npt.NDArray[Any])
+assert_type(AR_Any + 2, _nt.Array)

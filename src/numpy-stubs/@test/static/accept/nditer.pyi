@@ -1,7 +1,7 @@
-from typing import Any, assert_type
+from typing import assert_type
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 nditer_obj: np.nditer
 
@@ -20,13 +20,13 @@ assert_type(nditer_obj.iterationneedsapi, bool)
 assert_type(nditer_obj.iterindex, int)
 assert_type(nditer_obj.iterrange, tuple[int, ...])
 assert_type(nditer_obj.itersize, int)
-assert_type(nditer_obj.itviews, tuple[npt.NDArray[Any], ...])
+assert_type(nditer_obj.itviews, tuple[_nt.Array, ...])
 assert_type(nditer_obj.multi_index, tuple[int, ...])
 assert_type(nditer_obj.ndim, int)
 assert_type(nditer_obj.nop, int)
-assert_type(nditer_obj.operands, tuple[npt.NDArray[Any], ...])
+assert_type(nditer_obj.operands, tuple[_nt.Array, ...])
 assert_type(nditer_obj.shape, tuple[int, ...])
-assert_type(nditer_obj.value, tuple[npt.NDArray[Any], ...])
+assert_type(nditer_obj.value, tuple[_nt.Array, ...])
 
 assert_type(nditer_obj.close(), None)
 assert_type(nditer_obj.copy(), np.nditer)
@@ -39,11 +39,11 @@ assert_type(nditer_obj.reset(), None)
 
 assert_type(len(nditer_obj), int)
 assert_type(iter(nditer_obj), np.nditer)
-assert_type(next(nditer_obj), tuple[npt.NDArray[Any], ...])
+assert_type(next(nditer_obj), tuple[_nt.Array, ...])
 assert_type(nditer_obj.__copy__(), np.nditer)
 with nditer_obj as f:
     assert_type(f, np.nditer)
-assert_type(nditer_obj[0], npt.NDArray[Any])
-assert_type(nditer_obj[:], tuple[npt.NDArray[Any], ...])
+assert_type(nditer_obj[0], _nt.Array)
+assert_type(nditer_obj[:], tuple[_nt.Array, ...])
 nditer_obj[0] = 0
 nditer_obj[:] = [0, 1]

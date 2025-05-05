@@ -1,7 +1,7 @@
 from typing import Any, assert_type
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 AR_LIKE_b: list[bool]
 AR_LIKE_u: list[np.uint32]
@@ -9,9 +9,9 @@ AR_LIKE_i: list[int]
 AR_LIKE_f: list[float]
 AR_LIKE_c: list[complex]
 AR_LIKE_U: list[str]
-AR_o: npt.NDArray[np.object_]
+AR_o: _nt.Array[np.object_]
 
-OUT_f: npt.NDArray[np.float64]
+OUT_f: _nt.Array[np.float64]
 
 assert_type(np.einsum("i,i->i", AR_LIKE_b, AR_LIKE_b), Any)
 assert_type(np.einsum("i,i->i", AR_o, AR_o), Any)
@@ -22,8 +22,8 @@ assert_type(np.einsum("i,i->i", AR_LIKE_c, AR_LIKE_c), Any)
 assert_type(np.einsum("i,i->i", AR_LIKE_b, AR_LIKE_i), Any)
 assert_type(np.einsum("i,i,i,i->i", AR_LIKE_b, AR_LIKE_u, AR_LIKE_i, AR_LIKE_c), Any)
 
-assert_type(np.einsum("i,i->i", AR_LIKE_c, AR_LIKE_c, out=OUT_f), npt.NDArray[np.float64])
-assert_type(np.einsum("i,i->i", AR_LIKE_U, AR_LIKE_U, dtype=bool, casting="unsafe", out=OUT_f), npt.NDArray[np.float64])
+assert_type(np.einsum("i,i->i", AR_LIKE_c, AR_LIKE_c, out=OUT_f), _nt.Array[np.float64])
+assert_type(np.einsum("i,i->i", AR_LIKE_U, AR_LIKE_U, dtype=bool, casting="unsafe", out=OUT_f), _nt.Array[np.float64])
 assert_type(np.einsum("i,i->i", AR_LIKE_f, AR_LIKE_f, dtype="c16"), Any)
 assert_type(np.einsum("i,i->i", AR_LIKE_U, AR_LIKE_U, dtype=bool, casting="unsafe"), Any)
 

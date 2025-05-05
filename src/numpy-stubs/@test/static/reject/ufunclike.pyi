@@ -1,10 +1,10 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-AR_c: npt.NDArray[np.complex128]
-AR_m: npt.NDArray[np.timedelta64]
-AR_M: npt.NDArray[np.datetime64]
-AR_O: npt.NDArray[np.object_]
+AR_c: _nt.Array[np.complex128]
+AR_m: _nt.Array[np.timedelta64]
+AR_M: _nt.Array[np.datetime64]
+AR_O: _nt.Array[np.object_]
 
 np.fix(AR_c)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.fix(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]

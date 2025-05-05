@@ -1,12 +1,12 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 ###
 
-AR_i: npt.NDArray[np.int64]
-AR_f: npt.NDArray[np.float64]
-AR_m: npt.NDArray[np.timedelta64]
-AR_U: npt.NDArray[np.str_]
+AR_i: _nt.Array[np.int64]
+AR_f: _nt.Array[np.float64]
+AR_m: _nt.Array[np.timedelta64]
+AR_U: _nt.Array[np.str_]
 
 ###
 

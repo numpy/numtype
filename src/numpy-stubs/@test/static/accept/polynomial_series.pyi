@@ -4,7 +4,6 @@ from typing import TypeAlias, assert_type
 import _numtype as _nt
 import numpy as np
 import numpy.polynomial as npp
-import numpy.typing as npt
 
 _Float64_1d: TypeAlias = _nt.Array1D[np.float64]
 _Float64_nd: TypeAlias = _nt.Array[np.float64]
@@ -15,9 +14,9 @@ _ComplexFloating_nd: TypeAlias = _nt.Array[np.complexfloating]
 _Object_1d: TypeAlias = _nt.Array1D[np.object_]
 _Object_nd: TypeAlias = _nt.Array[np.object_]
 
-AR_b: npt.NDArray[np.bool]
-AR_u4: npt.NDArray[np.uint32]
-AR_i8: npt.NDArray[np.int64]
+AR_b: _nt.Array[np.bool]
+AR_u4: _nt.Array[np.uint32]
+AR_i8: _nt.Array[np.int64]
 AR_f8: _Float64_nd
 AR_c16: _Complex128_nd
 AR_O: _Object_nd

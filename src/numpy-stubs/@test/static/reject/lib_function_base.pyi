@@ -1,17 +1,15 @@
-from typing import Any
-
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-AR_f8: npt.NDArray[np.float64]
-AR_c16: npt.NDArray[np.complex128]
-AR_m: npt.NDArray[np.timedelta64]
-AR_M: npt.NDArray[np.datetime64]
-AR_O: npt.NDArray[np.object_]
-AR_b_list: list[npt.NDArray[np.bool]]
+AR_f8: _nt.Array[np.float64]
+AR_c16: _nt.Array[np.complex128]
+AR_m: _nt.Array[np.timedelta64]
+AR_M: _nt.Array[np.datetime64]
+AR_O: _nt.Array[np.object_]
+AR_b_list: list[_nt.Array[np.bool]]
 
-def fn_none_i(a: None, /) -> npt.NDArray[Any]: ...
-def fn_ar_i(a: npt.NDArray[np.float64], posarg: int, /) -> npt.NDArray[Any]: ...
+def fn_none_i(a: None, /) -> _nt.Array: ...
+def fn_ar_i(a: _nt.Array[np.float64], posarg: int, /) -> _nt.Array: ...
 
 np.angle(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.unwrap(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]

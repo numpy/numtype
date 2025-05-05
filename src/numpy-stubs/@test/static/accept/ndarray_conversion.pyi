@@ -1,14 +1,14 @@
 from typing import Any, assert_type
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-b1_0d: np.ndarray[tuple[()], np.dtype[np.bool]]
-u2_1d: np.ndarray[tuple[int], np.dtype[np.uint16]]
-i4_2d: np.ndarray[tuple[int, int], np.dtype[np.int32]]
-f8_3d: np.ndarray[tuple[int, int, int], np.dtype[np.float64]]
-cG_4d: np.ndarray[tuple[int, int, int, int], np.dtype[np.clongdouble]]
-i0_nd: npt.NDArray[np.int_]
+b1_0d: _nt.Array0D[np.bool]
+u2_1d: _nt.Array1D[np.uint16]
+i4_2d: _nt.Array2D[np.int32]
+f8_3d: _nt.Array3D[np.float64]
+cG_4d: _nt.Array4D[np.clongdouble]
+i0_nd: _nt.Array[np.intp]
 
 # item
 assert_type(i0_nd.item(), int)
@@ -38,42 +38,39 @@ assert_type(i0_nd.tolist(), Any)
 # dumps is pretty simple
 
 # astype
-assert_type(i0_nd.astype("float"), npt.NDArray[Any])
-assert_type(i0_nd.astype(float), npt.NDArray[Any])
-assert_type(i0_nd.astype(np.float64), npt.NDArray[np.float64])
-assert_type(i0_nd.astype(np.float64, "K"), npt.NDArray[np.float64])
-assert_type(i0_nd.astype(np.float64, "K", "unsafe"), npt.NDArray[np.float64])
-assert_type(i0_nd.astype(np.float64, "K", "unsafe", True), npt.NDArray[np.float64])
-assert_type(i0_nd.astype(np.float64, "K", "unsafe", True, True), npt.NDArray[np.float64])
+assert_type(i0_nd.astype("float"), _nt.Array)
+assert_type(i0_nd.astype(float), _nt.Array)
+assert_type(i0_nd.astype(np.float64), _nt.Array[np.float64])
+assert_type(i0_nd.astype(np.float64, "K"), _nt.Array[np.float64])
+assert_type(i0_nd.astype(np.float64, "K", "unsafe"), _nt.Array[np.float64])
+assert_type(i0_nd.astype(np.float64, "K", "unsafe", True), _nt.Array[np.float64])
+assert_type(i0_nd.astype(np.float64, "K", "unsafe", True, True), _nt.Array[np.float64])
 
-assert_type(np.astype(i0_nd, np.float64), npt.NDArray[np.float64])
+assert_type(np.astype(i0_nd, np.float64), _nt.Array[np.float64])
 
-assert_type(i4_2d.astype(np.uint16), np.ndarray[tuple[int, int], np.dtype[np.uint16]])
-assert_type(np.astype(i4_2d, np.uint16), np.ndarray[tuple[int, int], np.dtype[np.uint16]])
-assert_type(f8_3d.astype(np.int16), np.ndarray[tuple[int, int, int], np.dtype[np.int16]])
-assert_type(np.astype(f8_3d, np.int16), np.ndarray[tuple[int, int, int], np.dtype[np.int16]])
+assert_type(i4_2d.astype(np.uint16), _nt.Array2D[np.uint16])
+assert_type(np.astype(i4_2d, np.uint16), _nt.Array2D[np.uint16])
+assert_type(f8_3d.astype(np.int16), _nt.Array3D[np.int16])
+assert_type(np.astype(f8_3d, np.int16), _nt.Array3D[np.int16])
 
 # byteswap
-assert_type(i0_nd.byteswap(), npt.NDArray[np.int_])
-assert_type(i0_nd.byteswap(True), npt.NDArray[np.int_])
+assert_type(i0_nd.byteswap(), _nt.Array[np.int_])
+assert_type(i0_nd.byteswap(True), _nt.Array[np.int_])
 
 # copy
-assert_type(i0_nd.copy(), npt.NDArray[np.int_])
-assert_type(i0_nd.copy("C"), npt.NDArray[np.int_])
+assert_type(i0_nd.copy(), _nt.Array[np.int_])
+assert_type(i0_nd.copy("C"), _nt.Array[np.int_])
 
-assert_type(i0_nd.view(), npt.NDArray[np.int_])
-assert_type(i0_nd.view(np.float64), npt.NDArray[np.float64])
-assert_type(i0_nd.view(float), npt.NDArray[Any])
-assert_type(
-    i0_nd.view(np.float64, np.matrix),
-    np.matrix[tuple[int, int], np.dtype[np.float64]],
-)
+assert_type(i0_nd.view(), _nt.Array[np.int_])
+assert_type(i0_nd.view(np.float64), _nt.Array[np.float64])
+assert_type(i0_nd.view(float), _nt.Array)
+assert_type(i0_nd.view(np.float64, np.matrix), _nt.Matrix[np.float64])
 
 # getfield
-assert_type(i0_nd.getfield("float"), npt.NDArray[Any])
-assert_type(i0_nd.getfield(float), npt.NDArray[Any])
-assert_type(i0_nd.getfield(np.float64), npt.NDArray[np.float64])
-assert_type(i0_nd.getfield(np.float64, 8), npt.NDArray[np.float64])
+assert_type(i0_nd.getfield("float"), _nt.Array)
+assert_type(i0_nd.getfield(float), _nt.Array)
+assert_type(i0_nd.getfield(np.float64), _nt.Array[np.float64])
+assert_type(i0_nd.getfield(np.float64, 8), _nt.Array[np.float64])
 
 # setflags does not return a value
 # fill does not return a value

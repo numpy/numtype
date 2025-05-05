@@ -1,17 +1,17 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 b_ = np.bool()
 dt = np.datetime64(0, "D")
 td = np.timedelta64(0, "D")
 
-AR_b: npt.NDArray[np.bool]
-AR_u: npt.NDArray[np.uint32]
-AR_i: npt.NDArray[np.int64]
-AR_f: npt.NDArray[np.longdouble]
-AR_c: npt.NDArray[np.complex128]
-AR_m: npt.NDArray[np.timedelta64]
-AR_M: npt.NDArray[np.datetime64]
+AR_b: _nt.Array[np.bool]
+AR_u: _nt.Array[np.uint32]
+AR_i: _nt.Array[np.int64]
+AR_f: _nt.Array[np.longdouble]
+AR_c: _nt.Array[np.complex128]
+AR_m: _nt.Array[np.timedelta64]
+AR_M: _nt.Array[np.datetime64]
 
 AR_LIKE_b: list[bool]
 AR_LIKE_u: list[np.uint32]
@@ -22,7 +22,7 @@ AR_LIKE_m: list[np.timedelta64]
 AR_LIKE_M: list[np.datetime64]
 
 u8: np.uint64
-i4_nd: npt.NDArray[np.int32]
+i4_nd: _nt.Array[np.int32]
 
 # Array subtraction
 

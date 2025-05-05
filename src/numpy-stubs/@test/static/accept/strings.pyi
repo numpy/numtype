@@ -2,12 +2,11 @@ from typing import TypeAlias, assert_type
 
 import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
-_BoolArray: TypeAlias = npt.NDArray[np.bool_]
-_IntArray: TypeAlias = npt.NDArray[np.int_]
-_BytesArray: TypeAlias = npt.NDArray[np.bytes_]
-_StrArray: TypeAlias = npt.NDArray[np.str_]
+_BoolArray: TypeAlias = _nt.Array[np.bool_]
+_IntArray: TypeAlias = _nt.Array[np.int_]
+_BytesArray: TypeAlias = _nt.Array[np.bytes_]
+_StrArray: TypeAlias = _nt.Array[np.str_]
 
 AR_S: _BytesArray
 AR_U: _StrArray

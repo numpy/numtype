@@ -2,11 +2,11 @@ import contextlib
 from collections.abc import Callable
 from typing import assert_type
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 from numpy._core.arrayprint import _FormatOptions
 
-AR: npt.NDArray[np.int64]
+AR: _nt.Array[np.int64]
 func_float: Callable[[np.floating], str]
 func_int: Callable[[np.integer], str]
 

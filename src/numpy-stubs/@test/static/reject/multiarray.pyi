@@ -1,16 +1,16 @@
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 AR_LIKE_f: list[float]
 
 i8: np.int64
 M: np.datetime64
 
-AR_b: npt.NDArray[np.bool]
-AR_u1: npt.NDArray[np.uint8]
-AR_i8: npt.NDArray[np.int64]
-AR_f8: npt.NDArray[np.float64]
-AR_M: npt.NDArray[np.datetime64]
+AR_b: _nt.Array[np.bool]
+AR_u1: _nt.Array[np.uint8]
+AR_i8: _nt.Array[np.int64]
+AR_f8: _nt.Array[np.float64]
+AR_M: _nt.Array[np.datetime64]
 
 def func(a: int) -> None: ...
 
