@@ -2,6 +2,8 @@
 
 # ruff: noqa: PLR0916, PLR6301, ERA001, D101, D102, DOC201
 
+from __future__ import annotations
+
 import abc
 import difflib
 import functools
@@ -12,6 +14,7 @@ import textwrap
 from collections.abc import Callable, Generator, Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
 from typing import (
+    TYPE_CHECKING,
     Any,
     ClassVar,
     Final,
@@ -26,6 +29,9 @@ from typing_extensions import override
 
 import numpy as np
 import numpy.typing as npt
+
+if TYPE_CHECKING:
+    import _numtype as _nt
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -1139,10 +1145,7 @@ class ScalarOps(TestGen):
 
 class NDArrayOps(TestGen):
     testname = "ndarray_{}"
-    numpy_imports_extra: tuple[str, ...] = (
-        "import _numtype as _nt",
-        "import numpy.typing as npt",
-    )
+    numpy_imports_extra: tuple[str, ...] = ("import _numtype as _nt",)
 
     shape: Final[tuple[int, ...]]
     opname: _OpName
@@ -1304,7 +1307,7 @@ class NDArrayOps(TestGen):
         self,
         dtype1: np.dtype,
         dtype2: np.dtype,
-    ) -> tuple[npt.NDArray[Any], npt.NDArray[Any]]:
+    ) -> tuple[_nt.Array, _nt.Array]:
         arr1 = np.ones(self.shape, dtype=dtype1)
         arr2 = np.ones(self.shape, dtype=dtype2)
 
@@ -1496,7 +1499,7 @@ class NDArrayOps(TestGen):
             if len(dtypes) == 1:
                 array_expr = _array_expr_single(dtypes[0], npt=True)
             else:
-                array_expr = f"npt.NDArray[{self._abstract_expr(label)}]"
+                array_expr = f"_nt.Array[{self._abstract_expr(label)}]"
 
             yield f"{label}_nd", array_expr
 

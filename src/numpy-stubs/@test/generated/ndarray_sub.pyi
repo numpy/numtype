@@ -1,9 +1,8 @@
-# @generated 2025-05-05T19:48:40Z with tool/testgen.py
+# @generated 2025-05-05T23:12:15Z with tool/testgen.py
 from typing import assert_type
 
 import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 
 ###
 
@@ -26,13 +25,13 @@ cld_nd: _nt.Array[np.clongdouble]
 M8_nd: _nt.Array[np.datetime64]
 m8_nd: _nt.Array[np.timedelta64]
 O_nd: _nt.Array[np.object_]
-i_nd: npt.NDArray[np.signedinteger]
-u_nd: npt.NDArray[np.unsignedinteger]
-f_nd: npt.NDArray[np.floating]
-c_nd: npt.NDArray[np.complexfloating]
-iu_nd: npt.NDArray[np.integer]
-fc_nd: npt.NDArray[np.inexact]
-iufc_nd: npt.NDArray[np.number]
+i_nd: _nt.Array[np.signedinteger]
+u_nd: _nt.Array[np.unsignedinteger]
+f_nd: _nt.Array[np.floating]
+c_nd: _nt.Array[np.complexfloating]
+iu_nd: _nt.Array[np.integer]
+fc_nd: _nt.Array[np.inexact]
+iufc_nd: _nt.Array[np.number]
 
 b_py: bool
 i_py: int
