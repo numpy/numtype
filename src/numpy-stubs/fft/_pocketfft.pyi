@@ -100,28 +100,28 @@ def irfftn(
 def fft2(
     a: npt.ArrayLike,
     s: Sequence[int] | None = None,
-    axes: Sequence[int] | None = None,
+    axes: Sequence[int] | None = (-2, -1),
     norm: _NormKind = None,
     out: _nt.Array[np.complex128] | None = None,
 ) -> _nt.Array[np.complex128]: ...
 def ifft2(
     a: npt.ArrayLike,
     s: Sequence[int] | None = None,
-    axes: Sequence[int] | None = None,
+    axes: Sequence[int] | None = (-2, -1),
     norm: _NormKind = None,
     out: _nt.Array[np.complex128] | None = None,
 ) -> _nt.Array[np.complex128]: ...
 def rfft2(
     a: npt.ArrayLike,
     s: Sequence[int] | None = None,
-    axes: Sequence[int] | None = None,
+    axes: Sequence[int] | None = (-2, -1),
     norm: _NormKind = None,
     out: _nt.Array[np.complex128] | None = None,
 ) -> _nt.Array[np.complex128]: ...
 def irfft2(
     a: npt.ArrayLike,
     s: Sequence[int] | None = None,
-    axes: Sequence[int] | None = None,
+    axes: Sequence[int] | None = (-2, -1),
     norm: _NormKind = None,
     out: _nt.Array[np.float64] | None = None,
 ) -> _nt.Array[np.float64]: ...
