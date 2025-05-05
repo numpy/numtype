@@ -5,13 +5,33 @@
 import decimal
 import fractions
 from collections.abc import Sequence
-from typing import Any, Never, TypeAlias, type_check_only
+from typing import Any, TypeAlias, type_check_only
 from typing_extensions import Protocol, TypeAliasType, TypeVar
 
 import numpy as np
 from numpy._typing import _NestedSequence
 
 from . import op as op
+from ._array import (
+    Array as Array,
+    Array0D as Array0D,
+    Array1D as Array1D,
+    Array2D as Array2D,
+    Array3D as Array3D,
+    Array4D as Array4D,
+    MArray as MArray,
+    MArray0D as MArray0D,
+    MArray1D as MArray1D,
+    MArray2D as MArray2D,
+    MArray3D as MArray3D,
+    Matrix as Matrix,
+    StringArray as StringArray,
+    StringArray0D as StringArray0D,
+    StringArray1D as StringArray1D,
+    StringArray2D as StringArray2D,
+    StringArray3D as StringArray3D,
+    StringArrayND as StringArrayND,
+)
 from ._dtype import (
     ToDType as ToDType,
     ToDTypeBool as ToDTypeBool,
@@ -135,12 +155,9 @@ from ._shape import (
 # Type parameters
 
 _T = TypeVar("_T")
-_ShapeT = TypeVar("_ShapeT", bound=Shape, default=Shape)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=Shape, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
-_ScalarT0 = TypeVar("_ScalarT0", bound=np.generic, default=Any)
-_NaT = TypeVar("_NaT", default=Never)
 _NaT0 = TypeVar("_NaT0", default=Any)
 _NaT_co = TypeVar("_NaT_co", covariant=True)
 _ToT = TypeVar("_ToT")
@@ -194,55 +211,6 @@ SequenceND: TypeAlias = _T | _NestedSequence[_T]
 Sequence1ND: TypeAlias = _NestedSequence[_T]
 Sequence2ND: TypeAlias = Sequence[_NestedSequence[_T]]
 Sequence3ND: TypeAlias = Sequence[Sequence[_NestedSequence[_T]]]
-
-###
-# Shape-typed array aliases
-
-Array = TypeAliasType("Array", np.ndarray[_ShapeT, np.dtype[_ScalarT0]], type_params=(_ScalarT0, _ShapeT))
-Array0D = TypeAliasType("Array0D", np.ndarray[Shape0, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-Array1D = TypeAliasType("Array1D", np.ndarray[Shape1, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-Array2D = TypeAliasType("Array2D", np.ndarray[Shape2, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-Array3D = TypeAliasType("Array3D", np.ndarray[Shape3, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-Array4D = TypeAliasType("Array4D", np.ndarray[Shape4, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-
-MArray = TypeAliasType("MArray", np.ma.MaskedArray[_ShapeT, np.dtype[_ScalarT0]], type_params=(_ScalarT0, _ShapeT))
-MArray0D = TypeAliasType("MArray0D", np.ma.MaskedArray[Shape0, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-MArray1D = TypeAliasType("MArray1D", np.ma.MaskedArray[Shape1, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-MArray2D = TypeAliasType("MArray2D", np.ma.MaskedArray[Shape2, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-MArray3D = TypeAliasType("MArray3D", np.ma.MaskedArray[Shape3, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-
-Matrix = TypeAliasType("Matrix", np.matrix[Shape2, np.dtype[_ScalarT0]], type_params=(_ScalarT0,))
-
-StringArray = TypeAliasType(
-    "StringArray",
-    np.ndarray[_ShapeT, np.dtypes.StringDType[_NaT]],
-    type_params=(_ShapeT, _NaT),
-)
-StringArray0D = TypeAliasType(
-    "StringArray0D",
-    np.ndarray[Shape0, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
-StringArray1D = TypeAliasType(
-    "StringArray1D",
-    np.ndarray[Shape1, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
-StringArray2D = TypeAliasType(
-    "StringArray2D",
-    np.ndarray[Shape2, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
-StringArray3D = TypeAliasType(
-    "StringArray3D",
-    np.ndarray[Shape3, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
-StringArrayND = TypeAliasType(
-    "StringArrayND",
-    np.ndarray[Shape, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
 
 ###
 # helper aliases
