@@ -71,8 +71,8 @@ _SafeScalarT = TypeVar("_SafeScalarT", bound=_nt.co_complex | np.timedelta64 | n
 
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
 _ArrayT_co = TypeVar("_ArrayT_co", bound=_nt.Array, default=_nt.Array, covariant=True)
-_Array1T = TypeVar("_Array1T", bound=_nt.Array[Any, _nt.Shape1_])
-_Array2T = TypeVar("_Array2T", bound=_nt.Array[Any, _nt.Shape2_])
+_Array1T = TypeVar("_Array1T", bound=_nt.Array[Any, _nt.Shape1N])
+_Array2T = TypeVar("_Array2T", bound=_nt.Array[Any, _nt.Shape2N])
 
 ###
 

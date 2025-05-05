@@ -16,17 +16,17 @@ _SCT1 = TypeVar("_SCT1", bound=np.generic)
 
 _ArrayT = TypeVar("_ArrayT", bound=NDArray[Any])
 
-_Array1T = TypeVar("_Array1T", bound=np.ndarray[_nt.Shape1_, np.dtype])
-_Array1T0 = TypeVar("_Array1T0", bound=np.ndarray[_nt.Shape1_, np.dtype])
-_Array1T1 = TypeVar("_Array1T1", bound=np.ndarray[_nt.Shape1_, np.dtype])
+_Array1T = TypeVar("_Array1T", bound=np.ndarray[_nt.Shape1N, np.dtype])
+_Array1T0 = TypeVar("_Array1T0", bound=np.ndarray[_nt.Shape1N, np.dtype])
+_Array1T1 = TypeVar("_Array1T1", bound=np.ndarray[_nt.Shape1N, np.dtype])
 
-_Array2T = TypeVar("_Array2T", bound=np.ndarray[_nt.Shape2_, np.dtype])
-_Array2T0 = TypeVar("_Array2T0", bound=np.ndarray[_nt.Shape2_, np.dtype])
-_Array2T1 = TypeVar("_Array2T1", bound=np.ndarray[_nt.Shape2_, np.dtype])
+_Array2T = TypeVar("_Array2T", bound=np.ndarray[_nt.Shape2N, np.dtype])
+_Array2T0 = TypeVar("_Array2T0", bound=np.ndarray[_nt.Shape2N, np.dtype])
+_Array2T1 = TypeVar("_Array2T1", bound=np.ndarray[_nt.Shape2N, np.dtype])
 
-_Array3T = TypeVar("_Array3T", bound=np.ndarray[_nt.Shape3_, np.dtype])
-_Array3T0 = TypeVar("_Array3T0", bound=np.ndarray[_nt.Shape3_, np.dtype])
-_Array3T1 = TypeVar("_Array3T1", bound=np.ndarray[_nt.Shape3_, np.dtype])
+_Array3T = TypeVar("_Array3T", bound=np.ndarray[_nt.Shape3N, np.dtype])
+_Array3T0 = TypeVar("_Array3T0", bound=np.ndarray[_nt.Shape3N, np.dtype])
+_Array3T1 = TypeVar("_Array3T1", bound=np.ndarray[_nt.Shape3N, np.dtype])
 
 ###
 

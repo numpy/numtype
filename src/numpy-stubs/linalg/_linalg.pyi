@@ -51,7 +51,7 @@ _SafeInexact: TypeAlias = _SafeFloating | np.complex64 | np.complex128
 
 _T = TypeVar("_T")
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array[Any])
-_Shape2NDT = TypeVar("_Shape2NDT", bound=_nt.Shape2_)
+_Shape2NDT = TypeVar("_Shape2NDT", bound=_nt.Shape2N)
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _IntegerT = TypeVar("_IntegerT", bound=np.integer)
@@ -131,7 +131,7 @@ _ToUnsafe64_3nd: TypeAlias = _nt._ToArray2_3nd[
     _nt.inexact64 | _nt.co_integer | np.character[Any], complex | _nt._PyCharacter
 ]
 
-_Array2ND: TypeAlias = _nt.Array[_ScalarT, _nt.Shape2_]
+_Array2ND: TypeAlias = _nt.Array[_ScalarT, _nt.Shape2N]
 
 _LstSqResult: TypeAlias = tuple[_nt.Array[_ScalarT], _nt.Array[_FloatingT], np.int32, _nt.Array[_FloatingT]]
 

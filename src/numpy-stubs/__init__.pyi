@@ -629,7 +629,7 @@ _NumericArrayT = TypeVar("_NumericArrayT", bound=NDArray[number | timedelta64 | 
 
 _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, covariant=True)
-_ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=_nt.Shape1_)
+_ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=_nt.Shape1N)
 _1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], *tuple[L[1], ...]])  # TODO(jorenham): remove
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
@@ -2055,7 +2055,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload  # == 1-d
     def __iter__(self: _nt.Array1D[_ScalarT], /) -> Iterator[_ScalarT]: ...
     @overload  # >= 2-d
-    def __iter__(self: ndarray[_nt.Shape2_, dtype[_ScalarT]], /) -> Iterator[NDArray[_ScalarT]]: ...
+    def __iter__(self: ndarray[_nt.Shape2N, dtype[_ScalarT]], /) -> Iterator[NDArray[_ScalarT]]: ...
     @overload  # ?-d
     def __iter__(self, /) -> Iterator[Any]: ...
 
@@ -3790,7 +3790,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         *sizes5_: CanIndex,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> _nt.Array[Self, _nt.Shape4_]: ...
+    ) -> _nt.Array[Self, _nt.Shape4N]: ...
 
     #
     @overload
