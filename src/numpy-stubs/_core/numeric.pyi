@@ -642,7 +642,7 @@ def ones(
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> np.ndarray[_nt.Shape1, _DTypeT]: ...
+) -> np.ndarray[_nt.Rank1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def ones(
     shape: _ShapeLike1D,
@@ -714,7 +714,7 @@ def ones(
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> np.ndarray[_nt.Shape, _DTypeT]: ...
+) -> np.ndarray[Any, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def ones(
     shape: _ShapeLike,
@@ -796,7 +796,7 @@ def full(
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> np.ndarray[_nt.Shape1, _DTypeT]: ...
+) -> np.ndarray[_nt.Rank1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def full(
     shape: _ShapeLike1D,
@@ -976,7 +976,7 @@ def full(
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> np.ndarray[_nt.Shape, _DTypeT]: ...
+) -> np.ndarray[Any, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def full(
     shape: _ShapeLike,
@@ -1220,7 +1220,7 @@ def zeros_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
 @overload  # unknown shape, given dtype
-def zeros_like(  # type: ignore[overload-overlap]
+def zeros_like(
     a: object,
     dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderKACF = "K",
@@ -1228,7 +1228,7 @@ def zeros_like(  # type: ignore[overload-overlap]
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ndarray[_nt.Shape, _DTypeT]: ...
+) -> np.ndarray[Any, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def zeros_like(
     a: object,
@@ -1522,7 +1522,7 @@ def ones_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
 @overload  # unknown shape, given dtype
-def ones_like(  # type: ignore[overload-overlap]
+def ones_like(
     a: object,
     dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderKACF = "K",
@@ -1530,7 +1530,7 @@ def ones_like(  # type: ignore[overload-overlap]
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ndarray[_nt.Shape, _DTypeT]: ...
+) -> np.ndarray[Any, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def ones_like(
     a: object,
@@ -1845,7 +1845,7 @@ def full_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
 @overload  # unknown shape, given dtype
-def full_like(  # type: ignore[overload-overlap]
+def full_like(
     a: object,
     fill_value: object,
     dtype: _DTypeT | _SupportsDType[_DTypeT],
@@ -1854,7 +1854,7 @@ def full_like(  # type: ignore[overload-overlap]
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ndarray[_nt.Shape, _DTypeT]: ...
+) -> np.ndarray[Any, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def full_like(
     a: object,

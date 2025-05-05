@@ -505,7 +505,7 @@ def empty(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> np.ndarray[_nt.Shape1, _DTypeT]: ...
+) -> np.ndarray[_nt.Rank1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def empty(
     shape: _ShapeLike1D,
@@ -561,7 +561,7 @@ def empty(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> np.ndarray[_nt.Shape, _DTypeT]: ...
+) -> np.ndarray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def empty(
     shape: _ShapeLike,
@@ -591,7 +591,7 @@ def zeros(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> np.ndarray[_nt.Shape1, _DTypeT]: ...
+) -> np.ndarray[_nt.Rank1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def zeros(
     shape: _ShapeLike1D,
@@ -647,7 +647,7 @@ def zeros(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> np.ndarray[_nt.Shape, _DTypeT]: ...
+) -> np.ndarray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def zeros(
     shape: _ShapeLike,
@@ -875,7 +875,7 @@ def empty_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
 @overload  # unknown shape, given dtype
-def empty_like(  # type: ignore[overload-overlap]
+def empty_like(
     prototype: object,
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderKACF = "K",
@@ -883,7 +883,7 @@ def empty_like(  # type: ignore[overload-overlap]
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ndarray[_nt.Shape, _DTypeT]: ...
+) -> np.ndarray[Incomplete, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def empty_like(
     prototype: object,
