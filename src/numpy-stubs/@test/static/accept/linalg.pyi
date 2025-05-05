@@ -7,7 +7,7 @@ import numpy.typing as npt
 from numpy.linalg._linalg import EigResult, EighResult, QRResult, SVDResult, SlogdetResult
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_Array2ND: TypeAlias = _nt.Array[_ScalarT, _nt.Shape2_]
+_Array2ND: TypeAlias = _nt.Array[_ScalarT, _nt.Shape2N]
 
 ###
 

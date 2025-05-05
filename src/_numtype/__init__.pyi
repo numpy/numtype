@@ -61,6 +61,22 @@ from ._nep50 import (
     CastsWithInt as CastsWithInt,
     CastsWithScalar as CastsWithScalar,
 )
+from ._rank import (
+    Broadcasts as Broadcasts,
+    BroadcastsTo as BroadcastsTo,
+    Rank as Rank,
+    Rank0 as Rank0,
+    Rank0N as Rank0N,
+    Rank1 as Rank1,
+    Rank1N as Rank1N,
+    Rank2 as Rank2,
+    Rank2N as Rank2N,
+    Rank3 as Rank3,
+    Rank3N as Rank3N,
+    Rank4 as Rank4,
+    Rank4N as Rank4N,
+    _BroadcastableShape as _BroadcastableShape,
+)
 from ._scalar import (
     inexact32 as inexact32,
     inexact64 as inexact64,
@@ -104,14 +120,15 @@ from ._scalar_co import (
 from ._shape import (
     Shape as Shape,
     Shape0 as Shape0,
+    Shape0N as Shape0N,
     Shape1 as Shape1,
-    Shape1_ as Shape1_,
+    Shape1N as Shape1N,
     Shape2 as Shape2,
-    Shape2_ as Shape2_,
+    Shape2N as Shape2N,
     Shape3 as Shape3,
-    Shape3_ as Shape3_,
+    Shape3N as Shape3N,
     Shape4 as Shape4,
-    Shape4_ as Shape4_,
+    Shape4N as Shape4N,
 )
 
 ###
@@ -261,10 +278,10 @@ _ToArray2_3ds: TypeAlias = CanArray3D[_ScalarT] | Sequence[_ToArray2_2ds[_Scalar
 # requires a lower bound on dimensionality, e.g. `_2nd` denotes `ndin` within `[2, n]`
 _ToArray_1nd: TypeAlias = CanLenArrayND[_ScalarT] | Sequence1ND[CanArrayND[_ScalarT]]
 _ToArray2_1nd: TypeAlias = CanLenArrayND[_ScalarT] | Sequence1ND[_ToT | CanArrayND[_ScalarT]]
-_ToArray_2nd: TypeAlias = CanLenArray[_ScalarT, Shape2_] | Sequence[_ToArray_1nd[_ScalarT]]
-_ToArray2_2nd: TypeAlias = CanLenArray[_ScalarT, Shape2_] | Sequence[_ToArray2_1nd[_ScalarT, _ToT]]
-_ToArray_3nd: TypeAlias = CanLenArray[_ScalarT, Shape3_] | Sequence[_ToArray_2nd[_ScalarT]]
-_ToArray2_3nd: TypeAlias = CanLenArray[_ScalarT, Shape3_] | Sequence[_ToArray2_2nd[_ScalarT, _ToT]]
+_ToArray_2nd: TypeAlias = CanLenArray[_ScalarT, Shape2N] | Sequence[_ToArray_1nd[_ScalarT]]
+_ToArray2_2nd: TypeAlias = CanLenArray[_ScalarT, Shape2N] | Sequence[_ToArray2_1nd[_ScalarT, _ToT]]
+_ToArray_3nd: TypeAlias = CanLenArray[_ScalarT, Shape3N] | Sequence[_ToArray_2nd[_ScalarT]]
+_ToArray2_3nd: TypeAlias = CanLenArray[_ScalarT, Shape3N] | Sequence[_ToArray2_2nd[_ScalarT, _ToT]]
 
 ###
 # Non-overlapping scalar- and array-like aliases for all scalar types.
@@ -696,9 +713,9 @@ ToString_3ds = TypeAliasType(
     _CanStringArray[Shape3, _NaT0] | Sequence[ToString_2ds[_NaT0]],
     type_params=(_NaT0,),
 )
-ToString_1nd = TypeAliasType("ToString_1nd", _CanStringArray[Shape1_, _NaT0], type_params=(_NaT0,))
-ToString_2nd = TypeAliasType("ToString_2nd", _CanStringArray[Shape2_, _NaT0], type_params=(_NaT0,))
-ToString_3nd = TypeAliasType("ToString_3nd", _CanStringArray[Shape3_, _NaT0], type_params=(_NaT0,))
+ToString_1nd = TypeAliasType("ToString_1nd", _CanStringArray[Shape1N, _NaT0], type_params=(_NaT0,))
+ToString_2nd = TypeAliasType("ToString_2nd", _CanStringArray[Shape2N, _NaT0], type_params=(_NaT0,))
+ToString_3nd = TypeAliasType("ToString_3nd", _CanStringArray[Shape3N, _NaT0], type_params=(_NaT0,))
 
 # any scalar
 ToGeneric_nd = TypeAliasType("ToGeneric_nd", _ToArray2_nd[np.generic, _PyScalar])
