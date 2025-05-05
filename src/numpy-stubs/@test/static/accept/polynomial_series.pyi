@@ -1,18 +1,19 @@
 from collections.abc import Sequence
 from typing import TypeAlias, assert_type
 
+import _numtype as _nt
 import numpy as np
 import numpy.polynomial as npp
 import numpy.typing as npt
 
-_Float64_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[np.float64]]
-_Float64_nd: TypeAlias = np.ndarray[tuple[int, ...], np.dtype[np.float64]]
-_Floating_nd: TypeAlias = np.ndarray[tuple[int, ...], np.dtype[np.floating]]
-_Complex128_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[np.complex128]]
-_Complex128_nd: TypeAlias = np.ndarray[tuple[int, ...], np.dtype[np.complex128]]
-_ComplexFloating_nd: TypeAlias = np.ndarray[tuple[int, ...], np.dtype[np.complexfloating]]
-_Object_1d: TypeAlias = np.ndarray[tuple[int], np.dtype[np.object_]]
-_Object_nd: TypeAlias = np.ndarray[tuple[int, ...], np.dtype[np.object_]]
+_Float64_1d: TypeAlias = _nt.Array1D[np.float64]
+_Float64_nd: TypeAlias = _nt.Array[np.float64]
+_Floating_nd: TypeAlias = _nt.Array[np.floating]
+_Complex128_1d: TypeAlias = _nt.Array1D[np.complex128]
+_Complex128_nd: TypeAlias = _nt.Array[np.complex128]
+_ComplexFloating_nd: TypeAlias = _nt.Array[np.complexfloating]
+_Object_1d: TypeAlias = _nt.Array1D[np.object_]
+_Object_nd: TypeAlias = _nt.Array[np.object_]
 
 AR_b: npt.NDArray[np.bool]
 AR_u4: npt.NDArray[np.uint32]

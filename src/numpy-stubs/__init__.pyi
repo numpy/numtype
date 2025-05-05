@@ -630,7 +630,6 @@ _NumericArrayT = TypeVar("_NumericArrayT", bound=NDArray[number | timedelta64 | 
 _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, covariant=True)
 _ShapeT_1nd = TypeVar("_ShapeT_1nd", bound=_nt.Shape1N)
-_1NShapeT = TypeVar("_1NShapeT", bound=tuple[L[1], *tuple[L[1], ...]])  # TODO(jorenham): remove
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
 _SelfScalarT = TypeVar("_SelfScalarT", bound=generic)
@@ -1959,7 +1958,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __array__(self, dtype: _DTypeT, /, *, copy: bool | None = None) -> ndarray[_ShapeT_co, _DTypeT]: ...
 
     #
-    def __array_finalize__(self, obj: NDArray[Any] | Any, /) -> None: ...
+    def __array_finalize__(self, obj: _nt.Array[Any] | Any, /) -> None: ...
     def __array_ufunc__(self, ufunc: ufunc, method: _UFuncMethod, /, *inputs: object, **kwargs: object) -> Any: ...
     def __array_function__(
         self,
@@ -2909,12 +2908,25 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def resize(self: ndarray[_ShapeT, Any], new_shape: _ShapeT, /, *, refcheck: py_bool = True) -> None: ...
     @overload
-    def resize(self: _nt.Array1D[Any], n0: CanIndex, /, *, refcheck: py_bool = True) -> None: ...
-    @overload
-    def resize(self: _nt.Array2D[Any], n0: CanIndex, n1: CanIndex, /, *, refcheck: py_bool = True) -> None: ...
+    def resize(self: _nt.Array[Any, _nt.Shape1], n0: CanIndex, /, *, refcheck: py_bool = True) -> None: ...
     @overload
     def resize(
-        self: _nt.Array3D[Any], n0: CanIndex, n1: CanIndex, n2: CanIndex, /, *, refcheck: py_bool = True
+        self: _nt.Array[Any, _nt.Shape2], n0: CanIndex, n1: CanIndex, /, *, refcheck: py_bool = True
+    ) -> None: ...
+    @overload
+    def resize(
+        self: _nt.Array[Any, _nt.Shape3], n0: CanIndex, n1: CanIndex, n2: CanIndex, /, *, refcheck: py_bool = True
+    ) -> None: ...
+    @overload
+    def resize(
+        self: _nt.Array[Any, _nt.Shape4],
+        n0: CanIndex,
+        n1: CanIndex,
+        n2: CanIndex,
+        n3: CanIndex,
+        /,
+        *,
+        refcheck: py_bool = True,
     ) -> None: ...
 
     #
@@ -3271,7 +3283,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def repeat(self, /, repeats: _nt.CoInteger_nd, axis: None = None) -> ndarray[_nt.Shape1, _DTypeT_co]: ...
+    def repeat(self, /, repeats: _nt.CoInteger_nd, axis: None = None) -> ndarray[_nt.Rank1, _DTypeT_co]: ...
     @overload
     def repeat(
         self: ndarray[_AnyShapeT, _DTypeT], /, repeats: _nt.CoInteger_nd, axis: CanIndex
@@ -3719,15 +3731,6 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         order: _OrderACF = "C",
         copy: py_bool | None = None,
     ) -> Self: ...
-    @overload  # ((1, *(1, ...))@_ShapeType)
-    def reshape(
-        self,
-        shape: _1NShapeT,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
-    ) -> ndarray[_1NShapeT, dtype[Self]]: ...
     @overload  # (Sequence[index, ...])  # not recommended
     def reshape(
         self,
@@ -3767,18 +3770,6 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         order: _OrderACF = "C",
         copy: py_bool | None = None,
     ) -> _nt.Array3D[Self]: ...
-    @overload  # _(index, index, index, index)
-    def reshape(
-        self,
-        size1: CanIndex,
-        size2: CanIndex,
-        size3: CanIndex,
-        size4: CanIndex,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
-    ) -> _nt.Array4D[Self]: ...
     @overload  # _(index, index, index, index, *index)  # ndim >= 5
     def reshape(
         self,
@@ -3790,7 +3781,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
         *sizes5_: CanIndex,
         order: _OrderACF = "C",
         copy: py_bool | None = None,
-    ) -> _nt.Array[Self, _nt.Shape4N]: ...
+    ) -> _nt.Array[Self, _nt.Rank4N]: ...
 
     #
     @overload

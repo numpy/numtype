@@ -216,12 +216,12 @@ def _array_expr_single(
             sctype_expr = _join(*sctype_exprs)
 
         if ndim is None and npt:
-            return f"npt.NDArray[{sctype_expr}]"
+            return f"_nt.Array[{sctype_expr}]"
 
         dtype_expr = f"{NP}.dtype[{sctype_expr}]"
 
     if ndim is None:
-        shape_expr = "tuple[int, ...]"
+        shape_expr = "_nt.Rank"
     else:
         shape_expr_args = ", ".join(["int"] * ndim) if ndim else "()"
         shape_expr = f"tuple[{shape_expr_args}]"
@@ -1139,7 +1139,10 @@ class ScalarOps(TestGen):
 
 class NDArrayOps(TestGen):
     testname = "ndarray_{}"
-    numpy_imports_extra: tuple[str, ...] = ("import numpy.typing as npt",)
+    numpy_imports_extra: tuple[str, ...] = (
+        "import _numtype as _nt",
+        "import numpy.typing as npt",
+    )
 
     shape: Final[tuple[int, ...]]
     opname: _OpName
