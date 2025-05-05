@@ -465,8 +465,8 @@ assert_type(def_gen.hypergeometric(I_arr_like, I_arr_like, I_arr_like, size=1), 
 
 assert_type(def_gen.integers(0, 100), np.int64)
 assert_type(def_gen.integers(100), np.int64)
-assert_type(def_gen.integers([100]), np.int64 | _nt.Array[np.int64])
-assert_type(def_gen.integers(0, [100]), np.int64 | _nt.Array[np.int64])
+assert_type(def_gen.integers([100]), int | np.int64 | _nt.Array[np.int64])
+assert_type(def_gen.integers(0, [100]), int | np.int64 | _nt.Array[np.int64])
 
 assert_type(def_gen.integers(2, dtype=bool), bool)
 assert_type(def_gen.integers(0, 2, dtype=bool), bool)
