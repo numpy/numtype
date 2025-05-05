@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 import numpy as np
 import numpy._core.umath as um  # noqa: PLC2701
 
-_ScalarLike: TypeAlias = np.generic | np.ndarray["_nt.Shape0", np.dtype]
+_ScalarLike: TypeAlias = np.generic | np.ndarray["_nt.Rank0", np.dtype]
 
 _EXTRA_SCALARS: Final[tuple[_ScalarLike, ...]] = (
     np.str_(""),
