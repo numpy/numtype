@@ -1,5 +1,4 @@
-from typing import TypeAlias, assert_type
-from typing_extensions import TypeVar
+from typing import assert_type
 
 import _numtype as _nt
 import numpy as np
@@ -13,11 +12,6 @@ AR_LIKE_f: list[float]
 
 ###
 
-_ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_Array1D: TypeAlias = np.ndarray[_nt.Shape1, np.dtype[_ScalarT]]
-
-###
-
 assert_type(np.fix(AR_u), npt.NDArray[np.uint32])
 assert_type(np.fix(AR_LIKE_b), npt.NDArray[np.bool])
 assert_type(np.fix(AR_LIKE_i), npt.NDArray[np.intp])
@@ -25,13 +19,13 @@ assert_type(np.fix(AR_LIKE_f), npt.NDArray[np.float64])
 assert_type(np.fix(AR_LIKE_f, out=AR_U), npt.NDArray[np.str_])
 
 assert_type(np.isposinf(AR_u), npt.NDArray[np.bool])
-assert_type(np.isposinf(AR_LIKE_b), _Array1D[np.bool])
-assert_type(np.isposinf(AR_LIKE_i), _Array1D[np.bool])
-assert_type(np.isposinf(AR_LIKE_f), _Array1D[np.bool])
+assert_type(np.isposinf(AR_LIKE_b), _nt.Array1D[np.bool])
+assert_type(np.isposinf(AR_LIKE_i), _nt.Array1D[np.bool])
+assert_type(np.isposinf(AR_LIKE_f), _nt.Array1D[np.bool])
 assert_type(np.isposinf(AR_LIKE_f, out=AR_U), npt.NDArray[np.str_])
 
 assert_type(np.isneginf(AR_u), npt.NDArray[np.bool])
-assert_type(np.isneginf(AR_LIKE_b), _Array1D[np.bool])
-assert_type(np.isneginf(AR_LIKE_i), _Array1D[np.bool])
-assert_type(np.isneginf(AR_LIKE_f), _Array1D[np.bool])
+assert_type(np.isneginf(AR_LIKE_b), _nt.Array1D[np.bool])
+assert_type(np.isneginf(AR_LIKE_i), _nt.Array1D[np.bool])
+assert_type(np.isneginf(AR_LIKE_f), _nt.Array1D[np.bool])
 assert_type(np.isneginf(AR_LIKE_f, out=AR_U), npt.NDArray[np.str_])
