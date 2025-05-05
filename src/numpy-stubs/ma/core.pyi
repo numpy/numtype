@@ -769,7 +769,7 @@ class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
     def tolist(self) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 # 0D float64 array
-class MaskedConstant(MaskedArray[_nt.Shape0, np.dtype[np.float64]]):
+class MaskedConstant(MaskedArray[_nt.Rank0, np.dtype[np.float64]]):
     def __new__(cls) -> Self: ...
     @override
     def __array_wrap__(  # type: ignore[override]
@@ -778,7 +778,7 @@ class MaskedConstant(MaskedArray[_nt.Shape0, np.dtype[np.float64]]):
         obj: Incomplete,
         context: Incomplete | None = None,
         return_scalar: bool = False,
-    ) -> MaskedArray[_nt.Shape0, np.dtype[np.float64]]: ...
+    ) -> _nt.MArray0D[np.float64]: ...
     @override
     def __format__(self, format_spec: str, /) -> str: ...
 
