@@ -1,11 +1,11 @@
 import ctypes as ct
 import re
 from collections.abc import Callable, Iterable
-from typing import Any, Final, Generic, Self, overload
+from typing import Final, Generic, Self, overload
 from typing_extensions import TypeVar, deprecated, override
 
+import _numtype as _nt
 import numpy as np
-import numpy.typing as npt
 from numpy.ctypeslib import c_intp
 
 ###
@@ -30,9 +30,9 @@ space_re: Final[re.Pattern[str]] = ...
 
 class _ctypes(Generic[_PT_co]):
     @overload
-    def __init__(self: _ctypes[None], /, array: npt.NDArray[Any], ptr: None = None) -> None: ...
+    def __init__(self: _ctypes[None], /, array: _nt.Array, ptr: None = None) -> None: ...
     @overload
-    def __init__(self, /, array: npt.NDArray[Any], ptr: _PT_co) -> None: ...
+    def __init__(self, /, array: _nt.Array, ptr: _PT_co) -> None: ...
 
     #
     @property

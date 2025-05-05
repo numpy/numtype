@@ -1823,7 +1823,7 @@ def datetime_as_string(
 ) -> np.str_: ...
 @overload
 def datetime_as_string(
-    arr: npt.NDArray[np.datetime64],
+    arr: _nt.Array[np.datetime64],
     unit: L["auto"] | _TimeUnit | None = None,
     timezone: _TimeZone = "naive",
     casting: _CastingKind = "same_kind",
