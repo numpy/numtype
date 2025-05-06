@@ -16,8 +16,9 @@ from typing import (
 )
 from typing_extensions import CapsuleType, TypeVar, override
 
+import _numtype as _nt
 import numpy as np
-from numpy._typing import NDArray, _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes
+from numpy._typing import _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes
 
 __all__ = ["BitGenerator", "SeedSequence"]
 
@@ -54,13 +55,13 @@ class _CythonMixin:
 @type_check_only
 class _GenerateStateMixin(_CythonMixin):
     @overload
-    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt32 = ...) -> NDArray[np.uint32]: ...
+    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt32 = ...) -> _nt.Array[np.uint32]: ...
     @overload
-    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt64) -> NDArray[np.uint64]: ...
+    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt64) -> _nt.Array[np.uint64]: ...
     @overload
     def generate_state(
         self, /, n_words: int, dtype: _ToDTypeUInt32 | _ToDTypeUInt64 = ...
-    ) -> NDArray[np.uint32 | np.uint64]: ...
+    ) -> _nt.Array[np.uint32 | np.uint64]: ...
 
 ###
 
@@ -92,7 +93,7 @@ class BitGenerator(_CythonMixin, abc.ABC, Generic[_StateT]):
     @overload
     def random_raw(self, /, size: None = None, output: L[True] = True) -> int: ...
     @overload
-    def random_raw(self, /, size: _ShapeLike, output: L[True] = True) -> NDArray[np.uint64]: ...
+    def random_raw(self, /, size: _ShapeLike, output: L[True] = True) -> _nt.Array[np.uint64]: ...
     @overload
     def random_raw(self, /, size: _ShapeLike | None, output: L[False]) -> None: ...
     @overload
@@ -104,7 +105,7 @@ class ISeedSequence(abc.ABC):
     @abc.abstractmethod
     def generate_state(
         self, /, n_words: int, dtype: _ToDTypeUInt32 | _ToDTypeUInt64 = ...
-    ) -> NDArray[np.uint32 | np.uint64]: ...
+    ) -> _nt.Array[np.uint32 | np.uint64]: ...
 
 class ISpawnableSeedSequence(ISeedSequence, abc.ABC):
     @abc.abstractmethod
@@ -121,8 +122,10 @@ class SeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
     spawn_key: tuple[int, ...]
     pool_size: int
     n_children_spawned: int
-    pool: NDArray[np.uint32]
+    pool: _nt.Array[np.uint32]
 
+    @property
+    def state(self) -> _SeedSeqState: ...
     def __init__(
         self,
         /,
@@ -132,10 +135,5 @@ class SeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
         pool_size: int = 4,
         n_children_spawned: int = ...,
     ) -> None: ...
-
-    #
     @override
     def spawn(self, /, n_children: int) -> list[Self]: ...
-    #
-    @property
-    def state(self) -> _SeedSeqState: ...

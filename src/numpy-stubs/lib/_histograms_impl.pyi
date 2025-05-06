@@ -1,7 +1,9 @@
+from _typeshed import Incomplete
 from collections.abc import Sequence
-from typing import Any, Literal as L, SupportsIndex, TypeAlias
+from typing import Literal as L, SupportsIndex, TypeAlias
 
-from numpy._typing import ArrayLike, NDArray
+import _numtype as _nt
+from numpy._typing import ArrayLike
 
 __all__ = ["histogram", "histogram_bin_edges", "histogramdd"]
 
@@ -16,7 +18,7 @@ def histogram_bin_edges(
     bins: _BinKind | SupportsIndex | ArrayLike = 10,
     range: tuple[float, float] | None = None,
     weights: ArrayLike | None = None,
-) -> NDArray[Any]: ...
+) -> _nt.Array[Incomplete]: ...
 
 #
 def histogram(
@@ -25,7 +27,7 @@ def histogram(
     range: tuple[float, float] | None = None,
     density: bool | None = None,
     weights: ArrayLike | None = None,
-) -> tuple[NDArray[Any], NDArray[Any]]: ...
+) -> tuple[_nt.Array[Incomplete], _nt.Array[Incomplete]]: ...
 
 #
 def histogramdd(
@@ -34,4 +36,4 @@ def histogramdd(
     range: Sequence[tuple[float, float]] | None = None,
     density: bool | None = None,
     weights: ArrayLike | None = None,
-) -> tuple[NDArray[Any], tuple[NDArray[Any], ...]]: ...
+) -> tuple[_nt.Array[Incomplete], tuple[_nt.Array[Incomplete], ...]]: ...

@@ -26,11 +26,11 @@ from typing import (
 from typing_extensions import ParamSpec, TypeVar, TypeVarTuple, Unpack
 from unittest.case import SkipTest
 
+import _numtype as _nt
 import numpy as np
 from numpy._typing import (
     ArrayLike,
     DTypeLike,
-    NDArray,
     _ArrayLikeDT64_co,
     _ArrayLikeNumber_co,
     _ArrayLikeObject_co,
@@ -103,8 +103,8 @@ _WarnLog: TypeAlias = list[warnings.WarningMessage]
 _ToModules: TypeAlias = Iterable[types.ModuleType]
 
 _ComparisonFunc: TypeAlias = Callable[
-    [NDArray[Any], NDArray[Any]],
-    bool | np.bool | np.number | NDArray[np.bool | np.number | np.object_],
+    [_nt.Array, _nt.Array],
+    bool | _nt.co_complex | _nt.Array[_nt.co_complex | np.object_],
 ]
 _StrLike: TypeAlias = str | bytes
 _RegexLike: TypeAlias = _StrLike | Pattern[Any]
@@ -347,7 +347,7 @@ def assert_array_max_ulp(
     b: _ArrayLikeNumber_co,
     maxulp: int = 1,
     dtype: DTypeLike | None = None,
-) -> NDArray[np.floating]: ...
+) -> _nt.Array[np.floating]: ...
 
 #
 @overload
@@ -373,11 +373,7 @@ def assert_no_gc_cycles(func: Callable[_Tss, Any], /, *args: _Tss.args, **kwargs
 
 #
 @overload
-def tempdir(
-    suffix: None = None,
-    prefix: None = None,
-    dir: None = None,
-) -> _GeneratorContextManager[str]: ...
+def tempdir(suffix: None = None, prefix: None = None, dir: None = None) -> _GeneratorContextManager[str]: ...
 @overload
 def tempdir(
     suffix: AnyStr | None = None,

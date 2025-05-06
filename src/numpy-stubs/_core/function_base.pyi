@@ -1,8 +1,10 @@
-from typing import Any, Literal as L, SupportsIndex, TypeAlias, overload
+from _typeshed import Incomplete
+from typing import Literal as L, SupportsIndex, TypeAlias, overload
 from typing_extensions import TypeVar
 
+import _numtype as _nt
 import numpy as np
-from numpy._typing import DTypeLike, NDArray, _ArrayLikeFloat_co, _ArrayLikeNumber_co, _DTypeLike
+from numpy._typing import DTypeLike, _ArrayLikeFloat_co, _ArrayLikeNumber_co, _DTypeLike
 
 __all__ = ["geomspace", "linspace", "logspace"]
 
@@ -25,7 +27,7 @@ def linspace(
     axis: SupportsIndex = 0,
     *,
     device: _Device | None = None,
-) -> NDArray[np.floating]: ...
+) -> _nt.Array[np.floating]: ...
 @overload
 def linspace(
     start: _ArrayLikeNumber_co,
@@ -37,7 +39,7 @@ def linspace(
     axis: SupportsIndex = 0,
     *,
     device: _Device | None = None,
-) -> NDArray[np.inexact]: ...
+) -> _nt.Array[np.inexact]: ...
 @overload
 def linspace(
     start: _ArrayLikeNumber_co,
@@ -49,7 +51,7 @@ def linspace(
     axis: SupportsIndex = 0,
     *,
     device: _Device | None = None,
-) -> NDArray[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def linspace(
     start: _ArrayLikeNumber_co,
@@ -61,7 +63,7 @@ def linspace(
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
     device: _Device | None = None,
-) -> NDArray[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def linspace(
     start: _ArrayLikeNumber_co,
@@ -73,7 +75,7 @@ def linspace(
     axis: SupportsIndex = 0,
     *,
     device: _Device | None = None,
-) -> NDArray[Any]: ...
+) -> _nt.Array[Incomplete]: ...
 @overload
 def linspace(
     start: _ArrayLikeFloat_co,
@@ -85,7 +87,7 @@ def linspace(
     dtype: None = None,
     axis: SupportsIndex = 0,
     device: _Device | None = None,
-) -> tuple[NDArray[np.floating], np.floating]: ...
+) -> tuple[_nt.Array[np.floating], np.floating]: ...
 @overload
 def linspace(
     start: _ArrayLikeNumber_co,
@@ -97,7 +99,7 @@ def linspace(
     dtype: None = None,
     axis: SupportsIndex = 0,
     device: _Device | None = None,
-) -> tuple[NDArray[np.inexact], np.inexact]: ...
+) -> tuple[_nt.Array[np.inexact], np.inexact]: ...
 @overload
 def linspace(
     start: _ArrayLikeNumber_co,
@@ -109,7 +111,7 @@ def linspace(
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
     device: _Device | None = None,
-) -> tuple[NDArray[_ScalarT], _ScalarT]: ...
+) -> tuple[_nt.Array[_ScalarT], _ScalarT]: ...
 @overload
 def linspace(
     start: _ArrayLikeNumber_co,
@@ -121,7 +123,7 @@ def linspace(
     dtype: DTypeLike = ...,
     axis: SupportsIndex = 0,
     device: _Device | None = None,
-) -> tuple[NDArray[Any], Any]: ...
+) -> tuple[_nt.Array[Incomplete], Incomplete]: ...
 
 #
 @overload
@@ -133,7 +135,7 @@ def logspace(
     base: _ArrayLikeFloat_co = 10.0,
     dtype: None = None,
     axis: SupportsIndex = 0,
-) -> NDArray[np.floating]: ...
+) -> _nt.Array[np.floating]: ...
 @overload
 def logspace(
     start: _ArrayLikeNumber_co,
@@ -143,7 +145,7 @@ def logspace(
     base: _ArrayLikeNumber_co = 10.0,
     dtype: None = None,
     axis: SupportsIndex = 0,
-) -> NDArray[np.inexact]: ...
+) -> _nt.Array[np.inexact]: ...
 @overload
 def logspace(
     start: _ArrayLikeNumber_co,
@@ -153,7 +155,7 @@ def logspace(
     base: _ArrayLikeNumber_co,
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
-) -> NDArray[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def logspace(
     start: _ArrayLikeNumber_co,
@@ -164,7 +166,7 @@ def logspace(
     *,
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
-) -> NDArray[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def logspace(
     start: _ArrayLikeNumber_co,
@@ -174,7 +176,7 @@ def logspace(
     base: _ArrayLikeNumber_co = 10.0,
     dtype: DTypeLike = ...,
     axis: SupportsIndex = 0,
-) -> NDArray[Any]: ...
+) -> _nt.Array[Incomplete]: ...
 
 #
 @overload
@@ -185,7 +187,7 @@ def geomspace(
     endpoint: bool = True,
     dtype: None = None,
     axis: SupportsIndex = 0,
-) -> NDArray[np.floating]: ...
+) -> _nt.Array[np.floating]: ...
 @overload
 def geomspace(
     start: _ArrayLikeNumber_co,
@@ -194,7 +196,7 @@ def geomspace(
     endpoint: bool = True,
     dtype: None = None,
     axis: SupportsIndex = 0,
-) -> NDArray[np.inexact]: ...
+) -> _nt.Array[np.inexact]: ...
 @overload
 def geomspace(
     start: _ArrayLikeNumber_co,
@@ -203,7 +205,7 @@ def geomspace(
     endpoint: bool,
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
-) -> NDArray[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def geomspace(
     start: _ArrayLikeNumber_co,
@@ -213,7 +215,7 @@ def geomspace(
     *,
     dtype: _DTypeLike[_ScalarT],
     axis: SupportsIndex = 0,
-) -> NDArray[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def geomspace(
     start: _ArrayLikeNumber_co,
@@ -222,7 +224,7 @@ def geomspace(
     endpoint: bool = True,
     dtype: DTypeLike | None = None,
     axis: SupportsIndex = 0,
-) -> NDArray[Any]: ...
+) -> _nt.Array[Incomplete]: ...
 
 #
 def add_newdoc(

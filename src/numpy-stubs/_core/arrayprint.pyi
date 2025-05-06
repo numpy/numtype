@@ -1,11 +1,12 @@
 from collections.abc import Callable
 from contextlib import _GeneratorContextManager
-from typing import Any, Final, Literal, SupportsIndex, TypeAlias, TypedDict, overload, type_check_only
+from typing import Final, Literal, SupportsIndex, TypeAlias, TypedDict, overload, type_check_only
 from typing_extensions import deprecated
 
+import _numtype as _nt
 import numpy as np
 from numpy._globals import _NoValueType
-from numpy._typing import NDArray, _CharLike_co, _FloatLike_co
+from numpy._typing import _CharLike_co, _FloatLike_co
 
 __all__ = [
     "array2string",
@@ -25,7 +26,7 @@ _Sign: TypeAlias = Literal["-", "+", " "]
 _Trim: TypeAlias = Literal["k", ".", "0", "-"]
 _Legacy: TypeAlias = Literal["1.13", "1.21", "1.25", "2.1", False]
 _LegacyNoStyle: TypeAlias = Literal["1.21", "1.25", "2.1", False]
-_ReprFunc: TypeAlias = Callable[[NDArray[Any]], str]
+_ReprFunc: TypeAlias = Callable[[_nt.Array], str]
 
 @type_check_only
 class _FormatDict(TypedDict, total=False):
@@ -104,7 +105,7 @@ def printoptions(
 # public numpy export
 @overload  # no style
 def array2string(
-    a: NDArray[Any],
+    a: _nt.Array,
     max_line_width: int | None = None,
     precision: SupportsIndex | None = None,
     suppress_small: bool | None = None,
@@ -122,7 +123,7 @@ def array2string(
 ) -> str: ...
 @overload  # style=<given> (positional), legacy="1.13"
 def array2string(
-    a: NDArray[Any],
+    a: _nt.Array,
     max_line_width: int | None,
     precision: SupportsIndex | None,
     suppress_small: bool | None,
@@ -140,7 +141,7 @@ def array2string(
 ) -> str: ...
 @overload  # style=<given> (keyword), legacy="1.13"
 def array2string(
-    a: NDArray[Any],
+    a: _nt.Array,
     max_line_width: int | None = None,
     precision: SupportsIndex | None = None,
     suppress_small: bool | None = None,
@@ -159,7 +160,7 @@ def array2string(
 @overload  # style=<given> (positional), legacy!="1.13"
 @deprecated("'style' argument is deprecated and no longer functional except in 1.13 'legacy' mode")
 def array2string(
-    a: NDArray[Any],
+    a: _nt.Array,
     max_line_width: int | None,
     precision: SupportsIndex | None,
     suppress_small: bool | None,
@@ -178,7 +179,7 @@ def array2string(
 @overload  # style=<given> (keyword), legacy="1.13"
 @deprecated("'style' argument is deprecated and no longer functional except in 1.13 'legacy' mode")
 def array2string(
-    a: NDArray[Any],
+    a: _nt.Array,
     max_line_width: int | None = None,
     precision: SupportsIndex | None = None,
     suppress_small: bool | None = None,
@@ -222,7 +223,7 @@ def format_float_positional(
 
 # public numpy export
 def array_repr(
-    arr: NDArray[Any],
+    arr: _nt.Array,
     max_line_width: int | None = None,
     precision: SupportsIndex | None = None,
     suppress_small: bool | None = None,
@@ -230,7 +231,7 @@ def array_repr(
 
 # public numpy export
 def array_str(
-    a: NDArray[Any],
+    a: _nt.Array,
     max_line_width: int | None = None,
     precision: SupportsIndex | None = None,
     suppress_small: bool | None = None,
