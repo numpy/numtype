@@ -188,14 +188,7 @@ _UFuncMethod: TypeAlias = L["__call__", "reduce", "reduceat", "accumulate", "out
 _TimeLike: TypeAlias = np.datetime64 | np.timedelta64
 
 _SupportsStringLikeArray: TypeAlias = _SupportsArray[np.dtypes.StringDType | np.dtype[np.character]]
-_ToCharStringND: TypeAlias = (
-    _SupportsStringLikeArray
-    | _NestedSequence[_SupportsStringLikeArray]
-    | list[str]
-    | list[bytes]
-    | _NestedSequence[list[str]]
-    | _NestedSequence[list[bytes]]
-)
+_ToCharStringND: TypeAlias = _nt.SequenceND[_SupportsStringLikeArray | list[str] | list[bytes] | list[str | bytes]]
 
 ###
 # helper protocols
