@@ -200,13 +200,11 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __radd__(self: _BytesArray, lhs: _nt.ToBytes_nd, /) -> _BytesArray: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @override  # type: ignore[override]
-    @overload
+    @overload  # type: ignore[override]
     def __mul__(self, rhs: _nt.ToInteger_0d, /) -> Self: ...
     @overload
     def __mul__(self, rhs: _nt.ToInteger_nd, /) -> chararray[_nt.Shape, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override  # type: ignore[override]
-    @overload
+    @overload  # type: ignore[override]
     def __rmul__(self, lhs: int, /) -> Self: ...
     @overload
     def __rmul__(self, lhs: _nt.ToInteger_nd, /) -> chararray[_nt.Shape, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
