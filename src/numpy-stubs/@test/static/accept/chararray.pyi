@@ -1,10 +1,15 @@
-from typing import TypeAlias, assert_type
+from typing import Any, TypeAlias, assert_type
+from typing_extensions import TypeVar
 
 import _numtype as _nt
 import numpy as np
 
-_BytesArray: TypeAlias = np.char.chararray[_nt.Shape, np.dtype[np.bytes_]]
-_StrArray: TypeAlias = np.char.chararray[_nt.Shape, np.dtype[np.str_]]
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape, default=_nt.Shape)
+
+_BytesArray: TypeAlias = np.char.chararray[_ShapeT, np.dtype[np.bytes_]]
+_StrArray: TypeAlias = np.char.chararray[_ShapeT, np.dtype[np.str_]]
+
+###
 
 AR_U: _StrArray
 AR_S: _BytesArray
@@ -85,8 +90,8 @@ assert_type(AR_S.title(), _BytesArray)
 assert_type(AR_U.upper(), _StrArray)
 assert_type(AR_S.upper(), _BytesArray)
 
-assert_type(AR_U.zfill(5), _StrArray)
-assert_type(AR_S.zfill([2, 3, 4]), _BytesArray)
+assert_type(AR_U.zfill(5), _StrArray[Any])
+assert_type(AR_S.zfill([2, 3, 4]), _BytesArray[Any])
 
 assert_type(AR_U.count("a", start=[1, 2, 3]), _nt.Array[np.int_])
 assert_type(AR_S.count([b"a", b"b", b"c"], end=9), _nt.Array[np.int_])

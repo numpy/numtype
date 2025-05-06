@@ -1,10 +1,11 @@
+from _typeshed import Incomplete
 from collections.abc import Sequence
 from typing import Any, Literal, Literal as L, TypeAlias, overload
 from typing_extensions import TypeVar
 
-import numpy as np
+import _numtype as _nt
+from numpy import _OrderKACF  # noqa: ICN003
 from numpy._typing import (
-    NDArray,
     _ArrayLikeBool_co,
     _ArrayLikeComplex_co,
     _ArrayLikeFloat_co,
@@ -22,9 +23,9 @@ from numpy._typing import (
 
 __all__ = ["einsum", "einsum_path"]
 
-_ArrayT = TypeVar("_ArrayT", bound=NDArray[np.bool | np.number])
+_ArrayT = TypeVar("_ArrayT", bound=_nt.Array[_nt.co_complex])
 
-_OptimizeKind: TypeAlias = bool | Literal["greedy", "optimal"] | Sequence[Any] | None
+_OptimizeKind: TypeAlias = bool | Literal["greedy", "optimal"] | Sequence[Incomplete]
 _CastingSafe: TypeAlias = Literal["no", "equiv", "safe", "same_kind"]
 _CastingUnsafe: TypeAlias = Literal["unsafe"]
 
@@ -39,77 +40,77 @@ def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeBool_co,
-    out: None = ...,
-    dtype: _DTypeLikeBool | None = ...,
-    order: np._OrderKACF = ...,
-    casting: _CastingSafe = ...,
-    optimize: _OptimizeKind = ...,
-) -> Any: ...
+    out: None = None,
+    optimize: _OptimizeKind | None = None,
+    dtype: _DTypeLikeBool | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingSafe = "safe",
+) -> Incomplete: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeUInt_co,
-    out: None = ...,
-    dtype: _DTypeLikeUInt | None = ...,
-    order: np._OrderKACF = ...,
-    casting: _CastingSafe = ...,
-    optimize: _OptimizeKind = ...,
-) -> Any: ...
+    out: None = None,
+    dtype: _DTypeLikeUInt | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingSafe = "safe",
+    optimize: _OptimizeKind | None = None,
+) -> Incomplete: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeInt_co,
-    out: None = ...,
-    dtype: _DTypeLikeInt | None = ...,
-    order: np._OrderKACF = ...,
-    casting: _CastingSafe = ...,
-    optimize: _OptimizeKind = ...,
-) -> Any: ...
+    out: None = None,
+    dtype: _DTypeLikeInt | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingSafe = "safe",
+    optimize: _OptimizeKind | None = None,
+) -> Incomplete: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeFloat_co,
-    out: None = ...,
-    dtype: _DTypeLikeFloat | None = ...,
-    order: np._OrderKACF = ...,
-    casting: _CastingSafe = ...,
-    optimize: _OptimizeKind = ...,
-) -> Any: ...
+    out: None = None,
+    dtype: _DTypeLikeFloat | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingSafe = "safe",
+    optimize: _OptimizeKind | None = None,
+) -> Incomplete: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeComplex_co,
-    out: None = ...,
-    dtype: _DTypeLikeComplex | None = ...,
-    order: np._OrderKACF = ...,
-    casting: _CastingSafe = ...,
-    optimize: _OptimizeKind = ...,
-) -> Any: ...
+    out: None = None,
+    dtype: _DTypeLikeComplex | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingSafe = "safe",
+    optimize: _OptimizeKind | None = None,
+) -> Incomplete: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: Any,
     casting: _CastingUnsafe,
-    dtype: _DTypeLikeComplex_co | None = ...,
-    out: None = ...,
-    order: np._OrderKACF = ...,
-    optimize: _OptimizeKind = ...,
-) -> Any: ...
+    dtype: _DTypeLikeComplex_co | None = None,
+    out: None = None,
+    order: _OrderKACF = "K",
+    optimize: _OptimizeKind | None = None,
+) -> Incomplete: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeComplex_co,
     out: _ArrayT,
-    dtype: _DTypeLikeComplex_co | None = ...,
-    order: np._OrderKACF = ...,
-    casting: _CastingSafe = ...,
-    optimize: _OptimizeKind = ...,
+    dtype: _DTypeLikeComplex_co | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingSafe = "safe",
+    optimize: _OptimizeKind | None = None,
 ) -> _ArrayT: ...
 @overload
 def einsum(
@@ -118,42 +119,42 @@ def einsum(
     *operands: Any,
     out: _ArrayT,
     casting: _CastingUnsafe,
-    dtype: _DTypeLikeComplex_co | None = ...,
-    order: np._OrderKACF = ...,
-    optimize: _OptimizeKind = ...,
+    dtype: _DTypeLikeComplex_co | None = None,
+    order: _OrderKACF = "K",
+    optimize: _OptimizeKind | None = None,
 ) -> _ArrayT: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeObject_co,
-    out: None = ...,
-    dtype: _DTypeLikeObject | None = ...,
-    order: np._OrderKACF = ...,
-    casting: _CastingSafe = ...,
-    optimize: _OptimizeKind = ...,
-) -> Any: ...
+    out: None = None,
+    dtype: _DTypeLikeObject | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingSafe = "safe",
+    optimize: _OptimizeKind | None = None,
+) -> Incomplete: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: Any,
     casting: _CastingUnsafe,
-    dtype: _DTypeLikeObject | None = ...,
-    out: None = ...,
-    order: np._OrderKACF = ...,
-    optimize: _OptimizeKind = ...,
-) -> Any: ...
+    dtype: _DTypeLikeObject | None = None,
+    out: None = None,
+    order: _OrderKACF = "K",
+    optimize: _OptimizeKind | None = None,
+) -> Incomplete: ...
 @overload
 def einsum(
     subscripts: str | _ArrayLikeInt_co,
     /,
     *operands: _ArrayLikeObject_co,
     out: _ArrayT,
-    dtype: _DTypeLikeObject | None = ...,
-    order: np._OrderKACF = ...,
-    casting: _CastingSafe = ...,
-    optimize: _OptimizeKind = ...,
+    dtype: _DTypeLikeObject | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingSafe = "safe",
+    optimize: _OptimizeKind | None = None,
 ) -> _ArrayT: ...
 @overload
 def einsum(
@@ -162,9 +163,9 @@ def einsum(
     *operands: Any,
     out: _ArrayT,
     casting: _CastingUnsafe,
-    dtype: _DTypeLikeObject | None = ...,
-    order: np._OrderKACF = ...,
-    optimize: _OptimizeKind = ...,
+    dtype: _DTypeLikeObject | None = None,
+    order: _OrderKACF = "K",
+    optimize: _OptimizeKind | None = None,
 ) -> _ArrayT: ...
 
 # NOTE: `einsum_call` is a hidden kwarg unavailable for public use.
@@ -177,4 +178,4 @@ def einsum_path(
     *operands: _ArrayLikeComplex_co | _DTypeLikeObject,
     optimize: _OptimizeKind = "greedy",
     einsum_call: L[False] = False,
-) -> tuple[list[Any], str]: ...
+) -> tuple[list[Incomplete], str]: ...

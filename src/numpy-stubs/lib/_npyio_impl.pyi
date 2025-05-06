@@ -1,15 +1,16 @@
 import types
 import zipfile
-from _typeshed import StrOrBytesPath, StrPath, SupportsKeysAndGetItem, SupportsRead, SupportsWrite
+from _typeshed import Incomplete, StrOrBytesPath, StrPath, SupportsKeysAndGetItem, SupportsRead, SupportsWrite
 from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
 from re import Pattern
 from typing import IO, Any, ClassVar, Generic, Literal as L, Protocol, Self, TypeAlias, overload, type_check_only
 from typing_extensions import TypeVar, deprecated, override
 
+import _numtype as _nt
 import numpy as np
 from numpy._core.multiarray import packbits, unpackbits
 from numpy._globals import _NoValueType
-from numpy._typing import ArrayLike, DTypeLike, NDArray, _DTypeLike, _SupportsArrayFunc
+from numpy._typing import ArrayLike, DTypeLike, _DTypeLike, _SupportsArrayFunc
 from numpy.ma.mrecords import MaskedRecords
 
 from ._datasource import DataSource as DataSource
@@ -38,7 +39,7 @@ _FName: TypeAlias = StrPath | Iterable[str] | Iterable[bytes]
 _FNameRead: TypeAlias = StrPath | SupportsRead[str] | SupportsRead[bytes]
 _FNameWrite: TypeAlias = StrPath | SupportsWrite[bytes]
 
-_Converter: TypeAlias = Callable[[str], Any]
+_Converter: TypeAlias = Callable[[str], Incomplete]
 
 @type_check_only
 class _SupportsReadSeek(SupportsRead[_T_co], Protocol[_T_co]):
@@ -55,7 +56,7 @@ class BagObj(Generic[_T_co]):
     def __dir__(self) -> list[str]: ...
 
 # exported in numpy.lib.nppyio
-class NpzFile(Mapping[str, NDArray[_ScalarT_co]]):
+class NpzFile(Mapping[str, _nt.Array[_ScalarT_co]]):
     _MAX_REPR_ARRAY_COUNT: ClassVar[int] = 5
 
     zip: zipfile.ZipFile | None
@@ -92,13 +93,13 @@ class NpzFile(Mapping[str, NDArray[_ScalarT_co]]):
     @override
     def __iter__(self) -> Iterator[str]: ...
     @override
-    def __getitem__(self, key: str, /) -> NDArray[_ScalarT_co]: ...
+    def __getitem__(self, key: str, /) -> _nt.Array[_ScalarT_co]: ...
 
     #
     @overload
-    def get(self, key: str, default: None = None, /) -> NDArray[_ScalarT_co] | None: ...
+    def get(self, key: str, default: None = None, /) -> _nt.Array[_ScalarT_co] | None: ...
     @overload
-    def get(self, key: str, default: NDArray[_ScalarT_co] | _T, /) -> NDArray[_ScalarT_co] | _T: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def get(self, key: str, default: _nt.Array[_ScalarT_co] | _T, /) -> _nt.Array[_ScalarT_co] | _T: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def close(self) -> None: ...
@@ -148,7 +149,7 @@ def loadtxt(
     *,
     quotechar: str | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> NDArray[np.float64]: ...
+) -> _nt.Array[np.float64]: ...
 @overload
 def loadtxt(
     fname: _FName,
@@ -165,7 +166,7 @@ def loadtxt(
     *,
     quotechar: str | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> NDArray[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def loadtxt(
     fname: _FName,
@@ -182,7 +183,7 @@ def loadtxt(
     *,
     quotechar: str | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> NDArray[Any]: ...
+) -> _nt.Array: ...
 
 #
 def savetxt(
@@ -200,18 +201,12 @@ def savetxt(
 #
 @overload
 def fromregex(
-    file: _FNameRead,
-    regexp: str | bytes | Pattern[Any],
-    dtype: _DTypeLike[_ScalarT],
-    encoding: str | None = None,
-) -> NDArray[_ScalarT]: ...
+    file: _FNameRead, regexp: str | bytes | Pattern[Any], dtype: _DTypeLike[_ScalarT], encoding: str | None = None
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromregex(
-    file: _FNameRead,
-    regexp: str | bytes | Pattern[Any],
-    dtype: DTypeLike,
-    encoding: str | None = None,
-) -> NDArray[Any]: ...
+    file: _FNameRead, regexp: str | bytes | Pattern[Any], dtype: DTypeLike, encoding: str | None = None
+) -> _nt.Array: ...
 
 #
 @overload
@@ -242,7 +237,7 @@ def genfromtxt(
     *,
     ndmin: L[0, 1, 2] = 0,
     like: _SupportsArrayFunc | None = None,
-) -> NDArray[np.float64]: ...
+) -> _nt.Array[np.float64]: ...
 @overload
 def genfromtxt(
     fname: _FName,
@@ -271,7 +266,7 @@ def genfromtxt(
     *,
     ndmin: L[0, 1, 2] = 0,
     like: _SupportsArrayFunc | None = None,
-) -> NDArray[_ScalarT]: ...
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def genfromtxt(
     fname: _FName,
@@ -300,20 +295,16 @@ def genfromtxt(
     *,
     ndmin: L[0, 1, 2] = 0,
     like: _SupportsArrayFunc | None = None,
-) -> NDArray[Any]: ...
+) -> _nt.Array: ...
 
 #
 @overload
-def recfromtxt(
-    fname: _FName, *, usemask: L[False] = False, **kwargs: object
-) -> np.recarray[Any, np.dtype[np.record]]: ...
+def recfromtxt(fname: _FName, *, usemask: L[False] = False, **kw: object) -> np.recarray[Any, np.dtype[np.record]]: ...
 @overload
-def recfromtxt(fname: _FName, *, usemask: L[True], **kwargs: object) -> MaskedRecords[Any, np.dtype[np.void]]: ...
+def recfromtxt(fname: _FName, *, usemask: L[True], **kw: object) -> MaskedRecords[Any, np.dtype[np.void]]: ...
 
 #
 @overload
-def recfromcsv(
-    fname: _FName, *, usemask: L[False] = False, **kwargs: object
-) -> np.recarray[Any, np.dtype[np.record]]: ...
+def recfromcsv(fname: _FName, *, usemask: L[False] = False, **kw: object) -> np.recarray[Any, np.dtype[np.record]]: ...
 @overload
-def recfromcsv(fname: _FName, *, usemask: L[True], **kwargs: object) -> MaskedRecords[Any, np.dtype[np.void]]: ...
+def recfromcsv(fname: _FName, *, usemask: L[True], **kw: object) -> MaskedRecords[Any, np.dtype[np.void]]: ...
