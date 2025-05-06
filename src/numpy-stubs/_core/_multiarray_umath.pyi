@@ -31,15 +31,8 @@ from numpy._globals import _CopyMode
 from numpy._typing import (
     _ArrayLike,
     _ArrayLikeAnyString_co,
-    _ArrayLikeBool_co,
-    _ArrayLikeBytes_co,
-    _ArrayLikeFloat_co,
-    _ArrayLikeInt,
-    _ArrayLikeInt_co,
     _ArrayLikeNumber_co,
-    _ArrayLikeStr_co,
     _DTypeLike,
-    _NestedSequence,
     _ScalarLike_co,
     _ShapeLike,
     _SupportsArrayFunc as _CanArrayFunc,
@@ -128,7 +121,7 @@ _ShapeLike3D: TypeAlias = tuple[CanIndex, CanIndex, CanIndex]
 
 _FlatIterIndex0: TypeAlias = int | np.integer
 _FlatIterIndex: TypeAlias = _FlatIterIndex0 | tuple[_FlatIterIndex0]
-_FlatIterSlice0: TypeAlias = slice | EllipsisType | _ArrayLikeInt
+_FlatIterSlice0: TypeAlias = slice | EllipsisType | _nt.ToInteger_nd
 _FlatIterSlice: TypeAlias = _FlatIterSlice0 | tuple[_FlatIterSlice0]
 
 _Device: TypeAlias = L["cpu"]
@@ -140,28 +133,28 @@ _TimeUnit: TypeAlias = L["Y", "M", "D", "h", "m", "s", "ms", "us", "μs", "ns", 
 _TimeZone: TypeAlias = L["naive", "UTC", "local"] | dt.tzinfo
 _CorrMode: TypeAlias = L[0, "valid", 1, "same", 2, "full"]
 _ExtObjValue: TypeAlias = L["ignore", "warn", "raise", "call", "print", "log"]
+_CmpOp: TypeAlias = L["<", "<=", "==", ">=", ">", "!="]
+_BitOrder: TypeAlias = L["big", "little"]
 
 _Ignored: TypeAlias = object
 _Copy: TypeAlias = py_bool | L[2] | _CopyMode
 _WeekMask: TypeAlias = str | Sequence[L[0, 1] | py_bool | np.bool]
 
-_ToInt: TypeAlias = int | np.integer | np.bool
-_ToDT64: TypeAlias = np.datetime64 | _ToInt
-_ToTD64: TypeAlias = np.timedelta64 | _ToInt
-_ToFloat: TypeAlias = float | np.floating | np.integer | np.bool
-_ToComplex: TypeAlias = complex | np.number | np.bool
+_ToInt: TypeAlias = int | _nt.co_integer
+_ToDT64: TypeAlias = int | np.datetime64 | _nt.co_integer
+_ToTD64: TypeAlias = int | _nt.co_timedelta
+_ToFloat: TypeAlias = float | _nt.co_float
+_ToComplex: TypeAlias = complex | _nt.co_complex
 
 _ToDate: TypeAlias = _ToDT64 | dt.date | str  # accepts strings like "1993-06-29"
-_ToDelta: TypeAlias = np.timedelta64 | CanIndex | CanInt | dt.timedelta | str  # accepts same strings as `builtins.int`
+_ToDelta: TypeAlias = np.timedelta64 | dt.timedelta | CanIndex | CanInt | str  # accepts same strings as `builtins.int`
 _ToDateArray = TypeAliasType(
     "_ToDateArray",
-    _ArrayLike[np.datetime64 | np.floating | np.integer | np.character]
-    | _NestedSequence[_ToDT64 | dt.date]
-    | _NestedSequence[str],
+    _ArrayLike[np.datetime64 | np.integer | np.floating | np.character] | _nt.Sequence1ND[_ToDate],
 )
 _ToDeltaArray = TypeAliasType(
     "_ToDeltaArray",
-    _ArrayLike[np.timedelta64 | np.integer] | _NestedSequence[_ToDelta],
+    _ArrayLike[np.timedelta64 | np.integer] | _nt.Sequence1ND[_ToDelta],
 )
 
 _ToFile: TypeAlias = StrOrBytesPath | _CanSeekTellFileNo
@@ -319,7 +312,7 @@ class flagsobj:
 @final
 class broadcast:
     @property
-    def iters(self) -> tuple[flatiter[Any], ...]: ...
+    def iters(self) -> tuple[flatiter[Incomplete], ...]: ...
     @property
     def index(self) -> int: ...
     @property
@@ -337,7 +330,7 @@ class broadcast:
     def __new__(cls, *args: npt.ArrayLike) -> Self: ...
 
     #
-    def __next__(self) -> tuple[Any, ...]: ...
+    def __next__(self) -> tuple[Incomplete, ...]: ...
     def __iter__(self) -> Self: ...
 
     #
@@ -366,7 +359,7 @@ class flatiter(Generic[_ArrayT_co]):
     @overload
     def __getitem__(self: flatiter[_nt.Array[_SafeScalarT]], i: _FlatIterIndex, /) -> _SafeScalarT: ...
     @overload
-    def __getitem__(self: flatiter[_nt.Array[np.object_]], i: _FlatIterIndex, /) -> Any: ...
+    def __getitem__(self: flatiter[_nt.Array[np.object_]], i: _FlatIterIndex, /) -> Incomplete: ...
     @overload
     def __getitem__(self, i: _FlatIterSlice, /) -> _ArrayT_co: ...
     def __setitem__(self, i: _FlatIterIndex | _FlatIterSlice, value: object, /) -> None: ...
@@ -377,7 +370,7 @@ class flatiter(Generic[_ArrayT_co]):
     @overload
     def __array__(self, dtype: _DTypeLike[_ScalarT], /) -> _nt.Array1D[_ScalarT]: ...
     @overload
-    def __array__(self, dtype: npt.DTypeLike | None = None, /) -> _nt.Array1D: ...
+    def __array__(self, dtype: npt.DTypeLike | None = None, /) -> _nt.Array1D[Incomplete]: ...
 
 @final
 class nditer:
@@ -414,11 +407,11 @@ class nditer:
     @property
     def iterrange(self) -> tuple[int, ...]: ...
     @property
-    def itviews(self) -> tuple[_nt.Array, ...]: ...
+    def itviews(self) -> tuple[_nt.Array[Incomplete], ...]: ...
     @property
-    def operands(self) -> tuple[_nt.Array, ...]: ...
+    def operands(self) -> tuple[_nt.Array[Incomplete], ...]: ...
     @property
-    def value(self) -> tuple[_nt.Array, ...]: ...
+    def value(self) -> tuple[_nt.Array[Incomplete], ...]: ...
 
     #
     def __init__(
@@ -437,23 +430,21 @@ class nditer:
 
     #
     def __enter__(self) -> Self: ...
-    def __exit__(
-        self, tp: type[BaseException] | None, e: BaseException | None, tb: TracebackType | None, /
-    ) -> None: ...
+    def __exit__(self, t: type[BaseException] | None, e: BaseException | None, tb: TracebackType | None, /) -> None: ...
     def close(self) -> None: ...
     def reset(self) -> None: ...
 
     #
     def __len__(self) -> int: ...
     def __iter__(self) -> Self: ...
-    def __next__(self) -> tuple[_nt.Array, ...]: ...
+    def __next__(self) -> tuple[_nt.Array[Incomplete], ...]: ...
     def iternext(self) -> py_bool: ...
 
     #
     @overload
     def __getitem__(self, index: CanIndex, /) -> _nt.Array[Incomplete]: ...
     @overload
-    def __getitem__(self, index: slice, /) -> tuple[_nt.Array, ...]: ...
+    def __getitem__(self, index: slice, /) -> tuple[_nt.Array[Incomplete], ...]: ...
     def __setitem__(self, index: slice | CanIndex, value: npt.ArrayLike, /) -> None: ...
 
     #
@@ -519,7 +510,7 @@ def empty(
     dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D: ...
+) -> _nt.Array1D[Incomplete]: ...
 @overload  # known shape, default dtype (float64)
 def empty(
     shape: _AnyShapeT,
@@ -547,7 +538,7 @@ def empty(
     dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array[Any, _AnyShapeT]: ...
+) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # unknown shape, default dtype
 def empty(
     shape: _ShapeLike,
@@ -605,7 +596,7 @@ def zeros(
     dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D: ...
+) -> _nt.Array1D[Incomplete]: ...
 @overload  # known shape, default dtype (float64)
 def zeros(
     shape: _AnyShapeT,
@@ -633,7 +624,7 @@ def zeros(
     dtype: npt.DTypeLike = ...,
     order: _OrderCF = "C",
     **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array[Any, _AnyShapeT]: ...
+) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # unknown shape, default dtype
 def zeros(
     shape: _ShapeLike,
@@ -953,7 +944,7 @@ def empty_like(
     *,
     shape: _AnyShapeT,
     device: _Device | None = None,
-) -> _nt.Array[Any, _AnyShapeT]: ...
+) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # unknown shape, unknown scalar-type
 def empty_like(
     prototype: object,
@@ -1035,7 +1026,7 @@ def array(
     subok: bool = False,
     ndmin: L[0] = 0,
     **kwargs: Unpack[_KwargsCL],
-) -> _nt.Array0D[Any]: ...
+) -> _nt.Array0D[Incomplete]: ...
 @overload
 def array(
     object: object,
@@ -1085,7 +1076,7 @@ def asarray(
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = None,
     **kwargs: Unpack[_KwargsDCL],
-) -> _nt.Array0D[Any]: ...
+) -> _nt.Array0D[Incomplete]: ...
 @overload
 def asarray(
     a: object,
@@ -1141,15 +1132,11 @@ def asanyarray(
 # keep in sync with asfortranarray
 @overload
 def ascontiguousarray(
-    a: _CanArray[_nt.Array[_ScalarT, _ShapeT]],
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsL],
+    a: _CanArray[_nt.Array[_ScalarT, _ShapeT]], dtype: None = None, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[_ScalarT, _ShapeT]: ...
 @overload
 def ascontiguousarray(
-    a: _ArrayLike[_ScalarT],
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsL],
+    a: _ArrayLike[_ScalarT], dtype: None = None, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def ascontiguousarray(a: object, dtype: None = None, *, like: _nt.Array[_ScalarT]) -> _nt.Array[_ScalarT]: ...
@@ -1163,9 +1150,7 @@ def ascontiguousarray(
 # keep in sync with ascontiguousarray
 @overload
 def asfortranarray(
-    a: _CanArray[_nt.Array[_ScalarT, _ShapeT]],
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsL],
+    a: _CanArray[_nt.Array[_ScalarT, _ShapeT]], dtype: None = None, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[_ScalarT, _ShapeT]: ...
 @overload
 def asfortranarray(a: _ArrayLike[_ScalarT], dtype: None = None, **kwargs: Unpack[_KwargsL]) -> _nt.Array[_ScalarT]: ...
@@ -1190,30 +1175,15 @@ def fromstring(
 ) -> _nt.Array[np.float64]: ...
 @overload
 def fromstring(
-    string: bytes | str,
-    dtype: _DTypeLike[_ScalarT],
-    count: CanIndex = -1,
-    *,
-    sep: str,
-    **kwargs: Unpack[_KwargsL],
+    string: bytes | str, dtype: _DTypeLike[_ScalarT], count: CanIndex = -1, *, sep: str, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromstring(
-    string: bytes | str,
-    dtype: npt.DTypeLike = ...,
-    count: CanIndex = -1,
-    *,
-    sep: str,
-    like: _nt.Array[_ScalarT],
+    string: bytes | str, dtype: npt.DTypeLike = ..., count: CanIndex = -1, *, sep: str, like: _nt.Array[_ScalarT]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromstring(
-    string: bytes | str,
-    dtype: npt.DTypeLike,
-    count: CanIndex = -1,
-    *,
-    sep: str,
-    **kwargs: Unpack[_KwargsL],
+    string: bytes | str, dtype: npt.DTypeLike, count: CanIndex = -1, *, sep: str, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[Incomplete]: ...
 
 #
@@ -1248,43 +1218,25 @@ def fromfile(
 #
 @overload
 def fromiter(
-    iter: Iterable[object],
-    dtype: _DTypeLike[_ScalarT],
-    count: CanIndex = -1,
-    **kwargs: Unpack[_KwargsL],
+    iter: Iterable[object], dtype: _DTypeLike[_ScalarT], count: CanIndex = -1, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromiter(
-    iter: Iterable[object],
-    dtype: npt.DTypeLike,
-    count: CanIndex = -1,
-    **kwargs: Unpack[_KwargsL],
+    iter: Iterable[object], dtype: npt.DTypeLike, count: CanIndex = -1, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[Incomplete]: ...
 
 #
 @overload
 def frombuffer(
-    buffer: Buffer,
-    *,
-    count: CanIndex = -1,
-    offset: CanIndex = 0,
-    **kwargs: Unpack[_KwargsL],
+    buffer: Buffer, *, count: CanIndex = -1, offset: CanIndex = 0, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[np.float64]: ...
 @overload
 def frombuffer(
-    buffer: Buffer,
-    dtype: _DTypeLike[_ScalarT],
-    count: CanIndex = -1,
-    offset: CanIndex = 0,
-    **kwargs: Unpack[_KwargsL],
+    buffer: Buffer, dtype: _DTypeLike[_ScalarT], count: CanIndex = -1, offset: CanIndex = 0, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def frombuffer(
-    buffer: Buffer,
-    dtype: npt.DTypeLike,
-    count: CanIndex = -1,
-    offset: CanIndex = 0,
-    **kwargs: Unpack[_KwargsL],
+    buffer: Buffer, dtype: npt.DTypeLike, count: CanIndex = -1, offset: CanIndex = 0, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[Incomplete]: ...
 
 #
@@ -1297,126 +1249,87 @@ def from_dlpack(x: _CanDLPack, /, *, copy: py_bool | None = None, **kwargs: Unpa
 def arange(stop: object, *, dtype: _DTypeLike[_ScalarT], **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[_ScalarT]: ...
 @overload  # (start, stop step, dtype)
 def arange(
-    start: object,
-    stop: object,
-    step: object,
-    dtype: _DTypeLike[_ScalarT],
-    **kwargs: Unpack[_KwargsDL],
+    start: object, stop: object, step: object, dtype: _DTypeLike[_ScalarT], **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[_ScalarT]: ...
 @overload  # (start, stop, step?, dtype=)
 def arange(
-    start: object,
-    stop: object,
-    step: object = ...,
-    *,
-    dtype: _DTypeLike[_ScalarT],
-    **kwargs: Unpack[_KwargsDL],
+    start: object, stop: object, step: object = ..., *, dtype: _DTypeLike[_ScalarT], **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[_ScalarT]: ...
 @overload  # (stop: int)
 def arange(
-    stop: int | np.int_,
-    *,
-    dtype: _DTypeLike[np.int_] | type[int] | None = None,
-    **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.int_]: ...
+    stop: int | np.intp, *, dtype: _nt.ToDTypeInt64 | None = None, **kwargs: Unpack[_KwargsDL]
+) -> _nt.Array1D[np.intp]: ...
 @overload  # (start: int, stop: int, step?: int)
 def arange(
-    start: int | np.int_,
-    stop: int | np.int_,
-    step: int | np.int_ = ...,
-    dtype: _DTypeLike[np.int_] | type[int] | None = None,
+    start: int | np.intp,
+    stop: int | np.intp,
+    step: int | np.intp = ...,
+    dtype: _nt.ToDTypeInt64 | None = None,
     **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.int_]: ...
+) -> _nt.Array1D[np.intp]: ...
+@overload  # (stop: float, dtype=f64-like)
+def arange(stop: float, *, dtype: _nt.ToDTypeFloat64, **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[np.float64]: ...
+@overload  # (start: float, stop: float, step?: float, dtype=f64-like)
+def arange(
+    start: float, stop: float, step: float = ..., *, dtype: _nt.ToDTypeFloat64, **kwargs: Unpack[_KwargsDL]
+) -> _nt.Array1D[np.float64]: ...
+@overload  # (start: float, stop: float, step: float, dtype=f64-like)
+def arange(
+    start: float, stop: float, step: float, dtype: _nt.ToDTypeFloat64, **kwargs: Unpack[_KwargsDL]
+) -> _nt.Array1D[np.float64]: ...
 @overload  # (stop: float)
 def arange(
-    stop: float | np.float64,
-    *,
-    dtype: _DTypeLike[np.float64] | type[float] | None = None,
-    **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.float64 | np.int_]: ...
+    stop: _nt.JustFloat, *, dtype: _nt.ToDTypeFloat64 | None = None, **kwargs: Unpack[_KwargsDL]
+) -> _nt.Array1D[np.float64]: ...
 @overload  # (start: float, stop: float, step?: float)
 def arange(
-    start: float | np.float64,
-    stop: float | np.float64,
-    step: float | np.float64 = ...,
-    dtype: _DTypeLike[np.float64] | type[float] | None = None,
+    start: _nt.JustFloat,
+    stop: float,
+    step: float = ...,
+    dtype: _nt.ToDTypeFloat64 | None = None,
     **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.float64 | np.int_]: ...
+) -> _nt.Array1D[np.float64]: ...
+@overload  # (start: float, stop: float, step?: float)
+def arange(
+    start: float,
+    stop: _nt.JustFloat,
+    step: float = ...,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    **kwargs: Unpack[_KwargsDL],
+) -> _nt.Array1D[np.float64]: ...
+@overload  # int-like
+def arange(stop: _ToInt, *, dtype: None = None, **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[np.signedinteger]: ...
 @overload  # int-like
 def arange(
-    stop: _ToInt,
-    *,
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.signedinteger]: ...
-@overload  # int-like
-def arange(
-    start: _ToInt,
-    stop: _ToInt,
-    step: _ToInt = ...,
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsDL],
+    start: _ToInt, stop: _ToInt, step: _ToInt = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[np.signedinteger]: ...
 @overload  # float-like
 def arange(
-    stop: _ToFloat,
-    *,
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsDL],
+    stop: _ToFloat, *, dtype: None = None, **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[np.floating | np.signedinteger]: ...
 @overload  # float-like
 def arange(
-    start: _ToFloat,
-    stop: _ToFloat,
-    step: _ToFloat = ...,
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsDL],
+    start: _ToFloat, stop: _ToFloat, step: _ToFloat = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[np.floating | np.signedinteger]: ...
 @overload  # timedelta64
+def arange(stop: np.timedelta64, *, dtype: None = None, **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[np.timedelta64]: ...
+@overload  # timedelta64
 def arange(
-    stop: np.timedelta64,
-    *,
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsDL],
+    start: _ToTD64, stop: np.timedelta64, step: _ToTD64 = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[np.timedelta64]: ...
 @overload  # timedelta64
 def arange(
-    start: _ToTD64,
-    stop: np.timedelta64,
-    step: _ToTD64 = ...,
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.timedelta64]: ...
-@overload  # timedelta64
-def arange(
-    start: np.timedelta64,
-    stop: _ToTD64,
-    step: _ToTD64 = ...,
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsDL],
+    start: np.timedelta64, stop: _ToTD64, step: _ToTD64 = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[np.timedelta64]: ...
 @overload  # datetime64  (requires both start and stop)
 def arange(
-    start: np.datetime64,
-    stop: np.datetime64,
-    step: _ToDT64 = ...,
-    dtype: None = None,
-    **kwargs: Unpack[_KwargsDL],
+    start: np.datetime64, stop: np.datetime64, step: _ToDT64 = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[np.datetime64]: ...
 @overload  # fallback
-def arange(
-    stop: object,
-    *,
-    dtype: npt.DTypeLike,
-    **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[Incomplete]: ...
+def arange(stop: object, *, dtype: npt.DTypeLike, **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[Incomplete]: ...
 @overload  # fallback
 def arange(
-    start: object,
-    stop: object,
-    step: object = ...,
-    dtype: npt.DTypeLike | None = None,
-    **kwargs: Unpack[_KwargsDL],
+    start: object, stop: object, step: object = ..., dtype: npt.DTypeLike | None = None, **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[Incomplete]: ...
 
 ###
@@ -1485,46 +1398,32 @@ def concatenate(
 
 #
 def unpackbits(
-    a: _nt.Array[np.uint8],
-    /,
-    axis: CanIndex | None = None,
-    count: CanIndex | None = None,
-    bitorder: L["big", "little"] = "big",
+    a: _nt.Array[np.uint8], /, axis: CanIndex | None = None, count: CanIndex | None = None, bitorder: _BitOrder = "big"
 ) -> _nt.Array[np.uint8]: ...
-
-#
 def packbits(
-    a: _ArrayLikeInt_co,
-    /,
-    axis: CanIndex | None = None,
-    bitorder: L["big", "little"] = "big",
+    a: _nt.CoInteger_nd, /, axis: CanIndex | None = None, bitorder: _BitOrder = "big"
 ) -> _nt.Array[np.uint8]: ...
 
 #
-def copyto(
-    dst: _nt.Array,
-    src: npt.ArrayLike,
-    casting: _CastingKind = "same_kind",
-    where: _ArrayLikeBool_co | None = True,
-) -> None: ...
+def copyto(dst: _nt.Array, src: npt.ArrayLike, casting: _CastingKind = "same_kind") -> None: ...
 
 #
 @overload
-def where(condition: npt.ArrayLike, /) -> tuple[_nt.Array[np.int_], ...]: ...
+def where(condition: npt.ArrayLike, /) -> tuple[_nt.Array[np.intp], ...]: ...
 @overload
 def where(condition: npt.ArrayLike, x: _ArrayLike[_ScalarT], y: _ArrayLike[_ScalarT], /) -> _nt.Array[_ScalarT]: ...
 @overload
 def where(condition: npt.ArrayLike, x: npt.ArrayLike, y: npt.ArrayLike, /) -> _nt.Array[Incomplete]: ...
 
 #
-def putmask(a: _nt.Array, /, mask: _ArrayLikeBool_co, values: npt.ArrayLike) -> None: ...
+def putmask(a: _nt.Array, /, mask: _nt.ToBool_nd, values: npt.ArrayLike) -> None: ...
 
 #
 @overload
 def unravel_index(indices: _ToInt, shape: _ShapeLike, order: _OrderCF = "C") -> tuple[np.intp, ...]: ...
 @overload
 def unravel_index(
-    indices: _ArrayLike[np.integer] | _NestedSequence[_ToInt] | _NestedSequence[_ArrayLike[np.integer]],
+    indices: _nt.ToInteger_1nd,
     shape: _ShapeLike,
     order: _OrderCF = "C",
 ) -> tuple[_nt.Array[np.intp], ...]: ...
@@ -1539,7 +1438,7 @@ def ravel_multi_index(
 ) -> np.intp: ...
 @overload
 def ravel_multi_index(
-    multi_index: Sequence[_ArrayLike[np.integer] | _NestedSequence[np.integer | int]],
+    multi_index: Sequence[_nt.ToInteger_1nd],
     dims: _ShapeLike,
     mode: _ModeKind | tuple[_ModeKind, ...] = "raise",
     order: _OrderCF = "C",
@@ -1553,9 +1452,9 @@ def may_share_memory(a: object, b: object, /, max_work: L[0, 1] | None = None) -
 def can_cast(from_: npt.ArrayLike | npt.DTypeLike, to: npt.DTypeLike, casting: _CastingKind = "safe") -> bool: ...
 
 #
-def min_scalar_type(a: npt.ArrayLike, /) -> np.dtype: ...
-def result_type(*arrays_and_dtypes: npt.ArrayLike | npt.DTypeLike) -> np.dtype: ...
-def promote_types(type1: npt.DTypeLike, type2: npt.DTypeLike, /) -> np.dtype: ...
+def min_scalar_type(a: npt.ArrayLike, /) -> np.dtype[Incomplete]: ...
+def result_type(*arrays_and_dtypes: npt.ArrayLike | npt.DTypeLike) -> np.dtype[Incomplete]: ...
+def promote_types(type1: npt.DTypeLike, type2: npt.DTypeLike, /) -> np.dtype[Incomplete]: ...
 
 #
 @overload
@@ -1567,9 +1466,9 @@ def dot(a: npt.ArrayLike, b: npt.ArrayLike, out: _ArrayT) -> _ArrayT: ...
 @overload
 def vdot(a: _ArrayLike[_NumericT], b: _ArrayLike[_NumericT], /) -> _NumericT: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
 @overload
-def vdot(a: _ArrayLikeInt_co, b: _ArrayLikeInt_co, /) -> np.signedinteger: ...
+def vdot(a: _nt.CoInteger_nd, b: _nt.CoInteger_nd, /) -> np.signedinteger: ...
 @overload
-def vdot(a: _ArrayLikeFloat_co, b: _ArrayLikeFloat_co, /) -> np.floating | np.signedinteger: ...
+def vdot(a: _nt.CoFloating_nd, b: _nt.CoFloating_nd, /) -> np.floating | np.signedinteger: ...
 @overload
 def vdot(a: _ArrayLikeNumber_co, b: _ArrayLikeNumber_co, /) -> np.inexact | np.signedinteger: ...
 
@@ -1585,32 +1484,32 @@ def inner(a: npt.ArrayLike, b: npt.ArrayLike, /) -> Incomplete: ...
 @overload
 def interp(
     x: _ToFloat,
-    xp: _ArrayLikeFloat_co,
-    fp: _ArrayLikeFloat_co,
+    xp: _nt.CoFloating_nd,
+    fp: _nt.CoFloating_nd,
     left: _ToFloat | None = None,
     right: _ToFloat | None = None,
 ) -> np.float64: ...
 @overload
 def interp(
     x: _nt.Array[np.floating | np.integer, _ShapeT],
-    xp: _ArrayLikeFloat_co,
-    fp: _ArrayLikeFloat_co,
+    xp: _nt.CoFloating_nd,
+    fp: _nt.CoFloating_nd,
     left: _ToFloat | None = None,
     right: _ToFloat | None = None,
 ) -> _nt.Array[np.float64, _ShapeT]: ...
 @overload
 def interp(
-    x: _NestedSequence[_ToFloat],
-    xp: _ArrayLikeFloat_co,
-    fp: _ArrayLikeFloat_co,
+    x: _nt.Sequence1ND[_ToFloat],
+    xp: _nt.CoFloating_nd,
+    fp: _nt.CoFloating_nd,
     left: _ToFloat | None = None,
     right: _ToFloat | None = None,
 ) -> _nt.Array[np.float64]: ...
 @overload
 def interp(
-    x: _ArrayLikeFloat_co,
-    xp: _ArrayLikeFloat_co,
-    fp: _ArrayLikeFloat_co,
+    x: _nt.CoFloating_nd,
+    xp: _nt.CoFloating_nd,
+    fp: _nt.CoFloating_nd,
     left: _ToFloat | None = None,
     right: _ToFloat | None = None,
 ) -> np.float64 | _nt.Array[np.float64]: ...
@@ -1619,7 +1518,7 @@ def interp(
 @overload
 def interp_complex(
     x: _ToFloat,
-    xp: _ArrayLikeFloat_co,
+    xp: _nt.CoFloating_nd,
     fp: _ArrayLikeNumber_co,
     left: _ToComplex | None = None,
     right: _ToComplex | None = None,
@@ -1627,23 +1526,23 @@ def interp_complex(
 @overload
 def interp_complex(
     x: _nt.Array[np.floating | np.integer, _ShapeT],
-    xp: _ArrayLikeFloat_co,
+    xp: _nt.CoFloating_nd,
     fp: _ArrayLikeNumber_co,
     left: _ToComplex | None = None,
     right: _ToComplex | None = None,
 ) -> _nt.Array[np.complex128, _ShapeT]: ...
 @overload
 def interp_complex(
-    x: _NestedSequence[_ToFloat],
-    xp: _ArrayLikeFloat_co,
+    x: _nt.Sequence1ND[_ToFloat],
+    xp: _nt.CoFloating_nd,
     fp: _ArrayLikeNumber_co,
     left: _ToComplex | None = None,
     right: _ToComplex | None = None,
 ) -> _nt.Array[np.complex128]: ...
 @overload
 def interp_complex(
-    x: _ArrayLikeFloat_co,
-    xp: _ArrayLikeFloat_co,
+    x: _nt.CoFloating_nd,
+    xp: _nt.CoFloating_nd,
     fp: _ArrayLikeNumber_co,
     left: _ToComplex | None = None,
     right: _ToComplex | None = None,
@@ -1652,9 +1551,9 @@ def interp_complex(
 #
 def count_nonzero(a: object, /) -> int: ...
 def bincount(
-    x: _ArrayLikeInt_co,
+    x: _nt.CoInteger_nd,
     /,
-    weights: _ArrayLikeFloat_co | None = None,
+    weights: _nt.CoFloating_nd | None = None,
     minlength: CanIndex = 0,
 ) -> _nt.Array[np.intp]: ...
 
@@ -1721,7 +1620,7 @@ def busday_count(
     holidays: _ToDateArray | None = None,
     busdaycal: busdaycalendar | None = None,
     out: None = None,
-) -> np.int_: ...
+) -> np.intp: ...
 @overload
 def busday_count(
     begindates: _ToDate | _ToDateArray,
@@ -1730,7 +1629,7 @@ def busday_count(
     holidays: _ToDateArray | None = None,
     busdaycal: busdaycalendar | None = None,
     out: None = None,
-) -> _nt.Array[np.int_]: ...
+) -> _nt.Array[np.intp]: ...
 @overload
 def busday_count(
     begindates: _ToDateArray,
@@ -1739,7 +1638,7 @@ def busday_count(
     holidays: _ToDateArray | None = None,
     busdaycal: busdaycalendar | None = None,
     out: None = None,
-) -> _nt.Array[np.int_]: ...
+) -> _nt.Array[np.intp]: ...
 @overload
 def busday_count(
     begindates: _ToDate | _ToDateArray,
@@ -1838,13 +1737,13 @@ def datetime_data(dtype: str | _DTypeLike[np.datetime64 | np.timedelta64], /) ->
 @overload
 def correlate(a: _ArrayLike[_NumericT], v: _ArrayLike[_NumericT], mode: _CorrMode = 0) -> _nt.Array1D[_NumericT]: ...
 @overload
-def correlate(a: npt.ArrayLike, v: npt.ArrayLike, mode: _CorrMode = 0) -> _nt.Array1D: ...
+def correlate(a: npt.ArrayLike, v: npt.ArrayLike, mode: _CorrMode = 0) -> _nt.Array1D[Incomplete]: ...
 
 # keep in sync with correlate
 @overload
 def correlate2(a: _ArrayLike[_NumericT], v: _ArrayLike[_NumericT], mode: _CorrMode = 0) -> _nt.Array1D[_NumericT]: ...
 @overload
-def correlate2(a: npt.ArrayLike, v: npt.ArrayLike, mode: _CorrMode = 0) -> _nt.Array1D: ...
+def correlate2(a: npt.ArrayLike, v: npt.ArrayLike, mode: _CorrMode = 0) -> _nt.Array1D[Incomplete]: ...
 
 #
 @overload
@@ -1869,9 +1768,9 @@ def c_einsum(
 ###
 
 @overload
-def scalar(dtype: np.dtype[np.object_], obj: object) -> Any: ...
+def scalar(dtype: np.dtype[np.object_], obj: object) -> Incomplete: ...
 @overload
-def scalar(dtype: np.dtypes.StringDType, obj: np.ndarray[Any, np.dtypes.StringDType]) -> str: ...
+def scalar(dtype: np.dtypes.StringDType, obj: _nt.StringArray[Any, Any]) -> str: ...
 @overload
 def scalar(dtype: np.dtype[_SafeScalarT]) -> _SafeScalarT: ...
 @overload
@@ -1880,19 +1779,9 @@ def scalar(dtype: np.dtype[_SafeScalarT], obj: bytes) -> _SafeScalarT: ...
 ###
 
 @overload
-def compare_chararrays(
-    a1: _ArrayLikeStr_co,
-    a2: _ArrayLikeStr_co,
-    cmp: L["<", "<=", "==", ">=", ">", "!="],
-    rstrip: bool,
-) -> _nt.Array[np.bool]: ...
+def compare_chararrays(a1: _nt.ToStr_nd, a2: _nt.ToStr_nd, cmp: _CmpOp, rstrip: bool) -> _nt.Array[np.bool]: ...
 @overload
-def compare_chararrays(
-    a1: _ArrayLikeBytes_co,
-    a2: _ArrayLikeBytes_co,
-    cmp: L["<", "<=", "==", ">=", ">", "!="],
-    rstrip: bool,
-) -> _nt.Array[np.bool]: ...
+def compare_chararrays(a1: _nt.ToBytes_nd, a2: _nt.ToBytes_nd, cmp: _CmpOp, rstrip: bool) -> _nt.Array[np.bool]: ...
 
 ###
 
@@ -1921,11 +1810,7 @@ def _get_extobj_dict() -> _ExtObjDict: ...
 def _make_extobj() -> CapsuleType: ...
 
 #
-def _monotonicity(x: _ArrayLikeFloat_co) -> L[0, 1]: ...
-def _place(input: npt.ArrayLike, mask: _ArrayLikeBool_co, vals: npt.ArrayLike) -> None: ...
-def _reconstruct(
-    subtype: type[_nt.Array],
-    shape: _AnyShapeT,
-    dtype: _DTypeT,
-) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
+def _monotonicity(x: _nt.CoFloating_nd) -> L[0, 1]: ...
+def _place(input: npt.ArrayLike, mask: _nt.ToBool_nd, vals: npt.ArrayLike) -> None: ...
+def _reconstruct(subtype: type[_nt.Array], shape: _AnyShapeT, dtype: _DTypeT) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
 def _vec_string(a: _ArrayLikeAnyString_co, dtype: npt.DTypeLike, attr: str, /) -> _nt.Array[Incomplete]: ...
