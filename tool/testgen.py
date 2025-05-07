@@ -23,6 +23,7 @@ from typing import (
     TypeVar,
     cast,
     final,
+    get_args,
     overload,
 )
 from typing_extensions import override
@@ -62,12 +63,17 @@ _BinOpName: TypeAlias = Literal[
     "xor",
 ]
 _UnOpName: TypeAlias = Literal["abs", "neg", "pos", "invert"]
-_OpName: TypeAlias = Literal[_BinOpName, _UnOpName]
+_OpName: TypeAlias = Literal[_UnOpName, _BinOpName]
 
 ###
 
-ROOT_DIR: Final = Path(__file__).parent.parent
-TARGET_DIR: Final = ROOT_DIR / "src" / "numpy-stubs" / "@test" / "generated"
+DIR_ROOT: Final = Path(__file__).parent.parent
+DIR_SRC: Final = DIR_ROOT / "src"
+DIRS_TARGET: Final = {
+    dir_package.stem: dir_package / "@test" / "generated"
+    for dir_package in DIR_SRC.iterdir()
+    if dir_package.is_dir()
+}
 
 TAB: Final = " " * 4
 BR: Final = "\n"
@@ -366,6 +372,7 @@ def _strip_preamble(source: str) -> tuple[str | None, str]:
 
 
 class TestGen(abc.ABC):
+    package: ClassVar[str]
     stdlib_imports: ClassVar[tuple[str, ...]] = ("from typing import assert_type",)
     numpy_imports: ClassVar[tuple[str, ...]] = (f"import numpy as {NP}",)
 
@@ -383,7 +390,7 @@ class TestGen(abc.ABC):
     @property
     def path(self) -> Path:
         assert self.testname
-        return TARGET_DIR / f"{self.testname}.pyi"
+        return DIRS_TARGET[self.package] / f"{self.testname}.pyi"
 
     def get_names(self) -> Iterable[tuple[str, str]]:
         return ()
@@ -411,7 +418,7 @@ class TestGen(abc.ABC):
 
     def _generate_preamble(self) -> Generator[str]:
         timestamp = f"{np.datetime64('now')}Z"
-        here = Path(__file__).relative_to(ROOT_DIR)
+        here = Path(__file__).relative_to(DIR_ROOT)
 
         yield f"# {PREAMBLE_PREFIX} {timestamp} with {here}"
 
@@ -492,7 +499,7 @@ class TestGen(abc.ABC):
         head_new, body_new = _strip_preamble(src_new)
         assert head_new, src_new
 
-        path_new = str(self.path.relative_to(ROOT_DIR))
+        path_new = str(self.path.relative_to(DIR_ROOT))
         date_new = head_new.split(" ", 1)[0]
 
         if src_old := self._read():
@@ -523,6 +530,7 @@ class TestGen(abc.ABC):
 
 @final
 class EMath(TestGen):
+    package = "numpy-stubs"
     testname = "emath"
 
     VALUES: Final[dict[str, list[Any]]] = {
@@ -735,6 +743,7 @@ class EMath(TestGen):
 
 @final
 class LiteralBoolOps(TestGen):
+    package = "numpy-stubs"
     testname = "literal_bool_ops"
 
     UNOPS: ClassVar = {
@@ -887,6 +896,7 @@ class LiteralBoolOps(TestGen):
 
 @final
 class ScalarOps(TestGen):
+    package = "numpy-stubs"
     testname = "scalar_ops_{}"
 
     OPS_ARITHMETIC: ClassVar[dict[str, _BinOp]] = {
@@ -1144,6 +1154,7 @@ class ScalarOps(TestGen):
 
 
 class NDArrayOps(TestGen):
+    package = "numpy-stubs"
     testname = "ndarray_{}"
     numpy_imports_extra: tuple[str, ...] = ("import _numtype as _nt",)
 
@@ -1527,34 +1538,14 @@ class NDArrayOps(TestGen):
 TESTGENS: Final[Sequence[TestGen]] = [
     EMath(binary=False),
     LiteralBoolOps(),
-    ScalarOps("arithmetic"),
-    ScalarOps("modular"),
-    ScalarOps("bitwise"),
-    ScalarOps("comparison"),
-    NDArrayOps("pos"),
-    NDArrayOps("neg"),
-    NDArrayOps("abs"),
-    NDArrayOps("invert"),
-    NDArrayOps("add"),
-    NDArrayOps("sub"),
-    NDArrayOps("mul"),
-    NDArrayOps("matmul"),
-    NDArrayOps("pow"),
-    NDArrayOps("truediv"),
-    NDArrayOps("floordiv"),
-    NDArrayOps("mod"),
-    NDArrayOps("divmod"),
-    NDArrayOps("lshift"),
-    NDArrayOps("rshift"),
-    NDArrayOps("and"),
-    NDArrayOps("xor"),
-    NDArrayOps("or"),
+    *(ScalarOps(op_kind) for op_kind in get_args(_BinOpKind)),
+    *(NDArrayOps(op_name) for op_name in get_args(_OpName)),
 ]
 
 
 @np.errstate(all="ignore")
 def main() -> None:
-    """(Re)generate the `src/numpy-stubs/@test/generated/{}.pyi` type-tests."""
+    """(Re)generate the `src/*/@test/generated/{}.pyi` type-tests."""
     for testgen in TESTGENS:
         sys.stdout.writelines(testgen.regenerate())
 
