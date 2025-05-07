@@ -523,7 +523,7 @@ class TestGen(abc.ABC):
             tofile=path_new,
             fromfiledate=date_old,
             tofiledate=date_new if write else date_old,
-            n=0,
+            n=1,
             lineterm=BR,
         )
 
@@ -1546,8 +1546,44 @@ TESTGENS: Final[Sequence[TestGen]] = [
 @np.errstate(all="ignore")
 def main() -> None:
     """(Re)generate the `src/*/@test/generated/{}.pyi` type-tests."""
+    cwd = Path.cwd()
+    paths: dict[str, dict[Path, bool]] = {}
+
     for testgen in TESTGENS:
-        sys.stdout.writelines(testgen.regenerate())
+        path = testgen.path
+        diff = testgen.regenerate()
+        diff_out, diff_check = itertools.tee(diff, 2)
+        sys.stderr.writelines(diff_out)
+        sys.stderr.write("\n")
+        sys.stderr.flush()
+
+        diff_count = sum(1 for _ in diff_check)
+        if not diff_count:
+            sys.stdout.write(f"skipped ./{path.relative_to(cwd)}\n")
+            sys.stdout.flush()
+
+        package_paths = paths.setdefault(testgen.package, {})
+        assert path not in package_paths, path
+        package_paths[path] = bool(diff_count)
+
+    orphans: list[Path] = []
+    for package, testdir in DIRS_TARGET.items():
+        if not testdir.exists():
+            continue
+        assert testdir.is_dir()
+
+        known = paths.get(package, {})
+        for path in testdir.rglob("*.pyi"):
+            assert path.is_file()
+            if path not in known:
+                orphans.append(path)
+
+    for orphan in orphans:
+        assert orphan.is_file()
+        orphan.unlink()
+
+        sys.stderr.write(f"removed ./{orphan.relative_to(cwd)}\n")
+        sys.stderr.flush()
 
 
 if __name__ == "__main__":
