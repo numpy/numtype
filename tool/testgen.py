@@ -78,6 +78,7 @@ DIRS_TARGET: Final = {
 TAB: Final = " " * 4
 BR: Final = "\n"
 
+_NT: Final = "_nt"
 NP: Final = "np"
 PREAMBLE_PREFIX: Final = "@generated"
 
@@ -387,10 +388,16 @@ class TestGen(abc.ABC):
         self._names = {tp: name for name, tp in self.get_names() if tp and name}
         self._current_indent = 0
 
-    @property
+    @functools.cached_property
     def path(self) -> Path:
         assert self.testname
-        return DIRS_TARGET[self.package] / f"{self.testname}.pyi"
+
+        target_dir = DIRS_TARGET[self.package]
+        assert not target_dir.is_file(), target_dir
+
+        target_dir.mkdir(parents=True, exist_ok=True)
+
+        return target_dir / f"{self.testname}.pyi"
 
     def get_names(self) -> Iterable[tuple[str, str]]:
         return ()
@@ -1535,7 +1542,105 @@ class NDArrayOps(TestGen):
         yield from self._gen_unop() if self.n_in == 1 else self._gen_binop()
 
 
+@final
+class _NTRank(TestGen):
+    MAX_RANK = 4
+    NAME_ALIAS_GE = "_CanBroadcastTo"
+    NAME_ALIAS_LE = "_BroadcastableShape"
+
+    package = "_numtype"
+    testname = "test_rank"
+
+    @override
+    def _generate_imports(self) -> Generator[str]:
+        yield f"import {self.package} as {_NT}"
+
+        private_imports = ", ".join(sorted((self.NAME_ALIAS_LE, self.NAME_ALIAS_GE)))
+        yield f"from {self.package}._rank import {private_imports}"
+
+    @override
+    def get_names(self) -> Iterable[tuple[str, str]]:
+        for name_prefix, alias_prefix in [("s", "Shape"), ("r", "Rank")]:
+            for name_suffix, alias_suffix in [("", ""), ("n", "N")]:
+                for rank in range(self.MAX_RANK + 1):
+                    yield (
+                        f"{name_prefix}{rank}{name_suffix}",
+                        f"{_NT}.{alias_prefix}{rank}{alias_suffix}",
+                    )
+                yield "", ""
+
+    @override
+    def get_testcases(self) -> Iterable[str | None]:
+        yield from self._generate_section()
+
+        ignore_spec = {
+            "type": ["assignment"],
+            "pyright": ["reportAssignmentType"],
+        }
+        ignore_pragmas = (
+            f"# {kind}: ignore[{', '.join(sorted(rules))}]"
+            for kind, rules in ignore_spec.items()
+        )
+
+        template_accept = "{}: {} = {}"
+        template_reject = "  ".join((template_accept, *ignore_pragmas))
+        templates = {True: template_accept, False: template_reject}
+
+        for n_lhs, n_rhs in itertools.product(range(self.MAX_RANK + 1), repeat=2):
+            name_rhs = f"r{n_rhs}"
+
+            for name_op, name_type_orig, accept in [
+                ("ge", self.NAME_ALIAS_GE, n_lhs >= n_rhs),
+                ("le", self.NAME_ALIAS_LE, n_lhs <= n_rhs),
+            ]:
+                for name_lhs, name_type_arg in [
+                    (f"s{n_lhs}", f"Shape{n_lhs}"),
+                    (f"s{n_lhs}n", f"Shape{n_lhs}N"),
+                    (f"r{n_lhs}", f"Rank{n_lhs}"),
+                    (f"r{n_lhs}n", f"Rank{n_lhs}N"),
+                ]:
+                    name_test = f"{name_lhs}_{name_op}_{name_rhs}"
+                    expr_type = f"{name_type_orig}[{_NT}.{name_type_arg}]"
+
+                    expr_template = templates[accept]
+                    yield expr_template.format(name_test, expr_type, name_rhs)
+
+                    expr_template = templates[accept or name_op == "le"]
+                    yield expr_template.format(
+                        name_test + "n",
+                        expr_type,
+                        name_rhs + "n",
+                    )
+
+            yield ""
+
+        # yield from self._generate_section()
+
+        # for n_lhs, n_rhs in itertools.product(range(self.MAX_RANK + 1), repeat=2):
+        #     name_rhs = f"r{n_rhs}n"
+
+        #     for name_op, name_type_orig, accept in [
+        #         ("ge", self.NAME_ALIAS_GE, n_lhs >= n_rhs),
+        #         ("le", self.NAME_ALIAS_LE, n_lhs <= n_rhs),
+        #     ]:
+        #         for name_lhs, name_type_arg in [
+        #             (f"s{n_lhs}", f"Shape{n_lhs}"),
+        #             (f"r{n_lhs}", f"Rank{n_lhs}"),
+        #         ]:
+        #             name_test = f"{name_lhs}_{name_op}_{name_rhs}"
+        #             expr_type = f"{name_type_orig}[{_NT}.{name_type_arg}]"
+
+        #             expr_template = templates[accept]
+        #             yield expr_template.format(name_test, expr_type, name_rhs)
+
+        #     yield ""
+
+
+###
+
+
 TESTGENS: Final[Sequence[TestGen]] = [
+    _NTRank(),
     EMath(binary=False),
     LiteralBoolOps(),
     *(ScalarOps(op_kind) for op_kind in get_args(_BinOpKind)),
