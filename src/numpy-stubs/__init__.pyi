@@ -31,14 +31,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import (
-    Buffer,
-    CapsuleType,
-    Protocol,
-    TypeVar,
-    deprecated,
-    override,
-)
+from typing_extensions import Buffer, CapsuleType, Protocol, TypeVar, deprecated, override
 
 import _numtype as _nt
 
@@ -360,7 +353,6 @@ from ._typing import (
     _ShapeLike,
     _TD64Like_co,
 )
-from ._typing._char_codes import _LongCodes, _ULongCodes
 from .lib import scimath as emath
 from .lib._arraypad_impl import pad
 from .lib._arraysetops_impl import (
@@ -654,10 +646,7 @@ _NumberItemT = TypeVar("_NumberItemT", bound=complex)
 _NumberItemT_co = TypeVar("_NumberItemT_co", bound=complex, default=Any, covariant=True)
 _InexactItemT_co = TypeVar("_InexactItemT_co", bound=complex, default=Any, covariant=True)
 _FlexItemT_co = TypeVar(
-    "_FlexItemT_co",
-    bound=bytes | str | tuple[object, ...],
-    default=bytes | str | tuple[Any, ...],
-    covariant=True,
+    "_FlexItemT_co", bound=bytes | str | tuple[object, ...], default=bytes | str | tuple[Any, ...], covariant=True
 )
 _CharacterItemT_co = TypeVar("_CharacterItemT_co", bound=bytes | str, default=bytes | str, covariant=True)
 _TD64ItemT_co = TypeVar(
@@ -1191,219 +1180,111 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     #
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeBool,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeBool, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.BoolDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeInt8,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeInt8, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Int8DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeUInt8,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
-    ) -> dtypes.UByteDType: ...
+        cls, dtype: _nt.ToDTypeUInt8, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
+    ) -> dtypes.UInt8DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeInt16,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeInt16, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Int16DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeUInt16,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeUInt16, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.UInt16DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeInt32,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeInt32, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Int32DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeUInt32,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeUInt32, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.UInt32DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: type[ct.c_long] | _LongCodes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeLong, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.LongDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: type[ct.c_ulong] | _ULongCodes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeULong, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.ULongDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeInt64,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeInt64, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Int64DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeUInt64,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeUInt64, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.UInt64DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeFloat16,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeFloat16, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Float16DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeFloat32,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeFloat32, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Float32DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeFloat64 | None,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeFloat64 | None, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Float64DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeLongDouble,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeLongDouble, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.LongDoubleDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeComplex64,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeComplex64, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Complex64DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeComplex128,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeComplex128, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.Complex128DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeCLongDouble,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeCLongDouble, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.CLongDoubleDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeObject,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeObject, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.ObjectDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeBytes,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeBytes, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.BytesDType: ...
     @overload
     def __new__(  # type: ignore[overload-overlap]
-        cls,
-        dtype: _nt.ToDTypeStr,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeStr, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.StrDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeVoid,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeVoid, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.VoidDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeDateTime64,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeDateTime64, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.DateTime64DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeTimeDelta64,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeTimeDelta64, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.TimeDelta64DType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _nt.ToDTypeString,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _nt.ToDTypeString, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtypes.StringDType: ...
     @overload
     def __new__(
-        cls,
-        dtype: _DTypeLike[_ScalarT_co],
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: _DTypeLike[_ScalarT_co], align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> Self: ...
     @overload
     def __new__(
-        cls,
-        dtype: DTypeLike,
-        align: py_bool = False,
-        copy: py_bool = False,
-        metadata: _MetaData = ...,
+        cls, dtype: DTypeLike, align: py_bool = False, copy: py_bool = False, metadata: _MetaData = ...
     ) -> dtype: ...
 
     #
@@ -1544,7 +1425,7 @@ class _ArrayOrScalarCommon:
         keepdims: py_bool = False,
         initial: _NumberLike_co = ...,
         where: _nt.ToBool_nd = True,
-    ) -> Any: ...
+    ) -> Incomplete: ...
     @overload
     def max(
         self,
@@ -1571,7 +1452,7 @@ class _ArrayOrScalarCommon:
     @overload  # axis=None (default), out=None (default), keepdims=False (default)
     def argmax(self, /, axis: None = None, out: None = None, *, keepdims: L[False] = False) -> intp: ...
     @overload  # axis=index, out=None (default)
-    def argmax(self, /, axis: CanIndex, out: None = None, *, keepdims: py_bool = False) -> Any: ...
+    def argmax(self, /, axis: CanIndex, out: None = None, *, keepdims: py_bool = False) -> Incomplete: ...
     @overload  # axis=index, out=ndarray
     def argmax(self, /, axis: CanIndex | None, out: _ArrayT, *, keepdims: py_bool = False) -> _ArrayT: ...
     @overload
@@ -1587,7 +1468,7 @@ class _ArrayOrScalarCommon:
         keepdims: py_bool = False,
         initial: _NumberLike_co = ...,
         where: _nt.ToBool_nd = True,
-    ) -> Any: ...
+    ) -> Incomplete: ...
     @overload
     def min(
         self,
@@ -1614,7 +1495,7 @@ class _ArrayOrScalarCommon:
     @overload  # axis=None (default), out=None (default), keepdims=False (default)
     def argmin(self, /, axis: None = None, out: None = None, *, keepdims: L[False] = False) -> intp: ...
     @overload  # axis=index, out=None (default)
-    def argmin(self, /, axis: CanIndex, out: None = None, *, keepdims: py_bool = False) -> Any: ...
+    def argmin(self, /, axis: CanIndex, out: None = None, *, keepdims: py_bool = False) -> Incomplete: ...
     @overload  # axis=index, out=ndarray
     def argmin(self, /, axis: CanIndex | None, out: _ArrayT, *, keepdims: py_bool = False) -> _ArrayT: ...
     @overload
@@ -1637,12 +1518,7 @@ class _ArrayOrScalarCommon:
     # TODO: Annotate kwargs with an unpacked `TypedDict`
     @overload  # out: None (default)
     def clip(
-        self,
-        /,
-        min: ArrayLike,
-        max: ArrayLike | None = None,
-        out: None = None,
-        **kwargs: object,
+        self, /, min: ArrayLike, max: ArrayLike | None = None, out: None = None, **kwargs: object
     ) -> _nt.Array: ...
     @overload
     def clip(self, /, min: None, max: ArrayLike, out: None = None, **kwargs: object) -> _nt.Array: ...
@@ -1659,13 +1535,7 @@ class _ArrayOrScalarCommon:
 
     #
     @overload
-    def compress(
-        self,
-        /,
-        condition: _nt.CoInteger_nd,
-        axis: CanIndex | None = None,
-        out: None = None,
-    ) -> _nt.Array: ...
+    def compress(self, /, condition: _nt.CoInteger_nd, axis: CanIndex | None = None, out: None = None) -> _nt.Array: ...
     @overload
     def compress(self, /, condition: _nt.CoInteger_nd, axis: CanIndex | None, out: _ArrayT) -> _ArrayT: ...
     @overload
@@ -1674,11 +1544,7 @@ class _ArrayOrScalarCommon:
     #
     @overload  # out: None (default)
     def cumprod(
-        self,
-        /,
-        axis: CanIndex | None = None,
-        dtype: DTypeLike | None = None,
-        out: None = None,
+        self, /, axis: CanIndex | None = None, dtype: DTypeLike | None = None, out: None = None
     ) -> _nt.Array: ...
     @overload  # out: ndarray
     def cumprod(self, /, axis: CanIndex | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
@@ -1725,11 +1591,7 @@ class _ArrayOrScalarCommon:
     #
     @overload  # out: None (default)
     def cumsum(
-        self,
-        /,
-        axis: CanIndex | None = None,
-        dtype: DTypeLike | None = None,
-        out: None = None,
+        self, /, axis: CanIndex | None = None, dtype: DTypeLike | None = None, out: None = None
     ) -> _nt.Array: ...
     @overload  # out: ndarray
     def cumsum(self, /, axis: CanIndex | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
@@ -3446,7 +3308,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         casting: _CastingKind = "unsafe",
         subok: py_bool = True,
         copy: py_bool | _CopyMode = True,
-    ) -> ndarray[_ShapeT_co, dtype]: ...
+    ) -> ndarray[_ShapeT_co]: ...
 
     # the special casings work around the lack of higher-kinded typing (HKT) support in Python
     @overload  # ()
