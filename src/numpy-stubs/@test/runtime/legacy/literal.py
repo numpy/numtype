@@ -18,7 +18,7 @@ ACF = frozenset({None, "A", "C", "F"})
 CF = frozenset({None, "C", "F"})
 
 order_list: list[tuple[frozenset[str | None], Callable[..., Any]]] = [
-    (KACF, partial(np.ndarray, 1)),
+    (KACF, partial(np.ndarray.__call__, 1)),
     (KACF, AR.tobytes),
     (KACF, partial(AR.astype, int)),
     (KACF, AR.copy),
