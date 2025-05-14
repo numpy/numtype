@@ -49,6 +49,7 @@ from ._dtype import (
     ToDTypeInt16 as ToDTypeInt16,
     ToDTypeInt32 as ToDTypeInt32,
     ToDTypeInt64 as ToDTypeInt64,
+    ToDTypeLong as ToDTypeLong,
     ToDTypeLongDouble as ToDTypeLongDouble,
     ToDTypeObject as ToDTypeObject,
     ToDTypeStr as ToDTypeStr,
@@ -58,6 +59,7 @@ from ._dtype import (
     ToDTypeUInt16 as ToDTypeUInt16,
     ToDTypeUInt32 as ToDTypeUInt32,
     ToDTypeUInt64 as ToDTypeUInt64,
+    ToDTypeULong as ToDTypeULong,
     ToDTypeVoid as ToDTypeVoid,
     _ToDType as _ToDType,
 )
