@@ -18,6 +18,7 @@ from numpy._typing._char_codes import (
     _Int32Codes,
     _Int64Codes,
     _IntPCodes,
+    _LongCodes,
     _LongDoubleCodes,
     _ObjectCodes,
     _StrCodes,
@@ -28,6 +29,7 @@ from numpy._typing._char_codes import (
     _UInt32Codes,
     _UInt64Codes,
     _UIntPCodes,
+    _ULongCodes,
     _VoidCodes,
 )
 from numpy._typing._dtype_like import _VoidDTypeLike
@@ -49,6 +51,7 @@ __all__ = [
     "ToDTypeInt16",
     "ToDTypeInt32",
     "ToDTypeInt64",
+    "ToDTypeLong",
     "ToDTypeLongDouble",
     "ToDTypeObject",
     "ToDTypeStr",
@@ -58,6 +61,7 @@ __all__ = [
     "ToDTypeUInt16",
     "ToDTypeUInt32",
     "ToDTypeUInt64",
+    "ToDTypeULong",
     "ToDTypeVoid",
     "_ToDType",
     "_ToDType2",
@@ -105,6 +109,8 @@ ToDTypeInt32: TypeAlias = _ToDType2[np.int32, _c_i32] | _Int32Codes
 ToDTypeUInt32: TypeAlias = _ToDType2[np.uint32, _c_u32] | _UInt32Codes
 ToDTypeInt64: TypeAlias = _ToDType2[np.int64, _c_i64 | JustInt] | _Int64Codes | _IntPCodes
 ToDTypeUInt64: TypeAlias = _ToDType2[np.uint64, _c_u64] | _UInt64Codes | _UIntPCodes
+ToDTypeULong: TypeAlias = np.dtypes.ULongDType | type[ct.c_ulong] | _ULongCodes
+ToDTypeLong: TypeAlias = np.dtypes.LongDType | type[ct.c_long] | _LongCodes
 ToDTypeFloat16: TypeAlias = _ToDType[np.float16] | _Float16Codes
 ToDTypeFloat32: TypeAlias = _ToDType2[np.float32, ct.c_float] | _Float32Codes
 ToDTypeFloat64: TypeAlias = _ToDType2[np.float64, ct.c_double | JustFloat] | _Float64Codes
