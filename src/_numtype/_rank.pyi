@@ -35,7 +35,7 @@ _RankT = TypeVar("_RankT", bound=Shape, default=Any)
 
 HasRankLE = TypeAliasType(
     "HasRankLE",
-    _HasShape[_HasOwnShape[_UpperT] | _CanBroadcast[Any, _UpperT, _RankT]],
+    _HasShape[Shape0 | _HasOwnShape[_UpperT] | _CanBroadcast[Any, _UpperT, _RankT]],
     type_params=(_UpperT, _RankT),
 )
 HasRankGE = TypeAliasType(
