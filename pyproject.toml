@@ -311,7 +311,7 @@ env_list = [
     [tool.tox.env.mypy]
     description = "mypy"
     runner = "uv-venv-lock-runner"
-    dependency_groups = ["dev", "orjson", "types"]
+    dependency_groups = ["dev", "types"]
     commands = [
         [
             "mypy",
