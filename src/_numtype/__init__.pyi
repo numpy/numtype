@@ -84,8 +84,8 @@ from ._nep50 import (
     CastsWithScalar as CastsWithScalar,
 )
 from ._rank import (
-    Broadcasts as Broadcasts,
-    BroadcastsTo as BroadcastsTo,
+    HasRankGE as HasRankGE,
+    HasRankLE as HasRankLE,
     Rank as Rank,
     Rank0 as Rank0,
     Rank0N as Rank0N,
@@ -97,7 +97,6 @@ from ._rank import (
     Rank3N as Rank3N,
     Rank4 as Rank4,
     Rank4N as Rank4N,
-    _BroadcastableShape as _BroadcastableShape,
 )
 from ._scalar import (
     inexact32 as inexact32,

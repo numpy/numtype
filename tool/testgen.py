@@ -1544,96 +1544,80 @@ class NDArrayOps(TestGen):
 
 @final
 class _NTRank(TestGen):
-    MAX_RANK = 4
-    NAME_ALIAS_GE = "_CanBroadcastTo"
-    NAME_ALIAS_LE = "_BroadcastableShape"
+    _MAX_RANK = 4
+    # as defined in src/_numtype/_rank.pyi
+    _QNAME_ALIAS_LE = f"{_NT}.HasRankLE"
+    _QNAME_ALIAS_GE = f"{_NT}.HasRankGE"
 
     package = "_numtype"
     testname = "test_rank"
 
     @override
     def _generate_imports(self) -> Generator[str]:
+        yield "from typing import Any"
+        yield ""
         yield f"import {self.package} as {_NT}"
-
-        private_imports = ", ".join(sorted((self.NAME_ALIAS_LE, self.NAME_ALIAS_GE)))
-        yield f"from {self.package}._rank import {private_imports}"
 
     @override
     def get_names(self) -> Iterable[tuple[str, str]]:
-        for name_prefix, alias_prefix in [("s", "Shape"), ("r", "Rank")]:
-            for name_suffix, alias_suffix in [("", ""), ("n", "N")]:
-                for rank in range(self.MAX_RANK + 1):
-                    yield (
-                        f"{name_prefix}{rank}{name_suffix}",
-                        f"{_NT}.{alias_prefix}{rank}{alias_suffix}",
-                    )
-                yield "", ""
+        for name_suffix, alias_suffix in [("", ""), ("n", "N")]:
+            for rank in range(self._MAX_RANK + 1):
+                yield (
+                    f"r{rank}{name_suffix}",
+                    f"{_NT}.Array[Any, {_NT}.Rank{rank}{alias_suffix}]",
+                )
+            yield "", ""
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
-        yield from self._generate_section()
-
-        ignore_spec = {
-            "type": ["assignment"],
-            "pyright": ["reportAssignmentType"],
-        }
+        # prepare the templates for acceptance/rejection tests
+        ignore_spec = {"type": ["assignment"], "pyright": ["reportAssignmentType"]}
         ignore_pragmas = (
             f"# {kind}: ignore[{', '.join(sorted(rules))}]"
             for kind, rules in ignore_spec.items()
         )
-
         template_accept = "{}: {} = {}"
         template_reject = "  ".join((template_accept, *ignore_pragmas))
         templates = {True: template_accept, False: template_reject}
 
-        for n_lhs, n_rhs in itertools.product(range(self.MAX_RANK + 1), repeat=2):
-            name_rhs = f"r{n_rhs}"
+        # generate the test cases
+        n_lhs_prev = -1
+        for n_lhs, n_rhs in itertools.product(range(self._MAX_RANK + 1), repeat=2):
+            if n_lhs != n_lhs_prev:
+                yield from self._generate_section(f"rank {n_lhs}")
+                n_lhs_prev = n_lhs
 
             for name_op, name_type_orig, accept in [
-                ("ge", self.NAME_ALIAS_GE, n_lhs >= n_rhs),
-                ("le", self.NAME_ALIAS_LE, n_lhs <= n_rhs),
+                ("le", self._QNAME_ALIAS_LE, n_lhs >= n_rhs),
+                ("ge", self._QNAME_ALIAS_GE, n_lhs <= n_rhs),
             ]:
                 for name_lhs, name_type_arg in [
                     (f"s{n_lhs}", f"Shape{n_lhs}"),
-                    (f"s{n_lhs}n", f"Shape{n_lhs}N"),
                     (f"r{n_lhs}", f"Rank{n_lhs}"),
+                    (f"s{n_lhs}n", f"Shape{n_lhs}N"),
                     (f"r{n_lhs}n", f"Rank{n_lhs}N"),
                 ]:
-                    name_test = f"{name_lhs}_{name_op}_{name_rhs}"
+                    name_rhs = f"r{n_rhs}"
+                    name_test = f"{name_rhs}_{name_op}_{name_lhs}"
                     expr_type = f"{name_type_orig}[{_NT}.{name_type_arg}]"
 
                     expr_template = templates[accept]
                     yield expr_template.format(name_test, expr_type, name_rhs)
 
-                    expr_template = templates[accept or name_op == "le"]
-                    yield expr_template.format(
-                        name_test + "n",
-                        expr_type,
-                        name_rhs + "n",
-                    )
+                for name_lhs, name_type_arg in [
+                    (f"s{n_lhs}", f"Shape{n_lhs}"),
+                    (f"r{n_lhs}", f"Rank{n_lhs}"),
+                    (f"s{n_lhs}n", f"Shape{n_lhs}N"),
+                    (f"r{n_lhs}n", f"Rank{n_lhs}N"),
+                ]:
+                    name_rhs = f"r{n_rhs}n"
+                    name_test = f"{name_rhs}_{name_op}_{name_lhs}"
+                    expr_type = f"{name_type_orig}[{_NT}.{name_type_arg}]"
 
-            yield ""
+                    expr_template = templates[accept or name_op == "ge"]
+                    yield expr_template.format(name_test, expr_type, name_rhs)
 
-        # yield from self._generate_section()
-
-        # for n_lhs, n_rhs in itertools.product(range(self.MAX_RANK + 1), repeat=2):
-        #     name_rhs = f"r{n_rhs}n"
-
-        #     for name_op, name_type_orig, accept in [
-        #         ("ge", self.NAME_ALIAS_GE, n_lhs >= n_rhs),
-        #         ("le", self.NAME_ALIAS_LE, n_lhs <= n_rhs),
-        #     ]:
-        #         for name_lhs, name_type_arg in [
-        #             (f"s{n_lhs}", f"Shape{n_lhs}"),
-        #             (f"r{n_lhs}", f"Rank{n_lhs}"),
-        #         ]:
-        #             name_test = f"{name_lhs}_{name_op}_{name_rhs}"
-        #             expr_type = f"{name_type_orig}[{_NT}.{name_type_arg}]"
-
-        #             expr_template = templates[accept]
-        #             yield expr_template.format(name_test, expr_type, name_rhs)
-
-        #     yield ""
+                yield ""
 
 
 ###
@@ -1664,7 +1648,7 @@ def main() -> None:
 
         diff_count = sum(1 for _ in diff_check)
         if not diff_count:
-            sys.stdout.write(f"skipped ./{path.relative_to(cwd)}\n")
+            sys.stdout.write(f"skipped ./{path.relative_to(cwd)}")
             sys.stdout.flush()
 
         package_paths = paths.setdefault(testgen.package, {})
