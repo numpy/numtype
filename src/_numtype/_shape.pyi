@@ -1,7 +1,8 @@
-from typing import TypeAlias
+from typing import Any, TypeAlias
 from typing_extensions import TypeAliasType
 
 __all__ = [
+    "AnyShape",
     "Shape",
     "Shape0",
     "Shape0N",
@@ -16,6 +17,7 @@ __all__ = [
     "ShapeN",
 ]
 
+AnyShape = TypeAliasType("AnyShape", tuple[Any, ...])
 Shape = TypeAliasType("Shape", tuple[int, ...])
 
 Shape0 = TypeAliasType("Shape0", tuple[()])

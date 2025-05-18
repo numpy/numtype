@@ -142,6 +142,7 @@ from ._scalar_co import (
     co_ulong as co_ulong,
 )
 from ._shape import (
+    AnyShape as AnyShape,
     Shape as Shape,
     Shape0 as Shape0,
     Shape0N as Shape0N,
