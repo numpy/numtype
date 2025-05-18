@@ -102,7 +102,7 @@ class BaseRank(tuple[*_Ts], Generic[*_Ts]):
 
 @final
 @type_check_only
-class Rank0(BaseRank[*tuple[()]]):
+class Rank0(BaseRank[()]):
     @override
     def __broadcast__(self, from_: Shape0 | _HasOwnShape[Shape, Any], to: Shape, /) -> Self: ...
 
