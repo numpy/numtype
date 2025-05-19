@@ -1,10 +1,34 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.7.5,<0.8"]
+build-backend = "uv_build"
+
+
+[tool.uv.build-backend]
+# module-name = "numpy-stubs"  # NOTE: currently fails with uv 0.7.5
+source-include = ["src/_numtype/**", "src/numpy-stubs/**", "src/numtype/**"]
+wheel-include = ["src/_numtype/**", "src/numpy-stubs/**", "src/numtype/**"]
+source-exclude = [
+    '**/\@test',
+    "**/*.yml",
+    "**/.*",
+    "/docs",
+    "/tool",
+    "CONTRIBUTING.md",
+    "uv.lock",
+]
+wheel-exclude = [
+    '**/\@test',
+    "**/*.yml",
+    "**/.*",
+    "/docs",
+    "/tool",
+    "CONTRIBUTING.md",
+    "uv.lock",
+]
 
 
 [project]
-name = "numtype"
+name = "numpy-stubs"  # NOTE: currently fails with uv 0.7.5
 version = "2.2.6.0.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
@@ -90,22 +114,6 @@ dev = [
     {include-group = "typecheck"},
     {include-group = "docs"},
 ]
-
-
-[tool.hatch.build]
-exclude = [
-    "**/@test",
-    "**/*.yml",
-    "**/.*",
-    "/docs",
-    "/tool",
-    "CONTRIBUTING.md",
-    "uv.lock",
-]
-skip-excluded-dirs = true
-
-    [tool.hatch.build.targets.wheel]
-    packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
 
 
 [tool.mypy]

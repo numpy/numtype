@@ -569,7 +569,7 @@ wheels = [
 ]
 
 [[package]]
-name = "numtype"
+name = "numpy-stubs"
 version = "2.2.6.0.dev0"
 source = { editable = "." }
 
@@ -581,7 +581,7 @@ numpy = [
 [package.dev-dependencies]
 basedpyright = [
     { name = "basedpyright" },
-    { name = "numtype", extra = ["numpy"] },
+    { name = "numtype" },
     { name = "pytest" },
     { name = "types-setuptools" },
     { name = "types-tabulate" },
@@ -596,7 +596,7 @@ dev = [
     { name = "mkdocs-minify-plugin" },
     { name = "mkdocstrings", extra = ["python"] },
     { name = "mypy", extra = ["faster-cache"] },
-    { name = "numtype", extra = ["numpy"] },
+    { name = "numtype" },
     { name = "pygments" },
     { name = "pytest" },
     { name = "ruff" },
@@ -617,38 +617,38 @@ lint = [
     { name = "ruff" },
 ]
 list-and-test = [
-    { name = "numtype", extra = ["numpy"] },
+    { name = "numtype" },
     { name = "pytest" },
     { name = "ruff" },
     { name = "typing-extensions" },
 ]
 mypy = [
     { name = "mypy", extra = ["faster-cache"] },
-    { name = "numtype", extra = ["numpy"] },
+    { name = "numtype" },
     { name = "pytest" },
     { name = "types-setuptools" },
     { name = "types-tabulate" },
     { name = "typing-extensions" },
 ]
 numpy = [
-    { name = "numtype", extra = ["numpy"] },
+    { name = "numtype" },
 ]
 pytest = [
-    { name = "numtype", extra = ["numpy"] },
+    { name = "numtype" },
     { name = "pytest" },
     { name = "typing-extensions" },
 ]
 typecheck = [
     { name = "basedpyright" },
     { name = "mypy", extra = ["faster-cache"] },
-    { name = "numtype", extra = ["numpy"] },
+    { name = "numtype" },
     { name = "pytest" },
     { name = "types-setuptools" },
     { name = "types-tabulate" },
     { name = "typing-extensions" },
 ]
 types = [
-    { name = "numtype", extra = ["numpy"] },
+    { name = "numtype" },
     { name = "pytest" },
     { name = "types-setuptools" },
     { name = "types-tabulate" },
@@ -730,6 +730,15 @@ types = [
     { name = "types-setuptools", specifier = ">=80.7.0.20250516" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.13.2" },
+]
+
+[[package]]
+name = "numtype"
+version = "0.0.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/14/9d/31fdc3662ed6be2a774eb7b593624795b31f4754f8218690f60ee864a5d0/numtype-0.0.0.0.tar.gz", hash = "sha256:d755917be4c38435e75be0eef7a55dc842f25830f1eafefb334cf9da06577d82", size = 3552, upload-time = "2025-01-27T07:44:03.532Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b9/a4/640c14eaff794c3ca8ff9dae46907849fcd52b3aad100dcfe947c0d07a22/numtype-0.0.0.0-py3-none-any.whl", hash = "sha256:f3844408ff5a863c51b49245f8150c144cb68e35c7676d6249dc5074995effca", size = 2407, upload-time = "2025-01-27T07:44:01.587Z" },
 ]
 
 [[package]]
