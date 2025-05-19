@@ -40,7 +40,7 @@ _ScalarOutT = TypeVar("_ScalarOutT", bound=_ScalarOut, default=Any)
 _ScalarOutT_co = TypeVar("_ScalarOutT_co", bound=_ScalarOut, covariant=True)
 _ScalarOutT_contra = TypeVar("_ScalarOutT_contra", bound=_ScalarOut, contravariant=True)
 
-_ShapeT = TypeVar("_ShapeT", bound=_shape.Shape, default=_shape.Shape)
+_ShapeT = TypeVar("_ShapeT", bound=_shape.Shape, default=Any)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_shape.Shape, covariant=True)
 
 ###

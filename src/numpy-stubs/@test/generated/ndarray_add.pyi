@@ -1,4 +1,4 @@
-# @generated 2025-05-05T23:12:14Z with tool/testgen.py
+# @generated 2025-05-19T02:35:42Z with tool/testgen.py
 from typing import assert_type
 
 import _numtype as _nt
@@ -27,7 +27,7 @@ m8_nd: _nt.Array[np.timedelta64]
 O_nd: _nt.Array[np.object_]
 S_nd: _nt.Array[np.bytes_]
 U_nd: _nt.Array[np.str_]
-T_nd: np.ndarray[_nt.Rank, np.dtypes.StringDType]
+T_nd: np.ndarray[_nt.Shape, np.dtypes.StringDType]
 i_nd: _nt.Array[np.signedinteger]
 u_nd: _nt.Array[np.unsignedinteger]
 f_nd: _nt.Array[np.floating]
@@ -921,7 +921,7 @@ U_nd + m8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(U_nd + O_nd, _nt.Array[np.object_])
 U_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 assert_type(U_nd + U_nd, _nt.Array[np.str_])
-assert_type(U_nd + T_nd, np.ndarray[_nt.Rank, np.dtypes.StringDType])
+assert_type(U_nd + T_nd, np.ndarray[_nt.Shape, np.dtypes.StringDType])
 U_nd + i_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 U_nd + u_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 U_nd + f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -962,8 +962,8 @@ T_nd + cld_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + M8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + m8_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + S_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(T_nd + U_nd, np.ndarray[_nt.Rank, np.dtypes.StringDType])
-assert_type(T_nd + T_nd, np.ndarray[_nt.Rank, np.dtypes.StringDType])
+assert_type(T_nd + U_nd, np.ndarray[_nt.Shape, np.dtypes.StringDType])
+assert_type(T_nd + T_nd, np.ndarray[_nt.Shape, np.dtypes.StringDType])
 T_nd + i_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + u_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + f_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -977,13 +977,13 @@ T_nd + i_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + f_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + c_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 T_nd + S_py  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(T_nd + U_py, np.ndarray[_nt.Rank, np.dtypes.StringDType])
+assert_type(T_nd + U_py, np.ndarray[_nt.Shape, np.dtypes.StringDType])
 
 b_py + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 i_py + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 f_py + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 c_py + T_nd  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-assert_type(U_py + T_nd, np.ndarray[_nt.Rank, np.dtypes.StringDType])
+assert_type(U_py + T_nd, np.ndarray[_nt.Shape, np.dtypes.StringDType])
 
 assert_type(i_nd + b1_nd, _nt.Array[np.signedinteger])
 assert_type(i_nd + i1_nd, _nt.Array[np.signedinteger])

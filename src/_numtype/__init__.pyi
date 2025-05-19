@@ -19,13 +19,11 @@ from ._array import (
     Array2D as Array2D,
     Array3D as Array3D,
     Array4D as Array4D,
-    ArrayND as ArrayND,
     MArray as MArray,
     MArray0D as MArray0D,
     MArray1D as MArray1D,
     MArray2D as MArray2D,
     MArray3D as MArray3D,
-    MArrayND as MArrayND,
     Matrix as Matrix,
     StringArray as StringArray,
     StringArray0D as StringArray0D,
@@ -86,6 +84,7 @@ from ._nep50 import (
     CastsWithScalar as CastsWithScalar,
 )
 from ._rank import (
+    HasInnerShape as HasInnerShape,
     HasRankGE as HasRankGE,
     HasRankLE as HasRankLE,
     Rank as Rank,
@@ -141,6 +140,7 @@ from ._scalar_co import (
     co_ulong as co_ulong,
 )
 from ._shape import (
+    AnyShape as AnyShape,
     Shape as Shape,
     Shape0 as Shape0,
     Shape0N as Shape0N,
@@ -170,7 +170,8 @@ _ToT = TypeVar("_ToT")
 
 @type_check_only
 class CanArray0D(Protocol[_ScalarT_co]):
-    def __array__(self, /) -> np.ndarray[Shape0, np.dtype[_ScalarT_co]]: ...
+    # TODO: remove `| Rank0` once python/mypy#19110 is fixed
+    def __array__(self, /) -> np.ndarray[Shape0 | Rank0, np.dtype[_ScalarT_co]]: ...
 
 @type_check_only
 class CanArray1D(Protocol[_ScalarT_co]):
@@ -186,11 +187,13 @@ class CanArray3D(Protocol[_ScalarT_co]):
 
 @type_check_only
 class CanArrayND(Protocol[_ScalarT_co]):
-    def __array__(self, /) -> np.ndarray[Shape, np.dtype[_ScalarT_co]]: ...
+    # TODO: remove `| Rank0` once python/mypy#19110 is fixed
+    def __array__(self, /) -> np.ndarray[Shape | Rank0, np.dtype[_ScalarT_co]]: ...
 
 @type_check_only
 class CanLenArrayND(Protocol[_ScalarT_co]):
     def __len__(self, /) -> int: ...
+    # TODO: remove `| Rank0` once python/mypy#19110 is fixed
     def __array__(self, /) -> np.ndarray[Shape, np.dtype[_ScalarT_co]]: ...
 
 @type_check_only

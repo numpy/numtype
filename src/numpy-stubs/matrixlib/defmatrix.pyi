@@ -188,7 +188,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
-    def tolist(self: _CanItem[_T], /) -> list[list[_T]]: ...  # type: ignore[override]
+    def tolist(self: _CanItem[_T], /) -> list[list[_T]]: ...
 
     #
     @override

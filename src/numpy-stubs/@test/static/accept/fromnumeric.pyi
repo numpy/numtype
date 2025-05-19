@@ -3,7 +3,7 @@ from typing import Any, assert_type
 import _numtype as _nt
 import numpy as np
 
-class NDArraySubclass(np.ndarray[_nt.Rank, np.dtype[np.complex128]]): ...
+class NDArraySubclass(np.ndarray[_nt.Shape, np.dtype[np.complex128]]): ...
 
 AR_b1: _nt.Array[np.bool]
 AR_f4: _nt.Array[np.float32]
@@ -144,7 +144,8 @@ assert_type(np.nonzero(AR_f4), tuple[_nt.Array[np.intp], ...])
 assert_type(np.nonzero(AR_1d), tuple[_nt.Array[np.intp], ...])
 assert_type(np.nonzero(AR_nd), tuple[_nt.Array[np.intp], ...])
 
-assert_type(np.shape(b1), tuple[()])
+# TODO: remove the `# type: ignore` once python/mypy#19110 is fixed
+assert_type(np.shape(b1), tuple[()])  # type: ignore[assert-type]
 assert_type(np.shape(f_0d), tuple[()])
 assert_type(np.shape(i_1d), tuple[int])
 assert_type(np.shape(i_2d), tuple[int, int])
@@ -153,9 +154,8 @@ assert_type(np.shape(i_4d), tuple[int, ...])
 assert_type(np.shape(AR_b1), tuple[int, ...])
 assert_type(np.shape(AR_nd), tuple[int, ...])
 # these fail on mypy, but it works as expected with pyright/pylance
-# assert_type(np.shape(AR_0d), tuple[()])
-# assert_type(np.shape(AR_1d), tuple[int])
-# assert_type(np.shape(AR_2d), tuple[int, int])
+assert_type(np.shape(AR_0d), tuple[()])  # type: ignore[assert-type]
+assert_type(np.shape(AR_1d), tuple[int])  # type: ignore[assert-type]
 
 assert_type(np.compress(b_1d, b1), _nt.Array[np.bool])
 assert_type(np.compress(b_1d, f4), _nt.Array[np.float32])

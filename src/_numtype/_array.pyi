@@ -5,8 +5,8 @@ from typing_extensions import TypeAliasType, TypeVar
 
 import numpy as np
 
-from ._rank import Rank, Rank0, Rank1, Rank2, Rank3, Rank4
-from ._shape import Shape
+from ._rank import Rank0, Rank1, Rank2, Rank3, Rank4
+from ._shape import AnyShape, Shape
 
 __all__ = [
     "Array",
@@ -15,13 +15,11 @@ __all__ = [
     "Array2D",
     "Array3D",
     "Array4D",
-    "ArrayND",
     "MArray",
     "MArray0D",
     "MArray1D",
     "MArray2D",
     "MArray3D",
-    "MArrayND",
     "Matrix",
     "StringArray",
     "StringArray0D",
@@ -33,7 +31,8 @@ __all__ = [
 
 ###
 
-_RankT = TypeVar("_RankT", bound=Shape, default=Shape)
+# TODO: use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
+_RankT = TypeVar("_RankT", bound=AnyShape, default=Shape)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic, default=Any)
 _NaT = TypeVar("_NaT", default=Never)
 
@@ -45,7 +44,6 @@ Array1D = TypeAliasType("Array1D", np.ndarray[Rank1, np.dtype[_ScalarT]], type_p
 Array2D = TypeAliasType("Array2D", np.ndarray[Rank2, np.dtype[_ScalarT]], type_params=(_ScalarT,))
 Array3D = TypeAliasType("Array3D", np.ndarray[Rank3, np.dtype[_ScalarT]], type_params=(_ScalarT,))
 Array4D = TypeAliasType("Array4D", np.ndarray[Rank4, np.dtype[_ScalarT]], type_params=(_ScalarT,))
-ArrayND = TypeAliasType("ArrayND", np.ndarray[Rank, np.dtype[_ScalarT]], type_params=(_ScalarT,))
 
 ###
 
@@ -58,7 +56,6 @@ MArray0D = TypeAliasType("MArray0D", np.ma.MaskedArray[Rank0, np.dtype[_ScalarT]
 MArray1D = TypeAliasType("MArray1D", np.ma.MaskedArray[Rank1, np.dtype[_ScalarT]], type_params=(_ScalarT,))
 MArray2D = TypeAliasType("MArray2D", np.ma.MaskedArray[Rank2, np.dtype[_ScalarT]], type_params=(_ScalarT,))
 MArray3D = TypeAliasType("MArray3D", np.ma.MaskedArray[Rank3, np.dtype[_ScalarT]], type_params=(_ScalarT,))
-MArrayND = TypeAliasType("MArrayND", np.ma.MaskedArray[Rank, np.dtype[_ScalarT]], type_params=(_ScalarT, _RankT))
 
 ###
 
@@ -89,6 +86,6 @@ StringArray3D = TypeAliasType(
 )
 StringArrayND = TypeAliasType(
     "StringArrayND",
-    np.ndarray[Rank, np.dtypes.StringDType[_NaT]],
+    np.ndarray[Shape, np.dtypes.StringDType[_NaT]],
     type_params=(_NaT,),
 )

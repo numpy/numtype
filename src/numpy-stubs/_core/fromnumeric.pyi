@@ -59,7 +59,6 @@ __all__ = [
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 
 _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _NumberT = TypeVar("_NumberT", bound=np.number | np.object_)
 _IndT_contra = TypeVar("_IndT_contra", contravariant=True)
@@ -85,12 +84,6 @@ _Order: TypeAlias = str | Sequence[str]
 @type_check_only
 class _CanPut(Protocol[_IndT_contra, _VT_contra, _RT_co]):
     def put(self, ind: _IndT_contra, v: _VT_contra, /, *, mode: _ModeKind) -> _RT_co: ...
-
-@type_check_only
-class _HasShape(Protocol[_ShapeT_co]):
-    # NOTE: it matters that `self` is positional only
-    @property
-    def shape(self, /) -> _ShapeT_co: ...
 
 @type_check_only
 class UFuncKwargs(TypedDict, total=False):
@@ -515,7 +508,7 @@ def resize(a: ArrayLike, new_shape: Sequence[CanIndex]) -> _nt.Array[Incomplete]
 
 #
 @overload
-def squeeze(a: _nt.CanArray0D[_ScalarT], axis: _ShapeLike | None = None) -> _nt.Array0D[_ScalarT]: ...
+def squeeze(a: _nt.CanArray0D[_ScalarT], axis: _ShapeLike | None = None) -> _nt.Array0D[_ScalarT]: ...  # type: ignore[overload-overlap]
 @overload
 def squeeze(a: _nt._ToArray_nd[_ScalarT], axis: _ShapeLike | None = None) -> _nt.Array[_ScalarT]: ...
 @overload
@@ -582,25 +575,24 @@ def nonzero(a: _nt.ToGeneric_1nd) -> tuple[_nt.Array[np.int_], ...]: ...
 
 #
 @overload
-def shape(a: _HasShape[_ShapeT]) -> _ShapeT: ...
+def shape(a: _nt.HasInnerShape[_ShapeT]) -> _ShapeT: ...
 @overload
-def shape(a: _nt.ToGeneric_0d) -> tuple[()]: ...
+def shape(a: np.ndarray[_ShapeT]) -> _ShapeT: ...
 @overload
-def shape(a: _nt.ToGeneric_1ds) -> tuple[int]: ...
+def shape(a: _nt.ToGeneric_0d) -> _nt.Shape0: ...
 @overload
-def shape(a: _nt.ToGeneric_2ds) -> tuple[int, int]: ...
+def shape(a: _nt.ToGeneric_1ds) -> _nt.Shape1: ...
 @overload
-def shape(a: _nt.ToGeneric_3ds) -> tuple[int, int, int]: ...
+def shape(a: _nt.ToGeneric_2ds) -> _nt.Shape2: ...
 @overload
-def shape(a: _nt.ToGeneric_nd) -> tuple[int, ...]: ...
+def shape(a: _nt.ToGeneric_3ds) -> _nt.Shape3: ...
+@overload
+def shape(a: _nt.ToGeneric_nd) -> _nt.Shape: ...
 
 #
 @overload
 def compress(
-    condition: _nt.ToBool_nd,
-    a: _nt._ToArray_nd[_ScalarT],
-    axis: CanIndex | None = None,
-    out: None = None,
+    condition: _nt.ToBool_nd, a: _nt._ToArray_nd[_ScalarT], axis: CanIndex | None = None, out: None = None
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def compress(
@@ -1207,10 +1199,7 @@ def cumprod(
 ) -> _nt.Array[np.object_]: ...
 @overload
 def cumprod(
-    a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: CanIndex | None,
-    dtype: _DTypeLike[_ScalarT],
-    out: None = None,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd, axis: CanIndex | None, dtype: _DTypeLike[_ScalarT], out: None = None
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def cumprod(
@@ -1229,18 +1218,11 @@ def cumprod(
 ) -> _nt.Array[Incomplete]: ...
 @overload
 def cumprod(
-    a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: CanIndex | None,
-    dtype: DTypeLike | None,
-    out: _ArrayT,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd, axis: CanIndex | None, dtype: DTypeLike | None, out: _ArrayT
 ) -> _ArrayT: ...
 @overload
 def cumprod(
-    a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: CanIndex | None = None,
-    dtype: DTypeLike | None = None,
-    *,
-    out: _ArrayT,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT
 ) -> _ArrayT: ...
 
 #

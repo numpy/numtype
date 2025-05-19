@@ -9,5 +9,5 @@ class XYGrid(NamedTuple):
 
 arr: np.ndarray[XYGrid, Any]
 
-# Test shape property matches shape typevar
-assert_type(arr.shape, XYGrid)
+# NOTE(jorenham): mypy 1.15 ignores the typevar constraints, and incorrectly infers `XYGrid``
+assert_type(arr.shape, tuple[int, int])  # type: ignore[assert-type]
