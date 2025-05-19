@@ -49,7 +49,7 @@ dependencies = []
 
 [dependency-groups]
 numpy = ["numtype[numpy]"]
-lint = ["ruff>=0.11.9"]
+lint = ["ruff>=0.11.10"]
 pytest = [
     {include-group = "numpy"},
     "pytest>=8.3.5",
@@ -61,7 +61,7 @@ list_and_test = [
 ]
 types = [
     {include-group = "pytest"},
-    "types-setuptools>=80.4.0.20250511",
+    "types-setuptools>=80.7.0.20250516",
     "types-tabulate>=0.9.0.20241207",
 ]
 basedpyright = [
@@ -79,7 +79,7 @@ typecheck = [
 ]
 docs = [
     "mkdocs-material>=9.6.14",
-    "mkdocs-awesome-nav>=3.1.1",
+    "mkdocs-awesome-nav>=3.1.2",
     "markdown-callouts>=0.4.0",
     "mkdocs-include-markdown-plugin>=7.1.5",
     "mkdocs-minify-plugin>=0.8.0",
