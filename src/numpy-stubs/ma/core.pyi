@@ -204,9 +204,7 @@ __all__ = [
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.Shape, covariant=True)
-_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
 _DTypeLikeBool: TypeAlias = type[bool | np.bool_] | np.dtype[np.bool_] | _BoolCodes
@@ -321,20 +319,6 @@ class MaskedIterator:
 
 class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     __array_priority__: ClassVar[float] = 15  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @property
-    @override
-    def shape(self) -> _ShapeT_co: ...
-    @shape.setter
-    def shape(self: MaskedArray[_ShapeT], shape: _ShapeT, /) -> None: ...
-
-    #
-    @property
-    @override
-    def dtype(self) -> _DTypeT_co: ...
-    @dtype.setter
-    def dtype(self: MaskedArray[Any, _DTypeT], dtype: _DTypeT, /) -> None: ...
 
     #
     @property

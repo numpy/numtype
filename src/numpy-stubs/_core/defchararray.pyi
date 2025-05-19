@@ -121,7 +121,7 @@ __all__ = [
 ###
 
 _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape, default=_nt.Shape)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.Shape, covariant=True)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[np.character], default=np.dtype[Any], covariant=True)
 _CharT = TypeVar("_CharT", bound=np.character, default=Any)
 
