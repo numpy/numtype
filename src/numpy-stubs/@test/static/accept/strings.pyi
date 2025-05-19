@@ -42,8 +42,8 @@ assert_type(np.strings.less(AR_S, AR_S), _BoolArray)
 assert_type(np.strings.less(AR_T, AR_T), _BoolArray)
 assert_type(np.strings.less(AR_S, AR_U, dtype=np.bool_), _BoolArray)
 
-# TODO(jorenham)
-# https://github.com/numpy/numtype/issues/230
+# TODO(jorenham): https://github.com/numpy/numtype/issues/230
+# ruff: noqa: ERA001
 # assert_type(np.strings.add(AR_U, AR_U), _StrArray)
 # assert_type(np.strings.add(AR_S, AR_S), _BytesArray)
 # assert_type(np.strings.add(AR_T, AR_T), _nt.StringArray)

@@ -5,6 +5,8 @@ AR_U: _nt.Array[np.str_]
 AR_S: _nt.Array[np.bytes_]
 
 # TODO(jorenham)
+# ruff: noqa: ERA001
+
 # np.char.equal(AR_U, AR_S)
 # np.char.not_equal(AR_U, AR_S)
 # np.char.greater_equal(AR_U, AR_S)

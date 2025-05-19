@@ -90,8 +90,7 @@ assert_type(PS_all.has_samewindow(PS_all), bool)
 assert_type(PS_all.has_sametype(PS_all), bool)
 assert_type(PS_poly.has_sametype(PS_poly), bool)
 assert_type(PS_poly.has_sametype(PS_leg), bool)
-# different outcomes between mypy and pyright
-# assert_type(PS_poly.has_sametype(NotADirectoryError), L[False])
+assert_type(PS_poly.has_sametype(NotADirectoryError), bool)
 
 assert_type(PS_poly.copy(), npp.Polynomial)
 assert_type(PS_cheb.copy(), npp.Chebyshev)
