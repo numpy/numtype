@@ -5,9 +5,10 @@ on:
     branches: [main]
     paths:
       - "docs/**"
-      - "mkdocs.yml"
       - ".github/workflows/docs.yml"
       - "CONTRIBUTING.md"
+      - "mkdocs.yml"
+      - "uv.lock"
 
 permissions:
   contents: write
