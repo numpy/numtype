@@ -1,5 +1,10 @@
 from typing import Literal, TypeAlias
 
+# TODO(jorenham): move these to `_numtype` instead
+# https://github.com/numpy/numtype/issues/567
+
+# ruff: noqa: PYI047
+
 _BoolCodes: TypeAlias = Literal["bool", "bool_", "b1", "?", "|?", "=?", "<?", ">?", "\x00"]
 
 _Int8Codes: TypeAlias = Literal["int8", "byte", "i1", "b", "|i1", "|b", "=i1", "=b", "<i1", "<b", ">i1", ">b", "\x01"]

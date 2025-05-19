@@ -7,8 +7,6 @@ import sys
 from _typeshed import Incomplete, StrOrBytesPath, SupportsFlush, SupportsLenAndGetItem, SupportsWrite
 from builtins import bool as py_bool
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
-from decimal import Decimal
-from fractions import Fraction
 from types import EllipsisType, GenericAlias, GetSetDescriptorType, MappingProxyType, ModuleType
 from typing import (
     Any,
@@ -694,64 +692,6 @@ _SubModule: TypeAlias = L[
     "testing",
     "typing",
 ]
-_ExpiredAttribute: TypeAlias = L[
-    "DataSource",
-    "Inf",
-    "Infinity",
-    "NINF",
-    "NZERO",
-    "NaN",
-    "PINF",
-    "PZERO",
-    "add_docstring",
-    "add_newdoc",
-    "add_newdoc_ufunc",
-    "alltrue",
-    "asfarray",
-    "byte_bounds",
-    "cast",
-    "cfloat",
-    "clongfloat",
-    "compare_chararrays",
-    "compat",
-    "complex_",
-    "deprecate",
-    "deprecate_with_doc",
-    "disp",
-    "fastCopyAndTranspose",
-    "find_common_type",
-    "float_",
-    "format_parser",
-    "get_array_wrap",
-    "geterrobj",
-    "infty",
-    "issctype",
-    "issubclass_",
-    "issubsctype",
-    "longcomplex",
-    "longfloat",
-    "lookfor",
-    "mat",
-    "maximum_sctype",
-    "nbytes",
-    "obj2sctype",
-    "recfromcsv",
-    "recfromtxt",
-    "round_",
-    "safe_eval",
-    "sctype2char",
-    "sctypes",
-    "set_numeric_ops",
-    "set_string_function",
-    "seterrobj",
-    "singlecomplex",
-    "sometrue",
-    "source",
-    "string_",
-    "tracemalloc_domain",
-    "unicode_",
-    "who",
-]
 _UFuncMethod: TypeAlias = L["__call__", "reduce", "reduceat", "accumulate", "outer", "at"]
 
 _2Tuple: TypeAlias = tuple[_T, _T]
@@ -769,12 +709,10 @@ _JustBuiltinScalar: TypeAlias = int | _nt.JustFloat | _nt.JustComplex | _nt.Just
 
 _AbstractInexact: TypeAlias = _JustInexact | _JustFloating | _JustComplexFloating
 _AbstractInteger: TypeAlias = _JustInteger | _JustSignedInteger | _JustUnsignedInteger
-_AbstractNumber: TypeAlias = _JustNumber | _AbstractInteger | _AbstractInexact
 
 _int32_min: TypeAlias = int32 | int64
 _int16_min: TypeAlias = int16 | _int32_min
 _int16_max: TypeAlias = int16 | int8
-_int32_max: TypeAlias = int32 | _int16_max
 _float32_min: TypeAlias = float32 | float64 | longdouble
 _float32_max: TypeAlias = float32 | float16
 _float64_max: TypeAlias = float64 | _float32_max
@@ -784,12 +722,7 @@ _integer32_min: TypeAlias = _nt.integer32 | _nt.integer64
 _inexact64_min: TypeAlias = _nt.inexact64 | _nt.inexact64l
 _inexact64_max: TypeAlias = _float64_max | _complex128_max
 
-_ArrayUInt_co: TypeAlias = _nt.Array[_nt.co_uint64]
-_ArrayInt_co: TypeAlias = _nt.Array[_nt.co_int64]
 _ArrayInteger_co: TypeAlias = _nt.Array[_nt.co_integer]
-_ArrayFloat64_co: TypeAlias = _nt.Array[_nt.co_float64]
-_ArrayFloat_co: TypeAlias = _nt.Array[_nt.co_float]
-_ArrayComplex128_co: TypeAlias = _nt.Array[_nt.co_complex128]
 _ArrayComplex_co: TypeAlias = _nt.Array[_nt.co_complex]
 _ArrayTD64_co: TypeAlias = _nt.Array[_nt.co_timedelta]
 
@@ -798,21 +731,6 @@ _ToIndices: TypeAlias = _ToIndex | tuple[_ToIndex, ...]
 
 _Axis0D: TypeAlias = L[0, -1] | tuple[()]
 
-_UnsignedIntegerCType: TypeAlias = type[
-    ct.c_uint8 | ct.c_uint16 | ct.c_uint32 | ct.c_uint64
-    | ct.c_ushort | ct.c_uint | ct.c_ulong | ct.c_ulonglong
-    | ct.c_size_t | ct.c_void_p
-]  # fmt: skip
-_SignedIntegerCType: TypeAlias = type[
-    ct.c_int8 | ct.c_int16 | ct.c_int32 | ct.c_int64
-    | ct.c_short | ct.c_int | ct.c_long | ct.c_longlong
-    | ct.c_ssize_t
-]  # fmt: skip
-_FloatingCType: TypeAlias = type[ct.c_float | ct.c_double | ct.c_longdouble]
-_IntegerCType: TypeAlias = _UnsignedIntegerCType | _SignedIntegerCType
-_NumberCType: TypeAlias = _IntegerCType
-_GenericCType: TypeAlias = _NumberCType | type[ct.c_bool | ct.c_char | ct.py_object[Any]]
-
 _PyBoolND: TypeAlias = _nt.SequenceND[py_bool]
 _PyCoIntND: TypeAlias = _nt.SequenceND[int]
 _PyCoFloatND: TypeAlias = _nt.SequenceND[float]
@@ -820,11 +738,6 @@ _PyCoComplexND: TypeAlias = _nt.SequenceND[complex]
 _PyIntND: TypeAlias = _nt.SequenceND[_nt.JustInt]
 _PyFloatND: TypeAlias = _nt.SequenceND[_nt.JustFloat]
 _PyComplexND: TypeAlias = _nt.SequenceND[_nt.JustComplex]
-
-# some commonly used builtin types that are known to result in a
-# `dtype[object_]`, when their *type* is passed to the `dtype` constructor
-# NOTE: `builtins.object` should not be included here
-_BuiltinObjectLike: TypeAlias = Decimal | Fraction
 
 # can be anything, is case-insensitive, and only the first character matters
 _ByteOrder: TypeAlias = L[
@@ -898,7 +811,7 @@ _DTypeBuiltinKind: TypeAlias = L[0, 1, 2]
 _ArrayAPIVersion: TypeAlias = L["2021.12", "2022.12", "2023.12"]
 _Device: TypeAlias = L["cpu"]
 
-_OrderCF: TypeAlias = L["C", "F"] | None
+_OrderCF: TypeAlias = L["C", "F"] | None  # noqa: PYI047
 _OrderACF: TypeAlias = L["A", "C", "F"] | None
 _OrderKACF: TypeAlias = L["K", "A", "C", "F"] | None
 
@@ -941,7 +854,6 @@ _IntTD64Unit: TypeAlias = L[_MonthUnit, _IntTimeUnit]
 _TD64Unit: TypeAlias = L[_DateUnit, _TimeUnit]
 _TimeUnitSpec: TypeAlias = _TD64UnitT | tuple[_TD64UnitT, CanIndex]
 
-_BinOperandComplex128_co: TypeAlias = complex | float64 | _integer32_min
 _ToReal: TypeAlias = float | CanComplex | CanFloat | CanIndex
 _ToImag: TypeAlias = float | CanFloat | CanIndex
 

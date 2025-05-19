@@ -46,9 +46,6 @@ __all__ = [
 
 ###
 
-_SafeFloating: TypeAlias = np.float32 | np.float64
-_SafeInexact: TypeAlias = _SafeFloating | np.complex64 | np.complex128
-
 _T = TypeVar("_T")
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array[Any])
 _Shape2NDT = TypeVar("_Shape2NDT", bound=_nt.Shape2N)
@@ -97,7 +94,6 @@ _ToInt: TypeAlias = SupportsInt | CanIndex
 _Ax2: TypeAlias = _ToInt | _2Tuple[_ToInt]
 _Axes: TypeAlias = Iterable[int]
 
-_ArrayOrScalar: TypeAlias = _ScalarT | _nt.Array[_ScalarT]
 _Ord: TypeAlias = L[1, -1, 2, -2, "fro", "nuc"] | float
 _UPLO: TypeAlias = L["L", "U", "l", "u"]
 

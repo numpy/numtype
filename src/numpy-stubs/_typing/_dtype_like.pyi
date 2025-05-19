@@ -48,6 +48,10 @@ _DTypeLike: TypeAlias = type[_ScalarT] | np.dtype[_ScalarT] | _SupportsDType[np.
 # Would create a dtype[np.void]
 _VoidDTypeLike: TypeAlias = tuple[Any, Any] | list[Any] | _DTypeDict
 
+# TODO(jorenahm): remove these `_DTypeLike*` aliases in favor of `_numtype.ToDType*`:
+# https://github.com/numpy/numtype/issues/566
+# ruff: noqa: PYI047
+
 # Aliases for commonly used dtype-like objects.
 # Note that the precision of `np.number` subclasses is ignored herein.
 _DTypeLikeBool: TypeAlias = type[bool] | _DTypeLike[np.bool] | _BoolCodes

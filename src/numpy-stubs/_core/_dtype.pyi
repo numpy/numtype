@@ -7,7 +7,6 @@ import numpy as np
 
 _T = TypeVar("_T")
 
-_Kind: TypeAlias = L["u", "i", "c", "f", "b", "V", "O", "M", "m", "S", "U"]
 _Name: TypeAlias = L[
     "uint", "int", "complex", "float", "bool", "void", "object", "datetime", "timedelta", "bytes", "str"
 ]
