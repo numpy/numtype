@@ -185,14 +185,14 @@ basedpyright = [
     { name = "basedpyright", specifier = ">=1.29.1" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "types-setuptools", specifier = ">=80.4.0.20250511" },
+    { name = "types-setuptools", specifier = ">=80.7.0.20250516" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 dev = [
     { name = "basedpyright", specifier = ">=1.29.1" },
     { name = "markdown-callouts", specifier = ">=0.4.0" },
-    { name = "mkdocs-awesome-nav", specifier = ">=3.1.1" },
+    { name = "mkdocs-awesome-nav", specifier = ">=3.1.2" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
     { name = "mkdocs-material", specifier = ">=9.6.14" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
@@ -201,32 +201,32 @@ dev = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pygments", specifier = ">=2.19.1" },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.9" },
-    { name = "types-setuptools", specifier = ">=80.4.0.20250511" },
+    { name = "ruff", specifier = ">=0.11.10" },
+    { name = "types-setuptools", specifier = ">=80.7.0.20250516" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 docs = [
     { name = "markdown-callouts", specifier = ">=0.4.0" },
-    { name = "mkdocs-awesome-nav", specifier = ">=3.1.1" },
+    { name = "mkdocs-awesome-nav", specifier = ">=3.1.2" },
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.5" },
     { name = "mkdocs-material", specifier = ">=9.6.14" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.1" },
     { name = "pygments", specifier = ">=2.19.1" },
 ]
-lint = [{ name = "ruff", specifier = ">=0.11.9" }]
+lint = [{ name = "ruff", specifier = ">=0.11.10" }]
 list-and-test = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "ruff", specifier = ">=0.11.9" },
+    { name = "ruff", specifier = ">=0.11.10" },
     { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 mypy = [
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "types-setuptools", specifier = ">=80.4.0.20250511" },
+    { name = "types-setuptools", specifier = ">=80.7.0.20250516" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
@@ -241,14 +241,14 @@ typecheck = [
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.15.0" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "types-setuptools", specifier = ">=80.4.0.20250511" },
+    { name = "types-setuptools", specifier = ">=80.7.0.20250516" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
 types = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.3.5" },
-    { name = "types-setuptools", specifier = ">=80.4.0.20250511" },
+    { name = "types-setuptools", specifier = ">=80.7.0.20250516" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.13.2" },
 ]
