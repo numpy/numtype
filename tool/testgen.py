@@ -234,7 +234,7 @@ def _array_expr_single(
         dtype_expr = f"{NP}.dtype[{sctype_expr}]"
 
     if ndim is None:
-        shape_expr = "_nt.Rank"
+        shape_expr = "_nt.Shape"
     else:
         shape_expr_args = ", ".join(["int"] * ndim) if ndim else "()"
         shape_expr = f"tuple[{shape_expr_args}]"
