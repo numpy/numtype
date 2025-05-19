@@ -1358,6 +1358,7 @@ class NDArrayOps(TestGen):
         lhs: npt.ArrayLike,
         rhs: npt.ArrayLike,
         /,
+        *,
         reflect: bool = False,
     ) -> tuple[np.dtype, ...]:
         if reflect:
@@ -1461,8 +1462,8 @@ class NDArrayOps(TestGen):
             out_dtypes_set: set[tuple[np.dtype, ...]] = set()
             for dtype_np in dtypes_np:
                 arr = self._get_arrays(dtype_np, dtype_py)[0]
-
-                if not (out_dtypes := self._evaluate_binop(arr, val_py, reflect)):
+                out_dtypes = self._evaluate_binop(arr, val_py, reflect=reflect)
+                if not out_dtypes:
                     out_dtypes_set.clear()
                     break
                 out_dtypes_set.add(out_dtypes)
