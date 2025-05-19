@@ -20,6 +20,7 @@ __all__ = [
 AnyShape = TypeAliasType("AnyShape", tuple[Any, ...])
 Shape = TypeAliasType("Shape", tuple[int, ...])
 
+# TODO: remove `| Rank0` once python/mypy#19110 is fixed
 Shape0 = TypeAliasType("Shape0", tuple[()])
 Shape1 = TypeAliasType("Shape1", tuple[int])
 Shape2 = TypeAliasType("Shape2", tuple[int, int])

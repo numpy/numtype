@@ -508,7 +508,7 @@ def resize(a: ArrayLike, new_shape: Sequence[CanIndex]) -> _nt.Array[Incomplete]
 
 #
 @overload
-def squeeze(a: _nt.CanArray0D[_ScalarT], axis: _ShapeLike | None = None) -> _nt.Array0D[_ScalarT]: ...
+def squeeze(a: _nt.CanArray0D[_ScalarT], axis: _ShapeLike | None = None) -> _nt.Array0D[_ScalarT]: ...  # type: ignore[overload-overlap]
 @overload
 def squeeze(a: _nt._ToArray_nd[_ScalarT], axis: _ShapeLike | None = None) -> _nt.Array[_ScalarT]: ...
 @overload
@@ -1199,10 +1199,7 @@ def cumprod(
 ) -> _nt.Array[np.object_]: ...
 @overload
 def cumprod(
-    a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: CanIndex | None,
-    dtype: _DTypeLike[_ScalarT],
-    out: None = None,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd, axis: CanIndex | None, dtype: _DTypeLike[_ScalarT], out: None = None
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def cumprod(
@@ -1221,18 +1218,11 @@ def cumprod(
 ) -> _nt.Array[Incomplete]: ...
 @overload
 def cumprod(
-    a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: CanIndex | None,
-    dtype: DTypeLike | None,
-    out: _ArrayT,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd, axis: CanIndex | None, dtype: DTypeLike | None, out: _ArrayT
 ) -> _ArrayT: ...
 @overload
 def cumprod(
-    a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: CanIndex | None = None,
-    dtype: DTypeLike | None = None,
-    *,
-    out: _ArrayT,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT
 ) -> _ArrayT: ...
 
 #

@@ -204,7 +204,8 @@ __all__ = [
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.Shape, covariant=True)
+# TODO: use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.Shape, covariant=True)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
 _DTypeLikeBool: TypeAlias = type[bool | np.bool_] | np.dtype[np.bool_] | _BoolCodes

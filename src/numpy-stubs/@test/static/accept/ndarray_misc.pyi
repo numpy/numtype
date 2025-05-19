@@ -9,7 +9,7 @@ import numpy as np
 
 ###
 
-class SubArray(np.ndarray[_nt.Rank, np.dtype[np.object_]]): ...
+class SubArray(np.ndarray[_nt.Shape, np.dtype[np.object_]]): ...
 
 f8: np.float64
 i8: np.int64
@@ -191,7 +191,7 @@ assert_type(complex(AR_f8), complex)
 
 assert_type(operator.index(AR_i8), int)
 
-assert_type(AR_f8.__array_wrap__(AR_O_sub), _nt.ArrayND[np.object_])
+assert_type(AR_f8.__array_wrap__(AR_O_sub), _nt.Array[np.object_])
 
 assert_type(AR_V[0], Any)
 assert_type(AR_V[0, 0], Any)

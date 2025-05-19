@@ -1,7 +1,7 @@
 from typing import Any, Generic, Protocol, Self, TypeAlias, final, type_check_only
 from typing_extensions import TypeAliasType, TypeVar, TypeVarTuple, override
 
-from ._shape import Shape, Shape0, Shape0N, Shape1, Shape1N, Shape2, Shape2N, Shape3, Shape3N, Shape4, Shape4N
+from ._shape import AnyShape, Shape, Shape0, Shape1, Shape1N, Shape2, Shape2N, Shape3, Shape3N, Shape4, Shape4N
 
 __all__ = [
     "HasInnerShape",
@@ -29,21 +29,24 @@ _Shape04: TypeAlias = _Shape03 | Shape4
 
 ###
 
-_UpperT = TypeVar("_UpperT", bound=Shape)
-_LowerT = TypeVar("_LowerT", bound=Shape)
+# TODO(jorenham): remove `| Rank0 | Rank` once python/mypy#19110 is fixed
+_UpperT = TypeVar("_UpperT", bound=Shape | Rank0 | Rank)
+_LowerT = TypeVar("_LowerT", bound=Shape | Rank0 | Rank)
 _RankT = TypeVar("_RankT", bound=Shape, default=Any)
 
-_RankLE: TypeAlias = _CanBroadcast[Any, _UpperT, _RankT]
-_RankGE: TypeAlias = _CanBroadcast[_LowerT, Any, _RankT]
+# TODO(jorenham): remove `| Rank0 | Rank` once python/mypy#19110 is fixed
+_RankLE: TypeAlias = _CanBroadcast[Any, _UpperT, _RankT] | Shape0 | Rank0 | Rank
+# TODO(jorenham): remove `| Rank` once python/mypy#19110 is fixed
+_RankGE: TypeAlias = _CanBroadcast[_LowerT, Any, _RankT] | _LowerT | Rank
 
 HasRankLE = TypeAliasType(
     "HasRankLE",
-    _HasInnerShape[Shape0 | _RankLE[_UpperT, _RankT]],
+    _HasInnerShape[_RankLE[_UpperT, _RankT]],
     type_params=(_UpperT, _RankT),
 )
 HasRankGE = TypeAliasType(
     "HasRankGE",
-    _HasInnerShape[_LowerT | _RankGE[_LowerT, _RankT]],
+    _HasInnerShape[_RankGE[_LowerT, _RankT]],
     type_params=(_LowerT, _RankT),
 )
 
@@ -136,30 +139,30 @@ class Rank4(BaseRank[int, int, int, int]):
 @type_check_only
 class Rank(BaseRank[*tuple[int, ...]]):
     @override
-    def __broadcast__(self, from_: Shape0N, to: tuple[*_Ts], /) -> Self: ...
+    def __broadcast__(self, from_: AnyShape, to: tuple[*_Ts], /) -> Self: ...
 
 @final
 @type_check_only
 class Rank1N(BaseRank[int, *tuple[int, ...]]):
     @override
-    def __broadcast__(self, from_: Shape0N, to: Shape1N, /) -> Self: ...
+    def __broadcast__(self, from_: AnyShape, to: Shape1N, /) -> Self: ...
 
 @final
 @type_check_only
 class Rank2N(BaseRank[int, int, *tuple[int, ...]]):
     @override
-    def __broadcast__(self, from_: Shape0N, to: Shape2N, /) -> Self: ...
+    def __broadcast__(self, from_: AnyShape, to: Shape2N, /) -> Self: ...
 
 @final
 @type_check_only
 class Rank3N(BaseRank[int, int, int, *tuple[int, ...]]):
     @override
-    def __broadcast__(self, from_: Shape0N, to: Shape3N, /) -> Self: ...
+    def __broadcast__(self, from_: AnyShape, to: Shape3N, /) -> Self: ...
 
 @final
 @type_check_only
 class Rank4N(BaseRank[int, int, int, int, *tuple[int, ...]]):
     @override
-    def __broadcast__(self, from_: Shape0N, to: Shape4N, /) -> Self: ...
+    def __broadcast__(self, from_: AnyShape, to: Shape4N, /) -> Self: ...
 
 Rank0N: TypeAlias = Rank

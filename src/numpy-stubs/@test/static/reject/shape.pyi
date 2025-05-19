@@ -1,7 +1,6 @@
-from typing import Any
-
 import numpy as np
 
-# test bounds of _ShapeType_co
+# test bounds of _ShapeT_co
 
-np.ndarray[tuple[str, str], Any]  # type: ignore[type-var]  # pyright: ignore[reportInvalidTypeArguments]
+# TODO(jorenham): re-enable once python/mypy#19110 is fixed
+np.ndarray[tuple[str, str]]

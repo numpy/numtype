@@ -7,14 +7,14 @@ from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np
+from numpy import _AnyShapeT  # noqa: ICN003
 
 __all__ = ["Arrayterator"]
 
 ###
 
-_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
-_ShapeT2 = TypeVar("_ShapeT2", bound=_nt.Shape)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.Shape, covariant=True)
+# TODO: use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.Shape, covariant=True)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
@@ -35,7 +35,9 @@ class Arrayterator(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTyp
     # unlike ndarray, the Arrayterator shape has no setter
     @property  # type: ignore[misc]
     @override
-    def shape(self: _nt.HasInnerShape[_ShapeT] | Arrayterator[_ShapeT2]) -> _ShapeT | _ShapeT2: ...  # type: ignore[override]
+    # NOTE: This constrained typevar use is a workaround for a mypy bug
+    # def shape(self: _nt.HasInnerShape[_ShapeT] | ndarray[_ShapeT2]) -> _ShapeT | _ShapeT2: ...  # noqa: ERA001
+    def shape(self: Arrayterator[_AnyShapeT]) -> _AnyShapeT: ...
 
     #
     @property

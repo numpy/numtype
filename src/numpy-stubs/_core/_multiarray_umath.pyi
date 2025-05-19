@@ -676,7 +676,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
 @overload  # bool 0d array-like
-def empty_like(
+def empty_like(  # type: ignore[overload-overlap]
     prototype: _nt.ToBool_0d,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
@@ -716,7 +716,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
 @overload  # int 0d array-like
-def empty_like(
+def empty_like(  # type: ignore[overload-overlap]
     prototype: _nt.ToInt_0d,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -756,7 +756,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
 @overload  # float 0d array-like
-def empty_like(
+def empty_like(  # type: ignore[overload-overlap]
     prototype: _nt.ToFloat64_0d,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
@@ -796,7 +796,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.float64]: ...
 @overload  # complex 0d array-like
-def empty_like(
+def empty_like(  # type: ignore[overload-overlap]
     prototype: _nt.ToComplex128_0d,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
@@ -1008,7 +1008,7 @@ def array(
     **kwargs: Unpack[_KwargsCL],
 ) -> _nt.Array[_ScalarT]: ...
 @overload
-def array(
+def array(  # type: ignore[overload-overlap]
     object: _ScalarLike_co,
     dtype: _DTypeLike[_ScalarT],
     *,
@@ -1018,7 +1018,7 @@ def array(
     **kwargs: Unpack[_KwargsCL],
 ) -> _nt.Array0D[_ScalarT]: ...
 @overload
-def array(
+def array(  # type: ignore[overload-overlap]
     object: _ScalarLike_co,
     dtype: npt.DTypeLike | None,
     *,
@@ -1064,14 +1064,14 @@ def asarray(
     **kwargs: Unpack[_KwargsDCL],
 ) -> _nt.Array[_ScalarT]: ...
 @overload
-def asarray(
+def asarray(  # type: ignore[overload-overlap]
     a: _ScalarLike_co,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = None,
     **kwargs: Unpack[_KwargsDCL],
 ) -> _nt.Array0D[_ScalarT]: ...
 @overload
-def asarray(
+def asarray(  # type: ignore[overload-overlap]
     a: _ScalarLike_co,
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = None,

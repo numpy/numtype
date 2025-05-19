@@ -1,4 +1,4 @@
-# @generated 2025-05-14T01:47:22Z with tool/testgen.py
+# @generated 2025-05-19T03:25:34Z with tool/testgen.py
 from typing import Any
 
 import _numtype as _nt
@@ -31,7 +31,7 @@ r0n_le_r0n: _nt.HasRankLE[_nt.Rank0N] = r0n
 
 r0_ge_s0: _nt.HasRankGE[_nt.Shape0] = r0
 r0_ge_r0: _nt.HasRankGE[_nt.Rank0] = r0
-r0_ge_s0n: _nt.HasRankGE[_nt.Shape0N] = r0
+r0_ge_s0n: _nt.HasRankGE[_nt.Shape0N] = r0  # type: ignore[assignment]
 r0_ge_r0n: _nt.HasRankGE[_nt.Rank0N] = r0
 r0n_ge_s0: _nt.HasRankGE[_nt.Shape0] = r0n
 r0n_ge_r0: _nt.HasRankGE[_nt.Rank0] = r0n

@@ -1030,7 +1030,7 @@ def zeros_like(
     device: _Device | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
 @overload  # bool 0d array-like
-def zeros_like(
+def zeros_like(  # type: ignore[overload-overlap]
     a: _nt.ToBool_0d,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
@@ -1070,7 +1070,7 @@ def zeros_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
 @overload  # int 0d array-like
-def zeros_like(
+def zeros_like(  # type: ignore[overload-overlap]
     a: _nt.ToInt_0d,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -1110,7 +1110,7 @@ def zeros_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
 @overload  # float 0d array-like
-def zeros_like(
+def zeros_like(  # type: ignore[overload-overlap]
     a: _nt.ToFloat64_0d,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
@@ -1150,7 +1150,7 @@ def zeros_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.float64]: ...
 @overload  # complex 0d array-like
-def zeros_like(
+def zeros_like(  # type: ignore[overload-overlap]
     a: _nt.ToComplex128_0d,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
@@ -1332,7 +1332,7 @@ def ones_like(
     device: _Device | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
 @overload  # bool 0d array-like
-def ones_like(
+def ones_like(  # type: ignore[overload-overlap]
     a: _nt.ToBool_0d,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
@@ -1372,7 +1372,7 @@ def ones_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
 @overload  # int 0d array-like
-def ones_like(
+def ones_like(  # type: ignore[overload-overlap]
     a: _nt.ToInt_0d,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -1412,7 +1412,7 @@ def ones_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
 @overload  # float 0d array-like
-def ones_like(
+def ones_like(  # type: ignore[overload-overlap]
     a: _nt.ToFloat64_0d,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
@@ -1452,7 +1452,7 @@ def ones_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.float64]: ...
 @overload  # complex 0d array-like
-def ones_like(
+def ones_like(  # type: ignore[overload-overlap]
     a: _nt.ToComplex128_0d,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
@@ -1636,7 +1636,7 @@ def full_like(
     device: _Device | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
 @overload  # bool 0d array-like
-def full_like(
+def full_like(  # type: ignore[overload-overlap]
     a: _nt.ToBool_0d,
     fill_value: object,
     dtype: _nt.ToDTypeBool | None = None,
@@ -1680,7 +1680,7 @@ def full_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
 @overload  # int 0d array-like
-def full_like(
+def full_like(  # type: ignore[overload-overlap]
     a: _nt.ToInt_0d,
     fill_value: object,
     dtype: _nt.ToDTypeInt64 | None = None,
@@ -1724,7 +1724,7 @@ def full_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
 @overload  # float 0d array-like
-def full_like(
+def full_like(  # type: ignore[overload-overlap]
     a: _nt.ToFloat64_0d,
     fill_value: object,
     dtype: _nt.ToDTypeFloat64 | None = None,
@@ -1768,7 +1768,7 @@ def full_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.float64]: ...
 @overload  # complex 0d array-like
-def full_like(
+def full_like(  # type: ignore[overload-overlap]
     a: _nt.ToComplex128_0d,
     fill_value: object,
     dtype: _nt.ToDTypeComplex128 | None = None,
