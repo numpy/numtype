@@ -694,7 +694,7 @@ _SubModule: TypeAlias = L[
 ]
 _UFuncMethod: TypeAlias = L["__call__", "reduce", "reduceat", "accumulate", "outer", "at"]
 
-_2Tuple: TypeAlias = tuple[_T, _T]
+_Tuple2: TypeAlias = tuple[_T, _T]
 _IntOrInts: TypeAlias = int | tuple[int, ...]
 _MetaData: TypeAlias = dict[str, Any]
 
@@ -710,17 +710,17 @@ _JustBuiltinScalar: TypeAlias = int | _nt.JustFloat | _nt.JustComplex | _nt.Just
 _AbstractInexact: TypeAlias = _JustInexact | _JustFloating | _JustComplexFloating
 _AbstractInteger: TypeAlias = _JustInteger | _JustSignedInteger | _JustUnsignedInteger
 
-_int32_min: TypeAlias = int32 | int64
-_int16_min: TypeAlias = int16 | _int32_min
-_int16_max: TypeAlias = int16 | int8
-_float32_min: TypeAlias = float32 | float64 | longdouble
-_float32_max: TypeAlias = float32 | float16
-_float64_max: TypeAlias = float64 | _float32_max
-_complex128_min: TypeAlias = complex128 | clongdouble
-_complex128_max: TypeAlias = complex64 | complex128
-_integer32_min: TypeAlias = _nt.integer32 | _nt.integer64
-_inexact64_min: TypeAlias = _nt.inexact64 | _nt.inexact64l
-_inexact64_max: TypeAlias = _float64_max | _complex128_max
+_I32_min: TypeAlias = int32 | int64
+_I16_min: TypeAlias = int16 | _I32_min
+_I16_max: TypeAlias = int16 | int8
+_F32_min: TypeAlias = float32 | float64 | longdouble
+_F32_max: TypeAlias = float32 | float16
+_F64_max: TypeAlias = float64 | _F32_max
+_C128_min: TypeAlias = complex128 | clongdouble
+_C128_max: TypeAlias = complex64 | complex128
+_Integer32_min: TypeAlias = _nt.integer32 | _nt.integer64
+_Inexact64_min: TypeAlias = _nt.inexact64 | _nt.inexact64l
+_Inexact64_max: TypeAlias = _F64_max | _C128_max
 
 _ArrayInteger_co: TypeAlias = _nt.Array[_nt.co_integer]
 _ArrayComplex_co: TypeAlias = _nt.Array[_nt.co_complex]
@@ -2155,12 +2155,12 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         self: _HasDType[_HasType[_JustUnsignedInteger | _JustInteger]], x: _nt.Sequence1ND[_nt.JustInt], /
     ) -> _nt.Array[intp | float64]: ...
     @overload
-    def __matmul__(self: _nt.Array[uint64 | _float64_max], x: _nt.Sequence1ND[float], /) -> _nt.Array[float64]: ...
+    def __matmul__(self: _nt.Array[uint64 | _F64_max], x: _nt.Sequence1ND[float], /) -> _nt.Array[float64]: ...
     @overload
-    def __matmul__(self: _nt.Array[_complex128_max], x: _nt.Sequence1ND[complex], /) -> _nt.Array[complex128]: ...
+    def __matmul__(self: _nt.Array[_C128_max], x: _nt.Sequence1ND[complex], /) -> _nt.Array[complex128]: ...
     @overload
     def __matmul__(
-        self: _nt.Array[_inexact64_max], x: _nt.Sequence1ND[_nt.JustComplex], /
+        self: _nt.Array[_Inexact64_max], x: _nt.Sequence1ND[_nt.JustComplex], /
     ) -> _nt.Array[complex128]: ...
     @overload
     def __matmul__(self: _nt.CastsWithInt[_ScalarT], x: _nt.Sequence1ND[_nt.JustInt], /) -> _nt.Array[_ScalarT]: ...
@@ -2191,12 +2191,12 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
         self: _HasDType[_HasType[_JustUnsignedInteger | _JustInteger]], x: _nt.Sequence1ND[_nt.JustInt], /
     ) -> _nt.Array[intp | float64]: ...
     @overload
-    def __rmatmul__(self: _nt.Array[uint64 | _float64_max], x: _nt.Sequence1ND[float], /) -> _nt.Array[float64]: ...
+    def __rmatmul__(self: _nt.Array[uint64 | _F64_max], x: _nt.Sequence1ND[float], /) -> _nt.Array[float64]: ...
     @overload
-    def __rmatmul__(self: _nt.Array[_complex128_max], x: _nt.Sequence1ND[complex], /) -> _nt.Array[complex128]: ...
+    def __rmatmul__(self: _nt.Array[_C128_max], x: _nt.Sequence1ND[complex], /) -> _nt.Array[complex128]: ...
     @overload
     def __rmatmul__(
-        self: _nt.Array[_inexact64_max], x: _nt.Sequence1ND[_nt.JustComplex], /
+        self: _nt.Array[_Inexact64_max], x: _nt.Sequence1ND[_nt.JustComplex], /
     ) -> _nt.Array[complex128]: ...
     @overload
     def __rmatmul__(self: _nt.CastsWithInt[_ScalarT], x: _nt.Sequence1ND[_nt.JustInt], /) -> _nt.Array[_ScalarT]: ...
@@ -2469,55 +2469,55 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def __divmod__(self: _nt.Array[bool_, _nt.Shape], x: _nt.ToBool_nd, /) -> _2Tuple[_nt.Array[int8]]: ...
+    def __divmod__(self: _nt.Array[bool_, _nt.Shape], x: _nt.ToBool_nd, /) -> _Tuple2[_nt.Array[int8]]: ...
     @overload
     def __divmod__(
         self: _nt.Array[_RealNumberT, _nt.Shape], x: _nt.Casts[_RealNumberT, _nt.Shape] | _nt.ToBool_nd, /
-    ) -> _2Tuple[_nt.Array[_RealNumberT]]: ...
+    ) -> _Tuple2[_nt.Array[_RealNumberT]]: ...
     @overload
     def __divmod__(
         self: _nt.Array[_CoFloatingT, _nt.Shape], x: _nt.CastsWith[_CoFloatingT, _RealScalarT, _nt.Shape], /
-    ) -> _2Tuple[_nt.Array[_RealScalarT]]: ...
+    ) -> _Tuple2[_nt.Array[_RealScalarT]]: ...
     @overload
     def __divmod__(
         self: _nt.CastsWithInt[_RealScalarT, _nt.Shape], x: _PyIntND, /
-    ) -> _2Tuple[_nt.Array[_RealScalarT]]: ...
+    ) -> _Tuple2[_nt.Array[_RealScalarT]]: ...
     @overload
     def __divmod__(
         self: _nt.CastsWithFloat[_RealScalarT, _nt.Shape], x: _PyFloatND, /
-    ) -> _2Tuple[_nt.Array[_RealScalarT]]: ...
+    ) -> _Tuple2[_nt.Array[_RealScalarT]]: ...
     @overload
     def __divmod__(
         self: _nt.Array[timedelta64, _nt.Shape], x: _nt.ToTimeDelta_nd, /
     ) -> tuple[_nt.Array[int64], _nt.Array[timedelta64]]: ...
     @overload
-    def __divmod__(self: _nt.Array[object_, _nt.Shape], x: object, /) -> _2Tuple[_nt.Array[object_]]: ...
+    def __divmod__(self: _nt.Array[object_, _nt.Shape], x: object, /) -> _Tuple2[_nt.Array[object_]]: ...
 
     #
     @overload
-    def __rdivmod__(self: _nt.Array[bool_, _nt.Shape], x: _nt.ToBool_nd, /) -> _2Tuple[_nt.Array[int8]]: ...
+    def __rdivmod__(self: _nt.Array[bool_, _nt.Shape], x: _nt.ToBool_nd, /) -> _Tuple2[_nt.Array[int8]]: ...
     @overload
     def __rdivmod__(
         self: _nt.Array[_RealNumberT, _nt.Shape], x: _nt.Casts[_RealNumberT, _nt.Shape] | _nt.ToBool_nd, /
-    ) -> _2Tuple[_nt.Array[_RealNumberT]]: ...
+    ) -> _Tuple2[_nt.Array[_RealNumberT]]: ...
     @overload
     def __rdivmod__(
         self: _nt.Array[_CoFloatingT, _nt.Shape], x: _nt.CastsWith[_CoFloatingT, _RealScalarT, _nt.Shape], /
-    ) -> _2Tuple[_nt.Array[_RealScalarT]]: ...
+    ) -> _Tuple2[_nt.Array[_RealScalarT]]: ...
     @overload
     def __rdivmod__(
         self: _nt.CastsWithInt[_RealScalarT, _nt.Shape], x: _PyIntND, /
-    ) -> _2Tuple[_nt.Array[_RealScalarT]]: ...
+    ) -> _Tuple2[_nt.Array[_RealScalarT]]: ...
     @overload
     def __rdivmod__(
         self: _nt.CastsWithFloat[_RealScalarT, _nt.Shape], x: _PyFloatND, /
-    ) -> _2Tuple[_nt.Array[_RealScalarT]]: ...
+    ) -> _Tuple2[_nt.Array[_RealScalarT]]: ...
     @overload
     def __rdivmod__(
         self: _nt.Array[timedelta64, _nt.Shape], x: _nt.ToTimeDelta_nd, /
     ) -> tuple[_nt.Array[int64], _nt.Array[timedelta64]]: ...
     @overload
-    def __rdivmod__(self: _nt.Array[object_, _nt.Shape], x: object, /) -> _2Tuple[_nt.Array[object_]]: ...
+    def __rdivmod__(self: _nt.Array[object_, _nt.Shape], x: object, /) -> _Tuple2[_nt.Array[object_]]: ...
 
     #
     @overload
@@ -3970,23 +3970,23 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
 
     # keep in sync with __mod__
     @overload
-    def __divmod__(self, x: _RealNumberT, /) -> _2Tuple[_RealNumberT]: ...
+    def __divmod__(self, x: _RealNumberT, /) -> _Tuple2[_RealNumberT]: ...
     @overload
-    def __divmod__(self, x: py_bool | bool_, /) -> _2Tuple[int8]: ...
+    def __divmod__(self, x: py_bool | bool_, /) -> _Tuple2[int8]: ...
     @overload
-    def __divmod__(self, x: _nt.JustInt, /) -> _2Tuple[intp]: ...
+    def __divmod__(self, x: _nt.JustInt, /) -> _Tuple2[intp]: ...
     @overload
-    def __divmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
+    def __divmod__(self, x: _nt.JustFloat, /) -> _Tuple2[float64]: ...
 
     # keep in sync with __rmod__
     @overload
-    def __rdivmod__(self, x: _RealNumberT, /) -> _2Tuple[_RealNumberT]: ...
+    def __rdivmod__(self, x: _RealNumberT, /) -> _Tuple2[_RealNumberT]: ...
     @overload
-    def __rdivmod__(self, x: py_bool, /) -> _2Tuple[int8]: ...
+    def __rdivmod__(self, x: py_bool, /) -> _Tuple2[int8]: ...
     @overload
-    def __rdivmod__(self, x: _nt.JustInt, /) -> _2Tuple[intp]: ...
+    def __rdivmod__(self, x: _nt.JustInt, /) -> _Tuple2[intp]: ...
     @overload
-    def __rdivmod__(self, x: _nt.JustFloat, /) -> _2Tuple[float64]: ...
+    def __rdivmod__(self, x: _nt.JustFloat, /) -> _Tuple2[float64]: ...
 
     #
     @overload
@@ -4248,7 +4248,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     @type_check_only
     def __nep50__(
         self,
-        below: timedelta64 | _inexact64_min | _JustFloating | _JustInexact,
+        below: timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
         above: bool_,
         /,
     ) -> integer: ...
@@ -4317,18 +4317,18 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
 
     #
     @overload
-    def __divmod__(self, x: _nt.CastsScalar[Self] | int, /) -> _2Tuple[Self]: ...
+    def __divmod__(self, x: _nt.CastsScalar[Self] | int, /) -> _Tuple2[Self]: ...
     @overload
-    def __divmod__(self, x: _nt.CastsWithScalar[Self, _RealScalarT], /) -> _2Tuple[_RealScalarT]: ...
+    def __divmod__(self, x: _nt.CastsWithScalar[Self, _RealScalarT], /) -> _Tuple2[_RealScalarT]: ...
     @overload
-    def __divmod__(self: _nt.CastsWithFloat[_InexactT], x: _nt.JustFloat, /) -> _2Tuple[_InexactT]: ...
+    def __divmod__(self: _nt.CastsWithFloat[_InexactT], x: _nt.JustFloat, /) -> _Tuple2[_InexactT]: ...
     #
     @overload
-    def __rdivmod__(self, x: _nt.CastsScalar[Self] | int, /) -> _2Tuple[Self]: ...
+    def __rdivmod__(self, x: _nt.CastsScalar[Self] | int, /) -> _Tuple2[Self]: ...
     @overload
-    def __rdivmod__(self, x: _nt.CastsWithScalar[Self, _RealScalarT], /) -> _2Tuple[_RealScalarT]: ...
+    def __rdivmod__(self, x: _nt.CastsWithScalar[Self, _RealScalarT], /) -> _Tuple2[_RealScalarT]: ...
     @overload
-    def __rdivmod__(self: _nt.CastsWithFloat[_InexactT], x: _nt.JustFloat, /) -> _2Tuple[_InexactT]: ...
+    def __rdivmod__(self: _nt.CastsWithFloat[_InexactT], x: _nt.JustFloat, /) -> _Tuple2[_InexactT]: ...
 
     #
     @overload
@@ -4390,7 +4390,7 @@ class signedinteger(integer):
     @override
     def __nep50__(
         self,
-        below: int64 | timedelta64 | _inexact64_min | _JustFloating | _JustInexact,
+        below: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
         above: bool_,
         /,
     ) -> signedinteger: ...
@@ -4447,7 +4447,7 @@ class int16(_IntMixin[L[2]], signedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: _int16_min | timedelta64 | _float32_min | _JustFloating | complexfloating | _JustInexact,
+        below: _I16_min | timedelta64 | _F32_min | _JustFloating | complexfloating | _JustInexact,
         above: _nt.co_integer8,
         /,
     ) -> int16: ...
@@ -4476,7 +4476,7 @@ class int32(_IntMixin[L[4]], signedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: _int32_min | timedelta64 | _inexact64_min | _JustFloating | _JustInexact,
+        below: _I32_min | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
         above: _nt.co_integer16,
         /,
     ) -> int32: ...
@@ -4508,7 +4508,7 @@ class int64(_IntMixin[L[8]], signedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: int64 | timedelta64 | _inexact64_min | _JustFloating | _JustInexact,
+        below: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
         above: _nt.co_integer32,
         /,
     ) -> int64: ...
@@ -4532,9 +4532,9 @@ class int64(_IntMixin[L[8]], signedinteger):
     def dtype(self) -> dtypes.Int64DType: ...
 
 if sys.platform == "win32":
-    long: TypeAlias = int32  # pyright: ignore[reportRedeclaration]
+    long: TypeAlias = int32  # pyright: ignore[reportRedeclaration]  # noqa: PYI042
 else:
-    long: TypeAlias = int64  # pyright: ignore[reportRedeclaration]
+    long: TypeAlias = int64  # pyright: ignore[reportRedeclaration]  # noqa: PYI042
 
 longlong = int64
 
@@ -4546,7 +4546,7 @@ class unsignedinteger(integer):
     @override
     def __nep50__(
         self,
-        below: uint64 | timedelta64 | _inexact64_min | _JustFloating | _JustInexact,
+        below: uint64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
         above: bool_,
         /,
     ) -> unsignedinteger: ...
@@ -4566,7 +4566,7 @@ class uint8(_IntMixin[L[1]], unsignedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: _int16_min | unsignedinteger | timedelta64 | _JustFloating | inexact | _JustInexact,
+        below: _I16_min | unsignedinteger | timedelta64 | _JustFloating | inexact | _JustInexact,
         above: bool_,
         /,
     ) -> uint8: ...
@@ -4599,12 +4599,12 @@ class uint16(_IntMixin[L[2]], unsignedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: uint16 | _integer32_min | timedelta64 | _float32_min | _JustFloating | complexfloating | _JustInexact,
+        below: uint16 | _Integer32_min | timedelta64 | _F32_min | _JustFloating | complexfloating | _JustInexact,
         above: _nt.co_uint8,
         /,
     ) -> uint16: ...
     @type_check_only
-    def __nep50_rule0__(self, other: _int16_max, /) -> int32: ...
+    def __nep50_rule0__(self, other: _I16_max, /) -> int32: ...
     @type_check_only
     def __nep50_rule1__(self, other: float16, /) -> float32: ...
     @override
@@ -4634,7 +4634,7 @@ class uint32(_IntMixin[L[4]], unsignedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: uint32 | _nt.integer64 | timedelta64 | _inexact64_min | _AbstractInexact,
+        below: uint32 | _nt.integer64 | timedelta64 | _Inexact64_min | _AbstractInexact,
         above: _nt.co_uint16,
         /,
     ) -> uint32: ...
@@ -4669,7 +4669,7 @@ class uint64(_IntMixin[L[8]], unsignedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: uint64 | timedelta64 | _inexact64_min | _AbstractInexact,
+        below: uint64 | timedelta64 | _Inexact64_min | _AbstractInexact,
         above: _nt.co_uint32,
         /,
     ) -> uint64: ...
@@ -4691,9 +4691,9 @@ class uint64(_IntMixin[L[8]], unsignedinteger):
     def dtype(self) -> dtypes.UInt64DType: ...
 
 if sys.platform == "win32":
-    ulong: TypeAlias = uint32  # pyright: ignore[reportRedeclaration]
+    ulong: TypeAlias = uint32  # pyright: ignore[reportRedeclaration]  # noqa: PYI042
 else:
-    ulong: TypeAlias = uintp  # pyright: ignore[reportRedeclaration]
+    ulong: TypeAlias = uintp  # pyright: ignore[reportRedeclaration]  # noqa: PYI042
 
 ulonglong = uint64
 
@@ -4770,14 +4770,14 @@ class floating(_RealMixin, _RoundMixin, inexact[float]):
 
     #
     @overload
-    def __divmod__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> _2Tuple[Self]: ...
+    def __divmod__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> _Tuple2[Self]: ...
     @overload
-    def __divmod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _2Tuple[_FloatingT]: ...
+    def __divmod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _Tuple2[_FloatingT]: ...
     #
     @overload
-    def __rdivmod__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> _2Tuple[Self]: ...
+    def __rdivmod__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> _Tuple2[Self]: ...
     @overload
-    def __rdivmod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _2Tuple[_FloatingT]: ...
+    def __rdivmod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _Tuple2[_FloatingT]: ...
 
 class float16(_FloatMixin[L[2]], floating):
     def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
@@ -4814,7 +4814,7 @@ class float32(_FloatMixin[L[4]], floating):
     #
     @override
     @type_check_only
-    def __nep50__(self, below: _float32_min | complexfloating, above: float16 | _nt.co_integer16, /) -> float32: ...
+    def __nep50__(self, below: _F32_min | complexfloating, above: float16 | _nt.co_integer16, /) -> float32: ...
     @override
     @type_check_only
     def __nep50_complex__(self, /) -> complex64: ...
@@ -4842,7 +4842,7 @@ class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
     #
     @override
     @type_check_only
-    def __nep50__(self, below: _inexact64_min, above: _float32_max | _nt.co_integer, /) -> float64: ...
+    def __nep50__(self, below: _Inexact64_min, above: _F32_max | _nt.co_integer, /) -> float64: ...
     @override
     @type_check_only
     def __nep50_complex__(self, /) -> complex128: ...
@@ -4916,7 +4916,7 @@ float128 = longdouble
 class complexfloating(inexact[complex]):
     @override
     @type_check_only
-    def __nep50__(self, below: clongdouble, above: _float32_max | _nt.co_integer16, /) -> complexfloating: ...
+    def __nep50__(self, below: clongdouble, above: _F32_max | _nt.co_integer16, /) -> complexfloating: ...
     @final
     @override
     @type_check_only
@@ -4961,7 +4961,7 @@ class complex64(complexfloating):
     #
     @override
     @type_check_only
-    def __nep50__(self, below: complexfloating, above: _float32_max | _nt.co_integer16, /) -> complex64: ...
+    def __nep50__(self, below: complexfloating, above: _F32_max | _nt.co_integer16, /) -> complex64: ...
     @type_check_only
     def __nep50_rule0__(self, other: _nt.integer32 | _nt.integer64 | float64, /) -> complex128: ...
     @type_check_only
@@ -5011,7 +5011,7 @@ class complex128(complexfloating, complex):  # type: ignore[misc]
     #
     @override
     @type_check_only
-    def __nep50__(self, below: _complex128_min, above: complex64 | _float64_max | _nt.co_integer, /) -> complex128: ...
+    def __nep50__(self, below: _C128_min, above: complex64 | _F64_max | _nt.co_integer, /) -> complex128: ...
     @type_check_only
     def __nep50_rule1__(self, other: longdouble, /) -> clongdouble: ...
     @override

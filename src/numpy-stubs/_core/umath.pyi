@@ -189,6 +189,12 @@ _TimeLike: TypeAlias = np.datetime64 | np.timedelta64
 _SupportsStringLikeArray: TypeAlias = _SupportsArray[np.dtypes.StringDType | np.dtype[np.character]]
 _ToCharStringND: TypeAlias = _nt.SequenceND[_SupportsStringLikeArray | list[str] | list[bytes] | list[str | bytes]]
 
+_Eq1: TypeAlias = L[1, True]
+_Eq2: TypeAlias = L[2]
+_Ge3 = TypeAliasType("_Ge3", L[3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+_Ge1: TypeAlias = _Eq1 | _Ge2
+_Ge2: TypeAlias = _Eq2 | _Ge3
+
 ###
 # helper protocols
 
@@ -2109,12 +2115,6 @@ class _Call1N2N_py(Protocol[_OutT_co]):
         **kwargs: Unpack[_Kwargs3_],
     ) -> Incomplete: ...
 
-_3P = TypeAliasType("_3P", L[3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
-_2: TypeAlias = L[2]
-_2P: TypeAlias = _2 | _3P
-_1: TypeAlias = L[True, 1]
-_1P: TypeAlias = _1 | _2P
-
 _pyfunc_1_1 = TypeAliasType(
     "_pyfunc_1_1",
     np.ufunc[_Call11_py[_OutT], _At1, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
@@ -2143,20 +2143,22 @@ _pyfunc_1n_2n = TypeAliasType(
 
 # NOTE: We can't use e.g. `Concatenate[Any, ...]`, as that causes mypy to reject every function...
 @overload  # (a) -> T
-def frompyfunc(f: Callable[[Incomplete], _T], /, nin: _1, nout: _1, *, identity: object = None) -> _pyfunc_1_1[_T]: ...
+def frompyfunc(
+    f: Callable[[Incomplete], _T], /, nin: _Eq1, nout: _Eq1, *, identity: object = None
+) -> _pyfunc_1_1[_T]: ...
 @overload  # (a, b) -> T
 def frompyfunc(
-    f: Callable[[Incomplete, Incomplete], _T], /, nin: _2, nout: _1, *, identity: object = None
+    f: Callable[[Incomplete, Incomplete], _T], /, nin: _Eq2, nout: _Eq1, *, identity: object = None
 ) -> _pyfunc_2_1[_T]: ...
 @overload  # (a, b, c, ...) -> T
-def frompyfunc(f: Callable[..., _T], /, nin: _3P, nout: _1, *, identity: object = None) -> _pyfunc_3n_1[_T]: ...
+def frompyfunc(f: Callable[..., _T], /, nin: _Ge3, nout: _Eq1, *, identity: object = None) -> _pyfunc_3n_1[_T]: ...
 @overload  # (a, ...) -> (T1, T2)
 def frompyfunc(  # type: ignore[overload-overlap]  # mypy-only false positive
-    f: Callable[..., tuple[_T1, _T2]], /, nin: _1P, nout: _2, *, identity: object = None
+    f: Callable[..., tuple[_T1, _T2]], /, nin: _Ge1, nout: _Eq2, *, identity: object = None
 ) -> _pyfunc_1n_2[_T1, _T2]: ...
 @overload  # (a, ...) -> (T1, T2, *(T, ...))
 def frompyfunc(
-    f: Callable[..., tuple[_T1, _T2, *tuple[_T, ...]]], /, nin: _1P, nout: _2P, *, identity: object = None
+    f: Callable[..., tuple[_T1, _T2, *tuple[_T, ...]]], /, nin: _Ge1, nout: _Ge2, *, identity: object = None
 ) -> _pyfunc_1n_2n[_T1 | _T2 | _T]: ...
 @overload
 def frompyfunc(

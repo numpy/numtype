@@ -139,9 +139,9 @@ class _NBit(Generic[_DataSize_co, _ItemSize_co]):
 @type_check_only
 class _8Bit(_NoOrder, _NBit[L[1], L[1]]): ...
 
-_16Bit: TypeAlias = _NBit[L[2], L[2]]
-_32Bit: TypeAlias = _NBit[L[4], L[4]]
-_64Bit: TypeAlias = _NBit[L[8], L[8]]
+_16Bit: TypeAlias = _NBit[L[2], L[2]]  # noqa: PYI042
+_32Bit: TypeAlias = _NBit[L[4], L[4]]  # noqa: PYI042
+_64Bit: TypeAlias = _NBit[L[8], L[8]]  # noqa: PYI042
 
 if sys.platform == "win32":
     _LongSize: TypeAlias = L[4]  # pyright: ignore[reportRedeclaration]

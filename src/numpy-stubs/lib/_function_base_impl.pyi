@@ -76,7 +76,7 @@ _ScalarT1 = TypeVar("_ScalarT1", bound=np.generic)
 _ScalarT2 = TypeVar("_ScalarT2", bound=np.generic)
 _NumberT = TypeVar("_NumberT", bound=np.number)
 
-_2Tuple: TypeAlias = tuple[_T, _T]
+_Tuple2: TypeAlias = tuple[_T, _T]
 _ToInt: TypeAlias = CanIndex | SupportsInt
 _PercentileMethod: TypeAlias = L[
     "inverted_cdf",
@@ -168,7 +168,7 @@ def average(
     returned: L[True],
     *,
     keepdims: _NoValueType = ...,
-) -> _2Tuple[np.float64]: ...
+) -> _Tuple2[np.float64]: ...
 @overload
 def average(
     a: _nt.ToFloat64_nd | _nt.CoInteger_nd,
@@ -177,7 +177,7 @@ def average(
     *,
     returned: L[True],
     keepdims: _NoValueType | L[False] = ...,
-) -> _2Tuple[np.float64]: ...
+) -> _Tuple2[np.float64]: ...
 @overload
 def average(
     a: _nt.CoFloating_nd,
@@ -195,7 +195,7 @@ def average(
     returned: L[True],
     *,
     keepdims: _NoValueType | L[False] = ...,
-) -> _2Tuple[np.floating]: ...
+) -> _Tuple2[np.floating]: ...
 @overload
 def average(
     a: _nt.CoFloating_nd,
@@ -204,7 +204,7 @@ def average(
     *,
     returned: L[True],
     keepdims: _NoValueType | L[False] = ...,
-) -> _2Tuple[np.floating]: ...
+) -> _Tuple2[np.floating]: ...
 @overload
 def average(
     a: _nt.ToComplex_nd,
@@ -240,7 +240,7 @@ def average(
     returned: L[True],
     *,
     keepdims: _NoValueType | L[False] = ...,
-) -> _2Tuple[np.complexfloating]: ...
+) -> _Tuple2[np.complexfloating]: ...
 @overload
 def average(
     a: _nt.CoComplex_nd,
@@ -249,7 +249,7 @@ def average(
     returned: L[True],
     *,
     keepdims: _NoValueType | L[False] = ...,
-) -> _2Tuple[np.complexfloating]: ...
+) -> _Tuple2[np.complexfloating]: ...
 @overload
 def average(
     a: _nt.ToComplex_nd,
@@ -258,7 +258,7 @@ def average(
     *,
     returned: L[True],
     keepdims: _NoValueType | L[False] = ...,
-) -> _2Tuple[np.complexfloating]: ...
+) -> _Tuple2[np.complexfloating]: ...
 @overload
 def average(
     a: _nt.CoComplex_nd,
@@ -267,7 +267,7 @@ def average(
     weights: _nt.ToComplex_nd,
     returned: L[True],
     keepdims: _NoValueType | L[False] = ...,
-) -> _2Tuple[np.complexfloating]: ...
+) -> _Tuple2[np.complexfloating]: ...
 @overload
 def average(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
@@ -285,7 +285,7 @@ def average(
     returned: L[True],
     *,
     keepdims: _NoValueType | bool = ...,
-) -> _2Tuple[Incomplete]: ...
+) -> _Tuple2[Incomplete]: ...
 @overload
 def average(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
@@ -294,7 +294,7 @@ def average(
     *,
     returned: L[True],
     keepdims: _NoValueType | bool = ...,
-) -> _2Tuple[Incomplete]: ...
+) -> _Tuple2[Incomplete]: ...
 
 #
 @overload
