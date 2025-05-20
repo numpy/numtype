@@ -35,27 +35,11 @@ class _UFuncCastingError(UFuncTypeError):
 
 class _UFuncInputCastingError(_UFuncCastingError):
     in_i: Final[int]
-    def __init__(
-        self,
-        /,
-        ufunc: np.ufunc,
-        casting: _CastingKind,
-        from_: np.dtype,
-        to: np.dtype,
-        i: int,
-    ) -> None: ...
+    def __init__(self, /, ufunc: np.ufunc, casting: _CastingKind, from_: np.dtype, to: np.dtype, i: int) -> None: ...
 
 class _UFuncOutputCastingError(_UFuncCastingError):
     out_i: Final[int]
-    def __init__(
-        self,
-        /,
-        ufunc: np.ufunc,
-        casting: _CastingKind,
-        from_: np.dtype,
-        to: np.dtype,
-        i: int,
-    ) -> None: ...
+    def __init__(self, /, ufunc: np.ufunc, casting: _CastingKind, from_: np.dtype, to: np.dtype, i: int) -> None: ...
 
 class _ArrayMemoryError(MemoryError):
     shape: _nt.Shape

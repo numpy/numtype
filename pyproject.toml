@@ -190,10 +190,11 @@ preview = true
 
     [tool.ruff.format]
     line-ending = "lf"
+    skip-magic-trailing-comma = true
 
     [tool.ruff.lint]
     select = ["ALL"]
-    ignore = ["CPY", "FIX002"]
+    ignore = ["CPY", "FIX002", "COM812"]
 
         [tool.ruff.lint.per-file-ignores]
         "*.pyi" = [
@@ -231,7 +232,7 @@ preview = true
         combine-as-imports = true
         extra-standard-library = ["_typeshed", "typing_extensions"]
         known-first-party = ["numpy", "numtype", "_numtype"]
-        split-on-trailing-comma = true
+        split-on-trailing-comma = false
 
         [tool.ruff.lint.pydocstyle]
         convention = "numpy"

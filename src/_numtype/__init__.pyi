@@ -657,34 +657,22 @@ ToCharacter_3nd = TypeAliasType("ToCharacter_3nd", _ToArray2_3nd[_ToCharacter, _
 ToString_nd = TypeAliasType("ToString_nd", SequenceND[_CanStringArray[Shape, _NaT0]], type_params=(_NaT0,))
 ToString_0d = TypeAliasType("ToString_0d", _CanStringArray[Shape0, _NaT0], type_params=(_NaT0,))
 ToString_1ds = TypeAliasType(
-    "ToString_1ds",
-    _CanStringArray[Shape1, _NaT0] | Sequence[ToString_0d[_NaT0]],
-    type_params=(_NaT0,),
+    "ToString_1ds", _CanStringArray[Shape1, _NaT0] | Sequence[ToString_0d[_NaT0]], type_params=(_NaT0,)
 )
 ToString_2ds = TypeAliasType(
-    "ToString_2ds",
-    _CanStringArray[Shape2, _NaT0] | Sequence[ToString_1ds[_NaT0]],
-    type_params=(_NaT0,),
+    "ToString_2ds", _CanStringArray[Shape2, _NaT0] | Sequence[ToString_1ds[_NaT0]], type_params=(_NaT0,)
 )
 ToString_3ds = TypeAliasType(
-    "ToString_3ds",
-    _CanStringArray[Shape3, _NaT0] | Sequence[ToString_2ds[_NaT0]],
-    type_params=(_NaT0,),
+    "ToString_3ds", _CanStringArray[Shape3, _NaT0] | Sequence[ToString_2ds[_NaT0]], type_params=(_NaT0,)
 )
 ToString_1nd = TypeAliasType(
-    "ToString_1nd",
-    _CanStringArray[Shape1N, _NaT0] | Sequence[_CanStringArray[Shape0N, _NaT0]],
-    type_params=(_NaT0,),
+    "ToString_1nd", _CanStringArray[Shape1N, _NaT0] | Sequence[_CanStringArray[Shape0N, _NaT0]], type_params=(_NaT0,)
 )
 ToString_2nd = TypeAliasType(
-    "ToString_2nd",
-    _CanStringArray[Shape2N, _NaT0] | Sequence[ToString_1nd[_NaT0]],
-    type_params=(_NaT0,),
+    "ToString_2nd", _CanStringArray[Shape2N, _NaT0] | Sequence[ToString_1nd[_NaT0]], type_params=(_NaT0,)
 )
 ToString_3nd = TypeAliasType(
-    "ToString_3nd",
-    _CanStringArray[Shape3N, _NaT0] | Sequence[ToString_2nd[_NaT0]],
-    type_params=(_NaT0,),
+    "ToString_3nd", _CanStringArray[Shape3N, _NaT0] | Sequence[ToString_2nd[_NaT0]], type_params=(_NaT0,)
 )
 
 ToObject_nd = TypeAliasType("ToObject_nd", _ToArray2_nd[np.object_, _PyObject])
@@ -978,30 +966,14 @@ CoStr_1nd = TypeAliasType("CoStr_1nd", _ToArray2_1nd[_ToCharacter, _PyCharacter]
 CoStr_2nd = TypeAliasType("CoStr_2nd", _ToArray2_2nd[_ToCharacter, _PyCharacter])
 CoStr_3nd = TypeAliasType("CoStr_3nd", _ToArray2_3nd[_ToCharacter, _PyCharacter])
 
-CoString_nd = TypeAliasType(
-    "CoString_nd",
-    SequenceND[_CanCoStringArray[Shape, _NaT0] | JustStr],
-    type_params=(_NaT0,),
-)
-CoString_0d = TypeAliasType(
-    "CoString_0d",
-    _CanCoStringArray[Shape0, _NaT0] | JustStr,
-    type_params=(_NaT0,),
-)
-CoString_1ds = TypeAliasType(
-    "CoString_1ds",
-    _CanCoStringArray[Shape1, _NaT0] | Sequence[JustStr],
-    type_params=(_NaT0,),
-)
+CoString_nd = TypeAliasType("CoString_nd", SequenceND[_CanCoStringArray[Shape, _NaT0] | JustStr], type_params=(_NaT0,))
+CoString_0d = TypeAliasType("CoString_0d", _CanCoStringArray[Shape0, _NaT0] | JustStr, type_params=(_NaT0,))
+CoString_1ds = TypeAliasType("CoString_1ds", _CanCoStringArray[Shape1, _NaT0] | Sequence[JustStr], type_params=(_NaT0,))
 CoString_2ds = TypeAliasType(
-    "CoString_2ds",
-    _CanCoStringArray[Shape2, _NaT0] | Sequence[CoString_1ds[_NaT0]],
-    type_params=(_NaT0,),
+    "CoString_2ds", _CanCoStringArray[Shape2, _NaT0] | Sequence[CoString_1ds[_NaT0]], type_params=(_NaT0,)
 )
 CoString_3ds = TypeAliasType(
-    "CoString_3ds",
-    _CanCoStringArray[Shape3, _NaT0] | Sequence[CoString_2ds[_NaT0]],
-    type_params=(_NaT0,),
+    "CoString_3ds", _CanCoStringArray[Shape3, _NaT0] | Sequence[CoString_2ds[_NaT0]], type_params=(_NaT0,)
 )
 CoString_1nd = TypeAliasType(
     "CoString_1nd",
@@ -1009,12 +981,8 @@ CoString_1nd = TypeAliasType(
     type_params=(_NaT0,),
 )
 CoString_2nd = TypeAliasType(
-    "CoString_2nd",
-    _CanCoStringArray[Shape2N, _NaT0] | Sequence[CoString_1nd[_NaT0]],
-    type_params=(_NaT0,),
+    "CoString_2nd", _CanCoStringArray[Shape2N, _NaT0] | Sequence[CoString_1nd[_NaT0]], type_params=(_NaT0,)
 )
 CoString_3nd = TypeAliasType(
-    "CoString_3nd",
-    _CanCoStringArray[Shape3N, _NaT0] | Sequence[CoString_2nd[_NaT0]],
-    type_params=(_NaT0,),
+    "CoString_3nd", _CanCoStringArray[Shape3N, _NaT0] | Sequence[CoString_2nd[_NaT0]], type_params=(_NaT0,)
 )

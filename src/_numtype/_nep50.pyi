@@ -131,20 +131,12 @@ class _LikeScalar(Protocol[_LikeT_co]):
 _SequenceND: TypeAlias = _LikeT | _NestedSequence[_LikeT]
 
 Casts = TypeAliasType(
-    "Casts",
-    _SequenceND[_LikeNumeric[_CanNEP50[_ScalarOutT, Any, Any], _ShapeT]],
-    type_params=(_ScalarOutT, _ShapeT),
+    "Casts", _SequenceND[_LikeNumeric[_CanNEP50[_ScalarOutT, Any, Any], _ShapeT]], type_params=(_ScalarOutT, _ShapeT)
 )
 CastsArray = TypeAliasType(
-    "CastsArray",
-    _SequenceND[_LikeArray[_CanNEP50[_ScalarOutT, Any, Any], _ShapeT]],
-    type_params=(_ScalarOutT, _ShapeT),
+    "CastsArray", _SequenceND[_LikeArray[_CanNEP50[_ScalarOutT, Any, Any], _ShapeT]], type_params=(_ScalarOutT, _ShapeT)
 )
-CastsScalar = TypeAliasType(
-    "CastsScalar",
-    _LikeScalar[_CanNEP50[_ScalarOutT, Any, Any]],
-    type_params=(_ScalarOutT,),
-)
+CastsScalar = TypeAliasType("CastsScalar", _LikeScalar[_CanNEP50[_ScalarOutT, Any, Any]], type_params=(_ScalarOutT,))
 
 #
 _CastWith: TypeAlias = (
@@ -168,9 +160,7 @@ CastsWithArray = TypeAliasType(
     type_params=(_ScalarInT, _ScalarOutT, _ShapeT),
 )
 CastsWithScalar = TypeAliasType(
-    "CastsWithScalar",
-    _LikeScalar[_CastWith[_ScalarInT, _ScalarOutT]],
-    type_params=(_ScalarInT, _ScalarOutT),
+    "CastsWithScalar", _LikeScalar[_CastWith[_ScalarInT, _ScalarOutT]], type_params=(_ScalarInT, _ScalarOutT)
 )
 
 #

@@ -23,8 +23,5 @@ def byte_bounds(a: _HasSizeAndArrayInterface) -> tuple[int, int]: ...
 ###
 def normalize_axis_index(axis: int, ndim: int, msg_prefix: str | None = None) -> int: ...
 def normalize_axis_tuple(
-    axis: int | Iterable[int],
-    ndim: int,
-    argname: str | None = None,
-    allow_duplicate: bool = False,
+    axis: int | Iterable[int], ndim: int, argname: str | None = None, allow_duplicate: bool = False
 ) -> tuple[int, ...]: ...

@@ -2100,12 +2100,7 @@ def moveaxis(a: _nt.Array[_ScalarT], source: _ShapeLike, destination: _ShapeLike
 #
 @overload
 def cross(
-    a: _nt.ToBool_1nd,
-    b: _nt.ToBool_1nd,
-    axisa: int = -1,
-    axisb: int = -1,
-    axisc: int = -1,
-    axis: int | None = None,
+    a: _nt.ToBool_1nd, b: _nt.ToBool_1nd, axisa: int = -1, axisb: int = -1, axisc: int = -1, axis: int | None = None
 ) -> NoReturn: ...
 @overload
 def cross(
@@ -2252,11 +2247,7 @@ def allclose(
 #
 @overload
 def isclose(
-    a: _nt.ToGeneric_0d,
-    b: _nt.ToGeneric_0d,
-    rtol: ArrayLike = 1e-5,
-    atol: ArrayLike = 1e-8,
-    equal_nan: py_bool = False,
+    a: _nt.ToGeneric_0d, b: _nt.ToGeneric_0d, rtol: ArrayLike = 1e-5, atol: ArrayLike = 1e-8, equal_nan: py_bool = False
 ) -> np.bool: ...
 @overload
 def isclose(
@@ -2282,19 +2273,9 @@ def array_equiv(a1: ArrayLike, a2: ArrayLike) -> py_bool: ...
 #
 @overload
 def astype(
-    x: _nt.Array[Any, _ShapeT],
-    dtype: _DTypeLike[_ScalarT],
-    /,
-    *,
-    copy: py_bool = True,
-    device: _Device | None = None,
+    x: _nt.Array[Any, _ShapeT], dtype: _DTypeLike[_ScalarT], /, *, copy: py_bool = True, device: _Device | None = None
 ) -> ndarray[_ShapeT, dtype[_ScalarT]]: ...
 @overload
 def astype(
-    x: _nt.Array[Any, _ShapeT],
-    dtype: DTypeLike,
-    /,
-    *,
-    copy: py_bool = True,
-    device: _Device | None = None,
+    x: _nt.Array[Any, _ShapeT], dtype: DTypeLike, /, *, copy: py_bool = True, device: _Device | None = None
 ) -> ndarray[_ShapeT, dtype]: ...

@@ -51,17 +51,12 @@ class _CanArrayWrap(Protocol):
 
 #
 def take_along_axis(
-    arr: _ScalarT | _nt.Array[_ScalarT],
-    indices: _nt.Array[np.integer],
-    axis: int | None,
+    arr: _ScalarT | _nt.Array[_ScalarT], indices: _nt.Array[np.integer], axis: int | None
 ) -> _nt.Array[_ScalarT]: ...
 
 #
 def put_along_axis(
-    arr: _nt.Array[_ScalarT],
-    indices: _nt.Array[np.integer],
-    values: ArrayLike,
-    axis: int | None,
+    arr: _nt.Array[_ScalarT], indices: _nt.Array[np.integer], values: ArrayLike, axis: int | None
 ) -> None: ...
 
 #
@@ -84,9 +79,7 @@ def apply_along_axis(
 
 #
 def apply_over_axes(
-    func: Callable[[_nt.Array, int], _nt.Array[_ScalarT]],
-    a: ArrayLike,
-    axes: int | Sequence[int],
+    func: Callable[[_nt.Array, int], _nt.Array[_ScalarT]], a: ArrayLike, axes: int | Sequence[int]
 ) -> _nt.Array[_ScalarT]: ...
 
 #
@@ -98,10 +91,7 @@ def expand_dims(a: ArrayLike, axis: _ToShape) -> _nt.Array[Incomplete]: ...
 # Deprecated in NumPy 2.0, 2023-08-1
 @deprecated("`row_stack` alias is deprecated. Use `np.vstack` directly.")
 def row_stack(
-    tup: Sequence[ArrayLike],
-    *,
-    dtype: DTypeLike | None = None,
-    casting: _CastingKind = "same_kind",
+    tup: Sequence[ArrayLike], *, dtype: DTypeLike | None = None, casting: _CastingKind = "same_kind"
 ) -> _nt.Array[Incomplete]: ...
 
 #

@@ -137,19 +137,11 @@ class __array_namespace_info__:
     def dtypes(self, /, *, device: _Device | None = None, kind: _Permute1[_KindComplex]) -> _DTypesComplex: ...  # type: ignore[overload-overlap]
     @overload
     def dtypes(  # type: ignore[overload-overlap]
-        self,
-        /,
-        *,
-        device: _Device | None = None,
-        kind: _Permute12[_KindInteger, _KindInt, _KindUInt],
+        self, /, *, device: _Device | None = None, kind: _Permute12[_KindInteger, _KindInt, _KindUInt]
     ) -> _DTypesInteger: ...
     @overload
     def dtypes(  # type: ignore[overload-overlap]
-        self,
-        /,
-        *,
-        device: _Device | None = None,
-        kind: _Permute13[_KindNumber, _KindInteger, _KindFloat, _KindComplex],
+        self, /, *, device: _Device | None = None, kind: _Permute13[_KindNumber, _KindInteger, _KindFloat, _KindComplex]
     ) -> _DTypesNumber: ...
     @overload
     def dtypes(self, /, *, device: _Device | None = None, kind: tuple[_Kind, ...]) -> _DTypesUnion: ...

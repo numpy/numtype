@@ -4,22 +4,11 @@ from typing import Final, Literal as L, NotRequired, TypedDict, overload, type_c
 
 _CompilerConfigDictValue = TypedDict(
     "_CompilerConfigDictValue",
-    {
-        "name": str,
-        "linker": str,
-        "version": str,
-        "commands": str,
-        "args": str,
-        "linker args": str,
-    },
+    {"name": str, "linker": str, "version": str, "commands": str, "args": str, "linker args": str},
 )
 _CompilerConfigDict = TypedDict(
     "_CompilerConfigDict",
-    {
-        "c": _CompilerConfigDictValue,
-        "cython": _CompilerConfigDictValue,
-        "c++": _CompilerConfigDictValue,
-    },
+    {"c": _CompilerConfigDictValue, "cython": _CompilerConfigDictValue, "c++": _CompilerConfigDictValue},
 )
 _MachineInformationDict = TypedDict(
     "_MachineInformationDict",
@@ -59,12 +48,7 @@ class _PythonInformationDict(TypedDict):
     version: str
 
 _SIMDExtensionsDict = TypedDict(
-    "_SIMDExtensionsDict",
-    {
-        "baseline": list[str],
-        "found": list[str],
-        "not found": list[str],
-    },
+    "_SIMDExtensionsDict", {"baseline": list[str], "found": list[str], "not found": list[str]}
 )
 
 _ConfigDict = TypedDict(

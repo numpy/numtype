@@ -75,8 +75,7 @@ class ndenumerate(Generic[_ScalarT_co]):
     # The first overload is a (semi-)workaround for a mypy bug (tested with v1.10 and v1.11)
     @overload
     def __next__(
-        self: ndenumerate[_nt.co_number | np.flexible | np.datetime64 | np.timedelta64],
-        /,
+        self: ndenumerate[_nt.co_number | np.flexible | np.datetime64 | np.timedelta64], /
     ) -> tuple[tuple[int, ...], _ScalarT_co]: ...
     @overload
     def __next__(self: ndenumerate[np.object_], /) -> tuple[tuple[int, ...], Any]: ...
@@ -126,12 +125,7 @@ class AxisConcatenator(Generic[_AxisT_co, _MatrixT_co, _NDMinT_co, _Trans1DT_co]
 
     #
     def __init__(
-        self,
-        /,
-        axis: _AxisT_co = ...,
-        matrix: _MatrixT_co = ...,
-        ndmin: _NDMinT_co = ...,
-        trans1d: _Trans1DT_co = ...,
+        self, /, axis: _AxisT_co = ..., matrix: _MatrixT_co = ..., ndmin: _NDMinT_co = ..., trans1d: _Trans1DT_co = ...
     ) -> None: ...
 
     # TODO(jorenham): annotate this
@@ -142,9 +136,7 @@ class AxisConcatenator(Generic[_AxisT_co, _MatrixT_co, _NDMinT_co, _Trans1DT_co]
     @staticmethod
     @overload
     def concatenate(
-        *a: _nt._ToArray_nd[_ScalarT],
-        axis: CanIndex | None = 0,
-        out: None = None,
+        *a: _nt._ToArray_nd[_ScalarT], axis: CanIndex | None = 0, out: None = None
     ) -> _nt.Array[_ScalarT]: ...
     @staticmethod
     @overload

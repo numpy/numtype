@@ -253,8 +253,5 @@ def applyrules(rules: Mapping[str, object], d: Mapping[str, object], var: _Var =
 def get_f2py_modulename(source: FileDescriptorOrPath) -> str: ...
 def getuseblocks(pymod: Mapping[str, Mapping[str, Mapping[str, str]]]) -> list[str]: ...
 def process_f2cmap_dict(
-    f2cmap_all: _F2CMap,
-    new_map: _F2CMap,
-    c2py_map: _F2CMap,
-    verbose: bool = False,
+    f2cmap_all: _F2CMap, new_map: _F2CMap, c2py_map: _F2CMap, verbose: bool = False
 ) -> tuple[dict[str, dict[str, str]], list[str]]: ...

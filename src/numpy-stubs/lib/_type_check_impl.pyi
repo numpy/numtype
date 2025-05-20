@@ -47,9 +47,7 @@ class _HasDType(Protocol[_ScalarT_co]):
 
 #
 def mintypecode(
-    typechars: Iterable[_nt.ToGeneric_nd],
-    typeset: str | Container[str] = "GDFgdf",
-    default: str = "d",
+    typechars: Iterable[_nt.ToGeneric_nd], typeset: str | Container[str] = "GDFgdf", default: str = "d"
 ) -> str: ...
 
 #
@@ -111,11 +109,7 @@ def isrealobj(x: _HasDType[Any] | _nt.ToGeneric_nd) -> bool: ...
 #
 @overload
 def nan_to_num(
-    x: _ScalarT,
-    copy: bool = True,
-    nan: float = 0.0,
-    posinf: float | None = None,
-    neginf: float | None = None,
+    x: _ScalarT, copy: bool = True, nan: float = 0.0, posinf: float | None = None, neginf: float | None = None
 ) -> _ScalarT: ...
 @overload
 def nan_to_num(
@@ -127,19 +121,11 @@ def nan_to_num(
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def nan_to_num(
-    x: _nt.ToGeneric_0d,
-    copy: bool = True,
-    nan: float = 0.0,
-    posinf: float | None = None,
-    neginf: float | None = None,
+    x: _nt.ToGeneric_0d, copy: bool = True, nan: float = 0.0, posinf: float | None = None, neginf: float | None = None
 ) -> Any: ...
 @overload
 def nan_to_num(
-    x: _nt.ToGeneric_1nd,
-    copy: bool = True,
-    nan: float = 0.0,
-    posinf: float | None = None,
-    neginf: float | None = None,
+    x: _nt.ToGeneric_1nd, copy: bool = True, nan: float = 0.0, posinf: float | None = None, neginf: float | None = None
 ) -> _nt.Array: ...
 
 # If one passes a complex array to `real_if_close`, then one is reasonably
@@ -211,40 +197,21 @@ def common_type(a0: _HasDType[np.float16], /, *ai: _HasDType[np.float16]) -> typ
 def common_type(a0: _HasDType[np.float32], /, *ai: _HasDType[np.float32 | np.float16]) -> type[np.float32]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.float64 | np.integer],
-    /,
-    *ai: _HasDType[np.float64 | np.float32 | np.float16 | np.integer],
+    a0: _HasDType[np.float64 | np.integer], /, *ai: _HasDType[np.float64 | np.float32 | np.float16 | np.integer]
 ) -> type[np.float64]: ...
 @overload
-def common_type(
-    a0: _HasDType[np.longdouble],
-    /,
-    *ai: _HasDType[np.floating | np.integer],
-) -> type[np.longdouble]: ...
+def common_type(a0: _HasDType[np.longdouble], /, *ai: _HasDType[np.floating | np.integer]) -> type[np.longdouble]: ...
+@overload
+def common_type(a0: _HasDType[np.complex64], /, *ai: _HasDType[_nt.inexact32 | np.float16]) -> type[np.complex64]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.complex64],
-    /,
-    *ai: _HasDType[_nt.inexact32 | np.float16],
-) -> type[np.complex64]: ...
-@overload
-def common_type(
-    a0: _HasDType[np.complex128],
-    /,
-    *ai: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer],
+    a0: _HasDType[np.complex128], /, *ai: _HasDType[_nt.inexact64 | _nt.inexact32 | np.float16 | np.integer]
 ) -> type[np.complex128]: ...
 @overload
-def common_type(
-    a0: _HasDType[np.clongdouble],
-    /,
-    *ai: _HasDType[np.number],
-) -> type[np.clongdouble]: ...
+def common_type(a0: _HasDType[np.clongdouble], /, *ai: _HasDType[np.number]) -> type[np.clongdouble]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.float32 | np.float16],
-    array1: _HasDType[np.float32],
-    /,
-    *ai: _HasDType[np.float32 | np.float16],
+    a0: _HasDType[np.float32 | np.float16], array1: _HasDType[np.float32], /, *ai: _HasDType[np.float32 | np.float16]
 ) -> type[np.float32]: ...
 @overload
 def common_type(
@@ -304,49 +271,29 @@ def common_type(
 ) -> type[np.complex128]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.floating | np.integer],
-    /,
-    *ai: _HasDType[np.floating | np.integer],
+    a0: _HasDType[np.floating | np.integer], /, *ai: _HasDType[np.floating | np.integer]
 ) -> type[np.floating]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.number],
-    array1: _HasDType[np.clongdouble],
-    /,
-    *ai: _HasDType[np.number],
+    a0: _HasDType[np.number], array1: _HasDType[np.clongdouble], /, *ai: _HasDType[np.number]
 ) -> type[np.clongdouble]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.longdouble],
-    array1: _HasDType[np.complexfloating],
-    /,
-    *ai: _HasDType[np.number],
+    a0: _HasDType[np.longdouble], array1: _HasDType[np.complexfloating], /, *ai: _HasDType[np.number]
 ) -> type[np.clongdouble]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.complexfloating],
-    array1: _HasDType[np.longdouble],
-    /,
-    *ai: _HasDType[np.number],
+    a0: _HasDType[np.complexfloating], array1: _HasDType[np.longdouble], /, *ai: _HasDType[np.number]
 ) -> type[np.clongdouble]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.complexfloating],
-    array1: _HasDType[np.number],
-    /,
-    *ai: _HasDType[np.number],
+    a0: _HasDType[np.complexfloating], array1: _HasDType[np.number], /, *ai: _HasDType[np.number]
 ) -> type[np.complexfloating]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.number],
-    array1: _HasDType[np.complexfloating],
-    /,
-    *ai: _HasDType[np.number],
+    a0: _HasDType[np.number], array1: _HasDType[np.complexfloating], /, *ai: _HasDType[np.number]
 ) -> type[np.complexfloating]: ...
 @overload
 def common_type(
-    a0: _HasDType[np.number],
-    array1: _HasDType[np.number],
-    /,
-    *ai: _HasDType[np.number],
+    a0: _HasDType[np.number], array1: _HasDType[np.number], /, *ai: _HasDType[np.number]
 ) -> type[np.inexact]: ...

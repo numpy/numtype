@@ -149,13 +149,9 @@ _ToComplex: TypeAlias = complex | _nt.co_complex
 _ToDate: TypeAlias = _ToDT64 | dt.date | str  # accepts strings like "1993-06-29"
 _ToDelta: TypeAlias = np.timedelta64 | dt.timedelta | CanIndex | CanInt | str  # accepts same strings as `builtins.int`
 _ToDateArray = TypeAliasType(
-    "_ToDateArray",
-    _ArrayLike[np.datetime64 | np.integer | np.floating | np.character] | _nt.Sequence1ND[_ToDate],
+    "_ToDateArray", _ArrayLike[np.datetime64 | np.integer | np.floating | np.character] | _nt.Sequence1ND[_ToDate]
 )
-_ToDeltaArray = TypeAliasType(
-    "_ToDeltaArray",
-    _ArrayLike[np.timedelta64 | np.integer] | _nt.Sequence1ND[_ToDelta],
-)
+_ToDeltaArray = TypeAliasType("_ToDeltaArray", _ArrayLike[np.timedelta64 | np.integer] | _nt.Sequence1ND[_ToDelta])
 
 _ToFile: TypeAlias = StrOrBytesPath | _CanSeekTellFileNo
 
@@ -485,173 +481,101 @@ def get_handler_version(a: _nt.Array = ..., /) -> int | None: ...
 # NOTE: Keep in sync with `zeros` and `.numeric.ones`
 @overload  # 1d shape, default dtype (float64)
 def empty(
-    shape: _ShapeLike1D,
-    dtype: _nt.ToDTypeFloat64 = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike1D, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[np.float64]: ...
 @overload  # 1d shape, known dtype
 def empty(
-    shape: _ShapeLike1D,
-    dtype: _DTypeT | _HasDType[_DTypeT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike1D, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> np.ndarray[_nt.Rank1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def empty(
-    shape: _ShapeLike1D,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike1D, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[_ScalarT]: ...
 @overload  # 1d shape, unknown dtype
 def empty(
-    shape: _ShapeLike1D,
-    dtype: npt.DTypeLike = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike1D, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[Incomplete]: ...
 @overload  # known shape, default dtype (float64)
 def empty(
-    shape: _AnyShapeT,
-    dtype: _nt.ToDTypeFloat64 = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _AnyShapeT, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[np.float64, _AnyShapeT]: ...
 @overload  # known shape, known dtype  (mypy reports a false positive)
 def empty(  # type: ignore[overload-overlap]
-    shape: _AnyShapeT,
-    dtype: _DTypeT | _HasDType[_DTypeT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _AnyShapeT, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
 @overload  # known shape, known scalar-type
 def empty(
-    shape: _AnyShapeT,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _AnyShapeT, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[_ScalarT, _AnyShapeT]: ...
 @overload  # known shape, unknown scalar-type
 def empty(
-    shape: _AnyShapeT,
-    dtype: npt.DTypeLike = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _AnyShapeT, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # unknown shape, default dtype
 def empty(
-    shape: _ShapeLike,
-    dtype: _nt.ToDTypeFloat64 = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, known dtype
 def empty(
-    shape: _ShapeLike,
-    dtype: _DTypeT | _HasDType[_DTypeT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> np.ndarray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def empty(
-    shape: _ShapeLike,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, unknown dtype
 def empty(
-    shape: _ShapeLike,
-    dtype: npt.DTypeLike = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[Incomplete]: ...
 
 # NOTE: Keep in sync with `empty` (below) and `numpy._core.numeric.ones`
 @overload  # 1d shape, default dtype (float64)
 def zeros(
-    shape: _ShapeLike1D,
-    dtype: _nt.ToDTypeFloat64 = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike1D, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[np.float64]: ...
 @overload  # 1d shape, known dtype
 def zeros(
-    shape: _ShapeLike1D,
-    dtype: _DTypeT | _HasDType[_DTypeT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike1D, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> np.ndarray[_nt.Rank1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def zeros(
-    shape: _ShapeLike1D,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike1D, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[_ScalarT]: ...
 @overload  # 1d shape, unknown dtype
 def zeros(
-    shape: _ShapeLike1D,
-    dtype: npt.DTypeLike = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike1D, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array1D[Incomplete]: ...
 @overload  # known shape, default dtype (float64)
 def zeros(
-    shape: _AnyShapeT,
-    dtype: _nt.ToDTypeFloat64 = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _AnyShapeT, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[np.float64, _AnyShapeT]: ...
 @overload  # known shape, known dtype  (mypy reports a false positive)
 def zeros(  # type: ignore[overload-overlap]
-    shape: _AnyShapeT,
-    dtype: _DTypeT | _HasDType[_DTypeT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _AnyShapeT, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
 @overload  # known shape, known scalar-type
 def zeros(
-    shape: _AnyShapeT,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _AnyShapeT, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[_ScalarT, _AnyShapeT]: ...
 @overload  # known shape, unknown scalar-type
 def zeros(
-    shape: _AnyShapeT,
-    dtype: npt.DTypeLike = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _AnyShapeT, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # unknown shape, default dtype
 def zeros(
-    shape: _ShapeLike,
-    dtype: _nt.ToDTypeFloat64 = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, known dtype
 def zeros(
-    shape: _ShapeLike,
-    dtype: _DTypeT | _HasDType[_DTypeT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> np.ndarray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def zeros(
-    shape: _ShapeLike,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, unknown dtype
 def zeros(
-    shape: _ShapeLike,
-    dtype: npt.DTypeLike = ...,
-    order: _OrderCF = "C",
-    **kwargs: Unpack[_KwargsDL],
+    shape: _ShapeLike, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
 ) -> _nt.Array[Incomplete]: ...
 
 # NOTE: Keep in sync with `.numeric.{zeros,ones}_like` (all 30 overloads...)
@@ -1058,75 +982,43 @@ def asarray(
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
 @overload
 def asarray(
-    a: _ArrayLike[_ScalarT],
-    dtype: None = None,
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: _ArrayLike[_ScalarT], dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def asarray(  # type: ignore[overload-overlap]
-    a: _ScalarLike_co,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: _ScalarLike_co, dtype: _DTypeLike[_ScalarT], order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array0D[_ScalarT]: ...
 @overload
 def asarray(  # type: ignore[overload-overlap]
-    a: _ScalarLike_co,
-    dtype: npt.DTypeLike | None = None,
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: _ScalarLike_co, dtype: npt.DTypeLike | None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array0D[Incomplete]: ...
 @overload
 def asarray(
-    a: object,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: object, dtype: _DTypeLike[_ScalarT], order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def asarray(
-    a: object,
-    dtype: npt.DTypeLike | None = None,
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: object, dtype: npt.DTypeLike | None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array[Incomplete]: ...
 
 #
 @overload
+def asanyarray(a: _ArrayT, dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]) -> _ArrayT: ...
+@overload
 def asanyarray(
-    a: _ArrayT,
-    dtype: None = None,
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: _CanArray[_ArrayT], dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _ArrayT: ...
 @overload
 def asanyarray(
-    a: _CanArray[_ArrayT],
-    dtype: None = None,
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
-) -> _ArrayT: ...
-@overload
-def asanyarray(
-    a: _ArrayLike[_ScalarT],
-    dtype: None = None,
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: _ArrayLike[_ScalarT], dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def asanyarray(
-    a: object,
-    dtype: _DTypeLike[_ScalarT],
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: object, dtype: _DTypeLike[_ScalarT], order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def asanyarray(
-    a: object,
-    dtype: npt.DTypeLike | None = None,
-    order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    a: object, dtype: npt.DTypeLike | None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array[Incomplete]: ...
 
 # keep in sync with asfortranarray
@@ -1189,12 +1081,7 @@ def fromstring(
 #
 @overload
 def fromfile(
-    file: _ToFile,
-    *,
-    count: CanIndex = -1,
-    sep: str = "",
-    offset: CanIndex = 0,
-    **kwargs: Unpack[_KwargsL],
+    file: _ToFile, *, count: CanIndex = -1, sep: str = "", offset: CanIndex = 0, **kwargs: Unpack[_KwargsL]
 ) -> _nt.Array[np.float64]: ...
 @overload
 def fromfile(
@@ -1423,9 +1310,7 @@ def putmask(a: _nt.Array, /, mask: _nt.ToBool_nd, values: npt.ArrayLike) -> None
 def unravel_index(indices: _ToInt, shape: _ShapeLike, order: _OrderCF = "C") -> tuple[np.intp, ...]: ...
 @overload
 def unravel_index(
-    indices: _nt.ToInteger_1nd,
-    shape: _ShapeLike,
-    order: _OrderCF = "C",
+    indices: _nt.ToInteger_1nd, shape: _ShapeLike, order: _OrderCF = "C"
 ) -> tuple[_nt.Array[np.intp], ...]: ...
 
 #
@@ -1551,10 +1436,7 @@ def interp_complex(
 #
 def count_nonzero(a: object, /) -> int: ...
 def bincount(
-    x: _nt.CoInteger_nd,
-    /,
-    weights: _nt.CoFloating_nd | None = None,
-    minlength: CanIndex = 0,
+    x: _nt.CoInteger_nd, /, weights: _nt.CoFloating_nd | None = None, minlength: CanIndex = 0
 ) -> _nt.Array[np.intp]: ...
 
 #

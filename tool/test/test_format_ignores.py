@@ -88,31 +88,25 @@ def test_process_directory(tmpdir: pytest.TempdirFactory) -> None:
     ]
 
     test_files[0].write_text(
-        "# type: ignore[attr-defined, no-any-return]",
-        encoding="utf-8",
+        "# type: ignore[attr-defined, no-any-return]", encoding="utf-8"
     )
     test_files[1].write_text(
-        "# type: ignore[attr-defined, no-any-return]",
-        encoding="utf-8",
+        "# type: ignore[attr-defined, no-any-return]", encoding="utf-8"
     )
     test_files[2].write_text(
         "# " + "pyright: ignore[reportUnknownVariableType,reportUnknownMemberType]",
         encoding="utf-8",
     )
     test_files[3].write_text(
-        "# type: ignore[no-any-return, attr-defined]",
-        encoding="utf-8",
+        "# type: ignore[no-any-return, attr-defined]", encoding="utf-8"
     )
     test_files[4].write_text(
-        "# type: ignore[no-any-return, attr-defined]",
-        encoding="utf-8",
+        "# type: ignore[no-any-return, attr-defined]", encoding="utf-8"
     )
 
     # Check-only mode
     modified, total = _process_directory(
-        temp_dir,
-        glob_pattern="**/*.pyi",
-        check_only=True,
+        temp_dir, glob_pattern="**/*.pyi", check_only=True
     )
     correct_total = 3
 
@@ -148,14 +142,12 @@ def test_process_directory(tmpdir: pytest.TempdirFactory) -> None:
 
 
 def test_main_success(
-    tmpdir: pytest.TempdirFactory,
-    monkeypatch: pytest.MonkeyPatch,
+    tmpdir: pytest.TempdirFactory, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """Test main function with valid path."""
     test_file = Path(str(tmpdir)) / "test.pyi"
     test_file.write_text(
-        "# type: ignore[no-any-return, attr-defined]",
-        encoding="utf-8",
+        "# type: ignore[no-any-return, attr-defined]", encoding="utf-8"
     )
 
     monkeypatch.setattr(sys, "argv", ["format_ignores.py", str(test_file)])
@@ -170,14 +162,12 @@ def test_main_success(
 
 
 def test_main_check_mode(
-    tmpdir: pytest.TempdirFactory,
-    monkeypatch: pytest.MonkeyPatch,
+    tmpdir: pytest.TempdirFactory, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """Test main function in check-only mode."""
     test_file = Path(str(tmpdir)) / "test.pyi"
     test_file.write_text(
-        "# type: ignore[no-any-return, attr-defined]",
-        encoding="utf-8",
+        "# type: ignore[no-any-return, attr-defined]", encoding="utf-8"
     )
 
     monkeypatch.setattr(sys, "argv", ["format_ignores.py", "--check", str(test_file)])
@@ -201,21 +191,15 @@ def test_main_path_not_found(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 def test_main_custom_pattern(
-    tmpdir: pytest.TempdirFactory,
-    monkeypatch: pytest.MonkeyPatch,
+    tmpdir: pytest.TempdirFactory, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """Test main function with custom pattern."""
     temp_dir = Path(str(tmpdir))
     test_py = temp_dir / "test.py"
-    test_py.write_text(
-        "# type: ignore[attr-defined, no-any-return]",
-        encoding="utf-8",
-    )
+    test_py.write_text("# type: ignore[attr-defined, no-any-return]", encoding="utf-8")
 
     monkeypatch.setattr(
-        sys,
-        "argv",
-        ["format_ignores.py", "--pattern", "**/*.py", str(temp_dir)],
+        sys, "argv", ["format_ignores.py", "--pattern", "**/*.py", str(temp_dir)]
     )
 
     exit_code = main()

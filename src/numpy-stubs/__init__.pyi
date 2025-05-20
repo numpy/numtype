@@ -1762,12 +1762,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __array_finalize__(self, obj: _nt.Array | Any, /) -> None: ...
     def __array_ufunc__(self, ufunc: ufunc, method: _UFuncMethod, /, *inputs: object, **kwargs: object) -> Any: ...
     def __array_function__(
-        self,
-        /,
-        func: Callable[..., Any],
-        types: Iterable[type],
-        args: Iterable[Any],
-        kwargs: Mapping[str, Any],
+        self, /, func: Callable[..., Any], types: Iterable[type], args: Iterable[Any], kwargs: Mapping[str, Any]
     ) -> Any: ...
     def __array_wrap__(
         self,
@@ -1794,17 +1789,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload  # flexible | object_ | bool
     def __setitem__(
-        self: ndarray[Any, dtype[bool_ | object_ | flexible] | dtypes.StringDType],
-        key: _ToIndices,
-        value: object,
-        /,
+        self: ndarray[Any, dtype[bool_ | object_ | flexible] | dtypes.StringDType], key: _ToIndices, value: object, /
     ) -> None: ...
     @overload  # integer
     def __setitem__(
-        self: _nt.Array[integer],
-        key: _ToIndices,
-        value: _nt.SequenceND[_ConvertibleToInt] | _nt.CoInteger_nd,
-        /,
+        self: _nt.Array[integer], key: _ToIndices, value: _nt.SequenceND[_ConvertibleToInt] | _nt.CoInteger_nd, /
     ) -> None: ...
     @overload  # floating
     def __setitem__(
@@ -1822,17 +1811,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> None: ...
     @overload  # timedelta64
     def __setitem__(
-        self: _nt.Array[timedelta64],
-        key: _ToIndices,
-        value: _nt.SequenceND[_ConvertibleToTD64],
-        /,
+        self: _nt.Array[timedelta64], key: _ToIndices, value: _nt.SequenceND[_ConvertibleToTD64], /
     ) -> None: ...
     @overload  # datetime64
     def __setitem__(
-        self: _nt.Array[datetime64],
-        key: _ToIndices,
-        value: _nt.SequenceND[_ConvertibleToDT64],
-        /,
+        self: _nt.Array[datetime64], key: _ToIndices, value: _nt.SequenceND[_ConvertibleToDT64], /
     ) -> None: ...
     @overload  # void
     def __setitem__(self: _nt.Array[void], key: str | list[str], value: object, /) -> None: ...
@@ -2792,13 +2775,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def all(
-        self,
-        /,
-        axis: None = None,
-        out: None = None,
-        keepdims: L[False, 0] = False,
-        *,
-        where: _nt.ToBool_nd = True,
+        self, /, axis: None = None, out: None = None, keepdims: L[False, 0] = False, *, where: _nt.ToBool_nd = True
     ) -> bool_: ...
     @overload
     def all(
@@ -2812,13 +2789,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> bool_ | _nt.Array[bool_]: ...
     @overload
     def all(
-        self,
-        /,
-        axis: _IntOrInts | None,
-        out: _ArrayT,
-        keepdims: CanIndex = False,
-        *,
-        where: _nt.ToBool_nd = True,
+        self, /, axis: _IntOrInts | None, out: _ArrayT, keepdims: CanIndex = False, *, where: _nt.ToBool_nd = True
     ) -> _ArrayT: ...
     @overload
     def all(
@@ -2834,12 +2805,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def any(
-        self,
-        axis: None = None,
-        out: None = None,
-        keepdims: L[False, 0] = False,
-        *,
-        where: _nt.ToBool_nd = True,
+        self, axis: None = None, out: None = None, keepdims: L[False, 0] = False, *, where: _nt.ToBool_nd = True
     ) -> bool_: ...
     @overload
     def any(
@@ -2852,21 +2818,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> bool_ | _nt.Array[bool_]: ...
     @overload
     def any(
-        self,
-        axis: _IntOrInts | None,
-        out: _ArrayT,
-        keepdims: CanIndex = False,
-        *,
-        where: _nt.ToBool_nd = True,
+        self, axis: _IntOrInts | None, out: _ArrayT, keepdims: CanIndex = False, *, where: _nt.ToBool_nd = True
     ) -> _ArrayT: ...
     @overload
     def any(
-        self,
-        axis: _IntOrInts | None = None,
-        *,
-        out: _ArrayT,
-        keepdims: CanIndex = False,
-        where: _nt.ToBool_nd = True,
+        self, axis: _IntOrInts | None = None, *, out: _ArrayT, keepdims: CanIndex = False, where: _nt.ToBool_nd = True
     ) -> _ArrayT: ...
 
     #
@@ -2892,47 +2848,25 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def searchsorted(
-        self,
-        /,
-        v: _ScalarLike_co,
-        side: _SortSide = "left",
-        sorter: _nt.CoInteger_nd | None = None,
+        self, /, v: _ScalarLike_co, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> intp: ...
     @overload
     def searchsorted(
-        self,
-        /,
-        v: ndarray[_ShapeT],
-        side: _SortSide = "left",
-        sorter: _nt.CoInteger_nd | None = None,
+        self, /, v: ndarray[_ShapeT], side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> _nt.Array[intp, _ShapeT]: ...
     @overload
     def searchsorted(
-        self,
-        /,
-        v: _NestedSequence[_ScalarLike_co],
-        side: _SortSide = "left",
-        sorter: _nt.CoInteger_nd | None = None,
+        self, /, v: _NestedSequence[_ScalarLike_co], side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> _nt.Array[intp]: ...
     @overload
     def searchsorted(
-        self,
-        /,
-        v: ArrayLike,
-        side: _SortSide = "left",
-        sorter: _nt.CoInteger_nd | None = None,
+        self, /, v: ArrayLike, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> intp | _nt.Array[intp]: ...
 
     #
     @overload
     def sort(
-        self,
-        /,
-        axis: CanIndex = -1,
-        kind: _SortKind | None = None,
-        order: None = None,
-        *,
-        stable: bool | None = None,
+        self, /, axis: CanIndex = -1, kind: _SortKind | None = None, order: None = None, *, stable: bool | None = None
     ) -> None: ...
     @overload
     def sort(
@@ -2948,23 +2882,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def argsort(
-        self,
-        /,
-        axis: CanIndex = -1,
-        kind: _SortKind | None = None,
-        order: None = None,
-        *,
-        stable: bool | None = None,
+        self, /, axis: CanIndex = -1, kind: _SortKind | None = None, order: None = None, *, stable: bool | None = None
     ) -> _nt.Array[intp, _ShapeT_co]: ...
     @overload
     def argsort(
-        self,
-        /,
-        axis: None,
-        kind: _SortKind | None = None,
-        order: None = None,
-        *,
-        stable: bool | None = None,
+        self, /, axis: None, kind: _SortKind | None = None, order: None = None, *, stable: bool | None = None
     ) -> _nt.Array1D[intp]: ...
     @overload
     def argsort(
@@ -2990,12 +2912,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def partition(
-        self,
-        /,
-        kth: _nt.CoInteger_nd,
-        axis: CanIndex = -1,
-        kind: _PartitionKind = "introselect",
-        order: None = None,
+        self, /, kth: _nt.CoInteger_nd, axis: CanIndex = -1, kind: _PartitionKind = "introselect", order: None = None
     ) -> None: ...
     @overload
     def partition(
@@ -3041,13 +2958,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> _ScalarT: ...
     @overload  # ?d, out: T, /
     def trace(
-        self,
-        /,
-        offset: CanIndex,
-        axis1: CanIndex,
-        axis2: CanIndex,
-        dtype: DTypeLike | None,
-        out: _ArrayT,
+        self, /, offset: CanIndex, axis1: CanIndex, axis2: CanIndex, dtype: DTypeLike | None, out: _ArrayT
     ) -> _ArrayT: ...
     @overload  # ?d, *, out: T
     def trace(
@@ -3083,31 +2994,15 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> _ScalarT: ...
     @overload
     def take(
-        self,
-        /,
-        indices: _nt.CoInteger_nd,
-        axis: CanIndex | None = None,
-        out: None = None,
-        mode: _ModeKind = "raise",
+        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
     ) -> ndarray[_nt.Shape, _DTypeT_co]: ...
     @overload
     def take(
-        self,
-        /,
-        indices: _nt.CoInteger_nd,
-        axis: CanIndex | None,
-        out: _ArrayT,
-        mode: _ModeKind = "raise",
+        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
     @overload
     def take(
-        self,
-        /,
-        indices: _nt.CoInteger_nd,
-        axis: CanIndex | None = None,
-        *,
-        out: _ArrayT,
-        mode: _ModeKind = "raise",
+        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
 
     #
@@ -3127,49 +3022,23 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def reshape(self, shape: None, /, *, order: _OrderACF = "C", copy: py_bool | None = None) -> Self: ...
     @overload  # (empty_sequence)
     def reshape(  # type: ignore[overload-overlap]  # mypy false positive
-        self,
-        shape: Sequence[Never] | _nt.Shape0,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, shape: Sequence[Never] | _nt.Shape0, /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> ndarray[_nt.Rank0, _DTypeT_co]: ...
     @overload  # (index)
     def reshape(
-        self,
-        size1: CanIndex | _nt.Shape1,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, size1: CanIndex | _nt.Shape1, /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> ndarray[_nt.Rank1, _DTypeT_co]: ...
     @overload  # (index, index)
     def reshape(
-        self,
-        size1: _nt.Shape2,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, size1: _nt.Shape2, /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> ndarray[_nt.Rank2, _DTypeT_co]: ...
     @overload  # (index, index)
     def reshape(
-        self,
-        size1: CanIndex,
-        size2: CanIndex,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, size1: CanIndex, size2: CanIndex, /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> ndarray[_nt.Rank2, _DTypeT_co]: ...
     @overload  # (index, index, index)
     def reshape(
-        self,
-        size1: _nt.Shape3,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, size1: _nt.Shape3, /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> ndarray[_nt.Rank3, _DTypeT_co]: ...
     @overload  # (index, index, index)
     def reshape(
@@ -3184,12 +3053,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> ndarray[_nt.Rank3, _DTypeT_co]: ...
     @overload  # (index, index, index, index)
     def reshape(
-        self,
-        size1: _nt.Shape4,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, size1: _nt.Shape4, /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> ndarray[_nt.Rank4, _DTypeT_co]: ...
     @overload  # (index, index, index, index)
     def reshape(
@@ -3205,21 +3069,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> ndarray[_nt.Rank4, _DTypeT_co]: ...
     @overload  # (int, *(index, ...))
     def reshape(
-        self,
-        size0: CanIndex,
-        /,
-        *shape: CanIndex,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, size0: CanIndex, /, *shape: CanIndex, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> ndarray[Incomplete, _DTypeT_co]: ...
     @overload  # (sequence[index])
     def reshape(
-        self,
-        shape: Sequence[CanIndex],
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, shape: Sequence[CanIndex], /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> ndarray[Incomplete, _DTypeT_co]: ...
 
     #
@@ -3476,12 +3330,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     #
     @overload
     def take(
-        self,
-        /,
-        indices: _nt.CoInteger_0d,
-        axis: CanIndex | None = None,
-        out: None = None,
-        mode: _ModeKind = "raise",
+        self, /, indices: _nt.CoInteger_0d, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
     ) -> Self: ...
     @overload
     def take(
@@ -3494,22 +3343,11 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     ) -> _nt.Array[Self]: ...
     @overload
     def take(
-        self,
-        /,
-        indices: _nt.CoInteger_nd,
-        axis: CanIndex | None,
-        out: _ArrayT,
-        mode: _ModeKind = "raise",
+        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
     @overload
     def take(
-        self,
-        /,
-        indices: _nt.CoInteger_nd,
-        axis: CanIndex | None = None,
-        *,
-        out: _ArrayT,
-        mode: _ModeKind = "raise",
+        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
 
     #
@@ -3524,40 +3362,19 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     #
     @overload  # (() | [])
     def reshape(
-        self,
-        shape: tuple[()] | list[Never],
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, shape: tuple[()] | list[Never], /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> Self: ...
     @overload  # (Sequence[index, ...])  # not recommended
     def reshape(
-        self,
-        shape: Sequence[CanIndex],
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, shape: Sequence[CanIndex], /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> Self | _nt.Array[Self]: ...
     @overload  # _(index)
     def reshape(
-        self,
-        size1: CanIndex,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, size1: CanIndex, /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> _nt.Array1D[Self]: ...
     @overload  # _(index, index)
     def reshape(
-        self,
-        size1: CanIndex,
-        size2: CanIndex,
-        /,
-        *,
-        order: _OrderACF = "C",
-        copy: py_bool | None = None,
+        self, size1: CanIndex, size2: CanIndex, /, *, order: _OrderACF = "C", copy: py_bool | None = None
     ) -> _nt.Array2D[Self]: ...
     @overload  # _(index, index, index)
     def reshape(
@@ -4247,10 +4064,7 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
 class integer(_IntegralMixin, _RoundMixin, number[int]):
     @type_check_only
     def __nep50__(
-        self,
-        below: timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
-        above: bool_,
-        /,
+        self, below: timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: bool_, /
     ) -> integer: ...
     @final
     @override
@@ -4389,10 +4203,7 @@ class signedinteger(integer):
     @type_check_only
     @override
     def __nep50__(
-        self,
-        below: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
-        above: bool_,
-        /,
+        self, below: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: bool_, /
     ) -> signedinteger: ...
     @type_check_only
     def __nep50_rule0__(self, other: uint32, /) -> int64: ...
@@ -4417,10 +4228,7 @@ class int8(_IntMixin[L[1]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self,
-        below: signedinteger | timedelta64 | inexact | _JustFloating | _JustInexact,
-        above: bool_,
-        /,
+        self, below: signedinteger | timedelta64 | inexact | _JustFloating | _JustInexact, above: bool_, /
     ) -> int8: ...
     @type_check_only
     def __nep50_rule2__(self, other: uint8, /) -> int16: ...
@@ -4475,10 +4283,7 @@ class int32(_IntMixin[L[4]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self,
-        below: _I32_min | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
-        above: _nt.co_integer16,
-        /,
+        self, below: _I32_min | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: _nt.co_integer16, /
     ) -> int32: ...
     @override
     @type_check_only
@@ -4507,10 +4312,7 @@ class int64(_IntMixin[L[8]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self,
-        below: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
-        above: _nt.co_integer32,
-        /,
+        self, below: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: _nt.co_integer32, /
     ) -> int64: ...
     @override
     @type_check_only
@@ -4545,10 +4347,7 @@ class unsignedinteger(integer):
     @type_check_only
     @override
     def __nep50__(
-        self,
-        below: uint64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact,
-        above: bool_,
-        /,
+        self, below: uint64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: bool_, /
     ) -> unsignedinteger: ...
     @type_check_only
     def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
@@ -4565,10 +4364,7 @@ class uint8(_IntMixin[L[1]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self,
-        below: _I16_min | unsignedinteger | timedelta64 | _JustFloating | inexact | _JustInexact,
-        above: bool_,
-        /,
+        self, below: _I16_min | unsignedinteger | timedelta64 | _JustFloating | inexact | _JustInexact, above: bool_, /
     ) -> uint8: ...
     @type_check_only
     def __nep50_rule0__(self, other: int8, /) -> int16: ...
@@ -4633,10 +4429,7 @@ class uint32(_IntMixin[L[4]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self,
-        below: uint32 | _nt.integer64 | timedelta64 | _Inexact64_min | _AbstractInexact,
-        above: _nt.co_uint16,
-        /,
+        self, below: uint32 | _nt.integer64 | timedelta64 | _Inexact64_min | _AbstractInexact, above: _nt.co_uint16, /
     ) -> uint32: ...
     @type_check_only
     def __nep50_rule1__(self, other: float16 | float32, /) -> float64: ...
@@ -4668,10 +4461,7 @@ class uint64(_IntMixin[L[8]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self,
-        below: uint64 | timedelta64 | _Inexact64_min | _AbstractInexact,
-        above: _nt.co_uint32,
-        /,
+        self, below: uint64 | timedelta64 | _Inexact64_min | _AbstractInexact, above: _nt.co_uint32, /
     ) -> uint64: ...
     @type_check_only
     def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
@@ -5219,10 +5009,7 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
     def dtype(self) -> dtypes.VoidDType: ...
 
 class datetime64(
-    _RealMixin,
-    _CmpOpMixin[datetime64, _ArrayLikeDT64_co],
-    generic[_DT64ItemT_co],
-    Generic[_DT64ItemT_co],
+    _RealMixin, _CmpOpMixin[datetime64, _ArrayLikeDT64_co], generic[_DT64ItemT_co], Generic[_DT64ItemT_co]
 ):
     @property
     @override
@@ -5338,10 +5125,7 @@ class datetime64(
     def __rsub__(self: datetime64[dt.date], x: dt.date, /) -> dt.timedelta: ...
 
 class timedelta64(
-    _CmpOpMixin[_nt.CoTimeDelta_0d, _nt.CoTimeDelta_1nd],
-    _IntegralMixin,
-    generic[_TD64ItemT_co],
-    Generic[_TD64ItemT_co],
+    _CmpOpMixin[_nt.CoTimeDelta_0d, _nt.CoTimeDelta_1nd], _IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
 ):
     @type_check_only
     def __nep50__(self, below: timedelta64, above: _nt.co_integer, /) -> timedelta64: ...

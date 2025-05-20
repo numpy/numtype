@@ -32,30 +32,14 @@ def decorate(a: _FT) -> _FT: ...
 assert_type(np.testing.KnownFailureException(), np.testing.KnownFailureException)
 assert_type(np.testing.IgnoreException(), np.testing.IgnoreException)
 
+assert_type(np.testing.clear_and_catch_warnings(modules=[np.testing]), np.testing.clear_and_catch_warnings[None])
 assert_type(
-    np.testing.clear_and_catch_warnings(modules=[np.testing]),
-    np.testing.clear_and_catch_warnings[None],
+    np.testing.clear_and_catch_warnings(True), np.testing.clear_and_catch_warnings[list[warnings.WarningMessage]]
 )
-assert_type(
-    np.testing.clear_and_catch_warnings(True),
-    np.testing.clear_and_catch_warnings[list[warnings.WarningMessage]],
-)
-assert_type(
-    np.testing.clear_and_catch_warnings(False),
-    np.testing.clear_and_catch_warnings[None],
-)
-assert_type(
-    np.testing.clear_and_catch_warnings(bool_obj),
-    np.testing.clear_and_catch_warnings,
-)
-assert_type(
-    np.testing.clear_and_catch_warnings.class_modules,
-    tuple[types.ModuleType, ...],
-)
-assert_type(
-    np.testing.clear_and_catch_warnings.modules,
-    set[types.ModuleType],
-)
+assert_type(np.testing.clear_and_catch_warnings(False), np.testing.clear_and_catch_warnings[None])
+assert_type(np.testing.clear_and_catch_warnings(bool_obj), np.testing.clear_and_catch_warnings)
+assert_type(np.testing.clear_and_catch_warnings.class_modules, tuple[types.ModuleType, ...])
+assert_type(np.testing.clear_and_catch_warnings.modules, set[types.ModuleType])
 
 with np.testing.clear_and_catch_warnings(True) as c1:
     assert_type(c1, list[warnings.WarningMessage])
@@ -130,16 +114,10 @@ assert_type(np.testing.rundocs(), None)
 assert_type(np.testing.rundocs("test.py"), None)
 assert_type(np.testing.rundocs(Path("test.py"), raise_on_error=True), None)
 
-assert_type(
-    np.testing.assert_raises(RuntimeWarning),
-    unittest.case._AssertRaisesContext[RuntimeWarning],
-)
+assert_type(np.testing.assert_raises(RuntimeWarning), unittest.case._AssertRaisesContext[RuntimeWarning])
 assert_type(np.testing.assert_raises(RuntimeWarning, func3, 5), None)
 
-assert_type(
-    np.testing.assert_raises_regex(RuntimeWarning, r"test"),
-    unittest.case._AssertRaisesContext[RuntimeWarning],
-)
+assert_type(np.testing.assert_raises_regex(RuntimeWarning, r"test"), unittest.case._AssertRaisesContext[RuntimeWarning])
 assert_type(np.testing.assert_raises_regex(RuntimeWarning, b"test", func3, 5), None)
 assert_type(np.testing.assert_raises_regex(RuntimeWarning, re.compile(rb"test"), func3, 5), None)
 

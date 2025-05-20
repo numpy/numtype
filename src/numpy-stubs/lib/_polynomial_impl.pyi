@@ -42,11 +42,7 @@ _ScalarT_co = TypeVar("_ScalarT_co", bound=_nt.co_complex | np.object_, default=
 _ToInt: TypeAlias = SupportsInt | SupportsIndex
 _Tuple2: TypeAlias = tuple[_T, _T]
 _Tuple_didd: TypeAlias = tuple[
-    _T,
-    _nt.Array[np.float64],
-    _nt.Array[np.int32],
-    _nt.Array[np.float64],
-    _nt.Array[np.float64],
+    _T, _nt.Array[np.float64], _nt.Array[np.int32], _nt.Array[np.float64], _nt.Array[np.float64]
 ]
 
 ###
@@ -231,13 +227,11 @@ def polyder(p: poly1d, m: _ToInt = 1) -> poly1d: ...
 def polyder(p: _nt.CoInteger_1d, m: _ToInt = 1) -> _nt.Array1D[np.intp]: ...
 @overload
 def polyder(
-    p: _nt._ToArray2_1d[np.float64 | np.float32 | np.float16, _nt.JustFloat],
-    m: _ToInt = 1,
+    p: _nt._ToArray2_1d[np.float64 | np.float32 | np.float16, _nt.JustFloat], m: _ToInt = 1
 ) -> _nt.Array1D[np.float64]: ...
 @overload
 def polyder(
-    p: _nt._ToArray2_1d[np.complex128 | np.complex64, _nt.JustComplex],
-    m: _ToInt = 1,
+    p: _nt._ToArray2_1d[np.complex128 | np.complex64, _nt.JustComplex], m: _ToInt = 1
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def polyder(p: _nt.ToLongDouble_1d, m: _ToInt = 1) -> _nt.Array1D[np.longdouble]: ...
@@ -253,15 +247,11 @@ def polyder(p: _nt.CoComplex128_1d, m: _ToInt = 1) -> _nt.Array1D[np.complex128 
 def polyint(p: poly1d, m: _ToInt = 1, k: _nt.CoComplex_nd | _nt.ToObject_nd | None = None) -> poly1d: ...
 @overload
 def polyint(
-    p: _nt.CoFloat64_1d,
-    m: _ToInt = 1,
-    k: _nt.CoFloat64_0d | _nt.CoFloat64_1d | None = None,
+    p: _nt.CoFloat64_1d, m: _ToInt = 1, k: _nt.CoFloat64_0d | _nt.CoFloat64_1d | None = None
 ) -> _nt.Array1D[np.float64]: ...
 @overload
 def polyint(
-    p: _nt.ToLongDouble_1d,
-    m: _ToInt = 1,
-    k: _nt.CoFloating_0d | _nt.CoFloating_1d | None = None,
+    p: _nt.ToLongDouble_1d, m: _ToInt = 1, k: _nt.CoFloating_0d | _nt.CoFloating_1d | None = None
 ) -> _nt.Array1D[np.longdouble]: ...
 @overload
 def polyint(
@@ -284,15 +274,11 @@ def polyint(
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def polyint(
-    p: _nt.ToCLongDouble_1d,
-    m: _ToInt = 1,
-    k: _nt.CoComplex_0d | _nt.CoComplex_1d | None = None,
+    p: _nt.ToCLongDouble_1d, m: _ToInt = 1, k: _nt.CoComplex_0d | _nt.CoComplex_1d | None = None
 ) -> _nt.Array1D[np.clongdouble]: ...
 @overload
 def polyint(
-    p: _nt.ToObject_1d,
-    m: _ToInt = 1,
-    k: _nt.CoComplex_0d | _nt.CoComplex_1d | _nt.ToObject_1d | None = None,
+    p: _nt.ToObject_1d, m: _ToInt = 1, k: _nt.CoComplex_0d | _nt.CoComplex_1d | _nt.ToObject_1d | None = None
 ) -> _nt.Array1D[np.object_]: ...
 
 #

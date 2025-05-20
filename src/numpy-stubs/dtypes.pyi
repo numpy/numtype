@@ -326,10 +326,7 @@ class Float64DType(_64Bit, _Native, _Codes[L["f"], L["d"], L[12]], _DefaultDType
 
 @final
 class LongDoubleDType(  # type: ignore[misc]
-    _NBit[L[12, 16], L[12, 16]],
-    _Native,
-    _Codes[L["f"], L["g"], L[13]],
-    _DefaultDType[np.longdouble],
+    _NBit[L[12, 16], L[12, 16]], _Native, _Codes[L["f"], L["g"], L[13]], _DefaultDType[np.longdouble]
 ):
     @property
     @override
@@ -342,10 +339,7 @@ class LongDoubleDType(  # type: ignore[misc]
 
 @final
 class Complex64DType(  # type: ignore[misc]
-    _NBit[L[4], L[8]],
-    _Native,
-    _Codes[L["c"], L["F"], L[14]],
-    _DefaultDType[np.complex64],
+    _NBit[L[4], L[8]], _Native, _Codes[L["c"], L["F"], L[14]], _DefaultDType[np.complex64]
 ):
     @property
     @override
@@ -356,10 +350,7 @@ class Complex64DType(  # type: ignore[misc]
 
 @final
 class Complex128DType(  # type: ignore[misc]
-    _NBit[L[8], L[16]],
-    _Native,
-    _Codes[L["c"], L["D"], L[15]],
-    _DefaultDType[np.complex128],
+    _NBit[L[8], L[16]], _Native, _Codes[L["c"], L["D"], L[15]], _DefaultDType[np.complex128]
 ):
     @property
     @override
@@ -370,10 +361,7 @@ class Complex128DType(  # type: ignore[misc]
 
 @final
 class CLongDoubleDType(  # type: ignore[misc]
-    _NBit[L[12, 16], L[24, 32]],
-    _Native,
-    _Codes[L["c"], L["G"], L[16]],
-    _DefaultDType[np.clongdouble],
+    _NBit[L[12, 16], L[24, 32]], _Native, _Codes[L["c"], L["G"], L[16]], _DefaultDType[np.clongdouble]
 ):
     @property
     @override
@@ -400,11 +388,7 @@ class ObjectDType(_64Bit, _NoOrder, _Codes[L["O"], L["O"], L[17]], _SimpleDType[
 
 @final
 class BytesDType(  # type: ignore[misc]
-    _NBit[L[1], _ItemSize_co],
-    _NoOrder,
-    _Codes[L["S"], L["S"], L[18]],
-    _SimpleDType[np.bytes_],
-    Generic[_ItemSize_co],
+    _NBit[L[1], _ItemSize_co], _NoOrder, _Codes[L["S"], L["S"], L[18]], _SimpleDType[np.bytes_], Generic[_ItemSize_co]
 ):
     def __new__(cls, size: _ItemSize_co, /) -> BytesDType[_ItemSize_co]: ...
     @property
@@ -419,11 +403,7 @@ class BytesDType(  # type: ignore[misc]
 
 @final
 class StrDType(  # type: ignore[misc]
-    _NBit[L[4], _ItemSize_co],
-    _Native,
-    _Codes[L["U"], L["U"], L[19]],
-    _SimpleDType[np.str_],
-    Generic[_ItemSize_co],
+    _NBit[L[4], _ItemSize_co], _Native, _Codes[L["U"], L["U"], L[19]], _SimpleDType[np.str_], Generic[_ItemSize_co]
 ):
     def __new__(cls, size: _ItemSize_co, /) -> StrDType[_ItemSize_co]: ...
     @property

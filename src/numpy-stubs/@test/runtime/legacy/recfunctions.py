@@ -13,8 +13,7 @@ if TYPE_CHECKING:
 
 def test_recursive_fill_fields() -> None:
     a: _nt.Array[np.void] = np.array(
-        [(1, 10.0), (2, 20.0)],
-        dtype=[("A", np.int64), ("B", np.float64)],
+        [(1, 10.0), (2, 20.0)], dtype=[("A", np.int64), ("B", np.float64)]
     )
     b = np.zeros((3,), dtype=a.dtype)
     out = rfn.recursive_fill_fields(a, b)
@@ -56,10 +55,7 @@ def test_get_fieldstructure() -> None:
 
 def test_merge_arrays() -> None:
     assert_type(
-        rfn.merge_arrays((
-            np.ones(((2),), np.int_),
-            np.ones(((3),), np.float64),
-        )),
+        rfn.merge_arrays((np.ones(((2),), np.int_), np.ones(((3),), np.float64))),
         "np.recarray[_nt.Rank1, np.dtype[np.void]]",
     )
 
@@ -74,8 +70,7 @@ def test_drop_fields() -> None:
         "np.rec.recarray[_nt.Rank1, np.dtype[np.void]]",
     )
     assert_type(
-        rfn.rec_drop_fields(a, "a"),
-        "np.rec.recarray[_nt.Rank1, np.dtype[np.void]]",
+        rfn.rec_drop_fields(a, "a"), "np.rec.recarray[_nt.Rank1, np.dtype[np.void]]"
     )
 
 
@@ -83,10 +78,7 @@ def test_rename_fields() -> None:
     ndtype = [("a", np.int64), ("b", [("b_a", np.double), ("b_b", np.int64)])]
     a = np.ones(((3),), dtype=ndtype)
 
-    assert_type(
-        rfn.rename_fields(a, {"a": "A", "b_b": "B_B"}),
-        "_nt.Array1D[np.void]",
-    )
+    assert_type(rfn.rename_fields(a, {"a": "A", "b_b": "B_B"}), "_nt.Array1D[np.void]")
 
 
 def test_repack_fields() -> None:
@@ -94,10 +86,7 @@ def test_repack_fields() -> None:
 
     assert_type(rfn.repack_fields(dt), np.dtype[np.void])
     assert_type(rfn.repack_fields(dt.type(0)), np.void)
-    assert_type(
-        rfn.repack_fields(np.ones((3,), dtype=dt)),
-        "_nt.Array1D[np.void]",
-    )
+    assert_type(rfn.repack_fields(np.ones((3,), dtype=dt)), "_nt.Array1D[np.void]")
 
 
 def test_structured_to_unstructured() -> None:
@@ -124,8 +113,7 @@ def test_assign_fields_by_name() -> None:
 def test_require_fields() -> None:
     a = np.ones(4, dtype=[("a", "i4"), ("b", "f8"), ("c", "u1")])
     assert_type(
-        rfn.require_fields(a, [("b", "f4"), ("c", "u1")]),
-        "_nt.Array1D[np.void]",
+        rfn.require_fields(a, [("b", "f4"), ("c", "u1")]), "_nt.Array1D[np.void]"
     )
 
 

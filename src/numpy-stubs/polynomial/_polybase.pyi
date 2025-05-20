@@ -116,46 +116,26 @@ class ABCPolyBase(abc.ABC):
     #
     @overload
     def convert(
-        self,
-        /,
-        domain: _nt.CoComplex_1d | None = None,
-        kind: None = None,
-        window: _nt.CoComplex_1d | None = None,
+        self, /, domain: _nt.CoComplex_1d | None = None, kind: None = None, window: _nt.CoComplex_1d | None = None
     ) -> Self: ...
     @overload
     def convert(
-        self,
-        /,
-        domain: _nt.CoComplex_1d | None,
-        kind: type[_PolyT],
-        window: _nt.CoComplex_1d | None = None,
+        self, /, domain: _nt.CoComplex_1d | None, kind: type[_PolyT], window: _nt.CoComplex_1d | None = None
     ) -> _PolyT: ...
     @overload
     def convert(
-        self,
-        /,
-        domain: _nt.CoComplex_1d | None = None,
-        *,
-        kind: type[_PolyT],
-        window: _nt.CoComplex_1d | None = None,
+        self, /, domain: _nt.CoComplex_1d | None = None, *, kind: type[_PolyT], window: _nt.CoComplex_1d | None = None
     ) -> _PolyT: ...
 
     #
     def mapparms(self, /) -> tuple[Any, Any]: ...
     def integ(
-        self,
-        /,
-        m: SupportsIndex = 1,
-        k: _ToNumeric_0d | _nt.CoComplex_1d = [],
-        lbnd: _ToNumeric_0d | None = None,
+        self, /, m: SupportsIndex = 1, k: _ToNumeric_0d | _nt.CoComplex_1d = [], lbnd: _ToNumeric_0d | None = None
     ) -> Self: ...
     def deriv(self, /, m: SupportsIndex = 1) -> Self: ...
     def roots(self, /) -> _nt.Array1D[_nt.inexact64]: ...
     def linspace(
-        self,
-        /,
-        n: SupportsIndex = 100,
-        domain: _nt.CoComplex_1d | None = None,
+        self, /, n: SupportsIndex = 100, domain: _nt.CoComplex_1d | None = None
     ) -> _Tuple2[_nt.Array1D[_nt.inexact64]]: ...
 
     #
@@ -214,10 +194,7 @@ class ABCPolyBase(abc.ABC):
     ) -> Self: ...
     @classmethod
     def identity(
-        cls,
-        domain: _nt.CoComplex_1d | None = None,
-        window: _nt.CoComplex_1d | None = None,
-        symbol: str = "x",
+        cls, domain: _nt.CoComplex_1d | None = None, window: _nt.CoComplex_1d | None = None, symbol: str = "x"
     ) -> Self: ...
     @classmethod
     def basis(
@@ -229,10 +206,7 @@ class ABCPolyBase(abc.ABC):
     ) -> Self: ...
     @classmethod
     def cast(
-        cls,
-        series: ABCPolyBase,
-        domain: _nt.CoComplex_1d | None = None,
-        window: _nt.CoComplex_1d | None = None,
+        cls, series: ABCPolyBase, domain: _nt.CoComplex_1d | None = None, window: _nt.CoComplex_1d | None = None
     ) -> Self: ...
 
     #

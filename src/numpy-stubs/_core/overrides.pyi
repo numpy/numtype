@@ -24,8 +24,7 @@ def finalize_array_function_like(public_api: _FuncT) -> _FuncT: ...
 
 #
 def verify_matching_signatures(
-    implementation: Callable[_Tss, object],
-    dispatcher: Callable[_Tss, Iterable[_SupportsArrayFunc]],
+    implementation: Callable[_Tss, object], dispatcher: Callable[_Tss, Iterable[_SupportsArrayFunc]]
 ) -> None: ...
 
 # NOTE: This actually returns a `_ArrayFunctionDispatcher` callable wrapper object, with

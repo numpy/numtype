@@ -1,16 +1,6 @@
 import re
 from collections.abc import Callable
-from typing import (
-    Any,
-    ClassVar,
-    Final,
-    Generic,
-    Literal as L,
-    NamedTuple,
-    TypeVar,
-    final,
-    type_check_only,
-)
+from typing import Any, ClassVar, Final, Generic, Literal as L, NamedTuple, TypeVar, final, type_check_only
 from typing_extensions import TypeIs, override
 
 __all__ = ["VERSION_PATTERN", "InvalidVersion", "LegacyVersion", "Version", "parse"]
@@ -106,7 +96,7 @@ class Version(
             tuple[str, int] | _InfinityType,  # dev
             tuple[tuple[int, L[""]] | tuple[_NegativeInfinityType, str], ...] | _NegativeInfinityType,  # local
         ],
-    ],
+    ]
 ):
     _regex: ClassVar[re.Pattern[str]] = ...
     _version: Final[str]

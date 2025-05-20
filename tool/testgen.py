@@ -36,6 +36,7 @@ if TYPE_CHECKING:
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from tool._ruff import ruff_format
 from tool.promotion import _typename as dtype_label
 from tool.ufunc import _all_types as ufunc_signatures
 
@@ -137,13 +138,7 @@ def _ensure_tuple(x: _T | tuple[_T, ...], /) -> tuple[_T, ...]:
     return (x,)
 
 
-def _expr_assert_type(
-    val_expr: str,
-    type_expr: str,
-    /,
-    *,
-    wrap: int = 120,
-) -> str:
+def _expr_assert_type(val_expr: str, type_expr: str, /, *, wrap: int = 120) -> str:
     out = f"assert_type({val_expr}, {type_expr})"
     if len(out) > wrap or "\n" in out:
         val_expr = textwrap.indent(val_expr, TAB)
@@ -206,9 +201,7 @@ def _sctype_expr_from_value(value: _Scalar | tuple[_Scalar, ...], /) -> str:
 
 
 def _array_expr_single(
-    *dtypes: np.dtype,
-    ndim: int | None = None,
-    npt: bool = False,
+    *dtypes: np.dtype, ndim: int | None = None, npt: bool = False
 ) -> str:
     assert dtypes
 
@@ -243,9 +236,7 @@ def _array_expr_single(
 
 
 def _array_expr(
-    *dtypess: tuple[np.dtype, ...],
-    ndim: int | None = None,
-    npt: bool = False,
+    *dtypess: tuple[np.dtype, ...], ndim: int | None = None, npt: bool = False
 ) -> str:
     assert dtypess
 
@@ -259,13 +250,7 @@ def _array_expr(
 
     expr2 = _array_expr_single(*(dts[1] for dts in dtypess), ndim=ndim, npt=npt)
 
-    expr = f"tuple[{expr1}, {expr2}]"
-    if "\n" in expr or "|" in expr:
-        expr1 = textwrap.indent(expr1, TAB)
-        expr2 = textwrap.indent(expr2, TAB)
-        expr = f"tuple[\n{expr1},\n{expr2},\n]"
-
-    return expr
+    return f"tuple[{expr1}, {expr2}]"
 
 
 def __group_types(*types: str) -> tuple[dict[str, list[str]], list[str]]:
@@ -482,11 +467,7 @@ class TestGen(abc.ABC):
 
                 lines.append(line)
 
-        # ensure trailing newline
-        if not n_empty:
-            lines.append("")
-
-        return BR.join(lines)
+        return ruff_format(BR.join(lines))
 
     @final
     def _read(self, /) -> str | None:
@@ -753,11 +734,7 @@ class LiteralBoolOps(TestGen):
     package = "numpy-stubs"
     testname = "literal_bool_ops"
 
-    UNOPS: ClassVar = {
-        "{}.__bool__()": bool,
-        "abs({})": abs,
-        "~{}": op.__invert__,
-    }
+    UNOPS: ClassVar = {"{}.__bool__()": bool, "abs({})": abs, "~{}": op.__invert__}
     CMPOPS: ClassVar = {
         "{} == {}": op.__eq__,
         "{} != {}": op.__ne__,
@@ -1041,8 +1018,7 @@ class ScalarOps(TestGen):
         exprs_seen: set[tuple[str, ...]] = set()
         expr_lists: tuple[list[str], ...] = tuple([] for _ in range(nout))
         for val_lhs, val_rhs in itertools.product(
-            self._decompose(lhs),
-            self._decompose(rhs),
+            self._decompose(lhs), self._decompose(rhs)
         ):
             try:
                 vals_out = fn(val_lhs, val_rhs)
@@ -1322,9 +1298,7 @@ class NDArrayOps(TestGen):
             self.dtypes[kind] = tuple(dtypes)
 
     def _get_arrays(
-        self,
-        dtype1: np.dtype,
-        dtype2: np.dtype,
+        self, dtype1: np.dtype, dtype2: np.dtype
     ) -> tuple[_nt.Array, _nt.Array]:
         arr1 = np.ones(self.shape, dtype=dtype1)
         arr2 = np.ones(self.shape, dtype=dtype2)
@@ -1354,12 +1328,7 @@ class NDArrayOps(TestGen):
         return dtype
 
     def _evaluate_binop(
-        self,
-        lhs: npt.ArrayLike,
-        rhs: npt.ArrayLike,
-        /,
-        *,
-        reflect: bool = False,
+        self, lhs: npt.ArrayLike, rhs: npt.ArrayLike, /, *, reflect: bool = False
     ) -> tuple[np.dtype, ...]:
         if reflect:
             lhs, rhs = rhs, lhs
@@ -1437,11 +1406,7 @@ class NDArrayOps(TestGen):
                 ))
 
     def _gen_testcases_binop_py_0d(
-        self,
-        label_np: str,
-        /,
-        *,
-        reflect: bool = False,
+        self, label_np: str, /, *, reflect: bool = False
     ) -> Generator[str | None]:
         name_np = f"{label_np}_nd"
         dtypes_np = self.dtypes[label_np]

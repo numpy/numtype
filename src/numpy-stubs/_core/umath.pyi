@@ -249,23 +249,11 @@ class _Kwargs3_g(_KwargsCommon, total=False):
 class _Call11(Protocol):
     @overload  # (scalar, dtype: dtype[T]) -> T
     def __call__(
-        self,
-        x: _ScalarLike_co,
-        /,
-        out: None = None,
-        *,
-        dtype: _DTypeLike[_ScalarT],
-        **kwds: Unpack[_Kwargs2],
+        self, x: _ScalarLike_co, /, out: None = None, *, dtype: _DTypeLike[_ScalarT], **kwds: Unpack[_Kwargs2]
     ) -> _ScalarT: ...
     @overload  # (scalar) -> ?
     def __call__(
-        self,
-        x: _ScalarLike_co,
-        /,
-        out: None = None,
-        *,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _ScalarLike_co, /, out: None = None, *, dtype: DTypeLike | None = None, **kwds: Unpack[_Kwargs2]
     ) -> Incomplete: ...
     @overload  # (array, dtype: dtype[T]) -> Array[T]
     def __call__(
@@ -279,13 +267,7 @@ class _Call11(Protocol):
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # (array-like, out: T) -> T
     def __call__(
-        self,
-        x: ArrayLike,
-        /,
-        out: _Out1[_ArrayT],
-        *,
-        dtype: DTypeLike | None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: ArrayLike, /, out: _Out1[_ArrayT], *, dtype: DTypeLike | None = None, **kwds: Unpack[_Kwargs2]
     ) -> _ArrayT: ...
     @overload  # (array) -> Array[?] | ?
     def __call__(
@@ -322,23 +304,11 @@ class _Call11(Protocol):
 class _Call11Bool(Protocol):
     @overload  # (scalar) -> bool
     def __call__(
-        self,
-        x: _ScalarLike_co,
-        /,
-        out: None = None,
-        *,
-        dtype: _DTypeLikeBool | None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _ScalarLike_co, /, out: None = None, *, dtype: _DTypeLikeBool | None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.bool: ...
     @overload  # (array-like, out: T) -> T
     def __call__(
-        self,
-        x: ArrayLike,
-        /,
-        out: _Out1[_ArrayT],
-        *,
-        dtype: _DTypeLikeBool | None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: ArrayLike, /, out: _Out1[_ArrayT], *, dtype: _DTypeLikeBool | None = None, **kwds: Unpack[_Kwargs2]
     ) -> _ArrayT: ...
     @overload  # (array) -> Array[bool]
     def __call__(
@@ -365,23 +335,11 @@ class _Call11Bool(Protocol):
 class _Call11Float(Protocol):
     @overload  # (float) -> float64
     def __call__(
-        self,
-        x: float,
-        /,
-        out: None = None,
-        *,
-        dtype: _DTypeLikeFloat | None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: float, /, out: None = None, *, dtype: _DTypeLikeFloat | None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.float64: ...
     @overload  # (scalar) -> float
     def __call__(
-        self,
-        x: _FloatLike_co,
-        /,
-        out: None = None,
-        *,
-        dtype: _DTypeLikeFloat | None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _FloatLike_co, /, out: None = None, *, dtype: _DTypeLikeFloat | None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.floating: ...
     @overload  # (array-like, out: T) -> T
     def __call__(
@@ -418,73 +376,31 @@ class _Call11Float(Protocol):
 class _Call11Inexact(Protocol):
     @overload  # (float) -> float64
     def __call__(
-        self,
-        x: _nt.ToFloat64_0d,
-        /,
-        out: None = None,
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _nt.ToFloat64_0d, /, out: None = None, *, dtype: None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.float64: ...
     @overload  # (float-like) -> float
     def __call__(
-        self,
-        x: _nt.CoFloating_0d,
-        /,
-        out: None = None,
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _nt.CoFloating_0d, /, out: None = None, *, dtype: None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.floating: ...
     @overload  # (scalar) -> complex128
     def __call__(
-        self,
-        x: _nt.ToComplex128_0d,
-        /,
-        out: None = None,
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _nt.ToComplex128_0d, /, out: None = None, *, dtype: None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.complex128: ...
     @overload
     def __call__(
-        self,
-        x: _nt.ToComplex_0d,
-        /,
-        out: None = None,
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _nt.ToComplex_0d, /, out: None = None, *, dtype: None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.complexfloating: ...
     @overload  # (array-like, out: T) -> T
     def __call__(
-        self,
-        x: _nt.CoComplex_nd,
-        /,
-        out: _Out1[_ArrayT],
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _nt.CoComplex_nd, /, out: _Out1[_ArrayT], *, dtype: None = None, **kwds: Unpack[_Kwargs2]
     ) -> _ArrayT: ...
     @overload  # (array) -> _nt.Array[float64]
     def __call__(
-        self,
-        x: _nt.ToFloat64_1nd,
-        /,
-        out: None = None,
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _nt.ToFloat64_1nd, /, out: None = None, *, dtype: None = None, **kwds: Unpack[_Kwargs2]
     ) -> _nt.Array[np.float64]: ...
     @overload  # (array) -> _nt.Array[complex128]
     def __call__(
-        self,
-        x: _nt.ToComplex128_1nd,
-        /,
-        out: None = None,
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _nt.ToComplex128_1nd, /, out: None = None, *, dtype: None = None, **kwds: Unpack[_Kwargs2]
     ) -> _nt.Array[np.complex128]: ...
     @overload  # (array) -> Array[np.floating]
     def __call__(
@@ -521,13 +437,7 @@ class _Call11Inexact(Protocol):
 class _Call11Isnat(Protocol):
     @overload  # (scalar) -> bool
     def __call__(
-        self,
-        x: _TimeLike,
-        /,
-        out: None = None,
-        *,
-        dtype: _DTypeLikeBool | None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _TimeLike, /, out: None = None, *, dtype: _DTypeLikeBool | None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.bool: ...
     @overload  # (array-like, out: T) -> T
     def __call__(
@@ -554,13 +464,7 @@ class _Call11Isnat(Protocol):
 class _Call11Signbit(Protocol):
     @overload  # (scalar) -> bool
     def __call__(
-        self,
-        x: _FloatLike_co,
-        /,
-        out: None = None,
-        *,
-        dtype: _DTypeLikeBool | None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: _FloatLike_co, /, out: None = None, *, dtype: _DTypeLikeBool | None = None, **kwds: Unpack[_Kwargs2]
     ) -> np.bool: ...
     @overload  # (array-like, out: T) -> T
     def __call__(
@@ -587,23 +491,11 @@ class _Call11Signbit(Protocol):
 class _Call11Logical(Protocol):
     @overload
     def __call__(  # (scalar, dtype: np.object_) -> bool
-        self,
-        x: _ScalarLike_co,
-        /,
-        out: None = None,
-        *,
-        dtype: _DTypeLike[np.object_],
-        **kwargs: Unpack[_Kwargs2],
+        self, x: _ScalarLike_co, /, out: None = None, *, dtype: _DTypeLike[np.object_], **kwargs: Unpack[_Kwargs2]
     ) -> bool: ...
     @overload
     def __call__(  # (scalar) -> np.bool
-        self,
-        x: _NumberLike_co,
-        /,
-        out: None = None,
-        *,
-        dtype: _DTypeLikeBool | None = None,
-        **kwargs: Unpack[_Kwargs2],
+        self, x: _NumberLike_co, /, out: None = None, *, dtype: _DTypeLikeBool | None = None, **kwargs: Unpack[_Kwargs2]
     ) -> np.bool: ...
     @overload
     def __call__(  # (array-like, dtype: np.object_) -> np.object_
@@ -831,14 +723,7 @@ class _Call21Bool(Protocol):
         **kwds: Unpack[_Kwargs3],
     ) -> _nt.Array[np.bool]: ...
     @overload  # (array-like, array-like, out: T) -> T
-    def __call__(
-        self,
-        x1: ArrayLike,
-        x2: ArrayLike,
-        /,
-        out: _Out1[_ArrayT],
-        **kwds: Unpack[_Kwargs3],
-    ) -> _ArrayT: ...
+    def __call__(self, x1: ArrayLike, x2: ArrayLike, /, out: _Out1[_ArrayT], **kwds: Unpack[_Kwargs3]) -> _ArrayT: ...
     @overload  # (array-like, array-like) -> ?
     def __call__(
         self,
@@ -854,14 +739,7 @@ class _Call21Bool(Protocol):
 class _Call21Float(Protocol):
     @overload  # (float, float) -> float64
     def __call__(
-        self,
-        x1: float,
-        x2: float,
-        /,
-        out: None = None,
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs3],
+        self, x1: float, x2: float, /, out: None = None, *, dtype: None = None, **kwds: Unpack[_Kwargs3]
     ) -> np.float64: ...
     @overload  # (scalar, scalar) -> float
     def __call__(
@@ -1157,14 +1035,7 @@ class _Call21(Protocol):
     ) -> _nt.Array: ...
     @overload  # (array-like, array-like, out: T) -> T
     def __call__(
-        self,
-        x1: ArrayLike,
-        x2: ArrayLike,
-        /,
-        out: _Out1[_ArrayT],
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs3],
+        self, x1: ArrayLike, x2: ArrayLike, /, out: _Out1[_ArrayT], *, dtype: None = None, **kwds: Unpack[_Kwargs3]
     ) -> _ArrayT: ...
     @overload  # (array-like, array-like) -> Array[?] | ?
     def __call__(
@@ -1355,14 +1226,7 @@ class _Call21_g(Protocol):
     # scalar for 1D array-likes; ndarray otherwise
     @overload
     def __call__(
-        self,
-        x1: ArrayLike,
-        x2: ArrayLike,
-        /,
-        out: _Out1[_ArrayT],
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs3_g],
+        self, x1: ArrayLike, x2: ArrayLike, /, out: _Out1[_ArrayT], *, dtype: None = None, **kwds: Unpack[_Kwargs3_g]
     ) -> _ArrayT: ...
     @overload
     def __call__(
@@ -1421,22 +1285,11 @@ class _Accumulate2(Protocol):
     ) -> _nt.Array[_ScalarT]: ...
     @overload
     def __call__(
-        self,
-        array: ArrayLike,
-        /,
-        axis: SupportsIndex = 0,
-        *,
-        dtype: _DTypeLike[_ScalarT],
-        out: None = None,
+        self, array: ArrayLike, /, axis: SupportsIndex = 0, *, dtype: _DTypeLike[_ScalarT], out: None = None
     ) -> _nt.Array[_ScalarT]: ...
     @overload
     def __call__(
-        self,
-        array: ArrayLike,
-        /,
-        axis: SupportsIndex = 0,
-        dtype: DTypeLike | None = None,
-        out: _nt.Array | None = None,
+        self, array: ArrayLike, /, axis: SupportsIndex = 0, dtype: DTypeLike | None = None, out: _nt.Array | None = None
     ) -> _nt.Array: ...
 
 @type_check_only
@@ -1447,13 +1300,7 @@ class _ReduceAtE(Protocol):
 class _ReduceAt2(Protocol):
     @overload
     def __call__(
-        self,
-        array: ArrayLike,
-        indices: _ArrayLikeInt_co,
-        /,
-        axis: SupportsIndex,
-        dtype: None,
-        out: _ArrayT,
+        self, array: ArrayLike, indices: _ArrayLikeInt_co, /, axis: SupportsIndex, dtype: None, out: _ArrayT
     ) -> _ArrayT: ...
     @overload
     def __call__(
@@ -1504,14 +1351,7 @@ _OuterE: TypeAlias = Callable[[Never, Never], Any]
 class _Outer1(Protocol):
     @overload  # (array-like, array-like, out: T) -> T
     def __call__(
-        self,
-        A: ArrayLike,
-        B: ArrayLike,
-        /,
-        *,
-        dtype: None = None,
-        out: _Out1[_ArrayT],
-        **kwds: Unpack[_Kwargs3],
+        self, A: ArrayLike, B: ArrayLike, /, *, dtype: None = None, out: _Out1[_ArrayT], **kwds: Unpack[_Kwargs3]
     ) -> _ArrayT: ...
     @overload  # (array, array-like, dtype: dtype[T]) -> Array[T]
     def __call__(
@@ -1540,25 +1380,11 @@ class _Outer1(Protocol):
 class _Outer2(Protocol):
     @overload  # (array-like, array-like, out: (T1, None)) -> (T1, Array[?])
     def __call__(
-        self,
-        A: ArrayLike,
-        B: ArrayLike,
-        /,
-        *,
-        dtype: None = None,
-        out: tuple[_ArrayT1, None],
-        **kwds: Unpack[_Kwargs4],
+        self, A: ArrayLike, B: ArrayLike, /, *, dtype: None = None, out: tuple[_ArrayT1, None], **kwds: Unpack[_Kwargs4]
     ) -> tuple[_ArrayT1, _nt.Array[Incomplete]]: ...
     @overload  # (array-like, array-like, out: (None, T2)) -> (Array[?], T2)
     def __call__(
-        self,
-        A: ArrayLike,
-        B: ArrayLike,
-        /,
-        *,
-        dtype: None = None,
-        out: tuple[None, _ArrayT2],
-        **kwds: Unpack[_Kwargs4],
+        self, A: ArrayLike, B: ArrayLike, /, *, dtype: None = None, out: tuple[None, _ArrayT2], **kwds: Unpack[_Kwargs4]
     ) -> tuple[_nt.Array[Incomplete], _ArrayT2]: ...
     @overload  # (array-like, array-like, out: (T1, T2)) -> (T1, T2)
     def __call__(
@@ -1602,35 +1428,23 @@ _CallT12 = TypeVar("_CallT12", bound=Callable[Concatenate[Incomplete, ...], tupl
 _CallT21 = TypeVar("_CallT21", bound=Callable[Concatenate[Incomplete, Incomplete, ...], object], default=_Call21)
 _CallT21G = TypeVar("_CallT21G", bound=Callable[Concatenate[Incomplete, ...], object], default=_Call21_g)
 _CallT22 = TypeVar(
-    "_CallT22",
-    bound=Callable[Concatenate[Incomplete, Incomplete, ...], tuple[object, object]],
-    default=_Call22,
+    "_CallT22", bound=Callable[Concatenate[Incomplete, Incomplete, ...], tuple[object, object]], default=_Call22
 )
 
 _ufunc_1_1 = TypeAliasType(
-    "_ufunc_1_1",
-    np.ufunc[_CallT11, _At1, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
-    type_params=(_CallT11,),
+    "_ufunc_1_1", np.ufunc[_CallT11, _At1, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE], type_params=(_CallT11,)
 )
 _ufunc_1_2 = TypeAliasType(
-    "_ufunc_1_2",
-    np.ufunc[_CallT12, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
-    type_params=(_CallT12,),
+    "_ufunc_1_2", np.ufunc[_CallT12, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE], type_params=(_CallT12,)
 )
 _ufunc_2_1 = TypeAliasType(
-    "_ufunc_2_1",
-    np.ufunc[_CallT21, _At2, _Reduce2, _ReduceAt2, _Accumulate2, _Outer1],
-    type_params=(_CallT21,),
+    "_ufunc_2_1", np.ufunc[_CallT21, _At2, _Reduce2, _ReduceAt2, _Accumulate2, _Outer1], type_params=(_CallT21,)
 )
 _gufunc_2_1 = TypeAliasType(
-    "_gufunc_2_1",
-    np.ufunc[_CallT21G, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _Outer1],
-    type_params=(_CallT21G,),
+    "_gufunc_2_1", np.ufunc[_CallT21G, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _Outer1], type_params=(_CallT21G,)
 )
 _ufunc_2_2 = TypeAliasType(
-    "_ufunc_2_2",
-    np.ufunc[_CallT22, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _Outer2],
-    type_params=(_CallT22,),
+    "_ufunc_2_2", np.ufunc[_CallT22, _AtE, _ReduceE, _ReduceAtE, _AccumulateE, _Outer2], type_params=(_CallT22,)
 )
 
 ###
@@ -1890,30 +1704,15 @@ _replace: np.ufunc
 class _Call11_py(Protocol[_OutT_co]):
     @overload
     def __call__(
-        self,
-        x: _ScalarLike_co,
-        /,
-        out: None = None,
-        dtype: DTypeLike | None = None,
-        **kwargs: Unpack[_Kwargs2],
+        self, x: _ScalarLike_co, /, out: None = None, dtype: DTypeLike | None = None, **kwargs: Unpack[_Kwargs2]
     ) -> _OutT_co: ...
     @overload
     def __call__(
-        self,
-        x: ArrayLike,
-        /,
-        out: None = None,
-        dtype: DTypeLike | None = None,
-        **kwargs: Unpack[_Kwargs2],
+        self, x: ArrayLike, /, out: None = None, dtype: DTypeLike | None = None, **kwargs: Unpack[_Kwargs2]
     ) -> _OutT_co | _nt.Array[np.object_]: ...
     @overload
     def __call__(
-        self,
-        x: ArrayLike,
-        /,
-        out: _Out1[_ArrayT],
-        dtype: DTypeLike | None = None,
-        **kwargs: Unpack[_Kwargs2],
+        self, x: ArrayLike, /, out: _Out1[_ArrayT], dtype: DTypeLike | None = None, **kwargs: Unpack[_Kwargs2]
     ) -> _ArrayT: ...
     @overload
     def __call__(
@@ -2116,14 +1915,10 @@ class _Call1N2N_py(Protocol[_OutT_co]):
     ) -> Incomplete: ...
 
 _pyfunc_1_1 = TypeAliasType(
-    "_pyfunc_1_1",
-    np.ufunc[_Call11_py[_OutT], _At1, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE],
-    type_params=(_OutT,),
+    "_pyfunc_1_1", np.ufunc[_Call11_py[_OutT], _At1, _ReduceE, _ReduceAtE, _AccumulateE, _OuterE], type_params=(_OutT,)
 )
 _pyfunc_2_1 = TypeAliasType(
-    "_pyfunc_2_1",
-    np.ufunc[_Call21_py[_OutT], _At2, _Reduce2, _ReduceAt2, _Accumulate2, _Outer1],
-    type_params=(_OutT,),
+    "_pyfunc_2_1", np.ufunc[_Call21_py[_OutT], _At2, _Reduce2, _ReduceAt2, _Accumulate2, _Outer1], type_params=(_OutT,)
 )
 _pyfunc_3n_1 = TypeAliasType(
     "_pyfunc_3n_1",

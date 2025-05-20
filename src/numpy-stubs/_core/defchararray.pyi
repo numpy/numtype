@@ -483,21 +483,11 @@ def array(  # type: ignore[overload-overlap]
 ) -> _BytesArray: ...
 @overload  # unicode=False
 def array(
-    obj: object,
-    itemsize: int | None = None,
-    copy: bool = True,
-    *,
-    unicode: L[False],
-    order: _Order | None = None,
+    obj: object, itemsize: int | None = None, copy: bool = True, *, unicode: L[False], order: _Order | None = None
 ) -> _BytesArray: ...
 @overload  # unicode=True
 def array(
-    obj: object,
-    itemsize: int | None = None,
-    copy: bool = True,
-    *,
-    unicode: L[True],
-    order: _Order | None = None,
+    obj: object, itemsize: int | None = None, copy: bool = True, *, unicode: L[True], order: _Order | None = None
 ) -> _StrArray: ...
 @overload  # fallback
 def array(

@@ -39,25 +39,13 @@ _RankLE: TypeAlias = _CanBroadcast[Any, _UpperT, _RankT] | Shape0 | Rank0 | Rank
 # TODO(jorenham): remove `| Rank` once python/mypy#19110 is fixed
 _RankGE: TypeAlias = _CanBroadcast[_LowerT, Any, _RankT] | _LowerT | Rank
 
-HasRankLE = TypeAliasType(
-    "HasRankLE",
-    _HasInnerShape[_RankLE[_UpperT, _RankT]],
-    type_params=(_UpperT, _RankT),
-)
-HasRankGE = TypeAliasType(
-    "HasRankGE",
-    _HasInnerShape[_RankGE[_LowerT, _RankT]],
-    type_params=(_LowerT, _RankT),
-)
+HasRankLE = TypeAliasType("HasRankLE", _HasInnerShape[_RankLE[_UpperT, _RankT]], type_params=(_UpperT, _RankT))
+HasRankGE = TypeAliasType("HasRankGE", _HasInnerShape[_RankGE[_LowerT, _RankT]], type_params=(_LowerT, _RankT))
 
 _ShapeT = TypeVar("_ShapeT", bound=Shape)
 
 # for unwrapping potential rank types as shape tuples
-HasInnerShape = TypeAliasType(
-    "HasInnerShape",
-    _HasInnerShape[_HasOwnShape[Any, _ShapeT]],
-    type_params=(_ShapeT,),
-)
+HasInnerShape = TypeAliasType("HasInnerShape", _HasInnerShape[_HasOwnShape[Any, _ShapeT]], type_params=(_ShapeT,))
 
 ###
 

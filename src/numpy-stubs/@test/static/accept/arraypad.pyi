@@ -5,10 +5,7 @@ import _numtype as _nt
 import numpy as np
 
 def mode_func(
-    ar: _nt.Array[np.number],
-    width: tuple[int, int],
-    iaxis: SupportsIndex,
-    kwargs: Mapping[str, Any],
+    ar: _nt.Array[np.number], width: tuple[int, int], iaxis: SupportsIndex, kwargs: Mapping[str, Any]
 ) -> None: ...
 
 AR_i8: _nt.Array[np.int64]

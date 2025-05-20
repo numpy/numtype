@@ -83,14 +83,10 @@ class _HasDTypeOf(Protocol[_ScalarT_co]):
     def dtype(self) -> np.dtype[_ScalarT_co]: ...
 
 _ToDType = TypeAliasType(
-    "_ToDType",
-    type[_ScalarT] | np.dtype[_ScalarT] | _HasDTypeOf[_ScalarT],
-    type_params=(_ScalarT,),
+    "_ToDType", type[_ScalarT] | np.dtype[_ScalarT] | _HasDTypeOf[_ScalarT], type_params=(_ScalarT,)
 )
 _ToDType2 = TypeAliasType(
-    "_ToDType2",
-    type[_ScalarT | _T] | np.dtype[_ScalarT] | _HasDTypeOf[_ScalarT],
-    type_params=(_ScalarT, _T),
+    "_ToDType2", type[_ScalarT | _T] | np.dtype[_ScalarT] | _HasDTypeOf[_ScalarT], type_params=(_ScalarT, _T)
 )
 
 _C_i16: TypeAlias = ct.c_int16 | ct.c_short

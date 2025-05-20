@@ -226,34 +226,22 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
 #
 @overload
-def bmat(
-    obj: str,
-    ldict: Mapping[str, Any] | None = None,
-    gdict: Mapping[str, Any] | None = None,
-) -> _nt.Matrix: ...
+def bmat(obj: str, ldict: Mapping[str, Any] | None = None, gdict: Mapping[str, Any] | None = None) -> _nt.Matrix: ...
 @overload
 def bmat(
-    obj: _nt._ToArray_1nd[_ScalarT],
-    ldict: Mapping[str, Any] | None = None,
-    gdict: Mapping[str, Any] | None = None,
+    obj: _nt._ToArray_1nd[_ScalarT], ldict: Mapping[str, Any] | None = None, gdict: Mapping[str, Any] | None = None
 ) -> _nt.Matrix[_ScalarT]: ...
 @overload
 def bmat(
-    obj: _nt.Sequence3ND[bool],
-    ldict: Mapping[str, Any] | None = None,
-    gdict: Mapping[str, Any] | None = None,
+    obj: _nt.Sequence3ND[bool], ldict: Mapping[str, Any] | None = None, gdict: Mapping[str, Any] | None = None
 ) -> _nt.Matrix[np.bool]: ...
 @overload
 def bmat(
-    obj: _nt.Sequence3ND[_nt.JustInt],
-    ldict: Mapping[str, Any] | None = None,
-    gdict: Mapping[str, Any] | None = None,
+    obj: _nt.Sequence3ND[_nt.JustInt], ldict: Mapping[str, Any] | None = None, gdict: Mapping[str, Any] | None = None
 ) -> _nt.Matrix[np.intp]: ...
 @overload
 def bmat(
-    obj: _nt.Sequence3ND[_nt.JustFloat],
-    ldict: Mapping[str, Any] | None = None,
-    gdict: Mapping[str, Any] | None = None,
+    obj: _nt.Sequence3ND[_nt.JustFloat], ldict: Mapping[str, Any] | None = None, gdict: Mapping[str, Any] | None = None
 ) -> _nt.Matrix[np.float64]: ...
 @overload
 def bmat(
@@ -263,21 +251,15 @@ def bmat(
 ) -> _nt.Matrix[np.complex128]: ...
 @overload
 def bmat(
-    obj: _nt.Sequence3ND[_nt.JustBytes],
-    ldict: Mapping[str, Any] | None = None,
-    gdict: Mapping[str, Any] | None = None,
+    obj: _nt.Sequence3ND[_nt.JustBytes], ldict: Mapping[str, Any] | None = None, gdict: Mapping[str, Any] | None = None
 ) -> _nt.Matrix[np.bytes_]: ...
 @overload
 def bmat(
-    obj: _nt.Sequence3ND[_nt.JustStr],
-    ldict: Mapping[str, Any] | None = None,
-    gdict: Mapping[str, Any] | None = None,
+    obj: _nt.Sequence3ND[_nt.JustStr], ldict: Mapping[str, Any] | None = None, gdict: Mapping[str, Any] | None = None
 ) -> _nt.Matrix[np.str_]: ...
 @overload
 def bmat(
-    obj: _nt.ToGeneric_3nd,
-    ldict: Mapping[str, Any] | None = None,
-    gdict: Mapping[str, Any] | None = None,
+    obj: _nt.ToGeneric_3nd, ldict: Mapping[str, Any] | None = None, gdict: Mapping[str, Any] | None = None
 ) -> _nt.Matrix: ...
 
 #

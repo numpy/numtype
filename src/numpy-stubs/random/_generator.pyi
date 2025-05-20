@@ -139,37 +139,19 @@ class Generator:
     def random(self, /, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None) -> float: ...
     @overload
     def random(
-        self,
-        /,
-        size: _ShapeLike | None = None,
-        dtype: _nt.ToDTypeFloat64 = ...,
-        *,
-        out: _nt.Array[np.float64],
+        self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat64 = ..., *, out: _nt.Array[np.float64]
     ) -> _nt.Array[np.float64]: ...
     @overload
     def random(
-        self,
-        /,
-        size: _ShapeLike,
-        dtype: _nt.ToDTypeFloat64 = ...,
-        out: _nt.Array[np.float64] | None = None,
+        self, /, size: _ShapeLike, dtype: _nt.ToDTypeFloat64 = ..., out: _nt.Array[np.float64] | None = None
     ) -> _nt.Array[np.float64]: ...
     @overload
     def random(
-        self,
-        /,
-        size: _ShapeLike | None = None,
-        dtype: _nt.ToDTypeFloat32 = ...,
-        *,
-        out: _nt.Array[np.float32],
+        self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat32 = ..., *, out: _nt.Array[np.float32]
     ) -> _nt.Array[np.float32]: ...
     @overload
     def random(
-        self,
-        /,
-        size: _ShapeLike,
-        dtype: _nt.ToDTypeFloat32,
-        out: _nt.Array[np.float32] | None = None,
+        self, /, size: _ShapeLike, dtype: _nt.ToDTypeFloat32, out: _nt.Array[np.float32] | None = None
     ) -> _nt.Array[np.float32]: ...
 
     #
@@ -177,48 +159,25 @@ class Generator:
     def uniform(self, /, low: _nt.CoFloating_0d = 0.0, high: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
     def uniform(
-        self,
-        /,
-        low: _nt.CoFloating_nd,
-        high: _nt.CoFloating_nd,
-        size: _ShapeLike,
+        self, /, low: _nt.CoFloating_nd, high: _nt.CoFloating_nd, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def uniform(
-        self,
-        /,
-        low: _nt.CoFloating_nd = 0.0,
-        high: _nt.CoFloating_nd = 1.0,
-        *,
-        size: _ShapeLike,
+        self, /, low: _nt.CoFloating_nd = 0.0, high: _nt.CoFloating_nd = 1.0, *, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def uniform(
-        self,
-        /,
-        low: _nt.CoFloating_nd = 0.0,
-        high: _nt.CoFloating_nd = 1.0,
-        size: _ShapeLike | None = None,
+        self, /, low: _nt.CoFloating_nd = 0.0, high: _nt.CoFloating_nd = 1.0, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
     @overload  # size: None  (default)
     def triangular(
-        self,
-        /,
-        left: _nt.CoFloating_0d,
-        mode: _nt.CoFloating_0d,
-        right: _nt.CoFloating_0d,
-        size: None = None,
+        self, /, left: _nt.CoFloating_0d, mode: _nt.CoFloating_0d, right: _nt.CoFloating_0d, size: None = None
     ) -> float: ...
     @overload  # size: (int, ...)
     def triangular(
-        self,
-        /,
-        left: _nt.CoFloating_nd,
-        mode: _nt.CoFloating_nd,
-        right: _nt.CoFloating_nd,
-        size: _ShapeLike,
+        self, /, left: _nt.CoFloating_nd, mode: _nt.CoFloating_nd, right: _nt.CoFloating_nd, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def triangular(
@@ -237,22 +196,13 @@ class Generator:
     def beta(self, /, a: _nt.CoFloating_nd, b: _nt.CoFloating_nd, size: _ShapeLike) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def beta(
-        self,
-        /,
-        a: _nt.CoFloating_nd,
-        b: _nt.CoFloating_nd,
-        size: _ShapeLike | None = None,
+        self, /, a: _nt.CoFloating_nd, b: _nt.CoFloating_nd, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
     @overload
     def standard_exponential(
-        self,
-        /,
-        size: None = None,
-        dtype: _DTypeLikeFloat = ...,
-        method: _ExpMethod = "zig",
-        out: None = None,
+        self, /, size: None = None, dtype: _DTypeLikeFloat = ..., method: _ExpMethod = "zig", out: None = None
     ) -> float: ...
     @overload
     def standard_exponential(
@@ -314,20 +264,11 @@ class Generator:
     ) -> _nt.Array[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def laplace(
-        self,
-        /,
-        loc: _nt.CoFloating_nd = 0.0,
-        scale: _nt.CoFloating_nd = 1.0,
-        *,
-        size: _ShapeLike,
+        self, /, loc: _nt.CoFloating_nd = 0.0, scale: _nt.CoFloating_nd = 1.0, *, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def laplace(
-        self,
-        /,
-        loc: _nt.CoFloating_nd = 0.0,
-        scale: _nt.CoFloating_nd = 1.0,
-        size: _ShapeLike | None = None,
+        self, /, loc: _nt.CoFloating_nd = 0.0, scale: _nt.CoFloating_nd = 1.0, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
@@ -339,20 +280,11 @@ class Generator:
     ) -> _nt.Array[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def logistic(
-        self,
-        /,
-        loc: _nt.CoFloating_nd = 0.0,
-        scale: _nt.CoFloating_nd = 1.0,
-        *,
-        size: _ShapeLike,
+        self, /, loc: _nt.CoFloating_nd = 0.0, scale: _nt.CoFloating_nd = 1.0, *, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def logistic(
-        self,
-        /,
-        loc: _nt.CoFloating_nd = 0.0,
-        scale: _nt.CoFloating_nd = 1.0,
-        size: _ShapeLike | None = None,
+        self, /, loc: _nt.CoFloating_nd = 0.0, scale: _nt.CoFloating_nd = 1.0, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
@@ -380,20 +312,11 @@ class Generator:
     ) -> _nt.Array[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def gumbel(
-        self,
-        /,
-        loc: _nt.CoFloating_nd = 0.0,
-        scale: _nt.CoFloating_nd = 1.0,
-        *,
-        size: _ShapeLike,
+        self, /, loc: _nt.CoFloating_nd = 0.0, scale: _nt.CoFloating_nd = 1.0, *, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def gumbel(
-        self,
-        /,
-        loc: _nt.CoFloating_nd = 0.0,
-        scale: _nt.CoFloating_nd = 1.0,
-        size: _ShapeLike | None = None,
+        self, /, loc: _nt.CoFloating_nd = 0.0, scale: _nt.CoFloating_nd = 1.0, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
@@ -429,19 +352,11 @@ class Generator:
     def noncentral_chisquare(self, /, df: _nt.CoFloating_0d, nonc: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
     def noncentral_chisquare(
-        self,
-        /,
-        df: _nt.CoFloating_nd,
-        nonc: _nt.CoFloating_nd,
-        size: _ShapeLike,
+        self, /, df: _nt.CoFloating_nd, nonc: _nt.CoFloating_nd, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def noncentral_chisquare(
-        self,
-        /,
-        df: _nt.CoFloating_nd,
-        nonc: _nt.CoFloating_nd,
-        size: _ShapeLike | None = None,
+        self, /, df: _nt.CoFloating_nd, nonc: _nt.CoFloating_nd, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
@@ -449,37 +364,19 @@ class Generator:
     def standard_normal(self, /, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None) -> float: ...
     @overload
     def standard_normal(
-        self,
-        /,
-        size: _ShapeLike | None = None,
-        dtype: _nt.ToDTypeFloat64 = ...,
-        *,
-        out: _nt.Array[np.float64],
+        self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat64 = ..., *, out: _nt.Array[np.float64]
     ) -> _nt.Array[np.float64]: ...
     @overload
     def standard_normal(
-        self,
-        /,
-        size: _ShapeLike,
-        dtype: _nt.ToDTypeFloat64 = ...,
-        out: _nt.Array[np.float64] | None = None,
+        self, /, size: _ShapeLike, dtype: _nt.ToDTypeFloat64 = ..., out: _nt.Array[np.float64] | None = None
     ) -> _nt.Array[np.float64]: ...
     @overload
     def standard_normal(
-        self,
-        /,
-        size: _ShapeLike | None = ...,
-        dtype: _nt.ToDTypeFloat32 = ...,
-        *,
-        out: _nt.Array[np.float32],
+        self, /, size: _ShapeLike | None = ..., dtype: _nt.ToDTypeFloat32 = ..., *, out: _nt.Array[np.float32]
     ) -> _nt.Array[np.float32]: ...
     @overload
     def standard_normal(
-        self,
-        /,
-        size: _ShapeLike,
-        dtype: _nt.ToDTypeFloat32,
-        out: _nt.Array[np.float32] | None = None,
+        self, /, size: _ShapeLike, dtype: _nt.ToDTypeFloat32, out: _nt.Array[np.float32] | None = None
     ) -> _nt.Array[np.float32]: ...
 
     #
@@ -491,20 +388,11 @@ class Generator:
     ) -> _nt.Array[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def normal(
-        self,
-        /,
-        loc: _nt.CoFloating_nd = 0.0,
-        scale: _nt.CoFloating_nd = 1.0,
-        *,
-        size: _ShapeLike,
+        self, /, loc: _nt.CoFloating_nd = 0.0, scale: _nt.CoFloating_nd = 1.0, *, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def normal(
-        self,
-        /,
-        loc: _nt.CoFloating_nd = 0.0,
-        scale: _nt.CoFloating_nd = 1.0,
-        size: _ShapeLike | None = None,
+        self, /, loc: _nt.CoFloating_nd = 0.0, scale: _nt.CoFloating_nd = 1.0, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
@@ -518,20 +406,11 @@ class Generator:
     ) -> _nt.Array[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def lognormal(
-        self,
-        /,
-        mean: _nt.CoFloating_nd = 0.0,
-        sigma: _nt.CoFloating_nd = 1.0,
-        *,
-        size: _ShapeLike,
+        self, /, mean: _nt.CoFloating_nd = 0.0, sigma: _nt.CoFloating_nd = 1.0, *, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def lognormal(
-        self,
-        /,
-        mean: _nt.CoFloating_nd = 0.0,
-        sigma: _nt.CoFloating_nd = 1.0,
-        size: _ShapeLike | None = None,
+        self, /, mean: _nt.CoFloating_nd = 0.0, sigma: _nt.CoFloating_nd = 1.0, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
@@ -543,11 +422,7 @@ class Generator:
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def vonmises(
-        self,
-        /,
-        mu: _nt.CoFloating_nd,
-        kappa: _nt.CoFloating_nd,
-        size: _ShapeLike | None = None,
+        self, /, mu: _nt.CoFloating_nd, kappa: _nt.CoFloating_nd, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
@@ -567,12 +442,7 @@ class Generator:
     #
     @overload
     def standard_gamma(
-        self,
-        /,
-        shape: _nt.CoFloating_0d,
-        size: None = None,
-        dtype: _DTypeLikeFloat = ...,
-        out: None = None,
+        self, /, shape: _nt.CoFloating_0d, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None
     ) -> float: ...
     @overload
     def standard_gamma(
@@ -641,20 +511,11 @@ class Generator:
     ) -> _nt.Array[np.float64]: ...
     @overload  # size: (int, ...)  (keyword)
     def gamma(
-        self,
-        /,
-        shape: _nt.CoFloating_nd,
-        scale: _nt.CoFloating_nd = 1.0,
-        *,
-        size: _ShapeLike,
+        self, /, shape: _nt.CoFloating_nd, scale: _nt.CoFloating_nd = 1.0, *, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def gamma(
-        self,
-        /,
-        shape: _nt.CoFloating_nd,
-        scale: _nt.CoFloating_nd = 1.0,
-        size: _ShapeLike | None = None,
+        self, /, shape: _nt.CoFloating_nd, scale: _nt.CoFloating_nd = 1.0, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
@@ -664,31 +525,17 @@ class Generator:
     def f(self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _ShapeLike) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def f(
-        self,
-        /,
-        dfnum: _nt.CoFloating_nd,
-        dfden: _nt.CoFloating_nd,
-        size: _ShapeLike | None = None,
+        self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     #
     @overload  # size: None  (default)
     def noncentral_f(
-        self,
-        /,
-        dfnum: _nt.CoFloating_0d,
-        dfden: _nt.CoFloating_0d,
-        nonc: _nt.CoFloating_0d,
-        size: None = None,
+        self, /, dfnum: _nt.CoFloating_0d, dfden: _nt.CoFloating_0d, nonc: _nt.CoFloating_0d, size: None = None
     ) -> float: ...
     @overload  # size: (int, ...)
     def noncentral_f(
-        self,
-        /,
-        dfnum: _nt.CoFloating_nd,
-        dfden: _nt.CoFloating_nd,
-        nonc: _nt.CoFloating_nd,
-        size: _ShapeLike,
+        self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, nonc: _nt.CoFloating_nd, size: _ShapeLike
     ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def noncentral_f(
@@ -707,11 +554,7 @@ class Generator:
     def wald(self, /, mean: _nt.CoFloating_nd, scale: _nt.CoFloating_nd, size: _ShapeLike) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def wald(
-        self,
-        /,
-        mean: _nt.CoFloating_nd,
-        scale: _nt.CoFloating_nd,
-        size: _ShapeLike | None = None,
+        self, /, mean: _nt.CoFloating_nd, scale: _nt.CoFloating_nd, size: _ShapeLike | None = None
     ) -> float | _nt.Array[np.float64]: ...
 
     ###
@@ -730,14 +573,7 @@ class Generator:
     ) -> np.int64: ...
     @overload
     def integers(
-        self,
-        /,
-        low: int,
-        high: int | None = None,
-        size: None = None,
-        *,
-        dtype: type[bool],
-        endpoint: bool = False,
+        self, /, low: int, high: int | None = None, size: None = None, *, dtype: type[bool], endpoint: bool = False
     ) -> bool: ...
     @overload
     def integers(  # type: ignore[overload-overlap]
@@ -752,25 +588,11 @@ class Generator:
     ) -> _IntegerT: ...
     @overload
     def integers(
-        self,
-        /,
-        low: int,
-        high: int | None = None,
-        size: None = None,
-        *,
-        dtype: _BoolCodes,
-        endpoint: bool = False,
+        self, /, low: int, high: int | None = None, size: None = None, *, dtype: _BoolCodes, endpoint: bool = False
     ) -> np.bool: ...
     @overload
     def integers(
-        self,
-        /,
-        low: int,
-        high: int | None = None,
-        size: None = None,
-        *,
-        dtype: _nt.ToDTypeInt8,
-        endpoint: bool = False,
+        self, /, low: int, high: int | None = None, size: None = None, *, dtype: _nt.ToDTypeInt8, endpoint: bool = False
     ) -> np.int8: ...
     @overload
     def integers(
@@ -1209,11 +1031,7 @@ class Generator:
     def binomial(self, /, n: _nt.CoInteger_nd, p: _nt.CoFloating_nd, size: _ShapeLike) -> _nt.Array[np.int64]: ...
     @overload  # fallback
     def binomial(
-        self,
-        /,
-        n: _nt.CoInteger_nd,
-        p: _nt.CoFloating_nd,
-        size: _ShapeLike | None = None,
+        self, /, n: _nt.CoInteger_nd, p: _nt.CoFloating_nd, size: _ShapeLike | None = None
     ) -> int | _nt.Array[np.int64]: ...
 
     #
@@ -1225,11 +1043,7 @@ class Generator:
     ) -> _nt.Array[np.int64]: ...
     @overload  # fallback
     def negative_binomial(
-        self,
-        /,
-        n: _nt.CoFloating_nd,
-        p: _nt.CoFloating_nd,
-        size: _ShapeLike | None = None,
+        self, /, n: _nt.CoFloating_nd, p: _nt.CoFloating_nd, size: _ShapeLike | None = None
     ) -> int | _nt.Array[np.int64]: ...
 
     #
@@ -1263,12 +1077,7 @@ class Generator:
     def hypergeometric(self, /, ngood: int, nbad: int, nsample: int, size: None = None) -> int: ...
     @overload  # size: (int, ...)
     def hypergeometric(
-        self,
-        /,
-        ngood: _nt.CoInteger_nd,
-        nbad: _nt.CoInteger_nd,
-        nsample: _nt.CoInteger_nd,
-        size: _ShapeLike,
+        self, /, ngood: _nt.CoInteger_nd, nbad: _nt.CoInteger_nd, nsample: _nt.CoInteger_nd, size: _ShapeLike
     ) -> _nt.Array[np.int64]: ...
     @overload  # fallback
     def hypergeometric(
@@ -1309,11 +1118,7 @@ class Generator:
 
     #
     def multinomial(
-        self,
-        /,
-        n: _nt.CoInteger_nd,
-        pvals: _nt.CoFloating_nd,
-        size: _ShapeLike | None = None,
+        self, /, n: _nt.CoInteger_nd, pvals: _nt.CoFloating_nd, size: _ShapeLike | None = None
     ) -> _nt.Array[np.int64]: ...
 
     #

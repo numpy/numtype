@@ -135,9 +135,7 @@ def undo_rmbadname(names: Iterable[str]) -> list[str]: ...
 def openhook(filename: StrPath, mode: str) -> IO[Any]: ...
 def is_free_format(fname: StrPath) -> bool: ...
 def readfortrancode(
-    ffile: StrOrBytesPath | Iterable[StrOrBytesPath],
-    dowithline: Callable[[str, int], object] = ...,
-    istop: int = 1,
+    ffile: StrOrBytesPath | Iterable[StrOrBytesPath], dowithline: Callable[[str, int], object] = ..., istop: int = 1
 ) -> None: ...
 
 #
@@ -182,15 +180,11 @@ def get_useparameters(block: Mapping[str, object], param_map: Mapping[str, str] 
 #
 @overload
 def postcrack2(
-    block: dict[str, Any],
-    tab: str = "",
-    param_map: Mapping[str, str] | None = None,
+    block: dict[str, Any], tab: str = "", param_map: Mapping[str, str] | None = None
 ) -> dict[str, str | Any]: ...
 @overload
 def postcrack2(
-    block: list[dict[str, Any]],
-    tab: str = "",
-    param_map: Mapping[str, str] | None = None,
+    block: list[dict[str, Any]], tab: str = "", param_map: Mapping[str, str] | None = None
 ) -> list[dict[str, str | Any]]: ...
 
 #

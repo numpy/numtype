@@ -45,13 +45,7 @@ class _Kwargs3(_KwargsCommon, total=False):
 class _Call11(Protocol):
     @overload
     def __call__(
-        self,
-        x: ArrayLike,
-        /,
-        out: _Out1[_ArrayT],
-        *,
-        dtype: None = None,
-        **kwds: Unpack[_Kwargs2],
+        self, x: ArrayLike, /, out: _Out1[_ArrayT], *, dtype: None = None, **kwds: Unpack[_Kwargs2]
     ) -> _ArrayT: ...
     @overload
     def __call__(

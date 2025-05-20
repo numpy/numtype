@@ -23,7 +23,5 @@ def set_module(module: _HasModuleT) -> _HasModuleT: ...
 
 #
 def _rename_parameter(
-    old_names: Iterable[str],
-    new_names: Iterable[str],
-    dep_version: str | None = None,
+    old_names: Iterable[str], new_names: Iterable[str], dep_version: str | None = None
 ) -> Callable[[Callable[..., _T]], Callable[..., _T]]: ...

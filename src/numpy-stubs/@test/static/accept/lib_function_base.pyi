@@ -38,10 +38,7 @@ assert_type(vectorized_func.excluded, set[int | str])
 assert_type(vectorized_func.__doc__, str | None)
 assert_type(vectorized_func([1]), Any)
 assert_type(np.vectorize(int), np.vectorize)
-assert_type(
-    np.vectorize(int, otypes="i", doc="doc", excluded=(), cache=True, signature=None),
-    np.vectorize,
-)
+assert_type(np.vectorize(int, otypes="i", doc="doc", excluded=(), cache=True, signature=None), np.vectorize)
 
 assert_type(np.rot90(AR_f8, k=2), _nt.Array[np.float64])
 assert_type(np.rot90(AR_LIKE_f8, axes=(0, 1)), _nt.Array[Any])

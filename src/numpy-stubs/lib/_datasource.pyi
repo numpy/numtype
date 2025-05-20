@@ -24,9 +24,5 @@ class Repository(DataSource):
     def listdir(self, /) -> list[str]: ...
 
 def open(
-    path: str,
-    mode: _Mode = "r",
-    destpath: str | None = ...,
-    encoding: str | None = None,
-    newline: str | None = None,
+    path: str, mode: _Mode = "r", destpath: str | None = ..., encoding: str | None = None, newline: str | None = None
 ) -> IO[Any]: ...

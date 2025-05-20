@@ -34,8 +34,7 @@ _CoComplexT = TypeVar("_CoComplexT", bound=_nt.co_complex)
 # The returned arrays dtype must be compatible with `np.equal`
 _Device: TypeAlias = L["cpu"]
 _MaskFunc: TypeAlias = Callable[
-    [_nt.Array[np.intp], _T],
-    _nt.Array[_nt.co_complex | np.datetime64 | np.timedelta64 | np.object_],
+    [_nt.Array[np.intp], _T], _nt.Array[_nt.co_complex | np.datetime64 | np.timedelta64 | np.object_]
 ]
 
 _Sequence01D: TypeAlias = _T | Sequence[_T]

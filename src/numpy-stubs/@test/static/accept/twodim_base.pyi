@@ -54,83 +54,32 @@ assert_type(np.vander(AR_O), _nt.Array[np.object_])
 
 assert_type(
     np.histogram2d(AR_LIKE_c, AR_LIKE_c),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.complex128 | np.float64],
-        _nt.Array[np.complex128 | np.float64],
-    ],
+    tuple[_nt.Array[np.float64], _nt.Array[np.complex128 | np.float64], _nt.Array[np.complex128 | np.float64]],
 )
-assert_type(
-    np.histogram2d(AR_i, AR_b),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-    ],
-)
-assert_type(
-    np.histogram2d(AR_f, AR_i),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-    ],
-)
-assert_type(
-    np.histogram2d(AR_i, AR_f),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-    ],
-)
+assert_type(np.histogram2d(AR_i, AR_b), tuple[_nt.Array[np.float64], _nt.Array[np.float64], _nt.Array[np.float64]])
+assert_type(np.histogram2d(AR_f, AR_i), tuple[_nt.Array[np.float64], _nt.Array[np.float64], _nt.Array[np.float64]])
+assert_type(np.histogram2d(AR_i, AR_f), tuple[_nt.Array[np.float64], _nt.Array[np.float64], _nt.Array[np.float64]])
 assert_type(
     np.histogram2d(AR_f, AR_c, weights=AR_LIKE_b),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.complex128],
-        _nt.Array[np.complex128],
-    ],
+    tuple[_nt.Array[np.float64], _nt.Array[np.complex128], _nt.Array[np.complex128]],
 )
 assert_type(
-    np.histogram2d(AR_f, AR_c, bins=8),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.complex128],
-        _nt.Array[np.complex128],
-    ],
+    np.histogram2d(AR_f, AR_c, bins=8), tuple[_nt.Array[np.float64], _nt.Array[np.complex128], _nt.Array[np.complex128]]
 )
 assert_type(
     np.histogram2d(AR_c, AR_f, bins=(8, 5)),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.complex128],
-        _nt.Array[np.complex128],
-    ],
+    tuple[_nt.Array[np.float64], _nt.Array[np.complex128], _nt.Array[np.complex128]],
 )
 assert_type(
-    np.histogram2d(AR_c, AR_i, bins=AR_u),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.uint64],
-        _nt.Array[np.uint64],
-    ],
+    np.histogram2d(AR_c, AR_i, bins=AR_u), tuple[_nt.Array[np.float64], _nt.Array[np.uint64], _nt.Array[np.uint64]]
 )
 assert_type(
     np.histogram2d(AR_c, AR_c, bins=(AR_u, AR_u)),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.uint64],
-        _nt.Array[np.uint64],
-    ],
+    tuple[_nt.Array[np.float64], _nt.Array[np.uint64], _nt.Array[np.uint64]],
 )
 assert_type(
     np.histogram2d(AR_c, AR_c, bins=(AR_b, 8)),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.bool | np.complex128],
-        _nt.Array[np.bool | np.complex128],
-    ],
+    tuple[_nt.Array[np.float64], _nt.Array[np.bool | np.complex128], _nt.Array[np.bool | np.complex128]],
 )
 
 assert_type(np.mask_indices(10, func1), tuple[_nt.Array[np.intp], _nt.Array[np.intp]])

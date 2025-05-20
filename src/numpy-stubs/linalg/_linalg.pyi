@@ -602,83 +602,47 @@ def qr(a: _nt.CoComplex128_1nd, mode: L["r"]) -> _Array2ND[np.inexact]: ...
 #
 @overload  # float64 | complex128, compute_uv=False (positional)
 def svd(
-    a: _Toinexact64_1nd,
-    full_matrices: bool,
-    compute_uv: _False,
-    hermitian: bool = False,
+    a: _Toinexact64_1nd, full_matrices: bool, compute_uv: _False, hermitian: bool = False
 ) -> _nt.Array[np.float64]: ...
 @overload  # float64 | complex128, compute_uv=False (keyword)
 def svd(
-    a: _Toinexact64_1nd,
-    full_matrices: bool = True,
-    *,
-    compute_uv: _False,
-    hermitian: bool = False,
+    a: _Toinexact64_1nd, full_matrices: bool = True, *, compute_uv: _False, hermitian: bool = False
 ) -> _nt.Array[np.float64]: ...
 @overload  # float64, compute_uv=True
 def svd(
-    a: _ToFloat64_1nd,
-    full_matrices: bool = True,
-    compute_uv: _True = True,
-    hermitian: bool = False,
+    a: _ToFloat64_1nd, full_matrices: bool = True, compute_uv: _True = True, hermitian: bool = False
 ) -> SVDResult[np.float64, np.float64]: ...
 @overload  # complex128, compute_uv=True
 def svd(
-    a: _nt.ToComplex128_1nd,
-    full_matrices: bool = True,
-    compute_uv: _True = True,
-    hermitian: bool = False,
+    a: _nt.ToComplex128_1nd, full_matrices: bool = True, compute_uv: _True = True, hermitian: bool = False
 ) -> SVDResult[np.float64, np.complex128]: ...
 @overload  # float32, compute_uv=True
 def svd(
-    a: _nt.ToFloat32_1nd,
-    full_matrices: bool = True,
-    compute_uv: _True = True,
-    hermitian: bool = False,
+    a: _nt.ToFloat32_1nd, full_matrices: bool = True, compute_uv: _True = True, hermitian: bool = False
 ) -> SVDResult[np.float32, np.float32]: ...
 @overload  # float32 | complex64, compute_uv=False (positional)
 def svd(
-    a: _Toinexact32_1nd,
-    full_matrices: bool,
-    compute_uv: _False,
-    hermitian: bool = False,
+    a: _Toinexact32_1nd, full_matrices: bool, compute_uv: _False, hermitian: bool = False
 ) -> _nt.Array[np.float32]: ...
 @overload  # float32 | complex64, compute_uv=False (keyword)
 def svd(
-    a: _Toinexact32_1nd,
-    full_matrices: bool = True,
-    *,
-    compute_uv: _False,
-    hermitian: bool = False,
+    a: _Toinexact32_1nd, full_matrices: bool = True, *, compute_uv: _False, hermitian: bool = False
 ) -> _nt.Array[np.float32]: ...
 @overload  # complex64, compute_uv=True
 def svd(
-    a: _nt.ToComplex64_1nd,
-    full_matrices: bool = True,
-    compute_uv: _True = True,
-    hermitian: bool = False,
+    a: _nt.ToComplex64_1nd, full_matrices: bool = True, compute_uv: _True = True, hermitian: bool = False
 ) -> SVDResult[np.float32, np.complex64]: ...
 @overload  # +complex128, compute_uv=True
 def svd(
-    a: _nt.CoComplex128_1nd,
-    full_matrices: bool = True,
-    compute_uv: _True = True,
-    hermitian: bool = False,
+    a: _nt.CoComplex128_1nd, full_matrices: bool = True, compute_uv: _True = True, hermitian: bool = False
 ) -> SVDResult: ...
 @overload  # +complex128, compute_uv=False (positional)
 def svd(
-    a: _nt.CoComplex128_1nd,
-    full_matrices: bool,
-    compute_uv: _False,
-    hermitian: bool = False,
+    a: _nt.CoComplex128_1nd, full_matrices: bool, compute_uv: _False, hermitian: bool = False
 ) -> _nt.Array[np.floating]: ...
 @overload  # +complex128, compute_uv=False (keyword)
 def svd(
-    a: _nt.CoComplex128_1nd,
-    full_matrices: bool = True,
-    *,
-    compute_uv: _False,
-    hermitian: bool = False,
+    a: _nt.CoComplex128_1nd, full_matrices: bool = True, *, compute_uv: _False, hermitian: bool = False
 ) -> _nt.Array[np.floating]: ...
 
 #
@@ -782,51 +746,35 @@ def det(a: _nt.CoComplex128_1nd) -> Any: ...
 #
 @overload  # float64, +float64
 def lstsq(
-    a: _ToFloat64_1nd,
-    b: _nt.CoFloat64_1nd,
-    rcond: float | None = None,
+    a: _ToFloat64_1nd, b: _nt.CoFloat64_1nd, rcond: float | None = None
 ) -> _LstSqResult[np.float64, np.float64]: ...
 @overload  # +float64, float64
 def lstsq(
-    a: _nt.CoFloat64_1nd,
-    b: _ToFloat64_1nd,
-    rcond: float | None = None,
+    a: _nt.CoFloat64_1nd, b: _ToFloat64_1nd, rcond: float | None = None
 ) -> _LstSqResult[np.float64, np.float64]: ...
 @overload  # float32, float32
 def lstsq(
-    a: _nt.ToFloat32_1nd,
-    b: _nt.ToFloat32_1nd,
-    rcond: float | None = None,
+    a: _nt.ToFloat32_1nd, b: _nt.ToFloat32_1nd, rcond: float | None = None
 ) -> _LstSqResult[np.float32, np.float32]: ...
 @overload  # complex128, +complex128
 def lstsq(
-    a: _nt.ToComplex128_1nd,
-    b: _nt.CoComplex128_1nd,
-    rcond: float | None = None,
+    a: _nt.ToComplex128_1nd, b: _nt.CoComplex128_1nd, rcond: float | None = None
 ) -> _LstSqResult[np.complex128, np.float64]: ...
 @overload  # +complex128, complex128
 def lstsq(
-    a: _nt.CoComplex128_1nd,
-    b: _nt.ToComplex128_1nd,
-    rcond: float | None = None,
+    a: _nt.CoComplex128_1nd, b: _nt.ToComplex128_1nd, rcond: float | None = None
 ) -> _LstSqResult[np.complex128, np.float64]: ...
 @overload  # complex64, +complex64
 def lstsq(
-    a: _nt.ToComplex64_1nd,
-    b: _nt.CoComplex64_1nd,
-    rcond: float | None = None,
+    a: _nt.ToComplex64_1nd, b: _nt.CoComplex64_1nd, rcond: float | None = None
 ) -> _LstSqResult[np.complex64, np.float32]: ...
 @overload  # +complex64, complex64
 def lstsq(
-    a: _nt.CoComplex64_1nd,
-    b: _nt.ToComplex64_1nd,
-    rcond: float | None = None,
+    a: _nt.CoComplex64_1nd, b: _nt.ToComplex64_1nd, rcond: float | None = None
 ) -> _LstSqResult[np.complex64, np.float32]: ...
 @overload  # +complex128, +complex128
 def lstsq(
-    a: _nt.CoComplex128_1nd,
-    b: _nt.CoComplex128_1nd,
-    rcond: float | None = None,
+    a: _nt.CoComplex128_1nd, b: _nt.CoComplex128_1nd, rcond: float | None = None
 ) -> _LstSqResult[np.inexact, np.floating]: ...
 
 #

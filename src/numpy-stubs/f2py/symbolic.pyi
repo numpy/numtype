@@ -141,10 +141,7 @@ class Expr(Generic[_OpT_co, _DataT_co]):
 
     #
     def __call__(
-        self,
-        /,
-        *args: _ToExprN,
-        **kwargs: _ToExprN,
+        self, /, *args: _ToExprN, **kwargs: _ToExprN
     ) -> Expr[L[Op.APPLY], tuple[Self, tuple[Expr, ...], dict[str, Expr]]]: ...
 
     #
