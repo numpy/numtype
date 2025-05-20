@@ -68,9 +68,7 @@ def flatten_descr(ndtype: np.dtype[np.void]) -> tuple[tuple[str, np.dtype]]: ...
 
 #
 def get_fieldstructure(
-    adtype: np.dtype[np.void],
-    lastname: str | None = None,
-    parents: dict[str, list[str]] | None = None,
+    adtype: np.dtype[np.void], lastname: str | None = None, parents: dict[str, list[str]] | None = None
 ) -> dict[str, list[str]]: ...
 
 #
@@ -101,10 +99,7 @@ def drop_fields(
 ) -> _nt.Array[np.void, _ShapeT]: ...
 @overload
 def drop_fields(
-    base: _nt.Array[np.void, _ShapeT],
-    drop_names: str | Iterable[str],
-    usemask: bool,
-    asrecarray: Literal[True],
+    base: _nt.Array[np.void, _ShapeT], drop_names: str | Iterable[str], usemask: bool, asrecarray: Literal[True]
 ) -> np.recarray[_ShapeT, np.dtype[np.void]]: ...
 @overload
 def drop_fields(
@@ -118,24 +113,18 @@ def drop_fields(
 #
 @overload
 def rename_fields(
-    base: MaskedRecords[_ShapeT, np.dtype[np.void]],
-    namemapper: Mapping[str, str],
+    base: MaskedRecords[_ShapeT, np.dtype[np.void]], namemapper: Mapping[str, str]
 ) -> MaskedRecords[_ShapeT, np.dtype[np.void]]: ...
 @overload
 def rename_fields(
-    base: _nt.MArray[np.void, _ShapeT],
-    namemapper: Mapping[str, str],
+    base: _nt.MArray[np.void, _ShapeT], namemapper: Mapping[str, str]
 ) -> _nt.MArray[np.void, _ShapeT]: ...
 @overload
 def rename_fields(
-    base: np.recarray[_ShapeT, np.dtype[np.void]],
-    namemapper: Mapping[str, str],
+    base: np.recarray[_ShapeT, np.dtype[np.void]], namemapper: Mapping[str, str]
 ) -> np.recarray[_ShapeT, np.dtype[np.void]]: ...
 @overload
-def rename_fields(
-    base: _nt.Array[np.void, _ShapeT],
-    namemapper: Mapping[str, str],
-) -> _nt.Array[np.void, _ShapeT]: ...
+def rename_fields(base: _nt.Array[np.void, _ShapeT], namemapper: Mapping[str, str]) -> _nt.Array[np.void, _ShapeT]: ...
 
 #
 @overload
@@ -214,8 +203,7 @@ def append_fields(
 
 #
 def rec_drop_fields(
-    base: _nt.Array[np.void, _ShapeT],
-    drop_names: str | Iterable[str],
+    base: _nt.Array[np.void, _ShapeT], drop_names: str | Iterable[str]
 ) -> np.recarray[_ShapeT, np.dtype[np.void]]: ...
 
 #
@@ -239,17 +227,11 @@ def repack_fields(a: _ArrayT, align: bool = False, recurse: bool = False) -> _Ar
 # TODO(jorenham): Attempt shape-typing (return type has ndim == arr.ndim + 1)
 @overload
 def structured_to_unstructured(
-    arr: _nt.Array[np.void],
-    dtype: _DTypeLike[_ScalarT],
-    copy: bool = False,
-    casting: np._CastingKind = "unsafe",
+    arr: _nt.Array[np.void], dtype: _DTypeLike[_ScalarT], copy: bool = False, casting: np._CastingKind = "unsafe"
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def structured_to_unstructured(
-    arr: _nt.Array[np.void],
-    dtype: npt.DTypeLike | None = None,
-    copy: bool = False,
-    casting: np._CastingKind = "unsafe",
+    arr: _nt.Array[np.void], dtype: npt.DTypeLike | None = None, copy: bool = False, casting: np._CastingKind = "unsafe"
 ) -> _nt.Array: ...
 
 #
@@ -284,8 +266,7 @@ def unstructured_to_structured(
 
 #
 def apply_along_fields(
-    func: Callable[[_nt.Array[Any, _ShapeT]], _nt.Array],
-    arr: _nt.Array[np.void, _ShapeT],
+    func: Callable[[_nt.Array[Any, _ShapeT]], _nt.Array], arr: _nt.Array[np.void, _ShapeT]
 ) -> _nt.Array[np.void, _ShapeT]: ...
 
 #
@@ -293,8 +274,7 @@ def assign_fields_by_name(dst: _nt.Array[np.void], src: _nt.Array[np.void], zero
 
 #
 def require_fields(
-    array: _nt.Array[np.void, _ShapeT],
-    required_dtype: _DTypeLikeVoid,
+    array: _nt.Array[np.void, _ShapeT], required_dtype: _DTypeLikeVoid
 ) -> _nt.Array[np.void, _ShapeT]: ...
 
 # TODO(jorenham): Attempt shape-typing
@@ -368,18 +348,11 @@ def find_duplicates(
 ) -> _nt.MArray[np.void, _ShapeT]: ...
 @overload
 def find_duplicates(
-    a: _nt.MArray[np.void, _ShapeT],
-    key: str | None,
-    ignoremask: bool,
-    return_index: Literal[True],
+    a: _nt.MArray[np.void, _ShapeT], key: str | None, ignoremask: bool, return_index: Literal[True]
 ) -> tuple[_nt.MArray[np.void, _ShapeT], _nt.Array[np.intp, _ShapeT]]: ...
 @overload
 def find_duplicates(
-    a: _nt.MArray[np.void, _ShapeT],
-    key: str | None = None,
-    ignoremask: bool = True,
-    *,
-    return_index: Literal[True],
+    a: _nt.MArray[np.void, _ShapeT], key: str | None = None, ignoremask: bool = True, *, return_index: Literal[True]
 ) -> tuple[_nt.MArray[np.void, _ShapeT], _nt.Array[np.intp, _ShapeT]]: ...
 
 #

@@ -37,10 +37,7 @@ def _sort_ignore_list(ignore_text: str, /) -> str:
 
 
 def _process_file(
-    file_path: str | os.PathLike[str],
-    /,
-    *,
-    check_only: bool = False,
+    file_path: str | os.PathLike[str], /, *, check_only: bool = False
 ) -> bool:
     """
     Process a file to sort `(type|pyright): ignore[...]` comments.
@@ -64,9 +61,7 @@ def _process_file(
     def replace_match(match: re.Match[str], /) -> str:
         prefix = match.group(1)  # Whitespace and '#'
         type_or_pyright = match.group(2)  # "pyright" or "type"
-        match.group(
-            3,
-        )  # ":" and any surrounding whitespace plus "ignore["
+        match.group(3)  # ":" and any surrounding whitespace plus "ignore["
         ignore_list = match.group(4)  # The content inside the brackets
         suffix = match.group(5)  # The closing bracket "]"
         sorted_ignore = _sort_ignore_list(ignore_list)
@@ -156,7 +151,7 @@ def _parse_args(args: Sequence[str] | None = None, /) -> argparse.Namespace:
         Parsed arguments
     """
     parser = argparse.ArgumentParser(
-        description="Format `(type|pyright): ignore[...]` comments in Python files.",
+        description="Format `(type|pyright): ignore[...]` comments in Python files."
     )
     parser.add_argument(
         "paths",
@@ -210,9 +205,7 @@ def main(args: Sequence[str] | None = None, /) -> int:
 
         if path_obj.is_dir():
             modified, checked = _process_directory(
-                path,
-                glob_pattern=glob_pattern,
-                check_only=check_only,
+                path, glob_pattern=glob_pattern, check_only=check_only
             )
             total_modified += modified
             total_files += checked
@@ -232,7 +225,7 @@ def main(args: Sequence[str] | None = None, /) -> int:
     if check_only and total_files > 0:
         print(
             f"Found {total_modified} files that would be modified "
-            f"out of {total_files} checked",
+            f"out of {total_files} checked"
         )
         return errno.EAGAIN if total_modified > 0 else 0
 

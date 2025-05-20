@@ -45,28 +45,14 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
     ) -> None: ...
     @overload
     def __init__(
-        self: _Container[_ScalarT],
-        /,
-        data: _ArrayLike[_ScalarT],
-        dtype: None = None,
-        copy: bool = True,
+        self: _Container[_ScalarT], /, data: _ArrayLike[_ScalarT], dtype: None = None, copy: bool = True
     ) -> None: ...
     @overload
     def __init__(
-        self: _Container[_ScalarT],
-        /,
-        data: npt.ArrayLike,
-        dtype: _DTypeLike[_ScalarT],
-        copy: bool = True,
+        self: _Container[_ScalarT], /, data: npt.ArrayLike, dtype: _DTypeLike[_ScalarT], copy: bool = True
     ) -> None: ...
     @overload
-    def __init__(
-        self,
-        /,
-        data: npt.ArrayLike,
-        dtype: npt.DTypeLike | None = None,
-        copy: bool = True,
-    ) -> None: ...
+    def __init__(self, /, data: npt.ArrayLike, dtype: npt.DTypeLike | None = None, copy: bool = True) -> None: ...
 
     #
     def __complex__(self, /) -> complex: ...

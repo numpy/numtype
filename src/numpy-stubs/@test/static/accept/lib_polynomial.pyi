@@ -71,20 +71,10 @@ assert_type(np.polyfit(AR_f8, AR_f8, 2), _nt.Array[np.float64])
 assert_type(
     np.polyfit(AR_f8, AR_i8, 1, full=True),
     tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-        _nt.Array[np.int32],
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
+        _nt.Array[np.float64], _nt.Array[np.float64], _nt.Array[np.int32], _nt.Array[np.float64], _nt.Array[np.float64]
     ],
 )
-assert_type(
-    np.polyfit(AR_u4, AR_f8, 1.0, cov="unscaled"),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-    ],
-)
+assert_type(np.polyfit(AR_u4, AR_f8, 1.0, cov="unscaled"), tuple[_nt.Array[np.float64], _nt.Array[np.float64]])
 assert_type(np.polyfit(AR_c16, AR_f8, 2), _nt.Array[np.complex128])
 assert_type(
     np.polyfit(AR_f8, AR_c16, 1, full=True),
@@ -96,13 +86,7 @@ assert_type(
         _nt.Array[np.float64],
     ],
 )
-assert_type(
-    np.polyfit(AR_u4, AR_c16, 1.0, cov=True),
-    tuple[
-        _nt.Array[np.complex128],
-        _nt.Array[np.complex128],
-    ],
-)
+assert_type(np.polyfit(AR_u4, AR_c16, 1.0, cov=True), tuple[_nt.Array[np.complex128], _nt.Array[np.complex128]])
 
 assert_type(np.polyval(AR_b, AR_b), _nt.Array[np.bool])
 assert_type(np.polyval(AR_u4, AR_b), _nt.Array[np.unsignedinteger])

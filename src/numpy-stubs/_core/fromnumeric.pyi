@@ -113,28 +113,15 @@ def take(
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def take(
-    a: ArrayLike,
-    indices: _nt.CoInteger_1nd,
-    axis: CanIndex | None = None,
-    out: None = None,
-    mode: _ModeKind = "raise",
+    a: ArrayLike, indices: _nt.CoInteger_1nd, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
 ) -> _nt.Array[Incomplete]: ...
 @overload
 def take(
-    a: ArrayLike,
-    indices: _nt.CoInteger_1nd,
-    axis: CanIndex | None = None,
-    *,
-    out: _ArrayT,
-    mode: _ModeKind = "raise",
+    a: ArrayLike, indices: _nt.CoInteger_1nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
 ) -> _ArrayT: ...
 @overload
 def take(
-    a: ArrayLike,
-    indices: _nt.CoInteger_0d,
-    axis: CanIndex | None = None,
-    out: None = None,
-    mode: _ModeKind = "raise",
+    a: ArrayLike, indices: _nt.CoInteger_0d, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
 ) -> Incomplete: ...
 
 #
@@ -189,23 +176,11 @@ def reshape(
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # shape: index
 def reshape(
-    a: ArrayLike,
-    /,
-    shape: CanIndex,
-    order: _OrderACF = "C",
-    *,
-    newshape: None = None,
-    copy: bool | None = None,
+    a: ArrayLike, /, shape: CanIndex, order: _OrderACF = "C", *, newshape: None = None, copy: bool | None = None
 ) -> _nt.Array1D[Incomplete]: ...
 @overload
 def reshape(  # shape: _AnyShape
-    a: ArrayLike,
-    /,
-    shape: _AnyShapeT,
-    order: _OrderACF = "C",
-    *,
-    newshape: None = None,
-    copy: bool | None = None,
+    a: ArrayLike, /, shape: _AnyShapeT, order: _OrderACF = "C", *, newshape: None = None, copy: bool | None = None
 ) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # shape: Sequence[index]
 def reshape(
@@ -220,13 +195,7 @@ def reshape(
 @overload
 @deprecated("`newshape` is deprecated, `shape` instead. (deprecated in NumPy 2.1)")
 def reshape(
-    a: ArrayLike,
-    /,
-    shape: None = None,
-    order: _OrderACF = "C",
-    *,
-    newshape: _ShapeLike,
-    copy: bool | None = None,
+    a: ArrayLike, /, shape: None = None, order: _OrderACF = "C", *, newshape: _ShapeLike, copy: bool | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 #
@@ -330,12 +299,7 @@ def sort(
 ) -> _nt.Array[Incomplete]: ...
 @overload  # unknown shape, unknown dtype, axis=None
 def sort(
-    a: ArrayLike,
-    axis: None,
-    kind: _SortKind | None = None,
-    order: _Order | None = None,
-    *,
-    stable: bool | None = None,
+    a: ArrayLike, axis: None, kind: _SortKind | None = None, order: _Order | None = None, *, stable: bool | None = None
 ) -> _nt.Array1D[Any]: ...
 
 #
@@ -359,12 +323,7 @@ def argsort(
 ) -> _nt.Array1D[np.intp]: ...
 @overload  # axis=None
 def argsort(
-    a: ArrayLike,
-    axis: None,
-    kind: _SortKind | None = None,
-    order: _Order | None = None,
-    *,
-    stable: bool | None = None,
+    a: ArrayLike, axis: None, kind: _SortKind | None = None, order: _Order | None = None, *, stable: bool | None = None
 ) -> _nt.Array1D[np.intp]: ...
 @overload  # fallback
 def argsort(
@@ -387,43 +346,21 @@ def argmax(
 ) -> np.intp: ...
 @overload  # axis=None, keepdims=False
 def argmax(
-    a: ArrayLike,
-    axis: None = None,
-    out: None = None,
-    *,
-    keepdims: L[False] | _NoValueType = ...,
+    a: ArrayLike, axis: None = None, out: None = None, *, keepdims: L[False] | _NoValueType = ...
 ) -> np.intp: ...
 @overload  # keepdims=True
 def argmax(
-    a: ArrayLike,
-    axis: CanIndex | None = None,
-    out: None = None,
-    *,
-    keepdims: L[True],
+    a: ArrayLike, axis: CanIndex | None = None, out: None = None, *, keepdims: L[True]
 ) -> _nt.Array[np.intp]: ...
 @overload  # out=<given> (positional)
-def argmax(
-    a: ArrayLike,
-    axis: CanIndex | None,
-    out: _ArrayT,
-    *,
-    keepdims: bool | _NoValueType = ...,
-) -> _ArrayT: ...
+def argmax(a: ArrayLike, axis: CanIndex | None, out: _ArrayT, *, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
 @overload  # out=<given> (keyword)
 def argmax(
-    a: ArrayLike,
-    axis: CanIndex | None = None,
-    *,
-    out: _ArrayT,
-    keepdims: bool | _NoValueType = ...,
+    a: ArrayLike, axis: CanIndex | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...
 ) -> _ArrayT: ...
 @overload  # fallback
 def argmax(
-    a: ArrayLike,
-    axis: CanIndex | None = None,
-    out: _nt.Array | None = None,
-    *,
-    keepdims: bool | _NoValueType = ...,
+    a: ArrayLike, axis: CanIndex | None = None, out: _nt.Array | None = None, *, keepdims: bool | _NoValueType = ...
 ) -> Incomplete: ...
 
 #
@@ -437,59 +374,31 @@ def argmin(
 ) -> np.intp: ...
 @overload  # axis=None, keepdims=False
 def argmin(
-    a: ArrayLike,
-    axis: None = None,
-    out: None = None,
-    *,
-    keepdims: L[False] | _NoValueType = ...,
+    a: ArrayLike, axis: None = None, out: None = None, *, keepdims: L[False] | _NoValueType = ...
 ) -> np.intp: ...
 @overload  # keepdims=True
 def argmin(
-    a: ArrayLike,
-    axis: CanIndex | None = None,
-    out: None = None,
-    *,
-    keepdims: L[True],
+    a: ArrayLike, axis: CanIndex | None = None, out: None = None, *, keepdims: L[True]
 ) -> _nt.Array[np.intp]: ...
 @overload  # out=<given> (positional)
-def argmin(
-    a: ArrayLike,
-    axis: CanIndex | None,
-    out: _ArrayT,
-    *,
-    keepdims: bool | _NoValueType = ...,
-) -> _ArrayT: ...
+def argmin(a: ArrayLike, axis: CanIndex | None, out: _ArrayT, *, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
 @overload  # out=<given> (keyword)
 def argmin(
-    a: ArrayLike,
-    axis: CanIndex | None = None,
-    *,
-    out: _ArrayT,
-    keepdims: bool | _NoValueType = ...,
+    a: ArrayLike, axis: CanIndex | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...
 ) -> _ArrayT: ...
 @overload  # fallback
 def argmin(
-    a: ArrayLike,
-    axis: CanIndex | None = None,
-    out: _nt.Array | None = None,
-    *,
-    keepdims: bool | _NoValueType = ...,
+    a: ArrayLike, axis: CanIndex | None = None, out: _nt.Array | None = None, *, keepdims: bool | _NoValueType = ...
 ) -> Incomplete: ...
 
 #
 @overload
 def searchsorted(
-    a: ArrayLike,
-    v: _nt.ToGeneric_0d,
-    side: _SortSide = "left",
-    sorter: _nt.ToInteger_1d | None = None,
+    a: ArrayLike, v: _nt.ToGeneric_0d, side: _SortSide = "left", sorter: _nt.ToInteger_1d | None = None
 ) -> np.intp: ...
 @overload
 def searchsorted(
-    a: ArrayLike,
-    v: _nt.ToGeneric_1nd,
-    side: _SortSide = "left",
-    sorter: _nt.ToInteger_1d | None = None,
+    a: ArrayLike, v: _nt.ToGeneric_1nd, side: _SortSide = "left", sorter: _nt.ToInteger_1d | None = None
 ) -> _nt.Array[np.intp]: ...
 
 #
@@ -534,12 +443,7 @@ def trace(
 ) -> Incomplete: ...
 @overload
 def trace(
-    a: ArrayLike,
-    offset: CanIndex,
-    axis1: CanIndex,
-    axis2: CanIndex,
-    dtype: DTypeLike | None,
-    out: _ArrayT,
+    a: ArrayLike, offset: CanIndex, axis1: CanIndex, axis2: CanIndex, dtype: DTypeLike | None, out: _ArrayT
 ) -> _ArrayT: ...
 @overload
 def trace(

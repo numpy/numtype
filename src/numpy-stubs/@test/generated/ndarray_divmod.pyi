@@ -82,19 +82,11 @@ divmod(i1_nd, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumen
 divmod(i1_nd, m8_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(divmod(i1_nd, i_nd), tuple[_nt.Array[np.signedinteger], _nt.Array[np.signedinteger]])
 assert_type(
-    divmod(i1_nd, u_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(i1_nd, u_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(divmod(i1_nd, f_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
 assert_type(
-    divmod(i1_nd, iu_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(i1_nd, iu_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 
 assert_type(divmod(i1_nd, b_py), tuple[_nt.Array[np.int8], _nt.Array[np.int8]])
@@ -124,19 +116,11 @@ divmod(i2_nd, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumen
 divmod(i2_nd, m8_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(divmod(i2_nd, i_nd), tuple[_nt.Array[np.signedinteger], _nt.Array[np.signedinteger]])
 assert_type(
-    divmod(i2_nd, u_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(i2_nd, u_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(divmod(i2_nd, f_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
 assert_type(
-    divmod(i2_nd, iu_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(i2_nd, iu_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 
 assert_type(divmod(i2_nd, b_py), tuple[_nt.Array[np.int16], _nt.Array[np.int16]])
@@ -166,19 +150,11 @@ divmod(i4_nd, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumen
 divmod(i4_nd, m8_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(divmod(i4_nd, i_nd), tuple[_nt.Array[np.signedinteger], _nt.Array[np.signedinteger]])
 assert_type(
-    divmod(i4_nd, u_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(i4_nd, u_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(divmod(i4_nd, f_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
 assert_type(
-    divmod(i4_nd, iu_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(i4_nd, iu_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 
 assert_type(divmod(i4_nd, b_py), tuple[_nt.Array[np.int32], _nt.Array[np.int32]])
@@ -207,21 +183,9 @@ assert_type(divmod(i8_nd, fld_nd), tuple[_nt.Array[np.longdouble], _nt.Array[np.
 divmod(i8_nd, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(i8_nd, m8_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(divmod(i8_nd, i_nd), tuple[_nt.Array[np.int64], _nt.Array[np.int64]])
-assert_type(
-    divmod(i8_nd, u_nd),
-    tuple[
-        _nt.Array[np.int64 | np.float64],
-        _nt.Array[np.int64 | np.float64],
-    ],
-)
+assert_type(divmod(i8_nd, u_nd), tuple[_nt.Array[np.int64 | np.float64], _nt.Array[np.int64 | np.float64]])
 assert_type(divmod(i8_nd, f_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
-assert_type(
-    divmod(i8_nd, iu_nd),
-    tuple[
-        _nt.Array[np.int64 | np.float64],
-        _nt.Array[np.int64 | np.float64],
-    ],
-)
+assert_type(divmod(i8_nd, iu_nd), tuple[_nt.Array[np.int64 | np.float64], _nt.Array[np.int64 | np.float64]])
 
 assert_type(divmod(i8_nd, b_py), tuple[_nt.Array[np.int64], _nt.Array[np.int64]])
 assert_type(divmod(i8_nd, i_py), tuple[_nt.Array[np.int64], _nt.Array[np.int64]])
@@ -341,13 +305,7 @@ divmod(u8_nd, m8_nd)  # type: ignore[operator]  # pyright: ignore[reportArgument
 assert_type(divmod(u8_nd, i_nd), tuple[_nt.Array[np.float64], _nt.Array[np.float64]])
 assert_type(divmod(u8_nd, u_nd), tuple[_nt.Array[np.uint64], _nt.Array[np.uint64]])
 assert_type(divmod(u8_nd, f_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
-assert_type(
-    divmod(u8_nd, iu_nd),
-    tuple[
-        _nt.Array[np.uint64 | np.float64],
-        _nt.Array[np.uint64 | np.float64],
-    ],
-)
+assert_type(divmod(u8_nd, iu_nd), tuple[_nt.Array[np.uint64 | np.float64], _nt.Array[np.uint64 | np.float64]])
 
 assert_type(divmod(u8_nd, b_py), tuple[_nt.Array[np.uint64], _nt.Array[np.uint64]])
 assert_type(divmod(u8_nd, i_py), tuple[_nt.Array[np.uint64], _nt.Array[np.uint64]])
@@ -556,19 +514,11 @@ divmod(i_nd, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgument
 divmod(i_nd, m8_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(divmod(i_nd, i_nd), tuple[_nt.Array[np.signedinteger], _nt.Array[np.signedinteger]])
 assert_type(
-    divmod(i_nd, u_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(i_nd, u_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(divmod(i_nd, f_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
 assert_type(
-    divmod(i_nd, iu_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(i_nd, iu_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 
 assert_type(divmod(i_nd, b_py), tuple[_nt.Array[np.signedinteger], _nt.Array[np.signedinteger]])
@@ -583,33 +533,15 @@ divmod(c_py, i_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentTy
 
 assert_type(divmod(u_nd, b1_nd), tuple[_nt.Array[np.unsignedinteger], _nt.Array[np.unsignedinteger]])
 assert_type(
-    divmod(u_nd, i1_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(u_nd, i1_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(
-    divmod(u_nd, i2_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(u_nd, i2_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(
-    divmod(u_nd, i4_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(u_nd, i4_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
-assert_type(
-    divmod(u_nd, i8_nd),
-    tuple[
-        _nt.Array[np.int64 | np.float64],
-        _nt.Array[np.int64 | np.float64],
-    ],
-)
+assert_type(divmod(u_nd, i8_nd), tuple[_nt.Array[np.int64 | np.float64], _nt.Array[np.int64 | np.float64]])
 assert_type(divmod(u_nd, u1_nd), tuple[_nt.Array[np.unsignedinteger], _nt.Array[np.unsignedinteger]])
 assert_type(divmod(u_nd, u2_nd), tuple[_nt.Array[np.unsignedinteger], _nt.Array[np.unsignedinteger]])
 assert_type(divmod(u_nd, u4_nd), tuple[_nt.Array[np.unsignedinteger], _nt.Array[np.unsignedinteger]])
@@ -621,21 +553,11 @@ assert_type(divmod(u_nd, fld_nd), tuple[_nt.Array[np.longdouble], _nt.Array[np.l
 divmod(u_nd, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(u_nd, m8_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(
-    divmod(u_nd, i_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(u_nd, i_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(divmod(u_nd, u_nd), tuple[_nt.Array[np.unsignedinteger], _nt.Array[np.unsignedinteger]])
 assert_type(divmod(u_nd, f_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
-assert_type(
-    divmod(u_nd, iu_nd),
-    tuple[
-        _nt.Array[np.integer | np.float64],
-        _nt.Array[np.integer | np.float64],
-    ],
-)
+assert_type(divmod(u_nd, iu_nd), tuple[_nt.Array[np.integer | np.float64], _nt.Array[np.integer | np.float64]])
 
 assert_type(divmod(u_nd, b_py), tuple[_nt.Array[np.unsignedinteger], _nt.Array[np.unsignedinteger]])
 assert_type(divmod(u_nd, i_py), tuple[_nt.Array[np.unsignedinteger], _nt.Array[np.unsignedinteger]])
@@ -679,43 +601,19 @@ divmod(c_py, f_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentTy
 
 assert_type(divmod(iu_nd, b1_nd), tuple[_nt.Array[np.integer], _nt.Array[np.integer]])
 assert_type(
-    divmod(iu_nd, i1_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(iu_nd, i1_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(
-    divmod(iu_nd, i2_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(iu_nd, i2_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
 assert_type(
-    divmod(iu_nd, i4_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(iu_nd, i4_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
-assert_type(
-    divmod(iu_nd, i8_nd),
-    tuple[
-        _nt.Array[np.int64 | np.float64],
-        _nt.Array[np.int64 | np.float64],
-    ],
-)
+assert_type(divmod(iu_nd, i8_nd), tuple[_nt.Array[np.int64 | np.float64], _nt.Array[np.int64 | np.float64]])
 assert_type(divmod(iu_nd, u1_nd), tuple[_nt.Array[np.integer], _nt.Array[np.integer]])
 assert_type(divmod(iu_nd, u2_nd), tuple[_nt.Array[np.integer], _nt.Array[np.integer]])
 assert_type(divmod(iu_nd, u4_nd), tuple[_nt.Array[np.integer], _nt.Array[np.integer]])
-assert_type(
-    divmod(iu_nd, u8_nd),
-    tuple[
-        _nt.Array[np.uint64 | np.float64],
-        _nt.Array[np.uint64 | np.float64],
-    ],
-)
+assert_type(divmod(iu_nd, u8_nd), tuple[_nt.Array[np.uint64 | np.float64], _nt.Array[np.uint64 | np.float64]])
 assert_type(divmod(iu_nd, f2_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
 assert_type(divmod(iu_nd, f4_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
 assert_type(divmod(iu_nd, f8_nd), tuple[_nt.Array[np.float64], _nt.Array[np.float64]])
@@ -723,27 +621,11 @@ assert_type(divmod(iu_nd, fld_nd), tuple[_nt.Array[np.longdouble], _nt.Array[np.
 divmod(iu_nd, c16_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(iu_nd, m8_nd)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 assert_type(
-    divmod(iu_nd, i_nd),
-    tuple[
-        _nt.Array[np.signedinteger | np.float64],
-        _nt.Array[np.signedinteger | np.float64],
-    ],
+    divmod(iu_nd, i_nd), tuple[_nt.Array[np.signedinteger | np.float64], _nt.Array[np.signedinteger | np.float64]]
 )
-assert_type(
-    divmod(iu_nd, u_nd),
-    tuple[
-        _nt.Array[np.integer | np.float64],
-        _nt.Array[np.integer | np.float64],
-    ],
-)
+assert_type(divmod(iu_nd, u_nd), tuple[_nt.Array[np.integer | np.float64], _nt.Array[np.integer | np.float64]])
 assert_type(divmod(iu_nd, f_nd), tuple[_nt.Array[np.floating], _nt.Array[np.floating]])
-assert_type(
-    divmod(iu_nd, iu_nd),
-    tuple[
-        _nt.Array[np.integer | np.float64],
-        _nt.Array[np.integer | np.float64],
-    ],
-)
+assert_type(divmod(iu_nd, iu_nd), tuple[_nt.Array[np.integer | np.float64], _nt.Array[np.integer | np.float64]])
 
 assert_type(divmod(iu_nd, b_py), tuple[_nt.Array[np.integer], _nt.Array[np.integer]])
 assert_type(divmod(iu_nd, i_py), tuple[_nt.Array[np.integer], _nt.Array[np.integer]])

@@ -103,8 +103,7 @@ _WarnLog: TypeAlias = list[warnings.WarningMessage]
 _ToModules: TypeAlias = Iterable[types.ModuleType]
 
 _ComparisonFunc: TypeAlias = Callable[
-    [_nt.Array, _nt.Array],
-    bool | _nt.co_complex | _nt.Array[_nt.co_complex | np.object_],
+    [_nt.Array, _nt.Array], bool | _nt.co_complex | _nt.Array[_nt.co_complex | np.object_]
 ]
 _StrLike: TypeAlias = str | bytes
 _RegexLike: TypeAlias = _StrLike | Pattern[Any]
@@ -185,21 +184,12 @@ def print_assert_equal(test_string: str, actual: object, desired: object) -> Non
 #
 def assert_(val: object, msg: str | Callable[[], str] = "") -> None: ...
 def assert_equal(
-    actual: object,
-    desired: object,
-    err_msg: str = "",
-    verbose: bool = True,
-    *,
-    strict: bool = False,
+    actual: object, desired: object, err_msg: str = "", verbose: bool = True, *, strict: bool = False
 ) -> None: ...
 
 #
 def assert_almost_equal(
-    actual: _NumericArrayLike,
-    desired: _NumericArrayLike,
-    decimal: int = 7,
-    err_msg: str = "",
-    verbose: bool = True,
+    actual: _NumericArrayLike, desired: _NumericArrayLike, decimal: int = 7, err_msg: str = "", verbose: bool = True
 ) -> None: ...
 
 #
@@ -229,50 +219,26 @@ def assert_array_compare(
 
 #
 def assert_array_equal(
-    actual: object,
-    desired: object,
-    err_msg: str = "",
-    verbose: bool = True,
-    *,
-    strict: bool = False,
+    actual: object, desired: object, err_msg: str = "", verbose: bool = True, *, strict: bool = False
 ) -> None: ...
 
 #
 def assert_array_almost_equal(
-    actual: _NumericArrayLike,
-    desired: _NumericArrayLike,
-    decimal: float = 6,
-    err_msg: str = "",
-    verbose: bool = True,
+    actual: _NumericArrayLike, desired: _NumericArrayLike, decimal: float = 6, err_msg: str = "", verbose: bool = True
 ) -> None: ...
 
 #
 @overload
 def assert_array_less(
-    x: _ArrayLikeTD64_co,
-    y: _ArrayLikeTD64_co,
-    err_msg: str = "",
-    verbose: bool = True,
-    *,
-    strict: bool = False,
+    x: _ArrayLikeTD64_co, y: _ArrayLikeTD64_co, err_msg: str = "", verbose: bool = True, *, strict: bool = False
 ) -> None: ...
 @overload
 def assert_array_less(
-    x: _ArrayLikeDT64_co,
-    y: _ArrayLikeDT64_co,
-    err_msg: str = "",
-    verbose: bool = True,
-    *,
-    strict: bool = False,
+    x: _ArrayLikeDT64_co, y: _ArrayLikeDT64_co, err_msg: str = "", verbose: bool = True, *, strict: bool = False
 ) -> None: ...
 @overload
 def assert_array_less(
-    x: _NumericArrayLike,
-    y: _NumericArrayLike,
-    err_msg: str = "",
-    verbose: bool = True,
-    *,
-    strict: bool = False,
+    x: _NumericArrayLike, y: _NumericArrayLike, err_msg: str = "", verbose: bool = True, *, strict: bool = False
 ) -> None: ...
 
 #
@@ -281,27 +247,17 @@ def assert_string_equal(actual: str, desired: str) -> None: ...
 #
 @overload
 def assert_raises(
-    exception_class: _ExceptionSpec[_ET],
-    /,
-    *,
-    msg: str | None = None,
+    exception_class: _ExceptionSpec[_ET], /, *, msg: str | None = None
 ) -> unittest.case._AssertRaisesContext[_ET]: ...
 @overload
 def assert_raises(
-    exception_class: _ExceptionSpec,
-    callable: Callable[_Tss, Any],
-    /,
-    *args: _Tss.args,
-    **kwargs: _Tss.kwargs,
+    exception_class: _ExceptionSpec, callable: Callable[_Tss, Any], /, *args: _Tss.args, **kwargs: _Tss.kwargs
 ) -> None: ...
 
 #
 @overload
 def assert_raises_regex(
-    exception_class: _ExceptionSpec[_ET],
-    expected_regexp: _RegexLike,
-    *,
-    msg: str | None = None,
+    exception_class: _ExceptionSpec[_ET], expected_regexp: _RegexLike, *, msg: str | None = None
 ) -> unittest.case._AssertRaisesContext[_ET]: ...
 @overload
 def assert_raises_regex(
@@ -343,10 +299,7 @@ def assert_array_almost_equal_nulp(x: _ArrayLikeNumber_co, y: _ArrayLikeNumber_c
 
 #
 def assert_array_max_ulp(
-    a: _ArrayLikeNumber_co,
-    b: _ArrayLikeNumber_co,
-    maxulp: int = 1,
-    dtype: DTypeLike | None = None,
+    a: _ArrayLikeNumber_co, b: _ArrayLikeNumber_co, maxulp: int = 1, dtype: DTypeLike | None = None
 ) -> _nt.Array[np.floating]: ...
 
 #
@@ -376,69 +329,41 @@ def assert_no_gc_cycles(func: Callable[_Tss, Any], /, *args: _Tss.args, **kwargs
 def tempdir(suffix: None = None, prefix: None = None, dir: None = None) -> _GeneratorContextManager[str]: ...
 @overload
 def tempdir(
-    suffix: AnyStr | None = None,
-    prefix: AnyStr | None = None,
-    *,
-    dir: GenericPath[AnyStr],
+    suffix: AnyStr | None = None, prefix: AnyStr | None = None, *, dir: GenericPath[AnyStr]
 ) -> _GeneratorContextManager[AnyStr]: ...
 @overload
 def tempdir(
-    suffix: AnyStr | None = None,
-    *,
-    prefix: AnyStr,
-    dir: GenericPath[AnyStr] | None = None,
+    suffix: AnyStr | None = None, *, prefix: AnyStr, dir: GenericPath[AnyStr] | None = None
 ) -> _GeneratorContextManager[AnyStr]: ...
 @overload
 def tempdir(
-    suffix: AnyStr,
-    prefix: AnyStr | None = None,
-    dir: GenericPath[AnyStr] | None = None,
+    suffix: AnyStr, prefix: AnyStr | None = None, dir: GenericPath[AnyStr] | None = None
 ) -> _GeneratorContextManager[AnyStr]: ...
 
 #
 @overload
 def temppath(
-    suffix: None = None,
-    prefix: None = None,
-    dir: None = None,
-    text: bool = False,
+    suffix: None = None, prefix: None = None, dir: None = None, text: bool = False
 ) -> _GeneratorContextManager[str]: ...
 @overload
 def temppath(
-    suffix: AnyStr | None,
-    prefix: AnyStr | None,
-    dir: GenericPath[AnyStr],
-    text: bool = False,
+    suffix: AnyStr | None, prefix: AnyStr | None, dir: GenericPath[AnyStr], text: bool = False
 ) -> _GeneratorContextManager[AnyStr]: ...
 @overload
 def temppath(
-    suffix: AnyStr | None = None,
-    prefix: AnyStr | None = None,
-    *,
-    dir: GenericPath[AnyStr],
-    text: bool = False,
+    suffix: AnyStr | None = None, prefix: AnyStr | None = None, *, dir: GenericPath[AnyStr], text: bool = False
 ) -> _GeneratorContextManager[AnyStr]: ...
 @overload
 def temppath(
-    suffix: AnyStr | None,
-    prefix: AnyStr,
-    dir: GenericPath[AnyStr] | None = None,
-    text: bool = False,
+    suffix: AnyStr | None, prefix: AnyStr, dir: GenericPath[AnyStr] | None = None, text: bool = False
 ) -> _GeneratorContextManager[AnyStr]: ...
 @overload
 def temppath(
-    suffix: AnyStr | None = None,
-    *,
-    prefix: AnyStr,
-    dir: GenericPath[AnyStr] | None = None,
-    text: bool = False,
+    suffix: AnyStr | None = None, *, prefix: AnyStr, dir: GenericPath[AnyStr] | None = None, text: bool = False
 ) -> _GeneratorContextManager[AnyStr]: ...
 @overload
 def temppath(
-    suffix: AnyStr,
-    prefix: AnyStr | None = None,
-    dir: GenericPath[AnyStr] | None = None,
-    text: bool = False,
+    suffix: AnyStr, prefix: AnyStr | None = None, dir: GenericPath[AnyStr] | None = None, text: bool = False
 ) -> _GeneratorContextManager[AnyStr]: ...
 
 # NOTE: It's current impossible to annotate without it causing a stubtest error,
@@ -447,9 +372,7 @@ def check_support_sve(__cache: list[_T_or_bool] = []) -> _T_or_bool: ...  # noqa
 
 #
 def decorate_methods(
-    cls: type,
-    decorator: Callable[[Callable[..., Any]], Any],
-    testmatch: _RegexLike | None = None,
+    cls: type, decorator: Callable[[Callable[..., Any]], Any], testmatch: _RegexLike | None = None
 ) -> None: ...
 
 #

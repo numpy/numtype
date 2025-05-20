@@ -43,12 +43,7 @@ class ModuleTester:
         header: str = ...,
         fill_value: bool = ...,
     ) -> None: ...
-    def assert_array_equal(
-        self,
-        x: Incomplete,
-        y: Incomplete,
-        err_msg: str = ...,
-    ) -> None: ...
+    def assert_array_equal(self, x: Incomplete, y: Incomplete, err_msg: str = ...) -> None: ...
 
     #
     def test_0(self) -> None: ...

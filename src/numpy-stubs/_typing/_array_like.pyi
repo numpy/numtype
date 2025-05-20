@@ -28,11 +28,7 @@ class _SupportsArray(Protocol[_DTypeT_co]):
 @runtime_checkable
 class _SupportsArrayFunc(Protocol):  # noqa: PYI046
     def __array_function__(
-        self,
-        func: Callable[..., Any],
-        types: Collection[type[Any]],
-        args: tuple[Any, ...],
-        kwargs: dict[str, Any],
+        self, func: Callable[..., Any], types: Collection[type[Any]], args: tuple[Any, ...], kwargs: dict[str, Any]
     ) -> object: ...
 
 # A subset of `npt.ArrayLike` that can be parametrized w.r.t. `np.generic`

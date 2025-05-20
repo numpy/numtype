@@ -228,8 +228,5 @@ def geomspace(
 
 #
 def add_newdoc(
-    place: str,
-    obj: str | None,
-    doc: str | tuple[str, str] | list[tuple[str, str]],
-    warn_on_python: bool = True,
+    place: str, obj: str | None, doc: str | tuple[str, str] | list[tuple[str, str]], warn_on_python: bool = True
 ) -> None: ...  # undocumented

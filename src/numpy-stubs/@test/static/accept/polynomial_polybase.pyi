@@ -119,14 +119,10 @@ assert_type(PS_herm.deriv(SC_i_co), npp.Hermite)
 
 assert_type(PS_poly.roots(), _nt.Array1D[np.float64 | np.complex128])
 
-assert_type(
-    PS_poly.linspace(),
-    tuple[_nt.Array1D[np.float64 | np.complex128], _nt.Array1D[np.float64 | np.complex128]],
-)
+assert_type(PS_poly.linspace(), tuple[_nt.Array1D[np.float64 | np.complex128], _nt.Array1D[np.float64 | np.complex128]])
 
 assert_type(
-    PS_poly.linspace(9),
-    tuple[_nt.Array1D[np.float64 | np.complex128], _nt.Array1D[np.float64 | np.complex128]],
+    PS_poly.linspace(9), tuple[_nt.Array1D[np.float64 | np.complex128], _nt.Array1D[np.float64 | np.complex128]]
 )
 
 assert_type(PS_cheb.fit(AR_c_co, AR_c_co, SC_i_co), npp.Chebyshev)
@@ -134,10 +130,7 @@ assert_type(PS_leg.fit(AR_c_co, AR_c_co, AR_i), npp.Legendre)
 assert_type(PS_herm.fit(AR_c_co, AR_c_co, SQ_i), npp.Hermite)
 assert_type(PS_poly.fit(AR_c_co, SQ_c, SQ_i), npp.Polynomial)
 assert_type(PS_lag.fit(SQ_c, SQ_c, SQ_i, full=False), npp.Laguerre)
-assert_type(
-    PS_herme.fit(SQ_c, AR_c_co, SC_i_co, full=True),
-    tuple[npp.HermiteE, Sequence[np.inexact | np.int32]],
-)
+assert_type(PS_herme.fit(SQ_c, AR_c_co, SC_i_co, full=True), tuple[npp.HermiteE, Sequence[np.inexact | np.int32]])
 
 # custom operations
 

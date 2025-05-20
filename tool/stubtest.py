@@ -162,10 +162,7 @@ def main() -> int:
         print(*cmd)
 
     result = subprocess.run(
-        cmd,
-        check=False,
-        capture_output=True,
-        env={"FORCE_COLOR": "1"} | os.environ,
+        cmd, check=False, capture_output=True, env={"FORCE_COLOR": "1"} | os.environ
     )
     for std in "stdout", "stderr":
         stream = getattr(sys, std)

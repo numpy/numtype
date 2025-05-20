@@ -194,13 +194,7 @@ def _parse_args(args: Sequence[str] | None, /) -> argparse.Namespace:
         default="table",
         help="display format",
     )
-    parser.add_argument(
-        "-d",
-        "--dtypes",
-        type=str,
-        default=CHARS,
-        help="dtype chars",
-    )
+    parser.add_argument("-d", "--dtypes", type=str, default=CHARS, help="dtype chars")
 
     return parser.parse_args(args)
 

@@ -67,9 +67,7 @@ def _all_types(u: np.ufunc) -> tuple[str, ...]:
     # ugly workaround for weird string ufuncs in `_core.umath`
     prod_args = [_EXTRA_SCALARS] * u.nin
     if u.nin > 1 and not u.types and _qualname(u).startswith("numpy._"):
-        prod_args = [
-            (np.longlong(0), np.longlong(1), *_EXTRA_SCALARS),
-        ] * u.nin
+        prod_args = [(np.longlong(0), np.longlong(1), *_EXTRA_SCALARS)] * u.nin
 
     for args in itertools.product(*prod_args):
         try:
@@ -96,10 +94,7 @@ def _all_types(u: np.ufunc) -> tuple[str, ...]:
 
 
 def _unzip_types(
-    u: np.ufunc,
-    /,
-    *,
-    unique: bool = False,
+    u: np.ufunc, /, *, unique: bool = False
 ) -> tuple[tuple[list[str], ...], tuple[list[str], ...]]:
     tinss: tuple[list[str], ...] = tuple([] for _ in range(u.nin))
     toutss: tuple[list[str], ...] = tuple([] for _ in range(u.nout))
@@ -117,10 +112,7 @@ def _unzip_types(
 
 
 def _ufunc_list(
-    *,
-    nin: int | None = None,
-    nout: int | None = None,
-    private: bool = False,
+    *, nin: int | None = None, nout: int | None = None, private: bool = False
 ) -> list[dict[str, str]]:
     def _sort_key(ufunc: np.ufunc, /) -> tuple[Any, ...]:
         tins, touts = _unzip_types(ufunc, unique=True)
@@ -147,10 +139,7 @@ def _ufunc_list(
         out.append(entry := {"name": _qualname(u).replace("numpy.", "")})
 
         for param, n, targss in zip(
-            ("arg", "out"),
-            (nin, nout),
-            _unzip_types(u, unique=True),
-            strict=True,
+            ("arg", "out"), (nin, nout), _unzip_types(u, unique=True), strict=True
         ):
             if n is not None and len(targss) == 1:
                 entry[param] = "".join(targss[0])
@@ -200,9 +189,7 @@ def main(args: Sequence[str] | None = None, /) -> int:
     namespace = _parse_args(args)
 
     data = _ufunc_list(
-        nin=namespace.nin,
-        nout=namespace.nout,
-        private=namespace.private,
+        nin=namespace.nin, nout=namespace.nout, private=namespace.private
     )
 
     match namespace.format:
@@ -225,7 +212,7 @@ def main(args: Sequence[str] | None = None, /) -> int:
             # needed for consistent ordering of string-like types
             .replace("TS", "ST")
             .replace("TV", "VT")
-            .replace("US", "SU"),
+            .replace("US", "SU")
         )
 
     return 0

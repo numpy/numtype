@@ -99,18 +99,9 @@ assert_type(npp.polynomial.polyvander3d(AR_c16, AR_c16, AR_c16, [4, 3, 2]), _Com
 assert_type(npp.polynomial.polyvander3d(AR_O, AR_O, AR_O, [4, 3, 2]), _Object_nd)
 
 assert_type(npp.polynomial.polyfit(AR_f8, AR_f8, 2), _Float64_nd)
-assert_type(
-    npp.polynomial.polyfit(AR_f8, AR_i8, 1, full=True),
-    tuple[_Float64_nd, Sequence[np.inexact | np.int32]],
-)
-assert_type(
-    npp.polynomial.polyfit(AR_c16, AR_f8, 2),
-    _ComplexFloating_nd,
-)
-assert_type(
-    npp.polynomial.polyfit(AR_f8, AR_c16, 1, full=True)[0],
-    _ComplexFloating_nd,
-)
+assert_type(npp.polynomial.polyfit(AR_f8, AR_i8, 1, full=True), tuple[_Float64_nd, Sequence[np.inexact | np.int32]])
+assert_type(npp.polynomial.polyfit(AR_c16, AR_f8, 2), _ComplexFloating_nd)
+assert_type(npp.polynomial.polyfit(AR_f8, AR_c16, 1, full=True)[0], _ComplexFloating_nd)
 
 assert_type(npp.chebyshev.chebgauss(2), tuple[_Float64_1d, _Float64_1d])
 

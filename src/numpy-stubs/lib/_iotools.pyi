@@ -103,8 +103,7 @@ def has_nested_fields(ndtype: np.dtype[np.void]) -> bool: ...
 
 #
 def flatten_dtype(
-    ndtype: np.dtype[np.void],
-    flatten_base: bool = False,
+    ndtype: np.dtype[np.void], flatten_base: bool = False
 ) -> type[np.dtype[np.bool | np.number | np.character | np.object_ | np.datetime64 | np.timedelta64]]: ...
 
 #

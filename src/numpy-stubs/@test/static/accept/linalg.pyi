@@ -126,18 +126,9 @@ assert_type(np.linalg.pinv(AR_c16), _Array2ND[np.complex128])
 assert_type(np.linalg.slogdet(i_2d), SlogdetResult[np.float64, np.float64])
 assert_type(np.linalg.slogdet([f_1d]), SlogdetResult[np.float64, np.float64])
 assert_type(np.linalg.slogdet(c_2d), SlogdetResult[np.float64, np.complex128])
-assert_type(
-    np.linalg.slogdet(i_3d),
-    SlogdetResult[_nt.Array[np.float64], _nt.Array[np.float64]],
-)
-assert_type(
-    np.linalg.slogdet(f_3d),
-    SlogdetResult[_nt.Array[np.float64], _nt.Array[np.float64]],
-)
-assert_type(
-    np.linalg.slogdet(c_3d),
-    SlogdetResult[_nt.Array[np.float64], _nt.Array[np.complex128]],
-)
+assert_type(np.linalg.slogdet(i_3d), SlogdetResult[_nt.Array[np.float64], _nt.Array[np.float64]])
+assert_type(np.linalg.slogdet(f_3d), SlogdetResult[_nt.Array[np.float64], _nt.Array[np.float64]])
+assert_type(np.linalg.slogdet(c_3d), SlogdetResult[_nt.Array[np.float64], _nt.Array[np.complex128]])
 assert_type(np.linalg.slogdet(AR_i8), SlogdetResult)
 assert_type(np.linalg.slogdet(AR_f8), SlogdetResult)
 assert_type(np.linalg.slogdet(AR_c16), SlogdetResult)
@@ -147,31 +138,14 @@ assert_type(np.linalg.det(AR_f8), Any)
 assert_type(np.linalg.det(AR_c16), Any)
 
 assert_type(
-    np.linalg.lstsq(AR_i8, AR_i8),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-        np.int32,
-        _nt.Array[np.float64],
-    ],
+    np.linalg.lstsq(AR_i8, AR_i8), tuple[_nt.Array[np.float64], _nt.Array[np.float64], np.int32, _nt.Array[np.float64]]
 )
 assert_type(
-    np.linalg.lstsq(AR_i8, AR_f8),
-    tuple[
-        _nt.Array[np.float64],
-        _nt.Array[np.float64],
-        np.int32,
-        _nt.Array[np.float64],
-    ],
+    np.linalg.lstsq(AR_i8, AR_f8), tuple[_nt.Array[np.float64], _nt.Array[np.float64], np.int32, _nt.Array[np.float64]]
 )
 assert_type(
     np.linalg.lstsq(AR_f8, AR_c16),
-    tuple[
-        _nt.Array[np.complex128],
-        _nt.Array[np.float64],
-        np.int32,
-        _nt.Array[np.float64],
-    ],
+    tuple[_nt.Array[np.complex128], _nt.Array[np.float64], np.int32, _nt.Array[np.float64]],
 )
 
 assert_type(np.linalg.norm(AR_i8), np.float64)

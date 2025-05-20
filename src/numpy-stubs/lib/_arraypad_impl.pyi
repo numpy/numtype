@@ -14,28 +14,13 @@ __all__ = ["pad"]
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
 _ModeKind: TypeAlias = L[
-    "constant",
-    "edge",
-    "linear_ramp",
-    "maximum",
-    "mean",
-    "median",
-    "minimum",
-    "reflect",
-    "symmetric",
-    "wrap",
-    "empty",
+    "constant", "edge", "linear_ramp", "maximum", "mean", "median", "minimum", "reflect", "symmetric", "wrap", "empty"
 ]
 
 @type_check_only
 class _ModeFunc(Protocol):
     def __call__(
-        self,
-        vector: _nt.Array[Incomplete],
-        pad: tuple[int, int],
-        iaxis: int,
-        kwargs: Mapping[str, object],
-        /,
+        self, vector: _nt.Array[Incomplete], pad: tuple[int, int], iaxis: int, kwargs: Mapping[str, object], /
     ) -> None: ...
 
 ###
@@ -66,15 +51,7 @@ def pad(
 ) -> _nt.Array[Incomplete]: ...
 @overload
 def pad(
-    array: _ArrayLike[_ScalarT],
-    pad_width: _ArrayLikeInt,
-    mode: _ModeFunc,
-    **kwargs: object,
+    array: _ArrayLike[_ScalarT], pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object
 ) -> _nt.Array[_ScalarT]: ...
 @overload
-def pad(
-    array: ArrayLike,
-    pad_width: _ArrayLikeInt,
-    mode: _ModeFunc,
-    **kwargs: object,
-) -> _nt.Array[Incomplete]: ...
+def pad(array: ArrayLike, pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> _nt.Array[Incomplete]: ...

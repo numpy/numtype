@@ -665,11 +665,7 @@ class RandomState:
     ) -> _nt.Array[np.uint64]: ...
     @overload  # fallback
     def randint(
-        self,
-        /,
-        low: _nt.CoInteger_nd,
-        high: _nt.CoInteger_nd | None = None,
-        size: _ShapeLike | None = None,
+        self, /, low: _nt.CoInteger_nd, high: _nt.CoInteger_nd | None = None, size: _ShapeLike | None = None
     ) -> int | _nt.Array[np.int_]: ...
     @overload
     def randint(

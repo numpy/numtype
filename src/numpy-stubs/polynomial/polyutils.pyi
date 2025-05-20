@@ -13,8 +13,7 @@ __all__ = ["as_series", "format_float", "getdomain", "mapdomain", "mapparms", "t
 
 _T = TypeVar("_T")
 _T_seq = TypeVar(
-    "_T_seq",
-    bound=_nt.Array[_nt.co_complex | np.object_] | SupportsLenAndGetItem[_nt.co_complex | np.object_],
+    "_T_seq", bound=_nt.Array[_nt.co_complex | np.object_] | SupportsLenAndGetItem[_nt.co_complex | np.object_]
 )
 
 _Tuple2: TypeAlias = tuple[_T, _T]

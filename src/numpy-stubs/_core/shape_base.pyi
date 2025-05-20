@@ -99,47 +99,29 @@ def atleast_3d(a0: ArrayLike, a2: ArrayLike, /, *arys: ArrayLike) -> tuple[_nt.A
 #
 @overload
 def vstack(
-    tup: Sequence[_ArrayLike[_ScalarT]],
-    *,
-    dtype: None = None,
-    casting: np._CastingKind = "same_kind",
+    tup: Sequence[_ArrayLike[_ScalarT]], *, dtype: None = None, casting: np._CastingKind = "same_kind"
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def vstack(
-    tup: Sequence[ArrayLike],
-    *,
-    dtype: _DTypeLike[_ScalarT],
-    casting: np._CastingKind = "same_kind",
+    tup: Sequence[ArrayLike], *, dtype: _DTypeLike[_ScalarT], casting: np._CastingKind = "same_kind"
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def vstack(
-    tup: Sequence[ArrayLike],
-    *,
-    dtype: DTypeLike | None = None,
-    casting: np._CastingKind = "same_kind",
+    tup: Sequence[ArrayLike], *, dtype: DTypeLike | None = None, casting: np._CastingKind = "same_kind"
 ) -> _nt.Array[Any]: ...
 
 #
 @overload
 def hstack(
-    tup: Sequence[_ArrayLike[_ScalarT]],
-    *,
-    dtype: None = None,
-    casting: np._CastingKind = "same_kind",
+    tup: Sequence[_ArrayLike[_ScalarT]], *, dtype: None = None, casting: np._CastingKind = "same_kind"
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def hstack(
-    tup: Sequence[ArrayLike],
-    *,
-    dtype: _DTypeLike[_ScalarT],
-    casting: np._CastingKind = "same_kind",
+    tup: Sequence[ArrayLike], *, dtype: _DTypeLike[_ScalarT], casting: np._CastingKind = "same_kind"
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def hstack(
-    tup: Sequence[ArrayLike],
-    *,
-    dtype: DTypeLike | None = None,
-    casting: np._CastingKind = "same_kind",
+    tup: Sequence[ArrayLike], *, dtype: DTypeLike | None = None, casting: np._CastingKind = "same_kind"
 ) -> _nt.Array[Any]: ...
 
 #

@@ -59,33 +59,9 @@ MArray3D = TypeAliasType("MArray3D", np.ma.MaskedArray[Rank3, np.dtype[_ScalarT]
 
 ###
 
-StringArray = TypeAliasType(
-    "StringArray",
-    np.ndarray[_RankT, np.dtypes.StringDType[_NaT]],
-    type_params=(_RankT, _NaT),
-)
-StringArray0D = TypeAliasType(
-    "StringArray0D",
-    np.ndarray[Rank0, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
-StringArray1D = TypeAliasType(
-    "StringArray1D",
-    np.ndarray[Rank1, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
-StringArray2D = TypeAliasType(
-    "StringArray2D",
-    np.ndarray[Rank2, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
-StringArray3D = TypeAliasType(
-    "StringArray3D",
-    np.ndarray[Rank3, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
-StringArrayND = TypeAliasType(
-    "StringArrayND",
-    np.ndarray[Shape, np.dtypes.StringDType[_NaT]],
-    type_params=(_NaT,),
-)
+StringArray = TypeAliasType("StringArray", np.ndarray[_RankT, np.dtypes.StringDType[_NaT]], type_params=(_RankT, _NaT))
+StringArray0D = TypeAliasType("StringArray0D", np.ndarray[Rank0, np.dtypes.StringDType[_NaT]], type_params=(_NaT,))
+StringArray1D = TypeAliasType("StringArray1D", np.ndarray[Rank1, np.dtypes.StringDType[_NaT]], type_params=(_NaT,))
+StringArray2D = TypeAliasType("StringArray2D", np.ndarray[Rank2, np.dtypes.StringDType[_NaT]], type_params=(_NaT,))
+StringArray3D = TypeAliasType("StringArray3D", np.ndarray[Rank3, np.dtypes.StringDType[_NaT]], type_params=(_NaT,))
+StringArrayND = TypeAliasType("StringArrayND", np.ndarray[Shape, np.dtypes.StringDType[_NaT]], type_params=(_NaT,))

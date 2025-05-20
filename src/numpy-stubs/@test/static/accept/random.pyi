@@ -518,10 +518,7 @@ assert_type(def_gen.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, p=[1 
 assert_type(def_gen.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, replace=True), _nt.Array)
 assert_type(
     def_gen.choice(
-        ["pooh", "rabbit", "piglet", "Christopher"],
-        3,
-        replace=False,
-        p=np.array([1 / 8, 1 / 8, 1 / 2, 1 / 4]),
+        ["pooh", "rabbit", "piglet", "Christopher"], 3, replace=False, p=np.array([1 / 8, 1 / 8, 1 / 2, 1 / 4])
     ),
     _nt.Array,
 )
@@ -968,10 +965,7 @@ assert_type(random_st.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, p=[
 assert_type(random_st.choice(["pooh", "rabbit", "piglet", "Christopher"], 3, replace=True), _nt.Array)
 assert_type(
     random_st.choice(
-        ["pooh", "rabbit", "piglet", "Christopher"],
-        3,
-        replace=False,
-        p=np.array([1 / 8, 1 / 8, 1 / 2, 1 / 4]),
+        ["pooh", "rabbit", "piglet", "Christopher"], 3, replace=False, p=np.array([1 / 8, 1 / 8, 1 / 2, 1 / 4])
     ),
     _nt.Array,
 )

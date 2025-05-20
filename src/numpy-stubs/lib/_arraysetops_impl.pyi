@@ -72,45 +72,31 @@ class UniqueInverseResult(NamedTuple, Generic[_ScalarT]):
 #
 @overload
 def ediff1d(
-    ary: _nt.ToBool_nd,
-    to_end: ArrayLike | None = None,
-    to_begin: ArrayLike | None = None,
+    ary: _nt.ToBool_nd, to_end: ArrayLike | None = None, to_begin: ArrayLike | None = None
 ) -> _nt.Array1D[np.int8]: ...
 @overload
 def ediff1d(
-    ary: _nt.ToInt_nd,
-    to_end: _nt.CoInteger_nd | None = None,
-    to_begin: _nt.CoInteger_nd | None = None,
+    ary: _nt.ToInt_nd, to_end: _nt.CoInteger_nd | None = None, to_begin: _nt.CoInteger_nd | None = None
 ) -> _nt.Array1D[np.intp]: ...
 @overload
 def ediff1d(
-    ary: _nt.ToFloat64_nd,
-    to_end: _nt.CoFloating_nd | None = None,
-    to_begin: _nt.CoFloating_nd | None = None,
+    ary: _nt.ToFloat64_nd, to_end: _nt.CoFloating_nd | None = None, to_begin: _nt.CoFloating_nd | None = None
 ) -> _nt.Array1D[np.float64]: ...
 @overload
 def ediff1d(
-    ary: _nt.ToComplex128_nd,
-    to_end: _nt.CoComplex_nd | None = None,
-    to_begin: _nt.CoComplex_nd | None = None,
+    ary: _nt.ToComplex128_nd, to_end: _nt.CoComplex_nd | None = None, to_begin: _nt.CoComplex_nd | None = None
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def ediff1d(
-    ary: _nt.CoDateTime_nd,
-    to_end: _nt.CoTimeDelta_nd | None = None,
-    to_begin: _nt.CoTimeDelta_nd | None = None,
+    ary: _nt.CoDateTime_nd, to_end: _nt.CoTimeDelta_nd | None = None, to_begin: _nt.CoTimeDelta_nd | None = None
 ) -> _nt.Array1D[np.timedelta64]: ...
 @overload
 def ediff1d(
-    ary: _nt.ToObject_nd,
-    to_end: ArrayLike | None = None,
-    to_begin: ArrayLike | None = None,
+    ary: _nt.ToObject_nd, to_end: ArrayLike | None = None, to_begin: ArrayLike | None = None
 ) -> _nt.Array1D[np.object_]: ...
 @overload
 def ediff1d(
-    ary: _nt._ToArray_nd[_CoNumberT],
-    to_end: ArrayLike | None = None,
-    to_begin: ArrayLike | None = None,
+    ary: _nt._ToArray_nd[_CoNumberT], to_end: ArrayLike | None = None, to_begin: ArrayLike | None = None
 ) -> _nt.Array1D[_CoNumberT]: ...
 @overload
 def ediff1d(
@@ -420,108 +406,59 @@ def unique_values(x: ArrayLike) -> _nt.Array1D[Any]: ...
 #
 @overload
 def intersect1d(
-    ar1: _nt.ToFloat64_nd,
-    ar2: _nt.CoFloat64_nd,
-    assume_unique: bool = False,
-    return_indices: L[False] = False,
+    ar1: _nt.ToFloat64_nd, ar2: _nt.CoFloat64_nd, assume_unique: bool = False, return_indices: L[False] = False
 ) -> _nt.Array1D[np.float64]: ...
 @overload
 def intersect1d(
-    ar1: _nt.ToFloat64_nd,
-    ar2: _nt.CoFloat64_nd,
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: _nt.ToFloat64_nd, ar2: _nt.CoFloat64_nd, assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult[np.float64]: ...
 @overload
 def intersect1d(
-    ar1: _nt.CoFloat64_nd,
-    ar2: _nt.ToFloat64_nd,
-    assume_unique: bool = False,
-    return_indices: L[False] = False,
+    ar1: _nt.CoFloat64_nd, ar2: _nt.ToFloat64_nd, assume_unique: bool = False, return_indices: L[False] = False
 ) -> _nt.Array1D[np.float64]: ...
 @overload
 def intersect1d(
-    ar1: _nt.CoFloat64_nd,
-    ar2: _nt.ToFloat64_nd,
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: _nt.CoFloat64_nd, ar2: _nt.ToFloat64_nd, assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult[np.float64]: ...
 @overload
 def intersect1d(
-    ar1: _nt.ToBool_nd,
-    ar2: _nt.ToBool_nd,
-    assume_unique: bool = False,
-    return_indices: L[False] = False,
+    ar1: _nt.ToBool_nd, ar2: _nt.ToBool_nd, assume_unique: bool = False, return_indices: L[False] = False
 ) -> _nt.Array1D[np.bool]: ...
 @overload
 def intersect1d(
-    ar1: _nt.ToBool_nd,
-    ar2: _nt.ToBool_nd,
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: _nt.ToBool_nd, ar2: _nt.ToBool_nd, assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult[np.bool]: ...
 @overload
 def intersect1d(
-    ar1: _nt.ToInt_nd,
-    ar2: _nt.CoInt64_nd,
-    assume_unique: bool = False,
-    return_indices: L[False] = False,
+    ar1: _nt.ToInt_nd, ar2: _nt.CoInt64_nd, assume_unique: bool = False, return_indices: L[False] = False
 ) -> _nt.Array1D[np.intp]: ...
 @overload
 def intersect1d(
-    ar1: _nt.ToInt_nd,
-    ar2: _nt.CoInt64_nd,
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: _nt.ToInt_nd, ar2: _nt.CoInt64_nd, assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult[np.intp]: ...
 @overload
 def intersect1d(
-    ar1: _nt.CoInt64_nd,
-    ar2: _nt.ToInt_nd,
-    assume_unique: bool = False,
-    return_indices: L[False] = False,
+    ar1: _nt.CoInt64_nd, ar2: _nt.ToInt_nd, assume_unique: bool = False, return_indices: L[False] = False
 ) -> _nt.Array1D[np.intp]: ...
 @overload
 def intersect1d(
-    ar1: _nt.CoInt64_nd,
-    ar2: _nt.ToInt_nd,
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: _nt.CoInt64_nd, ar2: _nt.ToInt_nd, assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult[np.intp]: ...
 @overload
 def intersect1d(
-    ar1: _nt.ToComplex128_nd,
-    ar2: _nt.CoComplex128_nd,
-    assume_unique: bool = False,
-    return_indices: L[False] = False,
+    ar1: _nt.ToComplex128_nd, ar2: _nt.CoComplex128_nd, assume_unique: bool = False, return_indices: L[False] = False
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def intersect1d(
-    ar1: _nt.ToComplex128_nd,
-    ar2: _nt.CoComplex128_nd,
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: _nt.ToComplex128_nd, ar2: _nt.CoComplex128_nd, assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult[np.complex128]: ...
 @overload
 def intersect1d(
-    ar1: _nt.CoComplex128_nd,
-    ar2: _nt.ToComplex128_nd,
-    assume_unique: bool = False,
-    return_indices: L[False] = False,
+    ar1: _nt.CoComplex128_nd, ar2: _nt.ToComplex128_nd, assume_unique: bool = False, return_indices: L[False] = False
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def intersect1d(
-    ar1: _nt.CoComplex128_nd,
-    ar2: _nt.ToComplex128_nd,
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: _nt.CoComplex128_nd, ar2: _nt.ToComplex128_nd, assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult[np.complex128]: ...
 @overload
 def intersect1d(
@@ -532,26 +469,15 @@ def intersect1d(
 ) -> _nt.Array1D[_AnyScalarT]: ...
 @overload
 def intersect1d(
-    ar1: _ArrayLike[_AnyScalarT],
-    ar2: _ArrayLike[_AnyScalarT],
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: _ArrayLike[_AnyScalarT], ar2: _ArrayLike[_AnyScalarT], assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult[_AnyScalarT]: ...
 @overload
 def intersect1d(
-    ar1: ArrayLike,
-    ar2: ArrayLike,
-    assume_unique: bool = False,
-    return_indices: L[False] = False,
+    ar1: ArrayLike, ar2: ArrayLike, assume_unique: bool = False, return_indices: L[False] = False
 ) -> _nt.Array1D[Any]: ...
 @overload
 def intersect1d(
-    ar1: ArrayLike,
-    ar2: ArrayLike,
-    assume_unique: bool = False,
-    *,
-    return_indices: L[True],
+    ar1: ArrayLike, ar2: ArrayLike, assume_unique: bool = False, *, return_indices: L[True]
 ) -> _IntersectResult: ...
 
 #
@@ -587,21 +513,15 @@ def setxor1d(ar1: _nt.ToInt_nd, ar2: _nt.CoInt64_nd, assume_unique: bool = False
 def setxor1d(ar1: _nt.CoInt64_nd, ar2: _nt.ToInt_nd, assume_unique: bool = False) -> _nt.Array1D[np.intp]: ...
 @overload
 def setxor1d(
-    ar1: _nt.ToComplex128_nd,
-    ar2: _nt.CoComplex128_nd,
-    assume_unique: bool = False,
+    ar1: _nt.ToComplex128_nd, ar2: _nt.CoComplex128_nd, assume_unique: bool = False
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def setxor1d(
-    ar1: _nt.CoComplex128_nd,
-    ar2: _nt.ToComplex128_nd,
-    assume_unique: bool = False,
+    ar1: _nt.CoComplex128_nd, ar2: _nt.ToComplex128_nd, assume_unique: bool = False
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def setxor1d(
-    ar1: _ArrayLike[_AnyScalarT],
-    ar2: _ArrayLike[_AnyScalarT],
-    assume_unique: bool = False,
+    ar1: _ArrayLike[_AnyScalarT], ar2: _ArrayLike[_AnyScalarT], assume_unique: bool = False
 ) -> _nt.Array1D[_AnyScalarT]: ...
 @overload
 def setxor1d(ar1: ArrayLike, ar2: ArrayLike, assume_unique: bool = False) -> _nt.Array1D[Any]: ...
@@ -619,21 +539,15 @@ def setdiff1d(ar1: _nt.ToInt_nd, ar2: _nt.CoInt64_nd, assume_unique: bool = Fals
 def setdiff1d(ar1: _nt.CoInt64_nd, ar2: _nt.ToInt_nd, assume_unique: bool = False) -> _nt.Array1D[np.intp]: ...
 @overload
 def setdiff1d(
-    ar1: _nt.ToComplex128_nd,
-    ar2: _nt.CoComplex128_nd,
-    assume_unique: bool = False,
+    ar1: _nt.ToComplex128_nd, ar2: _nt.CoComplex128_nd, assume_unique: bool = False
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def setdiff1d(
-    ar1: _nt.CoComplex128_nd,
-    ar2: _nt.ToComplex128_nd,
-    assume_unique: bool = False,
+    ar1: _nt.CoComplex128_nd, ar2: _nt.ToComplex128_nd, assume_unique: bool = False
 ) -> _nt.Array1D[np.complex128]: ...
 @overload
 def setdiff1d(
-    ar1: _ArrayLike[_AnyScalarT],
-    ar2: _ArrayLike[_AnyScalarT],
-    assume_unique: bool = False,
+    ar1: _ArrayLike[_AnyScalarT], ar2: _ArrayLike[_AnyScalarT], assume_unique: bool = False
 ) -> _nt.Array1D[_AnyScalarT]: ...
 @overload
 def setdiff1d(ar1: ArrayLike, ar2: ArrayLike, assume_unique: bool = False) -> _nt.Array1D[Any]: ...
