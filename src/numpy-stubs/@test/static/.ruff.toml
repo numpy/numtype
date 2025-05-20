@@ -3,8 +3,8 @@ line-length = 120
 
 [lint]
 extend-ignore = [
-    "PTH",    # flake8-use-pathlib
-    "PYI015", # flake8-pyi:     assignment-default-in-stub
-    "PYI017", # flake8-pyi:     complex-assignment-in-stub
-    "SLF001", # flake8-self:    private-member-access
+    "PYI015", # flake8-pyi:         assignment-default-in-stub
+    "PYI017", # flake8-pyi:         complex-assignment-in-stub
+    "SLF001", # flake8-self:        private-member-access
+    "PTH123", # flake8-use-pathlib: builtin-open
 ]

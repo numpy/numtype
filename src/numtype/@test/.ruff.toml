@@ -3,6 +3,5 @@ extend = "../.ruff.toml"
 [lint]
 extend-ignore = [
     "D",       # pydocstyle
-    "S",       # flake8-bandit
-    "PLR2004", # pylint: magic-value-comparisons
+    "S101",    # flake8-bandit: assert
 ]

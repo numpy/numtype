@@ -180,35 +180,26 @@ reportPrivateLocalImportUsage = true
 reportUnannotatedClassAttribute = false
 strictGenericNarrowing = true
 
+
 [tool.ruff]
 src = ["src", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
 force-exclude = true
-# https://typing.python.org/en/latest/guides/writing_stubs.html#maximum-line-length
 line-length = 120
 preview = true
 
     [tool.ruff.format]
-    docstring-code-format = true
     line-ending = "lf"
 
     [tool.ruff.lint]
     select = ["ALL"]
-    ignore = [
-        "FBT",    # flake8-boolean-trap
-        "CPY",    # flake8-copyright
-        "EM",     # flake8-errmsg
-        "FIX",    # flake8-fixme
-        "ANN401", # flake8-annotations: any-type
-        "PYI041", # flake8-pyi:         redundant-numeric-union
-    ]
+    ignore = ["CPY", "FIX002"]
 
         [tool.ruff.lint.per-file-ignores]
         "*.pyi" = [
             "N",       # pep8-naming
             "TD",      # flake8-todo
             "COM812",  # flake8-commas: missing-trailing-comma
-            "PYI054",  # flake8-pyi:    numeric-literal-too-long
             "PLC2701", # pylint/C:      import-private-name
         ]
 
