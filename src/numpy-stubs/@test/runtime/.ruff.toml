@@ -3,7 +3,7 @@ extend = "../.ruff.toml"
 
 [lint]
 extend-ignore = [
-    "ARG",     # flake8-unused-arguments
-    "B015",    # flake8-bugbear:    useless-comparison
-    "B018",    # flake8-bugbear:    useless-expression
+    "ARG",  # flake8-unused-arguments
+    "B015", # flake8-bugbear:    useless-comparison
+    "B018", # flake8-bugbear:    useless-expression
 ]

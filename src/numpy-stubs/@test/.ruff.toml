@@ -3,7 +3,7 @@ line-length = 88
 
 [lint]
 extend-ignore = [
-    "D",       # pydocstyle
-    "FBT",     # flake8-boolean-trap
-    "PYI054",  # flake8-pyi: numeric-literal-too-long
+    "D",      # pydocstyle
+    "FBT",    # flake8-boolean-trap
+    "PYI054", # flake8-pyi: numeric-literal-too-long
 ]

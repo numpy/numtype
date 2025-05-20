@@ -2,4 +2,4 @@ extend = "../../pyproject.toml"
 line-length = 120
 
 [lint]
-extend-ignore = ["PLR2044"]  # pylint/R: empty-comment
+extend-ignore = ["PLR2044"] # pylint/R: empty-comment

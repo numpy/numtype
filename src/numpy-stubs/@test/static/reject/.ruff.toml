@@ -2,4 +2,4 @@ extend = "../.ruff.toml"
 builtins = ["reveal_type"]
 
 [lint]
-extend-ignore = ["B015", "B018"]  # flake8-bugbear: useless-{comparison,expression}
+extend-ignore = ["B015", "B018"] # flake8-bugbear: useless-{comparison,expression}
