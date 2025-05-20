@@ -71,7 +71,9 @@ __check_simd()
 
 def __commit_pyi_genocide_for_mypy() -> None:
     """
-    Remove the ``py.typed`` and all ``*.pyi`` files from the installed numpy package.
+    Remove all ``__init__.pyi`` files from the installed numpy package.
+
+    This works around https://github.com/python/mypy/issues/18997 on `mypy<1.16.0`.
 
     Raises
     ------
@@ -82,15 +84,9 @@ def __commit_pyi_genocide_for_mypy() -> None:
     if not package.is_dir():
         raise NotADirectoryError(f"{package} does not exist")
 
-    py_typed = package / "py.typed"
-    if py_typed.is_file():
-        py_typed.unlink()
-        if VERBOSE:
-            print(f"deleted {py_typed} (1)")
-
-    graveyard_size = sum(not pyi.unlink() for pyi in package.rglob("*.pyi"))  # type: ignore[func-returns-value]
+    graveyard_size = sum(not pyi.unlink() for pyi in package.rglob("__init__.pyi"))  # type: ignore[func-returns-value]
     if VERBOSE and graveyard_size:
-        print(f"deleted {package}/**/*.pyi ({graveyard_size})\n")
+        print(f"deleted {graveyard_size} __init__.pyi from {package}\n")
 
 
 def _allowlists() -> list[str]:
