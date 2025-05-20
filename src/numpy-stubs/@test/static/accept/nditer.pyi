@@ -40,7 +40,7 @@ assert_type(nditer_obj.reset(), None)
 assert_type(len(nditer_obj), int)
 assert_type(iter(nditer_obj), np.nditer)
 assert_type(next(nditer_obj), tuple[_nt.Array, ...])
-assert_type(nditer_obj.__copy__(), np.nditer)
+assert_type(nditer_obj.__copy__(), np.nditer)  # noqa: PLC2801
 with nditer_obj as f:
     assert_type(f, np.nditer)
 assert_type(nditer_obj[0], _nt.Array)

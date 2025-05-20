@@ -211,7 +211,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
-    def I(self) -> _nt.Matrix: ...
+    def I(self) -> _nt.Matrix: ...  # noqa: E743
     def getI(self) -> _nt.Matrix: ...
 
     #

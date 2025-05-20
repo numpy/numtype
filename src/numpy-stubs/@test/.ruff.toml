@@ -3,9 +3,7 @@ line-length = 88
 
 [lint]
 extend-ignore = [
-    "D",       # pydocstyle
-    "ERA",     # eradicate
-    "S",       # flake8-bandit
-    "T",       # flake8-print
-    "PLR2004", # pylint: magic-value-comparisons
+    "D",      # pydocstyle
+    "FBT",    # flake8-boolean-trap
+    "PYI054", # flake8-pyi: numeric-literal-too-long
 ]

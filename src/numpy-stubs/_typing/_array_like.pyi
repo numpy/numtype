@@ -1,4 +1,4 @@
-from collections.abc import Callable, Collection, Sequence
+from collections.abc import Callable, Collection
 from typing import Any, Protocol, TypeAlias, runtime_checkable
 from typing_extensions import Buffer, TypeVar
 
@@ -35,14 +35,6 @@ class _SupportsArrayFunc(Protocol):  # noqa: PYI046
         kwargs: dict[str, Any],
     ) -> object: ...
 
-_FiniteNestedSequence: TypeAlias = (
-    _T
-    | Sequence[_T]
-    | Sequence[Sequence[_T]]
-    | Sequence[Sequence[Sequence[_T]]]
-    | Sequence[Sequence[Sequence[Sequence[_T]]]]
-)
-
 # A subset of `npt.ArrayLike` that can be parametrized w.r.t. `np.generic`
 _ArrayLike: TypeAlias = _SupportsArray[np.dtype[_ScalarT]] | _NestedSequence[_SupportsArray[np.dtype[_ScalarT]]]
 
@@ -54,6 +46,11 @@ _DualArrayLike: TypeAlias = (
 )
 
 ArrayLike: TypeAlias = _DualArrayLike[np.dtype, complex | str | bytes] | Buffer
+
+# TODO(jorenham): get rid of this in favor of the ones in `_numtype`
+# https://github.com/numpy/numtype/issues/568
+
+# ruff: noqa: PYI047
 
 # `ArrayLike<X>_co`: array-like objects that can be coerced into `X`
 # given the casting rules `same_kind`

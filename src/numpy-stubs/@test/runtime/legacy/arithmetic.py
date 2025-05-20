@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from typing import Any
+from typing import Self
 
 import pytest
 
@@ -38,28 +36,28 @@ class Object:
         ret[()] = self
         return ret
 
-    def __sub__(self, value: Any) -> Object:
+    def __sub__(self, value: object) -> Self:
         return self
 
-    def __rsub__(self, value: Any) -> Object:
+    def __rsub__(self, value: object) -> Self:
         return self
 
-    def __floordiv__(self, value: Any) -> Object:
+    def __floordiv__(self, value: object) -> Self:
         return self
 
-    def __rfloordiv__(self, value: Any) -> Object:
+    def __rfloordiv__(self, value: object) -> Self:
         return self
 
-    def __mul__(self, value: Any) -> Object:
+    def __mul__(self, value: object) -> Self:
         return self
 
-    def __rmul__(self, value: Any) -> Object:
+    def __rmul__(self, value: object) -> Self:
         return self
 
-    def __pow__(self, value: Any) -> Object:
+    def __pow__(self, value: object) -> Self:
         return self
 
-    def __rpow__(self, value: Any) -> Object:
+    def __rpow__(self, value: object) -> Self:
         return self
 
 

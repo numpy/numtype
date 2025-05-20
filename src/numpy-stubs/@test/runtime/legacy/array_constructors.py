@@ -1,5 +1,3 @@
-from typing import Any
-
 import numpy as np
 import numpy.typing as npt
 
@@ -13,7 +11,7 @@ class SubClass(npt.NDArray[np.float64]):
     pass
 
 
-def func(i: int, j: int, **kwargs: Any) -> SubClass:
+def func(i: int, j: int, **kwargs: object) -> SubClass:
     return B
 
 

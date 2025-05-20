@@ -1,6 +1,10 @@
+# TODO(jorenham): get rid of these in favor of `_?numtype`
+
 from typing import Any, TypeAlias
 
 import numpy as np
+
+# ruff: noqa: PYI047
 
 # NOTE: `_StrLike_co` and `_BytesLike_co` are pointless, as `np.str_` and
 # `np.bytes_` are already subclasses of their builtin counterpart
@@ -14,7 +18,7 @@ _IntLike_co: TypeAlias = int | np.integer | np.bool
 _FloatLike_co: TypeAlias = float | np.floating | np.integer | np.bool
 _ComplexLike_co: TypeAlias = complex | np.number | np.bool
 _NumberLike_co = _ComplexLike_co
-_TD64Like_co: TypeAlias = int | np.timedelta64 | np.integer | np.bool
+_TD64Like_co: TypeAlias = _IntLike_co | np.timedelta64
 _ScalarLike_co: TypeAlias = complex | bytes | str | np.generic
 
 # `_VoidLike_co` is technically not a scalar, but it's close enough

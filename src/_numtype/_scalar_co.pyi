@@ -37,6 +37,8 @@ __all__ = [
 # See https://github.com/numpy/numtype/issues/366 for the scalar promotion table and
 # https://numpy.org/neps/nep-0050-scalar-promotion.html for the official specification.
 
+# ruff: noqa: PYI042
+
 co_int8: TypeAlias = np.int8 | np.bool
 co_int16: TypeAlias = np.int16 | co_integer8
 co_int32: TypeAlias = np.int32 | co_integer16

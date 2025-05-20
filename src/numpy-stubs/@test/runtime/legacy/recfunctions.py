@@ -1,7 +1,5 @@
 """These tests are based on the doctests from `numpy/lib/recfunctions.py`."""
 
-from __future__ import annotations
-
 from typing import TYPE_CHECKING, Any, assert_type
 
 import numpy as np
@@ -10,13 +8,15 @@ from numpy.lib import recfunctions as rfn
 if TYPE_CHECKING:
     import _numtype as _nt
 
+# ruff: noqa: S101
+
 
 def test_recursive_fill_fields() -> None:
     a: _nt.Array[np.void] = np.array(
         [(1, 10.0), (2, 20.0)],
         dtype=[("A", np.int64), ("B", np.float64)],
     )
-    b = np.zeros((int(3),), dtype=a.dtype)
+    b = np.zeros((3,), dtype=a.dtype)
     out = rfn.recursive_fill_fields(a, b)
     assert_type(out, "_nt.Array1D[np.void]")
 
@@ -57,8 +57,8 @@ def test_get_fieldstructure() -> None:
 def test_merge_arrays() -> None:
     assert_type(
         rfn.merge_arrays((
-            np.ones((int(2),), np.int_),
-            np.ones((int(3),), np.float64),
+            np.ones(((2),), np.int_),
+            np.ones(((3),), np.float64),
         )),
         "np.recarray[_nt.Rank1, np.dtype[np.void]]",
     )
@@ -66,7 +66,7 @@ def test_merge_arrays() -> None:
 
 def test_drop_fields() -> None:
     ndtype = [("a", np.int64), ("b", [("b_a", np.double), ("b_b", np.int64)])]
-    a = np.ones((int(3),), dtype=ndtype)
+    a = np.ones(((3),), dtype=ndtype)
 
     assert_type(rfn.drop_fields(a, "a"), "_nt.Array1D[np.void]")
     assert_type(
@@ -81,7 +81,7 @@ def test_drop_fields() -> None:
 
 def test_rename_fields() -> None:
     ndtype = [("a", np.int64), ("b", [("b_a", np.double), ("b_b", np.int64)])]
-    a = np.ones((int(3),), dtype=ndtype)
+    a = np.ones(((3),), dtype=ndtype)
 
     assert_type(
         rfn.rename_fields(a, {"a": "A", "b_b": "B_B"}),
@@ -130,11 +130,11 @@ def test_require_fields() -> None:
 
 
 def test_stack_arrays() -> None:
-    x = np.zeros((int(2),), np.int32)
+    x = np.zeros(((2),), np.int32)
     assert_type(rfn.stack_arrays(x), "_nt.Array1D[np.int32]")
 
-    z = np.ones((int(2),), [("A", "|S3"), ("B", float)])
-    zz = np.ones((int(2),), [("A", "|S3"), ("B", np.float64), ("C", np.float64)])
+    z = np.ones(((2),), [("A", "|S3"), ("B", float)])
+    zz = np.ones(((2),), [("A", "|S3"), ("B", np.float64), ("C", np.float64)])
     assert_type(rfn.stack_arrays((z, zz)), "_nt.MArray[np.void]")
 
 

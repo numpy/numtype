@@ -1,3 +1,5 @@
+# ruff: noqa: S101, PLR2004
+
 import ctypes as ct
 import sys
 
@@ -30,7 +32,6 @@ def test_longlong_64(char: str) -> None:
         ("long", "int32" if WIN32 else f"int{SIZE_P}"),
         ("intp", f"int{SIZE_P}"),
     ],
-    # ids="{} is {}".format,
 )
 def test_alias_integer(name_c: str, name_expect: str) -> None:
     signed_c: type[np.signedinteger] = getattr(np, name_c)
@@ -50,7 +51,6 @@ def test_alias_integer(name_c: str, name_expect: str) -> None:
         ("double", "float64"),
         ("longdouble", "float96" if WIN32 else f"float{SIZE_P + 64}"),
     ],
-    # ids="{} is {}".format,
 )
 def test_alias_floating(name_c: str, name_expect: str) -> None:
     floating_c: type[np.floating] = getattr(np, name_c)

@@ -1,5 +1,5 @@
 from collections.abc import Callable, Iterable
-from typing import Any, Final, NamedTuple, TypeAlias
+from typing import Any, Final, NamedTuple
 from typing_extensions import ParamSpec, TypeVar
 
 from numpy._typing import _SupportsArrayFunc
@@ -7,8 +7,6 @@ from numpy._typing import _SupportsArrayFunc
 _T = TypeVar("_T")
 _Tss = ParamSpec("_Tss")
 _FuncT = TypeVar("_FuncT", bound=Callable[..., object])
-
-_AnyFunc: TypeAlias = Callable[..., Any]
 
 ###
 
@@ -21,7 +19,7 @@ class ArgSpec(NamedTuple):
     keywords: str | None
     defaults: tuple[Any, ...]
 
-def get_array_function_like_doc(public_api: Callable[..., Any], docstring_template: str = "") -> str: ...
+def get_array_function_like_doc(public_api: Callable[..., object], docstring_template: str = "") -> str: ...
 def finalize_array_function_like(public_api: _FuncT) -> _FuncT: ...
 
 #
