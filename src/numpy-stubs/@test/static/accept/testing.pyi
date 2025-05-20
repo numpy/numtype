@@ -74,8 +74,8 @@ assert_type(np.testing.IS_PYPY, bool)
 assert_type(np.testing.HAS_REFCOUNT, bool)
 assert_type(np.testing.HAS_LAPACK64, bool)
 
-assert_type(np.testing.assert_(1, msg="test"), None)
-assert_type(np.testing.assert_(2, msg=lambda: "test"), None)
+assert_type(np.testing.assert_(1, msg="test"), None)  # noqa: PT009
+assert_type(np.testing.assert_(2, msg=lambda: "test"), None)  # noqa: PT009
 
 assert_type(np.testing.jiffies(), int)
 

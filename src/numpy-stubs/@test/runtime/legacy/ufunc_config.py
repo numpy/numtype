@@ -15,6 +15,9 @@ def func3(a: str, b: int) -> int:
     return 0
 
 
+# ruff: noqa: PLR6301
+
+
 class Write1:
     def write(self, a: str) -> None:
         return None

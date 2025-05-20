@@ -1,3 +1,4 @@
+import math
 from typing import Any, Literal, assert_type
 
 import _numtype as _nt
@@ -126,7 +127,7 @@ assert_type(i8.getfield(np.float64, 8), np.float64)
 
 assert_type(f8.as_integer_ratio(), tuple[int, int])
 assert_type(f8.is_integer(), bool)
-assert_type(f8.__trunc__(), int)
+assert_type(math.trunc(f8), int)
 assert_type(f8.__getformat__("float"), str)
 assert_type(f8.hex(), str)
 assert_type(np.float64.fromhex("0x0.0p+0"), np.float64)
@@ -148,8 +149,8 @@ assert_type(round(u8, 3), np.uint64)
 assert_type(round(f8), int)
 assert_type(round(f8, 3), np.float64)
 
-assert_type(f8.__ceil__(), int)
-assert_type(f8.__floor__(), int)
+assert_type(math.ceil(f8), int)
+assert_type(math.floor(f8), int)
 
 assert_type(i8.is_integer(), Literal[True])
 

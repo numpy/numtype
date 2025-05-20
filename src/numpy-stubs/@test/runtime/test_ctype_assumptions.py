@@ -1,3 +1,5 @@
+# ruff: noqa: S101, PLR2004
+
 import ctypes as ct
 import sys
 

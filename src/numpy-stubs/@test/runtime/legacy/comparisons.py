@@ -37,6 +37,8 @@ AR_O: np.ndarray[Any, np.dtype[np.object_]] = np.array([1], dtype=object)
 
 # Arrays
 
+# ruff: noqa: PLR0124
+
 AR_b > AR_b
 AR_b > AR_u
 AR_b > AR_i

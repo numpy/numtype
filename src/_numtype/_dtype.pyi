@@ -93,22 +93,22 @@ _ToDType2 = TypeAliasType(
     type_params=(_ScalarT, _T),
 )
 
-_c_i16: TypeAlias = ct.c_int16 | ct.c_short
-_c_u16: TypeAlias = ct.c_uint16 | ct.c_ushort
-_c_i32: TypeAlias = ct.c_int32 | ct.c_int
-_c_u32: TypeAlias = ct.c_uint32 | ct.c_uint
-_c_i64: TypeAlias = ct.c_int64 | ct.c_longlong | ct.c_ssize_t
-_c_u64: TypeAlias = ct.c_uint64 | ct.c_ulonglong | ct.c_size_t | ct.c_void_p
+_C_i16: TypeAlias = ct.c_int16 | ct.c_short
+_C_u16: TypeAlias = ct.c_uint16 | ct.c_ushort
+_C_i32: TypeAlias = ct.c_int32 | ct.c_int
+_C_u32: TypeAlias = ct.c_uint32 | ct.c_uint
+_C_i64: TypeAlias = ct.c_int64 | ct.c_longlong | ct.c_ssize_t
+_C_u64: TypeAlias = ct.c_uint64 | ct.c_ulonglong | ct.c_size_t | ct.c_void_p
 
 ToDTypeBool: TypeAlias = _ToDType2[np.bool, ct.c_bool | bool] | _BoolCodes
 ToDTypeInt8: TypeAlias = _ToDType2[np.int8, ct.c_int8] | _Int8Codes
 ToDTypeUInt8: TypeAlias = _ToDType2[np.uint8, ct.c_uint8] | _UInt8Codes
-ToDTypeInt16: TypeAlias = _ToDType2[np.int16, _c_i16] | _Int16Codes
-ToDTypeUInt16: TypeAlias = _ToDType2[np.uint16, _c_u16] | _UInt16Codes
-ToDTypeInt32: TypeAlias = _ToDType2[np.int32, _c_i32] | _Int32Codes
-ToDTypeUInt32: TypeAlias = _ToDType2[np.uint32, _c_u32] | _UInt32Codes
-ToDTypeInt64: TypeAlias = _ToDType2[np.int64, _c_i64 | JustInt] | _Int64Codes | _IntPCodes
-ToDTypeUInt64: TypeAlias = _ToDType2[np.uint64, _c_u64] | _UInt64Codes | _UIntPCodes
+ToDTypeInt16: TypeAlias = _ToDType2[np.int16, _C_i16] | _Int16Codes
+ToDTypeUInt16: TypeAlias = _ToDType2[np.uint16, _C_u16] | _UInt16Codes
+ToDTypeInt32: TypeAlias = _ToDType2[np.int32, _C_i32] | _Int32Codes
+ToDTypeUInt32: TypeAlias = _ToDType2[np.uint32, _C_u32] | _UInt32Codes
+ToDTypeInt64: TypeAlias = _ToDType2[np.int64, _C_i64 | JustInt] | _Int64Codes | _IntPCodes
+ToDTypeUInt64: TypeAlias = _ToDType2[np.uint64, _C_u64] | _UInt64Codes | _UIntPCodes
 ToDTypeULong: TypeAlias = np.dtypes.ULongDType | type[ct.c_ulong] | _ULongCodes
 ToDTypeLong: TypeAlias = np.dtypes.LongDType | type[ct.c_long] | _LongCodes
 ToDTypeFloat16: TypeAlias = _ToDType[np.float16] | _Float16Codes

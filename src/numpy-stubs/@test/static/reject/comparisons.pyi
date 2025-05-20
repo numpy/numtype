@@ -29,6 +29,8 @@ AR_m > AR_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_m > ""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_m > b""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
+# ruff: noqa: SIM300  # (flake8-simplify: yoda-conditions)
+
 AR_M > AR_i  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M > AR_f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M > AR_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]

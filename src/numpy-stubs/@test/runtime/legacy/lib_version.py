@@ -10,6 +10,8 @@ version.bugfix
 version.pre_release
 version.is_devversion
 
+# ruff: noqa: PLR0124
+
 version == version
 version != version
 version < "1.8.0"

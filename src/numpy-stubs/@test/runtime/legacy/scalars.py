@@ -84,6 +84,7 @@ np.uint32().strides
 np.uint64().shape
 
 # Time structures
+# ruff: noqa: DTZ001
 np.datetime64()
 np.datetime64(0, "D")
 np.datetime64(0, b"D")

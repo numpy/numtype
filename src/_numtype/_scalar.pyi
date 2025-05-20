@@ -19,6 +19,8 @@ __all__ = [
 ###
 # Sized abstract scalar type aliases.
 
+# ruff: noqa: PYI042
+
 integer8: TypeAlias = np.uint8 | np.int8
 integer16: TypeAlias = np.uint16 | np.int16
 integer32: TypeAlias = np.uint32 | np.int32
