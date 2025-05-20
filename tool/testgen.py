@@ -36,6 +36,7 @@ if TYPE_CHECKING:
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from tool._ruff import ruff_format
 from tool.promotion import _typename as dtype_label
 from tool.ufunc import _all_types as ufunc_signatures
 
@@ -249,13 +250,7 @@ def _array_expr(
 
     expr2 = _array_expr_single(*(dts[1] for dts in dtypess), ndim=ndim, npt=npt)
 
-    expr = f"tuple[{expr1}, {expr2}]"
-    if "\n" in expr or "|" in expr:
-        expr1 = textwrap.indent(expr1, TAB)
-        expr2 = textwrap.indent(expr2, TAB)
-        expr = f"tuple[\n{expr1},\n{expr2},\n]"
-
-    return expr
+    return f"tuple[{expr1}, {expr2}]"
 
 
 def __group_types(*types: str) -> tuple[dict[str, list[str]], list[str]]:
@@ -472,11 +467,7 @@ class TestGen(abc.ABC):
 
                 lines.append(line)
 
-        # ensure trailing newline
-        if not n_empty:
-            lines.append("")
-
-        return BR.join(lines)
+        return ruff_format(BR.join(lines))
 
     @final
     def _read(self, /) -> str | None:
