@@ -122,15 +122,10 @@ _Toinexact64l_1nd: TypeAlias = _nt._ToArray_1nd[_nt.inexact64l]
 _Toinexact64l_2ds: TypeAlias = _nt._ToArray_2ds[_nt.inexact64l]
 _Toinexact64l_3nd: TypeAlias = _nt._ToArray_3nd[_nt.inexact64l]
 
-_ToUnsafe64_1nd: TypeAlias = _nt._ToArray2_1nd[
-    _nt.inexact64 | _nt.co_integer | np.character[Any], complex | _nt._PyCharacter
-]
-_ToUnsafe64_2ds: TypeAlias = _nt._ToArray2_2ds[
-    _nt.inexact64 | _nt.co_integer | np.character[Any], complex | _nt._PyCharacter
-]
-_ToUnsafe64_3nd: TypeAlias = _nt._ToArray2_3nd[
-    _nt.inexact64 | _nt.co_integer | np.character[Any], complex | _nt._PyCharacter
-]
+_Unsafe64: TypeAlias = _nt.inexact64 | _nt.co_integer | np.character[Any]
+_ToUnsafe64_1nd: TypeAlias = _nt._ToArray2_1nd[_Unsafe64, complex | _nt._PyCharacter]
+_ToUnsafe64_2ds: TypeAlias = _nt._ToArray2_2ds[_Unsafe64, complex | _nt._PyCharacter]
+_ToUnsafe64_3nd: TypeAlias = _nt._ToArray2_3nd[_Unsafe64, complex | _nt._PyCharacter]
 
 _Array2ND: TypeAlias = _nt.Array[_ScalarT, _nt.Shape2N]
 
@@ -324,6 +319,10 @@ _PosInt: TypeAlias = L[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 _NegInt: TypeAlias = L[-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -14, -15, -16]
 
 #
+@overload  # workaround for microsoft/pyright#10232
+def matrix_power(a: _nt.CastsArray[np.float64, _nt.NeitherShape], n: CanIndex) -> _Array2ND[np.float64]: ...
+@overload  # workaround for microsoft/pyright#10232
+def matrix_power(a: _nt.CastsWithArray[np.float64, _NumberT, _nt.NeitherShape], n: CanIndex) -> _Array2ND[_NumberT]: ...
 @overload
 def matrix_power(a: _nt.CanLenArray[_NumberT, _Shape2NDT], n: _PosInt) -> _nt.Array[_NumberT, _Shape2NDT]: ...
 @overload
@@ -392,6 +391,8 @@ def outer(x1: _nt.CoInteger_1d, x2: _nt.ToInteger_1d, /) -> _nt.Array2D[np.integ
 def outer(x1: _nt.ToNumber_1d, x2: _nt.ToNumber_1d, /) -> _nt.Array2D[Any]: ...
 
 #
+@overload  # workaround for microsoft/pyright#10232
+def multi_dot(arrays: Iterable[_nt._ToArray_nnd[_nt.co_number]], *, out: None = None) -> Any: ...
 @overload
 def multi_dot(arrays: Iterable[_nt._ToArray_1ds[_AnyNumberT]], *, out: None = None) -> _AnyNumberT: ...
 @overload
@@ -454,6 +455,8 @@ def cross(x1: _nt.CoComplex_1nd, x2: _nt.ToComplex_1nd, /, *, axis: int = -1) ->
 def cross(x1: _nt.CoComplex_1nd, x2: _nt.CoComplex_1nd, /, *, axis: int = -1) -> _nt.Array[Any]: ...
 
 # pyright false positive in case of typevar constraints
+@overload  # workaround for microsoft/pyright#10232
+def matmul(x1: _nt._ToArray_nnd[_nt.co_number], x2: _nt._ToArray_nnd[_nt.co_number], /) -> Any: ...
 @overload
 def matmul(x1: _nt._ToArray_1ds[_AnyNumberT], x2: _nt._ToArray_1ds[_AnyNumberT], /) -> _AnyNumberT: ...  # pyright: ignore[reportOverlappingOverload]
 @overload
@@ -640,6 +643,14 @@ def svdvals(x: _Toinexact32_1nd, /) -> _nt.Array[np.float32]: ...
 def svdvals(x: _nt.CoComplex128_1nd, /) -> _nt.Array[np.floating]: ...
 
 #
+@overload  # workaround for microsoft/pyright#10232
+def matrix_rank(
+    A: _nt._ToArray_nnd[_nt.co_complex128],
+    tol: _nt.ToFloating_nd | None = None,
+    hermitian: bool = False,
+    *,
+    rtol: _nt.ToFloating_nd | None = None,
+) -> Any: ...
 @overload  # <2d +complex128
 def matrix_rank(
     A: _nt.CoComplex128_0d | _nt.CoComplex128_1ds,
@@ -674,6 +685,8 @@ def matrix_rank(
 ) -> Any: ...
 
 #
+@overload  # workaround for microsoft/pyright#10232
+def cond(x: _nt._ToArray_nnd[_nt.co_complex128], p: _Ord | None = None) -> Any: ...
 @overload  # 2d float64 | complex128
 def cond(x: _Toinexact64_2ds, p: _Ord | None = None) -> np.float64: ...
 @overload  # 2d float32 | complex64
@@ -690,6 +703,8 @@ def cond(x: _nt.CoComplex128_3nd, p: _Ord | None = None) -> _nt.Array[np.floatin
 def cond(x: _nt.CoComplex128_1nd, p: _Ord | None = None) -> Any: ...
 
 # keep in sync with `det`
+@overload  # # workaround for microsoft/pyright#10232
+def slogdet(a: _nt._ToArray_nnd[_nt.co_complex128]) -> SlogdetResult: ...
 @overload  # 2d float64
 def slogdet(a: _ToFloat64_2ds) -> SlogdetResult[np.float64, np.float64]: ...
 @overload  # 2d float32 + complex64
@@ -703,9 +718,11 @@ def slogdet(a: _nt._ToArray_3nd[_Inexact32T]) -> SlogdetResult[_nt.Array[np.floa
 @overload  # >2d complex128
 def slogdet(a: _nt.ToComplex128_3nd) -> SlogdetResult[_nt.Array[np.float64], _nt.Array[np.complex128]]: ...
 @overload  # +complex128
-def slogdet(a: _nt.CoComplex128_1nd) -> SlogdetResult[Any, Any]: ...
+def slogdet(a: _nt.CoComplex128_1nd) -> SlogdetResult: ...
 
 #
+@overload  # workaround for microsoft/pyright#10232
+def det(a: _nt._ToArray_nnd[_nt.co_complex128]) -> Any: ...
 @overload  # 2d float64
 def det(a: _ToFloat64_2ds) -> np.float64: ...
 @overload  # 2d float32 + complex64
@@ -763,9 +780,9 @@ def norm(
     x: _ToUnsafe64_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, *, keepdims: _True
 ) -> _Array2ND[np.float64]: ...
 @overload  # float64 | complex128 | character, axis=<given> (positional)
-def norm(x: _ToUnsafe64_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]
+def norm(x: _ToUnsafe64_1nd, ord: _Ord | None, axis: _Ax2, keepdims: bool = False) -> _nt.Array[np.float64]: ...
 @overload  # float64 | complex128 | character, axis=<given> (keyword)
-def norm(  # type: ignore[overload-overlap]
+def norm(
     x: _ToUnsafe64_1nd, ord: _Ord | None = None, *, axis: _Ax2, keepdims: bool = False
 ) -> _nt.Array[np.float64]: ...
 @overload  # float16, axis=None, keepdims=False
@@ -820,34 +837,38 @@ def norm(
 def norm(x: _nt.CoComplex_1nd, ord: _Ord | None = None, axis: _Ax2 | None = None, keepdims: bool = False) -> Any: ...
 
 #
-@overload  # 2d float64 | complex128 | character
-def matrix_norm(x: _ToUnsafe64_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float64: ...  # type: ignore[overload-overlap]
-@overload  # nd float64 | complex128 | character, keepdims=True
-def matrix_norm(x: _ToUnsafe64_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.float64]: ...
-@overload  # >2d float64 | complex128 | character
-def matrix_norm(x: _ToUnsafe64_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.float64]: ...
+@overload  # workaround for microsoft/pyright#10232
+def matrix_norm(
+    x: _nt._ToArray_nnd[_nt.co_number | np.character[Any]], /, *, keepdims: bool = False, ord: _Ord = "fro"
+) -> Any: ...
 @overload  # 2d float16
 def matrix_norm(x: _nt.ToFloat16_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float16: ...  # type: ignore[overload-overlap]
-@overload  # nd float16, keepdims=True
-def matrix_norm(x: _nt.ToFloat16_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.float16]: ...
-@overload  # >2d float16
-def matrix_norm(x: _nt.ToFloat16_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.float16]: ...
 @overload  # 2d float32 | complex64, keepdims=True
 def matrix_norm(x: _Toinexact32_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float32: ...  # type: ignore[overload-overlap]
-@overload  # nd float32 | complex64, keepdims=True
-def matrix_norm(x: _Toinexact32_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.float32]: ...
-@overload  # >2d float32 | complex64
-def matrix_norm(x: _Toinexact32_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.float32]: ...
+@overload  # 2d float64 | complex128 | character
+def matrix_norm(x: _ToUnsafe64_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float64: ...  # type: ignore[overload-overlap]
 @overload  # 2d longdouble | clongdouble
 def matrix_norm(x: _Toinexact64l_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.longdouble: ...  # type: ignore[overload-overlap]
-@overload  # nd longdouble | clongdouble, keepdims=True
-def matrix_norm(x: _Toinexact64l_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.longdouble]: ...
-@overload  # >2d longdouble | clongdouble
-def matrix_norm(x: _Toinexact64l_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.longdouble]: ...
 @overload  # 2d +number
 def matrix_norm(x: _nt.CoComplex_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.floating: ...  # type: ignore[overload-overlap]
+@overload  # nd float16, keepdims=True
+def matrix_norm(x: _nt.ToFloat16_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.float16]: ...
+@overload  # nd float32 | complex64, keepdims=True
+def matrix_norm(x: _Toinexact32_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.float32]: ...
+@overload  # nd float64 | complex128 | character, keepdims=True
+def matrix_norm(x: _ToUnsafe64_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.float64]: ...
+@overload  # nd longdouble | clongdouble, keepdims=True
+def matrix_norm(x: _Toinexact64l_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.longdouble]: ...
 @overload  # nd +number, keepdims=True
 def matrix_norm(x: _nt.CoComplex_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.floating]: ...
+@overload  # >2d float16
+def matrix_norm(x: _nt.ToFloat16_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.float16]: ...
+@overload  # >2d float32 | complex64
+def matrix_norm(x: _Toinexact32_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.float32]: ...
+@overload  # >2d float64 | complex128 | character
+def matrix_norm(x: _ToUnsafe64_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.float64]: ...
+@overload  # >2d longdouble | clongdouble
+def matrix_norm(x: _Toinexact64l_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.longdouble]: ...
 @overload  # >2d +number
 def matrix_norm(x: _nt.CoComplex_3nd, /, *, keepdims: bool = False, ord: _Ord = "fro") -> _nt.Array[np.floating]: ...
 @overload  # nd +number

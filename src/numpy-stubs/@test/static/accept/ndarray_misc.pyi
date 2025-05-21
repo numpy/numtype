@@ -9,7 +9,7 @@ import numpy as np
 
 ###
 
-class SubArray(np.ndarray[_nt.Shape, np.dtype[np.object_]]): ...
+class SubArray(np.ndarray[_nt.AnyShape, np.dtype[np.object_]]): ...
 
 f8: np.float64
 i8: np.int64
@@ -151,7 +151,7 @@ assert_type(AR_f8.var(out=AR_O_sub), SubArray)
 
 assert_type(AR_f8.argpartition([0]), _nt.Array[np.intp])
 
-assert_type(AR_f8.diagonal(), _nt.Array[np.float64, Any])
+assert_type(AR_f8.diagonal(), _nt.Array[np.float64])
 
 assert_type(AR_f8.dot(1), _nt.Array[Any])
 assert_type(AR_f8.dot([1]), Any)

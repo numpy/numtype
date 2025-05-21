@@ -32,7 +32,7 @@ __all__ = [
 ###
 
 # TODO: use `AnyShape` instead of `Shape` once python/mypy#19110 is fixed
-_RankT = TypeVar("_RankT", bound=AnyShape, default=Shape)
+_RankT = TypeVar("_RankT", bound=AnyShape, default=AnyShape)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic, default=Any)
 _NaT = TypeVar("_NaT", default=Never)
 

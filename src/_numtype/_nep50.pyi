@@ -9,6 +9,7 @@ import numpy as np
 from numpy._typing import _NestedSequence
 
 from . import _shape
+from ._rank import Rank0
 
 __all__ = [
     "Casts",
@@ -122,7 +123,7 @@ class _LikeArray(Protocol[_LikeT_co, _ShapeT_co]):
 @type_check_only
 class _LikeScalar(Protocol[_LikeT_co]):
     @property
-    def shape(self, /) -> _shape.Shape0: ...
+    def __inner_shape__(self, /) -> Rank0: ...
     @property
     def dtype(self, /) -> _HasType[_LikeT_co]: ...
 

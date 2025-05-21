@@ -7,7 +7,6 @@ from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy import _AnyShapeT  # noqa: ICN003
 
 __all__ = ["Arrayterator"]
 
@@ -37,7 +36,7 @@ class Arrayterator(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTyp
     @override
     # NOTE: This constrained typevar use is a workaround for a mypy bug
     # def shape(self: _nt.HasInnerShape[_ShapeT] | ndarray[_ShapeT2]) -> _ShapeT | _ShapeT2: ...  # noqa: ERA001
-    def shape(self: Arrayterator[_AnyShapeT]) -> _AnyShapeT: ...
+    def shape(self) -> _ShapeT_co: ...
 
     #
     @property
@@ -47,9 +46,9 @@ class Arrayterator(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTyp
     #
     def __init__(self, /, var: np.ndarray[_ShapeT_co, _DTypeT_co], buf_size: int | None = None) -> None: ...  # pyright: ignore[reportInconsistentConstructor]
     @override
-    def __getitem__(self, index: _AnyIndex, /) -> Arrayterator[_nt.Shape, _DTypeT_co]: ...  # type: ignore[override]
+    def __getitem__(self, index: _AnyIndex, /) -> Arrayterator[_nt.AnyShape, _DTypeT_co]: ...  # type: ignore[override]
     @override
-    def __iter__(self) -> Generator[np.ndarray[_nt.Shape, _DTypeT_co]]: ...
+    def __iter__(self) -> Generator[np.ndarray[_nt.AnyShape, _DTypeT_co]]: ...
 
     #
     @overload  # type: ignore[override]

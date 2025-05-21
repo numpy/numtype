@@ -599,6 +599,16 @@ def empty_like(
     *,
     device: _Device | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
+@overload  # workaround for microsoft/pyright#10232
+def empty_like(
+    prototype: _nt._ToArray_nnd[np.bool_],
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.bool_]: ...
 @overload  # bool 0d array-like
 def empty_like(  # type: ignore[overload-overlap]
     prototype: _nt.ToBool_0d,
@@ -639,6 +649,16 @@ def empty_like(
     *,
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
+@overload  # workaround for microsoft/pyright#10232
+def empty_like(
+    prototype: _nt._ToArray_nnd[np.intp],
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.intp]: ...
 @overload  # int 0d array-like
 def empty_like(  # type: ignore[overload-overlap]
     prototype: _nt.ToInt_0d,
@@ -679,6 +699,16 @@ def empty_like(
     *,
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
+@overload  # workaround for microsoft/pyright#10232
+def empty_like(
+    prototype: _nt._ToArray_nnd[np.float64],
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.float64]: ...
 @overload  # float 0d array-like
 def empty_like(  # type: ignore[overload-overlap]
     prototype: _nt.ToFloat64_0d,
@@ -729,6 +759,16 @@ def empty_like(  # type: ignore[overload-overlap]
     *,
     device: _Device | None = None,
 ) -> _nt.Array0D[np.complex128]: ...
+@overload  # workaround for microsoft/pyright#10232
+def empty_like(
+    prototype: _nt._ToArray_nnd[np.complex128],
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.complex128]: ...
 @overload  # complex 1d array-like
 def empty_like(
     prototype: _nt.ToComplex128_1ds,
@@ -770,7 +810,7 @@ def empty_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT, _AnyShapeT]: ...
 @overload  # array-like with known scalar-type, unknown shape
-def empty_like(  # type: ignore[overload-overlap]
+def empty_like(
     prototype: _ArrayLike[_ScalarT],
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
@@ -820,7 +860,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # bool array-like
-def empty_like(  # type: ignore[overload-overlap]
+def empty_like(
     prototype: _nt.ToBool_nd,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
@@ -830,7 +870,7 @@ def empty_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.bool_]: ...
 @overload  # int array-like
-def empty_like(  # type: ignore[overload-overlap]
+def empty_like(
     prototype: _nt.ToInt_nd,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -840,7 +880,7 @@ def empty_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.intp]: ...
 @overload  # float array-like
-def empty_like(  # type: ignore[overload-overlap]
+def empty_like(
     prototype: _nt.ToFloat64_nd,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
@@ -850,7 +890,7 @@ def empty_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.float64]: ...
 @overload  # complex array-like
-def empty_like(  # type: ignore[overload-overlap]
+def empty_like(
     prototype: _nt.ToComplex128_nd,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
@@ -932,7 +972,7 @@ def array(
     **kwargs: Unpack[_KwargsCL],
 ) -> _nt.Array[_ScalarT]: ...
 @overload
-def array(  # type: ignore[overload-overlap]
+def array(
     object: _ScalarLike_co,
     dtype: _DTypeLike[_ScalarT],
     *,
@@ -942,7 +982,7 @@ def array(  # type: ignore[overload-overlap]
     **kwargs: Unpack[_KwargsCL],
 ) -> _nt.Array0D[_ScalarT]: ...
 @overload
-def array(  # type: ignore[overload-overlap]
+def array(
     object: _ScalarLike_co,
     dtype: npt.DTypeLike | None,
     *,
@@ -985,11 +1025,11 @@ def asarray(
     a: _ArrayLike[_ScalarT], dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
-def asarray(  # type: ignore[overload-overlap]
+def asarray(
     a: _ScalarLike_co, dtype: _DTypeLike[_ScalarT], order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array0D[_ScalarT]: ...
 @overload
-def asarray(  # type: ignore[overload-overlap]
+def asarray(
     a: _ScalarLike_co, dtype: npt.DTypeLike | None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
 ) -> _nt.Array0D[Incomplete]: ...
 @overload

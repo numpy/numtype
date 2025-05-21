@@ -5,7 +5,7 @@ import numpy as np
 
 BytesArray: TypeAlias = _nt.Array[np.bytes_]
 StrArray: TypeAlias = _nt.Array[np.str_]
-StringArray: TypeAlias = np.ndarray[_nt.Shape, np.dtypes.StringDType]
+StringArray: TypeAlias = np.ndarray[_nt.AnyShape, np.dtypes.StringDType]
 
 AR_S: BytesArray
 AR_U: StrArray
@@ -186,16 +186,16 @@ assert_type(np.char.istitle(AR_SUT), _nt.Array[np.bool])
 assert_type(np.char.isupper(AR_SUT), _nt.Array[np.bool])
 assert_type(np.char.str_len(AR_SUT), _nt.Array[np.int_])
 
-assert_type(np.char.array(AR_U), np.char.chararray[tuple[int, ...], np.dtype[np.str_]])
-assert_type(np.char.array(AR_S, order="K"), np.char.chararray[tuple[int, ...], np.dtype[np.bytes_]])
-assert_type(np.char.array("bob", copy=True), np.char.chararray[tuple[int, ...], np.dtype[np.str_]])
-assert_type(np.char.array(b"bob", itemsize=5), np.char.chararray[tuple[int, ...], np.dtype[np.bytes_]])
-assert_type(np.char.array(1, unicode=False), np.char.chararray[tuple[int, ...], np.dtype[np.bytes_]])
-assert_type(np.char.array(1, unicode=True), np.char.chararray[tuple[int, ...], np.dtype[np.str_]])
+assert_type(np.char.array(AR_U), np.char.chararray[_nt.AnyShape, np.dtype[np.str_]])
+assert_type(np.char.array(AR_S, order="K"), np.char.chararray[_nt.AnyShape, np.dtype[np.bytes_]])
+assert_type(np.char.array("bob", copy=True), np.char.chararray[_nt.AnyShape, np.dtype[np.str_]])
+assert_type(np.char.array(b"bob", itemsize=5), np.char.chararray[_nt.AnyShape, np.dtype[np.bytes_]])
+assert_type(np.char.array(1, unicode=False), np.char.chararray[_nt.AnyShape, np.dtype[np.bytes_]])
+assert_type(np.char.array(1, unicode=True), np.char.chararray[_nt.AnyShape, np.dtype[np.str_]])
 
-assert_type(np.char.asarray(AR_U), np.char.chararray[tuple[int, ...], np.dtype[np.str_]])
-assert_type(np.char.asarray(AR_S, order="K"), np.char.chararray[tuple[int, ...], np.dtype[np.bytes_]])
-assert_type(np.char.asarray("bob"), np.char.chararray[tuple[int, ...], np.dtype[np.str_]])
-assert_type(np.char.asarray(b"bob", itemsize=5), np.char.chararray[tuple[int, ...], np.dtype[np.bytes_]])
-assert_type(np.char.asarray(1, unicode=False), np.char.chararray[tuple[int, ...], np.dtype[np.bytes_]])
-assert_type(np.char.asarray(1, unicode=True), np.char.chararray[tuple[int, ...], np.dtype[np.str_]])
+assert_type(np.char.asarray(AR_U), np.char.chararray[_nt.AnyShape, np.dtype[np.str_]])
+assert_type(np.char.asarray(AR_S, order="K"), np.char.chararray[_nt.AnyShape, np.dtype[np.bytes_]])
+assert_type(np.char.asarray("bob"), np.char.chararray[_nt.AnyShape, np.dtype[np.str_]])
+assert_type(np.char.asarray(b"bob", itemsize=5), np.char.chararray[_nt.AnyShape, np.dtype[np.bytes_]])
+assert_type(np.char.asarray(1, unicode=False), np.char.chararray[_nt.AnyShape, np.dtype[np.bytes_]])
+assert_type(np.char.asarray(1, unicode=True), np.char.chararray[_nt.AnyShape, np.dtype[np.str_]])

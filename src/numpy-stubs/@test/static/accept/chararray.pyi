@@ -4,7 +4,7 @@ from typing_extensions import TypeVar
 import _numtype as _nt
 import numpy as np
 
-_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape, default=_nt.Shape)
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape, default=_nt.AnyShape)
 
 _BytesArray: TypeAlias = np.char.chararray[_ShapeT, np.dtype[np.bytes_]]
 _StrArray: TypeAlias = np.char.chararray[_ShapeT, np.dtype[np.str_]]

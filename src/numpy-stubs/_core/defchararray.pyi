@@ -120,9 +120,9 @@ __all__ = [
 
 ###
 
-_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape, default=_nt.Shape)
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.Shape, covariant=True)
-_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[np.character], default=np.dtype[Any], covariant=True)
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape, default=_nt.AnyShape)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.AnyShape, covariant=True)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[np.character], default=np.dtype, covariant=True)
 _CharT = TypeVar("_CharT", bound=np.character, default=Any)
 
 _CharArray = TypeAliasType("_CharArray", chararray[_ShapeT, np.dtype[_CharT]], type_params=(_CharT, _ShapeT))
@@ -203,11 +203,11 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # type: ignore[override]
     def __mul__(self, rhs: _nt.ToInteger_0d, /) -> Self: ...
     @overload
-    def __mul__(self, rhs: _nt.ToInteger_nd, /) -> chararray[_nt.Shape, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __mul__(self, rhs: _nt.ToInteger_nd, /) -> chararray[_nt.AnyShape, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @overload  # type: ignore[override]
     def __rmul__(self, lhs: int, /) -> Self: ...
     @overload
-    def __rmul__(self, lhs: _nt.ToInteger_nd, /) -> chararray[_nt.Shape, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __rmul__(self, lhs: _nt.ToInteger_nd, /) -> chararray[_nt.AnyShape, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @override
@@ -263,7 +263,7 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def expandtabs(self, /, tabsize: _nt.ToInteger_0d = 8) -> Self: ...
     @overload
-    def expandtabs(self, /, tabsize: _nt.ToInteger_nd) -> chararray[_nt.Shape, _DTypeT_co]: ...
+    def expandtabs(self, /, tabsize: _nt.ToInteger_nd) -> chararray[_nt.AnyShape, _DTypeT_co]: ...
 
     #
     @overload
