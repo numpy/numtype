@@ -13,8 +13,11 @@ from numpy.random import BitGenerator, RandomState, SeedSequence
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _IntegerT = TypeVar("_IntegerT", bound=_nt.co_integer)
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 
 _DTypeLikeFloat: TypeAlias = _nt.ToDTypeFloat32 | _nt.ToDTypeFloat64
+_CoInt_nnd: TypeAlias = _nt._ToArray_nnd[_nt.co_integer]
+_CoFloat_nnd: TypeAlias = _nt._ToArray_nnd[_nt.co_float]
 
 _ExpMethod: TypeAlias = Literal["zig", "inv"]
 
@@ -139,22 +142,34 @@ class Generator:
     def random(self, /, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None) -> float: ...
     @overload
     def random(
-        self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat64 = ..., *, out: _nt.Array[np.float64]
-    ) -> _nt.Array[np.float64]: ...
+        self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat64 = ..., *, out: _nt.Array[np.float64, _ShapeT]
+    ) -> _nt.Array[np.float64, _ShapeT]: ...
     @overload
     def random(
         self, /, size: _ShapeLike, dtype: _nt.ToDTypeFloat64 = ..., out: _nt.Array[np.float64] | None = None
     ) -> _nt.Array[np.float64]: ...
     @overload
     def random(
-        self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat32 = ..., *, out: _nt.Array[np.float32]
-    ) -> _nt.Array[np.float32]: ...
+        self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat32 = ..., *, out: _nt.Array[np.float32, _ShapeT]
+    ) -> _nt.Array[np.float32, _ShapeT]: ...
     @overload
     def random(
         self, /, size: _ShapeLike, dtype: _nt.ToDTypeFloat32, out: _nt.Array[np.float32] | None = None
     ) -> _nt.Array[np.float32]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def uniform(
+        self, /, low: _CoFloat_nnd, high: _nt.CoFloating_nd = 1.0, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def uniform(
+        self, /, low: _nt.CoFloating_nd, high: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def uniform(
+        self, /, low: _nt.CoFloating_nd = 0.0, *, high: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def uniform(self, /, low: _nt.CoFloating_0d = 0.0, high: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
@@ -171,6 +186,18 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def triangular(
+        self, /, left: _CoFloat_nnd, mode: _nt.CoFloating_nd, right: _nt.CoFloating_nd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def triangular(
+        self, /, left: _nt.CoFloating_nd, mode: _CoFloat_nnd, right: _nt.CoFloating_nd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def triangular(
+        self, /, left: _nt.CoFloating_nd, mode: _nt.CoFloating_nd, right: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def triangular(
         self, /, left: _nt.CoFloating_0d, mode: _nt.CoFloating_0d, right: _nt.CoFloating_0d, size: None = None
@@ -190,6 +217,10 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def beta(self, /, a: _CoFloat_nnd, b: _nt.CoFloating_nd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def beta(self, /, a: _nt.CoFloating_nd, b: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def beta(self, /, a: _nt.CoFloating_0d, b: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -244,6 +275,8 @@ class Generator:
     ) -> _nt.Array[np.float32]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def exponential(self, /, scale: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
     @overload
     def exponential(self, /, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload
@@ -256,6 +289,18 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def laplace(
+        self, /, loc: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def laplace(
+        self, /, loc: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def laplace(
+        self, /, loc: _nt.CoFloating_nd = 0.0, *scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def laplace(self, /, loc: _nt.CoFloating_0d = 0.0, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
@@ -272,6 +317,18 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def logistic(
+        self, /, loc: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def logistic(
+        self, /, loc: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def logistic(
+        self, /, loc: _nt.CoFloating_nd = 0.0, *, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def logistic(self, /, loc: _nt.CoFloating_0d = 0.0, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
@@ -288,6 +345,8 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def power(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def power(self, /, a: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -296,6 +355,8 @@ class Generator:
     def power(self, /, a: _nt.CoFloating_nd, size: _ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def pareto(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def pareto(self, /, a: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -304,6 +365,18 @@ class Generator:
     def pareto(self, /, a: _nt.CoFloating_nd, size: _ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def gumbel(
+        self, /, loc: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def gumbel(
+        self, /, loc: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def gumbel(
+        self, /, loc: _nt.CoFloating_nd = 0.0, *, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def gumbel(self, /, loc: _nt.CoFloating_0d = 0.0, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
@@ -320,6 +393,8 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def weibull(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def weibull(self, /, a: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -328,6 +403,8 @@ class Generator:
     def weibull(self, /, a: _nt.CoFloating_nd, size: _ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def rayleigh(self, /, scale: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def rayleigh(self, /, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
@@ -340,6 +417,8 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def chisquare(self, /, df: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def chisquare(self, /, df: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -348,6 +427,14 @@ class Generator:
     def chisquare(self, /, df: _nt.CoFloating_nd, size: _ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def noncentral_chisquare(
+        self, /, df: _CoFloat_nnd, nonc: _nt.CoFloating_nd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def noncentral_chisquare(
+        self, /, df: _nt.CoFloating_nd, nonc: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def noncentral_chisquare(self, /, df: _nt.CoFloating_0d, nonc: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -380,6 +467,18 @@ class Generator:
     ) -> _nt.Array[np.float32]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def normal(
+        self, /, loc: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def normal(
+        self, /, loc: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def normal(
+        self, /, loc: _nt.CoFloating_nd = 0.0, *, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def normal(self, /, loc: _nt.CoFloating_0d = 0.0, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
@@ -396,6 +495,18 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def lognormal(
+        self, /, mean: _CoFloat_nnd, sigma: _nt.CoFloating_nd = 1.0, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def lognormal(
+        self, /, mean: _nt.CoFloating_nd = 0.0, *, sigma: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def lognormal(
+        self, /, mean: _nt.CoFloating_nd, sigma: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def lognormal(
         self, /, mean: _nt.CoFloating_0d = 0.0, sigma: _nt.CoFloating_0d = 1.0, size: None = None
@@ -414,6 +525,14 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def vonmises(
+        self, /, mu: _CoFloat_nnd, kappa: _nt.CoFloating_nd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def vonmises(
+        self, /, mu: _nt.CoFloating_nd, kappa: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def vonmises(self, /, mu: _nt.CoFloating_0d, kappa: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -432,6 +551,8 @@ class Generator:
     def standard_cauchy(self, /, size: _ShapeLike) -> _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def standard_t(self, /, df: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def standard_t(self, /, df: float, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -440,6 +561,18 @@ class Generator:
     def standard_t(self, /, df: _nt.CoFloating_nd, size: _ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def standard_gamma(
+        self, /, shape: _CoFloat_nnd, size: None = None, dtype: _nt.ToDTypeFloat64 = ..., out: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def standard_gamma(
+        self, /, shape: _CoFloat_nnd, size: None = None, *, dtype: _nt.ToDTypeFloat32, out: None = None
+    ) -> float | _nt.Array[np.float32]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def standard_gamma(
+        self, /, shape: _CoFloat_nnd, size: None, dtype: _nt.ToDTypeFloat32, out: None = None
+    ) -> float | _nt.Array[np.float32]: ...
     @overload
     def standard_gamma(
         self, /, shape: _nt.CoFloating_0d, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None
@@ -503,6 +636,14 @@ class Generator:
     ) -> float | _nt.Array[np.float32]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def gamma(
+        self, /, shape: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def gamma(
+        self, /, shape: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def gamma(self, /, shape: _nt.CoFloating_0d, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
@@ -519,6 +660,14 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def f(
+        self, /, dfnum: _CoFloat_nnd, dfden: _nt.CoFloating_nd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def f(
+        self, /, dfnum: _nt.CoFloating_nd, dfden: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def f(self, /, dfnum: _nt.CoFloating_0d, dfden: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -529,6 +678,18 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def noncentral_f(
+        self, /, dfnum: _CoFloat_nnd, dfden: _nt.CoFloating_nd, nonc: _nt.CoFloating_nd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def noncentral_f(
+        self, /, dfnum: _nt.CoFloating_nd, dfden: _CoFloat_nnd, nonc: _nt.CoFloating_nd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def noncentral_f(
+        self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, nonc: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def noncentral_f(
         self, /, dfnum: _nt.CoFloating_0d, dfden: _nt.CoFloating_0d, nonc: _nt.CoFloating_0d, size: None = None
@@ -548,6 +709,14 @@ class Generator:
     ) -> float | _nt.Array[np.float64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def wald(
+        self, /, mean: _CoFloat_nnd, scale: _nt.CoFloating_nd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def wald(
+        self, /, mean: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
+    ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
     def wald(self, /, mean: float, scale: float, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -1025,6 +1194,10 @@ class Generator:
     ) -> np.uint64 | _nt.Array[np.uint64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def binomial(self, /, n: _CoInt_nnd, p: _nt.CoFloating_nd, size: None = None) -> int | _nt.Array[np.int64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def binomial(self, /, n: _nt.CoInteger_nd, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
     @overload  # size: None  (default)
     def binomial(self, /, n: int, p: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
@@ -1035,6 +1208,14 @@ class Generator:
     ) -> int | _nt.Array[np.int64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def negative_binomial(
+        self, /, n: _CoFloat_nnd, p: _nt.CoFloating_nd, size: None = None
+    ) -> int | _nt.Array[np.int64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def negative_binomial(
+        self, /, n: _nt.CoFloating_nd, p: _CoFloat_nnd, size: None = None
+    ) -> int | _nt.Array[np.int64]: ...
     @overload  # size: None  (default)
     def negative_binomial(self, /, n: _nt.CoFloating_0d, p: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
@@ -1047,6 +1228,8 @@ class Generator:
     ) -> int | _nt.Array[np.int64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def poisson(self, /, lam: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
     @overload  # size: None  (default)
     def poisson(self, /, lam: _nt.CoFloating_0d = 1.0, size: None = None) -> int: ...
     @overload  # size: (int, ...)  (positional)
@@ -1057,6 +1240,8 @@ class Generator:
     def poisson(self, /, lam: _nt.CoFloating_nd = 1.0, size: _ShapeLike | None = None) -> int | _nt.Array[np.int64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def zipf(self, /, a: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
     @overload  # size: None  (default)
     def zipf(self, /, a: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
@@ -1065,6 +1250,8 @@ class Generator:
     def zipf(self, /, a: _nt.CoFloating_nd, size: _ShapeLike | None = None) -> int | _nt.Array[np.int64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def geometric(self, /, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
     @overload  # size: None  (default)
     def geometric(self, /, p: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
@@ -1073,6 +1260,18 @@ class Generator:
     def geometric(self, /, p: _nt.CoFloating_nd, size: _ShapeLike | None = None) -> int | _nt.Array[np.int64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def hypergeometric(
+        self, /, ngood: _CoInt_nnd, nbad: _nt.CoInteger_nd, nsample: _nt.CoInteger_nd, size: None = None
+    ) -> int | _nt.Array[np.int64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def hypergeometric(
+        self, /, ngood: _nt.CoInteger_nd, nbad: _CoInt_nnd, nsample: _nt.CoInteger_nd, size: None = None
+    ) -> int | _nt.Array[np.int64]: ...
+    @overload  # workaround for microsoft/pyright#10232
+    def hypergeometric(
+        self, /, ngood: _nt.CoInteger_nd, nbad: _nt.CoInteger_nd, nsample: _CoInt_nnd, size: None = None
+    ) -> int | _nt.Array[np.int64]: ...
     @overload  # size: None  (default)
     def hypergeometric(self, /, ngood: int, nbad: int, nsample: int, size: None = None) -> int: ...
     @overload  # size: (int, ...)
@@ -1090,6 +1289,8 @@ class Generator:
     ) -> int | _nt.Array[np.int64]: ...
 
     #
+    @overload  # workaround for microsoft/pyright#10232
+    def logseries(self, /, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
     @overload  # size: None  (default)
     def logseries(self, /, p: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
