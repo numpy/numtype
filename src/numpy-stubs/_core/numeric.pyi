@@ -714,7 +714,7 @@ def ones(
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> np.ndarray[Any, _DTypeT]: ...
+) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def ones(
     shape: _ShapeLike,
@@ -976,7 +976,7 @@ def full(
     *,
     device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-) -> np.ndarray[Any, _DTypeT]: ...
+) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def full(
     shape: _ShapeLike,
@@ -1029,6 +1029,16 @@ def zeros_like(
     *,
     device: _Device | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
+@overload  # workaround for microsoft/pyright#10232
+def zeros_like(
+    a: _nt._ToArray_nnd[np.bool_],
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.bool_]: ...
 @overload  # bool 0d array-like
 def zeros_like(  # type: ignore[overload-overlap]
     a: _nt.ToBool_0d,
@@ -1069,6 +1079,16 @@ def zeros_like(
     *,
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
+@overload  # workaround for microsoft/pyright#10232
+def zeros_like(
+    a: _nt._ToArray_nnd[np.intp],
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.intp]: ...
 @overload  # int 0d array-like
 def zeros_like(  # type: ignore[overload-overlap]
     a: _nt.ToInt_0d,
@@ -1109,6 +1129,16 @@ def zeros_like(
     *,
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
+@overload  # workaround for microsoft/pyright#10232
+def zeros_like(
+    a: _nt._ToArray_nnd[np.float64],
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.float64]: ...
 @overload  # float 0d array-like
 def zeros_like(  # type: ignore[overload-overlap]
     a: _nt.ToFloat64_0d,
@@ -1149,6 +1179,16 @@ def zeros_like(
     *,
     device: _Device | None = None,
 ) -> _nt.Array3D[np.float64]: ...
+@overload  # workaround for microsoft/pyright#10232
+def zeros_like(
+    a: _nt._ToArray_nnd[np.complex128],
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.complex128]: ...
 @overload  # complex 0d array-like
 def zeros_like(  # type: ignore[overload-overlap]
     a: _nt.ToComplex128_0d,
@@ -1200,7 +1240,7 @@ def zeros_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT, _AnyShapeT]: ...
 @overload  # array-like with known scalar-type, unknown shape
-def zeros_like(  # type: ignore[overload-overlap]
+def zeros_like(
     a: _ArrayLike[_ScalarT],
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
@@ -1228,7 +1268,7 @@ def zeros_like(
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ndarray[Any, _DTypeT]: ...
+) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def zeros_like(
     a: object,
@@ -1250,7 +1290,7 @@ def zeros_like(
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # bool array-like
-def zeros_like(  # type: ignore[overload-overlap]
+def zeros_like(
     a: _nt.ToBool_nd,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
@@ -1260,7 +1300,7 @@ def zeros_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.bool_]: ...
 @overload  # int array-like
-def zeros_like(  # type: ignore[overload-overlap]
+def zeros_like(
     a: _nt.ToInt_nd,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -1270,7 +1310,7 @@ def zeros_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.intp]: ...
 @overload  # float array-like
-def zeros_like(  # type: ignore[overload-overlap]
+def zeros_like(
     a: _nt.ToFloat64_nd,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
@@ -1280,7 +1320,7 @@ def zeros_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.float64]: ...
 @overload  # complex array-like
-def zeros_like(  # type: ignore[overload-overlap]
+def zeros_like(
     a: _nt.ToComplex128_nd,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
@@ -1331,6 +1371,16 @@ def ones_like(
     *,
     device: _Device | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
+@overload  # workaround for microsoft/pyright#10232
+def ones_like(
+    a: _nt._ToArray_nnd[np.bool_],
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.bool_]: ...
 @overload  # bool 0d array-like
 def ones_like(  # type: ignore[overload-overlap]
     a: _nt.ToBool_0d,
@@ -1371,6 +1421,16 @@ def ones_like(
     *,
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
+@overload  # workaround for microsoft/pyright#10232
+def ones_like(
+    a: _nt._ToArray_nnd[np.intp],
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.intp]: ...
 @overload  # int 0d array-like
 def ones_like(  # type: ignore[overload-overlap]
     a: _nt.ToInt_0d,
@@ -1411,6 +1471,16 @@ def ones_like(
     *,
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
+@overload  # workaround for microsoft/pyright#10232
+def ones_like(
+    a: _nt._ToArray_nnd[np.float64],
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.float64]: ...
 @overload  # float 0d array-like
 def ones_like(  # type: ignore[overload-overlap]
     a: _nt.ToFloat64_0d,
@@ -1451,6 +1521,16 @@ def ones_like(
     *,
     device: _Device | None = None,
 ) -> _nt.Array3D[np.float64]: ...
+@overload  # workaround for microsoft/pyright#10232
+def ones_like(
+    a: _nt._ToArray_nnd[np.complex128],
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: py_bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.Array[np.complex128]: ...
 @overload  # complex 0d array-like
 def ones_like(  # type: ignore[overload-overlap]
     a: _nt.ToComplex128_0d,
@@ -1502,7 +1582,7 @@ def ones_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT, _AnyShapeT]: ...
 @overload  # array-like with known scalar-type, unknown shape
-def ones_like(  # type: ignore[overload-overlap]
+def ones_like(
     a: _ArrayLike[_ScalarT],
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
@@ -1530,7 +1610,7 @@ def ones_like(
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ndarray[Any, _DTypeT]: ...
+) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def ones_like(
     a: object,
@@ -1552,7 +1632,7 @@ def ones_like(
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # bool array-like
-def ones_like(  # type: ignore[overload-overlap]
+def ones_like(
     a: _nt.ToBool_nd,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
@@ -1562,7 +1642,7 @@ def ones_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.bool_]: ...
 @overload  # int array-like
-def ones_like(  # type: ignore[overload-overlap]
+def ones_like(
     a: _nt.ToInt_nd,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -1572,7 +1652,7 @@ def ones_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.intp]: ...
 @overload  # float array-like
-def ones_like(  # type: ignore[overload-overlap]
+def ones_like(
     a: _nt.ToFloat64_nd,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
@@ -1582,7 +1662,7 @@ def ones_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.float64]: ...
 @overload  # complex array-like
-def ones_like(  # type: ignore[overload-overlap]
+def ones_like(
     a: _nt.ToComplex128_nd,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
@@ -1823,7 +1903,7 @@ def full_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT, _AnyShapeT]: ...
 @overload  # array-like with known scalar-type, unknown shape
-def full_like(  # type: ignore[overload-overlap]
+def full_like(
     a: _ArrayLike[_ScalarT],
     fill_value: object,
     dtype: np.dtype[_ScalarT] | None = None,
@@ -1854,7 +1934,7 @@ def full_like(
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ndarray[Any, _DTypeT]: ...
+) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def full_like(
     a: object,
@@ -1878,7 +1958,7 @@ def full_like(
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # bool array-like
-def full_like(  # type: ignore[overload-overlap]
+def full_like(
     a: _nt.ToBool_nd,
     fill_value: object,
     dtype: _nt.ToDTypeBool | None = None,
@@ -1889,7 +1969,7 @@ def full_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.bool_]: ...
 @overload  # int array-like
-def full_like(  # type: ignore[overload-overlap]
+def full_like(
     a: _nt.ToInt_nd,
     fill_value: object,
     dtype: _nt.ToDTypeInt64 | None = None,
@@ -1900,7 +1980,7 @@ def full_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.intp]: ...
 @overload  # float array-like
-def full_like(  # type: ignore[overload-overlap]
+def full_like(
     a: _nt.ToFloat64_nd,
     fill_value: object,
     dtype: _nt.ToDTypeFloat64 | None = None,
@@ -1911,7 +1991,7 @@ def full_like(  # type: ignore[overload-overlap]
     device: _Device | None = None,
 ) -> _nt.Array[np.float64]: ...
 @overload  # complex array-like
-def full_like(  # type: ignore[overload-overlap]
+def full_like(
     a: _nt.ToComplex128_nd,
     fill_value: object,
     dtype: _nt.ToDTypeComplex128 | None = None,
@@ -2247,7 +2327,11 @@ def allclose(
 #
 @overload
 def isclose(
-    a: _nt.ToGeneric_0d, b: _nt.ToGeneric_0d, rtol: ArrayLike = 1e-5, atol: ArrayLike = 1e-8, equal_nan: py_bool = False
+    a: np.generic | _nt._PyScalar,
+    b: np.generic | _nt._PyScalar,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
 ) -> np.bool: ...
 @overload
 def isclose(
