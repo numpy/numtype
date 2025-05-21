@@ -26,6 +26,6 @@ np.polyfit(AR_f8, AR_f8, 1, rcond=1j)  # type: ignore[call-overload]  # pyright:
 np.polyfit(AR_f8, AR_f8, 1, w=AR_c16)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.polyfit(AR_f8, AR_f8, 1, cov="bob")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.polyval(AR_f8, AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.polyval(AR_f8, AR_U)  # type: ignore[misc]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.polyadd(AR_f8, AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.polysub(AR_f8, AR_U)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
