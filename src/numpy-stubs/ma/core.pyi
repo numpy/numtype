@@ -624,7 +624,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
-    def ptp(  # type: ignore[override]  # pyright: ignore[reportIncompatibleVariableOverride]
+    def ptp(  # pyright: ignore[reportIncompatibleVariableOverride]
         self, axis: Incomplete = ..., out: Incomplete = ..., fill_value: Incomplete = ..., keepdims: Incomplete = ...
     ) -> Incomplete: ...
 

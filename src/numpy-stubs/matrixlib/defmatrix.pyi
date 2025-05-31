@@ -177,7 +177,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def argmin(self, /, axis: _ToAxis | None = None, *, out: _ArrayT) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @overload  # type: ignore[override]
+    @overload
     def ptp(self: _nt.Array[_ScalarT], /, axis: None = None, out: None = None) -> _ScalarT: ...
     @overload
     def ptp(self, /, axis: _ToAxis, out: None = None) -> matrix[_nt.Rank2, _DTypeT_co]: ...

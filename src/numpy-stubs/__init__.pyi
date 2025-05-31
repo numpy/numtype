@@ -4785,7 +4785,7 @@ class complex64(complexfloating):
 
 csingle = complex64
 
-class complex128(complexfloating, complex):  # type: ignore[misc]
+class complex128(complexfloating, complex):
     #
     @overload
     def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...

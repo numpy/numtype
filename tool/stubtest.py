@@ -2,7 +2,7 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #     "numtype[numpy]",
-#     "mypy[faster-cache]>=1.15.0",  # keep in sync with pyproject.toml
+#     "mypy[faster-cache]>=1.16.0",  # keep in sync with pyproject.toml
 #
 #     "PyInstaller",
 #     "hypothesis",
@@ -49,12 +49,6 @@ ALLOWLISTS = [
     ("ge" if sys.version_info >= (3, 12) else "lt") + "-py312.txt",
 ]
 
-if sys.platform == "win32":
-    if sys.version_info[:2] == (3, 12):
-        ALLOWLISTS.append("path-py312.txt")
-    elif sys.version_info[:2] <= (3, 11):
-        ALLOWLISTS.append("path-py311.txt")
-
 
 def __check_simd() -> None:
     try:
@@ -67,26 +61,6 @@ def __check_simd() -> None:
 
 
 __check_simd()
-
-
-def __commit_pyi_genocide_for_mypy() -> None:
-    """
-    Remove all ``__init__.pyi`` files from the installed numpy package.
-
-    This works around https://github.com/python/mypy/issues/18997 on `mypy<1.16.0`.
-
-    Raises
-    ------
-    NotADirectoryError
-        If `numpy` does not exist in the site-packages.
-    """
-    package = SITE_DIR / "numpy"
-    if not package.is_dir():
-        raise NotADirectoryError(f"{package} does not exist")
-
-    graveyard_size = sum(not pyi.unlink() for pyi in package.rglob("__init__.pyi"))  # type: ignore[func-returns-value]
-    if VERBOSE and graveyard_size:
-        print(f"deleted {graveyard_size} __init__.pyi from {package}\n")
 
 
 def _allowlists() -> list[str]:
@@ -147,8 +121,6 @@ def main() -> int:
     -------
     exit_code : int
     """
-    __commit_pyi_genocide_for_mypy()
-
     if VERBOSE:
         import numpy as np  # noqa: PLC0415
         import numtype as nt  # noqa: PLC0415

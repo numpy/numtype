@@ -129,7 +129,7 @@ class KnownFailureException(Exception): ...
 class IgnoreException(Exception): ...
 
 # NOTE: `warnings.catch_warnings` is incorrectly defined as invariant in typeshed
-class clear_and_catch_warnings(warnings.catch_warnings[_W_co], Generic[_W_co]):  # type: ignore[type-var]
+class clear_and_catch_warnings(warnings.catch_warnings[_W_co], Generic[_W_co]):
     class_modules: ClassVar[tuple[types.ModuleType, ...]] = ()
     modules: Final[set[types.ModuleType]]
 
