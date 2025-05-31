@@ -48,7 +48,7 @@ dependencies = []
 
 [dependency-groups]
 numpy = ["numtype[numpy]"]
-lint = ["ruff>=0.11.10"]
+lint = ["ruff>=0.11.12"]
 pytest = [
     {include-group = "numpy"},
     "pytest>=8.3.5",
@@ -60,17 +60,17 @@ list_and_test = [
 ]
 types = [
     {include-group = "pytest"},
-    "types-setuptools>=80.7.0.20250516",
+    "types-setuptools>=80.9.0.20250529",
     "types-tabulate>=0.9.0.20241207",
 ]
 basedpyright = [
     {include-group = "numpy"},
     {include-group = "types"},
-    "basedpyright>=1.29.1",
+    "basedpyright>=1.29.2",
 ]
 mypy = [
     {include-group = "types"},
-    "mypy[faster-cache]>=1.15.0",
+    "mypy[faster-cache]>=1.16.0",
 ]
 typecheck = [
     {include-group = "basedpyright"},
@@ -111,23 +111,12 @@ skip-excluded-dirs = true
 [tool.mypy]
 mypy_path = "src"
 strict = true
-strict_bytes = true
-strict_concatenate = true
-local_partial_types = true
-enable_error_code = ["ignore-without-code", "truthy-bool"]
-disable_error_code = ["explicit-override"]
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 enable_incomplete_feature = ["PreciseTupleTypes"]
-disallow_any_explicit = false
-disallow_any_expr = false
-disallow_any_decorated = false
+allow_redefinition_new = true
+local_partial_types = true
 warn_incomplete_stub = true
 warn_unreachable = false
-# needed for stubtest, see https://github.com/python/mypy/issues/18744
-disable_bytearray_promotion = true
-disable_memoryview_promotion = true
-# basedmypy/mypy compat
-# bare_literals = false
-# default_return = false
 
 
 [tool.pyright]
