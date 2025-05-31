@@ -141,6 +141,7 @@ from ._scalar_co import (
 )
 from ._shape import (
     AnyShape as AnyShape,
+    NeitherShape as NeitherShape,
     Shape as Shape,
     Shape0 as Shape0,
     Shape0N as Shape0N,
@@ -188,13 +189,17 @@ class CanArray3D(Protocol[_ScalarT_co]):
 @type_check_only
 class CanArrayND(Protocol[_ScalarT_co]):
     # TODO: remove `| Rank0` once python/mypy#19110 is fixed
-    def __array__(self, /) -> np.ndarray[Shape | Rank0, np.dtype[_ScalarT_co]]: ...
+    def __array__(self, /) -> np.ndarray[AnyShape | Rank0, np.dtype[_ScalarT_co]]: ...
 
 @type_check_only
 class CanLenArrayND(Protocol[_ScalarT_co]):
     def __len__(self, /) -> int: ...
     # TODO: remove `| Rank0` once python/mypy#19110 is fixed
-    def __array__(self, /) -> np.ndarray[Shape, np.dtype[_ScalarT_co]]: ...
+    def __array__(self, /) -> np.ndarray[AnyShape, np.dtype[_ScalarT_co]]: ...
+
+@type_check_only
+class CanArray(Protocol[_ScalarT_co, _ShapeT_co]):
+    def __array__(self, /) -> np.ndarray[_ShapeT_co, np.dtype[_ScalarT_co]]: ...
 
 @type_check_only
 class CanLenArray(Protocol[_ScalarT_co, _ShapeT_co]):
@@ -260,6 +265,7 @@ _ToArray_2nd: TypeAlias = CanLenArray[_ScalarT, Shape2N] | Sequence[_ToArray_1nd
 _ToArray2_2nd: TypeAlias = CanLenArray[_ScalarT, Shape2N] | Sequence[_ToArray2_1nd[_ScalarT, _ToT]]
 _ToArray_3nd: TypeAlias = CanLenArray[_ScalarT, Shape3N] | Sequence[_ToArray_2nd[_ScalarT]]
 _ToArray2_3nd: TypeAlias = CanLenArray[_ScalarT, Shape3N] | Sequence[_ToArray2_2nd[_ScalarT, _ToT]]
+_ToArray_nnd: TypeAlias = CanArray[_ScalarT, NeitherShape]  # noqa: PYI047
 
 ###
 # Non-overlapping scalar- and array-like aliases for all scalar types.

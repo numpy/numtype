@@ -1,8 +1,9 @@
-from typing import Any, TypeAlias
+from typing import Any, Never, TypeAlias
 from typing_extensions import TypeAliasType
 
 __all__ = [
     "AnyShape",
+    "NeitherShape",
     "Shape",
     "Shape0",
     "Shape0N",
@@ -17,8 +18,9 @@ __all__ = [
     "ShapeN",
 ]
 
-AnyShape = TypeAliasType("AnyShape", tuple[Any, ...])
 Shape = TypeAliasType("Shape", tuple[int, ...])
+AnyShape = TypeAliasType("AnyShape", tuple[Any, ...])
+NeitherShape = TypeAliasType("NeitherShape", tuple[Never, ...])
 
 # TODO: remove `| Rank0` once python/mypy#19110 is fixed
 Shape0 = TypeAliasType("Shape0", tuple[()])

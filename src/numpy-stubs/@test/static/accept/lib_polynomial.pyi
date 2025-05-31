@@ -89,10 +89,10 @@ assert_type(
 assert_type(np.polyfit(AR_u4, AR_c16, 1.0, cov=True), tuple[_nt.Array[np.complex128], _nt.Array[np.complex128]])
 
 assert_type(np.polyval(AR_b, AR_b), _nt.Array[np.bool])
-assert_type(np.polyval(AR_u4, AR_b), _nt.Array[np.unsignedinteger])
-assert_type(np.polyval(AR_i8, AR_i8), _nt.Array[np.signedinteger])
-assert_type(np.polyval(AR_f8, AR_i8), _nt.Array[np.floating])
-assert_type(np.polyval(AR_i8, AR_c16), _nt.Array[np.complexfloating])
+assert_type(np.polyval(AR_u4, AR_b), _nt.Array[np.uint32])
+assert_type(np.polyval(AR_i8, AR_i8), _nt.Array[np.int64])
+assert_type(np.polyval(AR_f8, AR_i8), _nt.Array[np.float64])
+assert_type(np.polyval(AR_i8, AR_c16), _nt.Array[np.complex128])
 assert_type(np.polyval(AR_O, AR_O), _nt.Array[np.object_])
 
 assert_type(np.polyadd(poly_obj, AR_i8), np.poly1d)  # type: ignore[assert-type]  # mypy fail

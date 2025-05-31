@@ -151,7 +151,7 @@ assert_type(np.shape(i_1d), tuple[int])
 assert_type(np.shape(i_2d), tuple[int, int])
 assert_type(np.shape(i_3d), tuple[int, int, int])
 assert_type(np.shape(i_4d), tuple[int, ...])
-assert_type(np.shape(AR_b1), tuple[int, ...])
+assert_type(np.shape(AR_b1), tuple[Any, ...])
 assert_type(np.shape(AR_nd), tuple[int, ...])
 # these fail on mypy, but it works as expected with pyright/pylance
 assert_type(np.shape(AR_0d), tuple[()])  # type: ignore[assert-type]
