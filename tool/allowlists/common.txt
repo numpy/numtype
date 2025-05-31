@@ -34,8 +34,5 @@ numpy\.f2py\.__main__
 # does not exist
 numpy\.distutils\.\w+
 
-# workaround for https://github.com/python/mypy/issues/15302#issuecomment-2701979355
-numpy\.testing(\._private\.utils)?\.check_support_sve
-
 # stdlib re-exports with incorrect typeshed stubs
 numpy\.compat(\.py3k)?\.os_PathLike\.__class_getitem__
