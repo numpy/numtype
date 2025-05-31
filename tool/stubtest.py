@@ -49,12 +49,6 @@ ALLOWLISTS = [
     ("ge" if sys.version_info >= (3, 12) else "lt") + "-py312.txt",
 ]
 
-if sys.platform == "win32":
-    if sys.version_info[:2] == (3, 12):
-        ALLOWLISTS.append("path-py312.txt")
-    elif sys.version_info[:2] <= (3, 11):
-        ALLOWLISTS.append("path-py311.txt")
-
 
 def __check_simd() -> None:
     try:
