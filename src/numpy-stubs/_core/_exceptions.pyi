@@ -5,7 +5,6 @@ from typing_extensions import TypeVar
 import _numtype as _nt
 import numpy as np
 from numpy import _CastingKind  # noqa: ICN003
-from numpy._utils import set_module as set_module
 
 ###
 
