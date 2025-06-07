@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "numtype"
-version = "2.2.6.0.dev0"
+version = "2.3.0.0.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
 authors = [
@@ -37,7 +37,7 @@ requires-python = ">=3.11"
 dependencies = []
 
     [project.optional-dependencies]
-    numpy = ["numpy>=2.2.6,<2.3"]
+    numpy = ["numpy>=2.3.0,<2.4"]
 
     [project.urls]
     Homepage = "https://numpy.org/"
@@ -48,11 +48,11 @@ dependencies = []
 
 [dependency-groups]
 numpy = ["numtype[numpy]"]
-lint = ["ruff>=0.11.12"]
+lint = ["ruff>=0.11.13"]
 pytest = [
     {include-group = "numpy"},
-    "pytest>=8.3.5",
-    "typing_extensions>=4.13.2",
+    "pytest>=8.4.0",
+    "typing_extensions>=4.14.0",
 ]
 list_and_test = [
     {include-group = "lint"},
