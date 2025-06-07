@@ -3527,8 +3527,6 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __bool__(self, /) -> _BoolItemT_co: ...
     @override
     def __int__(self, /) -> L[0, 1]: ...
-    @deprecated("It will be an error for 'np.bool' scalars to be interpreted as an index in NumPy 2.3.0")
-    def __index__(self, /) -> L[0, 1]: ...
 
     #
     @overload
@@ -4734,13 +4732,6 @@ class complexfloating(inexact[complex]):
     #
     @override
     def __abs__(self, /) -> floating: ...
-
-    #
-    @deprecated(
-        "The Python built-in `round` is deprecated for complex scalars, "
-        "and will raise a `TypeError` in a future release"
-    )
-    def __round__(self, /, ndigits: CanIndex | None = None) -> Self: ...
 
 class complex64(complexfloating):
     @overload
