@@ -16,11 +16,11 @@ numpy(\..+)?\.float(96|128)
 numpy(\..+)?\.complex(192|256)
 
 # these are always either missing float96/complex192 or float128/complex256
-numpy\.__all__
-numpy\._?core\.__all__
-numpy\._?core\.numeric\.__all__
-numpy\._?core\.numerictypes\.__all__
-numpy\.matlib\.__all__
+# numpy\.__all__
+# numpy\._?core\.__all__
+# numpy\._?core\.numeric\.__all__
+# numpy\._?core\.numerictypes\.__all__
+# numpy\.matlib\.__all__
 
 # requires numpy/_core/code_generators to be on the PYTHONPATH when running stubtest
 numpy\._core\.cversions
@@ -33,6 +33,3 @@ numpy\.f2py\.__main__
 
 # does not exist
 numpy\.distutils\.\w+
-
-# stdlib re-exports with incorrect typeshed stubs
-numpy\.compat(\.py3k)?\.os_PathLike\.__class_getitem__
