@@ -2,11 +2,13 @@ from numpy._core.function_base import add_newdoc
 from numpy._core.multiarray import add_docstring, tracemalloc_domain
 
 from . import (
+    # all private submodules are accessible at runtime through `__getattr__`
     _array_utils_impl as _array_utils_impl,
     _arraypad_impl as _arraypad_impl,
     _arraysetops_impl as _arraysetops_impl,
     _arrayterator_impl as _arrayterator_impl,
     _datasource as _datasource,
+    _format_impl as _format_impl,
     _function_base_impl as _function_base_impl,
     _histograms_impl as _histograms_impl,
     _index_tricks_impl as _index_tricks_impl,
@@ -23,7 +25,7 @@ from . import (
     _utils_impl as _utils_impl,
     _version as _version,
     array_utils,
-    format as format,
+    format,
     introspect,
     mixins,
     npyio,
@@ -39,6 +41,7 @@ __all__ = [
     "add_docstring",
     "add_newdoc",
     "array_utils",
+    "format",
     "introspect",
     "mixins",
     "npyio",
