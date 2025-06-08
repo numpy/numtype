@@ -62,6 +62,7 @@ __all__ = [
     "rjust",
     "rpartition",
     "rstrip",
+    "slice",
     "startswith",
     "str_len",
     "strip",
@@ -238,6 +239,32 @@ def translate(a: _nt.ToStr_nd, table: str, deletechars: str | None = None) -> _S
 def translate(a: _nt.ToBytes_nd, table: str, deletechars: str | None = None) -> _BytesND: ...
 @overload
 def translate(a: _nt.ToString_nd, table: str, deletechars: str | None = None) -> _nt.StringArray: ...
+
+#
+@overload
+def slice(
+    a: _nt.ToStr_nd,
+    start: _nt.ToInteger_nd | None = None,
+    stop: _nt.ToInteger_nd | None = None,
+    step: _nt.ToInteger_nd | None = None,
+    /,
+) -> _StrND: ...
+@overload
+def slice(
+    a: _nt.ToBytes_nd,
+    start: _nt.ToInteger_nd | None = None,
+    stop: _nt.ToInteger_nd | None = None,
+    step: _nt.ToInteger_nd | None = None,
+    /,
+) -> _BytesND: ...
+@overload
+def slice(
+    a: _nt.ToString_nd,
+    start: _nt.ToInteger_nd | None = None,
+    stop: _nt.ToInteger_nd | None = None,
+    step: _nt.ToInteger_nd | None = None,
+    /,
+) -> _nt.StringArray: ...
 
 #
 @overload
