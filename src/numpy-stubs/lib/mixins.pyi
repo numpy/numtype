@@ -19,6 +19,8 @@ _AnyArray: TypeAlias = np.ndarray[Any, np.dtype]
 # As such, only little type safety can be provided here.
 
 class NDArrayOperatorsMixin(Generic[_T_contra, _T_co]):
+    from numpy._core import umath as um  # noqa: PLC0415
+
     __slots__ = ()
 
     @type_check_only
