@@ -1,4 +1,3 @@
-import sys
 from builtins import bool as py_bool
 from typing import Final, Literal as L, TypedDict, type_check_only
 
@@ -15,6 +14,8 @@ from numpy import (
     clongdouble,
     complex64,
     complex128,
+    complex192,
+    complex256,
     complexfloating,
     csingle,
     datetime64,
@@ -24,6 +25,8 @@ from numpy import (
     float16,
     float32,
     float64,
+    float96,
+    float128,
     floating,
     generic,
     half,
@@ -79,6 +82,8 @@ __all__ = [
     "clongdouble",
     "complex64",
     "complex128",
+    "complex192",
+    "complex256",
     "complexfloating",
     "csingle",
     "datetime64",
@@ -89,6 +94,8 @@ __all__ = [
     "float16",
     "float32",
     "float64",
+    "float96",
+    "float128",
     "floating",
     "generic",
     "half",
@@ -129,15 +136,6 @@ __all__ = [
     "ushort",
     "void",
 ]
-
-if sys.platform == "win32" or sys.platform == "cygwin":
-    from numpy import complex192, float96
-
-    __all__ += ["complex192", "float96"]
-else:
-    from numpy import complex256, float128
-
-    __all__ += ["complex256", "float128"]
 
 ###
 

@@ -1,5 +1,3 @@
-import sys
-
 from ._asarray import require
 from ._ufunc_config import errstate, getbufsize, geterr, geterrcall, setbufsize, seterr, seterrcall
 from .arrayprint import (
@@ -152,6 +150,8 @@ from .numerictypes import (
     clongdouble,
     complex64,
     complex128,
+    complex192,
+    complex256,
     complexfloating,
     csingle,
     datetime64,
@@ -162,6 +162,8 @@ from .numerictypes import (
     float16,
     float32,
     float64,
+    float96,
+    float128,
     floating,
     generic,
     half,
@@ -391,6 +393,8 @@ __all__ = [
     "clongdouble",
     "complex64",
     "complex128",
+    "complex192",
+    "complex256",
     "complexfloating",
     "compress",
     "concat",
@@ -440,6 +444,8 @@ __all__ = [
     "float16",
     "float32",
     "float64",
+    "float96",
+    "float128",
     "float_power",
     "floating",
     "floor",
@@ -639,12 +645,3 @@ __all__ = [
     "zeros",
     "zeros_like",
 ]
-
-if sys.platform == "win32" or sys.platform == "cygwin":
-    from .numerictypes import complex192, float96
-
-    __all__ += ["complex192", "float96"]
-else:
-    from .numerictypes import complex256, float128
-
-    __all__ += ["complex256", "float128"]
