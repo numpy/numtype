@@ -519,12 +519,12 @@ __all__ = [  # noqa: RUF022
     "bitwise_and", "bitwise_count", "bitwise_invert", "bitwise_left_shift", "bitwise_not", "bitwise_or",
     "bitwise_right_shift", "bitwise_xor", "block", "bool", "bool_", "broadcast", "busday_count", "busday_offset",
     "busdaycalendar", "byte", "bytes_", "can_cast", "cbrt", "cdouble", "ceil", "character", "choose", "clip",
-    "clongdouble", "complex128", "complex192", "complex256", "complex64", "complexfloating", "compress", "concat",
+    "clongdouble", "complex128", "complex64", "complexfloating", "compress", "concat",
     "concatenate", "conj", "conjugate", "convolve", "copysign", "copyto", "correlate", "cos", "cosh", "count_nonzero",
     "cross", "csingle", "cumprod", "cumsum", "cumulative_prod", "cumulative_sum", "datetime64", "datetime_as_string",
     "datetime_data", "deg2rad", "degrees", "diagonal", "divide", "divmod", "dot", "double", "dtype", "e", "einsum",
     "einsum_path", "empty", "empty_like", "equal", "errstate", "euler_gamma", "exp", "exp2", "expm1", "fabs", "finfo",
-    "flatiter", "flatnonzero", "flexible", "float128", "float16", "float32", "float64", "float96", "float_power",
+    "flatiter", "flatnonzero", "flexible", "float16", "float32", "float64", "float_power",
     "floating", "floor", "floor_divide", "fmax", "fmin", "fmod", "format_float_positional", "format_float_scientific",
     "frexp", "from_dlpack", "frombuffer", "fromfile", "fromfunction", "fromiter", "frompyfunc", "fromstring", "full",
     "full_like", "gcd", "generic", "geomspace", "get_printoptions", "getbufsize", "geterr", "geterrcall", "greater",
@@ -594,6 +594,11 @@ __all__ = [  # noqa: RUF022
     # version.*
     "__version__",
 ]  # fmt: skip
+
+if sys.platform == "win32" or sys.platform == "cygwin":
+    __all__ += ["complex192", "float96"]
+else:
+    __all__ += ["complex256", "float128"]
 
 ###
 # Constrained types (for internal use only)
@@ -4698,8 +4703,10 @@ class longdouble(_FloatMixin[L[12, 16]], floating):
     @override
     def tolist(self, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
-float96 = longdouble
-float128 = longdouble
+if sys.platform == "win32" or sys.platform == "cygwin":
+    float96 = longdouble
+else:
+    float128 = longdouble
 
 class complexfloating(inexact[complex]):
     @override
@@ -4886,8 +4893,10 @@ class clongdouble(complexfloating):
     #
     def __complex__(self, /) -> complex: ...
 
-complex192 = clongdouble
-complex256 = clongdouble
+if sys.platform == "win32" or sys.platform == "cygwin":
+    complex192 = clongdouble
+else:
+    complex256 = clongdouble
 
 # NOTE: The `object_` constructor returns the passed object, so instances with type `object_` cannot exists at runtime.
 # NOTE: Because mypy does not fully support `__new__`, `object_` can't be made generic.

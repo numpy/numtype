@@ -1,3 +1,5 @@
+import sys
+
 from numpy._core.numeric import (
     False_,
     ScalarType,
@@ -59,8 +61,6 @@ from numpy._core.numeric import (
     clongdouble,
     complex64,
     complex128,
-    complex192,
-    complex256,
     complexfloating,
     compress,
     concatenate,
@@ -106,8 +106,6 @@ from numpy._core.numeric import (
     float16,
     float32,
     float64,
-    float96,
-    float128,
     float_power,
     floating,
     floor,
@@ -355,8 +353,6 @@ __all__ = [
     "clongdouble",
     "complex64",
     "complex128",
-    "complex192",
-    "complex256",
     "complexfloating",
     "compress",
     "concatenate",
@@ -402,8 +398,6 @@ __all__ = [
     "float16",
     "float32",
     "float64",
-    "float96",
-    "float128",
     "float_power",
     "floating",
     "floor",
@@ -590,3 +584,12 @@ __all__ = [
     "zeros",
     "zeros_like",
 ]
+
+if sys.platform == "win32" or sys.platform == "cygwin":
+    from numpy._core.numeric import complex192, float96
+
+    __all__ += ["complex192", "float96"]
+else:
+    from numpy._core.numeric import complex256, float128
+
+    __all__ += ["complex256", "float128"]
