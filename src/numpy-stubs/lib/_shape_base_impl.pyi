@@ -51,7 +51,7 @@ class _CanArrayWrap(Protocol):
 
 #
 def take_along_axis(
-    arr: _ScalarT | _nt.Array[_ScalarT], indices: _nt.Array[np.integer], axis: int | None
+    arr: _ScalarT | _nt.Array[_ScalarT], indices: _nt.Array[np.integer], axis: int | None = -1
 ) -> _nt.Array[_ScalarT]: ...
 
 #

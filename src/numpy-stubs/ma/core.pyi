@@ -12,7 +12,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import TypeVar, deprecated, override
+from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np
@@ -437,7 +437,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __mul__(self, other: Incomplete, /) -> Incomplete: ...
     @override
     def __rmul__(self, other: Incomplete, /) -> Incomplete: ...
-    def __div__(self, other: Incomplete, /) -> Incomplete: ...
     @override
     def __truediv__(self, other: Incomplete, /) -> Incomplete: ...
     @override
@@ -456,7 +455,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __isub__(self, other: Incomplete, /) -> Self: ...
     @override
     def __imul__(self, other: Incomplete, /) -> Self: ...  # type: ignore[override]
-    def __idiv__(self, other: Incomplete, /) -> Self: ...
     @override
     def __ifloordiv__(self, other: Incomplete, /) -> Self: ...
     @override
@@ -657,9 +655,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def torecords(self) -> Incomplete: ...
     @override
     def tolist(self, fill_value: Incomplete | None = None) -> Incomplete: ...
-    @deprecated("tostring() is deprecated. Use tobytes() instead.")
-    @override
-    def tostring(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
     def tobytes(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override

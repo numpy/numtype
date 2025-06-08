@@ -115,6 +115,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def unique(
@@ -125,6 +126,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> _nt.Array[Any]: ...
 @overload
 def unique(
@@ -135,6 +137,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -145,6 +148,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -155,6 +159,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -165,6 +170,7 @@ def unique(
     return_counts: L[False] = False,
     axis: CanIndex | None = None,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -175,6 +181,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -185,6 +192,7 @@ def unique(
     return_counts: L[False] = False,
     axis: CanIndex | None = None,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -195,6 +203,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -205,6 +214,7 @@ def unique(
     return_counts: L[True],
     axis: CanIndex | None = None,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -215,6 +225,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -225,6 +236,7 @@ def unique(
     return_counts: L[True],
     axis: CanIndex | None = None,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -235,6 +247,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -245,6 +258,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -255,6 +269,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -265,6 +280,7 @@ def unique(
     return_counts: L[True],
     axis: CanIndex | None = None,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -275,6 +291,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -285,6 +302,7 @@ def unique(
     return_counts: L[True],
     axis: CanIndex | None = None,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -295,6 +313,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -305,6 +324,7 @@ def unique(
     return_counts: L[True],
     axis: CanIndex | None = None,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -315,6 +335,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -325,6 +346,7 @@ def unique(
     return_counts: L[True],
     axis: CanIndex | None = None,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -335,6 +357,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[_ScalarT], _nt.Array[np.intp], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 @overload
 def unique(
@@ -345,6 +368,7 @@ def unique(
     axis: CanIndex | None = None,
     *,
     equal_nan: bool = True,
+    sorted: bool = True,
 ) -> tuple[_nt.Array[Any], _nt.Array[np.intp], _nt.Array[np.intp], _nt.Array[np.intp]]: ...
 
 #

@@ -2,14 +2,12 @@
 numpy\.__numtype__
 numpy\._typing.*
 numpy\.typing\.NBitBase
+numpy\.typing\.mypy_plugin
 
 # internal testing code
 numpy\.conftest
-numpy(\.\w+)?\.tests.*
 numpy\.random\._generator\.__test__
-
-# workaround for the `dtype.type` generic class-attribute that's `None` unless instantiated
-numpy(\..+)?\.dtype\.type
+numpy(\.\w+)?\.tests.*
 
 # system-dependent extended precision types
 numpy(\..+)?\.float(96|128)
@@ -25,14 +23,11 @@ numpy\.matlib\.__all__
 # requires numpy/_core/code_generators to be on the PYTHONPATH when running stubtest
 numpy\._core\.cversions
 
-# mypy plugin
-numpy\.typing\.mypy_plugin
-
 # raises SystemExit on import
 numpy\.f2py\.__main__
 
+# workaround for the `dtype.type` generic class-attribute that's `None` unless instantiated
+numpy(\..+)?\.dtype\.type
+
 # does not exist
 numpy\.distutils\.\w+
-
-# stdlib re-exports with incorrect typeshed stubs
-numpy\.compat(\.py3k)?\.os_PathLike\.__class_getitem__

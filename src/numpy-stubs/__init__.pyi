@@ -519,12 +519,12 @@ __all__ = [  # noqa: RUF022
     "bitwise_and", "bitwise_count", "bitwise_invert", "bitwise_left_shift", "bitwise_not", "bitwise_or",
     "bitwise_right_shift", "bitwise_xor", "block", "bool", "bool_", "broadcast", "busday_count", "busday_offset",
     "busdaycalendar", "byte", "bytes_", "can_cast", "cbrt", "cdouble", "ceil", "character", "choose", "clip",
-    "clongdouble", "complex128", "complex192", "complex256", "complex64", "complexfloating", "compress", "concat",
+    "clongdouble", "complex64", "complex128", "complex192", "complex256", "complexfloating", "compress", "concat",
     "concatenate", "conj", "conjugate", "convolve", "copysign", "copyto", "correlate", "cos", "cosh", "count_nonzero",
     "cross", "csingle", "cumprod", "cumsum", "cumulative_prod", "cumulative_sum", "datetime64", "datetime_as_string",
     "datetime_data", "deg2rad", "degrees", "diagonal", "divide", "divmod", "dot", "double", "dtype", "e", "einsum",
     "einsum_path", "empty", "empty_like", "equal", "errstate", "euler_gamma", "exp", "exp2", "expm1", "fabs", "finfo",
-    "flatiter", "flatnonzero", "flexible", "float128", "float16", "float32", "float64", "float96", "float_power",
+    "flatiter", "flatnonzero", "flexible", "float16", "float32", "float64", "float96", "float128", "float_power",
     "floating", "floor", "floor_divide", "fmax", "fmin", "fmod", "format_float_positional", "format_float_scientific",
     "frexp", "from_dlpack", "frombuffer", "fromfile", "fromfunction", "fromiter", "frompyfunc", "fromstring", "full",
     "full_like", "gcd", "generic", "geomspace", "get_printoptions", "getbufsize", "geterr", "geterrcall", "greater",
@@ -1046,7 +1046,7 @@ __NUMPY_SETUP__: Final = False
 __numpy_submodules__: Final[set[_SubModule]] = ...
 __former_attrs__: Final[_FormerAttrsDict] = ...
 __future_scalars__: Final[set[_FutureScalar]] = ...
-__array_api_version__: Final = "2023.12"
+__array_api_version__: Final = "2024.12"
 test: Final[PytestTester] = ...
 
 ###
@@ -3527,8 +3527,6 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __bool__(self, /) -> _BoolItemT_co: ...
     @override
     def __int__(self, /) -> L[0, 1]: ...
-    @deprecated("It will be an error for 'np.bool' scalars to be interpreted as an index in NumPy 2.3.0")
-    def __index__(self, /) -> L[0, 1]: ...
 
     #
     @overload
@@ -4734,13 +4732,6 @@ class complexfloating(inexact[complex]):
     #
     @override
     def __abs__(self, /) -> floating: ...
-
-    #
-    @deprecated(
-        "The Python built-in `round` is deprecated for complex scalars, "
-        "and will raise a `TypeError` in a future release"
-    )
-    def __round__(self, /, ndigits: CanIndex | None = None) -> Self: ...
 
 class complex64(complexfloating):
     @overload
