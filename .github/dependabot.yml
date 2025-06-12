@@ -1,12 +1,12 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directory: /
-    target-branch: main
+    directory: "/"
     schedule:
       interval: daily
     allow:
       - dependency-type: "all"
+    versioning-strategy: increase
     labels:
       - "topic: dependencies"
       - "tool: github-actions"
@@ -14,14 +14,14 @@ updates:
       prefix: "⬆️ "
 
   - package-ecosystem: uv
-    directory: /
-    target-branch: main
+    directories:
+      - "/"
+      - "/tool"
     schedule:
       interval: daily
     allow:
       - dependency-type: "all"
-    ignore:
-      - dependency-name: "numpy"
+    versioning-strategy: increase
     labels:
       - "topic: dependencies"
       - "tool: uv"
