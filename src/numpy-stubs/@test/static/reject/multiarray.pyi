@@ -42,9 +42,9 @@ np.datetime_as_string("2012")  # type: ignore[call-overload]  # pyright: ignore[
 
 np.char.compare_chararrays("a", b"a", "==", False)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
-np.nested_iters([AR_i8, AR_i8])  # type: ignore[call-arg]  # pyright: ignore[reportCallIssue]
-np.nested_iters([AR_i8, AR_i8], 0)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-np.nested_iters([AR_i8, AR_i8], [0])  # type: ignore[list-item]  # pyright: ignore[reportArgumentType]
-np.nested_iters([AR_i8, AR_i8], [[0], [1]], flags=["test"])  # type: ignore[list-item]  # pyright: ignore[reportArgumentType]
-np.nested_iters([AR_i8, AR_i8], [[0], [1]], op_flags=[["test"]])  # type: ignore[list-item]  # pyright: ignore[reportArgumentType]
-np.nested_iters([AR_i8, AR_i8], [[0], [1]], buffersize=1.0)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+np.nested_iters([AR_i8, AR_i8])  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
+np.nested_iters([AR_i8, AR_i8], 0)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.nested_iters([AR_i8, AR_i8], [0])  # type: ignore[list-item]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.nested_iters([AR_i8, AR_i8], [[0], [1]], flags=["test"])  # type: ignore[list-item]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.nested_iters([AR_i8, AR_i8], [[0], [1]], op_flags=[["test"]])  # type: ignore[list-item]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.nested_iters([AR_i8, AR_i8], [[0], [1]], buffersize=1.0)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
