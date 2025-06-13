@@ -101,7 +101,7 @@ _IterFlag: TypeAlias = L[
     "reduce_ok",
     "zerosize_ok",
 ]
-_IterFlagOp: TypeAlias = L[
+_OpFlag: TypeAlias = L[
     "readonly", "writeonly", "readwrite",
     "no_broadcast",
     "config",
@@ -114,6 +114,8 @@ _IterFlagOp: TypeAlias = L[
     "overlap_assume_elementwise",
     "virtual",  # undocumented
 ]  # fmt: skip
+_OpFlags: TypeAlias = Sequence[_OpFlag]
+_OpAxes: TypeAlias = Sequence[CanIndex] | None
 
 _ShapeLike1D: TypeAlias = CanIndex | tuple[CanIndex]
 _ShapeLike2D: TypeAlias = tuple[CanIndex, CanIndex]
@@ -308,7 +310,7 @@ class flagsobj:
 @final
 class broadcast:
     @property
-    def iters(self) -> tuple[flatiter[Incomplete], ...]: ...
+    def iters(self) -> tuple[flatiter[_nt.Array[Incomplete]], ...]: ...
     @property
     def index(self) -> int: ...
     @property
@@ -323,11 +325,11 @@ class broadcast:
     def shape(self) -> _nt.Shape: ...
 
     #
-    def __new__(cls, *args: npt.ArrayLike) -> Self: ...
+    def __new__(cls, *args: _nt.ToGeneric_nd) -> Self: ...
 
     #
-    def __next__(self) -> tuple[Incomplete, ...]: ...
     def __iter__(self) -> Self: ...
+    def __next__(self) -> tuple[Incomplete, ...]: ...
 
     #
     def reset(self) -> None: ...
@@ -370,8 +372,38 @@ class flatiter(Generic[_ArrayT_co]):
 
 @final
 class nditer:
+    @overload
+    def __init__(
+        self,
+        /,
+        op: _nt.ToGeneric_nd,
+        flags: Sequence[_IterFlag] | None = None,
+        op_flags: _OpFlags | None = None,
+        op_dtypes: _nt.ToDType | None = None,
+        order: _OrderKACF = "K",
+        casting: _CastingKind = "safe",
+        op_axes: _OpAxes = None,
+        itershape: _ShapeLike | None = None,
+        buffersize: CanIndex = 0,
+    ) -> None: ...
+    @overload
+    def __init__(
+        self,
+        /,
+        op: Sequence[_nt.ToGeneric_nd | None],
+        flags: Sequence[_IterFlag] | None = None,
+        op_flags: Sequence[_OpFlags] | None = None,
+        op_dtypes: Sequence[_nt.ToDType | None] | None = None,
+        order: _OrderKACF = "K",
+        casting: _CastingKind = "safe",
+        op_axes: Sequence[_OpAxes] | None = None,
+        itershape: _ShapeLike | None = None,
+        buffersize: CanIndex = 0,
+    ) -> None: ...
+
+    #
     @property
-    def dtypes(self) -> tuple[np.dtype, ...]: ...
+    def dtypes(self) -> tuple[np.dtype[Incomplete], *tuple[np.dtype[Incomplete], ...]]: ...
     @property
     def shape(self) -> _nt.Shape: ...
     @property
@@ -393,74 +425,73 @@ class nditer:
     @property
     def nop(self) -> int: ...
     @property
-    def index(self) -> int: ...
+    def index(self) -> int: ...  # might raise ValueError
     @property
-    def multi_index(self) -> tuple[int, ...]: ...
+    def multi_index(self) -> _nt.Shape: ...  # might raise ValueError
     @property
     def iterindex(self) -> int: ...
     @property
     def itersize(self) -> int: ...
     @property
-    def iterrange(self) -> tuple[int, ...]: ...
+    def iterrange(self) -> tuple[int, int]: ...
     @property
-    def itviews(self) -> tuple[_nt.Array[Incomplete], ...]: ...
+    def itviews(self) -> tuple[_nt.Array[Incomplete], *tuple[_nt.Array[Incomplete], ...]]: ...
     @property
-    def operands(self) -> tuple[_nt.Array[Incomplete], ...]: ...
-    @property
-    def value(self) -> tuple[_nt.Array[Incomplete], ...]: ...
-
-    #
-    def __init__(
-        self,
-        /,
-        op: Sequence[npt.ArrayLike | None] | npt.ArrayLike,
-        flags: Sequence[_IterFlag] | None = None,
-        op_flags: Sequence[Sequence[_IterFlagOp]] | None = None,
-        op_dtypes: Sequence[npt.DTypeLike] | npt.DTypeLike = None,
-        order: _OrderKACF = "K",
-        casting: _CastingKind = "safe",
-        op_axes: Sequence[Sequence[CanIndex]] | None = None,
-        itershape: _ShapeLike | None = None,
-        buffersize: CanIndex = 0,
-    ) -> None: ...
+    def operands(self) -> tuple[_nt.Array[Incomplete], *tuple[_nt.Array[Incomplete], ...]]: ...
 
     #
     def __enter__(self) -> Self: ...
     def __exit__(self, t: type[BaseException] | None, e: BaseException | None, tb: TracebackType | None, /) -> None: ...
     def close(self) -> None: ...
     def reset(self) -> None: ...
-
-    #
-    def __len__(self) -> int: ...
-    def __iter__(self) -> Self: ...
-    def __next__(self) -> tuple[_nt.Array[Incomplete], ...]: ...
+    def enable_external_loop(self) -> None: ...
+    def remove_axis(self, i: CanIndex, /) -> None: ...
+    def remove_multi_index(self) -> None: ...
+    def debug_print(self) -> None: ...
     def iternext(self) -> py_bool: ...
 
     #
+    def __copy__(self) -> Self: ...
+    def copy(self) -> Self: ...
+
+    #
+    def __iter__(self) -> Self: ...
+
+    # returns either a single array or a tuple of multiple arrays
+    def __next__(self) -> _nt.Array[Incomplete] | Incomplete: ...
+    @property
+    def value(self) -> _nt.Array[Incomplete] | Incomplete: ...
+
+    #
+    def __len__(self) -> int: ...
     @overload
     def __getitem__(self, index: CanIndex, /) -> _nt.Array[Incomplete]: ...
     @overload
     def __getitem__(self, index: slice, /) -> tuple[_nt.Array[Incomplete], ...]: ...
-    def __setitem__(self, index: slice | CanIndex, value: npt.ArrayLike, /) -> None: ...
+    @overload
+    def __setitem__(self, index: CanIndex, value: _nt.ToGeneric_nd, /) -> None: ...
+    @overload
+    def __setitem__(self, index: slice, value: Sequence[_nt.ToGeneric_nd], /) -> None: ...
 
-    #
-    def __copy__(self) -> Self: ...
-    def copy(self) -> nditer: ...
-
-    # .
-    def debug_print(self) -> None: ...
-    def enable_external_loop(self) -> None: ...
-
-    #
-    def remove_axis(self, i: CanIndex, /) -> None: ...
-    def remove_multi_index(self) -> None: ...
-
+#
+@overload
 def nested_iters(
-    op: Sequence[npt.ArrayLike] | npt.ArrayLike,
+    op: _nt.ToGeneric_nd,
     axes: Sequence[Sequence[CanIndex]],
     flags: Sequence[_IterFlag] | None = None,
-    op_flags: Sequence[Sequence[_IterFlagOp]] | None = None,
-    op_dtypes: Sequence[npt.DTypeLike] | npt.DTypeLike = None,
+    op_flags: _OpFlags | None = None,
+    op_dtypes: _nt.ToDType | None = None,
+    order: _OrderKACF = "K",
+    casting: _CastingKind = "safe",
+    buffersize: CanIndex = 0,
+) -> tuple[nditer, ...]: ...
+@overload
+def nested_iters(
+    op: Sequence[_nt.ToGeneric_nd | None],
+    axes: Sequence[Sequence[CanIndex]],
+    flags: Sequence[_IterFlag] | None = None,
+    op_flags: Sequence[_OpFlags] | None = None,
+    op_dtypes: Sequence[_nt.ToDType | None] | None = None,
     order: _OrderKACF = "K",
     casting: _CastingKind = "safe",
     buffersize: CanIndex = 0,
