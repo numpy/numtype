@@ -179,9 +179,17 @@ _Ge3 = TypeAliasType("_Ge3", L[3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 _Ge1: TypeAlias = _Eq1 | _Ge2
 _Ge2: TypeAlias = _Eq2 | _Ge3
 
+_ToScalar: TypeAlias = np.generic | complex | _nt.JustBytes | _nt.JustStr
+_ToFloat64: TypeAlias = _nt.JustFloat | np.float64
+_ToComplex128: TypeAlias = _nt.JustComplex | np.complex128
+_ToStringLike: TypeAlias = bytes | str | np.character
+
+_CoFloat: TypeAlias = float | _nt.co_float
+_CoComplex: TypeAlias = complex | _nt.co_complex
+
 _ToDTypeInexact: TypeAlias = _ToDTypeFloat | _ToDTypeComplex
 
-_BoolND: TypeAlias = _nt.Array[np.bool]
+_BoolND: TypeAlias = _nt.Array[np.bool_]
 _Float64ND: TypeAlias = _nt.Array[np.float64]
 _Complex128ND: TypeAlias = _nt.Array[np.complex128]
 _FloatND: TypeAlias = _nt.Array[np.floating]
@@ -241,11 +249,11 @@ class _Kwargs3_g(_KwargsCommon, total=False):
 class _Call11(Protocol):
     @overload  # 0d, dtype: T
     def __call__(
-        self, x: _nt.ToGeneric_0d, /, out: None = None, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: None = None, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
     ) -> _ScalarT: ...
     @overload  # 0d
     def __call__(
-        self, x: _nt.ToGeneric_0d, /, out: None = None, *, dtype: _nt.ToDType | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: None = None, *, dtype: _nt.ToDType | None = None, **kw: Unpack[_Kwargs2]
     ) -> Incomplete: ...
     @overload  # ?d, out: T
     def __call__(
@@ -296,8 +304,8 @@ class _Call11(Protocol):
 class _Call11Bool(Protocol):
     @overload  # 0d
     def __call__(
-        self, x: _nt.ToGeneric_0d, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
-    ) -> np.bool: ...
+        self, x: _ToScalar, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
+    ) -> np.bool_: ...
     @overload  # nd, out: T
     def __call__(
         self,
@@ -334,7 +342,7 @@ class _Call11Float(Protocol):
     @overload  # 0d float64
     def __call__(
         self,
-        x: _nt.ToFloat64_0d | _nt.CoInteger_0d,
+        x: float | _nt.co_integer,
         /,
         out: None = None,
         *,
@@ -343,7 +351,7 @@ class _Call11Float(Protocol):
     ) -> np.float64: ...
     @overload  # 0d floating
     def __call__(
-        self, x: _nt.CoFloating_0d, /, out: None = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _CoFloat, /, out: None = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
     ) -> np.floating: ...
     @overload  # nd float64
     def __call__(
@@ -375,7 +383,7 @@ class _Call11Inexact(Protocol):
     @overload  # 0d float64
     def __call__(
         self,
-        x: _nt.ToFloat64_0d | _nt.CoInteger_0d,
+        x: float | _nt.co_integer,
         /,
         out: None = None,
         *,
@@ -385,7 +393,7 @@ class _Call11Inexact(Protocol):
     @overload  # 0d complex128
     def __call__(
         self,
-        x: _nt.ToComplex128_0d,
+        x: _ToComplex128,
         /,
         out: None = None,
         *,
@@ -394,7 +402,7 @@ class _Call11Inexact(Protocol):
     ) -> np.complex128: ...
     @overload  # 0d floating
     def __call__(
-        self, x: _nt.CoFloating_0d, /, out: None = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _CoFloat, /, out: None = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
     ) -> np.floating: ...
     @overload  # 0d complexfloating
     def __call__(
@@ -451,8 +459,8 @@ class _Call11Inexact(Protocol):
 class _CallIsNat(Protocol):
     @overload  # 0d datetime64 | timedelta64
     def __call__(
-        self, x: _nt.CoDateTime_0d, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
-    ) -> np.bool: ...
+        self, x: _nt.co_datetime, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
+    ) -> np.bool_: ...
     @overload  # ?d datetime64 | timedelta64, out: bound nd bool
     def __call__(
         self,
@@ -488,8 +496,8 @@ class _CallIsNat(Protocol):
 class _CallSignbit(Protocol):
     @overload  # 0d floating
     def __call__(
-        self, x: _nt.CoFloating_0d, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
-    ) -> np.bool: ...
+        self, x: _CoFloat, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
+    ) -> np.bool_: ...
     @overload  # ?d floating, out: bound nd bool
     def __call__(
         self,
@@ -525,18 +533,12 @@ class _CallSignbit(Protocol):
 class _CallLogical(Protocol):
     @overload
     def __call__(  # 0d generic, dtype: np.object_
-        self, x: _nt.ToGeneric_0d, /, out: None = None, *, dtype: _nt.ToDTypeObject, **kwargs: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: None = None, *, dtype: _nt.ToDTypeObject, **kwargs: Unpack[_Kwargs2]
     ) -> bool: ...
     @overload
     def __call__(  # 0d +number
-        self,
-        x: _nt.CoComplex_0d,
-        /,
-        out: None = None,
-        *,
-        dtype: _nt.ToDTypeBool | None = None,
-        **kwargs: Unpack[_Kwargs2],
-    ) -> np.bool: ...
+        self, x: _CoComplex, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kwargs: Unpack[_Kwargs2]
+    ) -> np.bool_: ...
     @overload
     def __call__(  # nd object_
         self,
@@ -603,7 +605,7 @@ class _Call11String(Protocol[_ScalarT_co]):
     @overload  # 0d string-like
     def __call__(
         self,
-        x: _nt.ToString_0d | _nt.ToCharacter_0d,
+        x: _ToStringLike,
         /,
         out: None = None,
         *,
@@ -633,18 +635,12 @@ class _Call11String(Protocol[_ScalarT_co]):
 class _Call12(Protocol):
     @overload  # 0d, dtype: T
     def __call__(
-        self,
-        x: _nt.ToGeneric_0d,
-        /,
-        *,
-        out: _Tuple2[None] = (None, None),
-        dtype: _ToDType[_ScalarT],
-        **kw: Unpack[_Kwargs3],
+        self, x: _ToScalar, /, *, out: _Tuple2[None] = (None, None), dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
     ) -> _Tuple2[_ScalarT]: ...
     @overload  # 0d
     def __call__(
         self,
-        x: _nt.ToGeneric_0d,
+        x: _ToScalar,
         /,
         *,
         out: _Tuple2[None] = (None, None),
@@ -669,7 +665,7 @@ class _Call12(Protocol):
         x: _nt.ToGeneric_1nd,
         /,
         *,
-        out: _Tuple2[_nt.Array | None] = (None, None),
+        out: _Tuple2[None] = (None, None),
         dtype: _ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
     ) -> _Tuple2[_nt.Array[_ScalarT]]: ...
@@ -698,36 +694,15 @@ class _Call12(Protocol):
 class _Call21(Protocol):
     @overload  # 0d, 0d, dtype: T
     def __call__(
-        self,
-        x1: _nt.ToGeneric_0d,
-        x2: _nt.ToGeneric_0d,
-        /,
-        out: None = None,
-        *,
-        dtype: _ToDType[_ScalarT],
-        **kw: Unpack[_Kwargs3],
+        self, x1: _ToScalar, x2: _ToScalar, /, out: None = None, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
     ) -> _ScalarT: ...
     @overload  # 0d, 0d
     def __call__(
-        self,
-        x1: _nt.ToGeneric_0d,
-        x2: _nt.ToGeneric_0d,
-        /,
-        out: None = None,
-        *,
-        dtype: _nt.ToDType | None = None,
-        **kw: Unpack[_Kwargs3],
+        self, x1: _ToScalar, x2: _ToScalar, /, out: None = None, *, dtype: None = None, **kw: Unpack[_Kwargs3]
     ) -> Incomplete: ...
     @overload  # ?d, ?d, out: T
     def __call__(
-        self,
-        x1: _nt.ToGeneric_nd,
-        x2: _nt.ToGeneric_nd,
-        /,
-        out: _ArrayT,
-        *,
-        dtype: _nt.ToDType | None = None,
-        **kw: Unpack[_Kwargs3],
+        self, x1: _nt.ToGeneric_nd, x2: _nt.ToGeneric_nd, /, out: _ArrayT, *, dtype: None = None, **kw: Unpack[_Kwargs3]
     ) -> _ArrayT: ...
     @overload  # ?d, nd, dtype: T
     def __call__(
@@ -790,14 +765,14 @@ class _Call21Bool(Protocol):
     @overload  # 0d, 0d
     def __call__(
         self,
-        x1: _nt.ToGeneric_0d,
-        x2: _nt.ToGeneric_0d,
+        x1: _ToScalar,
+        x2: _ToScalar,
         /,
         out: None = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
-    ) -> np.bool: ...
+    ) -> np.bool_: ...
     @overload  # ?d, ?d, out: T
     def __call__(
         self,
@@ -848,8 +823,8 @@ class _Call21Float(Protocol):
     @overload  # 0d float64 | +integer, 0d float64 | +integer
     def __call__(
         self,
-        x1: _nt.ToFloat64_0d | _nt.CoInteger_0d,
-        x2: _nt.ToFloat64_0d | _nt.CoInteger_0d,
+        x1: float | _nt.co_integer,
+        x2: float | _nt.co_integer,
         /,
         out: None = None,
         *,
@@ -859,8 +834,8 @@ class _Call21Float(Protocol):
     @overload  # 0d +float64, 0d ~float64
     def __call__(
         self,
-        x1: _nt.CoFloat64_0d,
-        x2: _nt.ToFloat64_0d,
+        x1: _CoFloat,
+        x2: _ToFloat64,
         /,
         out: None = None,
         *,
@@ -870,8 +845,8 @@ class _Call21Float(Protocol):
     @overload  # 0d ~float64, 0d +float64
     def __call__(
         self,
-        x1: _nt.ToFloat64_0d,
-        x2: _nt.CoFloat64_0d,
+        x1: _ToFloat64,
+        x2: _CoFloat,
         /,
         out: None = None,
         *,
@@ -881,8 +856,8 @@ class _Call21Float(Protocol):
     @overload  # 0d +floating, 0d +floating
     def __call__(
         self,
-        x1: _nt.CoFloating_0d,
-        x2: _nt.CoFloating_0d,
+        x1: _CoFloat,
+        x2: _CoFloat,
         /,
         out: None = None,
         *,
@@ -958,21 +933,6 @@ class _Call21Float(Protocol):
 
 @type_check_only
 class _Call21String(Protocol):
-    @overload  # 0d string-like, 0d string-like
-    def __call__(
-        self,
-        x1: _nt.ToString_0d | _nt.ToCharacter_0d,
-        x2: _nt.ToString_0d | _nt.ToCharacter_0d,
-        /,
-        out: _nt.Array[Incomplete] | None = None,
-        *,
-        where: bool = True,
-        casting: _CastingKind = "same_kind",
-        order: _OrderKACF = "K",
-        dtype: _nt.ToDType | None = None,
-        subok: bool = True,
-        signature: str | tuple[_nt.ToDType, _nt.ToDType] | None = None,
-    ) -> Incomplete: ...
     @overload  # nd string-like, ?d string-like
     def __call__(
         self,
@@ -1003,14 +963,29 @@ class _Call21String(Protocol):
         subok: bool = True,
         signature: str | tuple[_nt.ToDType, _nt.ToDType] | None = None,
     ) -> _nt.Array[Incomplete]: ...
+    @overload  # 0d string-like, 0d string-like
+    def __call__(
+        self,
+        x1: _ToStringLike,
+        x2: _ToStringLike,
+        /,
+        out: _nt.Array[Incomplete] | None = None,
+        *,
+        where: bool = True,
+        casting: _CastingKind = "same_kind",
+        order: _OrderKACF = "K",
+        dtype: _nt.ToDType | None = None,
+        subok: bool = True,
+        signature: str | tuple[_nt.ToDType, _nt.ToDType] | None = None,
+    ) -> Incomplete: ...
 
 @type_check_only
 class _Call21Logical(Protocol):
     @overload  # 0d +number | object, 0d +number | object, dtype: object_
     def __call__(
         self,
-        x1: _nt.CoComplex_0d | _nt.ToObject_0d,
-        x2: _nt.CoComplex_0d | _nt.ToObject_0d,
+        x1: _CoComplex | _nt._PyObject,
+        x2: _CoComplex | _nt._PyObject,
         /,
         out: None = None,
         *,
@@ -1020,14 +995,14 @@ class _Call21Logical(Protocol):
     @overload  # 0d +number, 0d +number
     def __call__(
         self,
-        x1: _nt.CoComplex_0d,
-        x2: _nt.CoComplex_0d,
+        x1: _CoComplex,
+        x2: _CoComplex,
         /,
         out: None = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
-    ) -> np.bool: ...
+    ) -> np.bool_: ...
     @overload  # ?d +number | object_, nd +number | object_, dtype: object_
     def __call__(
         self,
@@ -1101,8 +1076,8 @@ class _Call22(Protocol):
     @overload  # 0d, 0d, dtype: bounTd
     def __call__(
         self,
-        x1: _nt.ToGeneric_0d,
-        x2: _nt.ToGeneric_0d,
+        x1: _ToScalar,
+        x2: _ToScalar,
         /,
         *,
         out: _Tuple2[None] = (None, None),
@@ -1112,8 +1087,8 @@ class _Call22(Protocol):
     @overload  # 0d, 0d
     def __call__(
         self,
-        x1: _nt.ToGeneric_0d,
-        x2: _nt.ToGeneric_0d,
+        x1: _ToScalar,
+        x2: _ToScalar,
         /,
         *,
         out: _Tuple2[None] = (None, None),
@@ -1253,7 +1228,7 @@ class _Reduce2(Protocol):
         dtype: _nt.ToDType | None = None,
         out: _nt.Array | None = None,
         keepdims: bool = False,
-        initial: _nt.ToGeneric_0d | None = ...,
+        initial: _ToScalar | None = ...,
         where: _nt.ToBool_nd = True,
     ) -> Incomplete: ...
 
@@ -1500,17 +1475,17 @@ isnan: Final[_ufunc11[_Call11Bool]] = ...
 logical_not: Final[_ufunc11[_CallLogical]] = ...
 
 # {UT} -> ?
-isnumeric: _ufunc11[_Call11String[np.bool]]
-isdecimal: _ufunc11[_Call11String[np.bool]]
+isnumeric: _ufunc11[_Call11String[np.bool_]]
+isdecimal: _ufunc11[_Call11String[np.bool_]]
 
 # {SUT} -> ?
-isalnum: _ufunc11[_Call11String[np.bool]]
-isalpha: _ufunc11[_Call11String[np.bool]]
-isdigit: _ufunc11[_Call11String[np.bool]]
-islower: _ufunc11[_Call11String[np.bool]]
-isspace: _ufunc11[_Call11String[np.bool]]
-istitle: _ufunc11[_Call11String[np.bool]]
-isupper: _ufunc11[_Call11String[np.bool]]
+isalnum: _ufunc11[_Call11String[np.bool_]]
+isalpha: _ufunc11[_Call11String[np.bool_]]
+isdigit: _ufunc11[_Call11String[np.bool_]]
+islower: _ufunc11[_Call11String[np.bool_]]
+isspace: _ufunc11[_Call11String[np.bool_]]
+istitle: _ufunc11[_Call11String[np.bool_]]
+isupper: _ufunc11[_Call11String[np.bool_]]
 
 # {SUT} -> n
 str_len: _ufunc11[_Call11String[np.intp]]
@@ -1725,7 +1700,7 @@ _replace: np.ufunc
 class _PyCall11(Protocol[_OutT_co]):
     @overload
     def __call__(
-        self, x: _nt.ToGeneric_0d, /, out: None = None, dtype: _nt.ToDType | None = None, **kwargs: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: None = None, dtype: _nt.ToDType | None = None, **kwargs: Unpack[_Kwargs2]
     ) -> _OutT_co: ...
     @overload
     def __call__(
@@ -1750,8 +1725,8 @@ class _PyCall21(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
-        x1: _nt.ToGeneric_0d,
-        x2: _nt.ToGeneric_0d,
+        x1: _ToScalar,
+        x2: _ToScalar,
         /,
         out: None = None,
         dtype: _nt.ToDType | None = None,
@@ -1803,11 +1778,11 @@ class _PyCall3N1(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
-        x1: _nt.ToGeneric_0d,
-        x2: _nt.ToGeneric_0d,
-        x3: _nt.ToGeneric_0d,
+        x1: _ToScalar,
+        x2: _ToScalar,
+        x3: _ToScalar,
         /,
-        *xs: _nt.ToGeneric_0d,
+        *xs: _ToScalar,
         out: None = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs4_],
@@ -1878,9 +1853,9 @@ class _PyCall1N2(Protocol[_OutT1_co, _OutT2_co]):
     @overload
     def __call__(
         self,
-        x1: _nt.ToGeneric_0d,
+        x1: _ToScalar,
         /,
-        *xs: _nt.ToGeneric_0d,
+        *xs: _ToScalar,
         out: tuple[None, None] = (None, None),
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3_],
@@ -1921,9 +1896,9 @@ class _PyCall1N2N(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
-        x1: _nt.ToGeneric_0d,
+        x1: _ToScalar,
         /,
-        *xs: _nt.ToGeneric_0d,
+        *xs: _ToScalar,
         out: _Tuple2_[None] = ...,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs3_],

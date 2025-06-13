@@ -693,17 +693,17 @@ ToObject_1nd = TypeAliasType("ToObject_1nd", _ToArray2_1nd[np.object_, _PyObject
 ToObject_2nd = TypeAliasType("ToObject_2nd", _ToArray2_2nd[np.object_, _PyObject])
 ToObject_3nd = TypeAliasType("ToObject_3nd", _ToArray2_3nd[np.object_, _PyObject])
 
-ToGeneric_nd = TypeAliasType("ToGeneric_nd", _ToArray2_nd[np.generic, _PyScalar])
-ToGeneric_0d = TypeAliasType("ToGeneric_0d", _ToArray2_0d[np.generic, _PyScalar])
+ToGeneric_nd = TypeAliasType("ToGeneric_nd", _ToArray2_nd[np.generic, _PyScalar] | ToString_nd)
+ToGeneric_0d = TypeAliasType("ToGeneric_0d", _ToArray2_0d[np.generic, _PyScalar] | ToString_0d)
 ToGeneric_1d = TypeAliasType("ToGeneric_1d", _ToArray2_1d[np.generic, _PyScalar])
 ToGeneric_2d = TypeAliasType("ToGeneric_2d", _ToArray2_2d[np.generic, _PyScalar])
 ToGeneric_3d = TypeAliasType("ToGeneric_3d", _ToArray2_3d[np.generic, _PyScalar])
-ToGeneric_1ds = TypeAliasType("ToGeneric_1ds", _ToArray2_1ds[np.generic, _PyScalar])
-ToGeneric_2ds = TypeAliasType("ToGeneric_2ds", _ToArray2_2ds[np.generic, _PyScalar])
-ToGeneric_3ds = TypeAliasType("ToGeneric_3ds", _ToArray2_3ds[np.generic, _PyScalar])
-ToGeneric_1nd = TypeAliasType("ToGeneric_1nd", _ToArray2_1nd[np.generic, _PyScalar])
-ToGeneric_2nd = TypeAliasType("ToGeneric_2nd", _ToArray2_2nd[np.generic, _PyScalar])
-ToGeneric_3nd = TypeAliasType("ToGeneric_3nd", _ToArray2_3nd[np.generic, _PyScalar])
+ToGeneric_1ds = TypeAliasType("ToGeneric_1ds", _ToArray2_1ds[np.generic, _PyScalar] | ToString_1ds)
+ToGeneric_2ds = TypeAliasType("ToGeneric_2ds", _ToArray2_2ds[np.generic, _PyScalar] | ToString_2ds)
+ToGeneric_3ds = TypeAliasType("ToGeneric_3ds", _ToArray2_3ds[np.generic, _PyScalar] | ToString_3ds)
+ToGeneric_1nd = TypeAliasType("ToGeneric_1nd", _ToArray2_1nd[np.generic, _PyScalar] | ToString_1nd)
+ToGeneric_2nd = TypeAliasType("ToGeneric_2nd", _ToArray2_2nd[np.generic, _PyScalar] | ToString_2nd)
+ToGeneric_3nd = TypeAliasType("ToGeneric_3nd", _ToArray2_3nd[np.generic, _PyScalar] | ToString_3nd)
 
 ###
 # *Co*ercible (overlapping) scalar- and array-like aliases.
