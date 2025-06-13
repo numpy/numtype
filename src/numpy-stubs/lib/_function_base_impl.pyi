@@ -95,6 +95,7 @@ _PercentileMethod: TypeAlias = L[
     "nearest",
 ]
 _Indexing: TypeAlias = L["xy", "ij"]
+_Trim: TypeAlias = L["f", "b", "fb", "bf"]
 
 @type_check_only
 class _CanRMulFloat(Protocol[_T_co]):
@@ -502,10 +503,10 @@ def sort_complex(a: ArrayLike) -> _nt.Array[np.complexfloating]: ...
 
 #
 @overload
-def trim_zeros(filt: _CanLenAndGetSlice[_T], trim: L["f", "b", "fb", "bf"] = "fb", axis: None = None) -> _T: ...
+def trim_zeros(filt: _CanLenAndGetSlice[_T], trim: _Trim = "fb", axis: None = None) -> _T: ...  # type: ignore[overload-overlap]
 @overload
 def trim_zeros(
-    filt: _nt.ToGeneric_1nd, trim: L["f", "b", "fb", "bf"] = "fb", axis: _ShapeLike | None = None
+    filt: _nt.ToGeneric_1nd, trim: _Trim = "fb", axis: _ShapeLike | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 #
