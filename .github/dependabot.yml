@@ -6,7 +6,6 @@ updates:
       interval: daily
     allow:
       - dependency-type: "all"
-    versioning-strategy: increase
     labels:
       - "topic: dependencies"
       - "tool: github-actions"
