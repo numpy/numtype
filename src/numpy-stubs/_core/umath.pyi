@@ -1,5 +1,6 @@
 from _typeshed import Incomplete
 from collections.abc import Callable, Sequence
+from types import EllipsisType
 from typing import (
     Any,
     Concatenate,
@@ -152,6 +153,7 @@ _InexactArrayT = TypeVar("_InexactArrayT", bound=_nt.Array[np.inexact])
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
+_FloatT = TypeVar("_FloatT", bound=np.floating)
 
 _OutT = TypeVar("_OutT")
 _OutT_co = TypeVar("_OutT_co", default=Any, covariant=True)
@@ -171,6 +173,7 @@ _Tuple3_: TypeAlias = tuple[_T, _T, _T, *tuple[_T, ...]]
 _Tuple4_: TypeAlias = tuple[_T, _T, _T, _T, *tuple[_T, ...]]
 
 _Out1: TypeAlias = _T | tuple[_T]
+_Out2: TypeAlias = _Tuple2[_T]
 _UFuncMethod: TypeAlias = L["__call__", "reduce", "reduceat", "accumulate", "outer", "at"]
 
 _Eq1: TypeAlias = L[1, True]
@@ -182,6 +185,7 @@ _Ge2: TypeAlias = _Eq2 | _Ge3
 _ToScalar: TypeAlias = np.generic | complex | _nt.JustBytes | _nt.JustStr
 _ToFloat64: TypeAlias = _nt.JustFloat | np.float64
 _ToComplex128: TypeAlias = _nt.JustComplex | np.complex128
+_ToComplex: TypeAlias = _nt.JustComplex | np.complexfloating
 _ToStringLike: TypeAlias = bytes | str | np.character
 
 _CoFloat: TypeAlias = float | _nt.co_float
@@ -194,6 +198,7 @@ _Float64ND: TypeAlias = _nt.Array[np.float64]
 _Complex128ND: TypeAlias = _nt.Array[np.complex128]
 _FloatND: TypeAlias = _nt.Array[np.floating]
 _ComplexND: TypeAlias = _nt.Array[np.complexfloating]
+_ObjectND: TypeAlias = _nt.Array[np.object_]
 
 ###
 # helper protocols
@@ -249,22 +254,26 @@ class _Kwargs3_g(_KwargsCommon, total=False):
 class _Call11(Protocol):
     @overload  # 0d, dtype: T
     def __call__(
-        self, x: _ToScalar, /, out: None = None, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: _Out1[None] = None, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
     ) -> _ScalarT: ...
     @overload  # 0d
     def __call__(
-        self, x: _ToScalar, /, out: None = None, *, dtype: _nt.ToDType | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: _Out1[None] = None, *, dtype: _nt.ToDType | None = None, **kw: Unpack[_Kwargs2]
     ) -> Incomplete: ...
     @overload  # ?d, out: T
     def __call__(
         self, x: _nt.ToGeneric_nd, /, out: _Out1[_ArrayT], *, dtype: _nt.ToDType | None = None, **kw: Unpack[_Kwargs2]
     ) -> _ArrayT: ...
+    @overload  # ?d, out=..., dtype: T
+    def __call__(
+        self, x: _nt.ToGeneric_nd, /, out: EllipsisType, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
+    ) -> _nt.Array[_ScalarT]: ...
     @overload  # nd, dtype: T
     def __call__(
         self,
         x: _nt.ToGeneric_1nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_nt.Array | None] = None,
         *,
         dtype: _ToDType[_ScalarT],
         **kw: Unpack[_Kwargs2],
@@ -274,17 +283,21 @@ class _Call11(Protocol):
         self,
         x: _nt.ToGeneric_1nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_nt.Array | None] = None,
         *,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs2],
+    ) -> _nt.Array[Incomplete]: ...
+    @overload  # ?d, out=...
+    def __call__(
+        self, x: _nt.ToGeneric_nd, /, out: EllipsisType, *, dtype: _nt.ToDType | None = None, **kw: Unpack[_Kwargs2]
     ) -> _nt.Array[Incomplete]: ...
     @overload  # ?d
     def __call__(
         self,
         x: _nt.ToGeneric_nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_nt.Array | None] = None,
         *,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs2],
@@ -294,7 +307,7 @@ class _Call11(Protocol):
         self,
         x: _CanArrayUFunc,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_nt.Array | None] = None,
         *,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs2],
@@ -304,7 +317,7 @@ class _Call11(Protocol):
 class _Call11Bool(Protocol):
     @overload  # 0d
     def __call__(
-        self, x: _ToScalar, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: _Out1[None] = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
     ) -> np.bool_: ...
     @overload  # nd, out: T
     def __call__(
@@ -321,21 +334,35 @@ class _Call11Bool(Protocol):
         self,
         x: _nt.ToGeneric_1nd,
         /,
-        out: _Out1[_BoolND] | None = None,
+        out: _Out1[_BoolND | None] = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs2],
+    ) -> _BoolND: ...
+    @overload  # ?d, out=...
+    def __call__(
+        self, x: _nt.ToGeneric_nd, /, out: EllipsisType, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
     ) -> _BoolND: ...
     @overload  # ?d
     def __call__(
         self,
         x: _nt.ToGeneric_nd,
         /,
-        out: _Out1[_BoolND] | None = None,
+        out: _Out1[_BoolND | None] = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> _BoolND | Incomplete: ...
+    @overload  # ?
+    def __call__(
+        self,
+        x: _CanArrayUFunc,
+        /,
+        out: _Out1[_BoolND | None] | EllipsisType = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> Incomplete: ...
 
 @type_check_only
 class _Call11Float(Protocol):
@@ -344,26 +371,36 @@ class _Call11Float(Protocol):
         self,
         x: float | _nt.co_integer,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> np.float64: ...
     @overload  # 0d floating
     def __call__(
-        self, x: _CoFloat, /, out: None = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _CoFloat, /, out: _Out1[None] = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
     ) -> np.floating: ...
     @overload  # nd float64
     def __call__(
         self,
         x: _nt.ToFloat64_1nd | _nt.CoInteger_1nd,
         /,
-        out: _Out1[_Float64ND] | None = None,
+        out: _Out1[_Float64ND | None] = None,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> _Float64ND: ...
-    @overload  # ?d floating, out: bound nd floating
+    @overload  # ?d float64, out=...
+    def __call__(
+        self,
+        x: _nt.ToFloat64_nd | _nt.CoInteger_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _nt.ToDTypeFloat64 | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _Float64ND: ...
+    @overload  # ?d floating, out: T
     def __call__(
         self, x: _nt.CoFloating_nd, /, out: _Out1[_FloatArrayT], *, dtype: None = None, **kw: Unpack[_Kwargs2]
     ) -> _FloatArrayT: ...
@@ -372,11 +409,25 @@ class _Call11Float(Protocol):
         self,
         x: _nt.CoFloating_1nd,
         /,
-        out: _Out1[_FloatND] | None = None,
+        out: _Out1[_FloatND | None] = None,
         *,
         dtype: _ToDTypeFloat | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> _FloatND: ...
+    @overload  # ?d floating
+    def __call__(
+        self, x: _nt.CoFloating_nd, /, out: EllipsisType, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
+    ) -> _FloatND: ...
+    @overload  # ?
+    def __call__(
+        self,
+        x: _CanArrayUFunc,
+        /,
+        out: _Out1[_FloatND | None] | EllipsisType = None,
+        *,
+        dtype: _ToDTypeFloat | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> Incomplete: ...
 
 @type_check_only
 class _Call11Inexact(Protocol):
@@ -385,7 +436,7 @@ class _Call11Inexact(Protocol):
         self,
         x: float | _nt.co_integer,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs2],
@@ -395,18 +446,18 @@ class _Call11Inexact(Protocol):
         self,
         x: _ToComplex128,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeComplex128 | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> np.complex128: ...
     @overload  # 0d floating
     def __call__(
-        self, x: _CoFloat, /, out: None = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _CoFloat, /, out: _Out1[None] = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
     ) -> np.floating: ...
     @overload  # 0d complexfloating
     def __call__(
-        self, x: _nt.ToComplex_0d, /, out: None = None, *, dtype: _ToDTypeComplex | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _ToComplex, /, out: _Out1[None] = None, *, dtype: _ToDTypeComplex | None = None, **kw: Unpack[_Kwargs2]
     ) -> np.complexfloating: ...
     @overload  # ?d +complexfloating, out: bound nd complexfloating
     def __call__(
@@ -423,7 +474,17 @@ class _Call11Inexact(Protocol):
         self,
         x: _nt.ToFloat64_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
+        *,
+        dtype: _nt.ToDTypeFloat64 | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _Float64ND: ...
+    @overload  # ?d float64, out=...
+    def __call__(
+        self,
+        x: _nt.ToFloat64_nd,
+        /,
+        out: EllipsisType,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs2],
@@ -433,35 +494,103 @@ class _Call11Inexact(Protocol):
         self,
         x: _nt.ToComplex128_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
+        *,
+        dtype: _nt.ToDTypeComplex128 | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _Complex128ND: ...
+    @overload  # ?d complex128, out=...
+    def __call__(
+        self,
+        x: _nt.ToComplex128_nd,
+        /,
+        out: EllipsisType,
         *,
         dtype: _nt.ToDTypeComplex128 | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> _Complex128ND: ...
     @overload  # nd +floating
     def __call__(
-        self, x: _nt.CoFloating_1nd, /, out: None = None, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
+        self,
+        x: _nt.CoFloating_1nd,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDTypeFloat | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _FloatND: ...
+    @overload  # ?d +floating, out=...
+    def __call__(
+        self, x: _nt.CoFloating_nd, /, out: EllipsisType, *, dtype: _ToDTypeFloat | None = None, **kw: Unpack[_Kwargs2]
     ) -> _FloatND: ...
     @overload  # nd complexfloating
     def __call__(
-        self, x: _nt.ToComplex_1nd, /, out: None = None, *, dtype: _ToDTypeComplex | None = None, **kw: Unpack[_Kwargs2]
+        self,
+        x: _nt.ToComplex_1nd,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDTypeComplex | None = None,
+        **kw: Unpack[_Kwargs2],
     ) -> _ComplexND: ...
+    @overload  # ?d complexfloating
+    def __call__(
+        self, x: _nt.ToComplex_nd, /, out: EllipsisType, *, dtype: _ToDTypeComplex | None = None, **kw: Unpack[_Kwargs2]
+    ) -> _ComplexND: ...
+    @overload  # nd +complexfloating
+    def __call__(
+        self,
+        x: _nt.CoComplex_1nd,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDTypeInexact | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _nt.Array[Incomplete]: ...
     @overload  # ?d +complexfloating
     def __call__(
-        self, x: _nt.CoComplex_nd, /, out: None = None, *, dtype: _ToDTypeInexact | None = None, **kw: Unpack[_Kwargs2]
+        self,
+        x: _nt.CoComplex_nd,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDTypeInexact | None = None,
+        **kw: Unpack[_Kwargs2],
     ) -> _nt.Array[Incomplete] | Incomplete: ...
     @overload  # ?
     def __call__(
-        self, x: _CanArrayUFunc, /, out: None = None, *, dtype: _ToDTypeInexact | None = None, **kw: Unpack[_Kwargs2]
+        self,
+        x: _CanArrayUFunc,
+        /,
+        out: _Out1[_FloatND | None] | EllipsisType = None,
+        *,
+        dtype: _ToDTypeInexact | None = None,
+        **kw: Unpack[_Kwargs2],
     ) -> Incomplete: ...
 
 @type_check_only
 class _CallIsNat(Protocol):
     @overload  # 0d datetime64 | timedelta64
     def __call__(
-        self, x: _nt.co_datetime, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
+        self,
+        x: _nt.co_datetime,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs2],
     ) -> np.bool_: ...
-    @overload  # ?d datetime64 | timedelta64, out: bound nd bool
+    @overload  # nd datetime64 | timedelta64
+    def __call__(
+        self,
+        x: _nt.CoDateTime_1nd,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _BoolND: ...
+    @overload  # ?d datetime64 | timedelta64, out: T
     def __call__(
         self,
         x: _nt.CoDateTime_nd,
@@ -471,12 +600,12 @@ class _CallIsNat(Protocol):
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> _BoolArrayT: ...
-    @overload  # nd datetime64 | timedelta64
+    @overload  # ?d datetime64 | timedelta64, out=...
     def __call__(
         self,
         x: _nt.CoDateTime_1nd,
         /,
-        out: _Out1[_BoolND] | None = None,
+        out: EllipsisType,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs2],
@@ -486,9 +615,9 @@ class _CallIsNat(Protocol):
         self,
         x: _CanArrayUFunc,
         /,
-        out: _Out1[_BoolND] | None = None,
+        out: _Out1[_nt.Array | None] | EllipsisType = None,
         *,
-        dtype: _nt.ToDTypeBool | None = None,
+        dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> Incomplete: ...
 
@@ -496,24 +625,34 @@ class _CallIsNat(Protocol):
 class _CallSignbit(Protocol):
     @overload  # 0d floating
     def __call__(
-        self, x: _CoFloat, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
+        self, x: _CoFloat, /, out: _Out1[None] = None, *, dtype: _nt.ToDTypeBool | None = None, **kw: Unpack[_Kwargs2]
     ) -> np.bool_: ...
-    @overload  # ?d floating, out: bound nd bool
-    def __call__(
-        self,
-        x: _nt.CoFloating_nd,
-        /,
-        out: _Out1[_ArrayT],
-        *,
-        dtype: _nt.ToDTypeBool | None = None,
-        **kw: Unpack[_Kwargs2],
-    ) -> _ArrayT: ...
     @overload  # nd +floating
     def __call__(
         self,
         x: _nt.CoFloating_1nd,
         /,
-        out: _Out1[_FloatND] | None = None,
+        out: _Out1[None] = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _BoolND: ...
+    @overload  # ?d floating, out: T
+    def __call__(
+        self,
+        x: _nt.CoFloating_nd,
+        /,
+        out: _Out1[_BoolArrayT],
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _BoolArrayT: ...
+    @overload  # ?d floating, out=...
+    def __call__(
+        self,
+        x: _nt.CoFloating_nd,
+        /,
+        out: EllipsisType,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs2],
@@ -523,7 +662,7 @@ class _CallSignbit(Protocol):
         self,
         x: _CanArrayUFunc,
         /,
-        out: _Out1[_FloatND] | None = None,
+        out: _Out1[_BoolND | None] | EllipsisType = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs2],
@@ -533,34 +672,60 @@ class _CallSignbit(Protocol):
 class _CallLogical(Protocol):
     @overload
     def __call__(  # 0d generic, dtype: np.object_
-        self, x: _ToScalar, /, out: None = None, *, dtype: _nt.ToDTypeObject, **kwargs: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: _Out1[None] = None, *, dtype: _nt.ToDTypeObject, **kwargs: Unpack[_Kwargs2]
     ) -> bool: ...
     @overload
     def __call__(  # 0d +number
-        self, x: _CoComplex, /, out: None = None, *, dtype: _nt.ToDTypeBool | None = None, **kwargs: Unpack[_Kwargs2]
+        self,
+        x: _CoComplex,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kwargs: Unpack[_Kwargs2],
     ) -> np.bool_: ...
     @overload
     def __call__(  # nd object_
         self,
         x: _nt.ToObject_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeObject | None = None,
         **kwargs: Unpack[_Kwargs2],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
+    @overload
+    def __call__(  # ?d object_, out=...
+        self,
+        x: _nt.ToObject_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _nt.ToDTypeObject | None = None,
+        **kwargs: Unpack[_Kwargs2],
+    ) -> _ObjectND: ...
     @overload
     def __call__(  # nd +number | object, dtype: np.object_
         self,
         x: _nt.CoComplex_1nd | _nt.ToObject_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeObject,
         **kwargs: Unpack[_Kwargs2],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
     @overload
-    def __call__(  # ?d +number | object, out: bound nd array
+    def __call__(  # ?d +number | object, out=..., dtype: np.object_
+        self,
+        x: _nt.CoComplex_nd | _nt.ToObject_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _nt.ToDTypeObject,
+        **kwargs: Unpack[_Kwargs2],
+    ) -> _ObjectND: ...
+    @overload
+    def __call__(  # ?d +number | object, out: T
         self,
         x: _nt.CoComplex_nd | _nt.ToObject_nd,
         /,
@@ -569,84 +734,144 @@ class _CallLogical(Protocol):
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> _ArrayT: ...
-    @overload  # nd +number | object, out: bound nd array
+    @overload  # nd +number
     def __call__(
         self,
         x: _nt.CoComplex_1nd,
         /,
-        out: _Out1[_BoolND] | None = None,
+        out: _Out1[_BoolND | None] = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs2],
     ) -> _BoolND: ...
     @overload
+    def __call__(  # ?d +number, out=...
+        self,
+        x: _nt.CoComplex_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kwargs: Unpack[_Kwargs2],
+    ) -> _BoolND: ...
+    @overload
+    def __call__(  # nd +number | object
+        self,
+        x: _nt.CoComplex_1nd | _nt.ToObject_1nd,
+        /,
+        out: _Out1[_nt.Array | None] = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kwargs: Unpack[_Kwargs2],
+    ) -> _nt.Array[Incomplete]: ...
+    @overload
+    def __call__(  # ?d +number | object, out=...
+        self,
+        x: _nt.CoComplex_nd | _nt.ToObject_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kwargs: Unpack[_Kwargs2],
+    ) -> _nt.Array[Incomplete]: ...
+    @overload
     def __call__(  # ?d +number | object
         self,
         x: _nt.CoComplex_nd | _nt.ToObject_nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_BoolND | None] = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> _nt.Array[Incomplete] | Incomplete: ...
-    @overload
-    def __call__(  # ?
+    @overload  # ?
+    def __call__(
         self,
         x: _CanArrayUFunc,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_BoolND | None] | EllipsisType = None,
         *,
-        dtype: _nt.ToDType | None = None,
-        **kwargs: Unpack[_Kwargs2],
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs2],
     ) -> Incomplete: ...
 
 @type_check_only
 class _Call11String(Protocol[_ScalarT_co]):
     @overload  # 0d string-like
     def __call__(
-        self,
-        x: _ToStringLike,
-        /,
-        out: None = None,
-        *,
-        where: bool = True,
-        casting: _CastingKind = "same_kind",
-        order: _OrderKACF = "K",
-        dtype: _nt.ToDTypeBool | None = None,
-        subok: bool = True,
-        signature: str | tuple[_nt.ToDType, _nt.ToDTypeBool] | None = None,
+        self, x: _ToStringLike, /, out: _Out1[None] = None, *, dtype: None = None, **kw: Unpack[_Kwargs2]
     ) -> _ScalarT_co: ...
     @overload  # nd string-like
     def __call__(
         self,
         x: _nt.ToString_1nd | _nt.ToCharacter_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
-        where: bool = True,
-        casting: _CastingKind = "same_kind",
-        order: _OrderKACF = "K",
-        dtype: _nt.ToDTypeBool | None = None,
-        subok: bool = True,
-        signature: str | tuple[_nt.ToDType, _nt.ToDTypeBool] | None = None,
+        dtype: None = None,
+        **kw: Unpack[_Kwargs2],
     ) -> _nt.Array[_ScalarT_co]: ...
+    @overload  # ?d string-like, out: T
+    def __call__(
+        self,
+        x: _nt.ToString_nd | _nt.ToCharacter_nd,
+        /,
+        out: _Out1[_ArrayT],
+        *,
+        dtype: _nt.ToDType | None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _ArrayT: ...
+    @overload  # ?d string-like, out=...
+    def __call__(
+        self,
+        x: _nt.ToString_nd | _nt.ToCharacter_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> _nt.Array[_ScalarT_co]: ...
+    @overload  # ?d string-like, dtype: T
+    def __call__(
+        self,
+        x: _nt.ToString_1nd | _nt.ToCharacter_1nd,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDType[_ScalarT],
+        **kw: Unpack[_Kwargs2],
+    ) -> _nt.Array[_ScalarT]: ...
+    @overload  # ?d string-like, out=..., dtype: T
+    def __call__(
+        self,
+        x: _nt.ToString_nd | _nt.ToCharacter_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _ToDType[_ScalarT],
+        **kw: Unpack[_Kwargs2],
+    ) -> _nt.Array[_ScalarT]: ...
+    @overload  # ?
+    def __call__(
+        self,
+        x: _nt.ToString_nd | _nt.ToCharacter_nd | _CanArrayUFunc,
+        /,
+        out: _Out1[None] | EllipsisType = None,
+        *,
+        dtype: None = None,
+        **kw: Unpack[_Kwargs2],
+    ) -> Incomplete: ...
 
 @type_check_only
 class _Call12(Protocol):
     @overload  # 0d, dtype: T
     def __call__(
-        self, x: _ToScalar, /, *, out: _Tuple2[None] = (None, None), dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
-    ) -> _Tuple2[_ScalarT]: ...
+        self, x: _ToScalar, /, *, out: _Out2[None] = ..., dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
+    ) -> _Out2[_ScalarT]: ...
     @overload  # 0d
     def __call__(
-        self,
-        x: _ToScalar,
-        /,
-        *,
-        out: _Tuple2[None] = (None, None),
-        dtype: _nt.ToDType | None = None,
-        **kw: Unpack[_Kwargs3],
-    ) -> _Tuple2[Incomplete]: ...
+        self, x: _ToScalar, /, *, out: _Out2[None] = ..., dtype: _nt.ToDType | None = None, **kw: Unpack[_Kwargs3]
+    ) -> _Out2[Incomplete]: ...
     @overload  # ?d, out: (T1, None)
     def __call__(
         self, x: _nt.ToGeneric_nd, /, *, out: tuple[_ArrayT1, None], dtype: None = None, **kw: Unpack[_Kwargs3]
@@ -659,46 +884,55 @@ class _Call12(Protocol):
     def __call__(
         self, x: _nt.ToGeneric_nd, /, *, out: tuple[_ArrayT1, _ArrayT2], dtype: None = None, **kw: Unpack[_Kwargs3]
     ) -> tuple[_ArrayT1, _ArrayT2]: ...
+    @overload  # ?d, out=...
+    def __call__(
+        self, x: _nt.ToGeneric_nd, /, *, out: EllipsisType, dtype: None = None, **kw: Unpack[_Kwargs3]
+    ) -> tuple[_nt.Array[Incomplete], _nt.Array[Incomplete]]: ...
+    @overload  # ?d, out=..., dtype: T
+    def __call__(
+        self, x: _nt.ToGeneric_nd, /, *, out: EllipsisType, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
+    ) -> tuple[_nt.Array[_ScalarT], _nt.Array[_ScalarT]]: ...
     @overload  # nd, dtype: T
     def __call__(
-        self,
-        x: _nt.ToGeneric_1nd,
-        /,
-        *,
-        out: _Tuple2[None] = (None, None),
-        dtype: _ToDType[_ScalarT],
-        **kw: Unpack[_Kwargs3],
-    ) -> _Tuple2[_nt.Array[_ScalarT]]: ...
+        self, x: _nt.ToGeneric_1nd, /, *, out: _Out2[None] = ..., dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
+    ) -> _Out2[_nt.Array[_ScalarT]]: ...
     @overload  # nd
     def __call__(
         self,
         x: _nt.ToGeneric_1nd,
         /,
         *,
-        out: _Tuple2[_nt.Array | None] = (None, None),
+        out: _Out2[_nt.Array | None] = ...,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3],
-    ) -> _Tuple2[_nt.Array[Incomplete]]: ...
+    ) -> _Out2[_nt.Array[Incomplete]]: ...
     @overload  # ?
     def __call__(
         self,
         x: _CanArrayUFunc,
         /,
+        out: _Out2[_nt.Array | None] | EllipsisType = ...,
         *,
-        out: _Tuple2[_nt.Array | None] = (None, None),
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3],
-    ) -> _Tuple2[Incomplete]: ...
+    ) -> _Out2[Incomplete]: ...
 
 @type_check_only
 class _Call21(Protocol):
     @overload  # 0d, 0d, dtype: T
     def __call__(
-        self, x1: _ToScalar, x2: _ToScalar, /, out: None = None, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
+        self,
+        x1: _ToScalar,
+        x2: _ToScalar,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDType[_ScalarT],
+        **kw: Unpack[_Kwargs3],
     ) -> _ScalarT: ...
     @overload  # 0d, 0d
     def __call__(
-        self, x1: _ToScalar, x2: _ToScalar, /, out: None = None, *, dtype: None = None, **kw: Unpack[_Kwargs3]
+        self, x1: _ToScalar, x2: _ToScalar, /, out: _Out1[None] = None, *, dtype: None = None, **kw: Unpack[_Kwargs3]
     ) -> Incomplete: ...
     @overload  # ?d, ?d, out: T
     def __call__(
@@ -710,7 +944,7 @@ class _Call21(Protocol):
         x1: _nt.ToGeneric_nd,
         x2: _nt.ToGeneric_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
@@ -721,7 +955,18 @@ class _Call21(Protocol):
         x1: _nt.ToGeneric_1nd,
         x2: _nt.ToGeneric_nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDType[_ScalarT],
+        **kw: Unpack[_Kwargs3],
+    ) -> _nt.Array[_ScalarT]: ...
+    @overload  # ?d, ?d, out=..., dtype: T
+    def __call__(
+        self,
+        x1: _nt.ToGeneric_nd,
+        x2: _nt.ToGeneric_nd,
+        /,
+        out: EllipsisType,
         *,
         dtype: _ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
@@ -732,9 +977,9 @@ class _Call21(Protocol):
         x1: _nt.ToGeneric_nd,
         x2: _nt.ToGeneric_1nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[None] = None,
         *,
-        dtype: _nt.ToDType | None = None,
+        dtype: None = None,
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[Incomplete]: ...
     @overload  # nd, ?d
@@ -743,22 +988,33 @@ class _Call21(Protocol):
         x1: _nt.ToGeneric_1nd,
         x2: _nt.ToGeneric_nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[None] = None,
         *,
-        dtype: _nt.ToDType | None = None,
+        dtype: None = None,
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[Incomplete]: ...
-    @overload  # ?d, ?d
+    @overload  # ?d, ?d, out=...
     def __call__(
         self,
         x1: _nt.ToGeneric_nd,
         x2: _nt.ToGeneric_nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: EllipsisType,
+        *,
+        dtype: None = None,
+        **kw: Unpack[_Kwargs3],
+    ) -> _nt.Array[Incomplete]: ...
+    @overload  # ?
+    def __call__(
+        self,
+        x1: _CanArrayUFunc | _nt.ToGeneric_nd,
+        x2: _CanArrayUFunc | _nt.ToGeneric_nd,
+        /,
+        out: _Out1[_nt.Array | None] | EllipsisType = None,
         *,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3],
-    ) -> _nt.Array[Incomplete] | Incomplete: ...
+    ) -> Incomplete: ...
 
 @type_check_only
 class _Call21Bool(Protocol):
@@ -768,7 +1024,7 @@ class _Call21Bool(Protocol):
         x1: _ToScalar,
         x2: _ToScalar,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
@@ -790,7 +1046,7 @@ class _Call21Bool(Protocol):
         x1: _nt.ToGeneric_nd,
         x2: _nt.ToGeneric_1nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
@@ -801,7 +1057,18 @@ class _Call21Bool(Protocol):
         x1: _nt.ToGeneric_1nd,
         x2: _nt.ToGeneric_nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_BoolND | None] = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs3],
+    ) -> _BoolND: ...
+    @overload  # ?d, ?d, out=...
+    def __call__(
+        self,
+        x1: _nt.ToGeneric_1nd,
+        x2: _nt.ToGeneric_nd,
+        /,
+        out: EllipsisType,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
@@ -812,11 +1079,22 @@ class _Call21Bool(Protocol):
         x1: _nt.ToGeneric_nd,
         x2: _nt.ToGeneric_nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_BoolND | None] | EllipsisType = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
     ) -> _BoolND | Incomplete: ...
+    @overload  # ?
+    def __call__(
+        self,
+        x1: _CanArrayUFunc | _nt.ToGeneric_nd,
+        x2: _CanArrayUFunc | _nt.ToGeneric_nd,
+        /,
+        out: _Out1[_BoolND | None] | EllipsisType = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs3],
+    ) -> Incomplete: ...
 
 @type_check_only
 class _Call21Float(Protocol):
@@ -826,7 +1104,7 @@ class _Call21Float(Protocol):
         x1: float | _nt.co_integer,
         x2: float | _nt.co_integer,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs3],
@@ -837,7 +1115,7 @@ class _Call21Float(Protocol):
         x1: _CoFloat,
         x2: _ToFloat64,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs3],
@@ -848,7 +1126,7 @@ class _Call21Float(Protocol):
         x1: _ToFloat64,
         x2: _CoFloat,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs3],
@@ -859,29 +1137,29 @@ class _Call21Float(Protocol):
         x1: _CoFloat,
         x2: _CoFloat,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _ToDTypeFloat | None = None,
         **kw: Unpack[_Kwargs3],
     ) -> np.floating: ...
-    @overload  # ?d +floating, ?d +floating, out: bound nd floating
+    @overload  # ?d +floating, ?d +floating, out: T
     def __call__(
         self,
         x1: _nt.CoFloating_nd,
         x2: _nt.CoFloating_nd,
         /,
-        out: _Out1[_ArrayT],
+        out: _Out1[_FloatArrayT],
         *,
         dtype: _ToDTypeFloat | None = None,
         **kw: Unpack[_Kwargs3],
-    ) -> _ArrayT: ...
+    ) -> _FloatArrayT: ...
     @overload  # ?d +float64, nd ~float64
     def __call__(
         self,
         x1: _nt.CoFloat64_nd,
         x2: _nt.ToFloat64_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs3],
@@ -892,18 +1170,73 @@ class _Call21Float(Protocol):
         x1: _nt.ToFloat64_1nd,
         x2: _nt.CoFloat64_nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeFloat64 | None = None,
         **kw: Unpack[_Kwargs3],
     ) -> _Float64ND: ...
+    @overload  # ?d +float64, ?d ~float64, out=...
+    def __call__(
+        self,
+        x1: _nt.CoFloat64_nd,
+        x2: _nt.ToFloat64_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _nt.ToDTypeFloat64 | None = None,
+        **kw: Unpack[_Kwargs3],
+    ) -> _Float64ND: ...
+    @overload  # ?d ~float64, ?d +float64, out=...
+    def __call__(
+        self,
+        x1: _nt.ToFloat64_nd,
+        x2: _nt.CoFloat64_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _nt.ToDTypeFloat64 | None = None,
+        **kw: Unpack[_Kwargs3],
+    ) -> _Float64ND: ...
+    @overload  # ?d +floating, ?d +floating, out=..., dtype: T
+    def __call__(
+        self,
+        x1: _nt.CoFloating_nd,
+        x2: _nt.CoFloating_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _ToDType[_FloatT],
+        **kw: Unpack[_Kwargs3],
+    ) -> _nt.Array[_FloatT]: ...
+    @overload  # ?d +floating, nd +floating, dtype: T
+    def __call__(
+        self,
+        x1: _nt.CoFloating_nd,
+        x2: _nt.CoFloating_1nd,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDType[_FloatT],
+        **kw: Unpack[_Kwargs3],
+    ) -> _nt.Array[_FloatT]: ...
+    @overload  # nd +floating, ?d +floating, dtype: T
+    def __call__(
+        self,
+        x1: _nt.CoFloating_1nd,
+        x2: _nt.CoFloating_nd,
+        /,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDType[_FloatT],
+        **kw: Unpack[_Kwargs3],
+    ) -> _nt.Array[_FloatT]: ...
     @overload  # ?d +floating, nd ~floating
     def __call__(
         self,
         x1: _nt.CoFloating_nd,
-        x2: _nt.ToFloating_1nd,
+        x2: _nt.CoFloating_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _ToDTypeFloat | None = None,
         **kw: Unpack[_Kwargs3],
@@ -911,10 +1244,21 @@ class _Call21Float(Protocol):
     @overload  # nd ~floating, ?d +floating
     def __call__(
         self,
-        x1: _nt.ToFloating_1nd,
+        x1: _nt.CoFloating_1nd,
         x2: _nt.CoFloating_nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
+        *,
+        dtype: _ToDTypeFloat | None = None,
+        **kw: Unpack[_Kwargs3],
+    ) -> _FloatND: ...
+    @overload  # ?d +floating, ?d +floating, out=...
+    def __call__(
+        self,
+        x1: _nt.CoFloating_nd,
+        x2: _nt.CoFloating_nd,
+        /,
+        out: EllipsisType,
         *,
         dtype: _ToDTypeFloat | None = None,
         **kw: Unpack[_Kwargs3],
@@ -925,14 +1269,26 @@ class _Call21Float(Protocol):
         x1: _nt.CoFloating_nd,
         x2: _nt.CoFloating_nd,
         /,
-        out: _Out1[_FloatND] | None = None,
+        out: _Out1[_FloatND | None] = None,
         *,
         dtype: _ToDTypeFloat | None = None,
         **kw: Unpack[_Kwargs3],
     ) -> _FloatND | Incomplete: ...
 
+# only used for private ufuncs
 @type_check_only
 class _Call21String(Protocol):
+    @overload  # 0d string-like, 0d string-like
+    def __call__(
+        self,
+        x1: _ToStringLike,
+        x2: _ToStringLike,
+        /,
+        out: _nt.Array[Incomplete] | None = None,
+        *,
+        dtype: _nt.ToDType | None = None,
+        **kw: Unpack[_Kwargs3],
+    ) -> Incomplete: ...
     @overload  # nd string-like, ?d string-like
     def __call__(
         self,
@@ -941,12 +1297,8 @@ class _Call21String(Protocol):
         /,
         out: _nt.Array[Incomplete] | None = None,
         *,
-        where: bool = True,
-        casting: _CastingKind = "same_kind",
-        order: _OrderKACF = "K",
         dtype: _nt.ToDType | None = None,
-        subok: bool = True,
-        signature: str | tuple[_nt.ToDType, _nt.ToDType] | None = None,
+        **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[Incomplete]: ...
     @overload  # ?d string-like, nd string-like
     def __call__(
@@ -956,28 +1308,20 @@ class _Call21String(Protocol):
         /,
         out: _nt.Array[Incomplete] | None = None,
         *,
-        where: bool = True,
-        casting: _CastingKind = "same_kind",
-        order: _OrderKACF = "K",
         dtype: _nt.ToDType | None = None,
-        subok: bool = True,
-        signature: str | tuple[_nt.ToDType, _nt.ToDType] | None = None,
+        **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[Incomplete]: ...
-    @overload  # 0d string-like, 0d string-like
+    @overload  # ?d string-like, ?d string-like, out=...
     def __call__(
         self,
-        x1: _ToStringLike,
-        x2: _ToStringLike,
+        x1: _nt.ToString_nd | _nt.ToCharacter_nd,
+        x2: _nt.ToString_nd | _nt.ToCharacter_nd,
         /,
-        out: _nt.Array[Incomplete] | None = None,
+        out: EllipsisType,
         *,
-        where: bool = True,
-        casting: _CastingKind = "same_kind",
-        order: _OrderKACF = "K",
         dtype: _nt.ToDType | None = None,
-        subok: bool = True,
-        signature: str | tuple[_nt.ToDType, _nt.ToDType] | None = None,
-    ) -> Incomplete: ...
+        **kw: Unpack[_Kwargs3],
+    ) -> _nt.Array[Incomplete]: ...
 
 @type_check_only
 class _Call21Logical(Protocol):
@@ -987,7 +1331,7 @@ class _Call21Logical(Protocol):
         x1: _CoComplex | _nt._PyObject,
         x2: _CoComplex | _nt._PyObject,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeObject,
         **kw: Unpack[_Kwargs3],
@@ -998,7 +1342,7 @@ class _Call21Logical(Protocol):
         x1: _CoComplex,
         x2: _CoComplex,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
@@ -1009,22 +1353,33 @@ class _Call21Logical(Protocol):
         x1: _nt.CoComplex_nd | _nt.ToObject_nd,
         x2: _nt.CoComplex_1nd | _nt.ToObject_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeObject,
         **kw: Unpack[_Kwargs3],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
     @overload  # nd +number | object_, ?d +number | object_, dtype: object_
     def __call__(
         self,
         x1: _nt.CoComplex_1nd | _nt.ToObject_1nd,
         x2: _nt.CoComplex_nd | _nt.ToObject_nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         *,
         dtype: _nt.ToDTypeObject,
         **kw: Unpack[_Kwargs3],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
+    @overload  # ?d +number | object_, ?d +number | object_, out=..., dtype: object_
+    def __call__(
+        self,
+        x1: _nt.CoComplex_nd | _nt.ToObject_nd,
+        x2: _nt.CoComplex_nd | _nt.ToObject_nd,
+        /,
+        out: EllipsisType,
+        *,
+        dtype: _nt.ToDTypeObject,
+        **kw: Unpack[_Kwargs3],
+    ) -> _ObjectND: ...
     @overload  # nd +number | object_, nd +number | object_, out: bound nd array
     def __call__(
         self,
@@ -1042,7 +1397,7 @@ class _Call21Logical(Protocol):
         x1: _nt.CoComplex_nd,
         x2: _nt.CoComplex_1nd,
         /,
-        out: _Out1[_BoolND] | None = None,
+        out: _Out1[_BoolND | None] = None,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
@@ -1053,7 +1408,18 @@ class _Call21Logical(Protocol):
         x1: _nt.CoComplex_1nd,
         x2: _nt.CoComplex_nd,
         /,
-        out: _Out1[_BoolND] | None = None,
+        out: _Out1[_BoolND | None] = None,
+        *,
+        dtype: _nt.ToDTypeBool | None = None,
+        **kw: Unpack[_Kwargs3],
+    ) -> _BoolND: ...
+    @overload  # ?d +number, ?d +number, out=...
+    def __call__(
+        self,
+        x1: _nt.CoComplex_nd,
+        x2: _nt.CoComplex_nd,
+        /,
+        out: EllipsisType,
         *,
         dtype: _nt.ToDTypeBool | None = None,
         **kw: Unpack[_Kwargs3],
@@ -1064,7 +1430,7 @@ class _Call21Logical(Protocol):
         x1: _nt.CoComplex_nd | _nt.ToObject_nd,
         x2: _nt.CoComplex_nd | _nt.ToObject_nd,
         /,
-        out: _Out1[_nt.Array[Incomplete]] | None = None,
+        out: _Out1[_nt.Array[Incomplete]] | EllipsisType | None = None,
         *,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3],
@@ -1080,10 +1446,10 @@ class _Call22(Protocol):
         x2: _ToScalar,
         /,
         *,
-        out: _Tuple2[None] = (None, None),
+        out: _Out2[None] = ...,
         dtype: _ToDType[_ScalarT],
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[_ScalarT]: ...
+    ) -> _Out2[_ScalarT]: ...
     @overload  # 0d, 0d
     def __call__(
         self,
@@ -1091,10 +1457,10 @@ class _Call22(Protocol):
         x2: _ToScalar,
         /,
         *,
-        out: _Tuple2[None] = (None, None),
+        out: _Out2[None] = ...,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[Incomplete]: ...
+    ) -> _Out2[Incomplete]: ...
     @overload  # nd, ?d, dtype: T
     def __call__(
         self,
@@ -1102,10 +1468,10 @@ class _Call22(Protocol):
         x2: _nt.ToGeneric_nd,
         /,
         *,
-        out: _Tuple2[_nt.Array[_ScalarT] | None] = (None, None),
+        out: _Out2[_nt.Array[_ScalarT] | None] = ...,
         dtype: _ToDType[_ScalarT],
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[_nt.Array[_ScalarT]]: ...
+    ) -> _Out2[_nt.Array[_ScalarT]]: ...
     @overload  # ?d, nd, dtype: T
     def __call__(
         self,
@@ -1113,10 +1479,21 @@ class _Call22(Protocol):
         x2: _nt.ToGeneric_1nd,
         /,
         *,
-        out: _Tuple2[_nt.Array[_ScalarT] | None] = (None, None),
+        out: _Out2[_nt.Array[_ScalarT] | None] = ...,
         dtype: _ToDType[_ScalarT],
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[_nt.Array[_ScalarT]]: ...
+    ) -> _Out2[_nt.Array[_ScalarT]]: ...
+    @overload  # ?d, ?d, out=..., dtype: T
+    def __call__(
+        self,
+        x1: _nt.ToGeneric_nd,
+        x2: _nt.ToGeneric_nd,
+        /,
+        *,
+        out: EllipsisType,
+        dtype: _ToDType[_ScalarT],
+        **kw: Unpack[_Kwargs4],
+    ) -> _Out2[_nt.Array[_ScalarT]]: ...
     @overload  # ?d, ?d, out: (T1, None)
     def __call__(
         self,
@@ -1157,10 +1534,10 @@ class _Call22(Protocol):
         x2: _nt.ToGeneric_nd,
         /,
         *,
-        out: _Tuple2[_nt.Array | None] = (None, None),
+        out: _Out2[None] = ...,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[_nt.Array[Incomplete]]: ...
+    ) -> _Out2[_nt.Array[Incomplete]]: ...
     @overload  # ?d, nd
     def __call__(
         self,
@@ -1168,10 +1545,21 @@ class _Call22(Protocol):
         x2: _nt.ToGeneric_1nd,
         /,
         *,
-        out: _Tuple2[_nt.Array | None] = (None, None),
+        out: _Out2[None] = ...,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[_nt.Array[Incomplete]]: ...
+    ) -> _Out2[_nt.Array[Incomplete]]: ...
+    @overload  # ?d, ?d
+    def __call__(
+        self,
+        x1: _nt.ToGeneric_nd,
+        x2: _nt.ToGeneric_nd,
+        /,
+        *,
+        out: EllipsisType,
+        dtype: _nt.ToDType | None = None,
+        **kw: Unpack[_Kwargs4],
+    ) -> _Out2[_nt.Array[Incomplete]]: ...
     @overload  # ?, ?
     def __call__(
         self,
@@ -1179,10 +1567,10 @@ class _Call22(Protocol):
         x2: _nt.ToGeneric_nd | _CanArrayUFunc,
         /,
         *,
-        out: _Tuple2[_nt.Array | None] = (None, None),
+        out: _Out2[_nt.Array | None] | EllipsisType = ...,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[Incomplete]: ...
+    ) -> _Out2[Incomplete]: ...
 
 # scalar for 1D array-likes; ndarray otherwise
 @type_check_only
@@ -1204,7 +1592,7 @@ class _Call21G(Protocol):
         x1: _nt.ToGeneric_nd,
         x2: _nt.ToGeneric_nd,
         /,
-        out: _Out1[_nt.Array | None] = None,
+        out: _Out1[_nt.Array | None] | EllipsisType = None,
         *,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3_g],
@@ -1226,7 +1614,7 @@ class _Reduce2(Protocol):
         /,
         axis: _ShapeLike | None = 0,
         dtype: _nt.ToDType | None = None,
-        out: _nt.Array | None = None,
+        out: _nt.Array | EllipsisType | None = None,
         keepdims: bool = False,
         initial: _ToScalar | None = ...,
         where: _nt.ToBool_nd = True,
@@ -1251,11 +1639,17 @@ class _Accumulate2(Protocol):
         /,
         axis: SupportsIndex,
         dtype: _ToDType[_ScalarT],
-        out: _nt.Array[_ScalarT] | None = None,
+        out: _nt.Array[_ScalarT] | EllipsisType | None = None,
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?d, *, dtype: T
     def __call__(
-        self, a: _nt.ToGeneric_nd, /, axis: SupportsIndex = 0, *, dtype: _ToDType[_ScalarT], out: None = None
+        self,
+        a: _nt.ToGeneric_nd,
+        /,
+        axis: SupportsIndex = 0,
+        *,
+        dtype: _ToDType[_ScalarT],
+        out: _Out1[None] | EllipsisType = None,
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?d
     def __call__(
@@ -1264,7 +1658,7 @@ class _Accumulate2(Protocol):
         /,
         axis: SupportsIndex = 0,
         dtype: _nt.ToDType | None = None,
-        out: _nt.Array | None = None,
+        out: _nt.Array | EllipsisType | None = None,
     ) -> _nt.Array[Incomplete]: ...
 
 @type_check_only
@@ -1296,7 +1690,7 @@ class _ReduceAt2(Protocol):
         /,
         axis: SupportsIndex,
         dtype: _ToDType[_ScalarT],
-        out: _nt.Array[_ScalarT] | None = None,
+        out: _nt.Array[_ScalarT] | EllipsisType | None = None,
     ) -> _nt.Array[_ScalarT]: ...
     @overload
     def __call__(
@@ -1307,7 +1701,7 @@ class _ReduceAt2(Protocol):
         axis: SupportsIndex = 0,
         *,
         dtype: _ToDType[_ScalarT],
-        out: _nt.Array[_ScalarT] | None = None,
+        out: _nt.Array[_ScalarT] | EllipsisType | None = None,
     ) -> _nt.Array[_ScalarT]: ...
     @overload
     def __call__(
@@ -1315,7 +1709,7 @@ class _ReduceAt2(Protocol):
         a: _nt.ToGeneric_nd,
         ixs: _nt.CoInteger_nd,
         /,
-        out: _nt.Array | None = None,
+        out: _nt.Array | EllipsisType | None = None,
         axis: SupportsIndex = 0,
         dtype: _nt.ToDType | None = None,
     ) -> _nt.Array[Incomplete]: ...
@@ -1342,7 +1736,7 @@ class _Outer1(Protocol):
         B: _nt.ToGeneric_nd,
         /,
         *,
-        out: _Out1[_nt.Array[_ScalarT] | None] = None,
+        out: _Out1[_nt.Array[_ScalarT] | None] | EllipsisType = None,
         dtype: _ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[_ScalarT]: ...
@@ -1353,7 +1747,7 @@ class _Outer1(Protocol):
         B: _nt.ToGeneric_nd,
         /,
         *,
-        out: _Out1[_nt.Array | None] = None,
+        out: _Out1[_nt.Array | None] | EllipsisType = None,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[Incomplete]: ...
@@ -1401,9 +1795,9 @@ class _Outer2(Protocol):
         /,
         *,
         dtype: _ToDType[_ScalarT],
-        out: _Tuple2[_nt.Array[_ScalarT] | None] = (None, None),
+        out: _Out2[_nt.Array[_ScalarT] | None] | EllipsisType = ...,
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[_nt.Array[_ScalarT]]: ...
+    ) -> _Out2[_nt.Array[_ScalarT]]: ...
     @overload  # ?d, ?d
     def __call__(
         self,
@@ -1412,9 +1806,9 @@ class _Outer2(Protocol):
         /,
         *,
         dtype: _nt.ToDType | None = None,
-        out: _Tuple2[_nt.Array | None] = (None, None),
+        out: _Out2[_nt.Array | None] | EllipsisType = ...,
         **kw: Unpack[_Kwargs4],
-    ) -> _Tuple2[_nt.Array[Incomplete]]: ...
+    ) -> _Out2[_nt.Array[Incomplete]]: ...
 
 ###
 # specific ufunc aliases
@@ -1700,22 +2094,31 @@ _replace: np.ufunc
 class _PyCall11(Protocol[_OutT_co]):
     @overload
     def __call__(
-        self, x: _ToScalar, /, out: None = None, dtype: _nt.ToDType | None = None, **kwargs: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: _Out1[None] = None, dtype: _nt.ToDType | None = None, **kwargs: Unpack[_Kwargs2]
     ) -> _OutT_co: ...
     @overload
     def __call__(
-        self, x: _nt.ToGeneric_1nd, /, out: None = None, dtype: _nt.ToDType | None = None, **kwargs: Unpack[_Kwargs2]
-    ) -> _nt.Array[np.object_]: ...
+        self,
+        x: _nt.ToGeneric_1nd,
+        /,
+        out: _Out1[None] = None,
+        dtype: _nt.ToDType | None = None,
+        **kwargs: Unpack[_Kwargs2],
+    ) -> _ObjectND: ...
     @overload
     def __call__(
         self, x: _nt.ToGeneric_nd, /, out: _Out1[_ArrayT], dtype: _nt.ToDType | None = None, **kwargs: Unpack[_Kwargs2]
     ) -> _ArrayT: ...
     @overload
     def __call__(
+        self, x: _nt.ToGeneric_nd, /, out: EllipsisType, dtype: _nt.ToDType | None = None, **kwargs: Unpack[_Kwargs2]
+    ) -> _ObjectND: ...
+    @overload
+    def __call__(
         self,
         x: _CanArrayUFunc,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_nt.Array | None] | EllipsisType = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs2],
     ) -> Incomplete: ...
@@ -1728,7 +2131,7 @@ class _PyCall21(Protocol[_OutT_co]):
         x1: _ToScalar,
         x2: _ToScalar,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs3],
     ) -> _OutT_co: ...
@@ -1738,20 +2141,30 @@ class _PyCall21(Protocol[_OutT_co]):
         x1: _nt.ToGeneric_1nd,
         x2: _nt.ToGeneric_nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs3],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
     @overload
     def __call__(
         self,
         x1: _nt.ToGeneric_nd,
         x2: _nt.ToGeneric_1nd,
         /,
-        out: None = None,
+        out: _Out1[None] = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs3],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
+    @overload
+    def __call__(
+        self,
+        x1: _nt.ToGeneric_nd,
+        x2: _nt.ToGeneric_nd,
+        /,
+        out: EllipsisType,
+        dtype: _nt.ToDType | None = None,
+        **kwargs: Unpack[_Kwargs3],
+    ) -> _ObjectND: ...
     @overload
     def __call__(
         self,
@@ -1768,7 +2181,7 @@ class _PyCall21(Protocol[_OutT_co]):
         x1: _CanArrayUFunc | _nt.ToGeneric_nd,
         x2: _CanArrayUFunc | _nt.ToGeneric_nd,
         /,
-        out: _Out1[_nt.Array] | None = None,
+        out: _Out1[_nt.Array | None] | EllipsisType = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs3],
     ) -> Incomplete: ...
@@ -1783,7 +2196,7 @@ class _PyCall3N1(Protocol[_OutT_co]):
         x3: _ToScalar,
         /,
         *xs: _ToScalar,
-        out: None = None,
+        out: _Out1[None] = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs4_],
     ) -> _OutT_co: ...
@@ -1795,10 +2208,10 @@ class _PyCall3N1(Protocol[_OutT_co]):
         x3: _nt.ToGeneric_1nd,
         /,
         *xs: _nt.ToGeneric_nd,
-        out: None = None,
+        out: _Out1[None] = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs4_],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
     @overload
     def __call__(
         self,
@@ -1807,10 +2220,10 @@ class _PyCall3N1(Protocol[_OutT_co]):
         x3: _nt.ToGeneric_nd,
         /,
         *xs: _nt.ToGeneric_nd,
-        out: None = None,
+        out: _Out1[None] = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs4_],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
     @overload
     def __call__(
         self,
@@ -1819,10 +2232,10 @@ class _PyCall3N1(Protocol[_OutT_co]):
         x3: _nt.ToGeneric_nd,
         /,
         *xs: _nt.ToGeneric_nd,
-        out: None = None,
+        out: _Out1[None] = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs4_],
-    ) -> _nt.Array[np.object_]: ...
+    ) -> _ObjectND: ...
     @overload
     def __call__(
         self,
@@ -1838,12 +2251,24 @@ class _PyCall3N1(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
+        x1: _nt.ToGeneric_nd,
+        x2: _nt.ToGeneric_nd,
+        x3: _nt.ToGeneric_nd,
+        /,
+        *xs: _nt.ToGeneric_nd,
+        out: EllipsisType,
+        dtype: _nt.ToDType | None = None,
+        **kwargs: Unpack[_Kwargs4_],
+    ) -> _ObjectND: ...
+    @overload
+    def __call__(
+        self,
         x1: _CanArrayUFunc | _nt.ToGeneric_nd,
         x2: _CanArrayUFunc | _nt.ToGeneric_nd,
         x3: _CanArrayUFunc | _nt.ToGeneric_nd,
         /,
         *xs: _CanArrayUFunc | _nt.ToGeneric_nd,
-        out: None = None,
+        out: _Out1[_nt.Array | None] | EllipsisType = None,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs4_],
     ) -> Incomplete: ...
@@ -1856,7 +2281,7 @@ class _PyCall1N2(Protocol[_OutT1_co, _OutT2_co]):
         x1: _ToScalar,
         /,
         *xs: _ToScalar,
-        out: tuple[None, None] = (None, None),
+        out: tuple[None, None] = ...,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3_],
     ) -> tuple[_OutT1_co, _OutT2_co]: ...
@@ -1866,10 +2291,10 @@ class _PyCall1N2(Protocol[_OutT1_co, _OutT2_co]):
         x1: _nt.ToGeneric_1nd,
         /,
         *xs: _nt.ToGeneric_nd,
-        out: tuple[None, None] = (None, None),
+        out: tuple[None, None] = ...,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3_],
-    ) -> tuple[_nt.Array[np.object_], _nt.Array[np.object_]]: ...
+    ) -> tuple[_ObjectND, _ObjectND]: ...
     @overload
     def __call__(
         self,
@@ -1883,10 +2308,20 @@ class _PyCall1N2(Protocol[_OutT1_co, _OutT2_co]):
     @overload
     def __call__(
         self,
+        x1: _nt.ToGeneric_nd,
+        /,
+        *xs: _nt.ToGeneric_nd,
+        out: EllipsisType,
+        dtype: _nt.ToDType | None = None,
+        **kw: Unpack[_Kwargs3_],
+    ) -> tuple[_ObjectND, _ObjectND]: ...
+    @overload
+    def __call__(
+        self,
         x1: _CanArrayUFunc | _nt.ToGeneric_nd,
         /,
         *xs: _CanArrayUFunc | _nt.ToGeneric_nd,
-        out: _Tuple2[_nt.Array | None] = (None, None),
+        out: _Out2[_nt.Array | None] | EllipsisType = ...,
         dtype: _nt.ToDType | None = None,
         **kw: Unpack[_Kwargs3_],
     ) -> Incomplete: ...
@@ -1912,7 +2347,7 @@ class _PyCall1N2N(Protocol[_OutT_co]):
         out: _Tuple2_[None] = ...,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs3_],
-    ) -> _Tuple2_[_nt.Array[np.object_]]: ...
+    ) -> _Tuple2_[_ObjectND]: ...
     @overload
     def __call__(
         self,
@@ -1926,10 +2361,20 @@ class _PyCall1N2N(Protocol[_OutT_co]):
     @overload
     def __call__(
         self,
+        x1: _nt.ToGeneric_nd,
+        /,
+        *xs: _nt.ToGeneric_nd,
+        out: EllipsisType,
+        dtype: _nt.ToDType | None = None,
+        **kwargs: Unpack[_Kwargs3_],
+    ) -> _Tuple2_[_ObjectND]: ...
+    @overload
+    def __call__(
+        self,
         x1: _CanArrayUFunc | _nt.ToGeneric_nd,
         /,
         *xs: _CanArrayUFunc | _nt.ToGeneric_nd,
-        out: _Tuple2_[_nt.Array | None] = ...,
+        out: _Tuple2_[_nt.Array | None] | EllipsisType = ...,
         dtype: _nt.ToDType | None = None,
         **kwargs: Unpack[_Kwargs3_],
     ) -> Incomplete: ...
@@ -1973,5 +2418,5 @@ def frompyfunc(
 ) -> _pyfunc1n2n[_T1 | _T2 | _T]: ...
 @overload
 def frompyfunc(
-    f: Callable[..., object], /, nin: SupportsIndex, nout: SupportsIndex, *, identity: object = None
+    f: Callable[..., Incomplete], /, nin: SupportsIndex, nout: SupportsIndex, *, identity: object = None
 ) -> np.ufunc: ...
