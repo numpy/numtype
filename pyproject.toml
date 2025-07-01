@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "numtype"
-version = "2.3.0.0.dev0"
+version = "2.3.1.0.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
 authors = [
@@ -37,7 +37,7 @@ requires-python = ">=3.11"
 dependencies = []
 
     [project.optional-dependencies]
-    numpy = ["numpy>=2.3.0,<2.4"]
+    numpy = ["numpy>=2.3.1,<2.4"]
 
     [project.urls]
     Homepage = "https://numpy.org/"
@@ -48,10 +48,10 @@ dependencies = []
 
 [dependency-groups]
 numpy = ["numtype[numpy]"]
-lint = ["ruff>=0.11.13"]
+lint = ["ruff>=0.12.1"]
 pytest = [
     {include-group = "numpy"},
-    "pytest>=8.4.0",
+    "pytest>=8.4.1",
     "typing_extensions>=4.14.0",
 ]
 list_and_test = [
@@ -66,24 +66,24 @@ types = [
 basedpyright = [
     {include-group = "numpy"},
     {include-group = "types"},
-    "basedpyright>=1.29.4",
+    "basedpyright>=1.29.5",
 ]
 mypy = [
     {include-group = "types"},
-    "mypy[faster-cache]>=1.16.0",
+    "mypy[faster-cache]>=1.16.1",
 ]
 typecheck = [
     {include-group = "basedpyright"},
     {include-group = "mypy"},
 ]
 docs = [
-    "mkdocs-material>=9.6.14",
+    "mkdocs-material>=9.6.15",
     "mkdocs-awesome-nav>=3.1.2",
     "markdown-callouts>=0.4.0",
-    "mkdocs-include-markdown-plugin>=7.1.5",
+    "mkdocs-include-markdown-plugin>=7.1.6",
     "mkdocs-minify-plugin>=0.8.0",
     "mkdocstrings[python]>=0.29.1",
-    "pygments>=2.19.1",
+    "pygments>=2.19.2",
 ]
 dev = [
     {include-group = "list_and_test"},

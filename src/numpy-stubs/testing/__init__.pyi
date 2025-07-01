@@ -2,6 +2,7 @@ from unittest import TestCase as _TestCase
 
 from . import overrides
 from ._private.utils import (
+    BLAS_SUPPORTS_FPE,
     HAS_LAPACK64,
     HAS_REFCOUNT,
     IS_64BIT,
@@ -52,6 +53,7 @@ from ._private.utils import (
 )
 
 __all__ = [
+    "BLAS_SUPPORTS_FPE",
     "HAS_LAPACK64",
     "HAS_REFCOUNT",
     "IS_64BIT",
