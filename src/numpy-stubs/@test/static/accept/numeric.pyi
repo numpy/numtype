@@ -22,9 +22,9 @@ AR_O: _nt.Array[np.object_]
 
 ###
 
-assert_type(np.count_nonzero(i8), int)
-assert_type(np.count_nonzero(AR_i8), int)
-assert_type(np.count_nonzero(ints), int)
+assert_type(np.count_nonzero(i8), np.intp)
+assert_type(np.count_nonzero(AR_i8), np.intp)
+assert_type(np.count_nonzero(ints), np.intp)
 assert_type(np.count_nonzero(AR_i8, keepdims=True), Any)
 assert_type(np.count_nonzero(AR_i8, axis=0), Any)
 
