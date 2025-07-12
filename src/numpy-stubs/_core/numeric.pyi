@@ -1,3 +1,4 @@
+from _typeshed import Incomplete
 from builtins import bool as py_bool
 from collections.abc import Callable, Sequence
 from typing import (
@@ -2027,9 +2028,9 @@ def full_like(
 
 #
 @overload
-def count_nonzero(a: ArrayLike, axis: None = None, *, keepdims: L[False] = False) -> int: ...
+def count_nonzero(a: ArrayLike, axis: None = None, *, keepdims: L[False] = False) -> np.intp: ...
 @overload
-def count_nonzero(a: ArrayLike, axis: _ShapeLike | None = None, *, keepdims: py_bool = False) -> Any: ...
+def count_nonzero(a: ArrayLike, axis: _ShapeLike | None = None, *, keepdims: py_bool = False) -> Incomplete: ...
 
 #
 def flatnonzero(a: ArrayLike) -> _nt.Array1D[np.intp]: ...
