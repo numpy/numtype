@@ -32,14 +32,6 @@ Test type stubs against actual implementations using MyPy's stubtest.
 uv run tool/stubtest.py <OPTIONS>
 ```
 
-## unstub.py
-
-Remove all `.pyi` files from the NumPy site-packages directory.
-
-```shell
-uv run tool/unstub.py
-```
-
 ## format_ignores.py
 
 Format pyright ignore comments to ensure they are alphabetically sorted with proper spacing.

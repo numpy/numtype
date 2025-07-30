@@ -60,10 +60,7 @@ See <https://docs.basedpyright.com/> for IDE integration and other info.
 
 ### mypy
 
-Mypy is used for type-checking the codebase and the type-tests. It takes more effort to run it on the codebase than `basedpyright`.
-This is primarily a consequence of mypy's inconsequent prioritization of the stubs bundled
-with NumPy over the `numpy-stubs` within a local development environment.
-To get around this, you can delete all `*.pyi` from your **local** `numpy` installation directory by running `uv tool/unstub.py`.
+Mypy is used for type-checking the codebase and the type-tests.
 
 **General Type Checking**
 
