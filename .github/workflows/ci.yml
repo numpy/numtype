@@ -28,7 +28,7 @@ jobs:
     - uses: astral-sh/setup-uv@v6.4.3
 
     - name: dprint
-      run: uv run --no-sync dprint check
+      run: uv run dprint check
 
     - name: ruff
       run: |
