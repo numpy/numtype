@@ -129,6 +129,16 @@
   - any-glob-to-any-file:
     - .github/workflows/**
 
+"tool: lefthook":
+- changed-files:
+  - any-glob-to-any-file:
+    - lefthook.yml
+
+"tool: dprint":
+- changed-files:
+  - any-glob-to-any-file:
+    - .dprint.jsonc
+
 "topic: dependencies":
 - changed-files:
   - any-glob-to-any-file:
@@ -150,5 +160,5 @@
 "topic: code style":
 - changed-files:
   - any-glob-to-any-file:
-    - "**/.dprint.jsonc"
+    - .dprint.jsonc
     - "**/.ruff.toml"
