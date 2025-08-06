@@ -21,6 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Typing :: Stubs Only",
     "Typing :: Typed",
 ]
@@ -247,6 +248,7 @@ env_list = [
     "3.11",
     "3.12",
     "3.13",
+    "3.14",
 ]
 
     [tool.tox.env_run_base]
@@ -293,7 +295,6 @@ env_list = [
             "mypy",
             "--no-incremental",
             "--cache-dir=/dev/null",
-            "--soft-error-limit=-1",
             {replace = "posargs", default = ["."], extend = true},
         ],
     ]

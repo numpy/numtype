@@ -36,7 +36,7 @@ jobs:
 
       - uses: uncenter/setup-taplo@v1.0.8
         with:
-          version: "0.9.3"
+          version: "0.10.0"
       - name: taplo
         run: |
           taplo validate --colors never --no-schema
@@ -61,7 +61,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        py: ["3.11", "3.12", "3.13"]
+        py: ["3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4.2.2
 
@@ -79,7 +79,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        py: ["3.11", "3.12", "3.13"]
+        py: ["3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4.2.2
 
@@ -97,7 +97,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        py: ["3.11", "3.12", "3.13"]
+        py: ["3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4.2.2
 
