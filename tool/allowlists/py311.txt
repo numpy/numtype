@@ -1,4 +1,4 @@
-# python < 3.12
+# python 3.11.*
 
 # distutils is deprecated and does not exist on python>=3.12
 numpy\.distutils\.command\.\w+

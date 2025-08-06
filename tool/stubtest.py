@@ -44,10 +44,7 @@ else:
     __root_site = None
 ROOT_SITE_DIR = __root_site
 
-ALLOWLISTS = [
-    "common.txt",
-    ("ge" if sys.version_info >= (3, 12) else "lt") + "-py312.txt",
-]
+ALLOWLISTS = ["common.txt", f"py3{sys.version_info.minor}.txt"]
 
 
 def __check_simd() -> None:
