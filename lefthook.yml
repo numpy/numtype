@@ -18,15 +18,15 @@ pre-commit:
 
   - name: format_ignores
     glob: "*.{py,pyi}"
+    exclude:
+    - tool/test/test_format_ignores.py
     stage_fixed: true
     run: uv {run} tool/format_ignores.py {staged_files}
-    exclude:
-    - "tool/test/test_format_ignores.py"
 
   - name: dprint
     glob: "*.{json,jsonc,md,toml,yaml,yml}"
     stage_fixed: true
-    run: uv {run} dprint fmt --incremental=false
+    run: uv {run} dprint fmt {staged_files}
 
   - name: basedpyright
     glob: "*.{py,pyi}"
