@@ -23,40 +23,40 @@ jobs:
     timeout-minutes: 1
 
     steps:
-      - uses: actions/checkout@v4.2.2
+    - uses: actions/checkout@v4.2.2
 
-      - name: typos
-        uses: crate-ci/typos@v1.35.1
+    - name: typos
+      uses: crate-ci/typos@v1.35.1
 
-      - name: markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v20.0.0
-        with:
-          config: "docs/.markdownlint.yaml"
-          globs: "**/*.md"
+    - name: markdownlint
+      uses: DavidAnson/markdownlint-cli2-action@v20.0.0
+      with:
+        config: "docs/.markdownlint.yaml"
+        globs: "**/*.md"
 
-      - uses: uncenter/setup-taplo@v1.0.8
-        with:
-          version: "0.9.3"
-      - name: taplo
-        run: |
-          taplo validate --colors never --no-schema
-          taplo fmt --colors never --check
+    - uses: uncenter/setup-taplo@v1.0.8
+      with:
+        version: "0.9.3"
+    - name: taplo
+      run: |
+        taplo validate --colors never --no-schema
+        taplo fmt --colors never --check
 
-      - uses: astral-sh/setup-uv@v6.4.3
+    - uses: astral-sh/setup-uv@v6.4.3
 
-      - name: ruff
-        run: |
-          uv run ruff check --output-format=github
-          uv run ruff format --check
+    - name: ruff
+      run: |
+        uv run ruff check --output-format=github
+        uv run ruff format --check
 
-      - name: dprint
-        run: uv run --no-sync dprint check
+    - name: dprint
+      run: uv run --no-sync dprint check
 
-      - name: pytest
-        run: uv run pytest
+    - name: pytest
+      run: uv run pytest
 
-      - name: format-ignores
-        run: uv run tool/format_ignores.py --check
+    - name: format-ignores
+      run: uv run tool/format_ignores.py --check
 
   # NOTE: Static typing only differs between `python<3.12` and otherwise,
   # so there's no need to run the type-checkers on all Python versions.
@@ -69,14 +69,14 @@ jobs:
       matrix:
         py: ["3.11", "3.13"]
     steps:
-      - uses: actions/checkout@v4.2.2
+    - uses: actions/checkout@v4.2.2
 
-      - uses: astral-sh/setup-uv@v6.4.3
-        with:
-          python-version: ${{ matrix.py }}
+    - uses: astral-sh/setup-uv@v6.4.3
+      with:
+        python-version: ${{ matrix.py }}
 
-      - name: basedpyright
-        run: uv run basedpyright
+    - name: basedpyright
+      run: uv run basedpyright
 
   mypy:
     runs-on: ubuntu-latest
@@ -86,14 +86,14 @@ jobs:
       matrix:
         py: ["3.11", "3.13"]
     steps:
-      - uses: actions/checkout@v4.2.2
+    - uses: actions/checkout@v4.2.2
 
-      - uses: astral-sh/setup-uv@v6.4.3
-        with:
-          python-version: ${{ matrix.py }}
+    - uses: astral-sh/setup-uv@v6.4.3
+      with:
+        python-version: ${{ matrix.py }}
 
-      - name: mypy
-        run: uv run --no-editable mypy --no-incremental --cache-dir=/dev/null .
+    - name: mypy
+      run: uv run --no-editable mypy --no-incremental --cache-dir=/dev/null .
 
   # NOTE: Stubtest does runtime inspections, so we consider all Python versions.
 
@@ -106,11 +106,11 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         py: ["3.11", "3.12", "3.13", "3.14"]
     steps:
-      - uses: actions/checkout@v4.2.2
+    - uses: actions/checkout@v4.2.2
 
-      - uses: astral-sh/setup-uv@v6.4.3
-        with:
-          python-version: ${{ matrix.py }}
+    - uses: astral-sh/setup-uv@v6.4.3
+      with:
+        python-version: ${{ matrix.py }}
 
-      - name: stubtest
-        run: uv run --active tool/stubtest.py
+    - name: stubtest
+      run: uv run --active tool/stubtest.py

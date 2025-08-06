@@ -56,9 +56,13 @@ NT = TypeVar("NT", bound=npt.NBitBase)
 def f(x: np.floating[NT]) -> np.floating[NT]: ...
 ```
 
+<!-- dprint-ignore-start -->
+
 ///
 /// tab | Python 3.12 and above
     select: True
+
+<!-- dprint-ignore-end -->
 
 ```py
 import numpy as np
@@ -67,11 +71,15 @@ import numpy.typing as npt
 def f[NT: npt.NBitBase](x: np.floating[NT]) -> np.floating[NT]: ...
 ```
 
+<!-- dprint-ignore-start -->
+
 ///
 
 you can write
 
 /// tab | Python 3.11 and above
+
+<!-- dprint-ignore-end -->
 
 ```py
 import numpy as np
@@ -82,15 +90,21 @@ FloatT = TypeVar("FloatT", bound=np.floating)
 def f(x: FloatT) -> FloatT: ...
 ```
 
+<!-- dprint-ignore-start -->
+
 ///
 /// tab | Python 3.12 and above
     select: True
+
+<!-- dprint-ignore-end -->
 
 ```py
 import numpy as np
 
 def f[FloatT: np.floating](x: FloatT) -> FloatT: ...
 ```
+
+<!-- dprint-ignore-start -->
 
 ///
 
@@ -99,6 +113,8 @@ As you can see, this also makes the code more readable.
 But what if that isn't possible? For instance, you might have the following function:
 
 /// tab | Python 3.11 and above
+
+<!-- dprint-ignore-end -->
 
 ```py
 import numpy as np
@@ -109,6 +125,8 @@ NT = TypeVar("NT", bound=npt.NBitBase)
 
 def f(x: np.complexfloating[NT]) -> np.floating[NT]: ...
 ```
+
+<!-- dprint-ignore-start -->
 
 ///
 /// tab | Python 3.12 and above
@@ -122,6 +140,8 @@ def f[NT: npt.NBitBase](x: np.complexfloating[NT]) -> np.floating[NT]: ...
 ```
 
 ///
+
+<!-- dprint-ignore-end -->
 
 In that case, you can rewrite it by using
 [`#!py typing.overload`](https://typing.python.org/en/latest/spec/overload.html):
@@ -178,7 +198,7 @@ In NumType, the stubs correctly reflect this runtime behaviour.
 ## Removed `number.__floordiv__`
 
 The abstract `numpy.number` type represents a scalar that's either integer, float, or complex.
-But the builtin "floordiv" operator, `//`  is only supported for integer and floating scalars.
+But the builtin "floordiv" operator, `//` is only supported for integer and floating scalars.
 Complex numpy scalars will raise an error. But in NumPy, type-checkers will allow you to write
 the following type-unsafe code:
 

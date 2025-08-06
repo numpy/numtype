@@ -1,28 +1,28 @@
 version: 2
 updates:
-  - package-ecosystem: github-actions
-    directory: "/"
-    schedule:
-      interval: daily
-    allow:
-      - dependency-type: "all"
-    labels:
-      - "topic: dependencies"
-      - "tool: github-actions"
-    commit-message:
-      prefix: "⬆️ "
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: daily
+  allow:
+  - dependency-type: "all"
+  labels:
+  - "topic: dependencies"
+  - "tool: github-actions"
+  commit-message:
+    prefix: "⬆️ "
 
-  - package-ecosystem: uv
-    directories:
-      - "/"
-      - "/tool"
-    schedule:
-      interval: daily
-    allow:
-      - dependency-type: "all"
-    versioning-strategy: increase
-    labels:
-      - "topic: dependencies"
-      - "tool: uv"
-    commit-message:
-      prefix: "⬆️ "
+- package-ecosystem: uv
+  directories:
+  - "/"
+  - "/tool"
+  schedule:
+    interval: daily
+  allow:
+  - dependency-type: "all"
+  versioning-strategy: increase
+  labels:
+  - "topic: dependencies"
+  - "tool: uv"
+  commit-message:
+    prefix: "⬆️ "

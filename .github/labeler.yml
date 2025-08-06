@@ -152,4 +152,3 @@
   - any-glob-to-any-file:
     - .taplo.toml
     - **/.ruff.toml
-

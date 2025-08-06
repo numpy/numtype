@@ -4,49 +4,49 @@ templates:
 pre-commit:
   parallel: true
   jobs:
-    - name: ruff
-      glob: "*.{py,pyi}"
-      stage_fixed: true
-      group:
-        piped: true
-        jobs:
-          - name: check
-            run: uv {run} ruff check --fix {staged_files}
+  - name: ruff
+    glob: "*.{py,pyi}"
+    stage_fixed: true
+    group:
+      piped: true
+      jobs:
+      - name: check
+        run: uv {run} ruff check --fix {staged_files}
 
-          - name: format
-            run: uv {run} ruff format {staged_files}
+      - name: format
+        run: uv {run} ruff format {staged_files}
 
-    - name: format_ignores
-      glob: "*.{py,pyi}"
-      stage_fixed: true
-      run: uv {run} tool/format_ignores.py {staged_files}
-      exclude:
-        - "tool/test/test_format_ignores.py"
+  - name: format_ignores
+    glob: "*.{py,pyi}"
+    stage_fixed: true
+    run: uv {run} tool/format_ignores.py {staged_files}
+    exclude:
+    - "tool/test/test_format_ignores.py"
 
-    - name: dprint
-      glob: "*.{json,jsonc,md,toml,yaml,yml}"
-      stage_fixed: true
-      run: uv {run} dprint fmt --incremental=false
+  - name: dprint
+    glob: "*.{json,jsonc,md,toml,yaml,yml}"
+    stage_fixed: true
+    run: uv {run} dprint fmt --incremental=false
 
-    - name: basedpyright
-      glob: "*.{py,pyi}"
-      run: uv {run} basedpyright --threads=3 {staged_files}
+  - name: basedpyright
+    glob: "*.{py,pyi}"
+    run: uv {run} basedpyright --threads=3 {staged_files}
 
-    - name: mkdocs
-      glob:
-        - "docs/**"
-        - "CONTRIBUTING.md"
-        - "mkdocs.yml"
-        - "uv.lock"
-      run: uv {run} mkdocs build
+  - name: mkdocs
+    glob:
+    - "docs/**"
+    - "CONTRIBUTING.md"
+    - "mkdocs.yml"
+    - "uv.lock"
+    run: uv {run} mkdocs build
 
 post-checkout:
   jobs:
-    - run: uv sync
-      glob: uv.lock
+  - run: uv sync
+    glob: uv.lock
 
 post-merge:
   files: "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD"
   jobs:
-    - run: uv sync
-      glob: uv.lock
+  - run: uv sync
+    glob: uv.lock

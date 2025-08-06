@@ -9,9 +9,9 @@ MD031:
   list_items: false
 MD033:
   allowed_elements:
-    - h1
-    - img
-    - a
-    - div
+  - h1
+  - img
+  - a
+  - div
 MD036: false
 MD041: false

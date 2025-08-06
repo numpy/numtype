@@ -8,7 +8,7 @@
     "redhat.vscode-yaml",
     "seatonjiang.gitmoji-vscode",
     "tamasfe.even-better-toml",
-    "dprint.dprint"
+    "dprint.dprint",
   ],
-  "unwantedRecommendations": ["ms-pyright.pyright", "ms-python.vscode-pylance"]
+  "unwantedRecommendations": ["ms-pyright.pyright", "ms-python.vscode-pylance"],
 }

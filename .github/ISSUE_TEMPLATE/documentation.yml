@@ -5,7 +5,7 @@ labels: ["topic: Docs"]
 
 body:
 - type: textarea
-  attributes: 
+  attributes:
     label: "Issue with current documentation:"
     description: >
       Please make sure to leave a reference to the document/code you're
