@@ -185,7 +185,7 @@ ignore = ["CPY", "FIX002", "COM812"]
   "N", # pep8-naming
   "TD", # flake8-todo
   "COM812", # flake8-commas: missing-trailing-comma
-  "PLC2701", # pylint/C:      import-private-name
+  "PLC2701", # pylint/convention: import-private-name
 ]
 
 [tool.ruff.lint.flake8-builtins]
