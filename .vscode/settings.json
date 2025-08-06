@@ -1,19 +1,17 @@
 {
-  "[markdown]": {
+  "[json][jsonc][markdown][toml][yaml]": {
+    "editor.defaultFormatter": "dprint.dprint",
     "editor.rulers": [88],
+    "editor.tabSize": 2,
   },
   "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.rulers": [88, 120],
   },
-  "[toml]": {
-    "editor.rulers": [88],
-  },
-  "evenBetterToml.schema.enabled": false,
-  "evenBetterToml.taplo.configFile.path": ".taplo.toml",
   "files.readonlyInclude": {
     "**/generated/*.pyi": true,
   },
+  "editor.formatOnSave": true,
   "git.branchProtection": ["main"],
-  "markdownlint.configFile": "docs/.markdownlint.yaml",
-  "mypy-type-checker.path": ["uv", "run", "--no-editable", "--no-sync", "mypy"],
+  "mypy-type-checker.path": [".venv/bin/mypy"],
 }

@@ -150,5 +150,5 @@
 "topic: code style":
 - changed-files:
   - any-glob-to-any-file:
-    - .taplo.toml
-    - **/.ruff.toml
+    - "**/.dprint.jsonc"
+    - "**/.ruff.toml"
