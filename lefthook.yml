@@ -1,36 +1,47 @@
+templates:
+  run: run --no-sync
+
 pre-commit:
   parallel: true
-  commands:
-    ruff-check:
+  jobs:
+    - name: ruff
       glob: "*.{py,pyi}"
-      run: uv run --no-sync ruff check --fix {staged_files}
       stage_fixed: true
-    ruff-format:
+      group:
+        piped: true
+        jobs:
+          - name: check
+            run: uv {run} ruff check --fix {staged_files}
+
+          - name: format
+            run: uv {run} ruff format {staged_files}
+
+    - name: format_ignores
       glob: "*.{py,pyi}"
-      run: uv run --no-sync ruff format {staged_files}
       stage_fixed: true
-    ignore-format:
-      glob: "*.{py,pyi}"
-      run: uv run --no-sync tool/format_ignores.py {staged_files}
-      stage_fixed: true
+      run: uv {run} tool/format_ignores.py {staged_files}
       exclude:
         - "tool/test/test_format_ignores.py"
-    docs-check:
+
+    - name: basedpyright
+      glob: "*.{py,pyi}"
+      run: uv {run} basedpyright --threads=3 {staged_files}
+
+    - name: mkdocs
       glob:
         - "docs/**"
-        - "mkdocs.yml"
         - "CONTRIBUTING.md"
-      run: uv run --no-sync mkdocs build
+        - "mkdocs.yml"
+        - "uv.lock"
+      run: uv {run} mkdocs build
 
 post-checkout:
-  commands:
-    dependencies:
+  jobs:
+    - run: uv sync
       glob: uv.lock
-      run: uv sync
 
 post-merge:
   files: "git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD"
-  commands:
-    dependencies:
+  jobs:
+    - run: uv sync
       glob: uv.lock
-      run: uv sync
