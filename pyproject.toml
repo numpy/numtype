@@ -75,7 +75,7 @@ typecheck = [
 ]
 docs = [
     "mkdocs-material>=9.6.16",
-    "pydantic>=2.12.0a1; python_version >= '3.14'",  # needed for mkdocs-awesome-nav
+    "pydantic>=2.12.0a1; python_version >= '3.14'", # needed for mkdocs-awesome-nav
     "mkdocs-awesome-nav>=3.1.2",
     "markdown-callouts>=0.4.0",
     "mkdocs-include-markdown-plugin>=7.1.6",
