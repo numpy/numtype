@@ -1,7 +1,7 @@
 ---
 hide:
-  - navigation
-  - toc
+- navigation
+- toc
 ---
 
 # NumType documentation
@@ -13,9 +13,10 @@ routines for fast operations on arrays, including mathematical, logical, shape
 manipulation, sorting, selecting, I/O, discrete Fourier transforms, basic linear
 algebra, basic statistical operations, random simulation and much more.
 
+<!-- dprint-ignore-start -->
 <div class="grid cards" markdown>
 
-- :material-book-open-variant:{ .lg .middle } &nbsp; __User guide__
+- :material-book-open-variant:{ .lg .middle } &nbsp; **User guide**
 
     ---
 
@@ -24,7 +25,7 @@ algebra, basic statistical operations, random simulation and much more.
 
     [:octicons-arrow-right-24: To the user guide](user/index.md)
 
-- :material-code-brackets:{ .lg .middle } &nbsp; __API reference__
+- :material-code-brackets:{ .lg .middle } &nbsp; **API reference**
 
     ---
 
@@ -43,3 +44,4 @@ algebra, basic statistical operations, random simulation and much more.
     [:octicons-arrow-right-24: To the contributor's guide](dev/index.md)
 
 </div>
+<!-- dprint-ignore-end -->

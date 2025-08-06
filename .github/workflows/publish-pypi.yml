@@ -16,12 +16,12 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - name: setup uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          python-version: "3.13"
-      - name: uv build
-        run: uv build
-      - name: publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+    - uses: actions/checkout@v4
+    - name: setup uv
+      uses: astral-sh/setup-uv@v6
+      with:
+        python-version: "3.13"
+    - name: uv build
+      run: uv build
+    - name: publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1

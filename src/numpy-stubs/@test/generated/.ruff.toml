@@ -3,7 +3,7 @@ line-length = 120
 
 [lint]
 extend-ignore = [
-    "B018",    # flake8-bugbear  useless-expression
-    "PLR0124", # pylint/R:       comparison-with-itself
-    "PLC2801", # pylint/C:       unnecessary-dunder-call
+  "B018", # flake8-bugbear  useless-expression
+  "PLR0124", # pylint/R:       comparison-with-itself
+  "PLC2801", # pylint/C:       unnecessary-dunder-call
 ]

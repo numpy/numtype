@@ -3,8 +3,8 @@ line-length = 120
 
 [lint]
 extend-ignore = [
-    "A",       # flake8-builtins
-    "ANN401",  # flake8-annotations: any-type
-    "SLF001",  # flake8-self:        private-member-access
-    "PLR2044", # pylint/R:           empty-comment
+  "A", # flake8-builtins
+  "ANN401", # flake8-annotations: any-type
+  "SLF001", # flake8-self:        private-member-access
+  "PLR2044", # pylint/R:           empty-comment
 ]

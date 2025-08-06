@@ -1,4 +1,3 @@
-
 # Style Guide
 
 ## `TypeVar` names

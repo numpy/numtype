@@ -2,6 +2,6 @@ extend = "../.ruff.toml"
 
 [lint]
 extend-ignore = [
-    "D",    # pydocstyle
-    "S101", # flake8-bandit: assert
+  "D", # pydocstyle
+  "S101", # flake8-bandit: assert
 ]

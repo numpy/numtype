@@ -4,11 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - "docs/**"
-      - ".github/workflows/docs.yml"
-      - "CONTRIBUTING.md"
-      - "mkdocs.yml"
-      - "uv.lock"
+    - "docs/**"
+    - ".github/workflows/docs.yml"
+    - "CONTRIBUTING.md"
+    - "mkdocs.yml"
+    - "uv.lock"
 
 permissions:
   contents: write
@@ -20,16 +20,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Configure Git Credentials
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+    - name: Configure Git Credentials
+      run: |
+        git config user.name github-actions[bot]
+        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
-      - uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
+    - uses: astral-sh/setup-uv@v6
 
-      - name: mkdocs gh-deploy
-        run: uv run --only-group=docs mkdocs gh-deploy --force
+    - name: mkdocs gh-deploy
+      run: uv run --only-group=docs mkdocs gh-deploy --force

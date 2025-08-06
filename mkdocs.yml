@@ -12,87 +12,87 @@ repo_name: numpy/numtype
 edit_uri: blob/main/docs/
 
 plugins:
-  # https://github.com/mkdocstrings/autorefs
-  - autorefs:
-      resolve_closest: true
+# https://github.com/mkdocstrings/autorefs
+- autorefs:
+    resolve_closest: true
 
-  # https://lukasgeiter.github.io/mkdocs-awesome-nav/
-  - awesome-nav:
-      filename: .nav.yml
+# https://lukasgeiter.github.io/mkdocs-awesome-nav/
+- awesome-nav:
+    filename: .nav.yml
 
-  # https://github.com/mondeja/mkdocs-include-markdown-plugin
-  - include-markdown:
+# https://github.com/mondeja/mkdocs-include-markdown-plugin
+- include-markdown:
 
-  # https://github.com/byrnereese/mkdocs-minify-plugin
-  - minify:
-      minify_html: true
-      enabled: !ENV [CI, false]
+# https://github.com/byrnereese/mkdocs-minify-plugin
+- minify:
+    minify_html: true
+    enabled: !ENV [CI, false]
 
-  # https://github.com/mkdocstrings/mkdocstrings
-  # https://github.com/mkdocstrings/python
-  - mkdocstrings:
-      handlers:
-        python:
-          inventories:
-            - url: https://docs.python.org/3/objects.inv
-            - url: https://numpy.org/doc/stable/objects.inv
-            - url: https://docs.scipy.org/doc/scipy/objects.inv
-          options:
-            docstring_section_style: list
-            members_order: source
-            show_root_heading: true
-            show_source: false
-            show_signature_annotations: true
+# https://github.com/mkdocstrings/mkdocstrings
+# https://github.com/mkdocstrings/python
+- mkdocstrings:
+    handlers:
+      python:
+        inventories:
+        - url: https://docs.python.org/3/objects.inv
+        - url: https://numpy.org/doc/stable/objects.inv
+        - url: https://docs.scipy.org/doc/scipy/objects.inv
+        options:
+          docstring_section_style: list
+          members_order: source
+          show_root_heading: true
+          show_source: false
+          show_signature_annotations: true
 
-  # https://squidfunk.github.io/mkdocs-material/plugins/privacy/
-  - privacy:
-      enabled: !ENV [CI, false]
+# https://squidfunk.github.io/mkdocs-material/plugins/privacy/
+- privacy:
+    enabled: !ENV [CI, false]
 
-  # https://squidfunk.github.io/mkdocs-material/plugins/search/
-  - search
+# https://squidfunk.github.io/mkdocs-material/plugins/search/
+- search
 
 markdown_extensions:
-  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
-  - abbr
-  - attr_list
-  - def_list
-  - footnotes
-  - md_in_html
-  - toc:
-      permalink: "#"
+# https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/
+- abbr
+- attr_list
+- def_list
+- footnotes
+- md_in_html
+- toc:
+    permalink: "#"
 
-  # https://github.com/oprypin/markdown-callouts
-  - callouts
+# https://github.com/oprypin/markdown-callouts
+- callouts
 
-  # https://facelessuser.github.io/pymdown-extensions/extensions/betterem/
-  - pymdownx.betterem:
-      smart_enable: asterisk
+# https://facelessuser.github.io/pymdown-extensions/extensions/betterem/
+- pymdownx.betterem:
+    smart_enable: asterisk
 
-  - pymdownx.blocks.tab:
-      alternate_style: true
+- pymdownx.blocks.tab:
+    alternate_style: true
 
-  # https://facelessuser.github.io/pymdown-extensions/extensions/emoji/
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+# https://facelessuser.github.io/pymdown-extensions/extensions/emoji/
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
-  # https://facelessuser.github.io/pymdown-extensions/extensions/highlight/
-  - pymdownx.highlight:
-      anchor_linenums: true
-      use_pygments: true
-  - pymdownx.inlinehilite
-  - pymdownx.superfences
+# https://facelessuser.github.io/pymdown-extensions/extensions/highlight/
+- pymdownx.highlight:
+    anchor_linenums: true
+    use_pygments: true
+- pymdownx.inlinehilite
+- pymdownx.superfences
 
-  # https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/
-  - pymdownx.magiclink:
-      repo_url_shortener: true
-      repo_url_shorthand: true
-      provider: github
-      user: numpy
-      repo: numtype
+# https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/
+- pymdownx.magiclink:
+    repo_url_shortener: true
+    repo_url_shorthand: true
+    provider: github
+    user: numpy
+    repo: numtype
 
-  # https://facelessuser.github.io/pymdown-extensions/extensions/saneheaders/
-  - pymdownx.saneheaders:
+# https://facelessuser.github.io/pymdown-extensions/extensions/saneheaders/
+- pymdownx.saneheaders:
 
 theme:
   name: material
@@ -101,42 +101,42 @@ theme:
   logo: theme/img/icon.svg
 
   features:
-    - content.tabs.link
-    - content.tooltips
-    - navigation.path
-    - navigation.indexes
-    - navigation.prune
-    - navigation.sections
-    - navigation.tabs
-    - navigation.top
-    - navigation.tracking
-    - search.highlight
-    - search.share
-    - search.suggest
-    - toc.follow
+  - content.tabs.link
+  - content.tooltips
+  - navigation.path
+  - navigation.indexes
+  - navigation.prune
+  - navigation.sections
+  - navigation.tabs
+  - navigation.top
+  - navigation.tracking
+  - search.highlight
+  - search.share
+  - search.suggest
+  - toc.follow
 
   palette:
-    - media: "(prefers-color-scheme)"
-      toggle:
-        icon: fontawesome/solid/circle-half-stroke
-        name: Switch to light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: custom
-      toggle:
-        icon: fontawesome/regular/moon
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: custom
-      toggle:
-        icon: fontawesome/regular/sun
-        name: Switch to system preference
+  - media: "(prefers-color-scheme)"
+    toggle:
+      icon: fontawesome/solid/circle-half-stroke
+      name: Switch to light mode
+  - media: "(prefers-color-scheme: light)"
+    scheme: default
+    primary: custom
+    toggle:
+      icon: fontawesome/regular/moon
+      name: Switch to dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    primary: custom
+    toggle:
+      icon: fontawesome/regular/sun
+      name: Switch to system preference
 
 extra_css:
-  - theme/style/color.css
-  - theme/style/font.css
-  - theme/style/overrides.css
-  - theme/style/theme.css
+- theme/style/color.css
+- theme/style/font.css
+- theme/style/overrides.css
+- theme/style/theme.css
 
 copyright: "&copy; Copyright 2025, NumPy Developers."

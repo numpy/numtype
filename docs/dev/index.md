@@ -173,7 +173,7 @@ See <https://tox.wiki/en/stable/> for more information.
 
 The documentation lives in `docs/`, the `README.md`, and `CONTRIBUTING.md`.
 Please read it carefully before proposing any changes.
-Ensure that the markdown is formatted correctly with [markdownlint].
+Ensure that the markdown is formatted correctly with [dprint][dprint].
 
 ### Previewing Documentation Site
 
@@ -215,7 +215,7 @@ See the [NumType style guide](style.md) for more.
 [basedpyright]: https://github.com/detachhead/basedpyright
 [gitmoji]: https://gitmoji.dev/
 [lefthook]: https://lefthook.dev/
-[markdownlint]: https://github.com/DavidAnson/markdownlint/tree/main
+[dprint]: https://dprint.dev/
 [mkdocs]: https://www.mkdocs.org/
 [mypy]: https://github.com/python/mypy
 [numpy-commit-style]: https://numpy.org/devdocs/dev/development_workflow.html#writing-the-commit-message

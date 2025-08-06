@@ -2,6 +2,6 @@ extend = "../.ruff.toml"
 
 [lint]
 extend-ignore = [
-    "PYI015", # flake8-pyi: assignment-default-in-stub
-    "PYI017", # flake8-pyi: complex-assignment-in-stub
+  "PYI015", # flake8-pyi: assignment-default-in-stub
+  "PYI017", # flake8-pyi: complex-assignment-in-stub
 ]
