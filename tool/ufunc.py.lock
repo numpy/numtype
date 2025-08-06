@@ -122,6 +122,7 @@ dev = [
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.0" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.17.1" },
     { name = "numtype", extras = ["numpy"] },
+    { name = "pydantic", marker = "python_full_version >= '3.14'", specifier = ">=2.12.0a1" },
     { name = "pygments", specifier = ">=2.19.2" },
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "ruff", specifier = ">=0.12.7" },
@@ -136,6 +137,7 @@ docs = [
     { name = "mkdocs-material", specifier = ">=9.6.16" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.0" },
+    { name = "pydantic", marker = "python_full_version >= '3.14'", specifier = ">=2.12.0a1" },
     { name = "pygments", specifier = ">=2.19.2" },
 ]
 lint = [{ name = "ruff", specifier = ">=0.12.7" }]

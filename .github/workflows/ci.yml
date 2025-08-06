@@ -55,19 +55,21 @@ jobs:
       - name: format-ignores
         run: uv run tool/format_ignores.py --check
 
+  # NOTE: Static typing only differs between `python<3.12` and otherwise,
+  # so there's no need to run the type-checkers on all Python versions.
+
   basedpyright:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
-        py: ["3.11", "3.12", "3.13", "3.14"]
+        py: ["3.11", "3.13"]
     steps:
       - uses: actions/checkout@v4.2.2
 
       - uses: astral-sh/setup-uv@v6.4.3
         with:
-          enable-cache: true
           python-version: ${{ matrix.py }}
 
       - name: basedpyright
@@ -79,7 +81,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        py: ["3.11", "3.12", "3.13", "3.14"]
+        py: ["3.11", "3.13"]
     steps:
       - uses: actions/checkout@v4.2.2
 
@@ -89,6 +91,8 @@ jobs:
 
       - name: mypy
         run: uv run --no-editable mypy --no-incremental --cache-dir=/dev/null .
+
+  # NOTE: Stubtest does runtime inspections, so we consider all Python versions.
 
   stubtest:
     runs-on: ${{ matrix.os }}

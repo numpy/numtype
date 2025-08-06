@@ -1,0 +1,5 @@
+# python 3.14.*
+
+numpy\.distutils
+numpy\.f2py\._backends\._distutils
+numpy\._core\._type_aliases\.__conditional_annotations__
