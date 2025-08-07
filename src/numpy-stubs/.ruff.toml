@@ -4,7 +4,9 @@ line-length = 120
 [lint]
 extend-ignore = [
   "A", # flake8-builtins
+  "N", # pep8-naming
   "ANN401", # flake8-annotations: any-type
   "SLF001", # flake8-self: private-member-access
-  "PLR2044", # pylint/R: empty-comment
+  "PLC2701", # pylint/convention: import-private-name
+  "PLR2044", # pylint/refactor: empty-comment
 ]

@@ -1,9 +1,9 @@
-extend = "../../../pyproject.toml"
+extend = "../.ruff.toml"
 line-length = 88
 
 [lint]
 extend-ignore = [
   "D", # pydocstyle
-  "FBT", # flake8-boolean-trap
+  "FBT003", # flake8-boolean-trap: boolean-positional-value-in-call
   "PYI054", # flake8-pyi: numeric-literal-too-long
 ]
