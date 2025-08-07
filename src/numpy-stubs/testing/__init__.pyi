@@ -1,4 +1,4 @@
-from unittest import TestCase as _TestCase
+from unittest import TestCase
 
 from . import overrides
 from ._private.utils import (
@@ -104,7 +104,3 @@ __all__ = [
     "temppath",
     "verbose",
 ]
-
-# workaround for incorrect typeshed definition
-class TestCase(_TestCase):
-    def __init_subclass__(cls, *args: object, **kwargs: object) -> None: ...
