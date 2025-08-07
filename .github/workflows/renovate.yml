@@ -1,4 +1,6 @@
 name: Renovate
+permissions:
+  contents: read
 
 on:
   schedule:
