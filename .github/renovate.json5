@@ -1,0 +1,12 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  lockFileMaintenance: {
+    enabled: true,
+  },
+  pep723: {
+    fileMatch: [
+      "tool/stubtest\\.py",
+      "tool/ufunc\\.py",
+    ],
+  },
+}
