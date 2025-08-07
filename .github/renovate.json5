@@ -3,10 +3,6 @@
   "extends": [
     "config:recommended"
   ],
-  "platform": "github",
-  "repositories": [
-    "numpy/numtype"
-  ],
   "lockFileMaintenance": {
     "enabled": true
   },
