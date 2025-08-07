@@ -1,6 +1,6 @@
 from typing import assert_type
 
-import _numtype as _nt
+import _numtype as _nt  # noqa: PLC2701
 
 # TODO: remove the `# type: ignore`s once python/mypy#19110 is fixed
 

@@ -1462,7 +1462,7 @@ random_st.randint(I_i8_high_open, dtype=np.int64)
 random_st.randint(I_i8_low, I_i8_high_open, dtype=np.int64)
 random_st.randint(-9223372036854775808, I_i8_high_open, dtype=np.int64)
 
-bg: np.random.BitGenerator = random_st._bit_generator  # noqa: SLF001
+bg: np.random.BitGenerator = random_st._bit_generator
 
 random_st.bytes(2)
 
