@@ -178,10 +178,7 @@ select = ["ALL"]
 ignore = ["CPY", "FIX002", "COM812"]
 
 [tool.ruff.lint.per-file-ignores]
-"*.pyi" = [
-  "TD", # flake8-todo
-  # "PLC2701", # pylint/convention: import-private-name
-]
+"*.pyi" = ["TD"]
 
 [tool.ruff.lint.flake8-builtins]
 builtins-allowed-modules = ["random"]
