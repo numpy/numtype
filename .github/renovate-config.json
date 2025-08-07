@@ -9,6 +9,6 @@
     "description": "lockFileMaintenance",
     "matchUpdateTypes": ["lockFileMaintenance", "pep723"],
     "dependencyDashboardApproval": false,
-    "minimumReleaseAge": 0
+    "minimumReleaseAge": "0"
   }]
 }
