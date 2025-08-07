@@ -90,6 +90,8 @@ dev = [
   { include-group = "docs" },
 ]
 
+# hatch
+
 [tool.hatch.build]
 exclude = [
   "**/@test",
@@ -105,6 +107,8 @@ skip-excluded-dirs = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
 
+# mypy
+
 [tool.mypy]
 mypy_path = "src"
 strict = true
@@ -114,6 +118,8 @@ allow_redefinition_new = true
 local_partial_types = true
 warn_incomplete_stub = true
 warn_unreachable = false
+
+# (based)pyright
 
 [tool.pyright]
 include = ["src", "tool"]
@@ -165,6 +171,8 @@ reportPrivateLocalImportUsage = true
 reportUnannotatedClassAttribute = false
 strictGenericNarrowing = true
 
+# ruff
+
 [tool.ruff]
 src = ["src", "tool"]
 extend-exclude = [".git", ".mypy_cache", ".tox", ".venv"]
@@ -182,10 +190,8 @@ ignore = ["CPY", "FIX002", "COM812"]
 
 [tool.ruff.lint.per-file-ignores]
 "*.pyi" = [
-  "N", # pep8-naming
   "TD", # flake8-todo
-  "COM812", # flake8-commas: missing-trailing-comma
-  "PLC2701", # pylint/convention: import-private-name
+  # "PLC2701", # pylint/convention: import-private-name
 ]
 
 [tool.ruff.lint.flake8-builtins]
@@ -224,6 +230,8 @@ convention = "numpy"
 [tool.ruff.lint.pylint]
 allow-dunder-method-names = ["__array__", "__array_ufunc__"]
 
+# pytest
+
 [tool.pytest.ini_options]
 minversion = "8.0"
 addopts = ["-ra", "--strict-config", "--strict-markers"]
@@ -231,9 +239,10 @@ filterwarnings = ["error"]
 log_cli_level = "INFO"
 xfail_strict = true
 
-# install tox with `uv tool install tox --with tox-uv --upgrade`
-# and run with `uvx tox p`
+# tox
+
 [tool.tox]
+# install with `uv tool install tox --with tox-uv --upgrade` and run with `uvx tox p`
 min_version = "4"
 requires = ["tox-uv>=1"]
 env_list = [
@@ -294,6 +303,8 @@ commands = [
     { replace = "posargs", default = ["."], extend = true },
   ],
 ]
+
+# typos
 
 [tool.typos]
 

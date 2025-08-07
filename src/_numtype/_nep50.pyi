@@ -6,7 +6,7 @@ from typing import Any, Protocol, TypeAlias, type_check_only
 from typing_extensions import TypeAliasType, TypeVar
 
 import numpy as np
-from numpy._typing import _NestedSequence
+from numpy._typing import _NestedSequence  # noqa: PLC2701
 
 from . import _shape
 from ._rank import Rank0

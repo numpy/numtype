@@ -9,7 +9,7 @@ from typing import Any, TypeAlias, type_check_only
 from typing_extensions import Protocol, TypeAliasType, TypeVar
 
 import numpy as np
-from numpy._typing import _NestedSequence
+from numpy._typing import _NestedSequence  # noqa: PLC2701
 
 from . import op as op
 from ._array import (

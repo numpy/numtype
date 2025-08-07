@@ -1,3 +1,5 @@
+# ruff: noqa: PLC2701
+
 import ctypes as ct
 from typing import Any, TypeAlias, type_check_only
 from typing_extensions import Protocol, TypeAliasType, TypeVar
