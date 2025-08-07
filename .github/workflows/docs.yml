@@ -9,6 +9,9 @@ on:
     - "CONTRIBUTING.md"
     - "mkdocs.yml"
     - "uv.lock"
+  release:
+    types: [released]
+  workflow_dispatch:
 
 permissions:
   contents: write
