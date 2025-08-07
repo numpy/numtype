@@ -1,12 +1,15 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  lockFileMaintenance: {
-    enabled: true,
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:recommended",
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
   },
-  pep723: {
-    fileMatch: [
-      "tool/stubtest\\.py",
-      "tool/ufunc\\.py",
-    ],
-  },
+  "pep723": {
+    "managerFilePatterns": [
+      "/tool/stubtest\\.py/",
+      "/tool/ufunc\\.py/"
+    ]
+  }
 }
