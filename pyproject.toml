@@ -1,6 +1,11 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.8"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = ["numpy-stubs", "_numtype", "numtype"]
+module-root = "src"
+source-exclude = ['\@test', ".ruff_cache", ".ruff.toml"]
 
 [project]
 name = "numtype"
@@ -10,6 +15,7 @@ readme = "README.md"
 authors = [{ name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com" }]
 maintainers = [{ name = "NumPy Developers", email = "numpy-discussion@python.org" }]
 license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 keywords = ["numpy", "typing", "stubs"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -89,23 +95,6 @@ dev = [
   { include-group = "typecheck" },
   { include-group = "docs" },
 ]
-
-# hatch
-
-[tool.hatch.build]
-exclude = [
-  "**/@test",
-  "**/*.yml",
-  "**/.*",
-  "/docs",
-  "/tool",
-  "CONTRIBUTING.md",
-  "uv.lock",
-]
-skip-excluded-dirs = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/_numtype", "src/numtype", "src/numpy-stubs"]
 
 # mypy
 
