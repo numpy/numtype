@@ -14,15 +14,4 @@ updates:
     actions:
       patterns: ["*"]
 
-- package-ecosystem: uv
-  directory: /
-  schedule:
-    interval: daily
-  labels:
-  - "topic: dependencies"
-  - "tool: uv"
-  commit-message:
-    prefix: "⬆️ "
-  groups:
-    actions:
-      patterns: ["*"]
+# Renovate takes care of uv
