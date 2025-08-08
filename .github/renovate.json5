@@ -9,12 +9,14 @@
     "pep723"
   ],
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": true,
+    "schedule": ["* 9-23 * * 1-6"]
   },
   "pep723": {
     "managerFilePatterns": [
       "/tool/stubtest\\.py/",
       "/tool/ufunc\\.py/"
     ]
-  }
+  },
+  "commitMessagePrefix": "👾"
 }
