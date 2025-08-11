@@ -611,6 +611,8 @@ _AnyShapeT = TypeVar(
     _nt.Shape1N,
     _nt.Shape0N,
 )
+_AnyItemT = TypeVar("_AnyItemT", bool, int, float, complex, bytes, str, dt.datetime, dt.date, dt.timedelta)
+_AnyNumberItemT = TypeVar("_AnyNumberItemT", int, float, complex)
 
 ###
 # Type parameters (for internal use only)
@@ -654,7 +656,6 @@ _CharDTypeT = TypeVar("_CharDTypeT", bound=dtype[character])
 
 _ItemT_co = TypeVar("_ItemT_co", default=Any, covariant=True)
 _BoolItemT_co = TypeVar("_BoolItemT_co", bound=py_bool, default=py_bool, covariant=True)
-_NumberItemT = TypeVar("_NumberItemT", bound=complex)
 _NumberItemT_co = TypeVar("_NumberItemT_co", bound=complex, default=Any, covariant=True)
 _InexactItemT_co = TypeVar("_InexactItemT_co", bound=complex, default=Any, covariant=True)
 _FlexItemT_co = TypeVar(
@@ -1932,7 +1933,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __add__(self: _nt.StringArrayND[_T], x: _nt.ToString_nd[_T] | _nt.ToStr_nd, /) -> _nt.StringArrayND[_T]: ...
     @overload
-    def __add__(self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRAdd[_T]], /) -> _nt.Array[Incomplete]: ...
+    def __add__(
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanRAdd[_AnyItemT]], /
+    ) -> _nt.Array[Incomplete]: ...
 
     #
     @overload
@@ -1958,7 +1961,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __radd__(self: _nt.StringArrayND[_T], x: _nt.ToString_nd[_T] | _nt.ToStr_nd, /) -> _nt.StringArrayND[_T]: ...
     @overload
-    def __radd__(self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanAdd[_T]], /) -> _nt.Array[Incomplete]: ...
+    def __radd__(
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanAdd[_AnyItemT]], /
+    ) -> _nt.Array[Incomplete]: ...
 
     #
     @overload  # type: ignore[misc]
@@ -1981,7 +1986,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __iadd__(
-        self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRAdd[_T, _T]], /
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanRAdd[_AnyItemT, _AnyItemT]], /
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
 
     #
@@ -2005,7 +2010,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __sub__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
     @overload
     def __sub__(
-        self: _nt.Array[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRSub[_NumberItemT]], /
+        self: _nt.Array[generic[_AnyNumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRSub[_AnyNumberItemT]], /
     ) -> _nt.Array[Incomplete]: ...
 
     #
@@ -2029,7 +2034,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __rsub__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
     @overload
     def __rsub__(
-        self: _nt.Array[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanSub[_NumberItemT]], /
+        self: _nt.Array[generic[_AnyNumberItemT]], x: _nt.Sequence1ND[_nt.op.CanSub[_AnyNumberItemT]], /
     ) -> _nt.Array[Incomplete]: ...
 
     #
@@ -2047,7 +2052,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __isub__(self: _nt.Array[object_], x: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __isub__(
-        self: _nt.Array[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRSub[_T, _T]], /
+        self: _nt.Array[generic[_AnyNumberItemT]],
+        x: _nt.Sequence1ND[_nt.op.CanRSub[_AnyNumberItemT, _AnyNumberItemT]],
+        /,
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
 
     #
@@ -2072,7 +2079,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __mul__(self: _nt.StringArrayND[_T], x: _nt.ToInteger_nd, /) -> _nt.StringArrayND[_T]: ...
     @overload
-    def __mul__(self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRMul[_T]], /) -> _nt.Array[Incomplete]: ...
+    def __mul__(
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanRMul[_AnyItemT]], /
+    ) -> _nt.Array[Incomplete]: ...
 
     #
     @overload
@@ -2096,7 +2105,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rmul__(self: _nt.StringArrayND[_T], x: _nt.ToInteger_nd, /) -> _nt.StringArrayND[_T]: ...
     @overload
-    def __rmul__(self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanMul[_T]], /) -> _nt.Array[Incomplete]: ...
+    def __rmul__(
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanMul[_AnyItemT]], /
+    ) -> _nt.Array[Incomplete]: ...
 
     #
     @overload  # type: ignore[misc]
@@ -2117,7 +2128,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __imul__(self: _nt.StringArrayND[_T], x: _nt.ToInteger_nd, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __imul__(
-        self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRMul[_T, _T]], /
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanRMul[_AnyItemT, _AnyItemT]], /
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
 
     # TODO(jorenham): Support the "1d @ 1d -> scalar" case
@@ -2267,7 +2278,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> _nt.Array[timedelta64]: ...
     @overload
     def __truediv__(
-        self: _nt.Array[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRTruediv[_NumberItemT]], /
+        self: _nt.Array[generic[_AnyNumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRTruediv[_AnyNumberItemT]], /
     ) -> _nt.Array[Incomplete]: ...
     @overload
     def __truediv__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
@@ -2293,7 +2304,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __rtruediv__(self: _nt.Array[integer | floating], x: _nt.ToTimeDelta_nd, /) -> _nt.Array[timedelta64]: ...
     @overload
     def __rtruediv__(
-        self: _nt.Array[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanTruediv[_NumberItemT]], /
+        self: _nt.Array[generic[_AnyNumberItemT]], x: _nt.Sequence1ND[_nt.op.CanTruediv[_AnyNumberItemT]], /
     ) -> _nt.Array[Incomplete]: ...
     @overload
     def __rtruediv__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
@@ -2311,7 +2322,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __itruediv__(
-        self: _nt.Array[generic[_NumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRTruediv[_NumberItemT, _NumberItemT]], /
+        self: _nt.Array[generic[_AnyNumberItemT]],
+        x: _nt.Sequence1ND[_nt.op.CanRTruediv[_AnyNumberItemT, _AnyNumberItemT]],
+        /,
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __itruediv__(self: _nt.Array[object_], x: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
@@ -2339,7 +2352,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> _nt.Array[timedelta64]: ...
     @overload
     def __floordiv__(
-        self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRFloordiv[_T]], /
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanRFloordiv[_AnyItemT]], /
     ) -> _nt.Array[Incomplete]: ...
     @overload
     def __floordiv__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
@@ -2365,7 +2378,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __rfloordiv__(self: _nt.Array[integer | floating], x: _nt.ToTimeDelta_nd, /) -> _nt.Array[timedelta64]: ...
     @overload
     def __rfloordiv__(
-        self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanFloordiv[_T]], /
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanFloordiv[_AnyItemT]], /
     ) -> _nt.Array[Incomplete]: ...
     @overload
     def __rfloordiv__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
@@ -2385,7 +2398,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __ifloordiv__(
-        self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRFloordiv[_T, _T]], /
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanRFloordiv[_AnyItemT, _AnyItemT]], /
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __ifloordiv__(self: _nt.Array[object_], x: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
@@ -2408,7 +2421,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __mod__(self: _nt.Array[timedelta64], x: _nt.ToTimeDelta_nd, /) -> _nt.Array[timedelta64]: ...
     @overload
-    def __mod__(self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRMod[_T]], /) -> _nt.Array[Incomplete]: ...
+    def __mod__(
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanRMod[_AnyItemT]], /
+    ) -> _nt.Array[Incomplete]: ...
     @overload
     def __mod__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
 
@@ -2430,7 +2445,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rmod__(self: _nt.Array[timedelta64], x: _nt.ToTimeDelta_nd, /) -> _nt.Array[timedelta64]: ...
     @overload
-    def __rmod__(self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanMod[_T]], /) -> _nt.Array[Incomplete]: ...
+    def __rmod__(
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanMod[_AnyItemT]], /
+    ) -> _nt.Array[Incomplete]: ...
     @overload
     def __rmod__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
 
@@ -2445,7 +2462,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __imod__(self: _nt.Array[timedelta64], x: _nt.ToTimeDelta_nd, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __imod__(
-        self: _nt.Array[generic[_T]], x: _nt.Sequence1ND[_nt.op.CanRMod[_T, _T]], /
+        self: _nt.Array[generic[_AnyItemT]], x: _nt.Sequence1ND[_nt.op.CanRMod[_AnyItemT, _AnyItemT]], /
     ) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
     @overload
     def __imod__(self: _nt.Array[object_], x: object, /) -> ndarray[_ShapeT_co, _DTypeT_co]: ...
