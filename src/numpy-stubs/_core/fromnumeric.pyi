@@ -674,7 +674,7 @@ def sum(
 #
 @overload  # workaround for microsoft/pyright#10232
 def all(
-    a: _nt._ToArray_nnd[Any],
+    a: _nt._ToArray_nnd[Any] | None,
     axis: None = None,
     out: None = None,
     keepdims: _Option[L[False, 0]] = ...,
@@ -683,7 +683,7 @@ def all(
 ) -> np.bool: ...
 @overload
 def all(
-    a: ArrayLike,
+    a: ArrayLike | None,
     axis: None = None,
     out: None = None,
     keepdims: _Option[L[False, 0]] = ...,
@@ -701,7 +701,7 @@ def all(
 ) -> np.bool | _nt.Array[np.bool]: ...
 @overload
 def all(
-    a: _nt.ToGeneric_1ds,
+    a: _nt.ToGeneric_1ds | None,
     axis: int | None = None,
     out: None = None,
     keepdims: _Option[L[False, 0]] = ...,
@@ -728,7 +728,7 @@ def all(
 ) -> _nt.Array[np.bool]: ...
 @overload
 def all(
-    a: ArrayLike,
+    a: ArrayLike | None,
     axis: int | tuple[int, ...] | None = None,
     out: None = None,
     keepdims: _Option[_nt.ToBool_0d] = ...,
@@ -737,7 +737,7 @@ def all(
 ) -> np.bool | _nt.Array[np.bool]: ...
 @overload
 def all(
-    a: ArrayLike,
+    a: ArrayLike | None,
     axis: int | tuple[int, ...] | None,
     out: _ArrayT,
     keepdims: _Option[_nt.ToBool_0d] = ...,
@@ -746,7 +746,7 @@ def all(
 ) -> _ArrayT: ...
 @overload
 def all(
-    a: ArrayLike,
+    a: ArrayLike | None,
     axis: int | tuple[int, ...] | None = None,
     *,
     out: _ArrayT,
@@ -757,7 +757,7 @@ def all(
 # keep in sync with `all`
 @overload  # workaround for microsoft/pyright#10232
 def any(
-    a: _nt._ToArray_nnd[Any],
+    a: _nt._ToArray_nnd[Any] | None,
     axis: None = None,
     out: None = None,
     keepdims: _Option[L[False, 0]] = ...,
@@ -766,7 +766,7 @@ def any(
 ) -> np.bool: ...
 @overload
 def any(
-    a: ArrayLike,
+    a: ArrayLike | None,
     axis: None = None,
     out: None = None,
     keepdims: _Option[L[False, 0]] = ...,
@@ -784,7 +784,7 @@ def any(
 ) -> np.bool | _nt.Array[np.bool]: ...
 @overload
 def any(
-    a: _nt.ToGeneric_1ds,
+    a: _nt.ToGeneric_1ds | None,
     axis: int | None = None,
     out: None = None,
     keepdims: _Option[L[False, 0]] = ...,
@@ -811,7 +811,7 @@ def any(
 ) -> _nt.Array[np.bool]: ...
 @overload
 def any(
-    a: ArrayLike,
+    a: ArrayLike | None,
     axis: int | tuple[int, ...] | None = None,
     out: None = None,
     keepdims: _Option[_nt.ToBool_0d] = ...,
@@ -820,7 +820,7 @@ def any(
 ) -> np.bool | _nt.Array[np.bool]: ...
 @overload
 def any(
-    a: ArrayLike,
+    a: ArrayLike | None,
     axis: int | tuple[int, ...] | None,
     out: _ArrayT,
     keepdims: _Option[_nt.ToBool_0d] = ...,
@@ -829,7 +829,7 @@ def any(
 ) -> _ArrayT: ...
 @overload
 def any(
-    a: ArrayLike,
+    a: ArrayLike | None,
     axis: int | tuple[int, ...] | None = None,
     *,
     out: _ArrayT,
