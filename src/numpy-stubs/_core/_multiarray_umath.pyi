@@ -1387,14 +1387,14 @@ def unravel_index(
 #
 @overload
 def ravel_multi_index(
-    multi_index: Sequence[_ToInt],
+    multi_index: SupportsLenAndGetItem[_ToInt],
     dims: _ShapeLike,
     mode: _ModeKind | tuple[_ModeKind, ...] = "raise",
     order: _OrderCF = "C",
 ) -> np.intp: ...
 @overload
 def ravel_multi_index(
-    multi_index: Sequence[_nt.ToInteger_1nd],
+    multi_index: SupportsLenAndGetItem[_nt.ToInteger_1nd],
     dims: _ShapeLike,
     mode: _ModeKind | tuple[_ModeKind, ...] = "raise",
     order: _OrderCF = "C",
