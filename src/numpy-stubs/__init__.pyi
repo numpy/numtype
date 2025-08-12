@@ -335,7 +335,7 @@ from ._core.umath import (
     vecmat,
 )
 from ._expired_attrs_2_0 import __expired_attributes__ as __expired_attributes__
-from ._globals import _CopyMode
+from ._globals import _CopyMode as _CopyMode, _NoValue as _NoValue
 from ._pytesttester import PytestTester
 from ._typing import (
     ArrayLike,
