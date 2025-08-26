@@ -51,12 +51,12 @@ Changelog = "https://github.com/numpy/numtype/releases"
 numpy = ["numtype[numpy]"]
 lint = [
   "dprint-py>=0.50.1.4",
-  "ruff>=0.12.7",
+  "ruff>=0.12.10",
 ]
 pytest = [
   { include-group = "numpy" },
   "pytest>=8.4.1",
-  "typing_extensions>=4.14.1",
+  "typing_extensions>=4.15.0",
 ]
 list_and_test = [
   { include-group = "lint" },
@@ -64,13 +64,13 @@ list_and_test = [
 ]
 types = [
   { include-group = "pytest" },
-  "types-setuptools>=80.9.0.20250801",
+  "types-setuptools>=80.9.0.20250822",
   "types-tabulate>=0.9.0.20241207",
 ]
 basedpyright = [
   { include-group = "numpy" },
   { include-group = "types" },
-  "basedpyright>=1.31.1",
+  "basedpyright>=1.31.3",
 ]
 mypy = [
   { include-group = "types" },
@@ -81,7 +81,7 @@ typecheck = [
   { include-group = "mypy" },
 ]
 docs = [
-  "mkdocs-material>=9.6.16",
+  "mkdocs-material>=9.6.18",
   "pydantic>=2.12.0a1; python_version >= '3.14'", # needed for mkdocs-awesome-nav
   "mkdocs-awesome-nav>=3.1.2",
   "markdown-callouts>=0.4.0",
