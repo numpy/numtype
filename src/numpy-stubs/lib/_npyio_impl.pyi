@@ -96,6 +96,7 @@ class NpzFile(Mapping[str, _nt.Array[_ScalarT_co]]):
     def __getitem__(self, key: str, /) -> _nt.Array[_ScalarT_co]: ...
 
     #
+    @override
     @overload
     def get(self, key: str, default: None = None, /) -> _nt.Array[_ScalarT_co] | None: ...
     @overload

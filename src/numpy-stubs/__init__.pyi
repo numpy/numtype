@@ -1,6 +1,3 @@
-# mypy: disable-error-code=override
-# ^ there are >100 false positives; we'll just rely on pyright
-
 import ctypes as ct
 import datetime as dt
 import sys
@@ -1719,7 +1716,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def strides(self, value: tuple[int, ...], /) -> None: ...
 
     #
-    @property
+    @property  # type: ignore[explicit-override]
     @override
     def real(self: _HasDTypeWithReal[_ScalarT], /) -> _nt.Array[_ScalarT, _ShapeT_co]: ...
     @real.setter
@@ -1727,7 +1724,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def real(self, value: ArrayLike, /) -> None: ...
 
     #
-    @property
+    @property  # type: ignore[explicit-override]
     @override
     def imag(self: _HasDTypeWithImag[_ScalarT], /) -> _nt.Array[_ScalarT, _ShapeT_co]: ...
     @imag.setter
@@ -1842,12 +1839,14 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __iter__(self, /) -> Iterator[Any]: ...
 
     #
+    @override  # type: ignore[override]
     @overload
     def __eq__(self, other: _ScalarLike_co | ndarray[_ShapeT_co], /) -> _nt.Array[bool_, _ShapeT_co]: ...
     @overload
     def __eq__(self, other: object, /) -> _nt.Array[bool_]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
+    @override  # type: ignore[override]
     @overload
     def __ne__(self, other: _ScalarLike_co | ndarray[_ShapeT_co], /) -> _nt.Array[bool_, _ShapeT_co]: ...
     @overload
@@ -2710,6 +2709,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def item(self: _HasDTypeWithItem[_T], /, *args: CanIndex) -> _T: ...
 
     #
+    @override
     @overload  # workaround for python/mypy#19110
     def tolist(self: _HasShapeAndItem[_nt.Rank0, _T], /) -> _T: ...  # type: ignore[overload-overlap]
     @overload  # workaround for microsoft/pyright#10232
@@ -3210,6 +3210,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def flat(self) -> flatiter[_nt.Array1D[Self]]: ...
 
     #
+    @override
     @overload
     def __eq__(self, other: _nt.ToGeneric_0d, /) -> bool_: ...
     @overload
@@ -3220,6 +3221,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def __eq__(self, other: object, /) -> Any: ...
 
     #
+    @override
     @overload
     def __ne__(self, other: _nt.ToGeneric_0d, /) -> bool_: ...
     @overload
@@ -3523,7 +3525,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     #
     @property
     @override
-    def dtype(self) -> dtypes.BoolDType: ...
+    def dtype(self) -> dtypes.BoolDType: ...  # type: ignore[override]
     @property
     @override
     def itemsize(self) -> L[1]: ...
@@ -3546,6 +3548,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __int__(self, /) -> L[0, 1]: ...
 
     #
+    @override  # type: ignore[override]
     @overload
     def __eq__(self: _Bool0, other: _ToFalse, /) -> _Bool1: ...
     @overload
@@ -3562,6 +3565,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     def __eq__(self, other: object, /) -> Any: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
+    @override  # type: ignore[override]
     @overload
     def __ne__(self: _Bool0, other: _ToTrue, /) -> _Bool1: ...
     @overload
@@ -4100,13 +4104,16 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __invert__(self, /) -> Self: ...
 
     #
+    @override  # type: ignore[override]
     @overload
     def __truediv__(self, x: _nt.CoInteger_0d | float, /) -> float64: ...
     @overload
     def __truediv__(self, x: _nt.JustComplex, /) -> complex128: ...
     @overload
     def __truediv__(self, x: _nt.CastsWithScalar[Self, _InexactT], /) -> _InexactT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
     #
+    @override  # type: ignore[override]
     @overload
     def __rtruediv__(self, x: _nt.CoInteger_0d | float, /) -> float64: ...
     @overload
@@ -4121,6 +4128,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __floordiv__(self, x: _nt.CastsWithScalar[Self, _RealScalarT], /) -> _RealScalarT: ...
     @overload
     def __floordiv__(self: _nt.CastsWithFloat[_InexactT], x: _nt.JustFloat, /) -> _InexactT: ...
+
     #
     @overload
     def __rfloordiv__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
@@ -4136,6 +4144,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __mod__(self, x: _nt.CastsWithScalar[Self, _RealScalarT], /) -> _RealScalarT: ...
     @overload
     def __mod__(self: _nt.CastsWithFloat[_InexactT], x: _nt.JustFloat, /) -> _InexactT: ...
+
     #
     @overload
     def __rmod__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
@@ -4151,6 +4160,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __divmod__(self, x: _nt.CastsWithScalar[Self, _RealScalarT], /) -> _Tuple2[_RealScalarT]: ...
     @overload
     def __divmod__(self: _nt.CastsWithFloat[_InexactT], x: _nt.JustFloat, /) -> _Tuple2[_InexactT]: ...
+
     #
     @overload
     def __rdivmod__(self, x: _nt.CastsScalar[Self] | int, /) -> _Tuple2[Self]: ...
@@ -4164,6 +4174,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __lshift__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
     @overload
     def __lshift__(self, x: _nt.CastsWithScalar[Self, _IntegralT], /) -> _IntegralT: ...
+
     #
     @overload
     def __rlshift__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
@@ -4175,6 +4186,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __rshift__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
     @overload
     def __rshift__(self, x: _nt.CastsWithScalar[Self, _IntegralT], /) -> _IntegralT: ...
+
     #
     @overload
     def __rrshift__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
@@ -4186,6 +4198,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __and__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
     @overload
     def __and__(self, x: _nt.CastsWithScalar[Self, _IntegralT], /) -> _IntegralT: ...
+
     #
     @overload
     def __rand__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
@@ -4197,6 +4210,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __xor__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
     @overload
     def __xor__(self, x: _nt.CastsWithScalar[Self, _IntegralT], /) -> _IntegralT: ...
+
     #
     @overload
     def __rxor__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
@@ -4208,6 +4222,7 @@ class integer(_IntegralMixin, _RoundMixin, number[int]):
     def __or__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
     @overload
     def __or__(self, x: _nt.CastsWithScalar[Self, _IntegralT], /) -> _IntegralT: ...
+
     #
     @overload
     def __ror__(self, x: _nt.CastsScalar[Self] | int, /) -> Self: ...
@@ -4525,13 +4540,16 @@ class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
     def __abs__(self, /) -> floating: ...
 
     #
+    @override  # type: ignore[override]
     @overload
     def __truediv__(self, x: int | _nt.JustFloat | _nt.CastsScalar[Self], /) -> Self: ...
     @overload
     def __truediv__(self, x: _nt.CastsWithScalar[Self, _InexactT], /) -> _InexactT: ...
     @overload
     def __truediv__(self: _nt.CastsWithComplex[_ComplexFloatT], x: _nt.JustComplex, /) -> _ComplexFloatT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
     #
+    @override  # type: ignore[override]
     @overload
     def __rtruediv__(self, x: int | _nt.JustFloat | _nt.CastsScalar[Self], /) -> Self: ...
     @overload
@@ -4556,6 +4574,7 @@ class floating(_RealMixin, _RoundMixin, inexact[float]):
     def __floordiv__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> Self: ...
     @overload
     def __floordiv__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _FloatingT: ...
+
     #
     @overload
     def __rfloordiv__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> Self: ...
@@ -4567,6 +4586,7 @@ class floating(_RealMixin, _RoundMixin, inexact[float]):
     def __mod__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> Self: ...
     @overload
     def __mod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _FloatingT: ...
+
     #
     @overload
     def __rmod__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> Self: ...
@@ -4578,6 +4598,7 @@ class floating(_RealMixin, _RoundMixin, inexact[float]):
     def __divmod__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> _Tuple2[Self]: ...
     @overload
     def __divmod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _Tuple2[_FloatingT]: ...
+
     #
     @overload
     def __rdivmod__(self, x: _nt.CastsScalar[Self] | int | _nt.JustFloat, /) -> _Tuple2[Self]: ...
@@ -4707,12 +4728,15 @@ class longdouble(_FloatMixin[L[12, 16]], floating):
     def dtype(self) -> dtypes.LongDoubleDType: ...
 
     #
+    @override  # type: ignore[override]
     @overload
     def item(self, /) -> Self: ...
     @overload
     def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
     @override
-    def tolist(self, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def tolist(self, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 float96 = longdouble
 float128 = longdouble
@@ -4879,12 +4903,15 @@ class clongdouble(complexfloating):
     def imag(self) -> longdouble: ...
 
     #
+    @override  # type: ignore[override]
     @overload
     def item(self, /) -> Self: ...
     @overload
     def item(self, arg0: L[0, -1] | tuple[L[0, -1]] | tuple[()], /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
     @override
-    def tolist(self, /) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def tolist(self, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @override
@@ -5036,7 +5063,7 @@ class datetime64(
     #
     @property
     @override
-    def dtype(self) -> dtypes.DateTime64DType: ...
+    def dtype(self) -> dtypes.DateTime64DType: ...  # type: ignore[override]
     @property
     @override
     def itemsize(self) -> L[8]: ...
@@ -5150,7 +5177,7 @@ class timedelta64(
     #
     @property
     @override
-    def dtype(self) -> dtypes.TimeDelta64DType: ...
+    def dtype(self) -> dtypes.TimeDelta64DType: ...  # type: ignore[override]
     @property
     @override
     def itemsize(self) -> L[8]: ...
@@ -5379,7 +5406,7 @@ class ufunc(Generic[_CallT_co, _AtT_co, _ReduceT_co, _ReduceAtT_co, _AccumulateT
     def __qualname__(self) -> str: ...  # type: ignore[misc]  # pyright: ignore[reportIncompatibleVariableOverride]
     @property
     @override
-    def __doc__(self) -> str: ...  # pyright: ignore[reportIncompatibleVariableOverride]
+    def __doc__(self) -> str: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleVariableOverride]
 
     #
     @property

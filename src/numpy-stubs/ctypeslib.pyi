@@ -3,7 +3,7 @@ import ctypes as ct
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable, Sequence
 from typing import Any, ClassVar, Generic, Literal as L, Protocol, TypeAlias, overload, type_check_only
-from typing_extensions import TypeVar
+from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np
@@ -55,7 +55,8 @@ class _ndptr(ct.c_void_p, Generic[_DTypeT0_co, _ShapeT0_co]):
     _ndim_: ClassVar[int | None]
     _flags_: ClassVar[list[_FlagsKind] | None]
 
-    @overload  # type: ignore[override]
+    @override  # type: ignore[override]
+    @overload
     @classmethod
     def from_param(cls: type[_ndptr[_DTypeT, _ShapeT]], obj: np.ndarray[_ShapeT, _DTypeT]) -> _ctypes[int]: ...
     @overload

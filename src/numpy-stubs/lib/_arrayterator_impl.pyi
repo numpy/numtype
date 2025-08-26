@@ -51,7 +51,8 @@ class Arrayterator(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTyp
     def __iter__(self) -> Generator[np.ndarray[_nt.AnyShape, _DTypeT_co]]: ...
 
     #
-    @overload  # type: ignore[override]
+    @override  # type: ignore[override]
+    @overload
     def __array__(
         self, /, dtype: _DTypeT_co | None = None, copy: bool | None = None
     ) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...

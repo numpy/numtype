@@ -1,4 +1,4 @@
-# mypy: disable-error-code=override
+# mypy: disable-error-code="override, explicit-override"
 # pyright: reportIncompatibleMethodOverride=false
 
 import datetime as dt
