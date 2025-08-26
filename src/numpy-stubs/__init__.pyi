@@ -3497,11 +3497,11 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
     @overload
-    def __init__(self: _Bool0, value: L[False, 0] | _Bool0 = ..., /) -> None: ...
+    def __new__(cls, value: L[False, 0] | _Bool0 = ..., /) -> _Bool0: ...
     @overload
-    def __init__(self: _Bool1, value: L[True, 1] | _Bool1, /) -> None: ...
+    def __new__(cls, value: L[True, 1] | _Bool1, /) -> _Bool1: ...
     @overload
-    def __init__(self, value: object, /) -> None: ...
+    def __new__(cls, value: object, /) -> Self: ...
 
     #
     @property
@@ -4232,7 +4232,7 @@ class signedinteger(integer):
     def __nep50_rule5__(self, other: _JustInteger | _JustUnsignedInteger, /) -> signedinteger | float64: ...
 
 class int8(_IntMixin[L[1]], signedinteger):
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+    def __new__(cls, value: _ConvertibleToInt = 0, /) -> Self: ...
 
     #
     @property
@@ -4258,7 +4258,7 @@ class int8(_IntMixin[L[1]], signedinteger):
 byte = int8
 
 class int16(_IntMixin[L[2]], signedinteger):
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+    def __new__(cls, value: _ConvertibleToInt = 0, /) -> Self: ...
 
     #
     @property
@@ -4287,7 +4287,7 @@ class int16(_IntMixin[L[2]], signedinteger):
 short = int16
 
 class int32(_IntMixin[L[4]], signedinteger):
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+    def __new__(cls, value: _ConvertibleToInt = 0, /) -> Self: ...
 
     #
     @property
@@ -4316,7 +4316,7 @@ class int32(_IntMixin[L[4]], signedinteger):
 intc = int32
 
 class int64(_IntMixin[L[8]], signedinteger):
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+    def __new__(cls, value: _ConvertibleToInt = 0, /) -> Self: ...
 
     #
     @property
@@ -4368,7 +4368,7 @@ class unsignedinteger(integer):
     def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
 
 class uint8(_IntMixin[L[1]], unsignedinteger):
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+    def __new__(cls, value: _ConvertibleToInt = 0, /) -> Self: ...
 
     #
     @property
@@ -4398,7 +4398,7 @@ class uint8(_IntMixin[L[1]], unsignedinteger):
 ubyte = uint8
 
 class uint16(_IntMixin[L[2]], unsignedinteger):
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+    def __new__(cls, value: _ConvertibleToInt = 0, /) -> Self: ...
 
     #
     @property
@@ -4433,7 +4433,7 @@ class uint16(_IntMixin[L[2]], unsignedinteger):
 ushort = uint16
 
 class uint32(_IntMixin[L[4]], unsignedinteger):
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+    def __new__(cls, value: _ConvertibleToInt = 0, /) -> Self: ...
 
     #
     @property
@@ -4465,7 +4465,7 @@ class uint32(_IntMixin[L[4]], unsignedinteger):
 uintc = uint32
 
 class uint64(_IntMixin[L[8]], unsignedinteger):
-    def __init__(self, value: _ConvertibleToInt = ..., /) -> None: ...
+    def __new__(cls, value: _ConvertibleToInt = 0, /) -> Self: ...
 
     #
     @property
@@ -4585,7 +4585,7 @@ class floating(_RealMixin, _RoundMixin, inexact[float]):
     def __rdivmod__(self, x: _nt.CastsWithScalar[Self, _FloatingT], /) -> _Tuple2[_FloatingT]: ...
 
 class float16(_FloatMixin[L[2]], floating):
-    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
+    def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
 
     #
     @override
@@ -4609,7 +4609,7 @@ class float16(_FloatMixin[L[2]], floating):
 half = float16
 
 class float32(_FloatMixin[L[4]], floating):
-    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
+    def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
 
     #
     @property
@@ -4637,7 +4637,6 @@ single = float32
 
 class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
     def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
-    def __init__(self, value: _ConvertibleToFloat | None = 0, /) -> None: ...
 
     #
     @property
@@ -4678,7 +4677,7 @@ class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
 double = float64
 
 class longdouble(_FloatMixin[L[12, 16]], floating):
-    def __init__(self, value: _ConvertibleToFloat | None = ..., /) -> None: ...
+    def __new__(cls, x: _ConvertibleToFloat | None = 0, /) -> Self: ...
 
     #
     @property
@@ -4752,9 +4751,9 @@ class complexfloating(inexact[complex]):
 
 class complex64(complexfloating):
     @overload
-    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
+    def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...
     @overload
-    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
+    def __new__(cls, real: _ToReal = 0, imag: _ToImag = 0, /) -> Self: ...
 
     #
     @override
@@ -4794,17 +4793,10 @@ class complex64(complexfloating):
 csingle = complex64
 
 class complex128(complexfloating, complex):
-    #
     @overload
     def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...
     @overload
     def __new__(cls, real: _ToReal = 0, imag: _ToImag = 0, /) -> Self: ...
-
-    #
-    @overload
-    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
-    @overload
-    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
 
     #
     @override
@@ -4848,9 +4840,9 @@ cdouble = complex128
 
 class clongdouble(complexfloating):
     @overload
-    def __init__(self, real: _ConvertibleToComplex | None = 0, /) -> None: ...
+    def __new__(cls, real: _ConvertibleToComplex | None = 0, /) -> Self: ...
     @overload
-    def __init__(self, real: _ToReal = 0, imag: _ToImag = 0, /) -> None: ...
+    def __new__(cls, real: _ToReal = 0, imag: _ToImag = 0, /) -> Self: ...
 
     #
     @override
@@ -4910,12 +4902,6 @@ complex256 = clongdouble
 # NOTE: Because mypy does not fully support `__new__`, `object_` can't be made generic.
 @final
 class object_(_RealMixin, generic[Any]):
-    @type_check_only
-    def __nep50__(self, below: object_, above: _nt.co_number | character, /) -> object_: ...
-    @type_check_only
-    def __nep50_builtin__(self, /) -> tuple[_JustBuiltinScalar, object_]: ...
-
-    #
     @overload
     def __new__(cls, nothing_to_see_here: None = None, /) -> None: ...  # type: ignore[misc]
     @overload
@@ -4932,7 +4918,10 @@ class object_(_RealMixin, generic[Any]):
     def __new__(cls, value: Any = ..., /) -> object | _nt.Array[Self]: ...  # type: ignore[misc]
 
     #
-    def __init__(self, value: object = ..., /) -> None: ...
+    @type_check_only
+    def __nep50__(self, below: object_, above: _nt.co_number | character, /) -> object_: ...
+    @type_check_only
+    def __nep50_builtin__(self, /) -> tuple[_JustBuiltinScalar, object_]: ...
 
     #
     @override
@@ -4953,20 +4942,16 @@ class flexible(_RealMixin, generic[_FlexItemT_co], Generic[_FlexItemT_co]): ...
 class character(flexible[_CharacterItemT_co], Generic[_CharacterItemT_co]): ...  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
 
 class bytes_(character[bytes], bytes):  # type: ignore[misc]
-    @type_check_only
-    def __nep50__(self, below: bytes_ | object_, above: Never, /) -> bytes_: ...
-    @type_check_only
-    def __nep50_builtin__(self, /) -> tuple[_nt.JustBytes, bytes_]: ...
-
-    #
     @overload
     def __new__(cls, s: str, /, encoding: str, errors: str = "strict") -> Self: ...
     @overload
     def __new__(cls, o: object = b"", /) -> Self: ...
-    @overload
-    def __init__(self, s: str, /, encoding: str, errors: str = "strict") -> None: ...
-    @overload
-    def __init__(self, o: object = b"", /) -> None: ...
+
+    #
+    @type_check_only
+    def __nep50__(self, below: bytes_ | object_, above: Never, /) -> bytes_: ...
+    @type_check_only
+    def __nep50_builtin__(self, /) -> tuple[_nt.JustBytes, bytes_]: ...
 
     #
     @property
@@ -4974,20 +4959,16 @@ class bytes_(character[bytes], bytes):  # type: ignore[misc]
     def dtype(self) -> dtypes.BytesDType: ...
 
 class str_(character[str], str):  # type: ignore[misc]
-    @type_check_only
-    def __nep50__(self, below: str_ | object_, above: Never, /) -> str_: ...
-    @type_check_only
-    def __nep50_builtin__(self, /) -> tuple[_nt.JustStr, str_]: ...
-
-    #
     @overload
     def __new__(cls, value: object = "", /) -> Self: ...
     @overload
     def __new__(cls, value: bytes, /, encoding: str = "utf-8", errors: str = "strict") -> Self: ...
-    @overload
-    def __init__(self, value: object = "", /) -> None: ...
-    @overload
-    def __init__(self, value: bytes, /, encoding: str = "utf-8", errors: str = "strict") -> None: ...
+
+    #
+    @type_check_only
+    def __nep50__(self, below: str_ | object_, above: Never, /) -> str_: ...
+    @type_check_only
+    def __nep50_builtin__(self, /) -> tuple[_nt.JustStr, str_]: ...
 
     #
     @property
@@ -4995,14 +4976,16 @@ class str_(character[str], str):  # type: ignore[misc]
     def dtype(self) -> dtypes.StrDType: ...
 
 class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright: ignore[reportGeneralTypeIssues]
+    @overload
+    def __new__(cls, value: _nt.CoInteger_0d | bytes, /, dtype: None = None) -> Self: ...
+    @overload
+    def __new__(cls, value: Any, /, dtype: _DTypeLikeVoid) -> Self: ...
+
+    #
     @type_check_only
     def __nep50__(self, below: object_, from_: Never, /) -> void: ...
 
     #
-    @overload
-    def __init__(self, value: _nt.CoInteger_0d | bytes, /, dtype: None = None) -> None: ...
-    @overload
-    def __init__(self, value: Any, /, dtype: _DTypeLikeVoid) -> None: ...
     @overload
     def __getitem__(self, key: str | CanIndex, /) -> Any: ...
     @overload
@@ -5019,6 +5002,38 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
 class datetime64(
     _RealMixin, _CmpOpMixin[datetime64, _ArrayLikeDT64_co], generic[_DT64ItemT_co], Generic[_DT64ItemT_co]
 ):
+    @overload
+    def __new__(cls, /) -> datetime64[None]: ...
+    @overload
+    def __new__(cls, value: datetime64[_DT64ItemT_co], /) -> Self: ...
+    @overload
+    def __new__(cls, value: _NaTValue | None, format: _TimeUnitSpec = ..., /) -> datetime64[None]: ...
+    @overload
+    def __new__(cls, value: dt.datetime, /) -> datetime64[dt.datetime]: ...
+    @overload
+    def __new__(cls, value: dt.date, /) -> datetime64[dt.date]: ...
+    @overload
+    def __new__(cls, value: _DT64Now, format: _TimeUnitSpec[_NativeTimeUnit] = ..., /) -> datetime64[dt.datetime]: ...
+    @overload
+    def __new__(cls, value: _DT64Date, format: _TimeUnitSpec[_DateUnit] = ..., /) -> datetime64[dt.date]: ...
+    @overload
+    def __new__(cls, value: int | dt.date, format: _TimeUnitSpec[_IntTimeUnit], /) -> datetime64[int]: ...
+    @overload
+    def __new__(cls, value: int | dt.date, format: _TimeUnitSpec[_NativeTimeUnit], /) -> datetime64[dt.datetime]: ...
+    @overload
+    def __new__(cls, value: int | dt.date, format: _TimeUnitSpec[_DateUnit], /) -> datetime64[dt.date]: ...
+    @overload
+    def __new__(cls, value: bytes | str, format: _TimeUnitSpec[_IntTimeUnit], /) -> datetime64[int | None]: ...
+    @overload
+    def __new__(
+        cls, value: bytes | str, format: _TimeUnitSpec[_NativeTimeUnit], /
+    ) -> datetime64[dt.datetime | None]: ...
+    @overload
+    def __new__(cls, value: bytes | str, format: _TimeUnitSpec[_DateUnit], /) -> datetime64[dt.date | None]: ...
+    @overload
+    def __new__(cls, value: bytes | str | dt.date | None, format: _TimeUnitSpec = ..., /) -> Self: ...
+
+    #
     @property
     @override
     def dtype(self) -> dtypes.DateTime64DType: ...
@@ -5028,36 +5043,6 @@ class datetime64(
     @property
     @override
     def nbytes(self) -> L[8]: ...
-
-    #
-    @overload
-    def __init__(self, value: datetime64[_DT64ItemT_co], /) -> None: ...
-    @overload
-    def __init__(self: datetime64[None], value: _NaTValue | None = ..., format: _TimeUnitSpec = ..., /) -> None: ...
-    @overload
-    def __init__(self: datetime64[dt.datetime], value: dt.datetime, /) -> None: ...
-    @overload
-    def __init__(self: datetime64[dt.date], value: dt.date, /) -> None: ...
-    @overload
-    def __init__(
-        self: datetime64[dt.datetime], value: _DT64Now, format: _TimeUnitSpec[_NativeTimeUnit] = ..., /
-    ) -> None: ...
-    @overload
-    def __init__(self: datetime64[dt.date], value: _DT64Date, format: _TimeUnitSpec[_DateUnit] = ..., /) -> None: ...
-    @overload
-    def __init__(
-        self: datetime64[int], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_IntTimeUnit], /
-    ) -> None: ...
-    @overload
-    def __init__(
-        self: datetime64[dt.datetime], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_NativeTimeUnit], /
-    ) -> None: ...
-    @overload
-    def __init__(
-        self: datetime64[dt.date], value: int | bytes | str | dt.date, format: _TimeUnitSpec[_DateUnit], /
-    ) -> None: ...
-    @overload
-    def __init__(self, value: bytes | str | dt.date | None, format: _TimeUnitSpec = ..., /) -> None: ...
 
     #
     @overload
@@ -5135,6 +5120,28 @@ class datetime64(
 class timedelta64(
     _CmpOpMixin[_nt.CoTimeDelta_0d, _nt.CoTimeDelta_1nd], _IntegralMixin, generic[_TD64ItemT_co], Generic[_TD64ItemT_co]
 ):
+    @overload
+    def __new__(cls, value: dt.timedelta | timedelta64[dt.timedelta], /) -> timedelta64[dt.timedelta]: ...
+    @overload
+    def __new__(cls, value: L[0] = ..., format: _TimeUnitSpec[_IntTD64Unit] = ..., /) -> timedelta64[L[0]]: ...
+    @overload
+    def __new__(
+        cls, value: _nt.CoInteger_0d | timedelta64[int], format: _TimeUnitSpec[_IntTD64Unit] = ..., /
+    ) -> timedelta64[int]: ...
+    @overload
+    def __new__(cls, value: dt.timedelta, format: _TimeUnitSpec[_IntTimeUnit], /) -> timedelta64[int]: ...
+    @overload
+    def __new__(
+        cls, value: int | integer | bool_ | timedelta64[dt.timedelta | int], format: _TimeUnitSpec[_NativeTD64Unit], /
+    ) -> timedelta64[dt.timedelta]: ...
+    @overload
+    def __new__(
+        cls, value: _NaTValue | timedelta64[None] | None, format: _TimeUnitSpec = ..., /
+    ) -> timedelta64[None]: ...
+    @overload
+    def __new__(cls, value: _ConvertibleToTD64, format: _TimeUnitSpec = ..., /) -> timedelta64[Any]: ...
+
+    #
     @type_check_only
     def __nep50__(self, below: timedelta64, above: _nt.co_integer, /) -> timedelta64: ...
     @type_check_only
@@ -5150,28 +5157,6 @@ class timedelta64(
     @property
     @override
     def nbytes(self) -> L[8]: ...
-
-    #
-    @overload
-    def __init__(self, value: _TD64ItemT_co | timedelta64[_TD64ItemT_co], /) -> None: ...
-    @overload
-    def __init__(self: timedelta64[L[0]], /) -> None: ...
-    @overload
-    def __init__(self: timedelta64[None], value: _NaTValue | None, format: _TimeUnitSpec, /) -> None: ...
-    @overload
-    def __init__(self: timedelta64[L[0]], value: L[0], format: _TimeUnitSpec[_IntTD64Unit] = ..., /) -> None: ...
-    @overload
-    def __init__(
-        self: timedelta64[int], value: _nt.CoInteger_0d, format: _TimeUnitSpec[_IntTD64Unit] = ..., /
-    ) -> None: ...
-    @overload
-    def __init__(self: timedelta64[int], value: dt.timedelta, format: _TimeUnitSpec[_IntTimeUnit], /) -> None: ...
-    @overload
-    def __init__(
-        self: timedelta64[dt.timedelta], value: _TD64Like_co, format: _TimeUnitSpec[_NativeTD64Unit] = ..., /
-    ) -> None: ...
-    @overload
-    def __init__(self, value: _ConvertibleToTD64, format: _TimeUnitSpec = ..., /) -> None: ...
 
     # inherited at runtime from `signedinteger`
     def __class_getitem__(cls, type_arg: type | object, /) -> GenericAlias: ...
