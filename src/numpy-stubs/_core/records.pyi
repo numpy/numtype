@@ -54,10 +54,15 @@ class record(np.void):  # type: ignore[misc]
     __module__: L["numpy"] = "numpy"
 
     def pprint(self) -> str: ...
+
+    #
     @override
     def __getattribute__(self, attr: str, /) -> Any: ...
     @override
     def __setattr__(self, attr: str, val: ArrayLike, /) -> None: ...
+
+    #
+    @override
     @overload
     def __getitem__(self, key: str | SupportsIndex, /) -> Incomplete: ...
     @overload

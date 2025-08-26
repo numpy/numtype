@@ -189,22 +189,29 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __le__(self, other: _nt.ToCharacter_nd, /) -> _BoolND: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @overload  # type: ignore[override]
+    @override  # type: ignore[override]
+    @overload
     def __add__(self: _StrArray, rhs: _nt.ToStr_nd, /) -> _StrArray: ...
     @overload
     def __add__(self: _BytesArray, rhs: _nt.ToBytes_nd, /) -> _BytesArray: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
     #
-    @overload  # type: ignore[override]
+    @override  # type: ignore[override]
+    @overload
     def __radd__(self: _StrArray, lhs: _nt.ToStr_nd, /) -> _StrArray: ...
     @overload
     def __radd__(self: _BytesArray, lhs: _nt.ToBytes_nd, /) -> _BytesArray: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @overload  # type: ignore[override]
+    @override  # type: ignore[override]
+    @overload
     def __mul__(self, rhs: _nt.ToInteger_0d, /) -> Self: ...
     @overload
     def __mul__(self, rhs: _nt.ToInteger_nd, /) -> chararray[_nt.AnyShape, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    @overload  # type: ignore[override]
+
+    #
+    @override  # type: ignore[override]
+    @overload
     def __rmul__(self, lhs: int, /) -> Self: ...
     @overload
     def __rmul__(self, lhs: _nt.ToInteger_nd, /) -> chararray[_nt.AnyShape, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -212,11 +219,14 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def __mod__(self, rhs: object, /) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
     @override
     def __rmod__(self: Never, rhs: Never, /) -> Any: ...  # type: ignore[misc, override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @overload  # type: ignore[override]
+    @override  # type: ignore[override]
+    @overload
     def argsort(
         self, /, axis: SupportsIndex = -1, kind: _SortKind | None = None, order: None = None
     ) -> _nt.Array[np.intp, _ShapeT_co]: ...
@@ -229,6 +239,8 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def decode(
         self: _BytesArray, /, encoding: str | None = None, errors: str | None = None
     ) -> _StrArray[_ShapeT_co]: ...
+
+    #
     def encode(
         self: _StrArray, /, encoding: str | None = None, errors: str | None = None
     ) -> _BytesArray[_ShapeT_co]: ...
@@ -304,7 +316,8 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def lstrip(self: _BytesArray, /, chars: _nt.ToBytes_nd | None = None) -> _BytesArray: ...
 
     #
-    @overload  # type: ignore[override]
+    @override  # type: ignore[override]
+    @overload
     def partition(self: _StrArray, /, sep: _nt.ToStr_nd) -> _StrArray: ...
     @overload
     def partition(self: _BytesArray, /, sep: _nt.ToBytes_nd) -> _BytesArray: ...  # pyright: ignore[reportIncompatibleMethodOverride]
