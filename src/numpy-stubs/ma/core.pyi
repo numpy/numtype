@@ -342,7 +342,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def baseclass(self) -> Incomplete: ...
 
     #
-    @property
+    @property  # type: ignore[explicit-override]
     @override
     def flat(self) -> Incomplete: ...
     @flat.setter
