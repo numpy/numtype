@@ -30,7 +30,7 @@ jobs:
         git config user.name github-actions[bot]
         git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
-    - uses: astral-sh/setup-uv@v6.6.0
+    - uses: astral-sh/setup-uv@v6.6.1
 
     - name: mkdocs gh-deploy
       run: uv run --only-group=docs mkdocs gh-deploy --force
