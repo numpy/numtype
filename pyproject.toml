@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv_build>=0.8"]
+requires = ["uv_build>=0.8.17,<0.9"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
@@ -9,7 +9,7 @@ source-exclude = ['\@test', ".ruff_cache", ".ruff.toml"]
 
 [project]
 name = "numtype"
-version = "2.3.2.0.dev0"
+version = "2.3.3.0.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
 authors = [{ name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com" }]
@@ -39,7 +39,7 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-numpy = ["numpy>=2.3.2,<2.4"]
+numpy = ["numpy>=2.3.3,<2.4"]
 
 [project.urls]
 Homepage = "https://numpy.org/"
@@ -50,12 +50,12 @@ Changelog = "https://github.com/numpy/numtype/releases"
 [dependency-groups]
 numpy = ["numtype[numpy]"]
 lint = [
-  "dprint-py>=0.50.1.4",
-  "ruff>=0.12.10",
+  "dprint-py>=0.50.2.0",
+  "ruff>=0.13.0",
 ]
 pytest = [
   { include-group = "numpy" },
-  "pytest>=8.4.1",
+  "pytest>=8.4.2",
   "typing_extensions>=4.15.0",
 ]
 list_and_test = [
@@ -70,22 +70,21 @@ types = [
 basedpyright = [
   { include-group = "numpy" },
   { include-group = "types" },
-  "basedpyright>=1.31.3",
+  "basedpyright==1.31.3", # trait broke divmod in 1.1.404
 ]
 mypy = [
   { include-group = "types" },
-  "mypy[faster-cache]>=1.17.1",
+  "mypy[faster-cache]>=1.18.1",
 ]
 typecheck = [
   { include-group = "basedpyright" },
   { include-group = "mypy" },
 ]
 docs = [
-  "mkdocs-material>=9.6.18",
-  "pydantic>=2.12.0a1; python_version >= '3.14'", # needed for mkdocs-awesome-nav
-  "mkdocs-awesome-nav>=3.1.2",
+  "mkdocs-material>=9.6.20",
+  "mkdocs-awesome-nav>=3.2.0",
   "markdown-callouts>=0.4.0",
-  "mkdocs-include-markdown-plugin>=7.1.6",
+  "mkdocs-include-markdown-plugin>=7.1.7",
   "mkdocs-minify-plugin>=0.8.0",
   "mkdocstrings[python]>=0.30.0",
   "pygments>=2.19.2",
