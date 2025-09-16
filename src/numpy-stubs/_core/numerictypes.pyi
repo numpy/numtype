@@ -1,7 +1,6 @@
+import sys
 from builtins import bool as py_bool
-from typing import Any, Final, Literal as L, TypedDict, type_check_only
-
-import numpy as np
+from typing import Any, Final, Literal as L, TypeAlias, TypedDict, type_check_only
 
 # ruff: noqa: ICN003
 from numpy import (
@@ -154,8 +153,12 @@ class _TypeCodes(TypedDict):
 ###
 
 typecodes: Final[_TypeCodes] = ...
-ScalarType: Final[
-    tuple[
+
+# pyright: reportRedeclaration=false
+# NOTE: The orders of float64/longdouble, int32/int64, and timedelta64/datetime64 are platform dependent.
+# NOTE: We assume 64-bit platforms here.
+if sys.platform == "darwin":
+    _ScalarTypeTuple: TypeAlias = tuple[
         type[int],
         type[float],
         type[complex],
@@ -163,32 +166,101 @@ ScalarType: Final[
         type[bytes],
         type[str],
         type[memoryview[Any]],
-        type[np.bool],
-        type[csingle],
-        type[cdouble],
+        type[Any],  # TODO: bool_?
+        type[complex64],
+        type[complex128],
         type[clongdouble],
-        type[half],
-        type[single],
-        type[double],
+        type[float16],
+        type[float32],
         type[longdouble],
-        type[byte],
-        type[short],
-        type[intc],
-        type[long],
-        type[longlong],
-        type[timedelta64],
-        type[datetime64],
+        type[float64],
+        type[int8],
+        type[int16],
+        type[int32],
+        type[int64],
+        type[Any],  # TODO: longlong?
+        type[datetime64[Any]],
+        type[timedelta64[Any]],
         type[object_],
         type[bytes_],
         type[str_],
-        type[ubyte],
-        type[ushort],
-        type[uintc],
-        type[ulong],
+        type[uint8],
+        type[uint16],
+        type[uint32],
+        type[uint64],
+        type[Any],  # TODO: ulonglong?
+        type[void],
+    ]
+elif sys.platform == "win32":
+    _ScalarTypeTuple: TypeAlias = tuple[
+        type[int],
+        type[float],
+        type[complex],
+        type[py_bool],
+        type[bytes],
+        type[str],
+        type[memoryview[Any]],
+        type[Any],  # TODO: bool_?
+        type[complex64],
+        type[complex128],
+        type[clongdouble],
+        type[float16],
+        type[float32],
+        type[float64],
+        type[longdouble],
+        type[int8],
+        type[int16],
+        type[int32],
+        type[Any],  # TODO: intc?
+        type[int64],
+        type[datetime64[Any]],
+        type[timedelta64[Any]],
+        type[object_],
+        type[bytes_],
+        type[str_],
+        type[uint8],
+        type[uint16],
+        type[Any],  # TODO: uintc?
+        type[uint32],
+        type[uint64],
+        type[void],
+    ]
+else:  # linux (presumed)
+    _ScalarTypeTuple: TypeAlias = tuple[
+        type[int],
+        type[float],
+        type[complex],
+        type[py_bool],
+        type[bytes],
+        type[str],
+        type[memoryview[Any]],
+        type[bool_[Any]],
+        type[complex64],
+        type[complex128],
+        type[clongdouble],
+        type[float16],
+        type[float32],
+        type[float64],
+        type[longdouble],
+        type[int8],
+        type[int16],
+        type[int32],
+        type[int64],
+        type[longlong],
+        type[timedelta64[Any]],
+        type[datetime64[Any]],
+        type[object_],
+        type[bytes_],
+        type[str_],
+        type[uint8],
+        type[uint16],
+        type[uint32],
+        type[uint64],
         type[ulonglong],
         type[void],
     ]
-] = ...
+
+ScalarType: Final[_ScalarTypeTuple] = ...
 typeDict: Final = sctypeDict
 
 def isdtype(dtype: dtype | type, kind: DTypeLike | tuple[DTypeLike, ...]) -> py_bool: ...
