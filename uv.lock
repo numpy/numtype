@@ -40,14 +40,14 @@ wheels = [
 
 [[package]]
 name = "basedpyright"
-version = "1.31.3"
+version = "1.31.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nodejs-wheel-binaries" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/64/3e/e5cd03d33a6ddd341427a0fe2fb27944ae11973069a8b880dad99102361b/basedpyright-1.31.3.tar.gz", hash = "sha256:c77bff2dc7df4fe09c0ee198589d8d24faaf8bfd883ee9e0af770b1a275a58f8", size = 22481852, upload-time = "2025-08-20T15:08:25.131Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/53/570b03ec0445a9b2cc69788482c1d12902a9b88a9b159e449c4c537c4e3a/basedpyright-1.31.4.tar.gz", hash = "sha256:2450deb16530f7c88c1a7da04530a079f9b0b18ae1c71cb6f812825b3b82d0b1", size = 22494467, upload-time = "2025-09-03T13:05:55.817Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d1/e5/edf168b8dd936bb82a97ebb76e7295c94a4f9d1c2e8e8a04696ef2b3a524/basedpyright-1.31.3-py3-none-any.whl", hash = "sha256:bdb0b5a9abe287a023d330fc71eaed181aaffd48f1dec59567f912cf716f38ff", size = 11722347, upload-time = "2025-08-20T15:08:20.528Z" },
+    { url = "https://files.pythonhosted.org/packages/e5/40/d1047a5addcade9291685d06ef42a63c1347517018bafd82747af9da0294/basedpyright-1.31.4-py3-none-any.whl", hash = "sha256:055e4a38024bd653be12d6216c1cfdbee49a1096d342b4d5f5b4560f7714b6fc", size = 11731440, upload-time = "2025-09-03T13:05:52.308Z" },
 ]
 
 [[package]]
@@ -723,7 +723,7 @@ provides-extras = ["numpy"]
 
 [package.metadata.requires-dev]
 basedpyright = [
-    { name = "basedpyright", specifier = "==1.31.3" },
+    { name = "basedpyright", specifier = "==1.31.4" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.4.2" },
     { name = "types-setuptools", specifier = ">=80.9.0.20250822" },
@@ -731,7 +731,7 @@ basedpyright = [
     { name = "typing-extensions", specifier = ">=4.15.0" },
 ]
 dev = [
-    { name = "basedpyright", specifier = "==1.31.3" },
+    { name = "basedpyright", specifier = "==1.31.4" },
     { name = "dprint-py", specifier = ">=0.50.2.0" },
     { name = "markdown-callouts", specifier = ">=0.4.0" },
     { name = "mkdocs-awesome-nav", specifier = ">=3.2.0" },
@@ -783,7 +783,7 @@ pytest = [
     { name = "typing-extensions", specifier = ">=4.15.0" },
 ]
 typecheck = [
-    { name = "basedpyright", specifier = "==1.31.3" },
+    { name = "basedpyright", specifier = "==1.31.4" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.18.1" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.4.2" },
