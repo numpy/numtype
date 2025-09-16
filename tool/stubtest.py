@@ -2,8 +2,7 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #     "numtype[numpy]",
-#     "mypy[faster-cache]>=1.17.1",  # keep in sync with pyproject.toml
-#
+#     "mypy[faster-cache] >=1.18.1, <1.19",  # keep in sync with pyproject.toml
 #     "PyInstaller",
 #     "hypothesis",
 #     "pytest",
@@ -66,7 +65,7 @@ def _allowlists() -> list[str]:
 
 
 def _stubtest_command() -> list[str]:
-    cmd = ["stubtest"]
+    cmd = ["stubtest", "--ignore-disjoint-bases"]
     args_extra = sys.argv[1:]
 
     if not any("--mypy-config-file" in arg for arg in args_extra):

@@ -280,19 +280,19 @@ assert_type(np.atleast_3d(A), _nt.Array[np.float64])
 assert_type(np.atleast_3d(A, A), tuple[_nt.Array[np.float64], _nt.Array[np.float64]])
 assert_type(np.atleast_3d(A, A, A), tuple[_nt.Array[np.float64], ...])
 
-assert_type(np.vstack([A, A]), _nt.Array[np.float64])  # type: ignore[assert-type]  # mypy fail
+assert_type(np.vstack([A, A]), _nt.Array[np.float64])
 assert_type(np.vstack([A, A], dtype=np.float32), _nt.Array[np.float32])
 assert_type(np.vstack([A, C]), _nt.Array)
 assert_type(np.vstack([C, C]), _nt.Array)
 
-assert_type(np.hstack([A, A]), _nt.Array[np.float64])  # type: ignore[assert-type]  # mypy fail
+assert_type(np.hstack([A, A]), _nt.Array[np.float64])
 assert_type(np.hstack([A, A], dtype=np.float32), _nt.Array[np.float32])
 
-assert_type(np.stack([A, A]), _nt.Array[np.float64])  # type: ignore[assert-type]  # mypy fail
+assert_type(np.stack([A, A]), _nt.Array[np.float64])
 assert_type(np.stack([A, A], dtype=np.float32), _nt.Array[np.float32])
 assert_type(np.stack([A, C]), _nt.Array)
 assert_type(np.stack([C, C]), _nt.Array)
-assert_type(np.stack([A, A], axis=0), _nt.Array[np.float64])  # type: ignore[assert-type]  # mypy fail
+assert_type(np.stack([A, A], axis=0), _nt.Array[np.float64])
 assert_type(np.stack([A, A], out=B), MyArray[np.float64])
 
 assert_type(np.block([[A, A], [A, A]]), _nt.Array)  # pyright: ignore[reportAssertTypeFailure]  # _nt.Array[np.float64]
