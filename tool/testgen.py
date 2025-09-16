@@ -734,7 +734,11 @@ class LiteralBoolOps(TestGen):
     package = "numpy-stubs"
     testname = "literal_bool_ops"
 
-    UNOPS: ClassVar = {"{}.__bool__()": bool, "abs({})": abs, "~{}": op.__invert__}
+    UNOPS: ClassVar[dict[str, Callable[..., Any]]] = {
+        "{}.__bool__()": bool,
+        "abs({})": abs,
+        "~{}": op.__invert__,
+    }
     CMPOPS: ClassVar = {
         "{} == {}": op.__eq__,
         "{} != {}": op.__ne__,
