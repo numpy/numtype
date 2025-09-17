@@ -182,8 +182,8 @@ assert_type(np.trapezoid(AR_LIKE_c), np.complexfloating)
 assert_type(np.trapezoid(AR_LIKE_c, AR_LIKE_f), np.complexfloating)
 assert_type(np.trapezoid(AR_LIKE_f, AR_LIKE_c), np.complexfloating)
 # pyright bug: https://github.com/microsoft/pyright/issues/9896
-assert_type(np.trapezoid(AR_LIKE_O), float)  # pyright: ignore[reportAssertTypeFailure]
-assert_type(np.trapezoid(AR_LIKE_O, AR_LIKE_f), float)  # pyright: ignore[reportAssertTypeFailure]
+assert_type(np.trapezoid(AR_LIKE_O), float)
+assert_type(np.trapezoid(AR_LIKE_O, AR_LIKE_f), float)
 assert_type(np.trapezoid(AR_i8), np.float64 | _nt.Array[np.float64])
 assert_type(np.trapezoid(AR_i8, AR_i8), np.float64 | _nt.Array[np.float64])
 assert_type(np.trapezoid(AR_f8), np.float64 | _nt.Array[np.float64])
