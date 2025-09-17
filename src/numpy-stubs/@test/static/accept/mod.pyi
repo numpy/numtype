@@ -79,8 +79,8 @@ assert_type(b_ % u8, np.uint64)
 assert_type(b_ % f8, np.float64)
 assert_type(b_ % AR_b, _nt.Array[np.int8])
 
-assert_type(divmod(b_, b_), tuple[np.int8, np.int8])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
-assert_type(divmod(b_, b), tuple[np.int8, np.int8])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
+assert_type(divmod(b_, b_), tuple[np.int8, np.int8])
+assert_type(divmod(b_, b), tuple[np.int8, np.int8])
 assert_type(divmod(b_, i), tuple[np.intp, np.intp])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
 assert_type(divmod(b_, f), tuple[np.float64, np.float64])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
 assert_type(divmod(b_, i8), tuple[np.int64, np.int64])
@@ -97,7 +97,7 @@ assert_type(u8 % b_, np.uint64)
 assert_type(f8 % b_, np.float64)
 assert_type(AR_b % b_, _nt.Array[np.int8])
 
-assert_type(divmod(b_, b), tuple[np.int8, np.int8])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
+assert_type(divmod(b_, b), tuple[np.int8, np.int8])
 assert_type(divmod(b_, i), tuple[np.intp, np.intp])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
 assert_type(divmod(b_, f), tuple[np.float64, np.float64])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
 assert_type(divmod(b_, i8), tuple[np.int64, np.int64])
