@@ -1049,10 +1049,23 @@ class ScalarOps(TestGen):
         return f"tuple[{', '.join(result_exprs)}]" if nout > 1 else result_exprs[0]
 
     def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
-        expr_eval = op.format(self.names[lhs], self.names[rhs])
+        # ugly workaround for microsoft/pyright#9896 and microsoft/pyright#10899
+        if (
+            op.startswith("divmod")
+            and "c" not in self.names[lhs] + self.names[rhs]
+            and (
+                self.names[rhs].endswith("_py")
+                or (not self.names[lhs][-1].isdigit() and self.names[rhs][-1].isdigit())
+                or (self.names[lhs] == "iu" and self.names[rhs] == "u")
+                or (lhs == rhs == "m")
+            )
+        ):
+            expr_eval = f"{self.names[lhs]}.__divmod__({self.names[rhs]})"
+        else:
+            expr_eval = op.format(self.names[lhs], self.names[rhs])
 
+        # generate rejection test, while avoiding trivial cases
         if not (expr_type := self._evaluate(op, lhs, rhs)):
-            # generate rejection test, while avoiding trivial cases
             opname = self.ops[op].__name__.removesuffix("_")
             if (
                 # ignore bitwise ops if neither arg is a bitwise char
