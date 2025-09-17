@@ -70,7 +70,7 @@ types = [
 basedpyright = [
   { include-group = "numpy" },
   { include-group = "types" },
-  "basedpyright==1.31.3", # trait broke divmod in 1.1.404
+  "basedpyright==1.31.4",
 ]
 mypy = [
   { include-group = "types" },

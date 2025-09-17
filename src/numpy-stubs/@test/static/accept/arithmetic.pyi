@@ -22,9 +22,12 @@ AR_Any: _nt.Array
 
 # Time structures
 
+# NOTE: The pyright ignores are the consequence of a pernicious bug in pyright
+# (microsoft/pyright#9896, microsoft/pyright#10849, microsoft/pyright#10899)
+
 assert_type(m8 // m8, np.int64)
 assert_type(m8 % m8, np.timedelta64)
-assert_type(divmod(m8, m8), tuple[np.int64, np.timedelta64])
+assert_type(divmod(m8, m8), tuple[np.int64, np.timedelta64])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
 
 assert_type(M8_none + m8, np.datetime64[None])
 assert_type(M8_none + i, np.datetime64[None])
@@ -54,7 +57,7 @@ assert_type(m8_delta - delta, dt.timedelta)
 assert_type(m8_delta / delta, float)
 assert_type(m8_delta // delta, int)
 assert_type(m8_delta % delta, dt.timedelta)
-assert_type(divmod(m8_delta, delta), tuple[int, dt.timedelta])
+assert_type(divmod(m8_delta, delta), tuple[int, dt.timedelta])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
 
 # Any
 

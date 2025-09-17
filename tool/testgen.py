@@ -1049,10 +1049,23 @@ class ScalarOps(TestGen):
         return f"tuple[{', '.join(result_exprs)}]" if nout > 1 else result_exprs[0]
 
     def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
-        expr_eval = op.format(self.names[lhs], self.names[rhs])
+        # ugly workaround for microsoft/pyright#9896 and microsoft/pyright#10899
+        if (
+            op.startswith("divmod")
+            and "c" not in self.names[lhs] + self.names[rhs]
+            and (
+                self.names[rhs].endswith("_py")
+                or (not self.names[lhs][-1].isdigit() and self.names[rhs][-1].isdigit())
+                or (self.names[lhs] == "iu" and self.names[rhs] == "u")
+                or (lhs == rhs == "m")
+            )
+        ):
+            expr_eval = f"{self.names[lhs]}.__divmod__({self.names[rhs]})"
+        else:
+            expr_eval = op.format(self.names[lhs], self.names[rhs])
 
+        # generate rejection test, while avoiding trivial cases
         if not (expr_type := self._evaluate(op, lhs, rhs)):
-            # generate rejection test, while avoiding trivial cases
             opname = self.ops[op].__name__.removesuffix("_")
             if (
                 # ignore bitwise ops if neither arg is a bitwise char
@@ -1321,6 +1334,39 @@ class NDArrayOps(TestGen):
     @overload
     def _op_expr(self, arg_expr_a: str, arg_expr_b: str, /) -> str: ...
     def _op_expr(self, /, *arg_exprs: str) -> str:
+        # ugly workaround for microsoft/pyright#9896 and microsoft/pyright#10899
+        if self.opname == "divmod":
+            lhs, rhs = arg_exprs
+            if (
+                "c" in {lhs[0], rhs[0]}
+                or (lhs.startswith("m8") and not rhs.startswith("m8"))
+                or (not lhs.startswith("m8") and rhs.startswith("m8"))
+            ):
+                pass
+            elif (
+                lhs.endswith("py")
+                or (
+                    # reflect if rhs is abstract
+                    not rhs.endswith("_py")
+                    and not rhs[1].isdigit()
+                    and lhs[1].isdigit()
+                )
+                or (
+                    # reflect if both are abstract and lhs is coercible to to rhs
+                    not rhs.endswith("_py")
+                    and not rhs[1].isdigit()
+                    and not lhs[1].isdigit()
+                    and lhs != rhs
+                    and (
+                        lhs[0]
+                        in rhs.split("_")[0].replace("c", "cf").replace("f", "fui")
+                    )
+                )
+            ):
+                return f"{rhs}.__rdivmod__({lhs})"
+            else:
+                return f"{lhs}.__divmod__({rhs})"
+
         return self.__op_expr_template.format(*arg_exprs)
 
     def _evaluate_unnop(self, arg: npt.ArrayLike, /) -> np.dtype | None:
