@@ -46,22 +46,22 @@ assert_type(m_td % m_td, np.timedelta64[dt.timedelta | None])
 assert_type(AR_m % m, _nt.Array[np.timedelta64])
 assert_type(m % AR_m, _nt.Array[np.timedelta64])
 
-# NOTE: `builtins.divmod` cannot be used because of
-# https://github.com/microsoft/pyright/issues/9896
+# NOTE: `builtins.divmod` can not always be used because of a recurrent pyright bug
+# (microsoft/pyright#9896, microsoft/pyright#10849, microsoft/pyright#10899)
 
 assert_type(divmod(m, m), tuple[np.int64, np.timedelta64])
-assert_type(m.__divmod__(m_nat), tuple[np.int64, np.timedelta64[None]])  # noqa: PLC2801
-assert_type(m.__divmod__(m_int0), tuple[np.int64, np.timedelta64[None]])  # noqa: PLC2801
-assert_type(m.__divmod__(m_int), tuple[np.int64, np.timedelta64[int | None]])  # noqa: PLC2801
-assert_type(m_nat.__divmod__(m), tuple[np.int64, np.timedelta64[None]])  # noqa: PLC2801
-assert_type(m_int.__divmod__(m_nat), tuple[np.int64, np.timedelta64[None]])  # noqa: PLC2801
-assert_type(m_int.__divmod__(m_int0), tuple[np.int64, np.timedelta64[None]])  # noqa: PLC2801
-assert_type(m_int.__divmod__(m_int), tuple[np.int64, np.timedelta64[int | None]])  # noqa: PLC2801
-assert_type(m_int.__divmod__(m_td), tuple[np.int64, np.timedelta64[int | None]])  # noqa: PLC2801
-assert_type(m_td.__divmod__(m_nat), tuple[np.int64, np.timedelta64[None]])  # noqa: PLC2801
-assert_type(m_td.__divmod__(m_int0), tuple[np.int64, np.timedelta64[None]])  # noqa: PLC2801
-assert_type(m_td.__divmod__(m_int), tuple[np.int64, np.timedelta64[int | None]])  # noqa: PLC2801
-assert_type(m_td.__divmod__(m_td), tuple[np.int64, np.timedelta64[dt.timedelta | None]])  # noqa: PLC2801
+assert_type(divmod(m, m_nat), tuple[np.int64, np.timedelta64[None]])
+assert_type(divmod(m, m_int0), tuple[np.int64, np.timedelta64[None]])
+assert_type(divmod(m, m_int), tuple[np.int64, np.timedelta64[int | None]])
+assert_type(divmod(m_nat, m), tuple[np.int64, np.timedelta64[None]])
+assert_type(divmod(m_int, m_nat), tuple[np.int64, np.timedelta64[None]])
+assert_type(divmod(m_int, m_int0), tuple[np.int64, np.timedelta64[None]])
+assert_type(divmod(m_int, m_int), tuple[np.int64, np.timedelta64[int | None]])
+assert_type(divmod(m_int, m_td), tuple[np.int64, np.timedelta64[int | None]])
+assert_type(divmod(m_td, m_nat), tuple[np.int64, np.timedelta64[None]])
+assert_type(divmod(m_td, m_int0), tuple[np.int64, np.timedelta64[None]])
+assert_type(divmod(m_td, m_int), tuple[np.int64, np.timedelta64[int | None]])
+assert_type(divmod(m_td, m_td), tuple[np.int64, np.timedelta64[dt.timedelta | None]])
 
 assert_type(divmod(AR_m, m), tuple[_nt.Array[np.int64], _nt.Array[np.timedelta64]])
 assert_type(divmod(m, AR_m), tuple[_nt.Array[np.int64], _nt.Array[np.timedelta64]])
