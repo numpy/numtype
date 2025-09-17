@@ -4,7 +4,7 @@ updates:
 - package-ecosystem: github-actions
   directory: /
   schedule:
-    interval: daily
+    interval: weekly
   labels:
   - "topic: dependencies"
   - "tool: github-actions"
@@ -14,4 +14,19 @@ updates:
     actions:
       patterns: ["*"]
 
-# Renovate takes care of uv
+- package-ecosystem: uv
+  versioning-strategy: increase
+  directory: /
+  schedule:
+    interval: weekly
+  allow:
+  - dependency-type: all
+  ignore:
+  - dependency-name: scipy
+  labels:
+  - "topic: dependencies"
+  commit-message:
+    prefix: "⬆️ "
+  groups:
+    actions:
+      patterns: ["*"]
