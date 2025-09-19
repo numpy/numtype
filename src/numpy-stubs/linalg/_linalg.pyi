@@ -7,7 +7,7 @@ import numpy as np
 from numpy._core.fromnumeric import matrix_transpose
 from numpy._core.umath import vecdot
 from numpy._globals import _NoValueType
-from numpy._typing import DTypeLike, _DTypeLike as _ToDType
+from numpy._typing import DTypeLike
 
 __all__ = [
     "LinAlgError",
@@ -45,24 +45,22 @@ __all__ = [
 ]
 
 ###
-
 _T = TypeVar("_T")
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array[Any])
 _Shape2NDT = TypeVar("_Shape2NDT", bound=_nt.Shape2N)
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_NumberT = TypeVar("_NumberT", bound=np.number)
 _IntegerT = TypeVar("_IntegerT", bound=np.integer)
 _FloatingT = TypeVar("_FloatingT", bound=np.floating)
-_NumberT = TypeVar("_NumberT", bound=np.number)
+_Inexact32T = TypeVar("_Inexact32T", bound=_nt.inexact32)
 _NativeScalarT = TypeVar(
     "_NativeScalarT", bound=_nt.co_number | np.flexible | np.datetime64 | np.timedelta64
 )  # no object_
-_Inexact32T = TypeVar("_Inexact32T", bound=_nt.inexact32)
 
 _FloatingT_co = TypeVar("_FloatingT_co", bound=np.floating, default=np.floating, covariant=True)
-_InexactT_co = TypeVar("_InexactT_co", bound=np.inexact, default=Any, covariant=True)
-
 _FloatingNDT_co = TypeVar("_FloatingNDT_co", bound=np.floating | _nt.Array[np.floating], default=Any, covariant=True)
+_InexactT_co = TypeVar("_InexactT_co", bound=np.inexact, default=Any, covariant=True)
 _InexactNDT_co = TypeVar("_InexactNDT_co", bound=np.inexact | _nt.Array[np.inexact], default=Any, covariant=True)
 
 ###
@@ -823,15 +821,15 @@ def matrix_norm(
     x: _nt._ToArray_nnd[_nt.co_number | np.character[Any]], /, *, keepdims: bool = False, ord: _Ord = "fro"
 ) -> Any: ...
 @overload  # 2d float16
-def matrix_norm(x: _nt.ToFloat16_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float16: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _nt.ToFloat16_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float16: ...
 @overload  # 2d float32 | complex64, keepdims=True
-def matrix_norm(x: _Toinexact32_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float32: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _Toinexact32_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float32: ...
 @overload  # 2d float64 | complex128 | character
-def matrix_norm(x: _ToUnsafe64_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float64: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _ToUnsafe64_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.float64: ...
 @overload  # 2d longdouble | clongdouble
-def matrix_norm(x: _Toinexact64l_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.longdouble: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _Toinexact64l_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.longdouble: ...
 @overload  # 2d +number
-def matrix_norm(x: _nt.CoComplex_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.floating: ...  # type: ignore[overload-overlap]
+def matrix_norm(x: _nt.CoComplex_2ds, /, *, keepdims: bool = False, ord: _Ord = "fro") -> np.floating: ...
 @overload  # nd float16, keepdims=True
 def matrix_norm(x: _nt.ToFloat16_1nd, /, *, keepdims: _True, ord: _Ord = "fro") -> _Array2ND[np.float16]: ...
 @overload  # nd float32 | complex64, keepdims=True
@@ -973,9 +971,11 @@ def trace(
     x: _nt.Sequence3ND[_nt.JustComplex], /, *, offset: SupportsIndex = 0, dtype: None = None
 ) -> _nt.Array[np.complex128]: ...
 @overload
-def trace(x: _nt.CoComplex_2ds, /, *, offset: SupportsIndex = 0, dtype: _ToDType[_ScalarT]) -> _ScalarT: ...
+def trace(x: _nt.CoComplex_2ds, /, *, offset: SupportsIndex = 0, dtype: _nt._ToDType[_ScalarT]) -> _ScalarT: ...
 @overload
-def trace(x: _nt.CoComplex_3nd, /, *, offset: SupportsIndex = 0, dtype: _ToDType[_ScalarT]) -> _nt.Array[_ScalarT]: ...
+def trace(
+    x: _nt.CoComplex_3nd, /, *, offset: SupportsIndex = 0, dtype: _nt._ToDType[_ScalarT]
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def trace(x: _nt.CoComplex_3nd, /, *, offset: SupportsIndex = 0, dtype: DTypeLike | None = None) -> _nt.Array[Any]: ...
 @overload
