@@ -51,7 +51,7 @@ Changelog = "https://github.com/numpy/numtype/releases"
 numpy = ["numtype[numpy]"]
 lint = [
   "dprint-py>=0.50.2.0",
-  "ruff>=0.13.0",
+  "ruff>=0.13.1",
 ]
 pytest = [
   { include-group = "numpy" },
@@ -74,7 +74,7 @@ basedpyright = [
 ]
 mypy = [
   { include-group = "types" },
-  "mypy[faster-cache]>=1.18.1",
+  "mypy[faster-cache]>=1.18.2",
 ]
 typecheck = [
   { include-group = "basedpyright" },
