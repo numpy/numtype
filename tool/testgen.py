@@ -1618,16 +1618,6 @@ class _NTRank(TestGen):
                     expr_type = f"{name_type_orig}[{_NT}.{name_type_arg}]"
 
                     expr_template = templates[accept]
-
-                    # TODO(jorenham): remove once python/mypy#19110 is fixed
-                    if (
-                        n_lhs == n_rhs == 0
-                        and name_op == "ge"
-                        and name_lhs[0] == "s"
-                        and name_lhs[-1] == "n"
-                    ):
-                        expr_template = f"{expr_template}  # type: ignore[assignment]"
-
                     yield expr_template.format(name_test, expr_type, name_rhs)
 
                 for name_lhs, name_type_arg in [
