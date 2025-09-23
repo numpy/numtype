@@ -1,9 +1,10 @@
 from typing import Any, Generic, Protocol, Self, TypeAlias, final, type_check_only
-from typing_extensions import TypeAliasType, TypeVar, TypeVarTuple, override
+from typing_extensions import TypeAliasType, TypeVar, TypeVarTuple
 
 from ._shape import AnyShape, Shape, Shape0, Shape1, Shape1N, Shape2, Shape2N, Shape3, Shape3N, Shape4, Shape4N
 
 __all__ = [
+    "AnyRank",
     "HasInnerShape",
     "HasRankGE",
     "HasRankLE",
@@ -22,11 +23,6 @@ __all__ = [
 
 ###
 
-_Shape01: TypeAlias = Shape0 | Shape1
-_Shape02: TypeAlias = _Shape01 | Shape2
-_Shape03: TypeAlias = _Shape02 | Shape3
-_Shape04: TypeAlias = _Shape03 | Shape4
-
 ###
 
 # TODO(jorenham): remove `| Rank0 | Rank` once python/mypy#19110 is fixed
@@ -42,14 +38,11 @@ _RankGE: TypeAlias = _CanBroadcast[_LowerT, Any, _RankT] | _LowerT | Rank
 HasRankLE = TypeAliasType("HasRankLE", _HasInnerShape[_RankLE[_UpperT, _RankT]], type_params=(_UpperT, _RankT))
 HasRankGE = TypeAliasType("HasRankGE", _HasInnerShape[_RankGE[_LowerT, _RankT]], type_params=(_LowerT, _RankT))
 
-_ShapeT = TypeVar("_ShapeT", bound=Shape)
-
 # for unwrapping potential rank types as shape tuples
+_ShapeT = TypeVar("_ShapeT", bound=Shape)
 HasInnerShape = TypeAliasType("HasInnerShape", _HasInnerShape[_HasOwnShape[Any, _ShapeT]], type_params=(_ShapeT,))
 
 ###
-
-_ShapeLikeT_co = TypeVar("_ShapeLikeT_co", bound=Shape | _HasOwnShape | _CanBroadcast[Any, Any], covariant=True)
 
 _FromT_contra = TypeVar("_FromT_contra", contravariant=True)
 _ToT_contra = TypeVar("_ToT_contra", bound=tuple[Any, ...], contravariant=True)
@@ -60,6 +53,8 @@ _EquivT_co = TypeVar("_EquivT_co", bound=Shape, default=Any, covariant=True)
 @type_check_only
 class _CanBroadcast(Protocol[_FromT_contra, _ToT_contra, _EquivT_co]):
     def __broadcast__(self, from_: _FromT_contra, to: _ToT_contra, /) -> _EquivT_co: ...
+
+_ShapeLikeT_co = TypeVar("_ShapeLikeT_co", bound=Shape | _HasOwnShape | _CanBroadcast[Any, Any], covariant=True)
 
 # __inner_shape__ is similar to `shape`, but directly exposes the `Rank` type.
 @final
@@ -85,72 +80,30 @@ class _HasOwnShape(Protocol[_OwnShapeT_contra, _OwnShapeT_co]):
 
 _Ts = TypeVarTuple("_Ts")  # should only contain `int`s
 
-# https://github.com/python/mypy/issues/19093
+@final
 @type_check_only
-class BaseRank(tuple[*_Ts], Generic[*_Ts]):
-    def __broadcast__(self, from_: tuple[*_Ts], to: tuple[*_Ts], /) -> Self: ...
+class BaseRank(tuple[*_Ts], Generic[_FromT_contra, _ToT_contra, *_Ts]):
+    def __broadcast__(self, from_: _FromT_contra, to: _ToT_contra, /) -> Self: ...
     def __own_shape__(self, shape: tuple[*_Ts], /) -> tuple[*_Ts]: ...
 
-@final
-@type_check_only
-class Rank0(BaseRank[()]):
-    @override
-    def __broadcast__(self, from_: Shape0 | _HasOwnShape[Shape, Any], to: Shape, /) -> Self: ...
+_Shape01: TypeAlias = Shape0 | Shape1
+_Shape02: TypeAlias = _Shape01 | Shape2
+_Shape03: TypeAlias = _Shape02 | Shape3
+_Shape04: TypeAlias = _Shape03 | Shape4
 
-@final
-@type_check_only
-class Rank1(BaseRank[int]):
-    @override
-    def __broadcast__(self, from_: _Shape01 | _HasOwnShape[Shape1N, Any], to: Shape1N, /) -> Self: ...
+Rank0 = TypeAliasType("Rank0", BaseRank[Shape0 | _HasOwnShape[Shape, Any], Shape, *tuple[()]])
+Rank1 = TypeAliasType("Rank1", BaseRank[_Shape01 | _HasOwnShape[Shape1N, Any], Shape1N, int])
+Rank2 = TypeAliasType("Rank2", BaseRank[_Shape02 | _HasOwnShape[Shape2N, Any], Shape2N, int, int])
+Rank3 = TypeAliasType("Rank3", BaseRank[_Shape03 | _HasOwnShape[Shape3N, Any], Shape3N, int, int, int])
+Rank4 = TypeAliasType("Rank4", BaseRank[_Shape04 | _HasOwnShape[Shape4N, Any], Shape4N, int, int, int, int])
 
-@final
-@type_check_only
-class Rank2(BaseRank[int, int]):
-    @override
-    def __broadcast__(self, from_: _Shape02 | _HasOwnShape[Shape2N, Any], to: Shape2N, /) -> Self: ...
+Rank = TypeAliasType("Rank", BaseRank[Shape, Shape, *tuple[int, ...]])
+AnyRank = TypeAliasType("AnyRank", BaseRank[Any, AnyShape, *tuple[Any, ...]])
 
-@final
-@type_check_only
-class Rank3(BaseRank[int, int, int]):
-    @override
-    def __broadcast__(self, from_: _Shape03 | _HasOwnShape[Shape3N, Any], to: Shape3N, /) -> Self: ...
+Rank0N = Rank
+Rank1N = TypeAliasType("Rank1N", BaseRank[AnyShape, Shape1N, int, *tuple[int, ...]])
+Rank2N = TypeAliasType("Rank2N", BaseRank[AnyShape, Shape2N, int, int, *tuple[int, ...]])
+Rank3N = TypeAliasType("Rank3N", BaseRank[AnyShape, Shape3N, int, int, int, *tuple[int, ...]])
+Rank4N = TypeAliasType("Rank4N", BaseRank[AnyShape, Shape4N, int, int, int, int, *tuple[int, ...]])
 
-@final
-@type_check_only
-class Rank4(BaseRank[int, int, int, int]):
-    @override
-    def __broadcast__(self, from_: _Shape04 | _HasOwnShape[Shape4N, Any], to: Shape4N, /) -> Self: ...
-
-# these emulates `AnyOf` (gradual union), rather than a `Union`.
-
-@final
-@type_check_only
-class Rank(BaseRank[*tuple[int, ...]]):
-    @override
-    def __broadcast__(self, from_: AnyShape, to: tuple[*_Ts], /) -> Self: ...
-
-@final
-@type_check_only
-class Rank1N(BaseRank[int, *tuple[int, ...]]):
-    @override
-    def __broadcast__(self, from_: AnyShape, to: Shape1N, /) -> Self: ...
-
-@final
-@type_check_only
-class Rank2N(BaseRank[int, int, *tuple[int, ...]]):
-    @override
-    def __broadcast__(self, from_: AnyShape, to: Shape2N, /) -> Self: ...
-
-@final
-@type_check_only
-class Rank3N(BaseRank[int, int, int, *tuple[int, ...]]):
-    @override
-    def __broadcast__(self, from_: AnyShape, to: Shape3N, /) -> Self: ...
-
-@final
-@type_check_only
-class Rank4N(BaseRank[int, int, int, int, *tuple[int, ...]]):
-    @override
-    def __broadcast__(self, from_: AnyShape, to: Shape4N, /) -> Self: ...
-
-Rank0N: TypeAlias = Rank
+# these emulate `AnyOf` (gradual union), rather than a `Union`.

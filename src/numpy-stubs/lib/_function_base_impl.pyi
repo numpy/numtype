@@ -1193,7 +1193,7 @@ def append(arr: ArrayLike, values: ArrayLike, axis: CanIndex | None = ...) -> _n
 
 #
 @overload  # workaround for microsoft/pyright#10232
-def digitize(x: _nt._ToArray_nnd[_nt.co_float], bins: _nt.CoFloating_1d, right: bool = False) -> _nt.Array[np.intp]: ...
+def digitize(x: _nt._ToArray_nnd[_nt.co_float], bins: _nt.CoFloating_1d, right: bool = False) -> _nt.Array[np.intp]: ...  # type: ignore[overload-overlap] # python/mypy#19908
 @overload
 def digitize(x: _nt.CoFloating_0d, bins: _nt.CoFloating_1d, right: bool = False) -> np.intp: ...
 @overload

@@ -23,3 +23,25 @@ assert_type(a3.shape, _nt.Shape3)  # type: ignore[assert-type]
 a4: _nt.Array4D
 assert_type(a4.__inner_shape__, _nt.Rank4)
 assert_type(a4.shape, _nt.Shape4)  # type: ignore[assert-type]
+
+###
+
+rx: _nt.AnyRank
+r0: _nt.Rank0
+r1: _nt.Rank1
+r2: _nt.Rank2
+r3: _nt.Rank3
+r4: _nt.Rank4
+
+rx0: _nt.AnyRank = r0
+rx1: _nt.AnyRank = r1
+rx2: _nt.AnyRank = r2
+rx3: _nt.AnyRank = r3
+rx4: _nt.AnyRank = r4
+
+# TODO: remove the `# type ignore`s once python/mypy#19908 is fixed (yes, another one)
+
+r0x: _nt.Rank0 = rx  # type: ignore[assignment]
+r1x: _nt.Rank1 = rx  # type: ignore[assignment]
+r2x: _nt.Rank2 = rx  # type: ignore[assignment]
+r3x: _nt.Rank3 = rx  # type: ignore[assignment]

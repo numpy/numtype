@@ -144,8 +144,7 @@ assert_type(np.nonzero(AR_f4), tuple[_nt.Array[np.intp], ...])
 assert_type(np.nonzero(AR_1d), tuple[_nt.Array[np.intp], ...])
 assert_type(np.nonzero(AR_nd), tuple[_nt.Array[np.intp], ...])
 
-# TODO: remove the `# type: ignore` once python/mypy#19110 is fixed
-assert_type(np.shape(b1), tuple[()])  # type: ignore[assert-type]
+assert_type(np.shape(b1), tuple[()])
 assert_type(np.shape(f_0d), tuple[()])
 assert_type(np.shape(i_1d), tuple[int])
 assert_type(np.shape(i_2d), tuple[int, int])
