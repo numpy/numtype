@@ -681,7 +681,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
 @overload  # workaround for microsoft/pyright#10232
-def empty_like(
+def empty_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     prototype: _nt._ToArray_nnd[np.intp],
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -731,7 +731,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
 @overload  # workaround for microsoft/pyright#10232
-def empty_like(
+def empty_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     prototype: _nt._ToArray_nnd[np.float64],
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",

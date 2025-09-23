@@ -1082,7 +1082,7 @@ def zeros_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
 @overload  # workaround for microsoft/pyright#10232
-def zeros_like(
+def zeros_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     a: _nt._ToArray_nnd[np.intp],
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -1132,7 +1132,7 @@ def zeros_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
 @overload  # workaround for microsoft/pyright#10232
-def zeros_like(
+def zeros_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     a: _nt._ToArray_nnd[np.float64],
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
@@ -1182,7 +1182,7 @@ def zeros_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.float64]: ...
 @overload  # workaround for microsoft/pyright#10232
-def zeros_like(
+def zeros_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     a: _nt._ToArray_nnd[np.complex128],
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
@@ -1424,7 +1424,7 @@ def ones_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
 @overload  # workaround for microsoft/pyright#10232
-def ones_like(
+def ones_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     a: _nt._ToArray_nnd[np.intp],
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
@@ -1474,7 +1474,7 @@ def ones_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
 @overload  # workaround for microsoft/pyright#10232
-def ones_like(
+def ones_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     a: _nt._ToArray_nnd[np.float64],
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
@@ -1524,7 +1524,7 @@ def ones_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.float64]: ...
 @overload  # workaround for microsoft/pyright#10232
-def ones_like(
+def ones_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     a: _nt._ToArray_nnd[np.complex128],
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",

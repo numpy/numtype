@@ -159,15 +159,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def uniform(
+    def uniform(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, low: _CoFloat_nnd, high: _nt.CoFloating_nd = 1.0, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def uniform(
+    def uniform(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, low: _nt.CoFloating_nd, high: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def uniform(
+    def uniform(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, low: _nt.CoFloating_nd = 0.0, *, high: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -187,15 +187,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def triangular(
+    def triangular(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, left: _CoFloat_nnd, mode: _nt.CoFloating_nd, right: _nt.CoFloating_nd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def triangular(
+    def triangular(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, left: _nt.CoFloating_nd, mode: _CoFloat_nnd, right: _nt.CoFloating_nd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def triangular(
+    def triangular(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, left: _nt.CoFloating_nd, mode: _nt.CoFloating_nd, right: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -218,9 +218,9 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def beta(self, /, a: _CoFloat_nnd, b: _nt.CoFloating_nd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    def beta(self, /, a: _CoFloat_nnd, b: _nt.CoFloating_nd, size: None = None) -> float | _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # workaround for microsoft/pyright#10232
-    def beta(self, /, a: _nt.CoFloating_nd, b: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    def beta(self, /, a: _nt.CoFloating_nd, b: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def beta(self, /, a: _nt.CoFloating_0d, b: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -276,7 +276,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def exponential(self, /, scale: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    def exponential(self, /, scale: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload
     def exponential(self, /, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload
@@ -290,15 +290,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def laplace(
+    def laplace(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def laplace(
+    def laplace(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def laplace(
+    def laplace(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _nt.CoFloating_nd = 0.0, *, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -318,15 +318,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def logistic(
+    def logistic(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def logistic(
+    def logistic(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def logistic(
+    def logistic(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _nt.CoFloating_nd = 0.0, *, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -346,7 +346,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def power(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    def power(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def power(self, /, a: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -356,7 +356,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def pareto(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    def pareto(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def pareto(self, /, a: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -366,15 +366,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def gumbel(
+    def gumbel(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def gumbel(
+    def gumbel(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def gumbel(
+    def gumbel(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _nt.CoFloating_nd = 0.0, *, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -394,7 +394,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def weibull(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    def weibull(self, /, a: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def weibull(self, /, a: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -404,7 +404,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def rayleigh(self, /, scale: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    def rayleigh(self, /, scale: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def rayleigh(self, /, scale: _nt.CoFloating_0d = 1.0, size: None = None) -> float: ...
     @overload  # size: (int, ...)  (positional)
@@ -418,7 +418,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def chisquare(self, /, df: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...
+    def chisquare(self, /, df: _CoFloat_nnd, size: None = None) -> float | _nt.Array[np.float64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def chisquare(self, /, df: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
@@ -428,11 +428,11 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def noncentral_chisquare(
+    def noncentral_chisquare(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, df: _CoFloat_nnd, nonc: _nt.CoFloating_nd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def noncentral_chisquare(
+    def noncentral_chisquare(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, df: _nt.CoFloating_nd, nonc: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -468,15 +468,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def normal(
+    def normal(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def normal(
+    def normal(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def normal(
+    def normal(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, loc: _nt.CoFloating_nd = 0.0, *, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -496,15 +496,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def lognormal(
+    def lognormal(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, mean: _CoFloat_nnd, sigma: _nt.CoFloating_nd = 1.0, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def lognormal(
+    def lognormal(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, mean: _nt.CoFloating_nd = 0.0, *, sigma: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def lognormal(
+    def lognormal(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, mean: _nt.CoFloating_nd, sigma: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -526,11 +526,11 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def vonmises(
+    def vonmises(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, mu: _CoFloat_nnd, kappa: _nt.CoFloating_nd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def vonmises(
+    def vonmises(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, mu: _nt.CoFloating_nd, kappa: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -562,15 +562,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def standard_gamma(
+    def standard_gamma(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, shape: _CoFloat_nnd, size: None = None, dtype: _nt.ToDTypeFloat64 = ..., out: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def standard_gamma(
+    def standard_gamma(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, shape: _CoFloat_nnd, size: None = None, *, dtype: _nt.ToDTypeFloat32, out: None = None
     ) -> float | _nt.Array[np.float32]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def standard_gamma(
+    def standard_gamma(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, shape: _CoFloat_nnd, size: None, dtype: _nt.ToDTypeFloat32, out: None = None
     ) -> float | _nt.Array[np.float32]: ...
     @overload
@@ -637,11 +637,11 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def gamma(
+    def gamma(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, shape: _CoFloat_nnd, scale: _nt.CoFloating_nd = 1.0, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def gamma(
+    def gamma(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, shape: _nt.CoFloating_nd, scale: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -661,11 +661,11 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def f(
+    def f(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, dfnum: _CoFloat_nnd, dfden: _nt.CoFloating_nd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def f(
+    def f(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, dfnum: _nt.CoFloating_nd, dfden: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -679,15 +679,15 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def noncentral_f(
+    def noncentral_f(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, dfnum: _CoFloat_nnd, dfden: _nt.CoFloating_nd, nonc: _nt.CoFloating_nd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def noncentral_f(
+    def noncentral_f(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, dfnum: _nt.CoFloating_nd, dfden: _CoFloat_nnd, nonc: _nt.CoFloating_nd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def noncentral_f(
+    def noncentral_f(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, nonc: _CoFloat_nnd, size: None = None
     ) -> float | _nt.Array[np.float64]: ...
     @overload  # size: None  (default)
@@ -1197,7 +1197,7 @@ class Generator:
     @overload  # workaround for microsoft/pyright#10232
     def binomial(self, /, n: _CoInt_nnd, p: _nt.CoFloating_nd, size: None = None) -> int | _nt.Array[np.int64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def binomial(self, /, n: _nt.CoInteger_nd, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
+    def binomial(self, /, n: _nt.CoInteger_nd, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def binomial(self, /, n: int, p: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
@@ -1209,11 +1209,11 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def negative_binomial(
+    def negative_binomial(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, n: _CoFloat_nnd, p: _nt.CoFloating_nd, size: None = None
     ) -> int | _nt.Array[np.int64]: ...
     @overload  # workaround for microsoft/pyright#10232
-    def negative_binomial(
+    def negative_binomial(  # type: ignore[overload-overlap]  # python/mypy#19908
         self, /, n: _nt.CoFloating_nd, p: _CoFloat_nnd, size: None = None
     ) -> int | _nt.Array[np.int64]: ...
     @overload  # size: None  (default)
@@ -1229,7 +1229,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def poisson(self, /, lam: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
+    def poisson(self, /, lam: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def poisson(self, /, lam: _nt.CoFloating_0d = 1.0, size: None = None) -> int: ...
     @overload  # size: (int, ...)  (positional)
@@ -1241,7 +1241,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def zipf(self, /, a: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
+    def zipf(self, /, a: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def zipf(self, /, a: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
@@ -1251,7 +1251,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def geometric(self, /, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
+    def geometric(self, /, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def geometric(self, /, p: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
@@ -1290,7 +1290,7 @@ class Generator:
 
     #
     @overload  # workaround for microsoft/pyright#10232
-    def logseries(self, /, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...
+    def logseries(self, /, p: _CoFloat_nnd, size: None = None) -> int | _nt.Array[np.int64]: ...  # type: ignore[overload-overlap]  # python/mypy#19908
     @overload  # size: None  (default)
     def logseries(self, /, p: _nt.CoFloating_0d, size: None = None) -> int: ...
     @overload  # size: (int, ...)
