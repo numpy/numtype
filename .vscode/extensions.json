@@ -1,12 +1,13 @@
 {
   "recommendations": [
+    "actboy168.tasks",
     "charliermarsh.ruff",
     "detachhead.basedpyright",
     "dprint.dprint",
+    "github.vscode-pull-request-github",
     "ms-python.mypy-type-checker",
     "ms-python.python",
     "seatonjiang.gitmoji-vscode",
-    "github.vscode-pull-request-github",
   ],
   "unwantedRecommendations": ["ms-pyright.pyright", "ms-python.vscode-pylance"],
 }
