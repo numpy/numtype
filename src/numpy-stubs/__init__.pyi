@@ -2711,7 +2711,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @override
     @overload  # workaround for python/mypy#19110
-    def tolist(self: _HasShapeAndItem[_nt.Rank0, _T], /) -> _T: ...  # type: ignore[overload-overlap]
+    def tolist(self: _HasShapeAndItem[_nt.Rank0, _T], /) -> _T: ...
     @overload  # workaround for microsoft/pyright#10232
     def tolist(self: ndarray[_nt.NeitherShape], /) -> Any: ...
     @overload
