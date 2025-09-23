@@ -435,7 +435,7 @@ wheels = [
 
 [[package]]
 name = "mkdocstrings"
-version = "0.30.0"
+version = "0.30.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
@@ -445,9 +445,9 @@ dependencies = [
     { name = "mkdocs-autorefs" },
     { name = "pymdown-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e2/0a/7e4776217d4802009c8238c75c5345e23014a4706a8414a62c0498858183/mkdocstrings-0.30.0.tar.gz", hash = "sha256:5d8019b9c31ddacd780b6784ffcdd6f21c408f34c0bd1103b5351d609d5b4444", size = 106597, upload-time = "2025-07-22T23:48:45.998Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c5/33/2fa3243439f794e685d3e694590d28469a9b8ea733af4b48c250a3ffc9a0/mkdocstrings-0.30.1.tar.gz", hash = "sha256:84a007aae9b707fb0aebfc9da23db4b26fc9ab562eb56e335e9ec480cb19744f", size = 106350, upload-time = "2025-09-19T10:49:26.446Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/de/b4/3c5eac68f31e124a55d255d318c7445840fa1be55e013f507556d6481913/mkdocstrings-0.30.0-py3-none-any.whl", hash = "sha256:ae9e4a0d8c1789697ac776f2e034e2ddd71054ae1cf2c2bb1433ccfd07c226f2", size = 36579, upload-time = "2025-07-22T23:48:44.152Z" },
+    { url = "https://files.pythonhosted.org/packages/7b/2c/f0dc4e1ee7f618f5bff7e05898d20bf8b6e7fa612038f768bfa295f136a4/mkdocstrings-0.30.1-py3-none-any.whl", hash = "sha256:41bd71f284ca4d44a668816193e4025c950b002252081e387433656ae9a70a82", size = 36704, upload-time = "2025-09-19T10:49:24.805Z" },
 ]
 
 [package.optional-dependencies]
@@ -738,7 +738,7 @@ dev = [
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.7" },
     { name = "mkdocs-material", specifier = ">=9.6.20" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
-    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.1" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.18.2" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pygments", specifier = ">=2.19.2" },
@@ -754,7 +754,7 @@ docs = [
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.7" },
     { name = "mkdocs-material", specifier = ">=9.6.20" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
-    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.1" },
     { name = "pygments", specifier = ">=2.19.2" },
 ]
 lint = [
@@ -1104,6 +1104,7 @@ wheels = [
 name = "ruff"
 version = "0.13.1"
 source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ab/33/c8e89216845615d14d2d42ba2bee404e7206a8db782f33400754f3799f05/ruff-0.13.1.tar.gz", hash = "sha256:88074c3849087f153d4bb22e92243ad4c1b366d7055f98726bc19aa08dc12d51", size = 5397987, upload-time = "2025-09-18T19:52:44.33Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f3/41/ca37e340938f45cfb8557a97a5c347e718ef34702546b174e5300dbb1f28/ruff-0.13.1-py3-none-linux_armv6l.whl", hash = "sha256:b2abff595cc3cbfa55e509d89439b5a09a6ee3c252d92020bd2de240836cf45b", size = 12304308, upload-time = "2025-09-18T19:51:56.253Z" },
     { url = "https://files.pythonhosted.org/packages/ff/84/ba378ef4129415066c3e1c80d84e539a0d52feb250685091f874804f28af/ruff-0.13.1-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:4ee9f4249bf7f8bb3984c41bfaf6a658162cdb1b22e3103eabc7dd1dc5579334", size = 12937258, upload-time = "2025-09-18T19:52:00.184Z" },

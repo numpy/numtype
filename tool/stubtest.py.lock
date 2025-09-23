@@ -5,7 +5,7 @@ requires-python = ">=3.11"
 [manifest]
 requirements = [
     { name = "hypothesis" },
-    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.18.1,<1.19" },
+    { name = "mypy", extras = ["faster-cache"], specifier = ">=1.18.2,<1.19" },
     { name = "numtype", extras = ["numpy"], directory = "../" },
     { name = "pyinstaller" },
     { name = "pytest" },
@@ -41,15 +41,15 @@ wheels = [
 
 [[package]]
 name = "hypothesis"
-version = "6.139.2"
+version = "6.140.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "sortedcontainers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/56/8e/f408b1a6d9745bf02c3d56e0788c930add554eee6b88a39bba141e897ac4/hypothesis-6.139.2.tar.gz", hash = "sha256:2dc2ff36ea977a9cb7fb68f24a5dbf5d673b88a2e502212676eafe09b699f511", size = 466099, upload-time = "2025-09-18T03:29:15.855Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ad/4a/3c340178b986b44b4f71ddb04625c8fb8bf815e7c7e23a6aabb2ce17e849/hypothesis-6.140.2.tar.gz", hash = "sha256:b3b4a162134eeef8a992621de6c43d80e03d44704a3c3bfb5b9d0661b375b0d2", size = 466699, upload-time = "2025-09-23T00:07:21.087Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7c/81/4a85771072ae39064f114f23716e312771a42bfe3a089cba3da6697dd231/hypothesis-6.139.2-py3-none-any.whl", hash = "sha256:6f466780b7d1db074fb473af14e3111a5dd4fe36c47fcd776cd7c480ae0a02f2", size = 533752, upload-time = "2025-09-18T03:29:12.088Z" },
+    { url = "https://files.pythonhosted.org/packages/e9/7d/7dd3684f9cb707b6b1e808c7f23dd0fa4a96fe106b6accd9b757c9985c50/hypothesis-6.140.2-py3-none-any.whl", hash = "sha256:4524cb84be90961563ef15634e2efe96150bbcce47621a13cff3c1b03a326663", size = 534388, upload-time = "2025-09-23T00:07:16.555Z" },
 ]
 
 [[package]]
@@ -237,7 +237,7 @@ dev = [
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.7" },
     { name = "mkdocs-material", specifier = ">=9.6.20" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
-    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.1" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.18.2" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pygments", specifier = ">=2.19.2" },
@@ -253,7 +253,7 @@ docs = [
     { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.7" },
     { name = "mkdocs-material", specifier = ">=9.6.20" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
-    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.1" },
     { name = "pygments", specifier = ">=2.19.2" },
 ]
 lint = [
