@@ -1,0 +1,117 @@
+{
+  "version": "2.0.0",
+  "tasks": [{
+    "label": "tox",
+    "group": { "kind": "test", "isDefault": true },
+    "type": "shell",
+    "command": "uvx tox p",
+    "options": {
+      "cwd": "${workspaceFolder}",
+      "statusbar": { "label": "$(testing-run-all-icon) tox" }
+    },
+    "problemMatcher": []
+  }, {
+    "label": "basedpyright",
+    "group": "test",
+    "type": "shell",
+    "command": "uv run basedpyright",
+    "options": {
+      "cwd": "${workspaceFolder}",
+      "statusbar": { "label": "$(search-fuzzy) basedpyright" }
+    },
+    "problemMatcher": [{
+      "owner": "basedpyright",
+      "fileLocation": "absolute",
+      "pattern": {
+        "regexp": "^(.+):(\\d+):(\\d+) - (error|warning|info): (.+)$",
+        "file": 1,
+        "line": 2,
+        "column": 3,
+        "severity": 4,
+        "message": 5
+      }
+    }]
+  }, {
+    "label": "mypy",
+    "group": "test",
+    "type": "shell",
+    "command": "uv run --no-editable mypy .",
+    "options": {
+      "cwd": "${workspaceFolder}",
+      "statusbar": { "label": "$(search-fuzzy) mypy" }
+    },
+    "problemMatcher": [{
+      "owner": "mypy",
+      "fileLocation": "absolute",
+      "pattern": {
+        "regexp": "^(.+):(\\d+): (error|warning|note): (.+)$",
+        "file": 1,
+        "line": 2,
+        "severity": 3,
+        "message": 4
+      }
+    }]
+  }, {
+    "label": "stubtest",
+    "group": "test",
+    "type": "shell",
+    "command": "uv run tool/stubtest.py",
+    "options": {
+      "cwd": "${workspaceFolder}",
+      "statusbar": { "label": "$(beaker) stubtest" }
+    },
+    "problemMatcher": []
+  }, {
+    "label": "ruff format",
+    "group": "build",
+    "type": "shell",
+    "command": "uv run ruff format",
+    "options": { "statusbar": { "hide": true } },
+    "presentation": { "close": true, "reveal": "silent" },
+    "problemMatcher": []
+  }, {
+    "label": "dprint format",
+    "group": "build",
+    "type": "shell",
+    "command": "uv run dprint fmt",
+    "options": { "statusbar": { "hide": true } },
+    "presentation": { "close": true, "reveal": "silent" },
+    "problemMatcher": []
+  }, {
+    "label": "format type-ignore comments",
+    "group": "build",
+    "type": "shell",
+    "command": "uv run tool/format_ignores.py",
+    "options": { "statusbar": { "hide": true } },
+    "presentation": { "close": true, "reveal": "silent" },
+    "problemMatcher": ["$python"]
+  }, {
+    "label": "format",
+    "group": { "kind": "build", "default": true },
+    "dependsOn": ["ruff format", "dprint format", "format type-ignore comments"],
+    "options": { "statusbar": { "label": "$(paintcan) format" } },
+    "problemMatcher": []
+  }, {
+    "label": "mkdocs serve",
+    "group": "build",
+    "type": "shell",
+    "command": "uv run mkdocs serve",
+    "options": {
+      "cwd": "${workspaceFolder}",
+      "statusbar": {
+        "label": "$(markdown) mkdocs",
+        "filePattern": "docs/.*|mkdocs.yml"
+      }
+    },
+    "isBackground": true,
+    "presentation": { "panel": "dedicated" },
+    "problemMatcher": [{
+      "base": "$python",
+      "background": {
+        "activeOnStart": true,
+        "beginsPattern": "Building documentation...",
+        "endsPattern": "Serving on"
+      }
+    }]
+  }]
+}
