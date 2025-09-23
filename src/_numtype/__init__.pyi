@@ -84,6 +84,7 @@ from ._nep50 import (
     CastsWithScalar as CastsWithScalar,
 )
 from ._rank import (
+    AnyRank as AnyRank,
     HasInnerShape as HasInnerShape,
     HasRankGE as HasRankGE,
     HasRankLE as HasRankLE,
