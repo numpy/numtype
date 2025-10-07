@@ -51,7 +51,7 @@ Changelog = "https://github.com/numpy/numtype/releases"
 numpy = ["numtype[numpy]"]
 lint = [
   "dprint-py>=0.50.2.0",
-  "ruff>=0.13.1",
+  "ruff>=0.13.3",
 ]
 pytest = [
   { include-group = "numpy" },
@@ -70,7 +70,7 @@ types = [
 basedpyright = [
   { include-group = "numpy" },
   { include-group = "types" },
-  "basedpyright==1.31.5",
+  "basedpyright==1.31.6",
 ]
 mypy = [
   { include-group = "types" },
@@ -81,10 +81,10 @@ typecheck = [
   { include-group = "mypy" },
 ]
 docs = [
-  "mkdocs-material>=9.6.20",
+  "mkdocs-material>=9.6.21",
   "mkdocs-awesome-nav>=3.2.0",
   "markdown-callouts>=0.4.0",
-  "mkdocs-include-markdown-plugin>=7.1.7",
+  "mkdocs-include-markdown-plugin>=7.2.0",
   "mkdocs-minify-plugin>=0.8.0",
   "mkdocstrings[python]>=0.30.1",
   "pygments>=2.19.2",

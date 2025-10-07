@@ -23,11 +23,11 @@ wheels = [
 
 [[package]]
 name = "attrs"
-version = "25.3.0"
+version = "25.4.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/5a/b0/1367933a8532ee6ff8d63537de4f1177af4bff9f3e829baf7331f595bb24/attrs-25.3.0.tar.gz", hash = "sha256:75d7cefc7fb576747b2c81b4442d4d4a1ce0900973527c011d1030fd3bf4af1b", size = 812032, upload-time = "2025-03-13T11:10:22.779Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6b/5c/685e6633917e101e5dcb62b9dd76946cbb57c26e133bae9e0cd36033c0a9/attrs-25.4.0.tar.gz", hash = "sha256:16d5969b87f0859ef33a48b35d55ac1be6e42ae49d5e853b597db70c35c57e11", size = 934251, upload-time = "2025-10-06T13:54:44.725Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/77/06/bb80f5f86020c4551da315d78b3ab75e8228f89f0162f2c3a819e407941a/attrs-25.3.0-py3-none-any.whl", hash = "sha256:427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3", size = 63815, upload-time = "2025-03-13T11:10:21.14Z" },
+    { url = "https://files.pythonhosted.org/packages/3a/2a/7cc015f5b9f5db42b7d48157e23356022889fc354a2813c15934b7cb5c0e/attrs-25.4.0-py3-none-any.whl", hash = "sha256:adcf7e2a1fb3b36ac48d97835bb6d8ade15b8dcce26aba8bf1d14847b57a3373", size = 67615, upload-time = "2025-10-06T13:54:43.17Z" },
 ]
 
 [[package]]
@@ -41,15 +41,15 @@ wheels = [
 
 [[package]]
 name = "hypothesis"
-version = "6.140.2"
+version = "6.140.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "sortedcontainers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ad/4a/3c340178b986b44b4f71ddb04625c8fb8bf815e7c7e23a6aabb2ce17e849/hypothesis-6.140.2.tar.gz", hash = "sha256:b3b4a162134eeef8a992621de6c43d80e03d44704a3c3bfb5b9d0661b375b0d2", size = 466699, upload-time = "2025-09-23T00:07:21.087Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/18/7f/946343e32881b56adc0eba64e428ad2f85251f9ef16e3e4ec1b6ab80199b/hypothesis-6.140.3.tar.gz", hash = "sha256:4f4a09bf77af21e0cc3dffed1ea639812dc75d38f81308ec9fb0e33f8557b0cb", size = 466925, upload-time = "2025-10-04T22:29:44.499Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e9/7d/7dd3684f9cb707b6b1e808c7f23dd0fa4a96fe106b6accd9b757c9985c50/hypothesis-6.140.2-py3-none-any.whl", hash = "sha256:4524cb84be90961563ef15634e2efe96150bbcce47621a13cff3c1b03a326663", size = 534388, upload-time = "2025-09-23T00:07:16.555Z" },
+    { url = "https://files.pythonhosted.org/packages/65/2a/0553ac2a8af432df92f2ffc05ca97e7ed64e00c97a371b019ae2690de325/hypothesis-6.140.3-py3-none-any.whl", hash = "sha256:a2cfff51641a58a56081f5c90ae1da6ccf3d043404f411805f7f0e0d75742d0e", size = 534534, upload-time = "2025-10-04T22:29:40.635Z" },
 ]
 
 [[package]]
@@ -222,7 +222,7 @@ provides-extras = ["numpy"]
 
 [package.metadata.requires-dev]
 basedpyright = [
-    { name = "basedpyright", specifier = "==1.31.4" },
+    { name = "basedpyright", specifier = "==1.31.6" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.4.2" },
     { name = "types-setuptools", specifier = ">=80.9.0.20250822" },
@@ -230,19 +230,19 @@ basedpyright = [
     { name = "typing-extensions", specifier = ">=4.15.0" },
 ]
 dev = [
-    { name = "basedpyright", specifier = "==1.31.4" },
+    { name = "basedpyright", specifier = "==1.31.6" },
     { name = "dprint-py", specifier = ">=0.50.2.0" },
     { name = "markdown-callouts", specifier = ">=0.4.0" },
     { name = "mkdocs-awesome-nav", specifier = ">=3.2.0" },
-    { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.7" },
-    { name = "mkdocs-material", specifier = ">=9.6.20" },
+    { name = "mkdocs-include-markdown-plugin", specifier = ">=7.2.0" },
+    { name = "mkdocs-material", specifier = ">=9.6.21" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.1" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.18.2" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pygments", specifier = ">=2.19.2" },
     { name = "pytest", specifier = ">=8.4.2" },
-    { name = "ruff", specifier = ">=0.13.1" },
+    { name = "ruff", specifier = ">=0.13.3" },
     { name = "types-setuptools", specifier = ">=80.9.0.20250822" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.15.0" },
@@ -250,21 +250,21 @@ dev = [
 docs = [
     { name = "markdown-callouts", specifier = ">=0.4.0" },
     { name = "mkdocs-awesome-nav", specifier = ">=3.2.0" },
-    { name = "mkdocs-include-markdown-plugin", specifier = ">=7.1.7" },
-    { name = "mkdocs-material", specifier = ">=9.6.20" },
+    { name = "mkdocs-include-markdown-plugin", specifier = ">=7.2.0" },
+    { name = "mkdocs-material", specifier = ">=9.6.21" },
     { name = "mkdocs-minify-plugin", specifier = ">=0.8.0" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.30.1" },
     { name = "pygments", specifier = ">=2.19.2" },
 ]
 lint = [
     { name = "dprint-py", specifier = ">=0.50.2.0" },
-    { name = "ruff", specifier = ">=0.13.1" },
+    { name = "ruff", specifier = ">=0.13.3" },
 ]
 list-and-test = [
     { name = "dprint-py", specifier = ">=0.50.2.0" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.4.2" },
-    { name = "ruff", specifier = ">=0.13.1" },
+    { name = "ruff", specifier = ">=0.13.3" },
     { name = "typing-extensions", specifier = ">=4.15.0" },
 ]
 mypy = [
@@ -282,7 +282,7 @@ pytest = [
     { name = "typing-extensions", specifier = ">=4.15.0" },
 ]
 typecheck = [
-    { name = "basedpyright", specifier = "==1.31.4" },
+    { name = "basedpyright", specifier = "==1.31.6" },
     { name = "mypy", extras = ["faster-cache"], specifier = ">=1.18.2" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.4.2" },
@@ -437,15 +437,15 @@ wheels = [
 
 [[package]]
 name = "pyinstaller-hooks-contrib"
-version = "2025.8"
+version = "2025.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "packaging" },
     { name = "setuptools" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/71/d6/e5b378b7d4add8c879295c531309b0320e9c07a70458665d091760ffdc87/pyinstaller_hooks_contrib-2025.8.tar.gz", hash = "sha256:3402ad41dfe9b5110af134422e37fc5d421ba342c6cb980bd67cb30b7415641c", size = 164214, upload-time = "2025-07-27T16:37:31.943Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/83/be0f57c0b77b66c33c2283ebd4ea341022b5a743e97c5fb3bebab82b38b9/pyinstaller_hooks_contrib-2025.9.tar.gz", hash = "sha256:56e972bdaad4e9af767ed47d132362d162112260cbe488c9da7fee01f228a5a6", size = 165189, upload-time = "2025-09-24T11:21:35.113Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/48/34/1d973d0dae849683e53fbcda84443ce016f315e6f4dc7605ede4f56a28c3/pyinstaller_hooks_contrib-2025.8-py3-none-any.whl", hash = "sha256:8d0b8cfa0cb689a619294ae200497374234bd4e3994b3ace2a4442274c899064", size = 442346, upload-time = "2025-07-27T16:37:30.268Z" },
+    { url = "https://files.pythonhosted.org/packages/a2/26/23b4cfc77d7f808c69f59070e1e8293a579ec281a547c61562357160b346/pyinstaller_hooks_contrib-2025.9-py3-none-any.whl", hash = "sha256:ccbfaa49399ef6b18486a165810155e5a8d4c59b41f20dc5da81af7482aaf038", size = 444283, upload-time = "2025-09-24T11:21:33.67Z" },
 ]
 
 [[package]]
