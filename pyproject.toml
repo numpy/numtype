@@ -145,7 +145,6 @@ reportMissingSuperCall = false
 reportPrivateUsage = false
 reportPropertyTypeMismatch = false
 reportSelfClsParameterName = false
-reportShadowedImports = false # causes a ~35% slowdown
 reportUninitializedInstanceVariable = true
 reportUnnecessaryTypeIgnoreComment = true
 reportUnusedExpression = false
