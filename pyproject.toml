@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv_build>=0.8.22,<0.9"]
+requires = ["uv_build>=0.9.0,<0.10.0"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
@@ -51,7 +51,7 @@ Changelog = "https://github.com/numpy/numtype/releases"
 numpy = ["numtype[numpy]"]
 lint = [
   "dprint-py>=0.50.2.0",
-  "ruff>=0.13.3",
+  "ruff>=0.14.0",
 ]
 pytest = [
   { include-group = "numpy" },
