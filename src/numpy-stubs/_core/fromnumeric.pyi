@@ -230,7 +230,7 @@ def matrix_transpose(x: ArrayLike, /) -> _nt.Array[Incomplete]: ...
 def partition(
     a: _nt._ToArray_nd[_ScalarT],
     kth: _nt.ToInteger_nd,
-    axis: CanIndex | None = None,
+    axis: CanIndex | None = -1,
     kind: _PartitionKind = "introselect",
     order: _Order | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -238,7 +238,7 @@ def partition(
 def partition(
     a: ArrayLike,
     kth: _nt.ToInteger_nd,
-    axis: CanIndex | None = None,
+    axis: CanIndex | None = -1,
     kind: _PartitionKind = "introselect",
     order: _Order | None = None,
 ) -> _nt.Array[Incomplete]: ...
@@ -266,7 +266,7 @@ def sort(
 def sort(
     a: _nt.CanArray0D[_ScalarT],
     axis: None,
-    kind: CanIndex | None = -1,
+    kind: CanIndex | None = None,
     order: _Order | None = None,
     *,
     stable: bool | None = None,
