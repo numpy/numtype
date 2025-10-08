@@ -1,5 +1,5 @@
 from _typeshed import Incomplete
-from typing import Final
+from typing import Final, final
 from typing_extensions import override
 
 import _numtype as _nt
@@ -80,6 +80,8 @@ class _fromnxfunction_allargs(_fromnxfunction):
     def __call__(self, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
 
 class MAxisConcatenator(AxisConcatenator):
+    __slots__ = ()
+
     @staticmethod
     @override
     def concatenate(arrays: Incomplete, axis: int = 0) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -87,7 +89,10 @@ class MAxisConcatenator(AxisConcatenator):
     @override
     def makemat(cls, arr: Incomplete) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleVariableOverride]
 
+@final
 class mr_class(MAxisConcatenator):
+    __slots__ = ()
+
     def __init__(self) -> None: ...
 
 def count_masked(arr: Incomplete, axis: Incomplete = ...) -> Incomplete: ...
