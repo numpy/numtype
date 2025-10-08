@@ -242,7 +242,7 @@ dev = [
     { name = "numtype", extras = ["numpy"] },
     { name = "pygments", specifier = ">=2.19.2" },
     { name = "pytest", specifier = ">=8.4.2" },
-    { name = "ruff", specifier = ">=0.13.3" },
+    { name = "ruff", specifier = ">=0.14.0" },
     { name = "types-setuptools", specifier = ">=80.9.0.20250822" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
     { name = "typing-extensions", specifier = ">=4.15.0" },
@@ -258,13 +258,13 @@ docs = [
 ]
 lint = [
     { name = "dprint-py", specifier = ">=0.50.2.0" },
-    { name = "ruff", specifier = ">=0.13.3" },
+    { name = "ruff", specifier = ">=0.14.0" },
 ]
 list-and-test = [
     { name = "dprint-py", specifier = ">=0.50.2.0" },
     { name = "numtype", extras = ["numpy"] },
     { name = "pytest", specifier = ">=8.4.2" },
-    { name = "ruff", specifier = ">=0.13.3" },
+    { name = "ruff", specifier = ">=0.14.0" },
     { name = "typing-extensions", specifier = ">=4.15.0" },
 ]
 mypy = [
