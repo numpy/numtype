@@ -23,14 +23,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5.0.0
+    - uses: actions/checkout@v6.0.0
 
     - name: Configure Git Credentials
       run: |
         git config user.name github-actions[bot]
         git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
-    - uses: astral-sh/setup-uv@v7.1.2
+    - uses: astral-sh/setup-uv@v7.1.4
 
     - name: mkdocs gh-deploy
       run: uv run --only-group=docs mkdocs gh-deploy --force
