@@ -30,11 +30,6 @@ classifiers = [
   "Typing :: Stubs Only",
   "Typing :: Typed",
 ]
-packages = [
-  { include = "src/_numtype" },
-  { include = "src/numpy-stubs" },
-  { include = "src/numtype" },
-]
 requires-python = ">=3.11"
 dependencies = []
 
