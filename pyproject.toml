@@ -65,7 +65,7 @@ types = [
 basedpyright = [
   { include-group = "numpy" },
   { include-group = "types" },
-  "basedpyright==1.33.0",
+  "basedpyright==1.34.0",
 ]
 mypy = [
   { include-group = "types" },
