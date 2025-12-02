@@ -217,11 +217,11 @@ allow-dunder-method-names = ["__array__", "__array_ufunc__"]
 # pytest
 
 [tool.pytest.ini_options]
-minversion = "8.0"
-addopts = ["-ra", "--strict-config", "--strict-markers"]
+minversion = "9.0"
+addopts = ["-ra"]
 filterwarnings = ["error"]
-log_cli_level = "INFO"
-xfail_strict = true
+log_level = "INFO"
+strict = true
 
 # tox
 
