@@ -26,7 +26,7 @@ __all__ = ["einsum", "einsum_path"]
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array[_nt.co_complex])
 
 # TODO (@jorenham): Annotate the `Sequence` value (numpy/numtype#724)
-_OptimizeKind: TypeAlias = bool | Literal["greedy", "optimal"] | Sequence[Incomplete]
+_OptimizeKind: TypeAlias = bool | Literal["greedy", "optimal"] | Sequence[str | tuple[int, ...]]
 _CastingSafe: TypeAlias = Literal["no", "equiv", "safe", "same_kind"]
 _CastingUnsafe: TypeAlias = Literal["unsafe"]
 
@@ -178,4 +178,4 @@ def einsum_path(
     *operands: _ArrayLikeComplex_co | _DTypeLikeObject,
     optimize: _OptimizeKind = "greedy",
     einsum_call: L[False] = False,
-) -> tuple[list[Incomplete], str]: ...
+) -> tuple[list[str | tuple[int, ...]], str]: ...
