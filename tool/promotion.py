@@ -38,13 +38,13 @@ def _types_co(chars: str, /) -> tuple[_ToScalarType, ...]:
 
 def _promotes_to(sct: npt.DTypeLike) -> tuple[_ToScalarType, ...]:
     out: list[_ToScalarType] = []
-    for _t in (bool, int, float, complex, str, bytes, *np.sctypeDict.values()):
+    for t in (bool, int, float, complex, str, bytes, *np.sctypeDict.values()):
         try:
-            dt = np.result_type(sct, _t)
+            dt = np.result_type(sct, t)
         except (ValueError, TypeError):
             continue
         if np.dtype(dt) == sct:
-            out.append(_t)
+            out.append(t)
     return tuple(dict.fromkeys(out))
 
 
