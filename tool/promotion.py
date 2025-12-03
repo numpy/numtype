@@ -187,9 +187,8 @@ def _parse_args(args: Sequence[str] | None, /) -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="promotion.py")
 
     parser.add_argument(
-        "-f",
-        "--format",
-        type=str,
+        "format",
+        nargs="?",
         choices=["table", "graph"],
         default="table",
         help="display format",
