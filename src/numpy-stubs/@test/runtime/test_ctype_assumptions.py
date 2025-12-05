@@ -46,6 +46,10 @@ def test_alias_integer(name_c: str, name_expect: str) -> None:
 
 
 # --- Floating Point Aliases ---
+_longdouble_name = np.dtype(np.longdouble).name
+assert _longdouble_name in {"float64", "float96", "float128"}, \
+    f"Unrecognized longdouble type: {_longdouble_name}"
+    
 _float_aliases = [
     ("half", "float16"),
     ("single", "float32"),
