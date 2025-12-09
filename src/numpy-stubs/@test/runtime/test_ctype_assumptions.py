@@ -4,16 +4,16 @@ import ctypes as ct
 import platform
 import sys
 
-import pytest
-
 import numpy as np
+import pytest
 
 IS_WIN = sys.platform == "win32"
 IS_X86 = platform.machine().lower() in {"x86_64", "amd64", "i386", "i686"}
 SIZE_P = ct.sizeof(ct.c_ssize_t) * 8
 
 
-def test_maxsize_width() -> None:
+def test_maxsize_32_or_64() -> None:
+    # assume we're either on a 32 or a 64 bit system
     assert SIZE_P in {32, 64}
     assert sys.maxsize == (1 << (SIZE_P - 1)) - 1
 
@@ -36,13 +36,13 @@ def test_longlong_64(char: str) -> None:
     ],
 )
 def test_alias_integer(name_c: str, name_expect: str) -> None:
-    signed_c = np.dtype(getattr(np, name_c))
-    signed_expect = np.dtype(getattr(np, name_expect))
-    assert signed_c == signed_expect
+    signed_c: type[np.signedinteger] = getattr(np, name_c)
+    signed_expect: type[np.signedinteger] = getattr(np, name_expect)
+    assert np.dtype(signed_c) == np.dtype(signed_expect)
 
-    unsigned_c = np.dtype(getattr(np, f"u{name_c}"))
-    unsigned_expect = np.dtype(getattr(np, f"u{name_expect}"))
-    assert unsigned_c == unsigned_expect
+    unsigned_c: type[np.unsignedinteger] = getattr(np, f"u{name_c}")
+    unsigned_expect: type[np.unsignedinteger] = getattr(np, f"u{name_expect}")
+    assert np.dtype(unsigned_c) == np.dtype(unsigned_expect)
 
 
 @pytest.mark.parametrize(
@@ -50,18 +50,12 @@ def test_alias_integer(name_c: str, name_expect: str) -> None:
     [("half", "float16"), ("single", "float32"), ("double", "float64")],
 )
 def test_alias_floating_standard(name_c: str, name_expect: str) -> None:
-    floating_c = np.dtype(getattr(np, name_c))
-    floating_expect = np.dtype(getattr(np, name_expect))
-    assert floating_c == floating_expect
+    floating_c: type[np.floating] = getattr(np, name_c)
+    floating_expect: type[np.floating] = getattr(np, name_expect)
+    assert np.dtype(floating_c) == np.dtype(floating_expect)
 
 
 def test_alias_longdouble() -> None:
-    """
-    Verify longdouble alias.
-    - Windows: float64 (MSVC) or float96 (MinGW).
-    - x86 Linux/Mac: float128 .
-    - ARM64 Linux/Mac: float64 .
-    """
     ld_name = np.dtype(np.longdouble).name
 
     if IS_WIN:
