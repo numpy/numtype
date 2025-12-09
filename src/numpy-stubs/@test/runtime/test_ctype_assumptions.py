@@ -5,10 +5,11 @@ import platform
 import sys
 
 import pytest
+
 import numpy as np
 
 IS_WIN = sys.platform == "win32"
-IS_X86 = platform.machine().lower() in ("x86_64", "amd64", "i386", "i686")
+IS_X86 = platform.machine().lower() in {"x86_64", "amd64", "i386", "i686"}
 SIZE_P = ct.sizeof(ct.c_ssize_t) * 8
 
 
