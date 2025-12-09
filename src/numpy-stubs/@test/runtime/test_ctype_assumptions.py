@@ -45,11 +45,7 @@ def test_alias_integer(name_c: str, name_expect: str) -> None:
 
 @pytest.mark.parametrize(
     ("name_c", "name_expect"),
-    [
-        ("half", "float16"),
-        ("single", "float32"),
-        ("double", "float64"),
-    ],
+    [("half", "float16"), ("single", "float32"), ("double", "float64")],
 )
 def test_alias_floating_standard(name_c: str, name_expect: str) -> None:
     floating_c: type[np.floating] = getattr(np, name_c)
