@@ -4,8 +4,9 @@ import ctypes as ct
 import platform
 import sys
 
-import numpy as np
 import pytest
+
+import numpy as np
 
 IS_WIN = sys.platform == "win32"
 IS_X86 = platform.machine().lower() in {"x86_64", "amd64", "i386", "i686"}
