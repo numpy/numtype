@@ -1,24 +1,16 @@
-from __future__ import annotations
-
-from typing import Any
+from typing import Any, Self
 
 import numpy as np
-import numpy.typing as npt
 
 
 class Object:
-    def __ceil__(self) -> Object:
+    def __trunc__(self, /) -> Self:
         return self
 
-    def __floor__(self) -> Object:
-        return self
-
-    def __ge__(self, value: object) -> bool:
+    def __ge__(self, other: object, /) -> bool:
         return True
 
-    def __array__(
-        self, dtype: npt.DTypeLike | None = None, *, copy: bool | None = None
-    ) -> np.ndarray[Any, np.dtype[np.object_]]:
+    def __array__(self, /) -> np.ndarray[Any, np.dtype[np.object_]]:
         ret = np.empty((), dtype=object)
         ret[()] = self
         return ret
@@ -29,7 +21,7 @@ AR_LIKE_u = [np.uint32(1), np.uint32(2), np.uint32(3)]
 AR_LIKE_i = [1, 2, 3]
 AR_LIKE_f = [1.0, 2.0, 3.0]
 AR_LIKE_O = [Object(), Object(), Object()]
-AR_U: np.ndarray[Any, np.dtype[np.str_]] = np.zeros(3, dtype="U5")
+AR_U: np.ndarray[tuple[int], np.dtype[np.str_]] = np.zeros(3, dtype="U5")
 
 np.fix(AR_LIKE_b)
 np.fix(AR_LIKE_u)

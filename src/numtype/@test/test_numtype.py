@@ -17,4 +17,4 @@ def test_reexport(name: str) -> None:
 
 
 def test_version() -> None:
-    assert nt.__version__.startswith(np.__version__)
+    assert nt.__version__.startswith(np.__version__.split("rc")[0])
