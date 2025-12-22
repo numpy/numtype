@@ -296,4 +296,4 @@ commands = [
 extend-ignore-identifiers-re = ['ND|nd|nin|NIN|TYP']
 
 [tool.typos.files]
-extend-exclude = ["*.pyi", ".mypyignore"]
+extend-exclude = ["*.pyi", "tool/allowlists/*.txt"]
