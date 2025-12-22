@@ -2,4 +2,7 @@
 
 numpy\.distutils
 numpy\.f2py\._backends\._distutils
-numpy\._core\._type_aliases\.__conditional_annotations__
+
+# false positive "... is not a Union" errors
+numpy\.typing\.ArrayLike
+numpy\.typing\.DTypeLike

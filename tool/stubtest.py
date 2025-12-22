@@ -2,7 +2,7 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #     "numtype[numpy]",
-#     "mypy[faster-cache] >=1.18.2, <1.19",  # keep in sync with pyproject.toml
+#     "mypy[faster-cache] >=1.19.1",  # keep in sync with pyproject.toml
 #     "PyInstaller",
 #     "hypothesis",
 #     "pytest",
@@ -43,7 +43,7 @@ else:
     __root_site = None
 ROOT_SITE_DIR = __root_site
 
-ALLOWLISTS = ["common.txt", f"py3{sys.version_info.minor}.txt"]
+ALLOWLISTS = ["todo.txt", "common.txt", f"py3{sys.version_info.minor}.txt"]
 
 
 def __check_simd() -> None:
@@ -65,7 +65,7 @@ def _allowlists() -> list[str]:
 
 
 def _stubtest_command() -> list[str]:
-    cmd = ["stubtest", "--ignore-disjoint-bases"]
+    cmd = ["stubtest", "--ignore-disjoint-bases", "--ignore-disjoint-bases"]
     args_extra = sys.argv[1:]
 
     if not any("--mypy-config-file" in arg for arg in args_extra):
