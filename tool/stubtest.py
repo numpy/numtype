@@ -43,7 +43,7 @@ else:
     __root_site = None
 ROOT_SITE_DIR = __root_site
 
-ALLOWLISTS = ["common.txt", f"py3{sys.version_info.minor}.txt"]
+ALLOWLISTS = ["todo.txt", "common.txt", f"py3{sys.version_info.minor}.txt"]
 
 
 def __check_simd() -> None:
