@@ -204,7 +204,8 @@ def main(args: Sequence[str] | None = None, /) -> int:
         import tabulate  # pyright: ignore[reportMissingModuleSource]  # noqa: PLC0415
 
         print(
-            tabulate.tabulate(
+            tabulate
+            .tabulate(
                 [list(map(as_code, entry.values())) for entry in data],
                 headers=[as_code("ufunc"), *list(map(as_code, data[0]))[1:]],
                 tablefmt=namespace.format,
