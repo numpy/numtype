@@ -65,7 +65,7 @@ def _allowlists() -> list[str]:
 
 
 def _stubtest_command() -> list[str]:
-    cmd = ["stubtest", "--ignore-disjoint-bases"]
+    cmd = ["stubtest", "--ignore-disjoint-bases", "--ignore-disjoint-bases"]
     args_extra = sys.argv[1:]
 
     if not any("--mypy-config-file" in arg for arg in args_extra):
