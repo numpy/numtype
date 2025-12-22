@@ -665,8 +665,6 @@ numpy.save
 numpy.shares_memory
 numpy.strings.slice
 numpy.trapz
-numpy.typing.ArrayLike
-numpy.typing.DTypeLike
 numpy.ufunc.__signature__
 numpy.void.__new__
 numpy.where

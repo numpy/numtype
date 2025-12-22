@@ -2,3 +2,7 @@
 
 numpy\.distutils
 numpy\.f2py\._backends\._distutils
+
+# false positive "... is not a Union" errors
+numpy\.typing\.ArrayLike
+numpy\.typing\.DTypeLike
