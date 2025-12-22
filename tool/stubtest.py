@@ -2,7 +2,7 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #     "numtype[numpy]",
-#     "mypy[faster-cache] >=1.18.2, <1.19",  # keep in sync with pyproject.toml
+#     "mypy[faster-cache] >=1.19.1",  # keep in sync with pyproject.toml
 #     "PyInstaller",
 #     "hypothesis",
 #     "pytest",
