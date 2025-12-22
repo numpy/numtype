@@ -26,7 +26,6 @@ numpy._core._multiarray_umath.frombuffer
 numpy._core._multiarray_umath.fromfile
 numpy._core._multiarray_umath.fromiter
 numpy._core._multiarray_umath.zeros
-numpy._core._simd.X86_V4
 numpy._core._type_aliases.abstract_type
 numpy._core._type_aliases.base_name
 numpy._core._type_aliases.bits

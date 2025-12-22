@@ -4,3 +4,4 @@ numpy\._core\._simd\.FMA3
 numpy\._core\._simd\.AVX2
 numpy\._core\._simd\.AVX512F
 numpy\._core\._simd\.AVX512_SKX
+numpy\._core\._simd\.X86_V4
