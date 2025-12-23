@@ -9,25 +9,17 @@ from typing import (
     Self,
     SupportsIndex as CanIndex,
     TypeAlias,
+    TypedDict,
     overload,
     type_check_only,
 )
-from typing_extensions import TypeVar, override
+from typing_extensions import TypeVar, Unpack, override
 
 import _numtype as _nt
 import numpy as np
 from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
 from numpy._globals import _NoValueType
-from numpy._typing import (
-    ArrayLike,
-    DTypeLike,
-    _ArrayLike,
-    _BoolCodes,
-    _DTypeLike,
-    _ScalarLike_co,
-    _ShapeLike,
-    _SupportsArrayFunc,
-)
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ScalarLike_co, _ShapeLike, _SupportsArrayFunc
 
 __all__ = [
     "MAError",
@@ -211,13 +203,26 @@ __all__ = [
 ]
 
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
+_MArrayT = TypeVar("_MArrayT", bound=np.ma.MaskedArray[Any, Any])
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 # TODO: use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.Shape, covariant=True)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
-_DTypeLikeBool: TypeAlias = type[bool | np.bool_] | np.dtype[np.bool_] | _BoolCodes
+_ToInt: TypeAlias = int | _nt.co_integer
+_ToTD64: TypeAlias = int | _nt.co_timedelta
+_ToFloat: TypeAlias = float | _nt.co_float
+_ArangeScalar: TypeAlias = np.integer | np.floating | np.datetime64 | np.timedelta64
+_ArangeScalarT = TypeVar("_ArangeScalarT", bound=_ArangeScalar)
+
+@type_check_only
+class _UFuncKwargs(TypedDict, total=False):
+    where: _nt.ToBool_nd | None
+    order: _OrderKACF
+    subok: bool
+    signature: str | tuple[str | None, ...]
+    casting: np._CastingKind
 
 ###
 
@@ -957,12 +962,14 @@ less: _MaskedBinaryOperation
 greater: _MaskedBinaryOperation
 logical_and: _MaskedBinaryOperation
 
-def alltrue(target: _nt.ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None) -> Incomplete: ...
+def alltrue(
+    target: _nt.ToGeneric_nd, axis: CanIndex | None = 0, dtype: _nt.ToDTypeBool | None = None
+) -> Incomplete: ...
 
 logical_or: _MaskedBinaryOperation
 
 def sometrue(
-    target: _nt.ToGeneric_nd, axis: CanIndex | None = 0, dtype: _DTypeLikeBool | None = None
+    target: _nt.ToGeneric_nd, axis: CanIndex | None = 0, dtype: _nt.ToDTypeBool | None = None
 ) -> Incomplete: ...
 
 logical_xor: _MaskedBinaryOperation
@@ -984,12 +991,6 @@ class _convert2ma:
     def __init__(self, /, funcname: str, np_ret: str, np_ma_ret: str, params: dict[str, Any] | None = None) -> None: ...
     def __call__(self, /, *args: object, **params: object) -> Any: ...
     def getdoc(self, /, np_ret: str, np_ma_ret: str) -> str | None: ...
-
-_ToInt: TypeAlias = int | _nt.co_integer
-_ToTD64: TypeAlias = int | _nt.co_timedelta
-_ToFloat: TypeAlias = float | _nt.co_float
-_ArangeScalar: TypeAlias = np.integer | np.floating | np.datetime64 | np.timedelta64
-_ArangeScalarT = TypeVar("_ArangeScalarT", bound=_ArangeScalar)
 
 # keep in sync with `_core.multiarray.arange`
 @overload  # (int-like, int-like?, int-like?)
@@ -1097,7 +1098,78 @@ def arange(
     hardmask: bool = False,
 ) -> _nt.MArray1D[Incomplete]: ...
 
-clip: _convert2ma
+# based on `_core.fromnumeric.clip`
+@overload
+def clip(
+    a: _ScalarT,
+    a_min: ArrayLike | _NoValueType | None = ...,
+    a_max: ArrayLike | _NoValueType | None = ...,
+    out: None = None,
+    *,
+    min: ArrayLike | _NoValueType | None = ...,
+    max: ArrayLike | _NoValueType | None = ...,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+    dtype: None = None,
+    **kwargs: Unpack[_UFuncKwargs],
+) -> _ScalarT: ...
+@overload
+def clip(
+    a: _nt.Array[_ScalarT],
+    a_min: ArrayLike | _NoValueType | None = ...,
+    a_max: ArrayLike | _NoValueType | None = ...,
+    out: None = None,
+    *,
+    min: ArrayLike | _NoValueType | None = ...,
+    max: ArrayLike | _NoValueType | None = ...,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+    dtype: None = None,
+    **kwargs: Unpack[_UFuncKwargs],
+) -> _nt.MArray[_ScalarT]: ...
+@overload
+def clip(
+    a: ArrayLike,
+    a_min: ArrayLike | None,
+    a_max: ArrayLike | None,
+    out: _MArrayT,
+    *,
+    min: ArrayLike | _NoValueType | None = ...,
+    max: ArrayLike | _NoValueType | None = ...,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+    dtype: DTypeLike | None = None,
+    **kwargs: Unpack[_UFuncKwargs],
+) -> _MArrayT: ...
+@overload
+def clip(
+    a: ArrayLike,
+    a_min: ArrayLike | _NoValueType | None = ...,
+    a_max: ArrayLike | _NoValueType | None = ...,
+    *,
+    out: _MArrayT,
+    min: ArrayLike | _NoValueType | None = ...,
+    max: ArrayLike | _NoValueType | None = ...,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+    dtype: DTypeLike | None = None,
+    **kwargs: Unpack[_UFuncKwargs],
+) -> _MArrayT: ...
+@overload
+def clip(
+    a: ArrayLike,
+    a_min: ArrayLike | _NoValueType | None = ...,
+    a_max: ArrayLike | _NoValueType | None = ...,
+    out: None = None,
+    *,
+    min: ArrayLike | _NoValueType | None = ...,
+    max: ArrayLike | _NoValueType | None = ...,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+    dtype: DTypeLike | None = None,
+    **kwargs: Unpack[_UFuncKwargs],
+) -> Incomplete: ...
+
 empty: _convert2ma
 empty_like: _convert2ma
 frombuffer: _convert2ma
