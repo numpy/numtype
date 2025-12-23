@@ -801,7 +801,13 @@ def diagonal(
 @overload
 def diagonal(a: ArrayLike, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1) -> _nt.Array[Incomplete]: ...
 
-repeat: _frommethod
+# keep in sync with `_core.fromnumeric.repeat`
+@overload
+def repeat(
+    a: _nt._ToArray_nd[_ScalarT], repeats: _nt.CoInteger_nd, axis: CanIndex | None = None
+) -> _nt.Array[_ScalarT]: ...
+@overload
+def repeat(a: ArrayLike, repeats: _nt.CoInteger_nd, axis: CanIndex | None = None) -> _nt.Array[Incomplete]: ...
 
 swapaxes: _frommethod
 

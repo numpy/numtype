@@ -170,13 +170,14 @@ def reshape(
     a: ArrayLike, /, shape: Sequence[CanIndex], order: _OrderACF = "C", *, copy: bool | None = None
 ) -> _nt.Array[Incomplete]: ...
 
-#
+# keep in sync with `ma.core.swapaxes`
 @overload
 def swapaxes(a: _nt._ToArray_nd[_ScalarT], axis1: CanIndex, axis2: CanIndex) -> _nt.Array[_ScalarT]: ...
 @overload
 def swapaxes(a: ArrayLike, axis1: CanIndex, axis2: CanIndex) -> _nt.Array[Incomplete]: ...
 
-#
+# TODO: port shape-typing improvements from upstream
+# keep in sync with `ma.core.repeat`
 @overload
 def repeat(
     a: _nt._ToArray_nd[_ScalarT], repeats: _nt.CoInteger_nd, axis: CanIndex | None = None

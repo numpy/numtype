@@ -21,7 +21,6 @@ numpy.ma.core.cumsum
 numpy.ma.core.mean
 numpy.ma.core.prod
 numpy.ma.core.product
-numpy.ma.core.repeat
 numpy.ma.core.std
 numpy.ma.core.sum
 numpy.ma.core.swapaxes
@@ -34,7 +33,6 @@ numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
 numpy.ma.prod
 numpy.ma.product
-numpy.ma.repeat
 numpy.ma.std
 numpy.ma.sum
 numpy.ma.swapaxes
