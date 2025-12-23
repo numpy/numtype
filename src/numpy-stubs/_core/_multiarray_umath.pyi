@@ -1186,17 +1186,21 @@ def ascontiguousarray(
 # keep in sync with ascontiguousarray
 @overload
 def asfortranarray(
-    a: _CanArray[_nt.Array[_ScalarT, _ShapeT]], dtype: None = None, **kwargs: Unpack[_KwargsL]
+    a: _CanArray[_nt.Array[_ScalarT, _ShapeT]], dtype: None = None, *, like: _CanArrayFunc | None = None
 ) -> _nt.Array[_ScalarT, _ShapeT]: ...
 @overload
-def asfortranarray(a: _ArrayLike[_ScalarT], dtype: None = None, **kwargs: Unpack[_KwargsL]) -> _nt.Array[_ScalarT]: ...
+def asfortranarray(
+    a: _ArrayLike[_ScalarT], dtype: None = None, *, like: _CanArrayFunc | None = None
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def asfortranarray(a: object, dtype: None = None, *, like: _nt.Array[_ScalarT]) -> _nt.Array[_ScalarT]: ...
 @overload
-def asfortranarray(a: object, dtype: _DTypeLike[_ScalarT], **kwargs: Unpack[_KwargsL]) -> _nt.Array[_ScalarT]: ...
+def asfortranarray(
+    a: object, dtype: _DTypeLike[_ScalarT], *, like: _CanArrayFunc | None = None
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def asfortranarray(
-    a: object, dtype: npt.DTypeLike | None = None, **kwargs: Unpack[_KwargsL]
+    a: object, dtype: npt.DTypeLike | None = None, *, like: _CanArrayFunc | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 # `sep` is a de facto mandatory argument, as its default value is deprecated
