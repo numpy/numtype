@@ -3187,7 +3187,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def getfield(self, /, dtype: DTypeLike, offset: CanIndex = 0) -> _nt.Array: ...
 
     #
-    def setfield(self, /, val: ArrayLike, dtype: DTypeLike, offset: CanIndex = 0) -> None: ...
+    def setfield(self, val: ArrayLike, /, dtype: DTypeLike, offset: CanIndex = 0) -> None: ...
 
     # keep `dtype` at the bottom to avoid shadowing
     @property
@@ -3300,7 +3300,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def swapaxes(self: Never, /, axis1: Never, axis2: Never) -> Never: ...  # type: ignore[misc]
     def sort(self: Never, /, axis: Never = ..., kind: Never = ..., order: Never = ...) -> Never: ...  # type: ignore[misc]
     def nonzero(self: Never, /) -> Never: ...  # type: ignore[misc]
-    def setfield(self: Never, /, val: Never, dtype: Never, offset: Never = ...) -> None: ...  # type: ignore[misc]
+    def setfield(self: Never, val: Never, /, dtype: Never, offset: L[0] = 0) -> None: ...  # type: ignore[misc]
     def searchsorted(self: Never, v: Never, /, side: L["left"] = "left", sorter: None = None) -> Never: ...  # type: ignore[misc]
 
     # NOTE: this wont't raise, but won't do anything either
@@ -5027,7 +5027,7 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
     def __getitem__(self, key: list[str], /) -> void: ...
     def __setitem__(self, key: str | list[str] | CanIndex, value: ArrayLike, /) -> None: ...
     @override
-    def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
+    def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = 0) -> None: ...
 
     #
     @property
