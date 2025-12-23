@@ -1,9 +1,3 @@
-numpy._core._methods.umr_all
-numpy._core._methods.umr_any
-numpy._core._methods.umr_maximum
-numpy._core._methods.umr_minimum
-numpy._core._methods.umr_prod
-numpy._core._methods.umr_sum
 numpy._core._type_aliases.abstract_type
 numpy._core._type_aliases.base_name
 numpy._core._type_aliases.bits
