@@ -1,11 +1,9 @@
 from collections.abc import Callable
 from contextlib import _GeneratorContextManager
-from typing import Final, Literal, SupportsIndex, TypeAlias, TypedDict, overload, type_check_only
-from typing_extensions import deprecated
+from typing import Final, Literal, SupportsIndex, TypeAlias, TypedDict, type_check_only
 
 import _numtype as _nt
 import numpy as np
-from numpy._globals import _NoValueType
 from numpy._typing import _CharLike_co, _FloatLike_co
 
 __all__ = [
@@ -25,7 +23,6 @@ _FloatMode: TypeAlias = Literal["fixed", "unique", "maxprec", "maxprec_equal"]
 _Sign: TypeAlias = Literal["-", "+", " "]
 _Trim: TypeAlias = Literal["k", ".", "0", "-"]
 _Legacy: TypeAlias = Literal["1.13", "1.21", "1.25", "2.1", False]
-_LegacyNoStyle: TypeAlias = Literal["1.21", "1.25", "2.1", False]
 _ReprFunc: TypeAlias = Callable[[_nt.Array], str]
 
 @type_check_only
@@ -103,7 +100,6 @@ def printoptions(
 ) -> _GeneratorContextManager[_FormatOptions]: ...
 
 # public numpy export
-@overload  # no style
 def array2string(
     a: _nt.Array,
     max_line_width: int | None = None,
@@ -111,89 +107,14 @@ def array2string(
     suppress_small: bool | None = None,
     separator: str = " ",
     prefix: str = "",
-    style: _NoValueType = ...,
+    *,
     formatter: _FormatDict | None = None,
     threshold: int | None = None,
     edgeitems: int | None = None,
     sign: _Sign | None = None,
     floatmode: _FloatMode | None = None,
     suffix: str = "",
-    *,
     legacy: _Legacy | None = None,
-) -> str: ...
-@overload  # style=<given> (positional), legacy="1.13"
-def array2string(
-    a: _nt.Array,
-    max_line_width: int | None,
-    precision: SupportsIndex | None,
-    suppress_small: bool | None,
-    separator: str,
-    prefix: str,
-    style: _ReprFunc,
-    formatter: _FormatDict | None = None,
-    threshold: int | None = None,
-    edgeitems: int | None = None,
-    sign: _Sign | None = None,
-    floatmode: _FloatMode | None = None,
-    suffix: str = "",
-    *,
-    legacy: Literal["1.13"],
-) -> str: ...
-@overload  # style=<given> (keyword), legacy="1.13"
-def array2string(
-    a: _nt.Array,
-    max_line_width: int | None = None,
-    precision: SupportsIndex | None = None,
-    suppress_small: bool | None = None,
-    separator: str = " ",
-    prefix: str = "",
-    *,
-    style: _ReprFunc,
-    formatter: _FormatDict | None = None,
-    threshold: int | None = None,
-    edgeitems: int | None = None,
-    sign: _Sign | None = None,
-    floatmode: _FloatMode | None = None,
-    suffix: str = "",
-    legacy: Literal["1.13"],
-) -> str: ...
-@overload  # style=<given> (positional), legacy!="1.13"
-@deprecated("'style' argument is deprecated and no longer functional except in 1.13 'legacy' mode")
-def array2string(
-    a: _nt.Array,
-    max_line_width: int | None,
-    precision: SupportsIndex | None,
-    suppress_small: bool | None,
-    separator: str,
-    prefix: str,
-    style: _ReprFunc,
-    formatter: _FormatDict | None = None,
-    threshold: int | None = None,
-    edgeitems: int | None = None,
-    sign: _Sign | None = None,
-    floatmode: _FloatMode | None = None,
-    suffix: str = "",
-    *,
-    legacy: _LegacyNoStyle | None = None,
-) -> str: ...
-@overload  # style=<given> (keyword), legacy="1.13"
-@deprecated("'style' argument is deprecated and no longer functional except in 1.13 'legacy' mode")
-def array2string(
-    a: _nt.Array,
-    max_line_width: int | None = None,
-    precision: SupportsIndex | None = None,
-    suppress_small: bool | None = None,
-    separator: str = " ",
-    prefix: str = "",
-    *,
-    style: _ReprFunc,
-    formatter: _FormatDict | None = None,
-    threshold: int | None = None,
-    edgeitems: int | None = None,
-    sign: _Sign | None = None,
-    floatmode: _FloatMode | None = None,
-    suffix: str = "",
-    legacy: _LegacyNoStyle | None = None,
 ) -> str: ...
 
 # public numpy export

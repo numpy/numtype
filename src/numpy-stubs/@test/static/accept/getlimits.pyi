@@ -19,7 +19,7 @@ assert_type(np.finfo(c8), np.finfo[np.float32])
 assert_type(np.finfo("f2"), np.finfo[np.float16])
 
 assert_type(finfo_f8.dtype, np.dtype[np.float64])
-assert_type(finfo_f8.bits, Literal[2, 4, 8, 12, 16])
+assert_type(finfo_f8.bits, int)
 assert_type(finfo_f8.eps, np.float64)
 assert_type(finfo_f8.epsneg, np.float64)
 assert_type(finfo_f8.iexp, int)

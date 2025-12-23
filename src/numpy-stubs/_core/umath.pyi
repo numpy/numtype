@@ -102,6 +102,7 @@ __all__ = [
     "logical_not",
     "logical_or",
     "logical_xor",
+    "matmul",
     "matvec",
     "maximum",
     "minimum",

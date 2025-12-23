@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Sequence
 from typing import Any, Literal as L, Protocol, SupportsIndex as CanIndex, TypeAlias, overload, type_check_only
-from typing_extensions import TypeVar, TypedDict, Unpack, deprecated
+from typing_extensions import TypeVar, TypedDict, Unpack
 
 import _numtype as _nt
 import numpy as np
@@ -147,56 +147,27 @@ def choose(
 #
 @overload  # shape: index
 def reshape(
-    a: _nt._ToArray_nd[_ScalarT],
-    /,
-    shape: CanIndex,
-    order: _OrderACF = "C",
-    *,
-    newshape: None = None,
-    copy: bool | None = None,
+    a: _nt._ToArray_nd[_ScalarT], /, shape: CanIndex, order: _OrderACF = "C", *, copy: bool | None = None
 ) -> _nt.Array1D[_ScalarT]: ...
 @overload  # shape: _AnyShape
 def reshape(
-    a: _nt._ToArray_nd[_ScalarT],
-    /,
-    shape: _AnyShapeT,
-    order: _OrderACF = "C",
-    *,
-    newshape: None = None,
-    copy: bool | None = None,
+    a: _nt._ToArray_nd[_ScalarT], /, shape: _AnyShapeT, order: _OrderACF = "C", *, copy: bool | None = None
 ) -> _nt.Array[_ScalarT, _AnyShapeT]: ...
 @overload  # shape: Sequence[index]
 def reshape(
-    a: _nt._ToArray_nd[_ScalarT],
-    /,
-    shape: Sequence[CanIndex],
-    order: _OrderACF = "C",
-    *,
-    newshape: None = None,
-    copy: bool | None = None,
+    a: _nt._ToArray_nd[_ScalarT], /, shape: Sequence[CanIndex], order: _OrderACF = "C", *, copy: bool | None = None
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # shape: index
 def reshape(
-    a: ArrayLike, /, shape: CanIndex, order: _OrderACF = "C", *, newshape: None = None, copy: bool | None = None
+    a: ArrayLike, /, shape: CanIndex, order: _OrderACF = "C", *, copy: bool | None = None
 ) -> _nt.Array1D[Incomplete]: ...
 @overload
 def reshape(  # shape: _AnyShape
-    a: ArrayLike, /, shape: _AnyShapeT, order: _OrderACF = "C", *, newshape: None = None, copy: bool | None = None
+    a: ArrayLike, /, shape: _AnyShapeT, order: _OrderACF = "C", *, copy: bool | None = None
 ) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # shape: Sequence[index]
 def reshape(
-    a: ArrayLike,
-    /,
-    shape: Sequence[CanIndex],
-    order: _OrderACF = "C",
-    *,
-    newshape: None = None,
-    copy: bool | None = None,
-) -> _nt.Array[Incomplete]: ...
-@overload
-@deprecated("`newshape` is deprecated, `shape` instead. (deprecated in NumPy 2.1)")
-def reshape(
-    a: ArrayLike, /, shape: None = None, order: _OrderACF = "C", *, newshape: _ShapeLike, copy: bool | None = None
+    a: ArrayLike, /, shape: Sequence[CanIndex], order: _OrderACF = "C", *, copy: bool | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 #
