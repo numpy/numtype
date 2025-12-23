@@ -3,34 +3,37 @@ from typing import Final, Literal as L, TypeAlias, TypedDict, type_check_only
 
 import numpy as np
 
-###
+sctypeDict: Final[dict[str, type[np.generic]]] = ...
+allTypes: Final[dict[str, type[np.generic]]] = ...
 
 @type_check_only
 class _CNamesDict(TypedDict):
-    BOOL: np.dtypes.BoolDType
-    BYTE: np.dtypes.ByteDType
-    UBYTE: np.dtypes.UByteDType
-    SHORT: np.dtypes.ShortDType
-    USHORT: np.dtypes.UShortDType
-    INT: np.dtypes.IntDType
-    UINT: np.dtypes.UIntDType
-    LONG: np.dtypes.LongDType
-    ULONG: np.dtypes.ULongDType
-    LONGLONG: np.dtypes.LongLongDType
-    ULONGLONG: np.dtypes.ULongLongDType
-    HALF: np.dtypes.Float16DType
-    FLOAT: np.dtypes.Float32DType
-    DOUBLE: np.dtypes.Float64DType
-    LONGDOUBLE: np.dtypes.LongDoubleDType
-    CFLOAT: np.dtypes.Complex64DType
-    CDOUBLE: np.dtypes.Complex128DType
-    CLONGDOUBLE: np.dtypes.CLongDoubleDType
-    STRING: np.dtypes.BytesDType
-    UNICODE: np.dtypes.StrDType
-    VOID: np.dtypes.VoidDType
-    OBJECT: np.dtypes.ObjectDType
-    DATETIME: np.dtypes.DateTime64DType
-    TIMEDELTA: np.dtypes.TimeDelta64DType
+    BOOL: np.dtype[np.bool]
+    HALF: np.dtype[np.half]
+    FLOAT: np.dtype[np.single]
+    DOUBLE: np.dtype[np.double]
+    LONGDOUBLE: np.dtype[np.longdouble]
+    CFLOAT: np.dtype[np.csingle]
+    CDOUBLE: np.dtype[np.cdouble]
+    CLONGDOUBLE: np.dtype[np.clongdouble]
+    STRING: np.dtype[np.bytes_]
+    UNICODE: np.dtype[np.str_]
+    VOID: np.dtype[np.void]
+    OBJECT: np.dtype[np.object_]
+    DATETIME: np.dtype[np.datetime64]
+    TIMEDELTA: np.dtype[np.timedelta64]
+    BYTE: np.dtype[np.byte]
+    UBYTE: np.dtype[np.ubyte]
+    SHORT: np.dtype[np.short]
+    USHORT: np.dtype[np.ushort]
+    INT: np.dtype[np.intc]
+    UINT: np.dtype[np.uintc]
+    LONG: np.dtype[np.long]
+    ULONG: np.dtype[np.ulong]
+    LONGLONG: np.dtype[np.longlong]
+    ULONGLONG: np.dtype[np.ulonglong]
+
+c_names_dict: Final[_CNamesDict] = ...
 
 _AbstractTypeName: TypeAlias = L[
     "generic",
@@ -44,6 +47,7 @@ _AbstractTypeName: TypeAlias = L[
     "floating",
     "complexfloating",
 ]
+_abstract_type_names: Final[set[_AbstractTypeName]] = ...
 
 @type_check_only
 class _AliasesType(TypedDict):
@@ -56,6 +60,8 @@ class _AliasesType(TypedDict):
     int_: L["intp"]
     uint: L["intp"]
 
+_aliases: Final[_AliasesType] = ...
+
 @type_check_only
 class _ExtraAliasesType(TypedDict):
     float: L["float64"]
@@ -67,6 +73,8 @@ class _ExtraAliasesType(TypedDict):
     str: L["str_"]
     unicode: L["str_"]
 
+_extra_aliases: Final[_ExtraAliasesType] = ...
+
 @type_check_only
 class _SCTypes(TypedDict):
     int: Collection[type[np.signedinteger]]
@@ -75,29 +83,4 @@ class _SCTypes(TypedDict):
     complex: Collection[type[np.complexfloating]]
     others: Collection[type[np.flexible | np.bool | np.object_]]
 
-###
-
-sctypeDict: Final[dict[str, type[np.generic]]] = ...
-allTypes: Final[dict[str, type[np.generic]]] = ...
-c_names_dict: Final[_CNamesDict] = ...
 sctypes: Final[_SCTypes] = ...
-
-_abstract_type_names: Final[set[_AbstractTypeName]] = ...
-_aliases: Final[_AliasesType] = ...
-_extra_aliases: Final[_ExtraAliasesType] = ...
-
-# namespace pollution
-k: str
-v: str
-is_complex: bool
-full_name: str
-longdouble_type: type[np.longdouble | np.clongdouble]
-bits: int
-base_name: str
-extended_prec_name: str
-type_info: np.dtype
-type_group: str
-concrete_type: type[np.generic]
-abstract_type: type[np.generic]
-sctype_key: str
-sctype_list: list[type[np.generic]]

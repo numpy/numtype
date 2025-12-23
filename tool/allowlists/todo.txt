@@ -1,17 +1,3 @@
-numpy._core._type_aliases.abstract_type
-numpy._core._type_aliases.base_name
-numpy._core._type_aliases.bits
-numpy._core._type_aliases.concrete_type
-numpy._core._type_aliases.extended_prec_name
-numpy._core._type_aliases.full_name
-numpy._core._type_aliases.is_complex
-numpy._core._type_aliases.k
-numpy._core._type_aliases.longdouble_type
-numpy._core._type_aliases.sctype_key
-numpy._core._type_aliases.sctype_list
-numpy._core._type_aliases.type_group
-numpy._core._type_aliases.type_info
-numpy._core._type_aliases.v
 numpy._core.array2string
 numpy._core.arrayprint.array2string
 numpy._core.defchararray.chararray.argsort
