@@ -1,6 +1,3 @@
-numpy._core._add_newdocs.refer_to_array_attribute
-numpy._core._add_newdocs_scalars.add_newdoc_for_scalar_type
-numpy._core._add_newdocs_scalars.bool_name
 numpy._core._internal._ctypes.get_as_parameter
 numpy._core._internal._ctypes.get_data
 numpy._core._internal._ctypes.get_shape
