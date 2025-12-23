@@ -2872,19 +2872,19 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def searchsorted(
-        self, /, v: _ScalarLike_co, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
+        self, v: _ScalarLike_co, /, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> intp: ...
     @overload
     def searchsorted(
-        self, /, v: ndarray[_ShapeT], side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
+        self, v: ndarray[_ShapeT], /, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> _nt.Array[intp, _ShapeT]: ...
     @overload
     def searchsorted(
-        self, /, v: _NestedSequence[_ScalarLike_co], side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
+        self, v: _NestedSequence[_ScalarLike_co], /, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> _nt.Array[intp]: ...
     @overload
     def searchsorted(
-        self, /, v: ArrayLike, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
+        self, v: ArrayLike, /, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> intp | _nt.Array[intp]: ...
 
     #
@@ -3301,7 +3301,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     def sort(self: Never, /, axis: Never = ..., kind: Never = ..., order: Never = ...) -> Never: ...  # type: ignore[misc]
     def nonzero(self: Never, /) -> Never: ...  # type: ignore[misc]
     def setfield(self: Never, /, val: Never, dtype: Never, offset: Never = ...) -> None: ...  # type: ignore[misc]
-    def searchsorted(self: Never, /, v: Never, side: Never = ..., sorter: Never = ...) -> Never: ...  # type: ignore[misc]
+    def searchsorted(self: Never, v: Never, /, side: L["left"] = "left", sorter: None = None) -> Never: ...  # type: ignore[misc]
 
     # NOTE: this wont't raise, but won't do anything either
     def resize(self, new_shape: L[0, -1] | tuple[L[0, -1]] | tuple[()], /, *, refcheck: py_bool = False) -> None: ...

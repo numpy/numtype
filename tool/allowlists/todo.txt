@@ -66,7 +66,6 @@ numpy._core.fromnumeric.reshape
 numpy._core.generic.diagonal
 numpy._core.generic.repeat
 numpy._core.generic.resize
-numpy._core.generic.searchsorted
 numpy._core.generic.setfield
 numpy._core.generic.setflags
 numpy._core.generic.sort
@@ -95,7 +94,6 @@ numpy._core.multiarray.frombuffer
 numpy._core.multiarray.fromfile
 numpy._core.multiarray.fromiter
 numpy._core.multiarray.may_share_memory
-numpy._core.multiarray.ndarray.searchsorted
 numpy._core.multiarray.ndarray.setfield
 numpy._core.multiarray.ndarray.setflags
 numpy._core.multiarray.ndarray.std
@@ -107,7 +105,6 @@ numpy._core.multiarray.ndarray.var
 numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
-numpy._core.ndarray.searchsorted
 numpy._core.ndarray.setfield
 numpy._core.ndarray.setflags
 numpy._core.ndarray.std
@@ -138,7 +135,6 @@ numpy._core.numeric.fromiter
 numpy._core.numeric.generic.diagonal
 numpy._core.numeric.generic.repeat
 numpy._core.numeric.generic.resize
-numpy._core.numeric.generic.searchsorted
 numpy._core.numeric.generic.setfield
 numpy._core.numeric.generic.setflags
 numpy._core.numeric.generic.sort
@@ -150,7 +146,6 @@ numpy._core.numeric.generic.tofile
 numpy._core.numeric.generic.trace
 numpy._core.numeric.generic.var
 numpy._core.numeric.may_share_memory
-numpy._core.numeric.ndarray.searchsorted
 numpy._core.numeric.ndarray.setfield
 numpy._core.numeric.ndarray.setflags
 numpy._core.numeric.ndarray.std
@@ -172,7 +167,6 @@ numpy._core.numerictypes.datetime64.__class_getitem__
 numpy._core.numerictypes.generic.diagonal
 numpy._core.numerictypes.generic.repeat
 numpy._core.numerictypes.generic.resize
-numpy._core.numerictypes.generic.searchsorted
 numpy._core.numerictypes.generic.setfield
 numpy._core.numerictypes.generic.setflags
 numpy._core.numerictypes.generic.sort
@@ -243,7 +237,6 @@ numpy.core.multiarray.frombuffer
 numpy.core.multiarray.fromfile
 numpy.core.multiarray.fromiter
 numpy.core.multiarray.may_share_memory
-numpy.core.multiarray.ndarray.searchsorted
 numpy.core.multiarray.ndarray.setfield
 numpy.core.multiarray.ndarray.setflags
 numpy.core.multiarray.ndarray.std
@@ -277,7 +270,6 @@ numpy.core.numeric.fromiter
 numpy.core.numeric.generic.diagonal
 numpy.core.numeric.generic.repeat
 numpy.core.numeric.generic.resize
-numpy.core.numeric.generic.searchsorted
 numpy.core.numeric.generic.setfield
 numpy.core.numeric.generic.setflags
 numpy.core.numeric.generic.sort
@@ -289,7 +281,6 @@ numpy.core.numeric.generic.tofile
 numpy.core.numeric.generic.trace
 numpy.core.numeric.generic.var
 numpy.core.numeric.may_share_memory
-numpy.core.numeric.ndarray.searchsorted
 numpy.core.numeric.ndarray.setfield
 numpy.core.numeric.ndarray.setflags
 numpy.core.numeric.ndarray.std
@@ -311,7 +302,6 @@ numpy.core.numerictypes.datetime64.__class_getitem__
 numpy.core.numerictypes.generic.diagonal
 numpy.core.numerictypes.generic.repeat
 numpy.core.numerictypes.generic.resize
-numpy.core.numerictypes.generic.searchsorted
 numpy.core.numerictypes.generic.setfield
 numpy.core.numerictypes.generic.setflags
 numpy.core.numerictypes.generic.sort
@@ -342,7 +332,6 @@ numpy.fromiter
 numpy.generic.diagonal
 numpy.generic.repeat
 numpy.generic.resize
-numpy.generic.searchsorted
 numpy.generic.setfield
 numpy.generic.setflags
 numpy.generic.sort
@@ -501,7 +490,6 @@ numpy.matlib.fromiter
 numpy.matlib.generic.diagonal
 numpy.matlib.generic.repeat
 numpy.matlib.generic.resize
-numpy.matlib.generic.searchsorted
 numpy.matlib.generic.setfield
 numpy.matlib.generic.setflags
 numpy.matlib.generic.sort
@@ -515,7 +503,6 @@ numpy.matlib.generic.var
 numpy.matlib.in1d
 numpy.matlib.may_share_memory
 numpy.matlib.nanpercentile
-numpy.matlib.ndarray.searchsorted
 numpy.matlib.ndarray.setfield
 numpy.matlib.ndarray.setflags
 numpy.matlib.ndarray.std
@@ -536,7 +523,6 @@ numpy.matlib.void.__new__
 numpy.matlib.where
 numpy.may_share_memory
 numpy.nanpercentile
-numpy.ndarray.searchsorted
 numpy.ndarray.setfield
 numpy.ndarray.setflags
 numpy.ndarray.std
