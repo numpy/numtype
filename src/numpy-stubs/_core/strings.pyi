@@ -2,6 +2,7 @@ from typing import TypeAlias, overload
 
 import _numtype as _nt
 import numpy as np
+from numpy._globals import _NoValueType
 from numpy._typing import _ArrayLikeAnyString_co as ToAnyStringND, _ArrayLikeInt_co as ToIntND
 
 from .umath import (
@@ -245,7 +246,7 @@ def translate(a: _nt.ToString_nd, table: str, deletechars: str | None = None) ->
 def slice(
     a: _nt.ToStr_nd,
     start: _nt.ToInteger_nd | None = None,
-    stop: _nt.ToInteger_nd | None = None,
+    stop: _nt.ToInteger_nd | _NoValueType = ...,
     step: _nt.ToInteger_nd | None = None,
     /,
 ) -> _StrND: ...
@@ -253,7 +254,7 @@ def slice(
 def slice(
     a: _nt.ToBytes_nd,
     start: _nt.ToInteger_nd | None = None,
-    stop: _nt.ToInteger_nd | None = None,
+    stop: _nt.ToInteger_nd | _NoValueType = ...,
     step: _nt.ToInteger_nd | None = None,
     /,
 ) -> _BytesND: ...
@@ -261,7 +262,7 @@ def slice(
 def slice(
     a: _nt.ToString_nd,
     start: _nt.ToInteger_nd | None = None,
-    stop: _nt.ToInteger_nd | None = None,
+    stop: _nt.ToInteger_nd | _NoValueType = ...,
     step: _nt.ToInteger_nd | None = None,
     /,
 ) -> _nt.StringArray: ...

@@ -1,4 +1,3 @@
-numpy._core.strings.slice
 numpy._core.umath.__all__
 numpy.core.umath.__all__
 numpy.core.umath.matmul
@@ -139,5 +138,4 @@ numpy.nanpercentile
 numpy.ndindex.ndincr
 numpy.percentile
 numpy.save
-numpy.strings.slice
 numpy.trapz
