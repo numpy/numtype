@@ -191,12 +191,6 @@ class _KwargsDL(TypedDict, total=False):
     like: _CanArrayFunc | None
 
 @type_check_only
-class _KwargsDCL(TypedDict, total=False):
-    device: _Device | None
-    copy: _Copy | None
-    like: _CanArrayFunc | None
-
-@type_check_only
 class _ExtObjDict(TypedDict):
     divide: _ExtObjValue
     over: _ExtObjValue
@@ -1119,22 +1113,54 @@ def asarray(
 
 #
 @overload
-def asanyarray(a: _ArrayT, dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]) -> _ArrayT: ...
-@overload
 def asanyarray(
-    a: _CanArray[_ArrayT], dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: _ArrayT,
+    dtype: None = None,
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _ArrayT: ...
 @overload
 def asanyarray(
-    a: _ArrayLike[_ScalarT], dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: _CanArray[_ArrayT],
+    dtype: None = None,
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
+) -> _ArrayT: ...
+@overload
+def asanyarray(
+    a: _ArrayLike[_ScalarT],
+    dtype: None = None,
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def asanyarray(
-    a: object, dtype: _DTypeLike[_ScalarT], order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: object,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def asanyarray(
-    a: object, dtype: npt.DTypeLike | None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: object,
+    dtype: npt.DTypeLike | None = None,
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[Incomplete]: ...
 
 # keep in sync with asfortranarray
