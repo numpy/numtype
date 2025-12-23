@@ -456,7 +456,6 @@ from numpy import (
     trace,
     transpose,
     trapezoid,
-    trapz,
     tri,
     tril,
     tril_indices,
@@ -560,7 +559,7 @@ __all__ += [  # noqa: RUF022
     "angle", "append", "asarray_chkfinite", "average", "bartlett", "bincount", "blackman", "copy", "corrcoef", "cov",
     "delete", "diff", "digitize", "extract", "flip", "gradient", "hamming", "hanning", "i0", "insert", "interp",
     "iterable", "kaiser", "median", "meshgrid", "percentile", "piecewise", "place", "quantile", "rot90", "select",
-    "sinc", "sort_complex", "trapezoid", "trapz", "trim_zeros", "unwrap", "vectorize",
+    "sinc", "sort_complex", "trapezoid", "trim_zeros", "unwrap", "vectorize",
     # lib._histograms_impl.*
     "histogram", "histogram_bin_edges", "histogramdd",
     # lib._index_tricks_impl.*

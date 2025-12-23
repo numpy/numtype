@@ -1,10 +1,8 @@
 numpy.corrcoef
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
-numpy.lib._function_base_impl.__all__
 numpy.lib._function_base_impl.corrcoef
 numpy.lib._function_base_impl.percentile
-numpy.lib._function_base_impl.trapz
 numpy.lib._index_tricks_impl.AxisConcatenator.concatenate
 numpy.lib._index_tricks_impl.ndindex.ndincr
 numpy.lib._nanfunctions_impl.nanpercentile
@@ -126,9 +124,7 @@ numpy.matlib.nanpercentile
 numpy.matlib.ndindex.ndincr
 numpy.matlib.percentile
 numpy.matlib.save
-numpy.matlib.trapz
 numpy.nanpercentile
 numpy.ndindex.ndincr
 numpy.percentile
 numpy.save
-numpy.trapz

@@ -13,7 +13,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import ParamSpec, TypeIs, TypeVar, deprecated
+from typing_extensions import ParamSpec, TypeIs, TypeVar
 
 import _numtype as _nt
 import numpy as np
@@ -57,7 +57,6 @@ __all__ = [
     "sinc",
     "sort_complex",
     "trapezoid",
-    "trapz",
     "trim_zeros",
     "unwrap",
     "vectorize",
@@ -1104,10 +1103,6 @@ def trapezoid(
     dx: _nt.CoFloating_0d = 1.0,
     axis: CanIndex = -1,
 ) -> Incomplete: ...
-
-#
-@deprecated("Use 'trapezoid' instead")
-def trapz(y: ArrayLike, x: ArrayLike | None = None, dx: float = 1.0, axis: int = -1) -> Incomplete: ...
 
 #
 @overload
