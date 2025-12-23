@@ -1540,9 +1540,9 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         out: None = None,
         *,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 1,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Any: ...
     @overload
     def prod(
@@ -1552,9 +1552,9 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None,
         out: _ArrayT,
         *,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 1,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def prod(
@@ -1564,9 +1564,9 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 1,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
