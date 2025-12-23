@@ -33,16 +33,16 @@ np.average(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType
 np.median(AR_M)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.percentile(AR_f8, 50j)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.quantile(AR_f8, 0.5j)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
-np.percentile(AR_f8, 50, interpolation="bob")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
-np.quantile(AR_f8, 0.5, interpolation="bob")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.percentile(AR_f8, 50, interpolation="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
+np.quantile(AR_f8, 0.5, interpolation="bob")  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 
 np.cov(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.cov(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.corrcoef(AR_m)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
 np.corrcoef(AR_O)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType, reportCallIssue]
-np.corrcoef(AR_f8, bias=True)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
-np.corrcoef(AR_f8, ddof=2)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
+np.corrcoef(AR_f8, bias=True)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
+np.corrcoef(AR_f8, ddof=2)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
 
 np.blackman(1j)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.bartlett(1j)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
