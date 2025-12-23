@@ -68,7 +68,6 @@ numpy._core.generic.repeat
 numpy._core.generic.resize
 numpy._core.generic.sort
 numpy._core.generic.trace
-numpy._core.generic.var
 numpy._core.getlimits.finfo.smallest_normal
 numpy._core.may_share_memory
 numpy._core.multiarray.arange
@@ -87,11 +86,9 @@ numpy._core.multiarray.frombuffer
 numpy._core.multiarray.fromfile
 numpy._core.multiarray.fromiter
 numpy._core.multiarray.may_share_memory
-numpy._core.multiarray.ndarray.var
 numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
-numpy._core.ndarray.var
 numpy._core.numeric.arange
 numpy._core.numeric.array
 numpy._core.numeric.array2string
@@ -116,9 +113,7 @@ numpy._core.numeric.generic.repeat
 numpy._core.numeric.generic.resize
 numpy._core.numeric.generic.sort
 numpy._core.numeric.generic.trace
-numpy._core.numeric.generic.var
 numpy._core.numeric.may_share_memory
-numpy._core.numeric.ndarray.var
 numpy._core.numeric.object_.__new__
 numpy._core.numeric.reshape
 numpy._core.numeric.shares_memory
@@ -134,7 +129,6 @@ numpy._core.numerictypes.generic.repeat
 numpy._core.numerictypes.generic.resize
 numpy._core.numerictypes.generic.sort
 numpy._core.numerictypes.generic.trace
-numpy._core.numerictypes.generic.var
 numpy._core.numerictypes.object_.__new__
 numpy._core.numerictypes.void.__new__
 numpy._core.object_.__new__
@@ -195,7 +189,6 @@ numpy.core.multiarray.frombuffer
 numpy.core.multiarray.fromfile
 numpy.core.multiarray.fromiter
 numpy.core.multiarray.may_share_memory
-numpy.core.multiarray.ndarray.var
 numpy.core.multiarray.shares_memory
 numpy.core.multiarray.where
 numpy.core.multiarray.zeros
@@ -223,9 +216,7 @@ numpy.core.numeric.generic.repeat
 numpy.core.numeric.generic.resize
 numpy.core.numeric.generic.sort
 numpy.core.numeric.generic.trace
-numpy.core.numeric.generic.var
 numpy.core.numeric.may_share_memory
-numpy.core.numeric.ndarray.var
 numpy.core.numeric.object_.__new__
 numpy.core.numeric.reshape
 numpy.core.numeric.shares_memory
@@ -241,7 +232,6 @@ numpy.core.numerictypes.generic.repeat
 numpy.core.numerictypes.generic.resize
 numpy.core.numerictypes.generic.sort
 numpy.core.numerictypes.generic.trace
-numpy.core.numerictypes.generic.var
 numpy.core.numerictypes.object_.__new__
 numpy.core.numerictypes.void.__new__
 numpy.core.umath.__all__
@@ -264,7 +254,6 @@ numpy.generic.repeat
 numpy.generic.resize
 numpy.generic.sort
 numpy.generic.trace
-numpy.generic.var
 numpy.in1d
 numpy.lib._arraysetops_impl.__all__
 numpy.lib._arraysetops_impl.in1d
@@ -415,11 +404,9 @@ numpy.matlib.generic.repeat
 numpy.matlib.generic.resize
 numpy.matlib.generic.sort
 numpy.matlib.generic.trace
-numpy.matlib.generic.var
 numpy.matlib.in1d
 numpy.matlib.may_share_memory
 numpy.matlib.nanpercentile
-numpy.matlib.ndarray.var
 numpy.matlib.ndindex.ndincr
 numpy.matlib.object_.__new__
 numpy.matlib.percentile
@@ -432,7 +419,6 @@ numpy.matlib.void.__new__
 numpy.matlib.where
 numpy.may_share_memory
 numpy.nanpercentile
-numpy.ndarray.var
 numpy.ndindex.ndincr
 numpy.object_.__new__
 numpy.percentile

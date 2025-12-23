@@ -1653,10 +1653,10 @@ class _ArrayOrScalarCommon:
         out: None = None,
         ddof: float = 0,
         *,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> Any: ...
     @overload
     def var(
@@ -1666,10 +1666,10 @@ class _ArrayOrScalarCommon:
         out: _ArrayT,
         ddof: float = 0,
         *,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def var(
@@ -1679,10 +1679,10 @@ class _ArrayOrScalarCommon:
         *,
         out: _ArrayT,
         ddof: float = 0,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> _ArrayT: ...
 
 #
