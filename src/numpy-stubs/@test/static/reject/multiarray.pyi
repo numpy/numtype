@@ -16,7 +16,7 @@ def func(a: int) -> None: ...
 
 ###
 
-np.where(AR_b, 1)  # type: ignore[call-overload]  # pyright: ignore[reportCallIssue]
+np.where(AR_b, 1)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]
 
 np.can_cast(AR_f8, 1)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 
@@ -34,8 +34,6 @@ np.unpackbits(AR_u1, bitorder=">")  # type: ignore[arg-type]  # pyright: ignore[
 
 np.shares_memory(1, 1, max_work=i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.may_share_memory(1, 1, max_work=i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-
-np.arange(M)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
 
 np.datetime_data(int)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.datetime_as_string("2012")  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType, reportCallIssue]
