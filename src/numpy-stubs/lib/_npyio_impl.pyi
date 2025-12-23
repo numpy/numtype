@@ -4,12 +4,11 @@ from _typeshed import Incomplete, StrOrBytesPath, StrPath, SupportsKeysAndGetIte
 from collections.abc import Callable, Collection, Iterable, Iterator, Mapping, Sequence
 from re import Pattern
 from typing import IO, Any, ClassVar, Generic, Literal as L, Protocol, Self, TypeAlias, overload, type_check_only
-from typing_extensions import TypeVar, deprecated, override
+from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np
 from numpy._core.multiarray import packbits, unpackbits
-from numpy._globals import _NoValueType
 from numpy._typing import ArrayLike, DTypeLike, _DTypeLike, _SupportsArrayFunc
 from numpy.ma.mrecords import MaskedRecords
 
@@ -117,19 +116,8 @@ def load(
 ) -> Any: ...
 
 #
-@overload
-def save(file: _FNameWrite, arr: ArrayLike, allow_pickle: bool = True, fix_imports: _NoValueType = ...) -> None: ...
-@overload
-@deprecated("The 'fix_imports' flag is deprecated in NumPy 2.1.")
-def save(file: _FNameWrite, arr: ArrayLike, allow_pickle: bool, fix_imports: bool) -> None: ...
-@overload
-@deprecated("The 'fix_imports' flag is deprecated in NumPy 2.1.")
-def save(file: _FNameWrite, arr: ArrayLike, allow_pickle: bool = True, *, fix_imports: bool) -> None: ...
-
-#
+def save(file: _FNameWrite, arr: ArrayLike, allow_pickle: bool = True) -> None: ...
 def savez(file: _FNameWrite, *args: ArrayLike, allow_pickle: bool = True, **kwds: ArrayLike) -> None: ...
-
-#
 def savez_compressed(file: _FNameWrite, *args: ArrayLike, allow_pickle: bool = True, **kwds: ArrayLike) -> None: ...
 
 # File-like objects only have to implement `__iter__` and,
