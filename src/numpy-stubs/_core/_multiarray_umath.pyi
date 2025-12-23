@@ -182,11 +182,6 @@ class _KwargsL(TypedDict, total=False):
     like: _CanArrayFunc | None
 
 @type_check_only
-class _KwargsDL(TypedDict, total=False):
-    device: _Device | None
-    like: _CanArrayFunc | None
-
-@type_check_only
 class _ExtObjDict(TypedDict):
     divide: _ExtObjValue
     over: _ExtObjValue
@@ -607,51 +602,111 @@ def empty(
 # NOTE: Keep in sync with `empty` (below) and `numpy._core.numeric.ones`
 @overload  # 1d shape, default dtype (float64)
 def zeros(
-    shape: _ShapeLike1D, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _ShapeLike1D,
+    dtype: _nt.ToDTypeFloat64 = ...,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array1D[np.float64]: ...
 @overload  # 1d shape, known dtype
 def zeros(
-    shape: _ShapeLike1D, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _ShapeLike1D,
+    dtype: _DTypeT | _HasDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> np.ndarray[_nt.Rank1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def zeros(
-    shape: _ShapeLike1D, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _ShapeLike1D,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array1D[_ScalarT]: ...
 @overload  # 1d shape, unknown dtype
 def zeros(
-    shape: _ShapeLike1D, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _ShapeLike1D,
+    dtype: npt.DTypeLike = ...,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array1D[Incomplete]: ...
 @overload  # known shape, default dtype (float64)
 def zeros(
-    shape: _AnyShapeT, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _AnyShapeT,
+    dtype: _nt.ToDTypeFloat64 = ...,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[np.float64, _AnyShapeT]: ...
 @overload  # known shape, known dtype  (mypy reports a false positive)
 def zeros(  # type: ignore[overload-overlap]
-    shape: _AnyShapeT, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _AnyShapeT,
+    dtype: _DTypeT | _HasDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
 @overload  # known shape, known scalar-type
 def zeros(
-    shape: _AnyShapeT, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _AnyShapeT,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT, _AnyShapeT]: ...
 @overload  # known shape, unknown scalar-type
 def zeros(
-    shape: _AnyShapeT, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _AnyShapeT,
+    dtype: npt.DTypeLike = ...,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # unknown shape, default dtype
 def zeros(
-    shape: _ShapeLike, dtype: _nt.ToDTypeFloat64 = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _ShapeLike,
+    dtype: _nt.ToDTypeFloat64 = ...,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, known dtype
 def zeros(
-    shape: _ShapeLike, dtype: _DTypeT | _HasDType[_DTypeT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _ShapeLike,
+    dtype: _DTypeT | _HasDType[_DTypeT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> np.ndarray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def zeros(
-    shape: _ShapeLike, dtype: _DTypeLike[_ScalarT], order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _ShapeLike,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, unknown dtype
 def zeros(
-    shape: _ShapeLike, dtype: npt.DTypeLike = ..., order: _OrderCF = "C", **kwargs: Unpack[_KwargsDL]
+    shape: _ShapeLike,
+    dtype: npt.DTypeLike = ...,
+    order: _OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[Incomplete]: ...
 
 # NOTE: Keep in sync with `.numeric.{zeros,ones}_like` (all 30 overloads...)
