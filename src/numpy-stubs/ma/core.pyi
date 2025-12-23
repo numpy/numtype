@@ -19,7 +19,16 @@ import _numtype as _nt
 import numpy as np
 from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
 from numpy._globals import _NoValueType
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ScalarLike_co, _ShapeLike, _SupportsArrayFunc
+from numpy._typing import (
+    ArrayLike,
+    DTypeLike,
+    _ArrayLike,
+    _DTypeLike,
+    _ScalarLike_co,
+    _ShapeLike,
+    _SupportsArrayFunc,
+    _SupportsDType,
+)
 
 __all__ = [
     "MAError",
@@ -206,15 +215,22 @@ _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _MArrayT = TypeVar("_MArrayT", bound=np.ma.MaskedArray[Any, Any])
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
+_ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 # TODO: use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.Shape, covariant=True)
-_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
 _ToInt: TypeAlias = int | _nt.co_integer
 _ToTD64: TypeAlias = int | _nt.co_timedelta
 _ToFloat: TypeAlias = float | _nt.co_float
+
 _ArangeScalar: TypeAlias = np.integer | np.floating | np.datetime64 | np.timedelta64
 _ArangeScalarT = TypeVar("_ArangeScalarT", bound=_ArangeScalar)
+
+_ShapeLike1D: TypeAlias = CanIndex | tuple[CanIndex]
+
+_Device: TypeAlias = L["cpu"]
 
 @type_check_only
 class _UFuncKwargs(TypedDict, total=False):
@@ -365,7 +381,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @property
     @override
-    def data(self) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def data(self) -> np.ma.MaskedArray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def get_fill_value(self) -> Incomplete: ...
@@ -1001,9 +1017,9 @@ def arange(
     step: _ToInt | None = 1,
     *,
     dtype: type[int] | _DTypeLike[np.int_] | None = None,
-    device: L["cpu"] | None = None,
+    device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-    fill_value: complex | None = None,
+    fill_value: int | None = None,
     hardmask: bool = False,
 ) -> _nt.MArray1D[np.int_]: ...
 @overload  # (float, float-like?, float-like?)
@@ -1014,9 +1030,9 @@ def arange(
     step: _ToFloat | None = 1,
     *,
     dtype: type[float] | _DTypeLike[np.float64] | None = None,
-    device: L["cpu"] | None = None,
+    device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-    fill_value: complex | None = None,
+    fill_value: float | None = None,
     hardmask: bool = False,
 ) -> _nt.MArray1D[np.float64 | Any]: ...
 @overload  # (float-like, float, float-like?)
@@ -1027,9 +1043,9 @@ def arange(
     step: _ToFloat | None = 1,
     *,
     dtype: type[float] | _DTypeLike[np.float64] | None = None,
-    device: L["cpu"] | None = None,
+    device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-    fill_value: complex | None = None,
+    fill_value: float | None = None,
     hardmask: bool = False,
 ) -> _nt.MArray1D[np.float64 | Any]: ...
 @overload  # (timedelta, timedelta-like?, timedelta-like?)
@@ -1040,9 +1056,9 @@ def arange(
     step: _ToTD64 | None = 1,
     *,
     dtype: _DTypeLike[np.timedelta64] | None = None,
-    device: L["cpu"] | None = None,
+    device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-    fill_value: complex | None = None,
+    fill_value: _ToTD64 | None = None,
     hardmask: bool = False,
 ) -> _nt.MArray1D[np.timedelta64[Incomplete]]: ...
 @overload  # (timedelta-like, timedelta, timedelta-like?)
@@ -1053,9 +1069,9 @@ def arange(
     step: _ToTD64 | None = 1,
     *,
     dtype: _DTypeLike[np.timedelta64] | None = None,
-    device: L["cpu"] | None = None,
+    device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-    fill_value: complex | None = None,
+    fill_value: _ToTD64 | None = None,
     hardmask: bool = False,
 ) -> _nt.MArray1D[np.timedelta64[Incomplete]]: ...
 @overload  # (datetime, datetime, timedelta-like) (requires both start and stop)
@@ -1066,9 +1082,9 @@ def arange(
     step: _ToTD64 | None = 1,
     *,
     dtype: _DTypeLike[np.datetime64] | None = None,
-    device: L["cpu"] | None = None,
+    device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
-    fill_value: complex | None = None,
+    fill_value: np.datetime64 | None = None,
     hardmask: bool = False,
 ) -> _nt.MArray1D[np.datetime64[Incomplete]]: ...
 @overload  # dtype=<known>
@@ -1079,7 +1095,7 @@ def arange(
     step: _ArangeScalar | float | None = 1,
     *,
     dtype: _DTypeLike[_ArangeScalarT],
-    device: L["cpu"] | None = None,
+    device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
     fill_value: complex | None = None,
     hardmask: bool = False,
@@ -1092,7 +1108,7 @@ def arange(
     step: _ArangeScalar | float | None = 1,
     *,
     dtype: DTypeLike | None = None,
-    device: L["cpu"] | None = None,
+    device: _Device | None = None,
     like: _SupportsArrayFunc | None = None,
     fill_value: complex | None = None,
     hardmask: bool = False,
@@ -1170,7 +1186,140 @@ def clip(
     **kwargs: Unpack[_UFuncKwargs],
 ) -> Incomplete: ...
 
-empty: _convert2ma
+# keep in sync with `_core._multiarray_umath.empty`
+@overload  # 1d shape, default dtype (float64)
+def empty(
+    shape: _ShapeLike1D,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: float | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[np.float64]: ...
+@overload  # 1d shape, known dtype
+def empty(
+    shape: _ShapeLike1D,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> np.ma.MaskedArray[_nt.Rank1, _DTypeT]: ...
+@overload  # 1d shape, known scalar-type
+def empty(
+    shape: _ShapeLike1D,
+    dtype: _DTypeLike[_ScalarT],
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[_ScalarT]: ...
+@overload  # 1d shape, unknown dtype
+def empty(
+    shape: _ShapeLike1D,
+    dtype: DTypeLike = None,
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[Incomplete]: ...
+@overload  # known shape, default dtype (float64)
+def empty(
+    shape: _ShapeT,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: float | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[np.float64, _ShapeT]: ...
+@overload  # known shape, known dtype  (mypy reports a false positive)
+def empty(
+    shape: _ShapeT,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> np.ma.MaskedArray[_ShapeT, _DTypeT]: ...
+@overload  # known shape, known scalar-type
+def empty(
+    shape: _ShapeT,
+    dtype: _DTypeLike[_ScalarT],
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[_ScalarT, _ShapeT]: ...
+@overload  # known shape, unknown scalar-type
+def empty(
+    shape: _ShapeT,
+    dtype: DTypeLike = None,
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[Incomplete, _ShapeT]: ...
+@overload  # unknown shape, default dtype
+def empty(
+    shape: _ShapeLike,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: float | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[np.float64]: ...
+@overload  # unknown shape, known dtype
+def empty(
+    shape: _ShapeLike,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> np.ma.MaskedArray[Incomplete, _DTypeT]: ...
+@overload  # unknown shape, known scalar-type
+def empty(
+    shape: _ShapeLike,
+    dtype: _DTypeLike[_ScalarT],
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[_ScalarT]: ...
+@overload  # unknown shape, unknown dtype
+def empty(
+    shape: _ShapeLike,
+    dtype: DTypeLike = ...,
+    order: np._OrderCF = "C",
+    *,
+    device: _Device | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[Incomplete]: ...
+
 empty_like: _convert2ma
 frombuffer: _convert2ma
 fromfunction: _convert2ma
