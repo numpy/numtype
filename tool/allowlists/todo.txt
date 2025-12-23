@@ -1,4 +1,3 @@
-numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
 numpy.linalg.linalg
 numpy.ma.all
