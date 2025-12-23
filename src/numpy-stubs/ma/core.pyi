@@ -1101,8 +1101,83 @@ def count(a: ArrayLike, axis: _ShapeLike | None = None, *, keepdims: L[True]) ->
 @overload
 def count(a: ArrayLike, axis: _ShapeLike | None, keepdims: L[True]) -> _nt.Array[np.int_]: ...
 
-argmin: _frommethod
-argmax: _frommethod
+# TODO: sync with `MaskedArray.argmin`
+# Keep in sync with `argmax`
+@overload
+def argmin(
+    a: ArrayLike,
+    axis: None = None,
+    fill_value: _ScalarLike_co | None = None,
+    out: None = None,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> np.intp: ...
+@overload
+def argmin(
+    a: ArrayLike,
+    axis: CanIndex | None = None,
+    fill_value: _ScalarLike_co | None = None,
+    out: None = None,
+    *,
+    keepdims: bool | _NoValueType = ...,
+) -> Any: ...
+@overload
+def argmin(
+    a: ArrayLike,
+    axis: CanIndex | None = None,
+    fill_value: _ScalarLike_co | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def argmin(
+    a: ArrayLike,
+    axis: CanIndex | None,
+    fill_value: _ScalarLike_co | None,
+    out: _ArrayT,
+    *,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+
+# TODO: sync with `MaskedArray.argmax`
+# Keep in sync with `argmin`
+@overload
+def argmax(
+    a: ArrayLike,
+    axis: None = None,
+    fill_value: _ScalarLike_co | None = None,
+    out: None = None,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> np.intp: ...
+@overload
+def argmax(
+    a: ArrayLike,
+    axis: CanIndex | None = None,
+    fill_value: _ScalarLike_co | None = None,
+    out: None = None,
+    *,
+    keepdims: bool | _NoValueType = ...,
+) -> Any: ...
+@overload
+def argmax(
+    a: ArrayLike,
+    axis: CanIndex | None = None,
+    fill_value: _ScalarLike_co | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def argmax(
+    a: ArrayLike,
+    axis: CanIndex | None,
+    fill_value: _ScalarLike_co | None,
+    out: _ArrayT,
+    *,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
 
 minimum: _extrema_operation
 maximum: _extrema_operation

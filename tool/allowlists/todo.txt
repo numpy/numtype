@@ -1,8 +1,4 @@
-numpy.ma.argmax
-numpy.ma.argmin
 numpy.ma.asanyarray
 numpy.ma.core._frommethod
-numpy.ma.core.argmax
-numpy.ma.core.argmin
 numpy.ma.core.asanyarray
 numpy.ma.mrecords.fromtextfile
