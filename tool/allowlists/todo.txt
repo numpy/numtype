@@ -29,13 +29,10 @@ numpy._core._type_aliases.v
 numpy._core.array2string
 numpy._core.arrayprint.array2string
 numpy._core.defchararray.chararray.argsort
-numpy._core.dtype.__new__
 numpy._core.finfo.smallest_normal
 numpy._core.fromnumeric.reshape
 numpy._core.getlimits.finfo.smallest_normal
-numpy._core.multiarray.dtype.__new__
 numpy._core.numeric.array2string
-numpy._core.numeric.dtype.__new__
 numpy._core.numeric.object_.__new__
 numpy._core.numeric.reshape
 numpy._core.numeric.ufunc.__signature__
@@ -58,9 +55,7 @@ numpy.core.arrayprint.array2string
 numpy.core.defchararray.chararray.argsort
 numpy.core.fromnumeric.reshape
 numpy.core.getlimits.finfo.smallest_normal
-numpy.core.multiarray.dtype.__new__
 numpy.core.numeric.array2string
-numpy.core.numeric.dtype.__new__
 numpy.core.numeric.object_.__new__
 numpy.core.numeric.reshape
 numpy.core.numeric.ufunc.__signature__
@@ -70,7 +65,6 @@ numpy.core.numerictypes.void.__new__
 numpy.core.umath.__all__
 numpy.core.umath.matmul
 numpy.corrcoef
-numpy.dtype.__new__
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
 numpy.finfo.smallest_normal
@@ -199,7 +193,6 @@ numpy.ma.zeros
 numpy.ma.zeros_like
 numpy.matlib.array2string
 numpy.matlib.corrcoef
-numpy.matlib.dtype.__new__
 numpy.matlib.finfo.smallest_normal
 numpy.matlib.in1d
 numpy.matlib.nanpercentile
