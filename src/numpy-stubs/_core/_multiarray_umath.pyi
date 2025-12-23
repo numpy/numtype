@@ -21,7 +21,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import Buffer, CapsuleType, TypeAliasType, TypeVar, Unpack, deprecated
+from typing_extensions import Buffer, CapsuleType, TypeAliasType, TypeVar, deprecated
 
 import _numtype as _nt
 import numpy as np
@@ -176,10 +176,6 @@ class _HasDoc(Protocol):
     __doc__: str | None
 
 ###
-
-@type_check_only
-class _KwargsL(TypedDict, total=False):
-    like: _CanArrayFunc | None
 
 @type_check_only
 class _ExtObjDict(TypedDict):
@@ -1356,11 +1352,16 @@ def fromstring(
     count: CanIndex = -1,
     *,
     sep: str,
-    **kwargs: Unpack[_KwargsL],
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[np.float64]: ...
 @overload
 def fromstring(
-    string: bytes | str, dtype: _DTypeLike[_ScalarT], count: CanIndex = -1, *, sep: str, **kwargs: Unpack[_KwargsL]
+    string: bytes | str,
+    dtype: _DTypeLike[_ScalarT],
+    count: CanIndex = -1,
+    *,
+    sep: str,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromstring(
@@ -1368,7 +1369,7 @@ def fromstring(
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromstring(
-    string: bytes | str, dtype: npt.DTypeLike, count: CanIndex = -1, *, sep: str, **kwargs: Unpack[_KwargsL]
+    string: bytes | str, dtype: npt.DTypeLike, count: CanIndex = -1, *, sep: str, like: _CanArrayFunc | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 #
