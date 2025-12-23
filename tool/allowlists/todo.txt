@@ -30,8 +30,6 @@ numpy.ma.core.ids
 numpy.ma.core.indices
 numpy.ma.core.mean
 numpy.ma.core.nonzero
-numpy.ma.core.ones
-numpy.ma.core.ones_like
 numpy.ma.core.prod
 numpy.ma.core.product
 numpy.ma.core.ravel
@@ -43,8 +41,6 @@ numpy.ma.core.sum
 numpy.ma.core.swapaxes
 numpy.ma.core.trace
 numpy.ma.core.var
-numpy.ma.core.zeros
-numpy.ma.core.zeros_like
 numpy.ma.count
 numpy.ma.cumprod
 numpy.ma.cumsum
@@ -58,8 +54,6 @@ numpy.ma.indices
 numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
 numpy.ma.nonzero
-numpy.ma.ones
-numpy.ma.ones_like
 numpy.ma.prod
 numpy.ma.product
 numpy.ma.ravel
@@ -71,5 +65,3 @@ numpy.ma.sum
 numpy.ma.swapaxes
 numpy.ma.trace
 numpy.ma.var
-numpy.ma.zeros
-numpy.ma.zeros_like

@@ -1704,15 +1704,20 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.MArray[Incomplete]: ...
 
+# This is a bit of a hack to avoid having to duplicate all those `empty` overloads for
+# `ones` and `zeros`, that relies on the fact that empty/zeros/ones have identical
+# type signatures, but may cause some type-checkers to report incorrect names in case
+# of user errors. Mypy and Pyright seem to handle this just fine.
+ones = empty
+ones_like = empty_like
+zeros = empty
+zeros_like = empty_like
+
 frombuffer: _convert2ma
 fromfunction: _convert2ma
 identity: _convert2ma
 indices: _convert2ma
-ones: _convert2ma
-ones_like: _convert2ma
 squeeze: _convert2ma
-zeros: _convert2ma
-zeros_like: _convert2ma
 
 all: _frommethod
 anomalies: _frommethod
