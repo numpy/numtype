@@ -1345,11 +1345,11 @@ def fromfile(
 #
 @overload
 def fromiter(
-    iter: Iterable[object], dtype: _DTypeLike[_ScalarT], count: CanIndex = -1, **kwargs: Unpack[_KwargsL]
+    iter: Iterable[object], dtype: _DTypeLike[_ScalarT], count: CanIndex = -1, *, like: _CanArrayFunc | None = None
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromiter(
-    iter: Iterable[object], dtype: npt.DTypeLike, count: CanIndex = -1, **kwargs: Unpack[_KwargsL]
+    iter: Iterable[object], dtype: npt.DTypeLike, count: CanIndex = -1, *, like: _CanArrayFunc | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 #
