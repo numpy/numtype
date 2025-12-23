@@ -10,7 +10,7 @@ pathlib_path: pathlib.Path
 str_file: IO[str]
 AR_i8: _nt.Array[np.int64]
 
-np.save(bytes_path, AR_i8)  # type: ignore[call-overload]  # pyright: ignore[reportArgumentType]
+np.save(bytes_path, AR_i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.savez(bytes_path, AR_i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 np.savez_compressed(bytes_path, AR_i8)  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
 

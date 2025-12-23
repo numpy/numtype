@@ -353,7 +353,6 @@ from .lib import scimath as emath
 from .lib._arraypad_impl import pad
 from .lib._arraysetops_impl import (
     ediff1d,
-    in1d,
     intersect1d,
     isin,
     setdiff1d,
@@ -399,7 +398,6 @@ from .lib._function_base_impl import (
     sinc,
     sort_complex,
     trapezoid,
-    trapz,
     trim_zeros,
     unwrap,
     vectorize,
@@ -548,13 +546,13 @@ __all__ = [  # noqa: RUF022
     # lib._arraypad_impl.*
     "pad",
     # lib._arraysetops_impl.*
-    "ediff1d", "in1d", "intersect1d", "isin", "setdiff1d", "setxor1d", "union1d", "unique", "unique_all",
+    "ediff1d", "intersect1d", "isin", "setdiff1d", "setxor1d", "union1d", "unique", "unique_all",
     "unique_counts", "unique_inverse", "unique_values",
     # lib._function_base_impl.*
     "angle", "append", "asarray_chkfinite", "average", "bartlett", "bincount", "blackman", "copy", "corrcoef", "cov",
     "delete", "diff", "digitize", "extract", "flip", "gradient", "hamming", "hanning", "i0", "insert", "interp",
     "iterable", "kaiser", "median", "meshgrid", "percentile", "piecewise", "place", "quantile", "rot90", "select",
-    "sinc", "sort_complex", "trapezoid", "trapz", "trim_zeros", "unwrap", "vectorize",
+    "sinc", "sort_complex", "trapezoid", "trim_zeros", "unwrap", "vectorize",
     # lib._histograms_impl.*
     "histogram", "histogram_bin_edges", "histogramdd",
     # lib._index_tricks_impl.*
