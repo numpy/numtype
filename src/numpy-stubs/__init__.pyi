@@ -3504,6 +3504,10 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
+    @classmethod
+    def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
+
+    #
     @overload
     def __new__(cls, value: L[False, 0] | _Bool0 = ..., /) -> _Bool0: ...
     @overload

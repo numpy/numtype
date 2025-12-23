@@ -48,8 +48,6 @@ numpy._core.asanyarray
 numpy._core.asarray
 numpy._core.ascontiguousarray
 numpy._core.asfortranarray
-numpy._core.bool.__class_getitem__
-numpy._core.bool_.__class_getitem__
 numpy._core.copyto
 numpy._core.datetime64.__class_getitem__
 numpy._core.defchararray.chararray.argsort
@@ -91,8 +89,6 @@ numpy._core.numeric.asanyarray
 numpy._core.numeric.asarray
 numpy._core.numeric.ascontiguousarray
 numpy._core.numeric.asfortranarray
-numpy._core.numeric.bool.__class_getitem__
-numpy._core.numeric.bool_.__class_getitem__
 numpy._core.numeric.copyto
 numpy._core.numeric.datetime64.__class_getitem__
 numpy._core.numeric.dtype.__new__
@@ -111,8 +107,6 @@ numpy._core.numeric.ufunc.__signature__
 numpy._core.numeric.void.__new__
 numpy._core.numeric.where
 numpy._core.numeric.zeros
-numpy._core.numerictypes.bool.__class_getitem__
-numpy._core.numerictypes.bool_.__class_getitem__
 numpy._core.numerictypes.datetime64.__class_getitem__
 numpy._core.numerictypes.object_.__new__
 numpy._core.numerictypes.void.__new__
@@ -132,8 +126,6 @@ numpy.asanyarray
 numpy.asarray
 numpy.ascontiguousarray
 numpy.asfortranarray
-numpy.bool.__class_getitem__
-numpy.bool_.__class_getitem__
 numpy.char.chararray.argsort
 numpy.copyto
 numpy.core._internal._ctypes.get_as_parameter
@@ -184,8 +176,6 @@ numpy.core.numeric.asanyarray
 numpy.core.numeric.asarray
 numpy.core.numeric.ascontiguousarray
 numpy.core.numeric.asfortranarray
-numpy.core.numeric.bool.__class_getitem__
-numpy.core.numeric.bool_.__class_getitem__
 numpy.core.numeric.copyto
 numpy.core.numeric.datetime64.__class_getitem__
 numpy.core.numeric.dtype.__new__
@@ -204,8 +194,6 @@ numpy.core.numeric.ufunc.__signature__
 numpy.core.numeric.void.__new__
 numpy.core.numeric.where
 numpy.core.numeric.zeros
-numpy.core.numerictypes.bool.__class_getitem__
-numpy.core.numerictypes.bool_.__class_getitem__
 numpy.core.numerictypes.datetime64.__class_getitem__
 numpy.core.numerictypes.object_.__new__
 numpy.core.numerictypes.void.__new__
@@ -248,7 +236,6 @@ numpy.ma.asanyarray
 numpy.ma.atleast_1d
 numpy.ma.atleast_2d
 numpy.ma.atleast_3d
-numpy.ma.bool_.__class_getitem__
 numpy.ma.clip
 numpy.ma.column_stack
 numpy.ma.compress
@@ -263,7 +250,6 @@ numpy.ma.core.arange
 numpy.ma.core.argmax
 numpy.ma.core.argmin
 numpy.ma.core.asanyarray
-numpy.ma.core.bool_.__class_getitem__
 numpy.ma.core.clip
 numpy.ma.core.compress
 numpy.ma.core.copy
@@ -356,8 +342,6 @@ numpy.matlib.asanyarray
 numpy.matlib.asarray
 numpy.matlib.ascontiguousarray
 numpy.matlib.asfortranarray
-numpy.matlib.bool.__class_getitem__
-numpy.matlib.bool_.__class_getitem__
 numpy.matlib.copyto
 numpy.matlib.corrcoef
 numpy.matlib.datetime64.__class_getitem__
