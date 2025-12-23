@@ -38,7 +38,6 @@ numpy._core.fromnumeric.reshape
 numpy._core.getlimits.finfo.smallest_normal
 numpy._core.multiarray.dtype.__new__
 numpy._core.multiarray.flatiter.__array__
-numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
 numpy._core.numeric.array2string
@@ -46,7 +45,6 @@ numpy._core.numeric.dtype.__new__
 numpy._core.numeric.flatiter.__array__
 numpy._core.numeric.object_.__new__
 numpy._core.numeric.reshape
-numpy._core.numeric.shares_memory
 numpy._core.numeric.ufunc.__signature__
 numpy._core.numeric.void.__new__
 numpy._core.numeric.where
@@ -55,7 +53,6 @@ numpy._core.numerictypes.object_.__new__
 numpy._core.numerictypes.void.__new__
 numpy._core.object_.__new__
 numpy._core.reshape
-numpy._core.shares_memory
 numpy._core.strings.slice
 numpy._core.ufunc.__signature__
 numpy._core.umath.__all__
@@ -76,7 +73,6 @@ numpy.core.fromnumeric.reshape
 numpy.core.getlimits.finfo.smallest_normal
 numpy.core.multiarray.dtype.__new__
 numpy.core.multiarray.flatiter.__array__
-numpy.core.multiarray.shares_memory
 numpy.core.multiarray.where
 numpy.core.multiarray.zeros
 numpy.core.numeric.array2string
@@ -84,7 +80,6 @@ numpy.core.numeric.dtype.__new__
 numpy.core.numeric.flatiter.__array__
 numpy.core.numeric.object_.__new__
 numpy.core.numeric.reshape
-numpy.core.numeric.shares_memory
 numpy.core.numeric.ufunc.__signature__
 numpy.core.numeric.void.__new__
 numpy.core.numeric.where
@@ -234,7 +229,6 @@ numpy.matlib.object_.__new__
 numpy.matlib.percentile
 numpy.matlib.reshape
 numpy.matlib.save
-numpy.matlib.shares_memory
 numpy.matlib.trapz
 numpy.matlib.ufunc.__signature__
 numpy.matlib.void.__new__
@@ -245,7 +239,6 @@ numpy.object_.__new__
 numpy.percentile
 numpy.reshape
 numpy.save
-numpy.shares_memory
 numpy.strings.slice
 numpy.trapz
 numpy.ufunc.__signature__
