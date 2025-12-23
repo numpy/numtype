@@ -1,19 +1,15 @@
-numpy._core.finfo.smallest_normal
 numpy._core.fromnumeric.reshape
-numpy._core.getlimits.finfo.smallest_normal
 numpy._core.numeric.reshape
 numpy._core.reshape
 numpy._core.strings.slice
 numpy._core.umath.__all__
 numpy.core.fromnumeric.reshape
-numpy.core.getlimits.finfo.smallest_normal
 numpy.core.numeric.reshape
 numpy.core.umath.__all__
 numpy.core.umath.matmul
 numpy.corrcoef
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
-numpy.finfo.smallest_normal
 numpy.in1d
 numpy.lib._arraysetops_impl.__all__
 numpy.lib._arraysetops_impl.in1d
@@ -138,7 +134,6 @@ numpy.ma.vstack
 numpy.ma.zeros
 numpy.ma.zeros_like
 numpy.matlib.corrcoef
-numpy.matlib.finfo.smallest_normal
 numpy.matlib.in1d
 numpy.matlib.nanpercentile
 numpy.matlib.ndindex.ndincr
