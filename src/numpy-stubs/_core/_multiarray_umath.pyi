@@ -1279,92 +1279,98 @@ def from_dlpack(x: _CanDLPack, /, *, copy: py_bool | None = None, **kwargs: Unpa
 
 ###
 
+_ArangeScalar: TypeAlias = np.integer | np.floating | np.datetime64 | np.timedelta64
+_ArangeScalarT = TypeVar("_ArangeScalarT", bound=_ArangeScalar)
+
 #
-@overload  # (stop, dtype=_)
-def arange(stop: object, *, dtype: _DTypeLike[_ScalarT], **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[_ScalarT]: ...
-@overload  # (start, stop step, dtype)
+# NOTE: The `float64 | Any` return types needed to avoid incompatible overlapping overloads
+@overload  # (int-like, int-like?, int-like?)
 def arange(
-    start: object, stop: object, step: object, dtype: _DTypeLike[_ScalarT], **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[_ScalarT]: ...
-@overload  # (start, stop, step?, dtype=)
+    start_or_stop: _ToInt,
+    /,
+    stop: _ToInt | None = None,
+    step: _ToInt | None = 1,
+    *,
+    dtype: type[int] | _DTypeLike[np.int_] | None = None,
+    device: L["cpu"] | None = None,
+    like: _CanArrayFunc | None = None,
+) -> _nt.Array1D[np.int_]: ...
+@overload  # (float, float-like?, float-like?)
 def arange(
-    start: object, stop: object, step: object = ..., *, dtype: _DTypeLike[_ScalarT], **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[_ScalarT]: ...
-@overload  # (stop: int)
+    start_or_stop: float | np.floating,
+    /,
+    stop: _ToFloat | None = None,
+    step: _ToFloat | None = 1,
+    *,
+    dtype: type[float] | _DTypeLike[np.float64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _CanArrayFunc | None = None,
+) -> _nt.Array1D[np.float64 | Any]: ...
+@overload  # (float-like, float, float-like?)
 def arange(
-    stop: int | np.intp, *, dtype: _nt.ToDTypeInt64 | None = None, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.intp]: ...
-@overload  # (start: int, stop: int, step?: int)
+    start_or_stop: _ToFloat,
+    /,
+    stop: float | np.floating,
+    step: _ToFloat | None = 1,
+    *,
+    dtype: type[float] | _DTypeLike[np.float64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _CanArrayFunc | None = None,
+) -> _nt.Array1D[np.float64 | Any]: ...
+@overload  # (timedelta, timedelta-like?, timedelta-like?)
 def arange(
-    start: int | np.intp,
-    stop: int | np.intp,
-    step: int | np.intp = ...,
-    dtype: _nt.ToDTypeInt64 | None = None,
-    **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.intp]: ...
-@overload  # (stop: float, dtype=f64-like)
-def arange(stop: float, *, dtype: _nt.ToDTypeFloat64, **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[np.float64]: ...
-@overload  # (start: float, stop: float, step?: float, dtype=f64-like)
+    start_or_stop: np.timedelta64,
+    /,
+    stop: _ToTD64 | None = None,
+    step: _ToTD64 | None = 1,
+    *,
+    dtype: _DTypeLike[np.timedelta64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _CanArrayFunc | None = None,
+) -> _nt.Array1D[np.timedelta64[Incomplete]]: ...
+@overload  # (timedelta-like, timedelta, timedelta-like?)
 def arange(
-    start: float, stop: float, step: float = ..., *, dtype: _nt.ToDTypeFloat64, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.float64]: ...
-@overload  # (start: float, stop: float, step: float, dtype=f64-like)
+    start_or_stop: _ToTD64,
+    /,
+    stop: np.timedelta64,
+    step: _ToTD64 | None = 1,
+    *,
+    dtype: _DTypeLike[np.timedelta64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _CanArrayFunc | None = None,
+) -> _nt.Array1D[np.timedelta64[Incomplete]]: ...
+@overload  # (datetime, datetime, timedelta-like) (requires both start and stop)
 def arange(
-    start: float, stop: float, step: float, dtype: _nt.ToDTypeFloat64, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.float64]: ...
-@overload  # (stop: float)
+    start_or_stop: np.datetime64,
+    /,
+    stop: np.datetime64,
+    step: _ToTD64 | None = 1,
+    *,
+    dtype: _DTypeLike[np.datetime64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _CanArrayFunc | None = None,
+) -> _nt.Array1D[np.datetime64[Incomplete]]: ...
+@overload  # dtype=<known>
 def arange(
-    stop: _nt.JustFloat, *, dtype: _nt.ToDTypeFloat64 | None = None, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.float64]: ...
-@overload  # (start: float, stop: float, step?: float)
+    start_or_stop: _ArangeScalar | float,
+    /,
+    stop: _ArangeScalar | float | None = None,
+    step: _ArangeScalar | float | None = 1,
+    *,
+    dtype: _DTypeLike[_ArangeScalarT],
+    device: L["cpu"] | None = None,
+    like: _CanArrayFunc | None = None,
+) -> _nt.Array1D[_ArangeScalarT]: ...
+@overload  # dtype=<unknown>
 def arange(
-    start: _nt.JustFloat,
-    stop: float,
-    step: float = ...,
-    dtype: _nt.ToDTypeFloat64 | None = None,
-    **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.float64]: ...
-@overload  # (start: float, stop: float, step?: float)
-def arange(
-    start: float,
-    stop: _nt.JustFloat,
-    step: float = ...,
-    dtype: _nt.ToDTypeFloat64 | None = None,
-    **kwargs: Unpack[_KwargsDL],
-) -> _nt.Array1D[np.float64]: ...
-@overload  # int-like
-def arange(stop: _ToInt, *, dtype: None = None, **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[np.signedinteger]: ...
-@overload  # int-like
-def arange(
-    start: _ToInt, stop: _ToInt, step: _ToInt = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.signedinteger]: ...
-@overload  # float-like
-def arange(
-    stop: _ToFloat, *, dtype: None = None, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.floating | np.signedinteger]: ...
-@overload  # float-like
-def arange(
-    start: _ToFloat, stop: _ToFloat, step: _ToFloat = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.floating | np.signedinteger]: ...
-@overload  # timedelta64
-def arange(stop: np.timedelta64, *, dtype: None = None, **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[np.timedelta64]: ...
-@overload  # timedelta64
-def arange(
-    start: _ToTD64, stop: np.timedelta64, step: _ToTD64 = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.timedelta64]: ...
-@overload  # timedelta64
-def arange(
-    start: np.timedelta64, stop: _ToTD64, step: _ToTD64 = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.timedelta64]: ...
-@overload  # datetime64  (requires both start and stop)
-def arange(
-    start: np.datetime64, stop: np.datetime64, step: _ToDT64 = ..., dtype: None = None, **kwargs: Unpack[_KwargsDL]
-) -> _nt.Array1D[np.datetime64]: ...
-@overload  # fallback
-def arange(stop: object, *, dtype: npt.DTypeLike, **kwargs: Unpack[_KwargsDL]) -> _nt.Array1D[Incomplete]: ...
-@overload  # fallback
-def arange(
-    start: object, stop: object, step: object = ..., dtype: npt.DTypeLike | None = None, **kwargs: Unpack[_KwargsDL]
+    start_or_stop: _ArangeScalar | float,
+    /,
+    stop: _ArangeScalar | float | None = None,
+    step: _ArangeScalar | float | None = 1,
+    *,
+    dtype: npt.DTypeLike | None = None,
+    device: L["cpu"] | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array1D[Incomplete]: ...
 
 ###

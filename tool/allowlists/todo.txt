@@ -12,7 +12,6 @@ numpy._core._methods.umr_maximum
 numpy._core._methods.umr_minimum
 numpy._core._methods.umr_prod
 numpy._core._methods.umr_sum
-numpy._core._multiarray_umath.arange
 numpy._core._multiarray_umath.empty
 numpy._core._multiarray_umath.empty_like
 numpy._core._multiarray_umath.flatiter.__array__
@@ -35,7 +34,6 @@ numpy._core._type_aliases.sctype_list
 numpy._core._type_aliases.type_group
 numpy._core._type_aliases.type_info
 numpy._core._type_aliases.v
-numpy._core.arange
 numpy._core.array2string
 numpy._core.arrayprint.array2string
 numpy._core.copyto
@@ -52,7 +50,6 @@ numpy._core.fromiter
 numpy._core.fromnumeric.reshape
 numpy._core.getlimits.finfo.smallest_normal
 numpy._core.may_share_memory
-numpy._core.multiarray.arange
 numpy._core.multiarray.copyto
 numpy._core.multiarray.dtype.__new__
 numpy._core.multiarray.empty
@@ -66,7 +63,6 @@ numpy._core.multiarray.may_share_memory
 numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
-numpy._core.numeric.arange
 numpy._core.numeric.array2string
 numpy._core.numeric.copyto
 numpy._core.numeric.dtype.__new__
@@ -96,7 +92,6 @@ numpy._core.umath.__all__
 numpy._core.void.__new__
 numpy._core.where
 numpy._core.zeros
-numpy.arange
 numpy.array2string
 numpy.char.chararray.argsort
 numpy.copyto
@@ -104,7 +99,6 @@ numpy.core._internal._ctypes.get_as_parameter
 numpy.core._internal._ctypes.get_data
 numpy.core._internal._ctypes.get_shape
 numpy.core._internal._ctypes.get_strides
-numpy.core._multiarray_umath.arange
 numpy.core._multiarray_umath.empty
 numpy.core._multiarray_umath.empty_like
 numpy.core._multiarray_umath.flatiter.__array__
@@ -117,7 +111,6 @@ numpy.core.arrayprint.array2string
 numpy.core.defchararray.chararray.argsort
 numpy.core.fromnumeric.reshape
 numpy.core.getlimits.finfo.smallest_normal
-numpy.core.multiarray.arange
 numpy.core.multiarray.copyto
 numpy.core.multiarray.dtype.__new__
 numpy.core.multiarray.empty
@@ -131,7 +124,6 @@ numpy.core.multiarray.may_share_memory
 numpy.core.multiarray.shares_memory
 numpy.core.multiarray.where
 numpy.core.multiarray.zeros
-numpy.core.numeric.arange
 numpy.core.numeric.array2string
 numpy.core.numeric.copyto
 numpy.core.numeric.dtype.__new__
@@ -289,7 +281,6 @@ numpy.ma.var
 numpy.ma.vstack
 numpy.ma.zeros
 numpy.ma.zeros_like
-numpy.matlib.arange
 numpy.matlib.array2string
 numpy.matlib.copyto
 numpy.matlib.corrcoef
