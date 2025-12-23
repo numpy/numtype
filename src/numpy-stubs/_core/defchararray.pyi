@@ -4,7 +4,7 @@ from typing_extensions import Buffer, TypeAliasType, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy import _OrderKACF as _Order, _SortKind  # noqa: ICN003
+from numpy import _OrderKACF as _Order  # noqa: ICN003
 from numpy._typing import (
     _ArrayLikeAnyString_co as _ToAnyCharND,
     _ArrayLikeString_co as _ToStringND,
@@ -223,17 +223,6 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def __rmod__(self: Never, rhs: Never, /) -> Any: ...  # type: ignore[misc, override]  # pyright: ignore[reportIncompatibleMethodOverride]
-
-    #
-    @override  # type: ignore[override]
-    @overload
-    def argsort(
-        self, /, axis: SupportsIndex = -1, kind: _SortKind | None = None, order: None = None
-    ) -> _nt.Array[np.intp, _ShapeT_co]: ...
-    @overload
-    def argsort(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, /, axis: None, kind: _SortKind | None = None, order: None = None
-    ) -> _nt.Array1D[np.intp]: ...
 
     #
     def decode(
