@@ -1319,7 +1319,7 @@ def fromstring(
 #
 @overload
 def fromfile(
-    file: _ToFile, *, count: CanIndex = -1, sep: str = "", offset: CanIndex = 0, **kwargs: Unpack[_KwargsL]
+    file: _ToFile, *, count: CanIndex = -1, sep: str = "", offset: CanIndex = 0, like: _CanArrayFunc | None = None
 ) -> _nt.Array[np.float64]: ...
 @overload
 def fromfile(
@@ -1328,7 +1328,8 @@ def fromfile(
     count: CanIndex = -1,
     sep: str = "",
     offset: CanIndex = 0,
-    **kwargs: Unpack[_KwargsL],
+    *,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromfile(
@@ -1337,7 +1338,8 @@ def fromfile(
     count: CanIndex = -1,
     sep: str = "",
     offset: CanIndex = 0,
-    **kwargs: Unpack[_KwargsL],
+    *,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[Incomplete]: ...
 
 #
