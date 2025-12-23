@@ -3288,13 +3288,7 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
     # NOTE: these technically exist, but will always raise when called
     def trace(  # type: ignore[misc]
-        self: Never,
-        /,
-        offset: Never = ...,
-        axis1: Never = ...,
-        axis2: Never = ...,
-        dtype: Never = ...,
-        out: Never = ...,
+        self: Never, /, offset: L[0] = 0, axis1: L[0] = 0, axis2: L[1] = 1, dtype: None = None, out: None = None
     ) -> Never: ...
     def diagonal(self: Never, /, offset: L[0] = 0, axis1: L[0] = 0, axis2: L[1] = 1) -> Never: ...  # type: ignore[misc]
     def swapaxes(self: Never, axis1: Never, axis2: Never, /) -> Never: ...  # type: ignore[misc]
