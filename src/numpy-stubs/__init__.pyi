@@ -3012,23 +3012,23 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def take(
         self: _nt.Array[_ScalarT],
-        /,
         indices: _nt.CoInteger_0d,
+        /,
         axis: CanIndex | None = None,
         out: None = None,
         mode: _ModeKind = "raise",
     ) -> _ScalarT: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
     ) -> ndarray[_nt.AnyShape, _DTypeT_co]: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
 
     #
@@ -3358,24 +3358,24 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     #
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_0d, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_0d, /, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
     ) -> Self: ...
     @overload
     def take(
         self,
-        /,
         indices: _NestedSequence[CanIndex],
+        /,
         axis: CanIndex | None = None,
         out: None = None,
         mode: _ModeKind = "raise",
     ) -> _nt.Array[Self]: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
 
     #
