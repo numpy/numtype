@@ -1,2 +1,1 @@
-numpy.ma.core._frommethod
 numpy.ma.mrecords.fromtextfile

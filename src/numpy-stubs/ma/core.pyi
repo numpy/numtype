@@ -1,3 +1,4 @@
+import types
 from _typeshed import Incomplete
 from collections.abc import Callable, Sequence
 from typing import (
@@ -757,14 +758,10 @@ class MaskedConstant(MaskedArray[_nt.Rank0, np.dtype[np.float64]]):
     @override
     def copy(self, /, *args: object, **kwargs: object) -> Incomplete: ...
 
-# TODO: sync with upstream
-class _frommethod:
-    __name__: str
-    __doc__: str
-    reversed: Incomplete
-    def __init__(self, methodname: Incomplete, reversed: Incomplete = ...) -> None: ...
-    def __call__(self, a: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
-    def getdoc(self) -> Incomplete: ...
+# we cannot meaningfully annotate `frommethod` further, because the callable signature
+# of the return type fully depends on the *value* of `methodname` and `reversed` in
+# a way that cannot be expressed in the Python type system.
+def _frommethod(methodname: str, reversed: bool = False) -> types.FunctionType: ...
 
 # TODO: sync with `MaskedArray` methods
 def harden_mask(a: _MArrayT) -> _MArrayT: ...
