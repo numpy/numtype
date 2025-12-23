@@ -3031,10 +3031,10 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def repeat(self, /, repeats: _nt.CoInteger_nd, axis: None = None) -> ndarray[_nt.Rank1, _DTypeT_co]: ...
+    def repeat(self, repeats: _nt.CoInteger_nd, /, axis: None = None) -> ndarray[_nt.Rank1, _DTypeT_co]: ...
     @overload
     def repeat(
-        self: ndarray[_AnyShapeT, _DTypeT], /, repeats: _nt.CoInteger_nd, axis: CanIndex
+        self: ndarray[_AnyShapeT, _DTypeT], repeats: _nt.CoInteger_nd, /, axis: CanIndex
     ) -> ndarray[_AnyShapeT, _DTypeT]: ...
 
     #
