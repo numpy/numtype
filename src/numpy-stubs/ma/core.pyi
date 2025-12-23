@@ -1010,12 +1010,10 @@ remainder: _DomainedBinaryOperation
 fmod: _DomainedBinaryOperation
 mod: _DomainedBinaryOperation
 
-# TODO
 # internal wrapper functions for the functions below
-class _convert2ma:
-    def __init__(self, /, funcname: str, np_ret: str, np_ma_ret: str, params: dict[str, Any] | None = None) -> None: ...
-    def __call__(self, /, *args: object, **params: object) -> Any: ...
-    def getdoc(self, /, np_ret: str, np_ma_ret: str) -> str | None: ...
+def _convert2ma(
+    funcname: str, np_ret: str, np_ma_ret: str, params: dict[str, Any] | None = None
+) -> Callable[..., Any]: ...
 
 # keep in sync with `_core.multiarray.arange`
 @overload  # (int-like, int-like?, int-like?)

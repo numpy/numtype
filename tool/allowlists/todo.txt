@@ -7,7 +7,6 @@ numpy.ma.argmin
 numpy.ma.asanyarray
 numpy.ma.compress
 numpy.ma.copy
-numpy.ma.core._convert2ma
 numpy.ma.core._frommethod
 numpy.ma.core.all
 numpy.ma.core.anom
