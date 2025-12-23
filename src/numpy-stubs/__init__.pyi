@@ -1,5 +1,6 @@
 import ctypes as ct
 import datetime as dt
+import inspect
 import sys
 from _typeshed import Incomplete, StrOrBytesPath, SupportsFlush, SupportsLenAndGetItem, SupportsWrite
 from builtins import bool as py_bool
@@ -5416,6 +5417,8 @@ _OuterT_co = TypeVar(
 
 @final
 class ufunc(Generic[_CallT_co, _AtT_co, _ReduceT_co, _ReduceAtT_co, _AccumulateT_co, _OuterT_co]):
+    __signature__: Final[inspect.Signature]
+
     __call__: _CallT_co  # method
     at: _AtT_co  # method
     reduce: _ReduceT_co  # method
