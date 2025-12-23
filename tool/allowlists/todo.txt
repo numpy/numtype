@@ -1,10 +1,5 @@
-numpy._core.fromnumeric.reshape
-numpy._core.numeric.reshape
-numpy._core.reshape
 numpy._core.strings.slice
 numpy._core.umath.__all__
-numpy.core.fromnumeric.reshape
-numpy.core.numeric.reshape
 numpy.core.umath.__all__
 numpy.core.umath.matmul
 numpy.corrcoef
@@ -138,13 +133,11 @@ numpy.matlib.in1d
 numpy.matlib.nanpercentile
 numpy.matlib.ndindex.ndincr
 numpy.matlib.percentile
-numpy.matlib.reshape
 numpy.matlib.save
 numpy.matlib.trapz
 numpy.nanpercentile
 numpy.ndindex.ndincr
 numpy.percentile
-numpy.reshape
 numpy.save
 numpy.strings.slice
 numpy.trapz
