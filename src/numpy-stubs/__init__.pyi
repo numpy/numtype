@@ -1217,6 +1217,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     ) -> dtype: ...
 
     #
+    @classmethod
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
@@ -1754,6 +1755,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> Self: ...
 
     #
+    @classmethod
     def __class_getitem__(cls, item: object, /) -> GenericAlias: ...
 
     #
@@ -3980,6 +3982,7 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
     def itemsize(self) -> int: ...
 
     #
+    @classmethod
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
@@ -5197,6 +5200,7 @@ class timedelta64(
     def nbytes(self) -> L[8]: ...
 
     # inherited at runtime from `signedinteger`
+    @classmethod
     def __class_getitem__(cls, type_arg: type | object, /) -> GenericAlias: ...
 
     # NOTE: Only a limited number of units support conversion
