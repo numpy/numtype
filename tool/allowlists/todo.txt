@@ -1,4 +1,2 @@
-numpy.ma.asanyarray
 numpy.ma.core._frommethod
-numpy.ma.core.asanyarray
 numpy.ma.mrecords.fromtextfile
