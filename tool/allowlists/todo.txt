@@ -12,7 +12,6 @@ numpy._core._methods.umr_maximum
 numpy._core._methods.umr_minimum
 numpy._core._methods.umr_prod
 numpy._core._methods.umr_sum
-numpy._core._multiarray_umath.empty_like
 numpy._core._multiarray_umath.flatiter.__array__
 numpy._core._multiarray_umath.from_dlpack
 numpy._core._multiarray_umath.frombuffer
@@ -37,7 +36,6 @@ numpy._core.array2string
 numpy._core.arrayprint.array2string
 numpy._core.defchararray.chararray.argsort
 numpy._core.dtype.__new__
-numpy._core.empty_like
 numpy._core.finfo.smallest_normal
 numpy._core.flatiter.__array__
 numpy._core.from_dlpack
@@ -48,7 +46,6 @@ numpy._core.fromnumeric.reshape
 numpy._core.getlimits.finfo.smallest_normal
 numpy._core.may_share_memory
 numpy._core.multiarray.dtype.__new__
-numpy._core.multiarray.empty_like
 numpy._core.multiarray.flatiter.__array__
 numpy._core.multiarray.from_dlpack
 numpy._core.multiarray.frombuffer
@@ -60,7 +57,6 @@ numpy._core.multiarray.where
 numpy._core.multiarray.zeros
 numpy._core.numeric.array2string
 numpy._core.numeric.dtype.__new__
-numpy._core.numeric.empty_like
 numpy._core.numeric.flatiter.__array__
 numpy._core.numeric.from_dlpack
 numpy._core.numeric.frombuffer
@@ -91,7 +87,6 @@ numpy.core._internal._ctypes.get_as_parameter
 numpy.core._internal._ctypes.get_data
 numpy.core._internal._ctypes.get_shape
 numpy.core._internal._ctypes.get_strides
-numpy.core._multiarray_umath.empty_like
 numpy.core._multiarray_umath.flatiter.__array__
 numpy.core._multiarray_umath.from_dlpack
 numpy.core._multiarray_umath.frombuffer
@@ -103,7 +98,6 @@ numpy.core.defchararray.chararray.argsort
 numpy.core.fromnumeric.reshape
 numpy.core.getlimits.finfo.smallest_normal
 numpy.core.multiarray.dtype.__new__
-numpy.core.multiarray.empty_like
 numpy.core.multiarray.flatiter.__array__
 numpy.core.multiarray.from_dlpack
 numpy.core.multiarray.frombuffer
@@ -115,7 +109,6 @@ numpy.core.multiarray.where
 numpy.core.multiarray.zeros
 numpy.core.numeric.array2string
 numpy.core.numeric.dtype.__new__
-numpy.core.numeric.empty_like
 numpy.core.numeric.flatiter.__array__
 numpy.core.numeric.from_dlpack
 numpy.core.numeric.frombuffer
@@ -135,7 +128,6 @@ numpy.core.umath.__all__
 numpy.core.umath.matmul
 numpy.corrcoef
 numpy.dtype.__new__
-numpy.empty_like
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
 numpy.finfo.smallest_normal
@@ -270,7 +262,6 @@ numpy.ma.zeros_like
 numpy.matlib.array2string
 numpy.matlib.corrcoef
 numpy.matlib.dtype.__new__
-numpy.matlib.empty_like
 numpy.matlib.finfo.smallest_normal
 numpy.matlib.flatiter.__array__
 numpy.matlib.from_dlpack

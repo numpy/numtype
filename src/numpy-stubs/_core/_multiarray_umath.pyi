@@ -662,6 +662,7 @@ def zeros(
 @overload  # known array, subok=True
 def empty_like(
     prototype: _ArrayT,
+    /,
     dtype: None = None,
     order: _OrderKACF = "K",
     subok: L[True] = True,
@@ -672,6 +673,7 @@ def empty_like(
 @overload  # array-like with known shape and type
 def empty_like(
     prototype: _CanArray[np.ndarray[_ShapeT, _DTypeT]],
+    /,
     dtype: _DTypeT | _HasDType[_DTypeT] | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -682,6 +684,7 @@ def empty_like(
 @overload  # workaround for microsoft/pyright#10232
 def empty_like(
     prototype: _nt._ToArray_nnd[np.bool_],
+    /,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -692,6 +695,7 @@ def empty_like(
 @overload  # bool 0d array-like
 def empty_like(
     prototype: _nt.ToBool_0d,
+    /,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -702,6 +706,7 @@ def empty_like(
 @overload  # bool 1d array-like
 def empty_like(
     prototype: _nt.ToBool_1ds,
+    /,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -712,6 +717,7 @@ def empty_like(
 @overload  # bool 2d array-like
 def empty_like(
     prototype: _nt.ToBool_2ds,
+    /,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -722,6 +728,7 @@ def empty_like(
 @overload  # bool 3d array-like
 def empty_like(
     prototype: _nt.ToBool_3ds,
+    /,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -732,6 +739,7 @@ def empty_like(
 @overload  # workaround for microsoft/pyright#10232
 def empty_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     prototype: _nt._ToArray_nnd[np.intp],
+    /,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -742,6 +750,7 @@ def empty_like(  # type: ignore[overload-overlap]  # python/mypy#19908
 @overload  # int 0d array-like
 def empty_like(
     prototype: _nt.ToInt_0d,
+    /,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -752,6 +761,7 @@ def empty_like(
 @overload  # int 1d array-like
 def empty_like(
     prototype: _nt.ToInt_1ds,
+    /,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -762,6 +772,7 @@ def empty_like(
 @overload  # int 2d array-like
 def empty_like(
     prototype: _nt.ToInt_2ds,
+    /,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -772,6 +783,7 @@ def empty_like(
 @overload  # int 3d array-like
 def empty_like(
     prototype: _nt.ToInt_3ds,
+    /,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -782,6 +794,7 @@ def empty_like(
 @overload  # workaround for microsoft/pyright#10232
 def empty_like(  # type: ignore[overload-overlap]  # python/mypy#19908
     prototype: _nt._ToArray_nnd[np.float64],
+    /,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -792,6 +805,7 @@ def empty_like(  # type: ignore[overload-overlap]  # python/mypy#19908
 @overload  # float 0d array-like
 def empty_like(
     prototype: _nt.ToFloat64_0d,
+    /,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -802,6 +816,7 @@ def empty_like(
 @overload  # float 1d array-like
 def empty_like(
     prototype: _nt.ToFloat64_1ds,
+    /,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -812,6 +827,7 @@ def empty_like(
 @overload  # float 2d array-like
 def empty_like(
     prototype: _nt.ToFloat64_2ds,
+    /,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -822,6 +838,7 @@ def empty_like(
 @overload  # float 3d array-like
 def empty_like(
     prototype: _nt.ToFloat64_3ds,
+    /,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -832,6 +849,7 @@ def empty_like(
 @overload  # complex 0d array-like
 def empty_like(
     prototype: _nt.ToComplex128_0d,
+    /,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -842,6 +860,7 @@ def empty_like(
 @overload  # workaround for microsoft/pyright#10232
 def empty_like(
     prototype: _nt._ToArray_nnd[np.complex128],
+    /,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -852,6 +871,7 @@ def empty_like(
 @overload  # complex 1d array-like
 def empty_like(
     prototype: _nt.ToComplex128_1ds,
+    /,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -862,6 +882,7 @@ def empty_like(
 @overload  # complex 2d array-like
 def empty_like(
     prototype: _nt.ToComplex128_2ds,
+    /,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -872,6 +893,7 @@ def empty_like(
 @overload  # complex 3d array-like
 def empty_like(
     prototype: _nt.ToComplex128_3ds,
+    /,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -882,6 +904,7 @@ def empty_like(
 @overload  # array-like with known scalar-type, given shape
 def empty_like(  # type: ignore[overload-overlap]
     prototype: _ArrayLike[_ScalarT],
+    /,
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -892,6 +915,7 @@ def empty_like(  # type: ignore[overload-overlap]
 @overload  # array-like with known scalar-type, unknown shape
 def empty_like(
     prototype: _ArrayLike[_ScalarT],
+    /,
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -902,6 +926,7 @@ def empty_like(
 @overload  # given shape, given dtype
 def empty_like(  # type: ignore[overload-overlap]
     prototype: object,
+    /,
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -912,6 +937,7 @@ def empty_like(  # type: ignore[overload-overlap]
 @overload  # unknown shape, given dtype
 def empty_like(
     prototype: object,
+    /,
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -922,6 +948,7 @@ def empty_like(
 @overload  # given shape, given scalar-type
 def empty_like(
     prototype: object,
+    /,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -932,6 +959,7 @@ def empty_like(
 @overload  # unknown shape, given scalar-type
 def empty_like(
     prototype: object,
+    /,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -942,6 +970,7 @@ def empty_like(
 @overload  # bool array-like
 def empty_like(
     prototype: _nt.ToBool_nd,
+    /,
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -952,6 +981,7 @@ def empty_like(
 @overload  # int array-like
 def empty_like(
     prototype: _nt.ToInt_nd,
+    /,
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -962,6 +992,7 @@ def empty_like(
 @overload  # float array-like
 def empty_like(
     prototype: _nt.ToFloat64_nd,
+    /,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -972,6 +1003,7 @@ def empty_like(
 @overload  # complex array-like
 def empty_like(
     prototype: _nt.ToComplex128_nd,
+    /,
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -982,6 +1014,7 @@ def empty_like(
 @overload  # given shape, unknown scalar-type
 def empty_like(
     prototype: object,
+    /,
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
@@ -992,6 +1025,7 @@ def empty_like(
 @overload  # unknown shape, unknown scalar-type
 def empty_like(
     prototype: object,
+    /,
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
