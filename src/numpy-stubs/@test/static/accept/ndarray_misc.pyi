@@ -157,7 +157,7 @@ assert_type(AR_f8.dot(1), _nt.Array[Any])
 assert_type(AR_f8.dot([1]), Any)
 assert_type(AR_f8.dot(1, out=AR_O_sub), SubArray)
 
-assert_type(AR_f8.nonzero(), tuple[_nt.Array[np.intp], ...])
+assert_type(AR_f8.nonzero(), tuple[_nt.Array1D[np.intp], ...])
 
 assert_type(AR_f8.searchsorted(1), np.intp)
 assert_type(AR_f8.searchsorted([1]), _nt.Array[np.intp])
