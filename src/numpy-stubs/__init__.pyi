@@ -1572,8 +1572,8 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
-        keepdims: py_bool = False,
         *,
+        keepdims: py_bool = False,
         where: _nt.ToBool_nd = True,
     ) -> Any: ...
     @overload
@@ -1583,8 +1583,8 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
-        keepdims: py_bool = False,
         *,
+        keepdims: py_bool = False,
         where: _nt.ToBool_nd = True,
     ) -> _ArrayT: ...
     @overload
