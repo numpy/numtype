@@ -35,13 +35,10 @@ numpy._core.getlimits.finfo.smallest_normal
 numpy._core.numeric.array2string
 numpy._core.numeric.reshape
 numpy._core.numeric.ufunc.__signature__
-numpy._core.numeric.void.__new__
-numpy._core.numerictypes.void.__new__
 numpy._core.reshape
 numpy._core.strings.slice
 numpy._core.ufunc.__signature__
 numpy._core.umath.__all__
-numpy._core.void.__new__
 numpy.array2string
 numpy.char.chararray.argsort
 numpy.core._internal._ctypes.get_as_parameter
@@ -55,8 +52,6 @@ numpy.core.getlimits.finfo.smallest_normal
 numpy.core.numeric.array2string
 numpy.core.numeric.reshape
 numpy.core.numeric.ufunc.__signature__
-numpy.core.numeric.void.__new__
-numpy.core.numerictypes.void.__new__
 numpy.core.umath.__all__
 numpy.core.umath.matmul
 numpy.corrcoef
@@ -197,7 +192,6 @@ numpy.matlib.reshape
 numpy.matlib.save
 numpy.matlib.trapz
 numpy.matlib.ufunc.__signature__
-numpy.matlib.void.__new__
 numpy.nanpercentile
 numpy.ndindex.ndincr
 numpy.percentile
@@ -206,4 +200,3 @@ numpy.save
 numpy.strings.slice
 numpy.trapz
 numpy.ufunc.__signature__
-numpy.void.__new__
