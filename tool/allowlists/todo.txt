@@ -6,9 +6,5 @@ numpy.ma.core.argmax
 numpy.ma.core.argmin
 numpy.ma.core.asanyarray
 numpy.ma.core.count
-numpy.ma.core.std
-numpy.ma.core.var
 numpy.ma.count
 numpy.ma.mrecords.fromtextfile
-numpy.ma.std
-numpy.ma.var

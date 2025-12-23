@@ -1023,8 +1023,73 @@ def trace(
     out: _ArrayT,
 ) -> _ArrayT: ...
 
-std: _frommethod
-var: _frommethod
+# TODO: sync with `MaskedArray.std`
+# keep in sync with `var`
+@overload
+def std(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    mean: _nt.CoComplex_nd | _NoValueType = ...,
+) -> Incomplete: ...
+@overload
+def std(
+    a: ArrayLike,
+    axis: _ShapeLike | None,
+    dtype: DTypeLike | None,
+    out: _ArrayT,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    mean: _nt.CoComplex_nd | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def std(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    mean: _nt.CoComplex_nd | _NoValueType = ...,
+) -> _ArrayT: ...
+
+# TODO: sync with `MaskedArray.var`
+# keep in sync with `std`
+@overload
+def var(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    mean: _nt.CoComplex_nd | _NoValueType = ...,
+) -> Incomplete: ...
+@overload
+def var(
+    a: ArrayLike,
+    axis: _ShapeLike | None,
+    dtype: DTypeLike | None,
+    out: _ArrayT,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    mean: _nt.CoComplex_nd | _NoValueType = ...,
+) -> _ArrayT: ...
+@overload
+def var(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+    ddof: float = 0,
+    keepdims: bool | _NoValueType = ...,
+    mean: _nt.CoComplex_nd | _NoValueType = ...,
+) -> _ArrayT: ...
 
 count: _frommethod
 
