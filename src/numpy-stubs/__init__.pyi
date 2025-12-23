@@ -2846,6 +2846,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def argpartition(
         self,
         kth: _nt.CoInteger_nd,
+        /,
         axis: CanIndex | None = ...,
         kind: _PartitionKind = ...,
         order: str | Sequence[str] | None = ...,

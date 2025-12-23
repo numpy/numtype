@@ -101,7 +101,6 @@ numpy._core.multiarray.frombuffer
 numpy._core.multiarray.fromfile
 numpy._core.multiarray.fromiter
 numpy._core.multiarray.may_share_memory
-numpy._core.multiarray.ndarray.argpartition
 numpy._core.multiarray.ndarray.fill
 numpy._core.multiarray.ndarray.max
 numpy._core.multiarray.ndarray.mean
@@ -122,7 +121,6 @@ numpy._core.multiarray.ndarray.var
 numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
-numpy._core.ndarray.argpartition
 numpy._core.ndarray.fill
 numpy._core.ndarray.max
 numpy._core.ndarray.mean
@@ -180,7 +178,6 @@ numpy._core.numeric.generic.tofile
 numpy._core.numeric.generic.trace
 numpy._core.numeric.generic.var
 numpy._core.numeric.may_share_memory
-numpy._core.numeric.ndarray.argpartition
 numpy._core.numeric.ndarray.fill
 numpy._core.numeric.ndarray.max
 numpy._core.numeric.ndarray.mean
@@ -288,7 +285,6 @@ numpy.core.multiarray.frombuffer
 numpy.core.multiarray.fromfile
 numpy.core.multiarray.fromiter
 numpy.core.multiarray.may_share_memory
-numpy.core.multiarray.ndarray.argpartition
 numpy.core.multiarray.ndarray.fill
 numpy.core.multiarray.ndarray.max
 numpy.core.multiarray.ndarray.mean
@@ -349,7 +345,6 @@ numpy.core.numeric.generic.tofile
 numpy.core.numeric.generic.trace
 numpy.core.numeric.generic.var
 numpy.core.numeric.may_share_memory
-numpy.core.numeric.ndarray.argpartition
 numpy.core.numeric.ndarray.fill
 numpy.core.numeric.ndarray.max
 numpy.core.numeric.ndarray.mean
@@ -602,7 +597,6 @@ numpy.matlib.generic.var
 numpy.matlib.in1d
 numpy.matlib.may_share_memory
 numpy.matlib.nanpercentile
-numpy.matlib.ndarray.argpartition
 numpy.matlib.ndarray.fill
 numpy.matlib.ndarray.max
 numpy.matlib.ndarray.mean
@@ -632,7 +626,6 @@ numpy.matlib.void.__new__
 numpy.matlib.where
 numpy.may_share_memory
 numpy.nanpercentile
-numpy.ndarray.argpartition
 numpy.ndarray.fill
 numpy.ndarray.max
 numpy.ndarray.mean
