@@ -1217,6 +1217,7 @@ class dtype(Generic[_ScalarT_co], metaclass=_DTypeMeta):
     ) -> dtype: ...
 
     #
+    @classmethod
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
@@ -1754,6 +1755,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> Self: ...
 
     #
+    @classmethod
     def __class_getitem__(cls, item: object, /) -> GenericAlias: ...
 
     #
@@ -3504,6 +3506,10 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
 # NOTE: Naming it `bool_` results in less unreadable type-checker output
 class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
+    @classmethod
+    def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
+
+    #
     @overload
     def __new__(cls, value: L[False, 0] | _Bool0 = ..., /) -> _Bool0: ...
     @overload
@@ -3976,6 +3982,7 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
     def itemsize(self) -> int: ...
 
     #
+    @classmethod
     def __class_getitem__(cls, item: Any, /) -> GenericAlias: ...
 
     #
@@ -5036,6 +5043,10 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
 class datetime64(
     _RealMixin, _CmpOpMixin[datetime64, _ArrayLikeDT64_co], generic[_DT64ItemT_co], Generic[_DT64ItemT_co]
 ):
+    @classmethod
+    def __class_getitem__(cls, type_arg: type | object, /) -> GenericAlias: ...
+
+    #
     @overload
     def __new__(cls, /) -> datetime64[None]: ...
     @overload
@@ -5193,6 +5204,7 @@ class timedelta64(
     def nbytes(self) -> L[8]: ...
 
     # inherited at runtime from `signedinteger`
+    @classmethod
     def __class_getitem__(cls, type_arg: type | object, /) -> GenericAlias: ...
 
     # NOTE: Only a limited number of units support conversion
