@@ -1,6 +1,5 @@
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
-numpy.lib._index_tricks_impl.ndindex.ndincr
 numpy.lib._nanfunctions_impl.nanpercentile
 numpy.lib._npyio_impl.save
 numpy.lib.mixins.NDArrayOperatorsMixin.um
@@ -116,8 +115,6 @@ numpy.ma.vstack
 numpy.ma.zeros
 numpy.ma.zeros_like
 numpy.matlib.nanpercentile
-numpy.matlib.ndindex.ndincr
 numpy.matlib.save
 numpy.nanpercentile
-numpy.ndindex.ndincr
 numpy.save

@@ -12,7 +12,7 @@ from typing import (
     final,
     overload,
 )
-from typing_extensions import TypeVar, deprecated
+from typing_extensions import TypeVar
 
 import _numtype as _nt
 import numpy as np
@@ -95,8 +95,6 @@ class ndindex:
     #
     def __iter__(self) -> Self: ...
     def __next__(self) -> tuple[int, ...]: ...
-    @deprecated("Deprecated since 1.20.0.")
-    def ndincr(self, /) -> None: ...
 
 class nd_grid(Generic[_BoolT_co]):
     __slots__: ClassVar[tuple[str, ...]] = ("sparse",)
