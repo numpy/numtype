@@ -21,7 +21,6 @@ numpy.ma.core.count
 numpy.ma.core.cumprod
 numpy.ma.core.cumsum
 numpy.ma.core.diagonal
-numpy.ma.core.ids
 numpy.ma.core.mean
 numpy.ma.core.nonzero
 numpy.ma.core.prod
@@ -37,7 +36,6 @@ numpy.ma.count
 numpy.ma.cumprod
 numpy.ma.cumsum
 numpy.ma.diagonal
-numpy.ma.ids
 numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
 numpy.ma.nonzero

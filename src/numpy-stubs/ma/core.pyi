@@ -772,6 +772,7 @@ class _frommethod:
 def harden_mask(a: _MArrayT) -> _MArrayT: ...
 def soften_mask(a: _MArrayT) -> _MArrayT: ...
 def shrink_mask(a: _MArrayT) -> _MArrayT: ...
+def ids(a: ArrayLike) -> tuple[int, int]: ...
 
 anom: _frommethod
 anomalies = anom
@@ -782,7 +783,6 @@ cumprod: _frommethod
 cumsum: _frommethod
 copy: _frommethod
 diagonal: _frommethod
-ids: _frommethod
 mean: _frommethod
 nonzero: _frommethod
 prod: _frommethod
