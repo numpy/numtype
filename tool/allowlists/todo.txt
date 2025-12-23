@@ -64,7 +64,6 @@ numpy._core.fromfile
 numpy._core.fromiter
 numpy._core.fromnumeric.reshape
 numpy._core.generic.diagonal
-numpy._core.generic.mean
 numpy._core.generic.min
 numpy._core.generic.prod
 numpy._core.generic.put
@@ -99,7 +98,6 @@ numpy._core.multiarray.frombuffer
 numpy._core.multiarray.fromfile
 numpy._core.multiarray.fromiter
 numpy._core.multiarray.may_share_memory
-numpy._core.multiarray.ndarray.mean
 numpy._core.multiarray.ndarray.min
 numpy._core.multiarray.ndarray.partition
 numpy._core.multiarray.ndarray.prod
@@ -117,7 +115,6 @@ numpy._core.multiarray.ndarray.var
 numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
-numpy._core.ndarray.mean
 numpy._core.ndarray.min
 numpy._core.ndarray.partition
 numpy._core.ndarray.prod
@@ -152,7 +149,6 @@ numpy._core.numeric.frombuffer
 numpy._core.numeric.fromfile
 numpy._core.numeric.fromiter
 numpy._core.numeric.generic.diagonal
-numpy._core.numeric.generic.mean
 numpy._core.numeric.generic.min
 numpy._core.numeric.generic.prod
 numpy._core.numeric.generic.put
@@ -170,7 +166,6 @@ numpy._core.numeric.generic.tofile
 numpy._core.numeric.generic.trace
 numpy._core.numeric.generic.var
 numpy._core.numeric.may_share_memory
-numpy._core.numeric.ndarray.mean
 numpy._core.numeric.ndarray.min
 numpy._core.numeric.ndarray.partition
 numpy._core.numeric.ndarray.prod
@@ -196,7 +191,6 @@ numpy._core.numerictypes.bool.__class_getitem__
 numpy._core.numerictypes.bool_.__class_getitem__
 numpy._core.numerictypes.datetime64.__class_getitem__
 numpy._core.numerictypes.generic.diagonal
-numpy._core.numerictypes.generic.mean
 numpy._core.numerictypes.generic.min
 numpy._core.numerictypes.generic.prod
 numpy._core.numerictypes.generic.put
@@ -273,7 +267,6 @@ numpy.core.multiarray.frombuffer
 numpy.core.multiarray.fromfile
 numpy.core.multiarray.fromiter
 numpy.core.multiarray.may_share_memory
-numpy.core.multiarray.ndarray.mean
 numpy.core.multiarray.ndarray.min
 numpy.core.multiarray.ndarray.partition
 numpy.core.multiarray.ndarray.prod
@@ -311,7 +304,6 @@ numpy.core.numeric.frombuffer
 numpy.core.numeric.fromfile
 numpy.core.numeric.fromiter
 numpy.core.numeric.generic.diagonal
-numpy.core.numeric.generic.mean
 numpy.core.numeric.generic.min
 numpy.core.numeric.generic.prod
 numpy.core.numeric.generic.put
@@ -329,7 +321,6 @@ numpy.core.numeric.generic.tofile
 numpy.core.numeric.generic.trace
 numpy.core.numeric.generic.var
 numpy.core.numeric.may_share_memory
-numpy.core.numeric.ndarray.mean
 numpy.core.numeric.ndarray.min
 numpy.core.numeric.ndarray.partition
 numpy.core.numeric.ndarray.prod
@@ -355,7 +346,6 @@ numpy.core.numerictypes.bool.__class_getitem__
 numpy.core.numerictypes.bool_.__class_getitem__
 numpy.core.numerictypes.datetime64.__class_getitem__
 numpy.core.numerictypes.generic.diagonal
-numpy.core.numerictypes.generic.mean
 numpy.core.numerictypes.generic.min
 numpy.core.numerictypes.generic.prod
 numpy.core.numerictypes.generic.put
@@ -390,7 +380,6 @@ numpy.frombuffer
 numpy.fromfile
 numpy.fromiter
 numpy.generic.diagonal
-numpy.generic.mean
 numpy.generic.min
 numpy.generic.prod
 numpy.generic.put
@@ -553,7 +542,6 @@ numpy.matlib.frombuffer
 numpy.matlib.fromfile
 numpy.matlib.fromiter
 numpy.matlib.generic.diagonal
-numpy.matlib.generic.mean
 numpy.matlib.generic.min
 numpy.matlib.generic.prod
 numpy.matlib.generic.put
@@ -573,7 +561,6 @@ numpy.matlib.generic.var
 numpy.matlib.in1d
 numpy.matlib.may_share_memory
 numpy.matlib.nanpercentile
-numpy.matlib.ndarray.mean
 numpy.matlib.ndarray.min
 numpy.matlib.ndarray.partition
 numpy.matlib.ndarray.prod
@@ -600,7 +587,6 @@ numpy.matlib.void.__new__
 numpy.matlib.where
 numpy.may_share_memory
 numpy.nanpercentile
-numpy.ndarray.mean
 numpy.ndarray.min
 numpy.ndarray.partition
 numpy.ndarray.prod

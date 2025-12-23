@@ -1573,8 +1573,8 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         out: None = None,
         *,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Any: ...
     @overload
     def mean(
@@ -1584,8 +1584,8 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None,
         out: _ArrayT,
         *,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def mean(
@@ -1595,8 +1595,8 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
