@@ -1,6 +1,5 @@
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
-numpy.lib.mixins.NDArrayOperatorsMixin.um
 numpy.linalg.linalg
 numpy.ma.all
 numpy.ma.anom
