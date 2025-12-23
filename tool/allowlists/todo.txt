@@ -36,7 +36,6 @@ numpy._core._type_aliases.type_info
 numpy._core._type_aliases.v
 numpy._core.array2string
 numpy._core.arrayprint.array2string
-numpy._core.copyto
 numpy._core.defchararray.chararray.argsort
 numpy._core.dtype.__new__
 numpy._core.empty
@@ -50,7 +49,6 @@ numpy._core.fromiter
 numpy._core.fromnumeric.reshape
 numpy._core.getlimits.finfo.smallest_normal
 numpy._core.may_share_memory
-numpy._core.multiarray.copyto
 numpy._core.multiarray.dtype.__new__
 numpy._core.multiarray.empty
 numpy._core.multiarray.empty_like
@@ -64,7 +62,6 @@ numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
 numpy._core.numeric.array2string
-numpy._core.numeric.copyto
 numpy._core.numeric.dtype.__new__
 numpy._core.numeric.empty
 numpy._core.numeric.empty_like
@@ -94,7 +91,6 @@ numpy._core.where
 numpy._core.zeros
 numpy.array2string
 numpy.char.chararray.argsort
-numpy.copyto
 numpy.core._internal._ctypes.get_as_parameter
 numpy.core._internal._ctypes.get_data
 numpy.core._internal._ctypes.get_shape
@@ -111,7 +107,6 @@ numpy.core.arrayprint.array2string
 numpy.core.defchararray.chararray.argsort
 numpy.core.fromnumeric.reshape
 numpy.core.getlimits.finfo.smallest_normal
-numpy.core.multiarray.copyto
 numpy.core.multiarray.dtype.__new__
 numpy.core.multiarray.empty
 numpy.core.multiarray.empty_like
@@ -125,7 +120,6 @@ numpy.core.multiarray.shares_memory
 numpy.core.multiarray.where
 numpy.core.multiarray.zeros
 numpy.core.numeric.array2string
-numpy.core.numeric.copyto
 numpy.core.numeric.dtype.__new__
 numpy.core.numeric.empty
 numpy.core.numeric.empty_like
@@ -282,7 +276,6 @@ numpy.ma.vstack
 numpy.ma.zeros
 numpy.ma.zeros_like
 numpy.matlib.array2string
-numpy.matlib.copyto
 numpy.matlib.corrcoef
 numpy.matlib.dtype.__new__
 numpy.matlib.empty_like
