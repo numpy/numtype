@@ -2934,13 +2934,13 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def partition(
-        self, /, kth: _nt.CoInteger_nd, axis: CanIndex = -1, kind: _PartitionKind = "introselect", order: None = None
+        self, kth: _nt.CoInteger_nd, /, axis: CanIndex = -1, kind: _PartitionKind = "introselect", order: None = None
     ) -> None: ...
     @overload
     def partition(
         self: _nt.Array[void, Any],
-        /,
         kth: _nt.CoInteger_nd,
+        /,
         axis: CanIndex = -1,
         kind: _PartitionKind = "introselect",
         order: str | Sequence[str] | None = None,

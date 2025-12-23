@@ -97,7 +97,6 @@ numpy._core.multiarray.frombuffer
 numpy._core.multiarray.fromfile
 numpy._core.multiarray.fromiter
 numpy._core.multiarray.may_share_memory
-numpy._core.multiarray.ndarray.partition
 numpy._core.multiarray.ndarray.prod
 numpy._core.multiarray.ndarray.put
 numpy._core.multiarray.ndarray.repeat
@@ -113,7 +112,6 @@ numpy._core.multiarray.ndarray.var
 numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
-numpy._core.ndarray.partition
 numpy._core.ndarray.prod
 numpy._core.ndarray.put
 numpy._core.ndarray.repeat
@@ -162,7 +160,6 @@ numpy._core.numeric.generic.tofile
 numpy._core.numeric.generic.trace
 numpy._core.numeric.generic.var
 numpy._core.numeric.may_share_memory
-numpy._core.numeric.ndarray.partition
 numpy._core.numeric.ndarray.prod
 numpy._core.numeric.ndarray.put
 numpy._core.numeric.ndarray.repeat
@@ -261,7 +258,6 @@ numpy.core.multiarray.frombuffer
 numpy.core.multiarray.fromfile
 numpy.core.multiarray.fromiter
 numpy.core.multiarray.may_share_memory
-numpy.core.multiarray.ndarray.partition
 numpy.core.multiarray.ndarray.prod
 numpy.core.multiarray.ndarray.put
 numpy.core.multiarray.ndarray.repeat
@@ -313,7 +309,6 @@ numpy.core.numeric.generic.tofile
 numpy.core.numeric.generic.trace
 numpy.core.numeric.generic.var
 numpy.core.numeric.may_share_memory
-numpy.core.numeric.ndarray.partition
 numpy.core.numeric.ndarray.prod
 numpy.core.numeric.ndarray.put
 numpy.core.numeric.ndarray.repeat
@@ -549,7 +544,6 @@ numpy.matlib.generic.var
 numpy.matlib.in1d
 numpy.matlib.may_share_memory
 numpy.matlib.nanpercentile
-numpy.matlib.ndarray.partition
 numpy.matlib.ndarray.prod
 numpy.matlib.ndarray.put
 numpy.matlib.ndarray.repeat
@@ -574,7 +568,6 @@ numpy.matlib.void.__new__
 numpy.matlib.where
 numpy.may_share_memory
 numpy.nanpercentile
-numpy.ndarray.partition
 numpy.ndarray.prod
 numpy.ndarray.put
 numpy.ndarray.repeat
