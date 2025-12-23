@@ -2294,7 +2294,7 @@ def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike, sparse: L[True]) -> 
 @overload
 def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike = ..., *, sparse: L[True]) -> tuple[_nt.Array, ...]: ...
 
-#
+# keep in sync with `ma.core.fromfunction`
 def fromfunction(
     function: Callable[..., _T],
     shape: Sequence[int],

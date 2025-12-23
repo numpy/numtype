@@ -1,4 +1,5 @@
 from _typeshed import Incomplete
+from collections.abc import Callable, Sequence
 from typing import (
     Any,
     ClassVar,
@@ -214,7 +215,7 @@ __all__ = [
 
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _ArrayT_co = TypeVar("_ArrayT_co", bound=np.ndarray[Any, Any], covariant=True)
-_MArrayT = TypeVar("_MArrayT", bound=np.ma.MaskedArray[Any, Any])
+_MArrayT = TypeVar("_MArrayT", bound=MaskedArray[Any, Any])
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
@@ -389,7 +390,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @property
     @override
-    def data(self) -> np.ma.MaskedArray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def data(self) -> MaskedArray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def get_fill_value(self) -> Incomplete: ...
@@ -1216,7 +1217,7 @@ def empty(
     like: _CanArrayFunc | None = None,
     fill_value: complex | None = None,
     hardmask: bool = False,
-) -> np.ma.MaskedArray[_nt.Rank1, _DTypeT]: ...
+) -> MaskedArray[_nt.Rank1, _DTypeT]: ...
 @overload  # 1d shape, known scalar-type
 def empty(
     shape: _ShapeLike1D,
@@ -1260,7 +1261,7 @@ def empty(
     like: _CanArrayFunc | None = None,
     fill_value: complex | None = None,
     hardmask: bool = False,
-) -> np.ma.MaskedArray[_ShapeT, _DTypeT]: ...
+) -> MaskedArray[_ShapeT, _DTypeT]: ...
 @overload  # known shape, known scalar-type
 def empty(
     shape: _ShapeT,
@@ -1304,7 +1305,7 @@ def empty(
     like: _CanArrayFunc | None = None,
     fill_value: complex | None = None,
     hardmask: bool = False,
-) -> np.ma.MaskedArray[Incomplete, _DTypeT]: ...
+) -> MaskedArray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def empty(
     shape: _ShapeLike,
@@ -1350,7 +1351,7 @@ def empty_like(
     shape: None = None,
     *,
     device: _Device | None = None,
-) -> np.ma.MaskedArray[_ShapeT, _DTypeT]: ...
+) -> MaskedArray[_ShapeT, _DTypeT]: ...
 @overload  # workaround for microsoft/pyright#10232
 def empty_like(
     prototype: _nt._ToArray_nnd[np.bool_],
@@ -1603,7 +1604,7 @@ def empty_like(
     *,
     shape: _ShapeT,
     device: _Device | None = None,
-) -> np.ma.MaskedArray[_ShapeT, _DTypeT]: ...
+) -> MaskedArray[_ShapeT, _DTypeT]: ...
 @overload  # unknown shape, given dtype
 def empty_like(
     prototype: object,
@@ -1614,7 +1615,7 @@ def empty_like(
     shape: _ShapeLike | None = None,
     *,
     device: _Device | None = None,
-) -> np.ma.MaskedArray[Incomplete, _DTypeT]: ...
+) -> MaskedArray[Incomplete, _DTypeT]: ...
 @overload  # given shape, given scalar-type
 def empty_like(
     prototype: object,
@@ -1732,7 +1733,15 @@ def frombuffer(
     buffer: Buffer, dtype: DTypeLike, count: CanIndex = -1, offset: CanIndex = 0, *, like: _CanArrayFunc | None = None
 ) -> _nt.MArray[Incomplete]: ...
 
-fromfunction: _convert2ma
+# keep roughly in sync with `_core.numeric.fromfunction`
+def fromfunction(
+    function: Callable[..., np.ndarray[_ShapeT, _DTypeT]],
+    shape: Sequence[int],
+    *,
+    dtype: DTypeLike | None = ...,  # = float
+    like: _CanArrayFunc | None = None,
+    **kwargs: object,
+) -> MaskedArray[_ShapeT, _DTypeT]: ...
 
 identity: _convert2ma
 indices: _convert2ma
