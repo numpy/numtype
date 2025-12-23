@@ -783,7 +783,15 @@ def ravel(a: _ArrayLike[_ScalarT], order: _OrderKACF = "C") -> _nt.MArray1D[_Sca
 @overload
 def ravel(a: ArrayLike, order: _OrderKACF = "C") -> _nt.MArray1D[Incomplete]: ...
 
-copy: _frommethod
+# keep roughly in sync with `lib._function_base_impl.copy`
+@overload
+def copy(a: _MArrayT, order: _OrderKACF = "C") -> _MArrayT: ...
+@overload
+def copy(a: np.ndarray[_ShapeT, _DTypeT], order: _OrderKACF = "C") -> MaskedArray[_ShapeT, _DTypeT]: ...
+@overload
+def copy(a: _ArrayLike[_ScalarT], order: _OrderKACF = "C") -> _nt.MArray[_ScalarT]: ...
+@overload
+def copy(a: ArrayLike, order: _OrderKACF = "C") -> _nt.MArray[Incomplete]: ...
 
 diagonal: _frommethod
 
