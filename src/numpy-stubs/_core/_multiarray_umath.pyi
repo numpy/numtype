@@ -1166,19 +1166,21 @@ def asanyarray(
 # keep in sync with asfortranarray
 @overload
 def ascontiguousarray(
-    a: _CanArray[_nt.Array[_ScalarT, _ShapeT]], dtype: None = None, **kwargs: Unpack[_KwargsL]
+    a: _CanArray[_nt.Array[_ScalarT, _ShapeT]], dtype: None = None, *, like: _CanArrayFunc | None = None
 ) -> _nt.Array[_ScalarT, _ShapeT]: ...
 @overload
 def ascontiguousarray(
-    a: _ArrayLike[_ScalarT], dtype: None = None, **kwargs: Unpack[_KwargsL]
+    a: _ArrayLike[_ScalarT], dtype: None = None, *, like: _CanArrayFunc | None = None
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def ascontiguousarray(a: object, dtype: None = None, *, like: _nt.Array[_ScalarT]) -> _nt.Array[_ScalarT]: ...
 @overload
-def ascontiguousarray(a: object, dtype: _DTypeLike[_ScalarT], **kwargs: Unpack[_KwargsL]) -> _nt.Array[_ScalarT]: ...
+def ascontiguousarray(
+    a: object, dtype: _DTypeLike[_ScalarT], *, like: _CanArrayFunc | None = None
+) -> _nt.Array[_ScalarT]: ...
 @overload
 def ascontiguousarray(
-    a: object, dtype: npt.DTypeLike | None = None, **kwargs: Unpack[_KwargsL]
+    a: object, dtype: npt.DTypeLike | None = None, *, like: _CanArrayFunc | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 # keep in sync with ascontiguousarray
