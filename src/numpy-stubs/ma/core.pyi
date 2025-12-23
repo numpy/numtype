@@ -923,11 +923,79 @@ def cumprod(a: ArrayLike, axis: CanIndex | None, dtype: DTypeLike | None, out: _
 @overload  # out: ndarray (kwarg)
 def cumprod(a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
-mean: _frommethod
-sum: _frommethod
+# TODO: sync with `MaskedArray.mean`
+# Keep in sync with `sum`, `prod`, and `product`
+@overload
+def mean(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+) -> Incomplete: ...
+@overload
+def mean(
+    a: ArrayLike, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+) -> _ArrayT: ...
+@overload
+def mean(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
 
-prod: _frommethod
-product: _frommethod
+# TODO: sync with `MaskedArray.sum`
+# Keep in sync with `mean`, `prod`, and `product`
+@overload
+def sum(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+) -> Incomplete: ...
+@overload
+def sum(
+    a: ArrayLike, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+) -> _ArrayT: ...
+@overload
+def sum(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+
+# TODO: sync with `MaskedArray.prod`
+# Keep in sync with `mean`, `sum`, and `product`
+@overload
+def prod(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+    keepdims: bool | _NoValueType = ...,
+) -> Incomplete: ...
+@overload
+def prod(
+    a: ArrayLike, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+) -> _ArrayT: ...
+@overload
+def prod(
+    a: ArrayLike,
+    axis: _ShapeLike | None = None,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+    keepdims: bool | _NoValueType = ...,
+) -> _ArrayT: ...
+
+product = prod
 
 trace: _frommethod
 
