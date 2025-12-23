@@ -1,4 +1,3 @@
-numpy.linalg.linalg
 numpy.ma.all
 numpy.ma.anom
 numpy.ma.anomalies
