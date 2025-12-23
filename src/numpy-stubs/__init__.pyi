@@ -332,7 +332,7 @@ from ._core.umath import (
     vecmat,
 )
 from ._expired_attrs_2_0 import __expired_attributes__ as __expired_attributes__
-from ._globals import _CopyMode as _CopyMode, _NoValue as _NoValue
+from ._globals import _CopyMode as _CopyMode, _NoValue as _NoValue, _NoValueType
 from ._pytesttester import PytestTester
 from ._typing import (
     ArrayLike,
@@ -1352,9 +1352,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         out: None = None,
         *,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Incomplete: ...
     @overload
     def max(
@@ -1363,9 +1363,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None,
         out: _ArrayT,
         *,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def max(
@@ -1374,9 +1374,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
