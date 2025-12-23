@@ -877,7 +877,29 @@ def any(
     a: ArrayLike, axis: _ShapeLike | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...
 ) -> _ArrayT: ...
 
-compress: _frommethod
+# TODO: sync with `MaskedArray.compress`
+# NOTE: The `MaskedArray.compress` definition uses its `DTypeT_co` type parameter,
+# which wouldn't work here for array-like inputs, so we need additional overloads.
+@overload
+def compress(
+    condition: _nt.ToBool_nd, a: _ArrayLike[_ScalarT], axis: None = None, out: None = None
+) -> _nt.MArray1D[_ScalarT]: ...
+@overload
+def compress(
+    condition: _nt.ToBool_nd, a: _ArrayLike[_ScalarT], axis: _ShapeLike, out: None = None
+) -> _nt.MArray[_ScalarT]: ...
+@overload
+def compress(
+    condition: _nt.ToBool_nd, a: ArrayLike, axis: None = None, out: None = None
+) -> _nt.MArray1D[Incomplete]: ...
+@overload
+def compress(
+    condition: _nt.ToBool_nd, a: ArrayLike, axis: _ShapeLike | None = None, out: None = None
+) -> _nt.MArray[Incomplete]: ...
+@overload
+def compress(condition: _nt.ToBool_nd, a: ArrayLike, axis: _ShapeLike | None, out: _ArrayT) -> _ArrayT: ...
+@overload
+def compress(condition: _nt.ToBool_nd, a: ArrayLike, axis: _ShapeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
 cumsum: _frommethod
 cumprod: _frommethod

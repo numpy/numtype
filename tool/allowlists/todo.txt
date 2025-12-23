@@ -1,12 +1,10 @@
 numpy.ma.argmax
 numpy.ma.argmin
 numpy.ma.asanyarray
-numpy.ma.compress
 numpy.ma.core._frommethod
 numpy.ma.core.argmax
 numpy.ma.core.argmin
 numpy.ma.core.asanyarray
-numpy.ma.core.compress
 numpy.ma.core.count
 numpy.ma.core.cumprod
 numpy.ma.core.cumsum
