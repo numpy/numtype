@@ -178,10 +178,6 @@ class _HasDoc(Protocol):
 ###
 
 @type_check_only
-class _KwargsD(TypedDict, total=False):
-    device: _Device | None
-
-@type_check_only
 class _KwargsL(TypedDict, total=False):
     like: _CanArrayFunc | None
 
@@ -1369,7 +1365,7 @@ def frombuffer(
 ) -> _nt.Array[Incomplete]: ...
 
 #
-def from_dlpack(x: _CanDLPack, /, *, copy: py_bool | None = None, **kwargs: Unpack[_KwargsD]) -> _nt.Array: ...
+def from_dlpack(x: _CanDLPack, /, *, copy: py_bool | None = None, device: _Device | None = None) -> _nt.Array: ...
 
 ###
 
