@@ -13,7 +13,6 @@ numpy._core._methods.umr_minimum
 numpy._core._methods.umr_prod
 numpy._core._methods.umr_sum
 numpy._core._multiarray_umath.arange
-numpy._core._multiarray_umath.array
 numpy._core._multiarray_umath.asanyarray
 numpy._core._multiarray_umath.asarray
 numpy._core._multiarray_umath.ascontiguousarray
@@ -41,7 +40,6 @@ numpy._core._type_aliases.type_group
 numpy._core._type_aliases.type_info
 numpy._core._type_aliases.v
 numpy._core.arange
-numpy._core.array
 numpy._core.array2string
 numpy._core.arrayprint.array2string
 numpy._core.asanyarray
@@ -63,7 +61,6 @@ numpy._core.fromnumeric.reshape
 numpy._core.getlimits.finfo.smallest_normal
 numpy._core.may_share_memory
 numpy._core.multiarray.arange
-numpy._core.multiarray.array
 numpy._core.multiarray.asanyarray
 numpy._core.multiarray.asarray
 numpy._core.multiarray.ascontiguousarray
@@ -82,7 +79,6 @@ numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
 numpy._core.numeric.arange
-numpy._core.numeric.array
 numpy._core.numeric.array2string
 numpy._core.numeric.asanyarray
 numpy._core.numeric.asarray
@@ -117,7 +113,6 @@ numpy._core.void.__new__
 numpy._core.where
 numpy._core.zeros
 numpy.arange
-numpy.array
 numpy.array2string
 numpy.asanyarray
 numpy.asarray
@@ -130,7 +125,6 @@ numpy.core._internal._ctypes.get_data
 numpy.core._internal._ctypes.get_shape
 numpy.core._internal._ctypes.get_strides
 numpy.core._multiarray_umath.arange
-numpy.core._multiarray_umath.array
 numpy.core._multiarray_umath.asanyarray
 numpy.core._multiarray_umath.asarray
 numpy.core._multiarray_umath.ascontiguousarray
@@ -148,7 +142,6 @@ numpy.core.defchararray.chararray.argsort
 numpy.core.fromnumeric.reshape
 numpy.core.getlimits.finfo.smallest_normal
 numpy.core.multiarray.arange
-numpy.core.multiarray.array
 numpy.core.multiarray.asanyarray
 numpy.core.multiarray.asarray
 numpy.core.multiarray.ascontiguousarray
@@ -167,7 +160,6 @@ numpy.core.multiarray.shares_memory
 numpy.core.multiarray.where
 numpy.core.multiarray.zeros
 numpy.core.numeric.arange
-numpy.core.numeric.array
 numpy.core.numeric.array2string
 numpy.core.numeric.asanyarray
 numpy.core.numeric.asarray
@@ -330,7 +322,6 @@ numpy.ma.vstack
 numpy.ma.zeros
 numpy.ma.zeros_like
 numpy.matlib.arange
-numpy.matlib.array
 numpy.matlib.array2string
 numpy.matlib.asanyarray
 numpy.matlib.asarray

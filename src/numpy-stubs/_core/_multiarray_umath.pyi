@@ -186,11 +186,6 @@ class _KwargsL(TypedDict, total=False):
     like: _CanArrayFunc | None
 
 @type_check_only
-class _KwargsCL(TypedDict, total=False):
-    copy: _Copy | None
-    like: _CanArrayFunc | None
-
-@type_check_only
 class _KwargsDL(TypedDict, total=False):
     device: _Device | None
     like: _CanArrayFunc | None
@@ -960,7 +955,9 @@ def array(
     order: _OrderKACF = "K",
     subok: L[True],
     ndmin: L[0] = 0,
-    **kwargs: Unpack[_KwargsCL],
+    ndmax: int = 0,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _ArrayT: ...
 @overload
 def array(
@@ -970,7 +967,9 @@ def array(
     order: _OrderKACF = "K",
     subok: L[True],
     ndmin: L[0, 1] = 0,
-    **kwargs: Unpack[_KwargsCL],
+    ndmax: int = 0,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _Array1T: ...
 @overload
 def array(
@@ -980,7 +979,9 @@ def array(
     order: _OrderKACF = "K",
     subok: L[True],
     ndmin: L[0, 1, 2] = 0,
-    **kwargs: Unpack[_KwargsCL],
+    ndmax: int = 0,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _Array2T: ...
 @overload
 def array(
@@ -990,7 +991,9 @@ def array(
     order: _OrderKACF = "K",
     subok: bool = False,
     ndmin: L[0] = 0,
-    **kwargs: Unpack[_KwargsCL],
+    ndmax: int = 0,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
 @overload
 def array(
@@ -1000,7 +1003,9 @@ def array(
     order: _OrderKACF = "K",
     subok: bool = False,
     ndmin: int = 0,
-    **kwargs: Unpack[_KwargsCL],
+    ndmax: int = 0,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def array(
@@ -1010,7 +1015,8 @@ def array(
     order: _OrderKACF = "K",
     subok: bool = False,
     ndmin: L[0] = 0,
-    **kwargs: Unpack[_KwargsCL],
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array0D[_ScalarT]: ...
 @overload
 def array(
@@ -1020,7 +1026,9 @@ def array(
     order: _OrderKACF = "K",
     subok: bool = False,
     ndmin: L[0] = 0,
-    **kwargs: Unpack[_KwargsCL],
+    ndmax: int = 0,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array0D[Incomplete]: ...
 @overload
 def array(
@@ -1030,7 +1038,9 @@ def array(
     order: _OrderKACF = "K",
     subok: bool = False,
     ndmin: int = 0,
-    **kwargs: Unpack[_KwargsCL],
+    ndmax: int = 0,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def array(
@@ -1040,7 +1050,9 @@ def array(
     order: _OrderKACF = "K",
     subok: bool = False,
     ndmin: int = 0,
-    **kwargs: Unpack[_KwargsCL],
+    ndmax: int = 0,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[Incomplete]: ...
 
 #
