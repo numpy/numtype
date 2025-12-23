@@ -24,7 +24,6 @@ numpy.ma.core.diagonal
 numpy.ma.core.mean
 numpy.ma.core.prod
 numpy.ma.core.product
-numpy.ma.core.ravel
 numpy.ma.core.repeat
 numpy.ma.core.std
 numpy.ma.core.sum
@@ -39,7 +38,6 @@ numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
 numpy.ma.prod
 numpy.ma.product
-numpy.ma.ravel
 numpy.ma.repeat
 numpy.ma.std
 numpy.ma.sum

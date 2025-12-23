@@ -775,28 +775,51 @@ def ids(a: ArrayLike) -> tuple[int, int]: ...
 # keep in sync with `ndarray.nonzero`
 def nonzero(a: ArrayLike) -> tuple[_nt.Array1D[np.intp], ...]: ...
 
+# TODO: sync with `MaskedArray.ravel`
+@overload
+def ravel(a: np.ndarray[Any, _DTypeT], order: _OrderKACF = "C") -> MaskedArray[_nt.Rank1, _DTypeT]: ...
+@overload
+def ravel(a: _ArrayLike[_ScalarT], order: _OrderKACF = "C") -> _nt.MArray1D[_ScalarT]: ...
+@overload
+def ravel(a: ArrayLike, order: _OrderKACF = "C") -> _nt.MArray1D[Incomplete]: ...
+
+copy: _frommethod
+
+diagonal: _frommethod
+
+repeat: _frommethod
+
+swapaxes: _frommethod
+
 anom: _frommethod
 anomalies = anom
+
 all: _frommethod
 any: _frommethod
+
 compress: _frommethod
-cumprod: _frommethod
+
 cumsum: _frommethod
-copy: _frommethod
-diagonal: _frommethod
+cumprod: _frommethod
+
 mean: _frommethod
+sum: _frommethod
+
 prod: _frommethod
 product: _frommethod
-ravel: _frommethod
-repeat: _frommethod
-std: _frommethod
-sum: _frommethod
-swapaxes: _frommethod
+
 trace: _frommethod
+
+std: _frommethod
 var: _frommethod
+
 count: _frommethod
+
 argmin: _frommethod
 argmax: _frommethod
+
+minimum: _extrema_operation
+maximum: _extrema_operation
 
 #
 def array(
@@ -812,9 +835,6 @@ def array(
     subok: Incomplete = ...,
     ndmin: Incomplete = ...,
 ) -> Incomplete: ...
-
-minimum: _extrema_operation
-maximum: _extrema_operation
 
 #
 @overload
