@@ -1,4 +1,3 @@
-numpy.fft.helper
 numpy.linalg.linalg
 numpy.ma.all
 numpy.ma.anom
