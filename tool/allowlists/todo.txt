@@ -23,7 +23,6 @@ numpy.ma.core.cumprod
 numpy.ma.core.cumsum
 numpy.ma.core.diagonal
 numpy.ma.core.harden_mask
-numpy.ma.core.identity
 numpy.ma.core.ids
 numpy.ma.core.indices
 numpy.ma.core.mean
@@ -44,7 +43,6 @@ numpy.ma.cumprod
 numpy.ma.cumsum
 numpy.ma.diagonal
 numpy.ma.harden_mask
-numpy.ma.identity
 numpy.ma.ids
 numpy.ma.indices
 numpy.ma.mean

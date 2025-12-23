@@ -1743,7 +1743,35 @@ def fromfunction(
     **kwargs: object,
 ) -> MaskedArray[_ShapeT, _DTypeT]: ...
 
-identity: _convert2ma
+# keep roughly in sync with `_core.numeric.identity`
+@overload
+def identity(
+    n: int,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    *,
+    like: _CanArrayFunc | None = None,
+    fill_value: float | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray2D[np.float64]: ...
+@overload
+def identity(
+    n: int,
+    dtype: _DTypeLike[_ScalarT],
+    *,
+    like: _CanArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray2D[_ScalarT]: ...
+@overload
+def identity(
+    n: int,
+    dtype: DTypeLike | None = None,
+    *,
+    like: _CanArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray2D[Incomplete]: ...
+
 indices: _convert2ma
 squeeze: _convert2ma
 
