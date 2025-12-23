@@ -2,6 +2,7 @@ import datetime as dt
 from _typeshed import Incomplete
 from collections.abc import Callable, Iterable, Sequence
 from typing import (
+    Any,
     Concatenate,
     Final,
     Literal as L,
@@ -74,6 +75,7 @@ _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT1 = TypeVar("_ScalarT1", bound=np.generic)
 _ScalarT2 = TypeVar("_ScalarT2", bound=np.generic)
 _NumberT = TypeVar("_NumberT", bound=np.number)
+_InexactDateTimeT = TypeVar("_InexactDateTimeT", bound=np.inexact | np.timedelta64 | np.datetime64)
 _TrapezoidScalarT = TypeVar("_TrapezoidScalarT", bound=np.inexact | np.timedelta64)
 
 _Tuple2: TypeAlias = tuple[_T, _T]
@@ -750,12 +752,10 @@ def median(
     keepdims: bool = False,
 ) -> _ArrayT: ...
 
-# keep in sync with `lib._nanfunctions_impl.nanpercentile`
-# TODO(jorenham): deprecate interpolation
-# TODO(jorenham): deprecate only allow weights if method="inverted_cdf"
-@overload
+# NOTE: keep in sync with `quantile`
+@overload  # inexact, scalar, axis=None
 def percentile(
-    a: _nt.CoFloating_nd,
+    a: _ArrayLike[_InexactDateTimeT],
     q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
@@ -764,12 +764,35 @@ def percentile(
     keepdims: L[False] = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> np.floating: ...
-@overload
+) -> _InexactDateTimeT: ...
+@overload  # inexact, scalar, axis=<given>
 def percentile(
-    a: _nt.CoFloating_nd,
-    q: _nt.CoFloating_1nd,
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[_InexactDateTimeT]: ...
+@overload  # inexact, scalar, keepdims=True
+def percentile(
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    *,
+    keepdims: L[True],
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[_InexactDateTimeT]: ...
+@overload  # inexact, array, axis=None
+def percentile(
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.Array[_nt.co_float, _ShapeT],
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
@@ -777,11 +800,22 @@ def percentile(
     keepdims: L[False] = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> _nt.Array[np.floating]: ...
-@overload
+) -> _nt.Array[_InexactDateTimeT, _ShapeT]: ...
+@overload  # inexact, array-like
 def percentile(
-    a: _nt.ToComplex_nd,
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[_InexactDateTimeT]: ...
+@overload  # float, scalar, axis=None
+def percentile(
+    a: _nt.CastsArray[np.float64],
     q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
@@ -790,12 +824,35 @@ def percentile(
     keepdims: L[False] = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> np.complexfloating: ...
-@overload
+) -> np.float64: ...
+@overload  # float, scalar, axis=<given>
 def percentile(
-    a: _nt.ToComplex_nd,
-    q: _nt.CoFloating_1nd,
+    a: _nt.CastsArray[np.float64],
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload  # float, scalar, keepdims=True
+def percentile(
+    a: _nt.CastsArray[np.float64],
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    *,
+    keepdims: L[True],
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload  # float, array, axis=None
+def percentile(
+    a: _nt.CastsArray[np.float64],
+    q: _nt.Array[_nt.co_float, _ShapeT],
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
@@ -803,11 +860,22 @@ def percentile(
     keepdims: L[False] = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> _nt.Array[np.complexfloating]: ...
-@overload
+) -> _nt.Array[np.float64, _ShapeT]: ...
+@overload  # float, array-like
 def percentile(
-    a: _nt.ToTimeDelta_nd,
+    a: _nt.CastsArray[np.float64],
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload  # complex, scalar, axis=None
+def percentile(
+    a: _nt.ToComplex128_1nd,
     q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
@@ -816,12 +884,35 @@ def percentile(
     keepdims: L[False] = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> np.timedelta64: ...
-@overload
+) -> np.complex128: ...
+@overload  # complex, scalar, axis=<given>
 def percentile(
-    a: _nt.ToTimeDelta_nd,
-    q: _nt.CoFloating_1nd,
+    a: _nt.ToComplex128_1nd,
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload  # complex, scalar, keepdims=True
+def percentile(
+    a: _nt.ToComplex128_1nd,
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    *,
+    keepdims: L[True],
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload  # complex, array, axis=None
+def percentile(
+    a: _nt.ToComplex128_1nd,
+    q: _nt.Array[_nt.co_float, _ShapeT],
     axis: None = None,
     out: None = None,
     overwrite_input: bool = False,
@@ -829,11 +920,22 @@ def percentile(
     keepdims: L[False] = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> _nt.Array[np.timedelta64]: ...
-@overload
+) -> _nt.Array[np.complex128, _ShapeT]: ...
+@overload  # complex, array-like
 def percentile(
-    a: _nt.ToDateTime_nd,
+    a: _nt.ToComplex128_1nd,
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload  # object_, scalar, axis=None
+def percentile(
+    a: _nt.ToObject_1nd,
     q: _nt.CoFloating_0d,
     axis: None = None,
     out: None = None,
@@ -842,50 +944,46 @@ def percentile(
     keepdims: L[False] = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> np.datetime64: ...
-@overload
+) -> Any: ...
+@overload  # object_, scalar, axis=<given>
 def percentile(
-    a: _nt.ToDateTime_nd,
-    q: _nt.CoFloating_1nd,
-    axis: None = None,
-    out: None = None,
-    overwrite_input: bool = False,
-    method: _PercentileMethod = "linear",
-    keepdims: L[False] = False,
-    *,
-    weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> _nt.Array[np.datetime64]: ...
-@overload
-def percentile(
-    a: _nt.ToObject_nd,
+    a: _nt.ToObject_1nd,
     q: _nt.CoFloating_0d,
-    axis: None = None,
+    axis: _ShapeLike,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
     keepdims: L[False] = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> Incomplete: ...
-@overload
-def percentile(
-    a: _nt.ToObject_nd,
-    q: _nt.CoFloating_1nd,
-    axis: None = None,
-    out: None = None,
-    overwrite_input: bool = False,
-    method: _PercentileMethod = "linear",
-    keepdims: L[False] = False,
-    *,
-    weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
 ) -> _nt.Array[np.object_]: ...
-@overload
+@overload  # object_, scalar, keepdims=True
 def percentile(
-    a: _nt.CoComplex_nd | _nt.CoDateTime_nd | _nt.ToObject_nd,
+    a: _nt.ToObject_1nd,
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    *,
+    keepdims: L[True],
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.object_]: ...
+@overload  # object_, array, axis=None
+def percentile(
+    a: _nt.ToObject_1nd,
+    q: _nt.Array[_nt.co_float, _ShapeT],
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.object_, _ShapeT]: ...
+@overload  # object_, array-like
+def percentile(
+    a: _nt.ToObject_1nd,
     q: _nt.CoFloating_1nd,
     axis: _ShapeLike | None = None,
     out: None = None,
@@ -894,24 +992,10 @@ def percentile(
     keepdims: bool = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> Incomplete: ...
-@overload
+) -> _nt.Array[np.object_]: ...
+@overload  # out=<given> (keyword)
 def percentile(
-    a: _nt.CoComplex_nd | _nt.CoDateTime_nd | _nt.ToObject_nd,
-    q: _nt.CoFloating_1nd,
-    axis: _ShapeLike | None = None,
-    *,
-    out: _ArrayT,
-    overwrite_input: bool = False,
-    method: _PercentileMethod = "linear",
-    keepdims: bool = False,
-    weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
-) -> _ArrayT: ...
-@overload
-def percentile(
-    a: _nt.CoComplex_nd | _nt.CoDateTime_nd | _nt.ToObject_nd,
+    a: ArrayLike,
     q: _nt.CoFloating_1nd,
     axis: _ShapeLike | None,
     out: _ArrayT,
@@ -920,12 +1004,311 @@ def percentile(
     keepdims: bool = False,
     *,
     weights: _nt.CoFloating_1nd | None = None,
-    interpolation: None = None,
 ) -> _ArrayT: ...
+@overload  # out=<given> (positional)
+def percentile(
+    a: ArrayLike,
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    *,
+    out: _ArrayT,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _ArrayT: ...
+@overload  # fallback
+def percentile(
+    a: _nt.CoComplex_1nd | _nt.ToObject_1nd,
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> Incomplete: ...
 
-# NOTE: Not an alias, but they do have identical signatures (that we can reuse)
-quantile = percentile
+# NOTE: keep in sync with `percentile`
+@overload  # inexact, scalar, axis=None
+def quantile(
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.CoFloating_0d,
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _InexactDateTimeT: ...
+@overload  # inexact, scalar, axis=<given>
+def quantile(
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[_InexactDateTimeT]: ...
+@overload  # inexact, scalar, keepdims=True
+def quantile(
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    *,
+    keepdims: L[True],
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[_InexactDateTimeT]: ...
+@overload  # inexact, array, axis=None
+def quantile(
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.Array[_nt.co_float, _ShapeT],
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[_InexactDateTimeT, _ShapeT]: ...
+@overload  # inexact, array-like
+def quantile(
+    a: _ArrayLike[_InexactDateTimeT],
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[_InexactDateTimeT]: ...
+@overload  # float, scalar, axis=None
+def quantile(
+    a: _nt.CastsArray[np.float64],
+    q: _nt.CoFloating_0d,
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> np.float64: ...
+@overload  # float, scalar, axis=<given>
+def quantile(
+    a: _nt.CastsArray[np.float64],
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload  # float, scalar, keepdims=True
+def quantile(
+    a: _nt.CastsArray[np.float64],
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    *,
+    keepdims: L[True],
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload  # float, array, axis=None
+def quantile(
+    a: _nt.CastsArray[np.float64],
+    q: _nt.Array[_nt.co_float, _ShapeT],
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.float64, _ShapeT]: ...
+@overload  # float, array-like
+def quantile(
+    a: _nt.CastsArray[np.float64],
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload  # complex, scalar, axis=None
+def quantile(
+    a: _nt.ToComplex128_1nd,
+    q: _nt.CoFloating_0d,
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> np.complex128: ...
+@overload  # complex, scalar, axis=<given>
+def quantile(
+    a: _nt.ToComplex128_1nd,
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload  # complex, scalar, keepdims=True
+def quantile(
+    a: _nt.ToComplex128_1nd,
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    *,
+    keepdims: L[True],
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload  # complex, array, axis=None
+def quantile(
+    a: _nt.ToComplex128_1nd,
+    q: _nt.Array[_nt.co_float, _ShapeT],
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.complex128, _ShapeT]: ...
+@overload  # complex, array-like
+def quantile(
+    a: _nt.ToComplex128_1nd,
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload  # object_, scalar, axis=None
+def quantile(
+    a: _nt.ToObject_1nd,
+    q: _nt.CoFloating_0d,
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> Any: ...
+@overload  # object_, scalar, axis=<given>
+def quantile(
+    a: _nt.ToObject_1nd,
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.object_]: ...
+@overload  # object_, scalar, keepdims=True
+def quantile(
+    a: _nt.ToObject_1nd,
+    q: _nt.CoFloating_0d,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    *,
+    keepdims: L[True],
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.object_]: ...
+@overload  # object_, array, axis=None
+def quantile(
+    a: _nt.ToObject_1nd,
+    q: _nt.Array[_nt.co_float, _ShapeT],
+    axis: None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: L[False] = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.object_, _ShapeT]: ...
+@overload  # object_, array-like
+def quantile(
+    a: _nt.ToObject_1nd,
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _nt.Array[np.object_]: ...
+@overload  # out=<given> (keyword)
+def quantile(
+    a: ArrayLike,
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None,
+    out: _ArrayT,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _ArrayT: ...
+@overload  # out=<given> (positional)
+def quantile(
+    a: ArrayLike,
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    *,
+    out: _ArrayT,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> _ArrayT: ...
+@overload  # fallback
+def quantile(
+    a: _nt.CoComplex_1nd | _nt.ToObject_1nd,
+    q: _nt.CoFloating_1nd,
+    axis: _ShapeLike | None = None,
+    out: None = None,
+    overwrite_input: bool = False,
+    method: _PercentileMethod = "linear",
+    keepdims: bool = False,
+    *,
+    weights: _nt.CoFloating_1nd | None = None,
+) -> Incomplete: ...
 
+#
 @overload  # workaround for microsoft/pyright#10232
 def trapezoid(
     y: _nt._ToArray_nnd[np.float64 | _nt.co_integer],
