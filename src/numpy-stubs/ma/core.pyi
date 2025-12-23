@@ -18,7 +18,16 @@ import _numtype as _nt
 import numpy as np
 from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
 from numpy._globals import _NoValueType
-from numpy._typing import ArrayLike, _ArrayLike, _BoolCodes, _ScalarLike_co, _ShapeLike
+from numpy._typing import (
+    ArrayLike,
+    DTypeLike,
+    _ArrayLike,
+    _BoolCodes,
+    _DTypeLike,
+    _ScalarLike_co,
+    _ShapeLike,
+    _SupportsArrayFunc,
+)
 
 __all__ = [
     "MAError",
@@ -728,11 +737,6 @@ class _frommethod:
     def __call__(self, a: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
     def getdoc(self) -> Incomplete: ...
 
-class _convert2ma:
-    def __init__(self, /, funcname: str, np_ret: str, np_ma_ret: str, params: dict[str, Any] | None = None) -> None: ...
-    def __call__(self, /, *args: object, **params: object) -> Any: ...
-    def getdoc(self, /, np_ret: str, np_ma_ret: str) -> str | None: ...
-
 #
 def array(
     data: Incomplete,
@@ -974,7 +978,125 @@ remainder: _DomainedBinaryOperation
 fmod: _DomainedBinaryOperation
 mod: _DomainedBinaryOperation
 
-arange: _convert2ma
+# TODO
+# internal wrapper functions for the functions below
+class _convert2ma:
+    def __init__(self, /, funcname: str, np_ret: str, np_ma_ret: str, params: dict[str, Any] | None = None) -> None: ...
+    def __call__(self, /, *args: object, **params: object) -> Any: ...
+    def getdoc(self, /, np_ret: str, np_ma_ret: str) -> str | None: ...
+
+_ToInt: TypeAlias = int | _nt.co_integer
+_ToTD64: TypeAlias = int | _nt.co_timedelta
+_ToFloat: TypeAlias = float | _nt.co_float
+_ArangeScalar: TypeAlias = np.integer | np.floating | np.datetime64 | np.timedelta64
+_ArangeScalarT = TypeVar("_ArangeScalarT", bound=_ArangeScalar)
+
+# keep in sync with `_core.multiarray.arange`
+@overload  # (int-like, int-like?, int-like?)
+def arange(
+    start_or_stop: _ToInt,
+    /,
+    stop: _ToInt | None = None,
+    step: _ToInt | None = 1,
+    *,
+    dtype: type[int] | _DTypeLike[np.int_] | None = None,
+    device: L["cpu"] | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[np.int_]: ...
+@overload  # (float, float-like?, float-like?)
+def arange(
+    start_or_stop: float | np.floating,
+    /,
+    stop: _ToFloat | None = None,
+    step: _ToFloat | None = 1,
+    *,
+    dtype: type[float] | _DTypeLike[np.float64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[np.float64 | Any]: ...
+@overload  # (float-like, float, float-like?)
+def arange(
+    start_or_stop: _ToFloat,
+    /,
+    stop: float | np.floating,
+    step: _ToFloat | None = 1,
+    *,
+    dtype: type[float] | _DTypeLike[np.float64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[np.float64 | Any]: ...
+@overload  # (timedelta, timedelta-like?, timedelta-like?)
+def arange(
+    start_or_stop: np.timedelta64,
+    /,
+    stop: _ToTD64 | None = None,
+    step: _ToTD64 | None = 1,
+    *,
+    dtype: _DTypeLike[np.timedelta64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[np.timedelta64[Incomplete]]: ...
+@overload  # (timedelta-like, timedelta, timedelta-like?)
+def arange(
+    start_or_stop: _ToTD64,
+    /,
+    stop: np.timedelta64,
+    step: _ToTD64 | None = 1,
+    *,
+    dtype: _DTypeLike[np.timedelta64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[np.timedelta64[Incomplete]]: ...
+@overload  # (datetime, datetime, timedelta-like) (requires both start and stop)
+def arange(
+    start_or_stop: np.datetime64,
+    /,
+    stop: np.datetime64,
+    step: _ToTD64 | None = 1,
+    *,
+    dtype: _DTypeLike[np.datetime64] | None = None,
+    device: L["cpu"] | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[np.datetime64[Incomplete]]: ...
+@overload  # dtype=<known>
+def arange(
+    start_or_stop: _ArangeScalar | float,
+    /,
+    stop: _ArangeScalar | float | None = None,
+    step: _ArangeScalar | float | None = 1,
+    *,
+    dtype: _DTypeLike[_ArangeScalarT],
+    device: L["cpu"] | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[_ArangeScalarT]: ...
+@overload  # dtype=<unknown>
+def arange(
+    start_or_stop: _ArangeScalar | float,
+    /,
+    stop: _ArangeScalar | float | None = None,
+    step: _ArangeScalar | float | None = 1,
+    *,
+    dtype: DTypeLike | None = None,
+    device: L["cpu"] | None = None,
+    like: _SupportsArrayFunc | None = None,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray1D[Incomplete]: ...
+
 clip: _convert2ma
 empty: _convert2ma
 empty_like: _convert2ma

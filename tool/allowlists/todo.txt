@@ -2,7 +2,6 @@ numpy.ma.all
 numpy.ma.anom
 numpy.ma.anomalies
 numpy.ma.any
-numpy.ma.arange
 numpy.ma.argmax
 numpy.ma.argmin
 numpy.ma.asanyarray
@@ -15,7 +14,6 @@ numpy.ma.core.all
 numpy.ma.core.anom
 numpy.ma.core.anomalies
 numpy.ma.core.any
-numpy.ma.core.arange
 numpy.ma.core.argmax
 numpy.ma.core.argmin
 numpy.ma.core.asanyarray
