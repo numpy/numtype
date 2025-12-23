@@ -6,8 +6,6 @@ numpy.ma.core.argmax
 numpy.ma.core.argmin
 numpy.ma.core.asanyarray
 numpy.ma.core.count
-numpy.ma.core.cumprod
-numpy.ma.core.cumsum
 numpy.ma.core.mean
 numpy.ma.core.prod
 numpy.ma.core.product
@@ -16,8 +14,6 @@ numpy.ma.core.sum
 numpy.ma.core.trace
 numpy.ma.core.var
 numpy.ma.count
-numpy.ma.cumprod
-numpy.ma.cumsum
 numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
 numpy.ma.prod

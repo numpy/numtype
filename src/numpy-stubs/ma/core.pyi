@@ -901,8 +901,27 @@ def compress(condition: _nt.ToBool_nd, a: ArrayLike, axis: _ShapeLike | None, ou
 @overload
 def compress(condition: _nt.ToBool_nd, a: ArrayLike, axis: _ShapeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
-cumsum: _frommethod
-cumprod: _frommethod
+# TODO: sync with `MaskedArray.cumsum`
+# Keep in sync with `cumprod`
+@overload  # out: None (default)
+def cumsum(
+    a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None = None, out: None = None
+) -> _nt.MArray[Incomplete]: ...
+@overload  # out: ndarray (positional)
+def cumsum(a: ArrayLike, axis: CanIndex | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
+@overload  # out: ndarray (kwarg)
+def cumsum(a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
+
+# TODO: sync with `MaskedArray.cumprod`
+# Keep in sync with `cumsum`
+@overload  # out: None (default)
+def cumprod(
+    a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None = None, out: None = None
+) -> _nt.MArray[Incomplete]: ...
+@overload  # out: ndarray (positional)
+def cumprod(a: ArrayLike, axis: CanIndex | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
+@overload  # out: ndarray (kwarg)
+def cumprod(a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
 mean: _frommethod
 sum: _frommethod
