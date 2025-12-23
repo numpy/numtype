@@ -1,5 +1,5 @@
 from typing import Any, Generic, Literal as L, NamedTuple, SupportsIndex as CanIndex, TypeAlias, overload
-from typing_extensions import TypeVar, deprecated
+from typing_extensions import TypeVar
 
 import _numtype as _nt
 import numpy as np
@@ -7,7 +7,6 @@ from numpy._typing import ArrayLike, _ArrayLike
 
 __all__ = [
     "ediff1d",
-    "in1d",
     "intersect1d",
     "isin",
     "setdiff1d",
@@ -585,14 +584,3 @@ def isin(
     *,
     kind: L["sort", "table"] | None = None,
 ) -> _nt.Array[np.bool]: ...
-
-#
-@deprecated("Use 'isin' instead")
-def in1d(
-    ar1: ArrayLike,
-    ar2: ArrayLike,
-    assume_unique: bool = False,
-    invert: bool = False,
-    *,
-    kind: L["sort", "table"] | None = None,
-) -> _nt.Array1D[np.bool]: ...

@@ -227,7 +227,6 @@ from numpy import (
     i0,
     iinfo,
     imag,
-    in1d,
     index_exp,
     indices,
     inexact,
@@ -555,7 +554,7 @@ __all__ += [  # noqa: RUF022
     # lib._arraypad_impl.*
     "pad",
     # lib._arraysetops_impl.*
-    "ediff1d", "in1d", "intersect1d", "isin", "setdiff1d", "setxor1d", "union1d", "unique", "unique_all",
+    "ediff1d", "intersect1d", "isin", "setdiff1d", "setxor1d", "union1d", "unique", "unique_all",
     "unique_counts", "unique_inverse", "unique_values",
     # lib._function_base_impl.*
     "angle", "append", "asarray_chkfinite", "average", "bartlett", "bincount", "blackman", "copy", "corrcoef", "cov",

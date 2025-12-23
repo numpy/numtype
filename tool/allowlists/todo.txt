@@ -1,9 +1,6 @@
 numpy.corrcoef
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
-numpy.in1d
-numpy.lib._arraysetops_impl.__all__
-numpy.lib._arraysetops_impl.in1d
 numpy.lib._function_base_impl.__all__
 numpy.lib._function_base_impl.corrcoef
 numpy.lib._function_base_impl.percentile
@@ -125,7 +122,6 @@ numpy.ma.vstack
 numpy.ma.zeros
 numpy.ma.zeros_like
 numpy.matlib.corrcoef
-numpy.matlib.in1d
 numpy.matlib.nanpercentile
 numpy.matlib.ndindex.ndincr
 numpy.matlib.percentile
