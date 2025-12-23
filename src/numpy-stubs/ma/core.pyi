@@ -997,7 +997,31 @@ def prod(
 
 product = prod
 
-trace: _frommethod
+# TODO: sync with `MaskedArray.trace`
+# Keep in sync with `_core.fromnumeric.trace`
+@overload
+def trace(
+    a: ArrayLike,
+    offset: CanIndex = 0,
+    axis1: CanIndex = 0,
+    axis2: CanIndex = 1,
+    dtype: DTypeLike | None = None,
+    out: None = None,
+) -> Incomplete: ...
+@overload
+def trace(
+    a: ArrayLike, offset: CanIndex, axis1: CanIndex, axis2: CanIndex, dtype: DTypeLike | None, out: _ArrayT
+) -> _ArrayT: ...
+@overload
+def trace(
+    a: ArrayLike,
+    offset: CanIndex = 0,
+    axis1: CanIndex = 0,
+    axis2: CanIndex = 1,
+    dtype: DTypeLike | None = None,
+    *,
+    out: _ArrayT,
+) -> _ArrayT: ...
 
 std: _frommethod
 var: _frommethod
