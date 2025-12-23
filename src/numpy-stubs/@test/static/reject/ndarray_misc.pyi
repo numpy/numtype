@@ -15,11 +15,6 @@ ctypes_obj = AR_f8.ctypes
 
 ###
 
-ctypes_obj.get_data()  # pyright: ignore[reportDeprecated]
-ctypes_obj.get_shape()  # pyright: ignore[reportDeprecated]
-ctypes_obj.get_strides()  # pyright: ignore[reportDeprecated]
-ctypes_obj.get_as_parameter()  # pyright: ignore[reportDeprecated]
-
 # NOTE: mypy stops analysis after something returns `NoReturn`; wrapping them in functions works around this
 
 def test_argpartition() -> None:
