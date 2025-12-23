@@ -627,14 +627,12 @@ def cov(
     dtype: DTypeLike,
 ) -> _nt.Array[Incomplete]: ...
 
-# NOTE `bias` and `ddof` are deprecated and ignored
+#
 @overload
 def corrcoef(
     x: _nt.CoFloat64_1nd,
     y: _nt.CoFloat64_1nd | None = None,
     rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
     *,
     dtype: _nt.ToDTypeFloat64 | None = None,
 ) -> _nt.Array[np.float64]: ...
@@ -643,28 +641,18 @@ def corrcoef(
     x: _nt.ToLongDouble_1nd,
     y: _nt.CoFloating_1nd | None = None,
     rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
     *,
     dtype: _nt.ToDTypeLongDouble | None = None,
 ) -> _nt.Array[np.longdouble]: ...
 @overload
 def corrcoef(
-    x: _nt.CoFloating_1nd,
-    y: _nt.ToLongDouble_1nd,
-    rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
-    *,
-    dtype: _nt.ToDTypeLongDouble | None = None,
+    x: _nt.CoFloating_1nd, y: _nt.ToLongDouble_1nd, rowvar: bool = True, *, dtype: _nt.ToDTypeLongDouble | None = None
 ) -> _nt.Array[np.longdouble]: ...
 @overload
 def corrcoef(
     x: _nt.ToComplex128_1nd | _nt.ToComplex64_1nd,
     y: _nt.CoComplex128_1nd | None = None,
     rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
     *,
     dtype: _nt.ToDTypeComplex128 | None = None,
 ) -> _nt.Array[np.complex128]: ...
@@ -673,8 +661,6 @@ def corrcoef(
     x: _nt.CoComplex128_1nd,
     y: _nt.ToComplex128_1nd | _nt.ToComplex64_1nd,
     rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
     *,
     dtype: _nt.ToDTypeComplex128 | None = None,
 ) -> _nt.Array[np.complex128]: ...
@@ -683,40 +669,20 @@ def corrcoef(
     x: _nt.ToCLongDouble_1nd,
     y: _nt.CoComplex_1nd | None = None,
     rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
     *,
     dtype: _nt.ToDTypeCLongDouble | None = None,
 ) -> _nt.Array[np.clongdouble]: ...
 @overload
 def corrcoef(
-    x: _nt.CoComplex_1nd,
-    y: _nt.ToCLongDouble_1nd,
-    rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
-    *,
-    dtype: _nt.ToDTypeCLongDouble | None = None,
+    x: _nt.CoComplex_1nd, y: _nt.ToCLongDouble_1nd, rowvar: bool = True, *, dtype: _nt.ToDTypeCLongDouble | None = None
 ) -> _nt.Array[np.clongdouble]: ...
 @overload
 def corrcoef(
-    x: _nt.CoComplex_1nd,
-    y: _nt.CoComplex_1nd | None = None,
-    rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
-    *,
-    dtype: _DTypeLike[_ScalarT],
+    x: _nt.CoComplex_1nd, y: _nt.CoComplex_1nd | None = None, rowvar: bool = True, *, dtype: _DTypeLike[_ScalarT]
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def corrcoef(
-    x: _nt.CoComplex_1nd,
-    y: _nt.CoComplex_1nd | None = None,
-    rowvar: bool = True,
-    bias: _NoValueType = ...,
-    ddof: _NoValueType = ...,
-    *,
-    dtype: DTypeLike | None = None,
+    x: _nt.CoComplex_1nd, y: _nt.CoComplex_1nd | None = None, rowvar: bool = True, *, dtype: DTypeLike | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 #

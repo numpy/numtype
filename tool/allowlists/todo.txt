@@ -1,7 +1,5 @@
-numpy.corrcoef
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
-numpy.lib._function_base_impl.corrcoef
 numpy.lib._function_base_impl.percentile
 numpy.lib._index_tricks_impl.AxisConcatenator.concatenate
 numpy.lib._index_tricks_impl.ndindex.ndincr
@@ -119,7 +117,6 @@ numpy.ma.var
 numpy.ma.vstack
 numpy.ma.zeros
 numpy.ma.zeros_like
-numpy.matlib.corrcoef
 numpy.matlib.nanpercentile
 numpy.matlib.ndindex.ndincr
 numpy.matlib.percentile
