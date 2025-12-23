@@ -24,7 +24,6 @@ numpy.ma.core.cumsum
 numpy.ma.core.diagonal
 numpy.ma.core.harden_mask
 numpy.ma.core.ids
-numpy.ma.core.indices
 numpy.ma.core.mean
 numpy.ma.core.nonzero
 numpy.ma.core.prod
@@ -44,7 +43,6 @@ numpy.ma.cumsum
 numpy.ma.diagonal
 numpy.ma.harden_mask
 numpy.ma.ids
-numpy.ma.indices
 numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
 numpy.ma.nonzero

@@ -1772,7 +1772,81 @@ def identity(
     hardmask: bool = False,
 ) -> _nt.MArray2D[Incomplete]: ...
 
-indices: _convert2ma
+# keep roughly in sync with `_core.numeric.indices`
+@overload
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: type[_nt.JustInt] = ...,
+    sparse: L[False] = False,
+    *,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[np.intp]: ...
+@overload
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: type[_nt.JustInt],
+    sparse: L[True],
+    *,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> tuple[_nt.MArray[np.intp], ...]: ...
+@overload
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: type[_nt.JustInt] = ...,
+    *,
+    sparse: L[True],
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> tuple[_nt.MArray[np.intp], ...]: ...
+@overload
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: _DTypeLike[_ScalarT],
+    sparse: L[False] = False,
+    *,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[_ScalarT]: ...
+@overload
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: _DTypeLike[_ScalarT],
+    sparse: L[True],
+    *,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> tuple[_nt.MArray[_ScalarT], ...]: ...
+@overload
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: DTypeLike = ...,
+    sparse: L[False] = False,
+    *,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[Incomplete]: ...
+@overload
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: DTypeLike,
+    sparse: L[True],
+    *,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> tuple[_nt.MArray[Incomplete], ...]: ...
+@overload
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: DTypeLike = ...,
+    *,
+    sparse: L[True],
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> tuple[_nt.MArray[Incomplete], ...]: ...
+
+#
 squeeze: _convert2ma
 
 all: _frommethod
