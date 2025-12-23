@@ -63,7 +63,6 @@ numpy._core.frombuffer
 numpy._core.fromfile
 numpy._core.fromiter
 numpy._core.fromnumeric.reshape
-numpy._core.generic.resize
 numpy._core.generic.sort
 numpy._core.generic.trace
 numpy._core.getlimits.finfo.smallest_normal
@@ -106,7 +105,6 @@ numpy._core.numeric.from_dlpack
 numpy._core.numeric.frombuffer
 numpy._core.numeric.fromfile
 numpy._core.numeric.fromiter
-numpy._core.numeric.generic.resize
 numpy._core.numeric.generic.sort
 numpy._core.numeric.generic.trace
 numpy._core.numeric.may_share_memory
@@ -120,7 +118,6 @@ numpy._core.numeric.zeros
 numpy._core.numerictypes.bool.__class_getitem__
 numpy._core.numerictypes.bool_.__class_getitem__
 numpy._core.numerictypes.datetime64.__class_getitem__
-numpy._core.numerictypes.generic.resize
 numpy._core.numerictypes.generic.sort
 numpy._core.numerictypes.generic.trace
 numpy._core.numerictypes.object_.__new__
@@ -205,7 +202,6 @@ numpy.core.numeric.from_dlpack
 numpy.core.numeric.frombuffer
 numpy.core.numeric.fromfile
 numpy.core.numeric.fromiter
-numpy.core.numeric.generic.resize
 numpy.core.numeric.generic.sort
 numpy.core.numeric.generic.trace
 numpy.core.numeric.may_share_memory
@@ -219,7 +215,6 @@ numpy.core.numeric.zeros
 numpy.core.numerictypes.bool.__class_getitem__
 numpy.core.numerictypes.bool_.__class_getitem__
 numpy.core.numerictypes.datetime64.__class_getitem__
-numpy.core.numerictypes.generic.resize
 numpy.core.numerictypes.generic.sort
 numpy.core.numerictypes.generic.trace
 numpy.core.numerictypes.object_.__new__
@@ -239,7 +234,6 @@ numpy.from_dlpack
 numpy.frombuffer
 numpy.fromfile
 numpy.fromiter
-numpy.generic.resize
 numpy.generic.sort
 numpy.generic.trace
 numpy.in1d
@@ -387,7 +381,6 @@ numpy.matlib.from_dlpack
 numpy.matlib.frombuffer
 numpy.matlib.fromfile
 numpy.matlib.fromiter
-numpy.matlib.generic.resize
 numpy.matlib.generic.sort
 numpy.matlib.generic.trace
 numpy.matlib.in1d
