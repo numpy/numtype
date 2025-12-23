@@ -1397,9 +1397,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         out: None = None,
         *,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Incomplete: ...
     @overload
     def min(
@@ -1408,9 +1408,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None,
         out: _ArrayT,
         *,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def min(
@@ -1419,9 +1419,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
