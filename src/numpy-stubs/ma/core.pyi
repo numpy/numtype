@@ -759,6 +759,7 @@ class MaskedConstant(MaskedArray[_nt.Rank0, np.dtype[np.float64]]):
     @override
     def copy(self, /, *args: object, **kwargs: object) -> Incomplete: ...
 
+# TODO: sync with upstream
 class _frommethod:
     __name__: str
     __doc__: str
@@ -766,6 +767,36 @@ class _frommethod:
     def __init__(self, methodname: Incomplete, reversed: Incomplete = ...) -> None: ...
     def __call__(self, a: Incomplete, *args: Incomplete, **params: Incomplete) -> Incomplete: ...
     def getdoc(self) -> Incomplete: ...
+
+# TODO: sync with `MaskedArray` methods
+def harden_mask(a: _MArrayT) -> _MArrayT: ...
+def soften_mask(a: _MArrayT) -> _MArrayT: ...
+def shrink_mask(a: _MArrayT) -> _MArrayT: ...
+
+anom: _frommethod
+anomalies = anom
+all: _frommethod
+any: _frommethod
+compress: _frommethod
+cumprod: _frommethod
+cumsum: _frommethod
+copy: _frommethod
+diagonal: _frommethod
+ids: _frommethod
+mean: _frommethod
+nonzero: _frommethod
+prod: _frommethod
+product: _frommethod
+ravel: _frommethod
+repeat: _frommethod
+std: _frommethod
+sum: _frommethod
+swapaxes: _frommethod
+trace: _frommethod
+var: _frommethod
+count: _frommethod
+argmin: _frommethod
+argmax: _frommethod
 
 #
 def array(
@@ -781,6 +812,9 @@ def array(
     subok: Incomplete = ...,
     ndmin: Incomplete = ...,
 ) -> Incomplete: ...
+
+minimum: _extrema_operation
+maximum: _extrema_operation
 
 #
 @overload
@@ -1869,33 +1903,3 @@ def squeeze(
 def squeeze(
     a: ArrayLike, axis: _ShapeLike | None = None, *, fill_value: complex | None = None, hardmask: bool = False
 ) -> _nt.MArray[Incomplete]: ...
-
-all: _frommethod
-anomalies: _frommethod
-anom: _frommethod
-any: _frommethod
-compress: _frommethod
-cumprod: _frommethod
-cumsum: _frommethod
-copy: _frommethod
-diagonal: _frommethod
-harden_mask: _frommethod
-ids: _frommethod
-mean: _frommethod
-nonzero: _frommethod
-prod: _frommethod
-product: _frommethod
-ravel: _frommethod
-repeat: _frommethod
-soften_mask: _frommethod
-std: _frommethod
-sum: _frommethod
-swapaxes: _frommethod
-trace: _frommethod
-var: _frommethod
-count: _frommethod
-argmin: _frommethod
-argmax: _frommethod
-
-minimum: _extrema_operation
-maximum: _extrema_operation

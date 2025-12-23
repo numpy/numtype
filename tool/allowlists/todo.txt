@@ -21,7 +21,6 @@ numpy.ma.core.count
 numpy.ma.core.cumprod
 numpy.ma.core.cumsum
 numpy.ma.core.diagonal
-numpy.ma.core.harden_mask
 numpy.ma.core.ids
 numpy.ma.core.mean
 numpy.ma.core.nonzero
@@ -29,7 +28,6 @@ numpy.ma.core.prod
 numpy.ma.core.product
 numpy.ma.core.ravel
 numpy.ma.core.repeat
-numpy.ma.core.soften_mask
 numpy.ma.core.std
 numpy.ma.core.sum
 numpy.ma.core.swapaxes
@@ -39,7 +37,6 @@ numpy.ma.count
 numpy.ma.cumprod
 numpy.ma.cumsum
 numpy.ma.diagonal
-numpy.ma.harden_mask
 numpy.ma.ids
 numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
@@ -48,7 +45,6 @@ numpy.ma.prod
 numpy.ma.product
 numpy.ma.ravel
 numpy.ma.repeat
-numpy.ma.soften_mask
 numpy.ma.std
 numpy.ma.sum
 numpy.ma.swapaxes
