@@ -1,6 +1,3 @@
-numpy._core.umath.__all__
-numpy.core.umath.__all__
-numpy.core.umath.matmul
 numpy.corrcoef
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
