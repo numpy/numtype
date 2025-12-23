@@ -1,6 +1,5 @@
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
-numpy.lib._index_tricks_impl.AxisConcatenator.concatenate
 numpy.lib._index_tricks_impl.ndindex.ndincr
 numpy.lib._nanfunctions_impl.nanpercentile
 numpy.lib._npyio_impl.save

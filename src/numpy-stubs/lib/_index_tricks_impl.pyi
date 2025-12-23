@@ -1,4 +1,4 @@
-from _typeshed import Incomplete
+from _typeshed import Incomplete, SupportsLenAndGetItem
 from collections.abc import Sequence
 from typing import (
     Any,
@@ -16,8 +16,9 @@ from typing_extensions import TypeVar, deprecated
 
 import _numtype as _nt
 import numpy as np
+from numpy import _CastingKind  # noqa: ICN003
 from numpy._core.multiarray import ravel_multi_index, unravel_index
-from numpy._typing import ArrayLike, _SupportsDType as _HasDType
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _SupportsDType as _HasDType
 
 __all__ = [
     "c_",
@@ -139,17 +140,62 @@ class AxisConcatenator(Generic[_AxisT_co, _MatrixT_co, _NDMinT_co, _Trans1DT_co]
     def __len__(self, /) -> L[0]: ...
 
     #
+    # Keep in sync with _core.multiarray.concatenate
     @staticmethod
     @overload
     def concatenate(
-        *a: _nt._ToArray_nd[_ScalarT], axis: CanIndex | None = 0, out: None = None
+        arrays: _ArrayLike[_ScalarT],
+        /,
+        axis: CanIndex | None = 0,
+        out: None = None,
+        *,
+        dtype: None = None,
+        casting: _CastingKind | None = "same_kind",
     ) -> _nt.Array[_ScalarT]: ...
     @staticmethod
     @overload
-    def concatenate(*a: ArrayLike, axis: CanIndex | None = 0, out: _ArrayT) -> _ArrayT: ...
+    def concatenate(
+        arrays: SupportsLenAndGetItem[ArrayLike],
+        /,
+        axis: CanIndex | None = 0,
+        out: None = None,
+        *,
+        dtype: _DTypeLike[_ScalarT],
+        casting: _CastingKind | None = "same_kind",
+    ) -> _nt.Array[_ScalarT]: ...
     @staticmethod
     @overload
-    def concatenate(*a: ArrayLike, axis: CanIndex | None = 0, out: None = None) -> _nt.Array: ...
+    def concatenate(
+        arrays: SupportsLenAndGetItem[ArrayLike],
+        /,
+        axis: CanIndex | None = 0,
+        out: None = None,
+        *,
+        dtype: DTypeLike | None = None,
+        casting: _CastingKind | None = "same_kind",
+    ) -> _nt.Array[Incomplete]: ...
+    @staticmethod
+    @overload
+    def concatenate(
+        arrays: SupportsLenAndGetItem[ArrayLike],
+        /,
+        axis: CanIndex | None = 0,
+        *,
+        out: _ArrayT,
+        dtype: DTypeLike | None = None,
+        casting: _CastingKind | None = "same_kind",
+    ) -> _ArrayT: ...
+    @staticmethod
+    @overload
+    def concatenate(
+        arrays: SupportsLenAndGetItem[ArrayLike],
+        /,
+        axis: CanIndex | None,
+        out: _ArrayT,
+        *,
+        dtype: DTypeLike | None = None,
+        casting: _CastingKind | None = "same_kind",
+    ) -> _ArrayT: ...
 
 @final
 class RClass(AxisConcatenator[L[0], L[False], L[1], L[-1]]):
