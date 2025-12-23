@@ -1061,27 +1061,60 @@ def asarray(
     a: _CanArray[np.ndarray[_ShapeT, _DTypeT]],
     dtype: None = None,
     order: _OrderKACF = None,
-    **kwargs: Unpack[_KwargsDCL],
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> np.ndarray[_ShapeT, _DTypeT]: ...
 @overload
 def asarray(
-    a: _ArrayLike[_ScalarT], dtype: None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: _ArrayLike[_ScalarT],
+    dtype: None = None,
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def asarray(
-    a: _ScalarLike_co, dtype: _DTypeLike[_ScalarT], order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: _ScalarLike_co,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array0D[_ScalarT]: ...
 @overload
 def asarray(
-    a: _ScalarLike_co, dtype: npt.DTypeLike | None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: _ScalarLike_co,
+    dtype: npt.DTypeLike | None = None,
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array0D[Incomplete]: ...
 @overload
 def asarray(
-    a: object, dtype: _DTypeLike[_ScalarT], order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: object,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def asarray(
-    a: object, dtype: npt.DTypeLike | None = None, order: _OrderKACF = None, **kwargs: Unpack[_KwargsDCL]
+    a: object,
+    dtype: npt.DTypeLike | None = None,
+    order: _OrderKACF = None,
+    *,
+    device: _Device | None = None,
+    copy: _Copy | None = None,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[Incomplete]: ...
 
 #
