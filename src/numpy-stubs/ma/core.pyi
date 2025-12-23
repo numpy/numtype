@@ -817,7 +817,22 @@ def swapaxes(a: _nt._ToArray_nd[_ScalarT], axis1: CanIndex, axis2: CanIndex) -> 
 @overload
 def swapaxes(a: ArrayLike, axis1: CanIndex, axis2: CanIndex) -> _nt.MArray[Incomplete]: ...
 
-anom: _frommethod
+# TODO: roughly sync with `MaskedArray.anom`
+# NOTE: The `MaskedArray.anom` definition is specific to `MaskedArray`, so we need
+# additional overloads to cover the array-like input here.
+@overload  # a: MaskedArray, dtype=None
+def anom(a: _MArrayT, axis: CanIndex | None = None, dtype: None = None) -> _MArrayT: ...
+@overload  # a: array-like, dtype=None
+def anom(a: _ArrayLike[_ScalarT], axis: CanIndex | None = None, dtype: None = None) -> _nt.MArray[_ScalarT]: ...
+@overload  # a: unknown array-like, dtype: dtype-like (positional)
+def anom(a: ArrayLike, axis: CanIndex | None, dtype: _DTypeLike[_ScalarT]) -> _nt.MArray[_ScalarT]: ...
+@overload  # a: unknown array-like, dtype: dtype-like (keyword)
+def anom(a: ArrayLike, axis: CanIndex | None = None, *, dtype: _DTypeLike[_ScalarT]) -> _nt.MArray[_ScalarT]: ...
+@overload  # a: unknown array-like, dtype: unknown dtype-like (positional)
+def anom(a: ArrayLike, axis: CanIndex | None, dtype: DTypeLike) -> _nt.MArray[Incomplete]: ...
+@overload  # a: unknown array-like, dtype: unknown dtype-like (keyword)
+def anom(a: ArrayLike, axis: CanIndex | None = None, *, dtype: DTypeLike) -> _nt.MArray[Incomplete]: ...
+
 anomalies = anom
 
 all: _frommethod
