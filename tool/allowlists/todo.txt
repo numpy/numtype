@@ -5,6 +5,4 @@ numpy.ma.core._frommethod
 numpy.ma.core.argmax
 numpy.ma.core.argmin
 numpy.ma.core.asanyarray
-numpy.ma.core.count
-numpy.ma.count
 numpy.ma.mrecords.fromtextfile

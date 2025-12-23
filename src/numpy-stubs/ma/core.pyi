@@ -1091,7 +1091,15 @@ def var(
     mean: _nt.CoComplex_nd | _NoValueType = ...,
 ) -> _ArrayT: ...
 
-count: _frommethod
+# TODO: sync with `MaskedArray.count`
+@overload
+def count(a: ArrayLike, axis: None = None, keepdims: L[False] | _NoValueType = ...) -> int: ...
+@overload
+def count(a: ArrayLike, axis: _ShapeLike, keepdims: bool | _NoValueType = ...) -> _nt.Array[np.int_]: ...
+@overload
+def count(a: ArrayLike, axis: _ShapeLike | None = None, *, keepdims: L[True]) -> _nt.Array[np.int_]: ...
+@overload
+def count(a: ArrayLike, axis: _ShapeLike | None, keepdims: L[True]) -> _nt.Array[np.int_]: ...
 
 argmin: _frommethod
 argmax: _frommethod
