@@ -1,6 +1,5 @@
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
-numpy.lib._nanfunctions_impl.nanpercentile
 numpy.lib._npyio_impl.save
 numpy.lib.mixins.NDArrayOperatorsMixin.um
 numpy.linalg.linalg
@@ -114,7 +113,5 @@ numpy.ma.var
 numpy.ma.vstack
 numpy.ma.zeros
 numpy.ma.zeros_like
-numpy.matlib.nanpercentile
 numpy.matlib.save
-numpy.nanpercentile
 numpy.save
