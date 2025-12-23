@@ -22,7 +22,6 @@ numpy.ma.core.cumprod
 numpy.ma.core.cumsum
 numpy.ma.core.diagonal
 numpy.ma.core.mean
-numpy.ma.core.nonzero
 numpy.ma.core.prod
 numpy.ma.core.product
 numpy.ma.core.ravel
@@ -38,7 +37,6 @@ numpy.ma.cumsum
 numpy.ma.diagonal
 numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
-numpy.ma.nonzero
 numpy.ma.prod
 numpy.ma.product
 numpy.ma.ravel

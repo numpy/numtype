@@ -544,8 +544,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         self, axis: Incomplete = ..., out: Incomplete = ..., keepdims: Incomplete = ...
     ) -> Incomplete: ...
     @override
-    def nonzero(self) -> Incomplete: ...
-    @override
     def trace(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         offset: Incomplete = ...,
@@ -774,6 +772,9 @@ def soften_mask(a: _MArrayT) -> _MArrayT: ...
 def shrink_mask(a: _MArrayT) -> _MArrayT: ...
 def ids(a: ArrayLike) -> tuple[int, int]: ...
 
+# keep in sync with `ndarray.nonzero`
+def nonzero(a: ArrayLike) -> tuple[_nt.Array1D[np.intp], ...]: ...
+
 anom: _frommethod
 anomalies = anom
 all: _frommethod
@@ -784,7 +785,6 @@ cumsum: _frommethod
 copy: _frommethod
 diagonal: _frommethod
 mean: _frommethod
-nonzero: _frommethod
 prod: _frommethod
 product: _frommethod
 ravel: _frommethod
