@@ -5043,6 +5043,10 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
 class datetime64(
     _RealMixin, _CmpOpMixin[datetime64, _ArrayLikeDT64_co], generic[_DT64ItemT_co], Generic[_DT64ItemT_co]
 ):
+    @classmethod
+    def __class_getitem__(cls, type_arg: type | object, /) -> GenericAlias: ...
+
+    #
     @overload
     def __new__(cls, /) -> datetime64[None]: ...
     @overload
