@@ -67,7 +67,6 @@ numpy._core.generic.diagonal
 numpy._core.generic.repeat
 numpy._core.generic.resize
 numpy._core.generic.sort
-numpy._core.generic.sum
 numpy._core.generic.swapaxes
 numpy._core.generic.take
 numpy._core.generic.tofile
@@ -91,7 +90,6 @@ numpy._core.multiarray.frombuffer
 numpy._core.multiarray.fromfile
 numpy._core.multiarray.fromiter
 numpy._core.multiarray.may_share_memory
-numpy._core.multiarray.ndarray.sum
 numpy._core.multiarray.ndarray.swapaxes
 numpy._core.multiarray.ndarray.take
 numpy._core.multiarray.ndarray.tofile
@@ -99,7 +97,6 @@ numpy._core.multiarray.ndarray.var
 numpy._core.multiarray.shares_memory
 numpy._core.multiarray.where
 numpy._core.multiarray.zeros
-numpy._core.ndarray.sum
 numpy._core.ndarray.swapaxes
 numpy._core.ndarray.take
 numpy._core.ndarray.tofile
@@ -127,14 +124,12 @@ numpy._core.numeric.generic.diagonal
 numpy._core.numeric.generic.repeat
 numpy._core.numeric.generic.resize
 numpy._core.numeric.generic.sort
-numpy._core.numeric.generic.sum
 numpy._core.numeric.generic.swapaxes
 numpy._core.numeric.generic.take
 numpy._core.numeric.generic.tofile
 numpy._core.numeric.generic.trace
 numpy._core.numeric.generic.var
 numpy._core.numeric.may_share_memory
-numpy._core.numeric.ndarray.sum
 numpy._core.numeric.ndarray.swapaxes
 numpy._core.numeric.ndarray.take
 numpy._core.numeric.ndarray.tofile
@@ -153,7 +148,6 @@ numpy._core.numerictypes.generic.diagonal
 numpy._core.numerictypes.generic.repeat
 numpy._core.numerictypes.generic.resize
 numpy._core.numerictypes.generic.sort
-numpy._core.numerictypes.generic.sum
 numpy._core.numerictypes.generic.swapaxes
 numpy._core.numerictypes.generic.take
 numpy._core.numerictypes.generic.tofile
@@ -219,7 +213,6 @@ numpy.core.multiarray.frombuffer
 numpy.core.multiarray.fromfile
 numpy.core.multiarray.fromiter
 numpy.core.multiarray.may_share_memory
-numpy.core.multiarray.ndarray.sum
 numpy.core.multiarray.ndarray.swapaxes
 numpy.core.multiarray.ndarray.take
 numpy.core.multiarray.ndarray.tofile
@@ -250,14 +243,12 @@ numpy.core.numeric.generic.diagonal
 numpy.core.numeric.generic.repeat
 numpy.core.numeric.generic.resize
 numpy.core.numeric.generic.sort
-numpy.core.numeric.generic.sum
 numpy.core.numeric.generic.swapaxes
 numpy.core.numeric.generic.take
 numpy.core.numeric.generic.tofile
 numpy.core.numeric.generic.trace
 numpy.core.numeric.generic.var
 numpy.core.numeric.may_share_memory
-numpy.core.numeric.ndarray.sum
 numpy.core.numeric.ndarray.swapaxes
 numpy.core.numeric.ndarray.take
 numpy.core.numeric.ndarray.tofile
@@ -276,7 +267,6 @@ numpy.core.numerictypes.generic.diagonal
 numpy.core.numerictypes.generic.repeat
 numpy.core.numerictypes.generic.resize
 numpy.core.numerictypes.generic.sort
-numpy.core.numerictypes.generic.sum
 numpy.core.numerictypes.generic.swapaxes
 numpy.core.numerictypes.generic.take
 numpy.core.numerictypes.generic.tofile
@@ -303,7 +293,6 @@ numpy.generic.diagonal
 numpy.generic.repeat
 numpy.generic.resize
 numpy.generic.sort
-numpy.generic.sum
 numpy.generic.swapaxes
 numpy.generic.take
 numpy.generic.tofile
@@ -458,7 +447,6 @@ numpy.matlib.generic.diagonal
 numpy.matlib.generic.repeat
 numpy.matlib.generic.resize
 numpy.matlib.generic.sort
-numpy.matlib.generic.sum
 numpy.matlib.generic.swapaxes
 numpy.matlib.generic.take
 numpy.matlib.generic.tofile
@@ -467,7 +455,6 @@ numpy.matlib.generic.var
 numpy.matlib.in1d
 numpy.matlib.may_share_memory
 numpy.matlib.nanpercentile
-numpy.matlib.ndarray.sum
 numpy.matlib.ndarray.swapaxes
 numpy.matlib.ndarray.take
 numpy.matlib.ndarray.tofile
@@ -484,7 +471,6 @@ numpy.matlib.void.__new__
 numpy.matlib.where
 numpy.may_share_memory
 numpy.nanpercentile
-numpy.ndarray.sum
 numpy.ndarray.swapaxes
 numpy.ndarray.take
 numpy.ndarray.tofile
