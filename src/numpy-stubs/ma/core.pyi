@@ -793,7 +793,13 @@ def copy(a: _ArrayLike[_ScalarT], order: _OrderKACF = "C") -> _nt.MArray[_Scalar
 @overload
 def copy(a: ArrayLike, order: _OrderKACF = "C") -> _nt.MArray[Incomplete]: ...
 
-diagonal: _frommethod
+# keep in sync with `_core.fromnumeric.diagonal`
+@overload
+def diagonal(
+    a: _nt._ToArray_nd[_ScalarT], offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+) -> _nt.Array[_ScalarT]: ...
+@overload
+def diagonal(a: ArrayLike, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1) -> _nt.Array[Incomplete]: ...
 
 repeat: _frommethod
 

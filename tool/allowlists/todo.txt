@@ -18,7 +18,6 @@ numpy.ma.core.compress
 numpy.ma.core.count
 numpy.ma.core.cumprod
 numpy.ma.core.cumsum
-numpy.ma.core.diagonal
 numpy.ma.core.mean
 numpy.ma.core.prod
 numpy.ma.core.product
@@ -31,7 +30,6 @@ numpy.ma.core.var
 numpy.ma.count
 numpy.ma.cumprod
 numpy.ma.cumsum
-numpy.ma.diagonal
 numpy.ma.mean
 numpy.ma.mrecords.fromtextfile
 numpy.ma.prod
