@@ -31,7 +31,6 @@ numpy.ma.core.product
 numpy.ma.core.ravel
 numpy.ma.core.repeat
 numpy.ma.core.soften_mask
-numpy.ma.core.squeeze
 numpy.ma.core.std
 numpy.ma.core.sum
 numpy.ma.core.swapaxes
@@ -51,7 +50,6 @@ numpy.ma.product
 numpy.ma.ravel
 numpy.ma.repeat
 numpy.ma.soften_mask
-numpy.ma.squeeze
 numpy.ma.std
 numpy.ma.sum
 numpy.ma.swapaxes

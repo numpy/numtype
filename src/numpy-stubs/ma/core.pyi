@@ -1025,12 +1025,12 @@ def arange(
     stop: _ToInt | None = None,
     step: _ToInt | None = 1,
     *,
-    dtype: type[int] | _DTypeLike[np.int_] | None = None,
+    dtype: _nt.ToDTypeInt64 | None = None,
     device: _Device | None = None,
     like: _CanArrayFunc | None = None,
     fill_value: int | None = None,
     hardmask: bool = False,
-) -> _nt.MArray1D[np.int_]: ...
+) -> _nt.MArray1D[np.int64]: ...
 @overload  # (float, float-like?, float-like?)
 def arange(
     start_or_stop: float | np.floating,
@@ -1846,8 +1846,31 @@ def indices(
     hardmask: bool = False,
 ) -> tuple[_nt.MArray[Incomplete], ...]: ...
 
-#
-squeeze: _convert2ma
+# keep roughly in sync with `_core.fromnumeric.squeeze`
+@overload  # workaround for microsoft/pyright#10232
+def squeeze(
+    a: _ScalarT, axis: _ShapeLike | None = None, *, fill_value: complex | None = None, hardmask: bool = False
+) -> _nt.MArray0D[_ScalarT]: ...
+@overload  # workaround for microsoft/pyright#10232
+def squeeze(
+    a: _nt._ToArray_nnd[_ScalarT],
+    axis: _ShapeLike | None = None,
+    *,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[_ScalarT]: ...
+@overload
+def squeeze(
+    a: _nt._ToArray_nd[_ScalarT],
+    axis: _ShapeLike | None = None,
+    *,
+    fill_value: complex | None = None,
+    hardmask: bool = False,
+) -> _nt.MArray[_ScalarT]: ...
+@overload
+def squeeze(
+    a: ArrayLike, axis: _ShapeLike | None = None, *, fill_value: complex | None = None, hardmask: bool = False
+) -> _nt.MArray[Incomplete]: ...
 
 all: _frommethod
 anomalies: _frommethod
