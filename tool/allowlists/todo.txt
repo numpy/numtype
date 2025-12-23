@@ -12,7 +12,6 @@ numpy._core._methods.umr_maximum
 numpy._core._methods.umr_minimum
 numpy._core._methods.umr_prod
 numpy._core._methods.umr_sum
-numpy._core._multiarray_umath.flatiter.__array__
 numpy._core._type_aliases.abstract_type
 numpy._core._type_aliases.base_name
 numpy._core._type_aliases.bits
@@ -32,14 +31,11 @@ numpy._core.arrayprint.array2string
 numpy._core.defchararray.chararray.argsort
 numpy._core.dtype.__new__
 numpy._core.finfo.smallest_normal
-numpy._core.flatiter.__array__
 numpy._core.fromnumeric.reshape
 numpy._core.getlimits.finfo.smallest_normal
 numpy._core.multiarray.dtype.__new__
-numpy._core.multiarray.flatiter.__array__
 numpy._core.numeric.array2string
 numpy._core.numeric.dtype.__new__
-numpy._core.numeric.flatiter.__array__
 numpy._core.numeric.object_.__new__
 numpy._core.numeric.reshape
 numpy._core.numeric.ufunc.__signature__
@@ -58,16 +54,13 @@ numpy.core._internal._ctypes.get_as_parameter
 numpy.core._internal._ctypes.get_data
 numpy.core._internal._ctypes.get_shape
 numpy.core._internal._ctypes.get_strides
-numpy.core._multiarray_umath.flatiter.__array__
 numpy.core.arrayprint.array2string
 numpy.core.defchararray.chararray.argsort
 numpy.core.fromnumeric.reshape
 numpy.core.getlimits.finfo.smallest_normal
 numpy.core.multiarray.dtype.__new__
-numpy.core.multiarray.flatiter.__array__
 numpy.core.numeric.array2string
 numpy.core.numeric.dtype.__new__
-numpy.core.numeric.flatiter.__array__
 numpy.core.numeric.object_.__new__
 numpy.core.numeric.reshape
 numpy.core.numeric.ufunc.__signature__
@@ -81,7 +74,6 @@ numpy.dtype.__new__
 numpy.f2py._backends._meson.MesonTemplate.objects_substitution
 numpy.fft.helper
 numpy.finfo.smallest_normal
-numpy.flatiter.__array__
 numpy.in1d
 numpy.lib._arraysetops_impl.__all__
 numpy.lib._arraysetops_impl.in1d
@@ -209,7 +201,6 @@ numpy.matlib.array2string
 numpy.matlib.corrcoef
 numpy.matlib.dtype.__new__
 numpy.matlib.finfo.smallest_normal
-numpy.matlib.flatiter.__array__
 numpy.matlib.in1d
 numpy.matlib.nanpercentile
 numpy.matlib.ndindex.ndincr
