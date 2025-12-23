@@ -4949,15 +4949,15 @@ complex256 = clongdouble
 @final
 class object_(_RealMixin, generic[Any]):
     @overload
-    def __new__(cls, nothing_to_see_here: None = None, /) -> None: ...  # type: ignore[misc]
+    def __new__(cls, value: None = None, /) -> None: ...  # type: ignore[misc]
     @overload
-    def __new__(cls, stringy: str, /) -> str: ...  # type: ignore[misc]  # pyright: ignore[reportOverlappingOverload]
+    def __new__(cls, value: str, /) -> str: ...  # type: ignore[misc]  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __new__(cls, stringy: bytes, /) -> bytes: ...  # type: ignore[misc]
+    def __new__(cls, value: bytes, /) -> bytes: ...  # type: ignore[misc]
     @overload
-    def __new__(cls, array: ndarray[_ShapeT], /) -> _nt.Array[Self, _ShapeT]: ...  # type: ignore[misc]
+    def __new__(cls, value: ndarray[_ShapeT], /) -> _nt.Array[Self, _ShapeT]: ...  # type: ignore[misc]
     @overload
-    def __new__(cls, sequence: SupportsLenAndGetItem[object], /) -> _nt.Array[Self]: ...  # type: ignore[misc]
+    def __new__(cls, value: SupportsLenAndGetItem[object], /) -> _nt.Array[Self]: ...  # type: ignore[misc]
     @overload
     def __new__(cls, value: _T, /) -> _T: ...  # type: ignore[misc]
     @overload  # catch-all
