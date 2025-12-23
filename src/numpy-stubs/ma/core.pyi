@@ -6,6 +6,7 @@ from typing import (
     Generic,
     Literal as L,
     Never,
+    Protocol,
     Self,
     SupportsIndex as CanIndex,
     TypeAlias,
@@ -212,6 +213,7 @@ __all__ = [
 ]
 
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
+_ArrayT_co = TypeVar("_ArrayT_co", bound=np.ndarray[Any, Any], covariant=True)
 _MArrayT = TypeVar("_MArrayT", bound=np.ma.MaskedArray[Any, Any])
 _UFuncT_co = TypeVar("_UFuncT_co", bound=np.ufunc, default=np.ufunc, covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
@@ -229,6 +231,8 @@ _ArangeScalar: TypeAlias = np.integer | np.floating | np.datetime64 | np.timedel
 _ArangeScalarT = TypeVar("_ArangeScalarT", bound=_ArangeScalar)
 
 _ShapeLike1D: TypeAlias = CanIndex | tuple[CanIndex]
+_ShapeLike2D: TypeAlias = tuple[CanIndex, CanIndex]
+_ShapeLike3D: TypeAlias = tuple[CanIndex, CanIndex, CanIndex]
 
 _Device: TypeAlias = L["cpu"]
 
@@ -239,6 +243,10 @@ class _UFuncKwargs(TypedDict, total=False):
     subok: bool
     signature: str | tuple[str | None, ...]
     casting: np._CastingKind
+
+@type_check_only
+class _CanArray(Protocol[_ArrayT_co]):
+    def __array__(self, /) -> _ArrayT_co: ...
 
 ###
 
@@ -1320,7 +1328,382 @@ def empty(
     hardmask: bool = False,
 ) -> _nt.MArray[Incomplete]: ...
 
-empty_like: _convert2ma
+# keep in sync with `_core._multiarray_umath.empty_like`
+@overload  # known array, subok=True
+def empty_like(
+    prototype: _MArrayT,
+    /,
+    dtype: None = None,
+    order: _OrderKACF = "K",
+    subok: L[True] = True,
+    shape: None = None,
+    *,
+    device: _Device | None = None,
+) -> _MArrayT: ...
+@overload  # array-like with known shape and type
+def empty_like(
+    prototype: _CanArray[np.ndarray[_ShapeT, _DTypeT]],
+    /,
+    dtype: _DTypeT | _SupportsDType[_DTypeT] | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: None = None,
+    *,
+    device: _Device | None = None,
+) -> np.ma.MaskedArray[_ShapeT, _DTypeT]: ...
+@overload  # workaround for microsoft/pyright#10232
+def empty_like(
+    prototype: _nt._ToArray_nnd[np.bool_],
+    /,
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[np.bool_]: ...
+@overload  # bool 0d array-like
+def empty_like(
+    prototype: _nt.ToBool_0d,
+    /,
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray0D[np.bool_]: ...
+@overload  # bool 1d array-like
+def empty_like(
+    prototype: _nt.ToBool_1ds,
+    /,
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray1D[np.bool_]: ...
+@overload  # bool 2d array-like
+def empty_like(
+    prototype: _nt.ToBool_2ds,
+    /,
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray2D[np.bool_]: ...
+@overload  # bool 3d array-like
+def empty_like(
+    prototype: _nt.ToBool_3ds,
+    /,
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray3D[np.bool_]: ...
+@overload  # workaround for microsoft/pyright#10232
+def empty_like(  # type: ignore[overload-overlap]  # python/mypy#19908
+    prototype: _nt._ToArray_nnd[np.intp],
+    /,
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[np.intp]: ...
+@overload  # int 0d array-like
+def empty_like(
+    prototype: _nt.ToInt_0d,
+    /,
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray0D[np.intp]: ...
+@overload  # int 1d array-like
+def empty_like(
+    prototype: _nt.ToInt_1ds,
+    /,
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray1D[np.intp]: ...
+@overload  # int 2d array-like
+def empty_like(
+    prototype: _nt.ToInt_2ds,
+    /,
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray2D[np.intp]: ...
+@overload  # int 3d array-like
+def empty_like(
+    prototype: _nt.ToInt_3ds,
+    /,
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray3D[np.intp]: ...
+@overload  # workaround for microsoft/pyright#10232
+def empty_like(  # type: ignore[overload-overlap]  # python/mypy#19908
+    prototype: _nt._ToArray_nnd[np.float64],
+    /,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[np.float64]: ...
+@overload  # float 0d array-like
+def empty_like(
+    prototype: _nt.ToFloat64_0d,
+    /,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray0D[np.float64]: ...
+@overload  # float 1d array-like
+def empty_like(
+    prototype: _nt.ToFloat64_1ds,
+    /,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray1D[np.float64]: ...
+@overload  # float 2d array-like
+def empty_like(
+    prototype: _nt.ToFloat64_2ds,
+    /,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray2D[np.float64]: ...
+@overload  # float 3d array-like
+def empty_like(
+    prototype: _nt.ToFloat64_3ds,
+    /,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray3D[np.float64]: ...
+@overload  # complex 0d array-like
+def empty_like(
+    prototype: _nt.ToComplex128_0d,
+    /,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray0D[np.complex128]: ...
+@overload  # workaround for microsoft/pyright#10232
+def empty_like(
+    prototype: _nt._ToArray_nnd[np.complex128],
+    /,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: tuple[()] | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[np.complex128]: ...
+@overload  # complex 1d array-like
+def empty_like(
+    prototype: _nt.ToComplex128_1ds,
+    /,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike1D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray1D[np.complex128]: ...
+@overload  # complex 2d array-like
+def empty_like(
+    prototype: _nt.ToComplex128_2ds,
+    /,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike2D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray2D[np.complex128]: ...
+@overload  # complex 3d array-like
+def empty_like(
+    prototype: _nt.ToComplex128_3ds,
+    /,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike3D | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray3D[np.complex128]: ...
+@overload  # array-like with known scalar-type, given shape
+def empty_like(
+    prototype: _ArrayLike[_ScalarT],
+    /,
+    dtype: np.dtype[_ScalarT] | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    *,
+    shape: _ShapeT,
+    device: _Device | None = None,
+) -> _nt.MArray[_ScalarT, _ShapeT]: ...
+@overload  # array-like with known scalar-type, unknown shape
+def empty_like(
+    prototype: _ArrayLike[_ScalarT],
+    /,
+    dtype: np.dtype[_ScalarT] | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[_ScalarT]: ...
+@overload  # given shape, given dtype
+def empty_like(
+    prototype: object,
+    /,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    *,
+    shape: _ShapeT,
+    device: _Device | None = None,
+) -> np.ma.MaskedArray[_ShapeT, _DTypeT]: ...
+@overload  # unknown shape, given dtype
+def empty_like(
+    prototype: object,
+    /,
+    dtype: _DTypeT | _SupportsDType[_DTypeT],
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> np.ma.MaskedArray[Incomplete, _DTypeT]: ...
+@overload  # given shape, given scalar-type
+def empty_like(
+    prototype: object,
+    /,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    *,
+    shape: _ShapeT,
+    device: _Device | None = None,
+) -> _nt.MArray[_ScalarT, _ShapeT]: ...
+@overload  # unknown shape, given scalar-type
+def empty_like(
+    prototype: object,
+    /,
+    dtype: _DTypeLike[_ScalarT],
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[_ScalarT]: ...
+@overload  # bool array-like
+def empty_like(
+    prototype: _nt.ToBool_nd,
+    /,
+    dtype: _nt.ToDTypeBool | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[np.bool_]: ...
+@overload  # int array-like
+def empty_like(
+    prototype: _nt.ToInt_nd,
+    /,
+    dtype: _nt.ToDTypeInt64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[np.intp]: ...
+@overload  # float array-like
+def empty_like(
+    prototype: _nt.ToFloat64_nd,
+    /,
+    dtype: _nt.ToDTypeFloat64 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[np.float64]: ...
+@overload  # complex array-like
+def empty_like(
+    prototype: _nt.ToComplex128_nd,
+    /,
+    dtype: _nt.ToDTypeComplex128 | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[np.complex128]: ...
+@overload  # given shape, unknown scalar-type
+def empty_like(
+    prototype: object,
+    /,
+    dtype: DTypeLike | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    *,
+    shape: _ShapeT,
+    device: _Device | None = None,
+) -> _nt.MArray[Incomplete, _ShapeT]: ...
+@overload  # unknown shape, unknown scalar-type
+def empty_like(
+    prototype: object,
+    /,
+    dtype: DTypeLike | None = None,
+    order: _OrderKACF = "K",
+    subok: bool = True,
+    shape: _ShapeLike | None = None,
+    *,
+    device: _Device | None = None,
+) -> _nt.MArray[Incomplete]: ...
+
 frombuffer: _convert2ma
 fromfunction: _convert2ma
 identity: _convert2ma

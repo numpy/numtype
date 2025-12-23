@@ -22,7 +22,6 @@ numpy.ma.core.count
 numpy.ma.core.cumprod
 numpy.ma.core.cumsum
 numpy.ma.core.diagonal
-numpy.ma.core.empty_like
 numpy.ma.core.frombuffer
 numpy.ma.core.fromfunction
 numpy.ma.core.harden_mask
@@ -50,7 +49,6 @@ numpy.ma.count
 numpy.ma.cumprod
 numpy.ma.cumsum
 numpy.ma.diagonal
-numpy.ma.empty_like
 numpy.ma.frombuffer
 numpy.ma.fromfunction
 numpy.ma.harden_mask
