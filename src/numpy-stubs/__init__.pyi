@@ -1337,7 +1337,7 @@ class _ArrayOrScalarCommon:
 
     # NOTE: even on `generic` this seems to work
     def setflags(
-        self, /, write: py_bool | None = None, align: py_bool | None = None, uic: py_bool | None = None
+        self, /, *, write: py_bool | None = None, align: py_bool | None = None, uic: py_bool | None = None
     ) -> None: ...
 
     #
