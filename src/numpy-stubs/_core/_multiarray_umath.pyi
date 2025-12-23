@@ -1353,15 +1353,25 @@ def fromiter(
 #
 @overload
 def frombuffer(
-    buffer: Buffer, *, count: CanIndex = -1, offset: CanIndex = 0, **kwargs: Unpack[_KwargsL]
+    buffer: Buffer, *, count: CanIndex = -1, offset: CanIndex = 0, like: _CanArrayFunc | None = None
 ) -> _nt.Array[np.float64]: ...
 @overload
 def frombuffer(
-    buffer: Buffer, dtype: _DTypeLike[_ScalarT], count: CanIndex = -1, offset: CanIndex = 0, **kwargs: Unpack[_KwargsL]
+    buffer: Buffer,
+    dtype: _DTypeLike[_ScalarT],
+    count: CanIndex = -1,
+    offset: CanIndex = 0,
+    *,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def frombuffer(
-    buffer: Buffer, dtype: npt.DTypeLike, count: CanIndex = -1, offset: CanIndex = 0, **kwargs: Unpack[_KwargsL]
+    buffer: Buffer,
+    dtype: npt.DTypeLike,
+    count: CanIndex = -1,
+    offset: CanIndex = 0,
+    *,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[Incomplete]: ...
 
 #
