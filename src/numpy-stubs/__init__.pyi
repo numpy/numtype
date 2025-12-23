@@ -26,7 +26,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import Buffer, CapsuleType, Protocol, TypeVar, deprecated, override
+from typing_extensions import Buffer, CapsuleType, Protocol, TypeVar, override
 
 import _numtype as _nt
 
@@ -332,7 +332,7 @@ from ._core.umath import (
     vecmat,
 )
 from ._expired_attrs_2_0 import __expired_attributes__ as __expired_attributes__
-from ._globals import _CopyMode as _CopyMode, _NoValue as _NoValue
+from ._globals import _CopyMode as _CopyMode, _NoValue as _NoValue, _NoValueType
 from ._pytesttester import PytestTester
 from ._typing import (
     ArrayLike,
@@ -1324,20 +1324,18 @@ class _ArrayOrScalarCommon:
     #
     def dump(self, file: StrOrBytesPath | SupportsWrite[bytes]) -> None: ...
     def dumps(self) -> bytes: ...
-    @deprecated("tostring() is deprecated. Use tobytes() instead.")
-    def tostring(self, order: _OrderKACF = "C") -> bytes: ...
     def tobytes(self, order: _OrderKACF = "C") -> bytes: ...
-    def tofile(self, fid: StrOrBytesPath | _CanSeekTellFileNo, sep: str = ..., format: str = ...) -> None: ...
+    def tofile(self, fid: StrOrBytesPath | _CanSeekTellFileNo, /, sep: str = "", format: str = "%s") -> None: ...
     def tolist(self) -> Any: ...
     def to_device(self, device: _Device, /, *, stream: int | Any | None = ...) -> Self: ...
 
     # NOTE: for `generic`, these two methods don't do anything
-    def fill(self, value: _ScalarLike_co, /) -> None: ...
-    def put(self, /, indices: _nt.CoInteger_nd, values: ArrayLike, mode: _ModeKind = "raise") -> None: ...
+    def fill(self, /, value: _ScalarLike_co) -> None: ...
+    def put(self, indices: _nt.CoInteger_nd, values: ArrayLike, /, mode: _ModeKind = "raise") -> None: ...
 
     # NOTE: even on `generic` this seems to work
     def setflags(
-        self, /, write: py_bool | None = None, align: py_bool | None = None, uic: py_bool | None = None
+        self, /, *, write: py_bool | None = None, align: py_bool | None = None, uic: py_bool | None = None
     ) -> None: ...
 
     #
@@ -1351,9 +1349,10 @@ class _ArrayOrScalarCommon:
         /,
         axis: _ShapeLike | None = None,
         out: None = None,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        *,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Incomplete: ...
     @overload
     def max(
@@ -1361,9 +1360,10 @@ class _ArrayOrScalarCommon:
         /,
         axis: _ShapeLike | None,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        *,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def max(
@@ -1372,9 +1372,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
@@ -1394,9 +1394,10 @@ class _ArrayOrScalarCommon:
         /,
         axis: _ShapeLike | None = None,
         out: None = None,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        *,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Incomplete: ...
     @overload
     def min(
@@ -1404,9 +1405,10 @@ class _ArrayOrScalarCommon:
         /,
         axis: _ShapeLike | None,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        *,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def min(
@@ -1415,9 +1417,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = ...,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
@@ -1489,9 +1491,10 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 0,
-        where: _nt.ToBool_nd = True,
+        *,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Any: ...
     @overload
     def sum(
@@ -1500,9 +1503,10 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 0,
-        where: _nt.ToBool_nd = True,
+        *,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def sum(
@@ -1512,9 +1516,9 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 0,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
@@ -1535,9 +1539,10 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 1,
-        where: _nt.ToBool_nd = True,
+        *,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Any: ...
     @overload
     def prod(
@@ -1546,9 +1551,10 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 1,
-        where: _nt.ToBool_nd = True,
+        *,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def prod(
@@ -1558,9 +1564,9 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        initial: _NumberLike_co = 1,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        initial: _NumberLike_co | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
@@ -1570,9 +1576,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
-        keepdims: py_bool = False,
         *,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> Any: ...
     @overload
     def mean(
@@ -1581,9 +1587,9 @@ class _ArrayOrScalarCommon:
         axis: _ShapeLike | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
-        keepdims: py_bool = False,
         *,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def mean(
@@ -1593,8 +1599,8 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
@@ -1605,11 +1611,11 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         out: None = None,
         ddof: float = 0,
-        keepdims: py_bool = False,
         *,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> Any: ...
     @overload
     def std(
@@ -1618,11 +1624,11 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None,
         out: _ArrayT,
         ddof: float = 0,
-        keepdims: py_bool = False,
         *,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def std(
@@ -1632,10 +1638,10 @@ class _ArrayOrScalarCommon:
         *,
         out: _ArrayT,
         ddof: float = 0,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> _ArrayT: ...
 
     #
@@ -1646,11 +1652,11 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None = None,
         out: None = None,
         ddof: float = 0,
-        keepdims: py_bool = False,
         *,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> Any: ...
     @overload
     def var(
@@ -1659,11 +1665,11 @@ class _ArrayOrScalarCommon:
         dtype: DTypeLike | None,
         out: _ArrayT,
         ddof: float = 0,
-        keepdims: py_bool = False,
         *,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> _ArrayT: ...
     @overload
     def var(
@@ -1673,10 +1679,10 @@ class _ArrayOrScalarCommon:
         *,
         out: _ArrayT,
         ddof: float = 0,
-        keepdims: py_bool = False,
-        where: _nt.ToBool_nd = True,
-        mean: _nt.CoComplex_nd = ...,
-        correction: float = ...,
+        keepdims: py_bool | _NoValueType = ...,
+        where: _nt.ToBool_nd | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+        correction: float | _NoValueType = ...,
     ) -> _ArrayT: ...
 
 #
@@ -2753,7 +2759,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     ) -> None: ...
 
     #
-    def swapaxes(self, /, axis1: CanIndex, axis2: CanIndex) -> Self: ...
+    def swapaxes(self, axis1: CanIndex, axis2: CanIndex, /) -> Self: ...
     def squeeze(self, /, axis: CanIndex | tuple[CanIndex, ...] | None = None) -> ndarray[_nt.AnyShape, _DTypeT_co]: ...
     def byteswap(self, /, inplace: py_bool = False) -> Self: ...
 
@@ -2846,6 +2852,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def argpartition(
         self,
         kth: _nt.CoInteger_nd,
+        /,
         axis: CanIndex | None = ...,
         kind: _PartitionKind = ...,
         order: str | Sequence[str] | None = ...,
@@ -2853,11 +2860,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     # 1D + 1D returns a scalar; # all other with at least 1 non-0D array return an ndarray.
     @overload
-    def dot(self, b: _ScalarLike_co, out: None = ...) -> _nt.Array: ...
+    def dot(self, b: _ScalarLike_co, /, out: None = ...) -> _nt.Array: ...
     @overload
-    def dot(self, b: ArrayLike, out: None = ...) -> Any: ...
+    def dot(self, b: ArrayLike, /, out: None = ...) -> Any: ...
     @overload
-    def dot(self, b: ArrayLike, out: _ArrayT) -> _ArrayT: ...
+    def dot(self, b: ArrayLike, /, out: _ArrayT) -> _ArrayT: ...
 
     # `nonzero()` is deprecated for 0d arrays/generics
     def nonzero(self) -> tuple[_nt.Array[intp], ...]: ...
@@ -2865,19 +2872,19 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def searchsorted(
-        self, /, v: _ScalarLike_co, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
+        self, v: _ScalarLike_co, /, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> intp: ...
     @overload
     def searchsorted(
-        self, /, v: ndarray[_ShapeT], side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
+        self, v: ndarray[_ShapeT], /, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> _nt.Array[intp, _ShapeT]: ...
     @overload
     def searchsorted(
-        self, /, v: _NestedSequence[_ScalarLike_co], side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
+        self, v: _NestedSequence[_ScalarLike_co], /, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> _nt.Array[intp]: ...
     @overload
     def searchsorted(
-        self, /, v: ArrayLike, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
+        self, v: ArrayLike, /, side: _SortSide = "left", sorter: _nt.CoInteger_nd | None = None
     ) -> intp | _nt.Array[intp]: ...
 
     #
@@ -2929,13 +2936,13 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     @overload
     def partition(
-        self, /, kth: _nt.CoInteger_nd, axis: CanIndex = -1, kind: _PartitionKind = "introselect", order: None = None
+        self, kth: _nt.CoInteger_nd, /, axis: CanIndex = -1, kind: _PartitionKind = "introselect", order: None = None
     ) -> None: ...
     @overload
     def partition(
         self: _nt.Array[void, Any],
-        /,
         kth: _nt.CoInteger_nd,
+        /,
         axis: CanIndex = -1,
         kind: _PartitionKind = "introselect",
         order: str | Sequence[str] | None = None,
@@ -3003,31 +3010,31 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def take(
         self: _nt.Array[_ScalarT],
-        /,
         indices: _nt.CoInteger_0d,
+        /,
         axis: CanIndex | None = None,
         out: None = None,
         mode: _ModeKind = "raise",
     ) -> _ScalarT: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
     ) -> ndarray[_nt.AnyShape, _DTypeT_co]: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
 
     #
     @overload
-    def repeat(self, /, repeats: _nt.CoInteger_nd, axis: None = None) -> ndarray[_nt.Rank1, _DTypeT_co]: ...
+    def repeat(self, repeats: _nt.CoInteger_nd, /, axis: None = None) -> ndarray[_nt.Rank1, _DTypeT_co]: ...
     @overload
     def repeat(
-        self: ndarray[_AnyShapeT, _DTypeT], /, repeats: _nt.CoInteger_nd, axis: CanIndex
+        self: ndarray[_AnyShapeT, _DTypeT], repeats: _nt.CoInteger_nd, /, axis: CanIndex
     ) -> ndarray[_AnyShapeT, _DTypeT]: ...
 
     #
@@ -3180,7 +3187,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def getfield(self, /, dtype: DTypeLike, offset: CanIndex = 0) -> _nt.Array: ...
 
     #
-    def setfield(self, /, val: ArrayLike, dtype: DTypeLike, offset: CanIndex = 0) -> None: ...
+    def setfield(self, val: ArrayLike, /, dtype: DTypeLike, offset: CanIndex = 0) -> None: ...
 
     # keep `dtype` at the bottom to avoid shadowing
     @property
@@ -3281,23 +3288,22 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
 
     # NOTE: these technically exist, but will always raise when called
     def trace(  # type: ignore[misc]
-        self: Never,
-        /,
-        offset: Never = ...,
-        axis1: Never = ...,
-        axis2: Never = ...,
-        dtype: Never = ...,
-        out: Never = ...,
+        self: Never, /, offset: L[0] = 0, axis1: L[0] = 0, axis2: L[1] = 1, dtype: None = None, out: None = None
     ) -> Never: ...
-    def diagonal(self: Never, /, offset: Never = ..., axis1: Never = ..., axis2: Never = ...) -> Never: ...  # type: ignore[misc]
-    def swapaxes(self: Never, /, axis1: Never, axis2: Never) -> Never: ...  # type: ignore[misc]
-    def sort(self: Never, /, axis: Never = ..., kind: Never = ..., order: Never = ...) -> Never: ...  # type: ignore[misc]
+    def diagonal(self: Never, /, offset: L[0] = 0, axis1: L[0] = 0, axis2: L[1] = 1) -> Never: ...  # type: ignore[misc]
+    def swapaxes(self: Never, axis1: Never, axis2: Never, /) -> Never: ...  # type: ignore[misc]
+    def sort(  # type: ignore[misc]
+        self: Never, /, axis: L[-1] = -1, kind: None = None, order: None = None, *, stable: None = None
+    ) -> Never: ...
     def nonzero(self: Never, /) -> Never: ...  # type: ignore[misc]
-    def setfield(self: Never, /, val: Never, dtype: Never, offset: Never = ...) -> None: ...  # type: ignore[misc]
-    def searchsorted(self: Never, /, v: Never, side: Never = ..., sorter: Never = ...) -> Never: ...  # type: ignore[misc]
+    def setfield(self: Never, val: Never, /, dtype: Never, offset: L[0] = 0) -> None: ...  # type: ignore[misc]
+    def searchsorted(self: Never, v: Never, /, side: L["left"] = "left", sorter: None = None) -> Never: ...  # type: ignore[misc]
 
     # NOTE: this wont't raise, but won't do anything either
-    def resize(self, new_shape: L[0, -1] | tuple[L[0, -1]] | tuple[()], /, *, refcheck: py_bool = False) -> None: ...
+    @overload
+    def resize(self, /, *, refcheck: py_bool = True) -> None: ...
+    @overload
+    def resize(self, new_shape: L[0, -1] | tuple[L[0, -1]] | tuple[()], /, *, refcheck: py_bool = True) -> None: ...
 
     #
     def byteswap(self, /, inplace: L[False] = False) -> Self: ...
@@ -3349,28 +3355,28 @@ class generic(_ArrayOrScalarCommon, Generic[_ItemT_co]):
     #
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_0d, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_0d, /, axis: CanIndex | None = None, out: None = None, mode: _ModeKind = "raise"
     ) -> Self: ...
     @overload
     def take(
         self,
-        /,
         indices: _NestedSequence[CanIndex],
+        /,
         axis: CanIndex | None = None,
         out: None = None,
         mode: _ModeKind = "raise",
     ) -> _nt.Array[Self]: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
     @overload
     def take(
-        self, /, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
+        self, indices: _nt.CoInteger_nd, /, axis: CanIndex | None = None, *, out: _ArrayT, mode: _ModeKind = "raise"
     ) -> _ArrayT: ...
 
     #
-    def repeat(self, /, repeats: _nt.CoInteger_nd, axis: CanIndex | None = None) -> _nt.Array[Self]: ...
+    def repeat(self, repeats: _nt.CoInteger_nd, /, axis: CanIndex | None = None) -> _nt.Array[Self]: ...
 
     #
     def flatten(self, /, order: _OrderKACF = "C") -> _nt.Array1D[Self]: ...
@@ -5020,7 +5026,7 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
     def __getitem__(self, key: list[str], /) -> void: ...
     def __setitem__(self, key: str | list[str] | CanIndex, value: ArrayLike, /) -> None: ...
     @override
-    def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = ...) -> None: ...
+    def setfield(self, val: ArrayLike, dtype: DTypeLike, offset: int = 0) -> None: ...
 
     #
     @property
