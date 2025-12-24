@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from types import EllipsisType
 from typing import Any, Generic, Self, SupportsIndex, TypeAlias, overload
-from typing_extensions import TypeAliasType, TypeVar, override
+from typing_extensions import TypeAliasType, TypeVar, deprecated, override
 
 import _numtype as _nt
 import numpy as np
@@ -16,7 +16,7 @@ _ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=Any, covariant=True)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype, default=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
 
-_Container = TypeAliasType("_Container", container[_ShapeT, np.dtype[_ScalarT]], type_params=(_ScalarT, _ShapeT))
+_Container = TypeAliasType("_Container", container[_ShapeT, np.dtype[_ScalarT]], type_params=(_ScalarT, _ShapeT))  # pyright: ignore[reportDeprecated]
 
 _BoolArrayT = TypeVar("_BoolArrayT", bound=_Container[np.bool_])
 _IntegralArrayT = TypeVar("_IntegralArrayT", bound=_Container[_nt.co_integer | np.object_])
@@ -32,6 +32,7 @@ _ToIndices: TypeAlias = _ToIndex | tuple[_ToIndex, ...]
 
 ###
 
+@deprecated("The numpy.lib.user_array.container class is deprecated and will be removed in a future version.")
 class container(Generic[_ShapeT_co, _DTypeT_co]):
     array: np.ndarray[_ShapeT_co, _DTypeT_co]
 
@@ -39,7 +40,7 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
     def __init__(
         self,
         /,
-        data: container[_ShapeT_co, _DTypeT_co] | np.ndarray[_ShapeT_co, _DTypeT_co],
+        data: container[_ShapeT_co, _DTypeT_co] | np.ndarray[_ShapeT_co, _DTypeT_co],  # pyright: ignore[reportDeprecated]
         dtype: None = None,
         copy: bool = True,
     ) -> None: ...
@@ -78,9 +79,9 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
 
     # keep in sync with np.ndarray
     @overload
-    def __getitem__(self, key: _ArrayInt_co | tuple[_ArrayInt_co, ...], /) -> container[_ShapeT_co, _DTypeT_co]: ...
+    def __getitem__(self, key: _ArrayInt_co | tuple[_ArrayInt_co, ...], /) -> container[_ShapeT_co, _DTypeT_co]: ...  # pyright: ignore[reportDeprecated]
     @overload
-    def __getitem__(self, key: _ToIndexSlices, /) -> container[Any, _DTypeT_co]: ...
+    def __getitem__(self, key: _ToIndexSlices, /) -> container[Any, _DTypeT_co]: ...  # pyright: ignore[reportDeprecated]
     @overload
     def __getitem__(self, key: _ToIndices, /) -> Any: ...
     @overload
@@ -190,11 +191,11 @@ class container(Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def __array_wrap__(self, arg0: npt.ArrayLike, /) -> container[_ShapeT_co, _DTypeT_co]: ...
+    def __array_wrap__(self, arg0: npt.ArrayLike, /) -> container[_ShapeT_co, _DTypeT_co]: ...  # pyright: ignore[reportDeprecated]
     @overload
     def __array_wrap__(
         self, a: np.ndarray[_ShapeT, _DTypeT], c: Any = ..., s: Any = ..., /
-    ) -> container[_ShapeT, _DTypeT]: ...
+    ) -> container[_ShapeT, _DTypeT]: ...  # pyright: ignore[reportDeprecated]
 
     #
     def copy(self, /) -> Self: ...
