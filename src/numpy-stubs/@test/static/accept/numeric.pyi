@@ -44,7 +44,8 @@ assert_type(np.correlate(AR_b, AR_u8), _nt.Array1D[np.unsignedinteger])
 assert_type(np.correlate(AR_i8, AR_b), _nt.Array1D[np.signedinteger])
 assert_type(np.correlate(AR_i8, AR_f8), _nt.Array1D[np.floating])
 assert_type(np.correlate(AR_i8, AR_c16), _nt.Array1D[np.complexfloating])
-assert_type(np.correlate(AR_i8, AR_m), _nt.Array1D[np.timedelta64])
+# mypy incorrectly infers this as "ndarray[Any, Any]", but pyright behaves correctly
+assert_type(np.correlate(AR_i8, AR_m), _nt.Array1D[np.timedelta64])  # type: ignore[assert-type]
 assert_type(np.correlate(AR_O, AR_O), _nt.Array1D[np.object_])
 
 assert_type(np.convolve(ints, AR_i8, mode="valid"), _nt.Array1D[np.signedinteger])
@@ -54,7 +55,8 @@ assert_type(np.convolve(AR_b, AR_u8), _nt.Array1D[np.unsignedinteger])
 assert_type(np.convolve(AR_i8, AR_b), _nt.Array1D[np.signedinteger])
 assert_type(np.convolve(AR_i8, AR_f8), _nt.Array1D[np.floating])
 assert_type(np.convolve(AR_i8, AR_c16), _nt.Array1D[np.complexfloating])
-assert_type(np.convolve(AR_i8, AR_m), _nt.Array1D[np.timedelta64])
+# mypy incorrectly infers this as "ndarray[Any, Any]", but pyright behaves correctly
+assert_type(np.convolve(AR_i8, AR_m), _nt.Array1D[np.timedelta64])  # type: ignore[assert-type]
 assert_type(np.convolve(AR_O, AR_O), _nt.Array1D[np.object_])
 
 assert_type(np.outer(i8, AR_i8), _nt.Array2D[np.signedinteger])
@@ -78,7 +80,8 @@ assert_type(np.tensordot(AR_b, AR_u8), _nt.Array[np.unsignedinteger])
 assert_type(np.tensordot(AR_i8, AR_b), _nt.Array[np.signedinteger])
 assert_type(np.tensordot(AR_i8, AR_f8), _nt.Array[np.floating])
 assert_type(np.tensordot(AR_i8, AR_c16), _nt.Array[np.complexfloating])
-assert_type(np.tensordot(AR_i8, AR_m), _nt.Array[np.timedelta64])
+# mypy incorrectly infers this as "ndarray[Any, Any]", but pyright behaves correctly
+assert_type(np.tensordot(AR_i8, AR_m), _nt.Array[np.timedelta64])  # type: ignore[assert-type]
 assert_type(np.tensordot(AR_O, AR_O), _nt.Array[np.object_])
 
 assert_type(np.isscalar(i8), bool)

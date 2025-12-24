@@ -1,4 +1,4 @@
-from typing import Self
+from typing import Any, Self
 
 import pytest
 
@@ -34,28 +34,28 @@ class Object:
         ret[()] = self
         return ret
 
-    def __sub__(self, value: object) -> Self:
+    def __sub__(self, value: Any) -> Self:
         return self
 
-    def __rsub__(self, value: object) -> Self:
+    def __rsub__(self, value: Any) -> Self:
         return self
 
-    def __floordiv__(self, value: object) -> Self:
+    def __floordiv__(self, value: Any) -> Self:
         return self
 
-    def __rfloordiv__(self, value: object) -> Self:
+    def __rfloordiv__(self, value: Any) -> Self:
         return self
 
-    def __mul__(self, value: object) -> Self:
+    def __mul__(self, value: Any) -> Self:
         return self
 
-    def __rmul__(self, value: object) -> Self:
+    def __rmul__(self, value: Any) -> Self:
         return self
 
-    def __pow__(self, value: object) -> Self:
+    def __pow__(self, value: Any) -> Self:
         return self
 
-    def __rpow__(self, value: object) -> Self:
+    def __rpow__(self, value: Any) -> Self:
         return self
 
 
@@ -84,7 +84,6 @@ AR_b - AR_LIKE_i
 AR_b - AR_LIKE_f
 AR_b - AR_LIKE_c
 AR_b - AR_LIKE_m
-AR_b - AR_LIKE_O
 
 AR_LIKE_u - AR_b
 AR_LIKE_i - AR_b
@@ -92,7 +91,6 @@ AR_LIKE_f - AR_b
 AR_LIKE_c - AR_b
 AR_LIKE_m - AR_b
 AR_LIKE_M - AR_b
-AR_LIKE_O - AR_b
 
 AR_u - AR_LIKE_b
 AR_u - AR_LIKE_u

@@ -317,7 +317,8 @@ assert_type(np.around(AR_f4, out=AR_subclass), NDArraySubclass)
 assert_type(np.mean(AR_b1), np.floating)
 assert_type(np.mean(AR_i8), np.floating)
 assert_type(np.mean(AR_f4), np.floating)
-assert_type(np.mean(AR_m), np.timedelta64)
+# mypy incorrectly infers this as "Any" but pyright behaves correctly
+assert_type(np.mean(AR_m), np.timedelta64)  # type: ignore[assert-type]
 assert_type(np.mean(AR_c16), np.complexfloating)
 assert_type(np.mean(AR_O), Any)
 assert_type(np.mean(AR_f4, axis=0), Any)

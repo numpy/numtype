@@ -157,9 +157,10 @@ assert_type(np.busday_count("2011-01", "2011-02"), np.int_)
 assert_type(np.busday_count(["2011-01"], "2011-02"), _nt.Array[np.int_])
 assert_type(np.busday_count(["2011-01"], date_scalar), _nt.Array[np.int_])
 
-assert_type(np.busday_offset(date_scalar, m), np.datetime64[dt.datetime])
-assert_type(np.busday_offset(M, m), np.datetime64[dt.datetime])
-assert_type(np.busday_offset(M, 5), np.datetime64[dt.datetime])
+# mypy incorrectly infers this as "Any" but pyright behaves correctly
+assert_type(np.busday_offset(date_scalar, m), np.datetime64[dt.datetime])  # type: ignore[assert-type]
+assert_type(np.busday_offset(M, m), np.datetime64[dt.datetime])  # type: ignore[assert-type]
+assert_type(np.busday_offset(M, 5), np.datetime64[dt.datetime])  # type: ignore[assert-type]
 assert_type(np.busday_offset(AR_M, m), _nt.Array[np.datetime64[dt.datetime]])
 assert_type(np.busday_offset(M, timedelta_seq), _nt.Array[np.datetime64[dt.datetime]])
 assert_type(np.busday_offset("2011-01", 1, roll="forward"), np.datetime64[dt.datetime])

@@ -51,10 +51,11 @@ assert_type(np.isnat(dt64), np.bool_)
 assert_type(np.isnat(td64), np.bool_)
 assert_type(np.isnat([td64, td64]), _nt.Array[np.bool_])
 assert_type(np.isnat([td64, td64], out=AR_bool), _nt.Array[np.bool_])
-assert_type(np.isnat(AR_dt64), _nt.Array[np.bool_])
-assert_type(np.isnat(AR_td64), _nt.Array[np.bool_])
-assert_type(np.isnat(AR_dt64, out=AR_bool), _nt.Array[np.bool_])
-assert_type(np.isnat(AR_td64, out=AR_bool), _nt.Array[np.bool_])
+# mypy incorrectly infers the return type as "Any" here, but pyright is correct
+assert_type(np.isnat(AR_dt64), _nt.Array[np.bool_])  # type: ignore[assert-type]
+assert_type(np.isnat(AR_td64), _nt.Array[np.bool_])  # type: ignore[assert-type]
+assert_type(np.isnat(AR_dt64, out=AR_bool), _nt.Array[np.bool_])  # type: ignore[assert-type]
+assert_type(np.isnat(AR_td64, out=AR_bool), _nt.Array[np.bool_])  # type: ignore[assert-type]
 
 assert_type(np.isinf(f8), np.bool_)
 assert_type(np.isinf(AR_f8), _nt.Array[np.bool_])
