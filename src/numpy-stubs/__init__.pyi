@@ -814,7 +814,7 @@ _OrderKACF: TypeAlias = L["K", "A", "C", "F"] | None
 
 _FutureScalar: TypeAlias = L["bytes", "str", "object"]
 _ByteOrderChar: TypeAlias = L["<", ">", "=", "|"]
-_CastingKind: TypeAlias = L["no", "equiv", "safe", "same_kind", "unsafe"]
+_CastingKind: TypeAlias = L["no", "equiv", "safe", "same_kind", "unsafe", "same_value"]
 _ModeKind: TypeAlias = L["raise", "wrap", "clip"]
 _PartitionKind: TypeAlias = L["introselect"]
 _SortSide: TypeAlias = L["left", "right"]
