@@ -23,12 +23,12 @@ AR_LIKE_f = [1.0, 2.0, 3.0]
 AR_LIKE_O = [Object(), Object(), Object()]
 AR_U: np.ndarray[tuple[int], np.dtype[np.str_]] = np.zeros(3, dtype="U5")
 
-np.fix(AR_LIKE_b)
-np.fix(AR_LIKE_u)
-np.fix(AR_LIKE_i)
-np.fix(AR_LIKE_f)
-np.fix(AR_LIKE_O)
-np.fix(AR_LIKE_f, out=AR_U)
+np.fix(AR_LIKE_b)  # pyright: ignore[reportDeprecated]
+np.fix(AR_LIKE_u)  # pyright: ignore[reportDeprecated]
+np.fix(AR_LIKE_i)  # pyright: ignore[reportDeprecated]
+np.fix(AR_LIKE_f)  # pyright: ignore[reportDeprecated]
+np.fix(AR_LIKE_O)  # pyright: ignore[reportDeprecated]
+np.fix(AR_LIKE_f, out=AR_U)  # pyright: ignore[reportDeprecated]
 
 np.isposinf(AR_LIKE_b)
 np.isposinf(AR_LIKE_u)
