@@ -72,17 +72,32 @@ __all__ = [
 _T = TypeVar("_T")
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True, default=Any)
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, covariant=True, default=np.dtype)
 
 @type_check_only
-class _HasDType(Protocol[_DTypeT_co]):
+class _HasDTypeOld(Protocol[_DTypeT_co]):
     @property
     def dtype(self) -> _DTypeT_co: ...
 
 @type_check_only
-class _HasDTypeOf(Protocol[_ScalarT_co]):
+class _HasDTypeNew(Protocol[_DTypeT_co]):
+    @property
+    def __numpy_dtype__(self) -> _DTypeT_co: ...
+
+_HasDType = TypeAliasType("_HasDType", _HasDTypeNew[_DTypeT] | _HasDTypeOld[_DTypeT], type_params=(_DTypeT,))
+
+@type_check_only
+class _HasDTypeOldOf(Protocol[_ScalarT_co]):
     @property
     def dtype(self) -> np.dtype[_ScalarT_co]: ...
+
+@type_check_only
+class _HasDTypeNewOf(Protocol[_ScalarT_co]):
+    @property
+    def __numpy_dtype__(self) -> np.dtype[_ScalarT_co]: ...
+
+_HasDTypeOf = TypeAliasType("_HasDTypeOf", _HasDTypeNewOf[_ScalarT] | _HasDTypeOldOf[_ScalarT], type_params=(_ScalarT,))
 
 _ToDType = TypeAliasType(
     "_ToDType", type[_ScalarT] | np.dtype[_ScalarT] | _HasDTypeOf[_ScalarT], type_params=(_ScalarT,)
