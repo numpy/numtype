@@ -27,10 +27,13 @@ class _ModeFunc(Protocol):
 
 # TODO: In practice each keyword argument is exclusive to one or more
 # specific modes. Consider adding more overloads to express this in the future.
+
+_PadWidth: TypeAlias = _ArrayLikeInt | dict[int, int] | dict[int, tuple[int, int]] | dict[int, int | tuple[int, int]]
+
 @overload
 def pad(
     array: _ArrayLike[_ScalarT],
-    pad_width: _ArrayLikeInt,
+    pad_width: _PadWidth,
     mode: _ModeKind = ...,
     *,
     stat_length: _ArrayLikeInt | None = ...,
@@ -41,7 +44,7 @@ def pad(
 @overload
 def pad(
     array: ArrayLike,
-    pad_width: _ArrayLikeInt,
+    pad_width: _PadWidth,
     mode: _ModeKind = ...,
     *,
     stat_length: _ArrayLikeInt | None = ...,
@@ -51,7 +54,7 @@ def pad(
 ) -> _nt.Array[Incomplete]: ...
 @overload
 def pad(
-    array: _ArrayLike[_ScalarT], pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object
+    array: _ArrayLike[_ScalarT], pad_width: _PadWidth, mode: _ModeFunc, **kwargs: object
 ) -> _nt.Array[_ScalarT]: ...
 @overload
-def pad(array: ArrayLike, pad_width: _ArrayLikeInt, mode: _ModeFunc, **kwargs: object) -> _nt.Array[Incomplete]: ...
+def pad(array: ArrayLike, pad_width: _PadWidth, mode: _ModeFunc, **kwargs: object) -> _nt.Array[Incomplete]: ...
