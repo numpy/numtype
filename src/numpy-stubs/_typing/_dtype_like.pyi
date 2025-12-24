@@ -1,6 +1,6 @@
 from _typeshed import Incomplete
 from collections.abc import Sequence
-from typing import Any, Protocol, Required, TypeAlias, TypedDict, runtime_checkable
+from typing import Any, Protocol, Required, TypeAlias, TypedDict, type_check_only
 from typing_extensions import TypeVar
 
 import numpy as np
@@ -21,11 +21,13 @@ from ._char_codes import (
 )
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", covariant=True, bound=np.dtype)
 
 # TODO(jorenham): Actually annotate this
 _DTypeLikeNested: TypeAlias = Incomplete
 
+@type_check_only
 class _DTypeDict(TypedDict, total=False):
     names: Required[Sequence[str]]
     formats: Required[Sequence[_DTypeLikeNested]]
@@ -36,11 +38,17 @@ class _DTypeDict(TypedDict, total=False):
     # but `titles` can in principle accept any object
     titles: Sequence[Any]
 
-# A protocol for anything with the dtype attribute
-@runtime_checkable
-class _SupportsDType(Protocol[_DTypeT_co]):
+@type_check_only
+class _HasDTypeLegacy(Protocol[_DTypeT_co]):
     @property
-    def dtype(self) -> _DTypeT_co: ...
+    def dtype(self, /) -> _DTypeT_co: ...
+
+@type_check_only
+class _HasDType(Protocol[_DTypeT_co]):
+    @property
+    def __numpy_dtype__(self, /) -> _DTypeT_co: ...
+
+_SupportsDType: TypeAlias = _HasDType[_DTypeT] | _HasDTypeLegacy[_DTypeT]
 
 # A subset of `npt.DTypeLike` that can be parametrized w.r.t. `np.generic`
 _DTypeLike: TypeAlias = type[_ScalarT] | np.dtype[_ScalarT] | _SupportsDType[np.dtype[_ScalarT]]
