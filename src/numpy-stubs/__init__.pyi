@@ -1718,6 +1718,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     # def shape(self: _nt.HasInnerShape[_ShapeT] | ndarray[_ShapeT2]) -> _ShapeT | _ShapeT2: ...  # noqa: ERA001
     def shape(self: ndarray[_AnyShapeT]) -> _AnyShapeT: ...
     @shape.setter
+    @deprecated("In-place shape modification will be deprecated in NumPy 2.5.", category=PendingDeprecationWarning)
     def shape(self: _nt.HasInnerShape[_ShapeT] | ndarray[_ShapeT2], shape: _ShapeT | _ShapeT2, /) -> None: ...
 
     #
