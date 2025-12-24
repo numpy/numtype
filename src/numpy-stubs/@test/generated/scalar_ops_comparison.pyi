@@ -1,4 +1,4 @@
-# @generated 2025-05-03T21:24:40Z with tool/testgen.py
+# @generated 2025-12-24T22:19:45Z with tool/testgen.py
 from typing import assert_type
 
 import numpy as np
@@ -497,7 +497,7 @@ assert_type(c128l < iu, np.bool)
 assert_type(c128l < fc, np.bool)
 assert_type(c128l < iufc, np.bool)
 
-assert_type(M64 < M64, np.bool)
+assert_type(M64 < M64, np.bool)  # type: ignore[assert-type]
 
 assert_type(m64 < b_py, np.bool)
 assert_type(m64 < i_py, np.bool)
@@ -1168,7 +1168,7 @@ assert_type(c128l <= iu, np.bool)
 assert_type(c128l <= fc, np.bool)
 assert_type(c128l <= iufc, np.bool)
 
-assert_type(M64 <= M64, np.bool)
+assert_type(M64 <= M64, np.bool)  # type: ignore[assert-type]
 
 assert_type(m64 <= b_py, np.bool)
 assert_type(m64 <= i_py, np.bool)
@@ -1839,7 +1839,7 @@ assert_type(c128l >= iu, np.bool)
 assert_type(c128l >= fc, np.bool)
 assert_type(c128l >= iufc, np.bool)
 
-assert_type(M64 >= M64, np.bool)
+assert_type(M64 >= M64, np.bool)  # type: ignore[assert-type]
 
 assert_type(m64 >= b_py, np.bool)
 assert_type(m64 >= i_py, np.bool)
@@ -2510,7 +2510,7 @@ assert_type(c128l > iu, np.bool)
 assert_type(c128l > fc, np.bool)
 assert_type(c128l > iufc, np.bool)
 
-assert_type(M64 > M64, np.bool)
+assert_type(M64 > M64, np.bool)  # type: ignore[assert-type]
 
 assert_type(m64 > b_py, np.bool)
 assert_type(m64 > i_py, np.bool)
@@ -2745,7 +2745,7 @@ assert_type(b1 == f64l, np.bool)
 assert_type(b1 == c64, np.bool)
 assert_type(b1 == c128, np.bool)
 assert_type(b1 == c128l, np.bool)
-assert_type(b1 == m64, np.bool)
+assert_type(b1 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i8 == b_py, np.bool)
 assert_type(i8 == i_py, np.bool)
@@ -2767,7 +2767,7 @@ assert_type(i8 == f64l, np.bool)
 assert_type(i8 == c64, np.bool)
 assert_type(i8 == c128, np.bool)
 assert_type(i8 == c128l, np.bool)
-assert_type(i8 == m64, np.bool)
+assert_type(i8 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i16 == b_py, np.bool)
 assert_type(i16 == i_py, np.bool)
@@ -2789,7 +2789,7 @@ assert_type(i16 == f64l, np.bool)
 assert_type(i16 == c64, np.bool)
 assert_type(i16 == c128, np.bool)
 assert_type(i16 == c128l, np.bool)
-assert_type(i16 == m64, np.bool)
+assert_type(i16 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i32 == b_py, np.bool)
 assert_type(i32 == i_py, np.bool)
@@ -2811,7 +2811,7 @@ assert_type(i32 == f64l, np.bool)
 assert_type(i32 == c64, np.bool)
 assert_type(i32 == c128, np.bool)
 assert_type(i32 == c128l, np.bool)
-assert_type(i32 == m64, np.bool)
+assert_type(i32 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i64 == b_py, np.bool)
 assert_type(i64 == i_py, np.bool)
@@ -2833,7 +2833,7 @@ assert_type(i64 == f64l, np.bool)
 assert_type(i64 == c64, np.bool)
 assert_type(i64 == c128, np.bool)
 assert_type(i64 == c128l, np.bool)
-assert_type(i64 == m64, np.bool)
+assert_type(i64 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u8 == b_py, np.bool)
 assert_type(u8 == i_py, np.bool)
@@ -2855,7 +2855,7 @@ assert_type(u8 == f64l, np.bool)
 assert_type(u8 == c64, np.bool)
 assert_type(u8 == c128, np.bool)
 assert_type(u8 == c128l, np.bool)
-assert_type(u8 == m64, np.bool)
+assert_type(u8 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u16 == b_py, np.bool)
 assert_type(u16 == i_py, np.bool)
@@ -2877,7 +2877,7 @@ assert_type(u16 == f64l, np.bool)
 assert_type(u16 == c64, np.bool)
 assert_type(u16 == c128, np.bool)
 assert_type(u16 == c128l, np.bool)
-assert_type(u16 == m64, np.bool)
+assert_type(u16 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u32 == b_py, np.bool)
 assert_type(u32 == i_py, np.bool)
@@ -2899,7 +2899,7 @@ assert_type(u32 == f64l, np.bool)
 assert_type(u32 == c64, np.bool)
 assert_type(u32 == c128, np.bool)
 assert_type(u32 == c128l, np.bool)
-assert_type(u32 == m64, np.bool)
+assert_type(u32 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u64 == b_py, np.bool)
 assert_type(u64 == i_py, np.bool)
@@ -2921,6 +2921,7 @@ assert_type(u64 == f64l, np.bool)
 assert_type(u64 == c64, np.bool)
 assert_type(u64 == c128, np.bool)
 assert_type(u64 == c128l, np.bool)
+assert_type(u64 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f16 == b_py, np.bool)
 assert_type(f16 == i_py, np.bool)
@@ -2942,6 +2943,7 @@ assert_type(f16 == f64l, np.bool)
 assert_type(f16 == c64, np.bool)
 assert_type(f16 == c128, np.bool)
 assert_type(f16 == c128l, np.bool)
+assert_type(f16 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f32 == b_py, np.bool)
 assert_type(f32 == i_py, np.bool)
@@ -2963,6 +2965,7 @@ assert_type(f32 == f64l, np.bool)
 assert_type(f32 == c64, np.bool)
 assert_type(f32 == c128, np.bool)
 assert_type(f32 == c128l, np.bool)
+assert_type(f32 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f64 == b_py, np.bool)
 assert_type(f64 == i_py, np.bool)
@@ -2984,6 +2987,7 @@ assert_type(f64 == f64l, np.bool)
 assert_type(f64 == c64, np.bool)
 assert_type(f64 == c128, np.bool)
 assert_type(f64 == c128l, np.bool)
+assert_type(f64 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f64l == b_py, np.bool)
 assert_type(f64l == i_py, np.bool)
@@ -3005,6 +3009,7 @@ assert_type(f64l == f64l, np.bool)
 assert_type(f64l == c64, np.bool)
 assert_type(f64l == c128, np.bool)
 assert_type(f64l == c128l, np.bool)
+assert_type(f64l == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(c64 == b_py, np.bool)
 assert_type(c64 == i_py, np.bool)
@@ -3026,6 +3031,7 @@ assert_type(c64 == f64l, np.bool)
 assert_type(c64 == c64, np.bool)
 assert_type(c64 == c128, np.bool)
 assert_type(c64 == c128l, np.bool)
+assert_type(c64 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(c128 == b_py, np.bool)
 assert_type(c128 == i_py, np.bool)
@@ -3047,6 +3053,7 @@ assert_type(c128 == f64l, np.bool)
 assert_type(c128 == c64, np.bool)
 assert_type(c128 == c128, np.bool)
 assert_type(c128 == c128l, np.bool)
+assert_type(c128 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(c128l == b_py, np.bool)
 assert_type(c128l == i_py, np.bool)
@@ -3068,11 +3075,14 @@ assert_type(c128l == f64l, np.bool)
 assert_type(c128l == c64, np.bool)
 assert_type(c128l == c128, np.bool)
 assert_type(c128l == c128l, np.bool)
+assert_type(c128l == m64, np.bool)  # type: ignore[assert-type]
 
-assert_type(M64 == M64, np.bool)
+assert_type(M64 == M64, np.bool)  # type: ignore[assert-type]
 
 assert_type(m64 == b_py, np.bool)
 assert_type(m64 == i_py, np.bool)
+assert_type(m64 == f_py, np.bool)
+assert_type(m64 == c_py, np.bool)
 assert_type(m64 == b1, np.bool)
 assert_type(m64 == i8, np.bool)
 assert_type(m64 == i16, np.bool)
@@ -3081,7 +3091,15 @@ assert_type(m64 == i64, np.bool)
 assert_type(m64 == u8, np.bool)
 assert_type(m64 == u16, np.bool)
 assert_type(m64 == u32, np.bool)
-assert_type(m64 == m64, np.bool)
+assert_type(m64 == u64, np.bool)
+assert_type(m64 == f16, np.bool)
+assert_type(m64 == f32, np.bool)
+assert_type(m64 == f64, np.bool)
+assert_type(m64 == f64l, np.bool)
+assert_type(m64 == c64, np.bool)
+assert_type(m64 == c128, np.bool)
+assert_type(m64 == c128l, np.bool)
+assert_type(m64 == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i == b_py, np.bool)
 assert_type(i == i_py, np.bool)
@@ -3103,7 +3121,7 @@ assert_type(i == f64l, np.bool)
 assert_type(i == c64, np.bool)
 assert_type(i == c128, np.bool)
 assert_type(i == c128l, np.bool)
-assert_type(i == m64, np.bool)
+assert_type(i == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u == b_py, np.bool)
 assert_type(u == i_py, np.bool)
@@ -3125,7 +3143,7 @@ assert_type(u == f64l, np.bool)
 assert_type(u == c64, np.bool)
 assert_type(u == c128, np.bool)
 assert_type(u == c128l, np.bool)
-assert_type(u == m64, np.bool)
+assert_type(u == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f == b_py, np.bool)
 assert_type(f == i_py, np.bool)
@@ -3147,6 +3165,7 @@ assert_type(f == f64l, np.bool)
 assert_type(f == c64, np.bool)
 assert_type(f == c128, np.bool)
 assert_type(f == c128l, np.bool)
+assert_type(f == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(c == b_py, np.bool)
 assert_type(c == i_py, np.bool)
@@ -3168,6 +3187,7 @@ assert_type(c == f64l, np.bool)
 assert_type(c == c64, np.bool)
 assert_type(c == c128, np.bool)
 assert_type(c == c128l, np.bool)
+assert_type(c == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(iu == b_py, np.bool)
 assert_type(iu == i_py, np.bool)
@@ -3189,7 +3209,7 @@ assert_type(iu == f64l, np.bool)
 assert_type(iu == c64, np.bool)
 assert_type(iu == c128, np.bool)
 assert_type(iu == c128l, np.bool)
-assert_type(iu == m64, np.bool)
+assert_type(iu == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(fc == b_py, np.bool)
 assert_type(fc == i_py, np.bool)
@@ -3211,6 +3231,7 @@ assert_type(fc == f64l, np.bool)
 assert_type(fc == c64, np.bool)
 assert_type(fc == c128, np.bool)
 assert_type(fc == c128l, np.bool)
+assert_type(fc == m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(iufc == b_py, np.bool)
 assert_type(iufc == i_py, np.bool)
@@ -3232,7 +3253,7 @@ assert_type(iufc == f64l, np.bool)
 assert_type(iufc == c64, np.bool)
 assert_type(iufc == c128, np.bool)
 assert_type(iufc == c128l, np.bool)
-assert_type(iufc == m64, np.bool)
+assert_type(iufc == m64, np.bool)  # type: ignore[assert-type]
 
 ###
 # __[r]ne__
@@ -3257,7 +3278,7 @@ assert_type(b1 != f64l, np.bool)
 assert_type(b1 != c64, np.bool)
 assert_type(b1 != c128, np.bool)
 assert_type(b1 != c128l, np.bool)
-assert_type(b1 != m64, np.bool)
+assert_type(b1 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i8 != b_py, np.bool)
 assert_type(i8 != i_py, np.bool)
@@ -3279,7 +3300,7 @@ assert_type(i8 != f64l, np.bool)
 assert_type(i8 != c64, np.bool)
 assert_type(i8 != c128, np.bool)
 assert_type(i8 != c128l, np.bool)
-assert_type(i8 != m64, np.bool)
+assert_type(i8 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i16 != b_py, np.bool)
 assert_type(i16 != i_py, np.bool)
@@ -3301,7 +3322,7 @@ assert_type(i16 != f64l, np.bool)
 assert_type(i16 != c64, np.bool)
 assert_type(i16 != c128, np.bool)
 assert_type(i16 != c128l, np.bool)
-assert_type(i16 != m64, np.bool)
+assert_type(i16 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i32 != b_py, np.bool)
 assert_type(i32 != i_py, np.bool)
@@ -3323,7 +3344,7 @@ assert_type(i32 != f64l, np.bool)
 assert_type(i32 != c64, np.bool)
 assert_type(i32 != c128, np.bool)
 assert_type(i32 != c128l, np.bool)
-assert_type(i32 != m64, np.bool)
+assert_type(i32 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i64 != b_py, np.bool)
 assert_type(i64 != i_py, np.bool)
@@ -3345,7 +3366,7 @@ assert_type(i64 != f64l, np.bool)
 assert_type(i64 != c64, np.bool)
 assert_type(i64 != c128, np.bool)
 assert_type(i64 != c128l, np.bool)
-assert_type(i64 != m64, np.bool)
+assert_type(i64 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u8 != b_py, np.bool)
 assert_type(u8 != i_py, np.bool)
@@ -3367,7 +3388,7 @@ assert_type(u8 != f64l, np.bool)
 assert_type(u8 != c64, np.bool)
 assert_type(u8 != c128, np.bool)
 assert_type(u8 != c128l, np.bool)
-assert_type(u8 != m64, np.bool)
+assert_type(u8 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u16 != b_py, np.bool)
 assert_type(u16 != i_py, np.bool)
@@ -3389,7 +3410,7 @@ assert_type(u16 != f64l, np.bool)
 assert_type(u16 != c64, np.bool)
 assert_type(u16 != c128, np.bool)
 assert_type(u16 != c128l, np.bool)
-assert_type(u16 != m64, np.bool)
+assert_type(u16 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u32 != b_py, np.bool)
 assert_type(u32 != i_py, np.bool)
@@ -3411,7 +3432,7 @@ assert_type(u32 != f64l, np.bool)
 assert_type(u32 != c64, np.bool)
 assert_type(u32 != c128, np.bool)
 assert_type(u32 != c128l, np.bool)
-assert_type(u32 != m64, np.bool)
+assert_type(u32 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u64 != b_py, np.bool)
 assert_type(u64 != i_py, np.bool)
@@ -3433,6 +3454,7 @@ assert_type(u64 != f64l, np.bool)
 assert_type(u64 != c64, np.bool)
 assert_type(u64 != c128, np.bool)
 assert_type(u64 != c128l, np.bool)
+assert_type(u64 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f16 != b_py, np.bool)
 assert_type(f16 != i_py, np.bool)
@@ -3454,6 +3476,7 @@ assert_type(f16 != f64l, np.bool)
 assert_type(f16 != c64, np.bool)
 assert_type(f16 != c128, np.bool)
 assert_type(f16 != c128l, np.bool)
+assert_type(f16 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f32 != b_py, np.bool)
 assert_type(f32 != i_py, np.bool)
@@ -3475,6 +3498,7 @@ assert_type(f32 != f64l, np.bool)
 assert_type(f32 != c64, np.bool)
 assert_type(f32 != c128, np.bool)
 assert_type(f32 != c128l, np.bool)
+assert_type(f32 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f64 != b_py, np.bool)
 assert_type(f64 != i_py, np.bool)
@@ -3496,6 +3520,7 @@ assert_type(f64 != f64l, np.bool)
 assert_type(f64 != c64, np.bool)
 assert_type(f64 != c128, np.bool)
 assert_type(f64 != c128l, np.bool)
+assert_type(f64 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f64l != b_py, np.bool)
 assert_type(f64l != i_py, np.bool)
@@ -3517,6 +3542,7 @@ assert_type(f64l != f64l, np.bool)
 assert_type(f64l != c64, np.bool)
 assert_type(f64l != c128, np.bool)
 assert_type(f64l != c128l, np.bool)
+assert_type(f64l != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(c64 != b_py, np.bool)
 assert_type(c64 != i_py, np.bool)
@@ -3538,6 +3564,7 @@ assert_type(c64 != f64l, np.bool)
 assert_type(c64 != c64, np.bool)
 assert_type(c64 != c128, np.bool)
 assert_type(c64 != c128l, np.bool)
+assert_type(c64 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(c128 != b_py, np.bool)
 assert_type(c128 != i_py, np.bool)
@@ -3559,6 +3586,7 @@ assert_type(c128 != f64l, np.bool)
 assert_type(c128 != c64, np.bool)
 assert_type(c128 != c128, np.bool)
 assert_type(c128 != c128l, np.bool)
+assert_type(c128 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(c128l != b_py, np.bool)
 assert_type(c128l != i_py, np.bool)
@@ -3580,11 +3608,14 @@ assert_type(c128l != f64l, np.bool)
 assert_type(c128l != c64, np.bool)
 assert_type(c128l != c128, np.bool)
 assert_type(c128l != c128l, np.bool)
+assert_type(c128l != m64, np.bool)  # type: ignore[assert-type]
 
-assert_type(M64 != M64, np.bool)
+assert_type(M64 != M64, np.bool)  # type: ignore[assert-type]
 
 assert_type(m64 != b_py, np.bool)
 assert_type(m64 != i_py, np.bool)
+assert_type(m64 != f_py, np.bool)
+assert_type(m64 != c_py, np.bool)
 assert_type(m64 != b1, np.bool)
 assert_type(m64 != i8, np.bool)
 assert_type(m64 != i16, np.bool)
@@ -3593,7 +3624,15 @@ assert_type(m64 != i64, np.bool)
 assert_type(m64 != u8, np.bool)
 assert_type(m64 != u16, np.bool)
 assert_type(m64 != u32, np.bool)
-assert_type(m64 != m64, np.bool)
+assert_type(m64 != u64, np.bool)
+assert_type(m64 != f16, np.bool)
+assert_type(m64 != f32, np.bool)
+assert_type(m64 != f64, np.bool)
+assert_type(m64 != f64l, np.bool)
+assert_type(m64 != c64, np.bool)
+assert_type(m64 != c128, np.bool)
+assert_type(m64 != c128l, np.bool)
+assert_type(m64 != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(i != b_py, np.bool)
 assert_type(i != i_py, np.bool)
@@ -3615,7 +3654,7 @@ assert_type(i != f64l, np.bool)
 assert_type(i != c64, np.bool)
 assert_type(i != c128, np.bool)
 assert_type(i != c128l, np.bool)
-assert_type(i != m64, np.bool)
+assert_type(i != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(u != b_py, np.bool)
 assert_type(u != i_py, np.bool)
@@ -3637,7 +3676,7 @@ assert_type(u != f64l, np.bool)
 assert_type(u != c64, np.bool)
 assert_type(u != c128, np.bool)
 assert_type(u != c128l, np.bool)
-assert_type(u != m64, np.bool)
+assert_type(u != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(f != b_py, np.bool)
 assert_type(f != i_py, np.bool)
@@ -3659,6 +3698,7 @@ assert_type(f != f64l, np.bool)
 assert_type(f != c64, np.bool)
 assert_type(f != c128, np.bool)
 assert_type(f != c128l, np.bool)
+assert_type(f != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(c != b_py, np.bool)
 assert_type(c != i_py, np.bool)
@@ -3680,6 +3720,7 @@ assert_type(c != f64l, np.bool)
 assert_type(c != c64, np.bool)
 assert_type(c != c128, np.bool)
 assert_type(c != c128l, np.bool)
+assert_type(c != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(iu != b_py, np.bool)
 assert_type(iu != i_py, np.bool)
@@ -3701,7 +3742,7 @@ assert_type(iu != f64l, np.bool)
 assert_type(iu != c64, np.bool)
 assert_type(iu != c128, np.bool)
 assert_type(iu != c128l, np.bool)
-assert_type(iu != m64, np.bool)
+assert_type(iu != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(fc != b_py, np.bool)
 assert_type(fc != i_py, np.bool)
@@ -3723,6 +3764,7 @@ assert_type(fc != f64l, np.bool)
 assert_type(fc != c64, np.bool)
 assert_type(fc != c128, np.bool)
 assert_type(fc != c128l, np.bool)
+assert_type(fc != m64, np.bool)  # type: ignore[assert-type]
 
 assert_type(iufc != b_py, np.bool)
 assert_type(iufc != i_py, np.bool)
@@ -3744,4 +3786,4 @@ assert_type(iufc != f64l, np.bool)
 assert_type(iufc != c64, np.bool)
 assert_type(iufc != c128, np.bool)
 assert_type(iufc != c128l, np.bool)
-assert_type(iufc != m64, np.bool)
+assert_type(iufc != m64, np.bool)  # type: ignore[assert-type]
