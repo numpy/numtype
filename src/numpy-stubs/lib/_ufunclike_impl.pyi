@@ -1,5 +1,5 @@
 from typing import overload
-from typing_extensions import TypeVar
+from typing_extensions import TypeVar, deprecated
 
 import _numtype as _nt
 import numpy as np
@@ -16,30 +16,43 @@ _RealT = TypeVar("_RealT", bound=np.integer | np.floating | np.object_)
 
 #
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.Array[_RealT, _ShapeT], out: None = None) -> _nt.Array[_RealT, _ShapeT]: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.ToBool_0d, out: None = None) -> np.bool: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.ToInt_0d, out: None = None) -> np.intp: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.ToFloat64_0d, out: None = None) -> np.float64: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.CanArray0D[_RealT], out: None = None) -> _RealT: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.ToBool_1nd, out: None = None) -> _nt.Array[np.bool]: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.ToInt_1nd, out: None = None) -> _nt.Array[np.intp]: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.ToFloat64_1nd, out: None = None) -> _nt.Array[np.float64]: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt._ToArray_1ds[_RealT], out: None = None) -> _nt.Array1D[_RealT]: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt._ToArray_2ds[_RealT], out: None = None) -> _nt.Array2D[_RealT]: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt._ToArray_3ds[_RealT], out: None = None) -> _nt.Array3D[_RealT]: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt._ToArray_1nd[_RealT], out: None = None) -> _nt.Array[_RealT]: ...
 @overload
+@deprecated("np.fix will be deprecated in NumPy 2.5 in favor of np.trunc", category=PendingDeprecationWarning)
 def fix(x: _nt.CoFloating_nd, out: _ArrayT) -> _ArrayT: ...
 
 #

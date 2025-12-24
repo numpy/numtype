@@ -11,11 +11,11 @@ AR_LIKE_f: list[float]
 
 ###
 
-assert_type(np.fix(AR_u4), _nt.Array[np.uint32])
-assert_type(np.fix(AR_LIKE_b), _nt.Array[np.bool])
-assert_type(np.fix(AR_LIKE_i), _nt.Array[np.intp])
-assert_type(np.fix(AR_LIKE_f), _nt.Array[np.float64])
-assert_type(np.fix(AR_LIKE_f, out=AR_U), _nt.Array[np.str_])
+assert_type(np.fix(AR_u4), _nt.Array[np.uint32])  # pyright: ignore[reportDeprecated]
+assert_type(np.fix(AR_LIKE_b), _nt.Array[np.bool])  # pyright: ignore[reportDeprecated]
+assert_type(np.fix(AR_LIKE_i), _nt.Array[np.intp])  # pyright: ignore[reportDeprecated]
+assert_type(np.fix(AR_LIKE_f), _nt.Array[np.float64])  # pyright: ignore[reportDeprecated]
+assert_type(np.fix(AR_LIKE_f, out=AR_U), _nt.Array[np.str_])  # pyright: ignore[reportDeprecated]
 
 assert_type(np.isposinf(AR_u4), _nt.Array[np.bool])
 assert_type(np.isposinf(AR_LIKE_b), _nt.Array1D[np.bool])
