@@ -27,7 +27,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import Buffer, CapsuleType, Protocol, TypeVar, override
+from typing_extensions import Buffer, CapsuleType, Protocol, TypeVar, deprecated, override
 
 import _numtype as _nt
 
@@ -1724,6 +1724,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @property
     def strides(self) -> tuple[int, ...]: ...
     @strides.setter
+    @deprecated("Setting the strides on a NumPy array has been deprecated in NumPy 2.4")
     def strides(self, value: tuple[int, ...], /) -> None: ...
 
     #
