@@ -2,7 +2,7 @@ import numpy as np
 
 m: np.ma.MaskedArray[tuple[int], np.dtype[np.float64]]
 
-m.shape = (3, 1)  # type: ignore[arg-type, assignment]
+m.shape = (3, 1)  # type: ignore[arg-type, assignment]  # pyright: ignore[reportDeprecated]
 m.dtype = np.bool  # type: ignore[assignment, misc]  # pyright: ignore[reportAttributeAccessIssue]
 
 np.amin(m, axis=1.0)  # type: ignore[call-overload] # pyright: ignore[reportArgumentType, reportCallIssue]
