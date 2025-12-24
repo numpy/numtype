@@ -14,7 +14,7 @@ _ScalarT_co = TypeVar("_ScalarT_co", bound=np.generic, covariant=True)
 _DTypeT = TypeVar("_DTypeT", bound=np.dtype)
 _DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, covariant=True)
 
-NDArray: TypeAlias = np.ndarray[_nt.Shape, np.dtype[_ScalarT_co]]
+NDArray: TypeAlias = np.ndarray[_nt.AnyShape, np.dtype[_ScalarT_co]]
 
 # The `_SupportsArray` protocol only cares about the default dtype
 # (i.e. `dtype=None` or no `dtype` parameter at all) of the to-be returned
