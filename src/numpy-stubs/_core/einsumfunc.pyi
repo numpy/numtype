@@ -27,7 +27,7 @@ _ArrayT = TypeVar("_ArrayT", bound=_nt.Array[_nt.co_complex])
 
 # TODO (@jorenham): Annotate the `Sequence` value (numpy/numtype#724)
 _OptimizeKind: TypeAlias = bool | Literal["greedy", "optimal"] | Sequence[str | tuple[int, ...]]
-_CastingSafe: TypeAlias = Literal["no", "equiv", "safe", "same_kind"]
+_CastingSafe: TypeAlias = Literal["no", "equiv", "safe", "same_kind", "same_value"]
 _CastingUnsafe: TypeAlias = Literal["unsafe"]
 
 # TODO: Properly handle the `casting`-based combinatorics
