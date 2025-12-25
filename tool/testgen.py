@@ -1048,7 +1048,7 @@ class ScalarOps(TestGen):
 
         return f"tuple[{', '.join(result_exprs)}]" if nout > 1 else result_exprs[0]
 
-    def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
+    def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:  # noqa: C901
         # ugly workaround for microsoft/pyright#9896 and microsoft/pyright#10899
         if (
             op.startswith("divmod")
@@ -1113,6 +1113,10 @@ class ScalarOps(TestGen):
             # workaround a mypy bug related to the datetime64/timedelta64[Any] defaults
             if rhs == "M" or (rhs == "m" and ("==" in op or "!=" in op)):
                 result += "  # type: ignore[assert-type]"
+
+        # yet another mypy workaround
+        if op.startswith("divmod") and lhs == rhs == "m":
+            result += "  # type: ignore[assert-type]"
 
         return result
 
