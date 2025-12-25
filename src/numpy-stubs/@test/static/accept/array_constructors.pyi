@@ -106,7 +106,8 @@ assert_type(np.arange(10.0), _nt.Array1D[np.float64 | Any])
 assert_type(np.arange(0, stop=10.0), _nt.Array1D[np.float64 | Any])
 assert_type(np.arange(np.timedelta64(0)), _nt.Array1D[np.timedelta64[Any]])
 assert_type(np.arange(0, np.timedelta64(10)), _nt.Array1D[np.timedelta64[Any]])
-assert_type(np.arange(np.datetime64("0"), np.datetime64("10")), _nt.Array1D[np.datetime64[Any]])
+# mypy incorrectly infers this as "ndarray[Any, Any]" but pyright behaves correctly
+assert_type(np.arange(np.datetime64("0"), np.datetime64("10")), _nt.Array1D[np.datetime64[Any]])  # type: ignore[assert-type]
 assert_type(np.arange(10, dtype=np.float64), _nt.Array1D[np.float64 | Any])
 assert_type(np.arange(0, 10, step=2, dtype=np.int16), _nt.Array1D[np.int16])
 assert_type(np.arange(10, dtype=int), _nt.Array1D[np.int_])

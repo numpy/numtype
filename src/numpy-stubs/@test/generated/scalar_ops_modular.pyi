@@ -1,4 +1,4 @@
-# @generated 2025-09-17T13:49:06Z with tool/testgen.py
+# @generated 2025-12-25T10:48:48Z with tool/testgen.py
 from typing import assert_type
 
 import numpy as np
@@ -1628,7 +1628,7 @@ divmod(m64, f32)  # type: ignore[operator]  # pyright: ignore[reportArgumentType
 divmod(m64, f64)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(m64, f64l)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(m64, c128)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
-assert_type(m64.__divmod__(m64), tuple[np.int64, np.timedelta64])
+assert_type(m64.__divmod__(m64), tuple[np.int64, np.timedelta64])  # type: ignore[assert-type]
 divmod(m64, i)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(m64, u)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]
 divmod(m64, f)  # type: ignore[operator]  # pyright: ignore[reportArgumentType, reportCallIssue]

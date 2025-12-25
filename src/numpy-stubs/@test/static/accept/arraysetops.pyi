@@ -15,7 +15,8 @@ AR_LIKE_i_: list[int]
 
 assert_type(np.intersect1d(AR_i_, AR_i_), _nt.Array1D[np.intp])
 assert_type(np.intersect1d(AR_f8, AR_i_), _nt.Array1D[np.float64])
-assert_type(np.intersect1d(AR_M, AR_M, assume_unique=True), _nt.Array1D[np.datetime64])
+# mypy incorrectly infers this as "ndarray[Any, Any]" but pyright behaves correctly
+assert_type(np.intersect1d(AR_M, AR_M, assume_unique=True), _nt.Array1D[np.datetime64])  # type: ignore[assert-type]
 assert_type(
     np.intersect1d(AR_f8, AR_f8, return_indices=True),
     tuple[_nt.Array1D[np.float64], _nt.Array1D[np.intp], _nt.Array1D[np.intp]],
@@ -23,7 +24,8 @@ assert_type(
 
 assert_type(np.union1d(AR_i_, AR_i_), _nt.Array1D[np.intp])
 assert_type(np.union1d(AR_f8, AR_i_), _nt.Array1D[np.float64])
-assert_type(np.union1d(AR_M, AR_M), _nt.Array1D[np.datetime64])
+# mypy incorrectly infers this as "ndarray[Any, Any]" but pyright behaves correctly
+assert_type(np.union1d(AR_M, AR_M), _nt.Array1D[np.datetime64])  # type: ignore[assert-type]
 
 assert_type(np.ediff1d(AR_b), _nt.Array1D[np.int8])
 assert_type(np.ediff1d(AR_M), _nt.Array1D[np.timedelta64])
@@ -33,11 +35,13 @@ assert_type(np.ediff1d(AR_LIKE_i_, to_begin=[0, 1]), _nt.Array1D[np.intp])
 
 assert_type(np.setxor1d(AR_i_, AR_i_), _nt.Array1D[np.intp])
 assert_type(np.setxor1d(AR_f8, AR_i_), _nt.Array1D[np.float64])
-assert_type(np.setxor1d(AR_M, AR_M, assume_unique=True), _nt.Array1D[np.datetime64])
+# mypy incorrectly infers this as "ndarray[Any, Any]" but pyright behaves correctly
+assert_type(np.setxor1d(AR_M, AR_M, assume_unique=True), _nt.Array1D[np.datetime64])  # type: ignore[assert-type]
 
 assert_type(np.setdiff1d(AR_i_, AR_i_), _nt.Array1D[np.intp])
 assert_type(np.setdiff1d(AR_f8, AR_i_), _nt.Array1D[np.float64])
-assert_type(np.setdiff1d(AR_M, AR_M, assume_unique=True), _nt.Array1D[np.datetime64])
+# mypy incorrectly infers this as "ndarray[Any, Any]" but pyright behaves correctly
+assert_type(np.setdiff1d(AR_M, AR_M, assume_unique=True), _nt.Array1D[np.datetime64])  # type: ignore[assert-type]
 
 assert_type(np.isin(AR_i_, AR_i_), _nt.Array[np.bool])
 assert_type(np.isin(AR_f8, AR_i_), _nt.Array[np.bool])

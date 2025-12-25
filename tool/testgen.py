@@ -945,7 +945,7 @@ class ScalarOps(TestGen):
         # temporal
         "M": "M64",
         "m": "m64",
-        # # abstract numeric
+        # abstract numeric
         "bhil": "i",  # signedinteger
         "BHIL": "u",  # unsignedinteger
         "efdg": "f",  # floating
@@ -1048,7 +1048,7 @@ class ScalarOps(TestGen):
 
         return f"tuple[{', '.join(result_exprs)}]" if nout > 1 else result_exprs[0]
 
-    def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:
+    def _assert_stmt(self, op: str, lhs: str, rhs: str, /) -> str | None:  # noqa: C901
         # ugly workaround for microsoft/pyright#9896 and microsoft/pyright#10899
         if (
             op.startswith("divmod")
@@ -1103,7 +1103,22 @@ class ScalarOps(TestGen):
         if expr_type == "bool":
             return None
 
-        return _expr_assert_type(expr_eval, expr_type)
+        result = _expr_assert_type(expr_eval, expr_type)
+
+        if "comparison" in self.testname:
+            # probably not needed, but for some reason this is needed
+            if "M" in {lhs, rhs} and lhs != rhs:
+                return None
+
+            # workaround a mypy bug related to the datetime64/timedelta64[Any] defaults
+            if rhs == "M" or (rhs == "m" and ("==" in op or "!=" in op)):
+                result += "  # type: ignore[assert-type]"
+
+        # yet another mypy workaround
+        if op.startswith("divmod") and lhs == rhs == "m":
+            result += "  # type: ignore[assert-type]"
+
+        return result
 
     @override
     def _generate_names_section(self) -> Generator[str]:

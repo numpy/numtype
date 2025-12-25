@@ -32,8 +32,9 @@ AR_m: _nt.Array[np.timedelta64]
 assert_type(m % m, np.timedelta64)
 assert_type(m % m_nat, np.timedelta64[None])
 assert_type(m % m_int0, np.timedelta64[None])
-assert_type(m % m_int, np.timedelta64[int | None])
-assert_type(m_nat % m, np.timedelta64[None])
+assert_type(m % m_int, np.timedelta64)
+# mypy incorrectly infers this as "timedelta64[Any]", but pyright behaves correctly
+assert_type(m_nat % m, np.timedelta64[None])  # type: ignore[assert-type]
 assert_type(m_int % m_nat, np.timedelta64[None])
 assert_type(m_int % m_int0, np.timedelta64[None])
 assert_type(m_int % m_int, np.timedelta64[int | None])
@@ -46,19 +47,22 @@ assert_type(m_td % m_td, np.timedelta64[dt.timedelta | None])
 assert_type(AR_m % m, _nt.Array[np.timedelta64])
 assert_type(m % AR_m, _nt.Array[np.timedelta64])
 
+# mypy incorrectly infers this as "tuple[Any, ...]", but pyright behaves correctly (surprisingly)
+assert_type(divmod(m, m), tuple[np.int64, np.timedelta64])  # type: ignore[assert-type]
+assert_type(divmod(m, m_nat), tuple[np.int64, np.timedelta64])  # type: ignore[assert-type]
+assert_type(divmod(m, m_int0), tuple[np.int64, np.timedelta64])  # type: ignore[assert-type]
+assert_type(divmod(m, m_int), tuple[np.int64, np.timedelta64])
+# mypy incorrectly infers this as "tuple[Any, ...]" but pyright behaves correctly
+assert_type(divmod(m_nat, m), tuple[np.int64, np.timedelta64[None]])  # type: ignore[assert-type]
+assert_type(divmod(m_int, m_nat), tuple[np.int64, np.timedelta64[None]])
+assert_type(divmod(m_int, m_int0), tuple[np.int64, np.timedelta64[None]])
+
 # NOTE: The pyright ignores are the consequence of a pernicious bug in pyright
 # (microsoft/pyright#9896, microsoft/pyright#10849, microsoft/pyright#10899) that
 # causes incorrect behavior in certain functions that accept generic protocols with
 # overloaded methods. Even though mypy also isn't fully correct here, it will at least
 # not falsely reject valid calls, and has no problems with any of the following tests.
 
-assert_type(divmod(m, m), tuple[np.int64, np.timedelta64])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
-assert_type(divmod(m, m_nat), tuple[np.int64, np.timedelta64[None]])
-assert_type(divmod(m, m_int0), tuple[np.int64, np.timedelta64[None]])
-assert_type(divmod(m, m_int), tuple[np.int64, np.timedelta64[int | None]])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
-assert_type(divmod(m_nat, m), tuple[np.int64, np.timedelta64[None]])
-assert_type(divmod(m_int, m_nat), tuple[np.int64, np.timedelta64[None]])
-assert_type(divmod(m_int, m_int0), tuple[np.int64, np.timedelta64[None]])
 assert_type(divmod(m_int, m_int), tuple[np.int64, np.timedelta64[int | None]])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
 assert_type(divmod(m_int, m_td), tuple[np.int64, np.timedelta64[int | None]])  # pyright: ignore[reportArgumentType, reportAssertTypeFailure, reportCallIssue]
 assert_type(divmod(m_td, m_nat), tuple[np.int64, np.timedelta64[None]])

@@ -45,7 +45,8 @@ assert_type(i8 > [decimal.Decimal("1.5")], BoolND)
 ###
 # Time structures
 
-assert_type(dt > dt, np.bool)
+# mypy incorrectly infers this as "Any" but pyright behaves correctly
+assert_type(dt > dt, np.bool)  # type: ignore[assert-type]
 
 assert_type(td > td, np.bool)
 assert_type(td > i, np.bool)

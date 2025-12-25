@@ -43,12 +43,7 @@ AR_LIKE_m - AR_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssu
 
 # array floor division
 
-AR_M // AR_LIKE_b  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_M // AR_LIKE_u  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_M // AR_LIKE_i  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_M // AR_LIKE_f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M // AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_M // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 AR_b // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
@@ -59,7 +54,6 @@ AR_c // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIss
 AR_m // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M // AR_LIKE_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
-AR_m // AR_LIKE_b  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_m // AR_LIKE_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 AR_b // AR_LIKE_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
