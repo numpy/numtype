@@ -628,8 +628,9 @@ _NumericArrayT = TypeVar("_NumericArrayT", bound=_nt.Array[number | timedelta64 
 
 _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ShapeT2 = TypeVar("_ShapeT2", bound=_nt.Shape)
-# TODO(jorenham): use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, covariant=True)
+# TODO(jorenham): use `Shape` instead of `AnyShape` as bound once python/mypy#19110 is fixed
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.AnyShape, covariant=True)
+_ShapeT0_co = TypeVar("_ShapeT0_co", bound=_nt.AnyShape, covariant=True)
 _Shape1NDT = TypeVar("_Shape1NDT", bound=_nt.Shape1N)
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
@@ -884,9 +885,9 @@ class _CanItem(Protocol[_T_co]):
     def item(self, /) -> _T_co: ...
 
 @type_check_only
-class _HasShapeAndItem(Protocol[_ShapeT_co, _T_co]):
+class _HasShapeAndItem(Protocol[_ShapeT0_co, _T_co]):
     @property
-    def __inner_shape__(self, /) -> _ShapeT_co: ...
+    def __inner_shape__(self, /) -> _ShapeT0_co: ...
     def item(self, /) -> _T_co: ...
 
 @type_check_only
@@ -895,9 +896,9 @@ class _HasDType(Protocol[_T_co]):
     def dtype(self, /) -> _T_co: ...
 
 @type_check_only
-class _HasShapeAndDType(Protocol[_ShapeT_co, _T_co]):
+class _HasShapeAndDType(Protocol[_ShapeT0_co, _T_co]):
     @property
-    def __inner_shape__(self, /) -> _ShapeT_co: ...
+    def __inner_shape__(self, /) -> _ShapeT0_co: ...
     @property
     def dtype(self, /) -> _T_co: ...
 
