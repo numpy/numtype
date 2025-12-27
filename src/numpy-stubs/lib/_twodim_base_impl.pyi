@@ -30,6 +30,7 @@ _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ComplexT = TypeVar("_ComplexT", bound=np.complexfloating)
 _InexactT = TypeVar("_InexactT", bound=np.inexact)
 _CoComplexT = TypeVar("_CoComplexT", bound=_nt.co_complex)
+_ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
 
 # The returned arrays dtype must be compatible with `np.equal`
 _Device: TypeAlias = L["cpu"]
@@ -44,11 +45,15 @@ _Histogram2D: TypeAlias = tuple[_nt.Array2D[np.float64], _nt.Array1D[_ScalarT], 
 ###
 
 @overload
+def fliplr(m: _ArrayT) -> _ArrayT: ...
+@overload
 def fliplr(m: _nt._ToArray_nd[_ScalarT]) -> _nt.Array[_ScalarT]: ...
 @overload
 def fliplr(m: _nt.ToGeneric_nd) -> _nt.Array: ...
 
 #
+@overload
+def flipud(m: _ArrayT) -> _ArrayT: ...
 @overload
 def flipud(m: _nt._ToArray_nd[_ScalarT]) -> _nt.Array[_ScalarT]: ...
 @overload
