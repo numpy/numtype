@@ -38,8 +38,8 @@ _MaskFunc: TypeAlias = Callable[
 ]
 
 _Sequence01D: TypeAlias = _T | Sequence[_T]
-_Indices2D: TypeAlias = tuple[_nt.Array[np.intp], _nt.Array[np.intp]]
-_Histogram2D: TypeAlias = tuple[_nt.Array[np.float64], _nt.Array[_ScalarT], _nt.Array[_ScalarT]]
+_Indices2D: TypeAlias = tuple[_nt.Array1D[np.intp], _nt.Array1D[np.intp]]
+_Histogram2D: TypeAlias = tuple[_nt.Array2D[np.float64], _nt.Array1D[_ScalarT], _nt.Array1D[_ScalarT]]
 
 ###
 
