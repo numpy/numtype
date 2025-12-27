@@ -3532,7 +3532,7 @@ class bool_(generic[_BoolItemT_co], Generic[_BoolItemT_co]):
 
     #
     @type_check_only
-    def __nep50__(self, below: _nt.co_number | timedelta64, above: Never, /) -> bool_: ...
+    def __nep50__(self, into: _nt.co_number | timedelta64, from_: Never, /) -> bool_: ...
     @type_check_only
     def __nep50_builtin__(self, /) -> tuple[py_bool, bool_]: ...
     @type_check_only
@@ -4105,7 +4105,7 @@ class number(_CmpOpMixin[_nt.CoComplex_0d, _nt.CoComplex_1nd], generic[_NumberIt
 class integer(_IntegralMixin, _RoundMixin, number[int]):
     @type_check_only
     def __nep50__(
-        self, below: timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: bool_, /
+        self, into: timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, from_: bool_, /
     ) -> integer: ...
     @final
     @override
@@ -4255,7 +4255,7 @@ class signedinteger(integer):
     @type_check_only
     @override
     def __nep50__(
-        self, below: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: bool_, /
+        self, into: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, from_: bool_, /
     ) -> signedinteger: ...
     @type_check_only
     def __nep50_rule0__(self, other: uint32, /) -> int64: ...
@@ -4279,9 +4279,7 @@ class int8(_IntMixin[L[1]], signedinteger):
     #
     @override
     @type_check_only
-    def __nep50__(
-        self, below: signedinteger | timedelta64 | inexact | _JustFloating | _JustInexact, above: bool_, /
-    ) -> int8: ...
+    def __nep50__(self, into: signedinteger | timedelta64 | inexact | _JustFloating, from_: bool_, /) -> int8: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @type_check_only
     def __nep50_rule2__(self, other: uint8, /) -> int16: ...
     @type_check_only
@@ -4307,8 +4305,8 @@ class int16(_IntMixin[L[2]], signedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: _I16_min | timedelta64 | _F32_min | _JustFloating | complexfloating | _JustInexact,
-        above: _nt.co_integer8,
+        into: _I16_min | timedelta64 | _F32_min | _JustFloating | complexfloating | _JustInexact,
+        from_: _nt.co_integer8,
         /,
     ) -> int16: ...
     @type_check_only
@@ -4335,7 +4333,7 @@ class int32(_IntMixin[L[4]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self, below: _I32_min | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: _nt.co_integer16, /
+        self, into: _I32_min | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, from_: _nt.co_integer16, /
     ) -> int32: ...
     @override
     @type_check_only
@@ -4364,7 +4362,7 @@ class int64(_IntMixin[L[8]], signedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self, below: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: _nt.co_integer32, /
+        self, into: int64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, from_: _nt.co_integer32, /
     ) -> int64: ...
     @override
     @type_check_only
@@ -4399,7 +4397,7 @@ class unsignedinteger(integer):
     @type_check_only
     @override
     def __nep50__(
-        self, below: uint64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, above: bool_, /
+        self, into: uint64 | timedelta64 | _Inexact64_min | _JustFloating | _JustInexact, from_: bool_, /
     ) -> unsignedinteger: ...
     @type_check_only
     def __nep50_rule3__(self, other: _JustUnsignedInteger, /) -> unsignedinteger: ...
@@ -4415,8 +4413,8 @@ class uint8(_IntMixin[L[1]], unsignedinteger):
     #
     @override
     @type_check_only
-    def __nep50__(
-        self, below: _I16_min | unsignedinteger | timedelta64 | _JustFloating | inexact | _JustInexact, above: bool_, /
+    def __nep50__(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, into: _I16_min | unsignedinteger | timedelta64 | _JustFloating | inexact, from_: bool_, /
     ) -> uint8: ...
     @type_check_only
     def __nep50_rule0__(self, other: int8, /) -> int16: ...
@@ -4447,8 +4445,8 @@ class uint16(_IntMixin[L[2]], unsignedinteger):
     @type_check_only
     def __nep50__(
         self,
-        below: uint16 | _Integer32_min | timedelta64 | _F32_min | _JustFloating | complexfloating | _JustInexact,
-        above: _nt.co_uint8,
+        into: uint16 | _Integer32_min | timedelta64 | _F32_min | _JustFloating | complexfloating | _JustInexact,
+        from_: _nt.co_uint8,
         /,
     ) -> uint16: ...
     @type_check_only
@@ -4481,7 +4479,7 @@ class uint32(_IntMixin[L[4]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self, below: uint32 | _nt.integer64 | timedelta64 | _Inexact64_min | _AbstractInexact, above: _nt.co_uint16, /
+        self, into: uint32 | _nt.integer64 | timedelta64 | _Inexact64_min | _AbstractInexact, from_: _nt.co_uint16, /
     ) -> uint32: ...
     @type_check_only
     def __nep50_rule1__(self, other: float16 | float32, /) -> float64: ...
@@ -4513,7 +4511,7 @@ class uint64(_IntMixin[L[8]], unsignedinteger):
     @override
     @type_check_only
     def __nep50__(
-        self, below: uint64 | timedelta64 | _Inexact64_min | _AbstractInexact, above: _nt.co_uint32, /
+        self, into: uint64 | timedelta64 | _Inexact64_min | _AbstractInexact, from_: _nt.co_uint32, /
     ) -> uint64: ...
     @type_check_only
     def __nep50_rule2__(self, other: complex64, /) -> complex128: ...
@@ -4544,7 +4542,7 @@ uint = uintp
 
 class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
     @type_check_only
-    def __nep50__(self, below: clongdouble, above: _nt.co_integer8, /) -> inexact: ...
+    def __nep50__(self, into: clongdouble, from_: _nt.co_integer8, /) -> inexact: ...
     @final
     @override
     @type_check_only
@@ -4582,7 +4580,7 @@ class inexact(number[_InexactItemT_co], Generic[_InexactItemT_co]):
 class floating(_RealMixin, _RoundMixin, inexact[float]):
     @override
     @type_check_only
-    def __nep50__(self, below: _nt.inexact64l, above: _nt.co_integer8, /) -> floating: ...
+    def __nep50__(self, into: _nt.inexact64l, from_: _nt.co_integer8, /) -> floating: ...
     @override
     @type_check_only
     def __nep50_rule3__(self, other: _JustFloating, /) -> floating: ...
@@ -4633,7 +4631,7 @@ class float16(_FloatMixin[L[2]], floating):
     #
     @override
     @type_check_only
-    def __nep50__(self, below: inexact, above: _nt.co_integer8, /) -> float16: ...
+    def __nep50__(self, into: inexact, from_: _nt.co_integer8, /) -> float16: ...
     @override
     @type_check_only
     def __nep50_complex__(self, /) -> complex64: ...
@@ -4662,7 +4660,7 @@ class float32(_FloatMixin[L[4]], floating):
     #
     @override
     @type_check_only
-    def __nep50__(self, below: _F32_min | complexfloating, above: float16 | _nt.co_integer16, /) -> float32: ...
+    def __nep50__(self, into: _F32_min | complexfloating, from_: float16 | _nt.co_integer16, /) -> float32: ...
     @override
     @type_check_only
     def __nep50_complex__(self, /) -> complex64: ...
@@ -4689,7 +4687,7 @@ class float64(_FloatMixin[L[8]], floating, float):  # type: ignore[misc]
     #
     @override
     @type_check_only
-    def __nep50__(self, below: _Inexact64_min, above: _F32_max | _nt.co_integer, /) -> float64: ...
+    def __nep50__(self, into: _Inexact64_min, from_: _F32_max | _nt.co_integer, /) -> float64: ...
     @override
     @type_check_only
     def __nep50_complex__(self, /) -> complex128: ...
@@ -4730,7 +4728,7 @@ class longdouble(_FloatMixin[L[12, 16]], floating):
     #
     @override
     @type_check_only
-    def __nep50__(self, below: longdouble | clongdouble, above: _nt.co_float64, /) -> longdouble: ...
+    def __nep50__(self, into: longdouble | clongdouble, from_: _nt.co_float64, /) -> longdouble: ...
     @override
     @type_check_only
     def __nep50_complex__(self, /) -> clongdouble: ...
@@ -4766,7 +4764,7 @@ float128 = longdouble
 class complexfloating(inexact[complex]):
     @override
     @type_check_only
-    def __nep50__(self, below: clongdouble, above: _F32_max | _nt.co_integer16, /) -> complexfloating: ...
+    def __nep50__(self, into: clongdouble, from_: _F32_max | _nt.co_integer16, /) -> complexfloating: ...
     @final
     @override
     @type_check_only
@@ -4804,7 +4802,7 @@ class complex64(complexfloating):
     #
     @override
     @type_check_only
-    def __nep50__(self, below: complexfloating, above: _F32_max | _nt.co_integer16, /) -> complex64: ...
+    def __nep50__(self, into: complexfloating, from_: _F32_max | _nt.co_integer16, /) -> complex64: ...
     @type_check_only
     def __nep50_rule0__(self, other: _nt.integer32 | _nt.integer64 | float64, /) -> complex128: ...
     @type_check_only
@@ -4847,7 +4845,7 @@ class complex128(complexfloating, complex):
     #
     @override
     @type_check_only
-    def __nep50__(self, below: _C128_min, above: complex64 | _F64_max | _nt.co_integer, /) -> complex128: ...
+    def __nep50__(self, into: _C128_min, from_: complex64 | _F64_max | _nt.co_integer, /) -> complex128: ...
     @type_check_only
     def __nep50_rule1__(self, other: longdouble, /) -> clongdouble: ...
     @override
@@ -4893,7 +4891,7 @@ class clongdouble(complexfloating):
     #
     @override
     @type_check_only
-    def __nep50__(self, below: clongdouble, above: _nt.co_number, /) -> clongdouble: ...
+    def __nep50__(self, into: clongdouble, from_: _nt.co_number, /) -> clongdouble: ...
     @override
     @type_check_only
     def __nep50_rule2__(self, other: _AbstractInteger, /) -> clongdouble: ...
@@ -4968,7 +4966,7 @@ class object_(_RealMixin, generic[Any]):
 
     #
     @type_check_only
-    def __nep50__(self, below: object_, above: _nt.co_number | character, /) -> object_: ...
+    def __nep50__(self, into: object_, from_: _nt.co_number | character, /) -> object_: ...
     @type_check_only
     def __nep50_builtin__(self, /) -> tuple[_JustBuiltinScalar, object_]: ...
 
@@ -4998,7 +4996,7 @@ class bytes_(character[bytes], bytes):  # type: ignore[misc]
 
     #
     @type_check_only
-    def __nep50__(self, below: bytes_ | object_, above: Never, /) -> bytes_: ...
+    def __nep50__(self, into: bytes_ | object_, from_: Never, /) -> bytes_: ...
     @type_check_only
     def __nep50_builtin__(self, /) -> tuple[_nt.JustBytes, bytes_]: ...
 
@@ -5015,7 +5013,7 @@ class str_(character[str], str):  # type: ignore[misc]
 
     #
     @type_check_only
-    def __nep50__(self, below: str_ | object_, above: Never, /) -> str_: ...
+    def __nep50__(self, into: str_ | object_, from_: Never, /) -> str_: ...
     @type_check_only
     def __nep50_builtin__(self, /) -> tuple[_nt.JustStr, str_]: ...
 
@@ -5032,7 +5030,7 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
 
     #
     @type_check_only
-    def __nep50__(self, below: object_, from_: Never, /) -> void: ...
+    def __nep50__(self, into: object_, from_: Never, /) -> void: ...
 
     #
     @overload
@@ -5212,7 +5210,7 @@ class timedelta64(
 
     #
     @type_check_only
-    def __nep50__(self, below: timedelta64, above: _nt.co_integer, /) -> timedelta64: ...
+    def __nep50__(self, into: timedelta64, from_: _nt.co_integer, /) -> timedelta64: ...
     @type_check_only
     def __nep50_builtin__(self, /) -> tuple[int, timedelta64]: ...
 
