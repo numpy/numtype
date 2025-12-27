@@ -13,6 +13,9 @@ numpy(\.\w+)?\.tests.*
 numpy(\..+)?\.float(96|128)
 numpy(\..+)?\.complex(192|256)
 
+# system-dependent private SIMD submodules
+numpy\._core\._simd\.(SSE42|FMA3|AVX(2|512F|512_SKX)|X86_V(3|4)|ASIMD|NEON|RVV)
+
 # these are always either missing float96/complex192 or float128/complex256
 numpy\.__all__
 numpy\._?core\.__all__

@@ -1,7 +1,0 @@
-# only defined on systems with an intel processor
-numpy\._core\._simd\.SSE42
-numpy\._core\._simd\.FMA3
-numpy\._core\._simd\.AVX2
-numpy\._core\._simd\.AVX512F
-numpy\._core\._simd\.AVX512_SKX
-# numpy\._core\._simd\.X86_V4
