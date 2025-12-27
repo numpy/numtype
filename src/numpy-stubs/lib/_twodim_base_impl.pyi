@@ -1,5 +1,6 @@
+from _typeshed import Incomplete
 from collections.abc import Callable, Sequence
-from typing import Literal as L, TypeAlias, overload
+from typing import Literal as L, Never, TypeAlias, overload
 from typing_extensions import TypeVar
 
 import _numtype as _nt
@@ -31,6 +32,11 @@ _ComplexT = TypeVar("_ComplexT", bound=np.complexfloating)
 _InexactT = TypeVar("_InexactT", bound=np.inexact)
 _CoComplexT = TypeVar("_CoComplexT", bound=_nt.co_complex)
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
+
+# Workaround for mypy's and pyright's lack of compliance with the typing spec for
+# overloads for gradual types. This works because only `Any` and `Never` are assignable
+# to `Never`.
+_ArrayNoD: TypeAlias = np.ndarray[tuple[Never] | tuple[Never, Never], np.dtype[_ScalarT]]
 
 # The returned arrays dtype must be compatible with `np.equal`
 _Device: TypeAlias = L["cpu"]
@@ -65,7 +71,7 @@ def eye(
     N: int,
     M: int | None = None,
     k: int = 0,
-    dtype: _nt.ToDTypeFloat64 | None = ...,
+    dtype: _nt.ToDTypeFloat64 | None = ...,  # = float
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -98,7 +104,7 @@ def eye(
     N: int,
     M: int | None = None,
     k: int = 0,
-    dtype: _nt.ToDType = ...,
+    dtype: _nt.ToDType = ...,  # = float
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -106,6 +112,16 @@ def eye(
 ) -> _nt.Array: ...
 
 #
+@overload
+def diag(v: _ArrayNoD[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...  # type: ignore[overload-overlap]
+@overload
+def diag(v: _nt.Array2D[_ScalarT] | Sequence[Sequence[_ScalarT]], k: int = 0) -> _nt.Array1D[_ScalarT]: ...
+@overload
+def diag(v: _nt.Array1D[_ScalarT] | Sequence[_ScalarT], k: int = 0) -> _nt.Array2D[_ScalarT]: ...
+@overload
+def diag(v: Sequence[Sequence[_nt.ToGeneric_0d]], k: int = 0) -> _nt.Array1D[Incomplete]: ...
+@overload
+def diag(v: Sequence[_nt.ToGeneric_0d], k: int = 0) -> _nt.Array2D[Incomplete]: ...
 @overload
 def diag(v: _nt._ToArray_nd[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...
 @overload
