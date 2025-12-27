@@ -134,7 +134,7 @@ array % 1
 array %= 1
 
 divmod(array, 1)  # pyright: ignore[reportArgumentType, reportCallIssue]  # microsoft/pyright#10899
-divmod(1, nonzero_array)
+divmod(1, nonzero_array)  # pyright: ignore[reportCallIssue]  # microsoft/pyright#10899
 
 array**1
 1**array

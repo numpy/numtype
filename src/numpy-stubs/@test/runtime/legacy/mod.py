@@ -28,7 +28,7 @@ td % AR2
 AR2 % td
 
 divmod(td, td)  # pyright: ignore[reportArgumentType, reportCallIssue]  # microsoft/pyright#10899
-divmod(td, AR2)
+divmod(td, AR2)  # pyright: ignore[reportCallIssue]  # microsoft/pyright#10899
 divmod(AR2, td)
 
 # Bool
@@ -49,7 +49,7 @@ divmod(b, f)
 divmod(b, i8)
 divmod(b, u8)
 divmod(b_, f8)
-divmod(b_, AR)
+divmod(b_, AR)  # pyright: ignore[reportCallIssue]  # microsoft/pyright#10899
 
 b % b_
 i % b_
@@ -91,7 +91,7 @@ divmod(i8, f8)
 divmod(i8, f4)
 divmod(i4, i4)
 divmod(i4, f4)
-divmod(i8, AR)
+divmod(i8, AR)  # pyright: ignore[reportCallIssue]  # microsoft/pyright#10899
 
 b % i8
 i % i8
@@ -130,7 +130,7 @@ divmod(f8, f)
 divmod(f8, f8)
 divmod(f8, f4)
 divmod(f4, f4)
-divmod(f8, AR)
+divmod(f8, AR)  # pyright: ignore[reportCallIssue]  # microsoft/pyright#10899
 
 b % f8
 i % f8

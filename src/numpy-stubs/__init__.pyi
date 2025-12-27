@@ -628,8 +628,9 @@ _NumericArrayT = TypeVar("_NumericArrayT", bound=_nt.Array[number | timedelta64 
 
 _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ShapeT2 = TypeVar("_ShapeT2", bound=_nt.Shape)
-# TODO(jorenham): use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, covariant=True)
+# TODO(jorenham): use `Shape` instead of `AnyShape` as bound once python/mypy#19110 is fixed
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.AnyShape, covariant=True)
+_ShapeT0_co = TypeVar("_ShapeT0_co", bound=_nt.AnyShape, covariant=True)
 _Shape1NDT = TypeVar("_Shape1NDT", bound=_nt.Shape1N)
 
 _ScalarT = TypeVar("_ScalarT", bound=generic)
@@ -884,9 +885,9 @@ class _CanItem(Protocol[_T_co]):
     def item(self, /) -> _T_co: ...
 
 @type_check_only
-class _HasShapeAndItem(Protocol[_ShapeT_co, _T_co]):
+class _HasShapeAndItem(Protocol[_ShapeT0_co, _T_co]):
     @property
-    def __inner_shape__(self, /) -> _ShapeT_co: ...
+    def __inner_shape__(self, /) -> _ShapeT0_co: ...
     def item(self, /) -> _T_co: ...
 
 @type_check_only
@@ -895,9 +896,9 @@ class _HasDType(Protocol[_T_co]):
     def dtype(self, /) -> _T_co: ...
 
 @type_check_only
-class _HasShapeAndDType(Protocol[_ShapeT_co, _T_co]):
+class _HasShapeAndDType(Protocol[_ShapeT0_co, _T_co]):
     @property
-    def __inner_shape__(self, /) -> _ShapeT_co: ...
+    def __inner_shape__(self, /) -> _ShapeT0_co: ...
     @property
     def dtype(self, /) -> _T_co: ...
 
@@ -1920,6 +1921,9 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     def __pos__(self: _NumericArrayT, /) -> _NumericArrayT: ...  # noqa: PYI019
     def __invert__(self: _IntegralArrayT, /) -> _IntegralArrayT: ...  # noqa: PYI019
 
+    # NOTE: The pyright `reportOverlappingOverload` errors below are false positives that
+    # started appearing after adding a default to `_ShapeT_co`
+
     #
     @overload
     def __add__(self: _nt.Array[_ScalarT], x: _nt.Casts[_ScalarT], /) -> _nt.Array[_ScalarT]: ...
@@ -1936,11 +1940,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __add__(self: _nt.Array[datetime64], x: _nt.CoTimeDelta_nd, /) -> _nt.Array[datetime64]: ...
     @overload
-    def __add__(self: _nt.Array[_nt.co_timedelta], x: _nt.ToDateTime_nd, /) -> _nt.Array[datetime64]: ...
+    def __add__(self: _nt.Array[_nt.co_timedelta], x: _nt.ToDateTime_nd, /) -> _nt.Array[datetime64]: ...  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __add__(self: _nt.Array[object_, Any], x: object, /) -> _nt.Array[object_]: ...  # type: ignore[overload-cannot-match]
+    def __add__(self: _nt.Array[object_, Any], x: object, /) -> _nt.Array[object_]: ...  # type: ignore[overload-cannot-match]  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __add__(self: _nt.Array[str_], x: _nt.ToString_nd[_T], /) -> _nt.StringArrayND[_T]: ...
+    def __add__(self: _nt.Array[str_], x: _nt.ToString_nd[_T], /) -> _nt.StringArrayND[_T]: ...  # pyright: ignore[reportOverlappingOverload]
     @overload
     def __add__(self: _nt.StringArrayND[_T], x: _nt.ToString_nd[_T] | _nt.ToStr_nd, /) -> _nt.StringArrayND[_T]: ...
     @overload
@@ -1964,11 +1968,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __radd__(self: _nt.Array[datetime64], x: _nt.CoTimeDelta_nd, /) -> _nt.Array[datetime64]: ...
     @overload
-    def __radd__(self: _nt.Array[_nt.co_timedelta], x: _nt.ToDateTime_nd, /) -> _nt.Array[datetime64]: ...
+    def __radd__(self: _nt.Array[_nt.co_timedelta], x: _nt.ToDateTime_nd, /) -> _nt.Array[datetime64]: ...  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __radd__(self: _nt.Array[object_, Any], x: object, /) -> _nt.Array[object_]: ...  # type: ignore[overload-cannot-match]
+    def __radd__(self: _nt.Array[object_, Any], x: object, /) -> _nt.Array[object_]: ...  # type: ignore[overload-cannot-match]  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __radd__(self: _nt.Array[str_], x: _nt.ToString_nd[_T], /) -> _nt.StringArrayND[_T]: ...
+    def __radd__(self: _nt.Array[str_], x: _nt.ToString_nd[_T], /) -> _nt.StringArrayND[_T]: ...  # pyright: ignore[reportOverlappingOverload]
     @overload
     def __radd__(self: _nt.StringArrayND[_T], x: _nt.ToString_nd[_T] | _nt.ToStr_nd, /) -> _nt.StringArrayND[_T]: ...
     @overload
@@ -2020,7 +2024,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __sub__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
     @overload
-    def __sub__(
+    def __sub__(  # pyright: ignore[reportOverlappingOverload]
         self: _nt.Array[number[_AnyNumberItemT]], x: _nt.Sequence1ND[_nt.op.CanRSub[_AnyNumberItemT]], /
     ) -> _nt.Array[Incomplete]: ...
 
@@ -2044,7 +2048,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rsub__(self: _nt.Array[object_], x: object, /) -> _nt.Array[object_]: ...
     @overload
-    def __rsub__(
+    def __rsub__(  # pyright: ignore[reportOverlappingOverload]
         self: _nt.Array[number[_AnyNumberItemT]], x: _nt.Sequence1ND[_nt.op.CanSub[_AnyNumberItemT]], /
     ) -> _nt.Array[Incomplete]: ...
 
@@ -2082,11 +2086,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __mul__(self: _nt.CastsWithComplex[_ScalarT], x: _PyComplexND, /) -> _nt.Array[_ScalarT]: ...
     @overload
-    def __mul__(self: _nt.Array[timedelta64], x: _nt.ToFloating_nd, /) -> _nt.Array[timedelta64]: ...
+    def __mul__(self: _nt.Array[timedelta64], x: _nt.ToFloating_nd, /) -> _nt.Array[timedelta64]: ...  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __mul__(self: _nt.Array[object_, Any], x: object, /) -> _nt.Array[object_]: ...  # type: ignore[overload-cannot-match]
+    def __mul__(self: _nt.Array[object_, Any], x: object, /) -> _nt.Array[object_]: ...  # type: ignore[overload-cannot-match]  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __mul__(self: _nt.Array[integer], x: _nt.ToString_nd, /) -> _nt.StringArrayND[_T]: ...
+    def __mul__(self: _nt.Array[integer], x: _nt.ToString_nd, /) -> _nt.StringArrayND[_T]: ...  # pyright: ignore[reportOverlappingOverload]
     @overload
     def __mul__(self: _nt.StringArrayND[_T], x: _nt.ToInteger_nd, /) -> _nt.StringArrayND[_T]: ...
     @overload
@@ -2108,11 +2112,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     @overload
     def __rmul__(self: _nt.CastsWithComplex[_ScalarT], x: _PyComplexND, /) -> _nt.Array[_ScalarT]: ...
     @overload
-    def __rmul__(self: _nt.Array[timedelta64], x: _nt.ToFloating_nd, /) -> _nt.Array[timedelta64]: ...
+    def __rmul__(self: _nt.Array[timedelta64], x: _nt.ToFloating_nd, /) -> _nt.Array[timedelta64]: ...  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __rmul__(self: _nt.Array[object_, Any], x: object, /) -> _nt.Array[object_]: ...  # type: ignore[overload-cannot-match]
+    def __rmul__(self: _nt.Array[object_, Any], x: object, /) -> _nt.Array[object_]: ...  # type: ignore[overload-cannot-match]  # pyright: ignore[reportOverlappingOverload]
     @overload
-    def __rmul__(self: _nt.Array[integer], x: _nt.ToString_nd, /) -> _nt.StringArrayND[_T]: ...
+    def __rmul__(self: _nt.Array[integer], x: _nt.ToString_nd, /) -> _nt.StringArrayND[_T]: ...  # pyright: ignore[reportOverlappingOverload]
     @overload
     def __rmul__(self: _nt.StringArrayND[_T], x: _nt.ToInteger_nd, /) -> _nt.StringArrayND[_T]: ...
     @overload
