@@ -46,19 +46,6 @@ ROOT_SITE_DIR = __root_site
 ALLOWLISTS = ["common.txt", f"py3{sys.version_info.minor}.txt"]
 
 
-def __check_simd() -> None:
-    try:
-        from numpy._core import _simd  # noqa: PLC0415, PLC2701
-    except ImportError:
-        return
-
-    if not hasattr(_simd, "AVX512F"):
-        ALLOWLISTS.append("simd.txt")
-
-
-__check_simd()
-
-
 def _allowlists() -> list[str]:
     relpath = (TOOL_DIR / "allowlists").relative_to(CWD)
     return [str(relpath / fname) for fname in ALLOWLISTS]

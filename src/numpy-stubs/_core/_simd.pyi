@@ -1,28 +1,43 @@
-import sys
 from types import ModuleType
-from typing import TypedDict, type_check_only
+from typing import Required, TypedDict, type_check_only
 
-# NOTE: these 6 are only defined on systems with an intel processor
+# NOTE: these are only defined on (some) systems with an intel processor
 SSE42: ModuleType | None = ...
 FMA3: ModuleType | None = ...
 AVX2: ModuleType | None = ...
 AVX512F: ModuleType | None = ...
 AVX512_SKX: ModuleType | None = ...
-if sys.platform == "linux":
-    X86_V4: ModuleType | None = ...
+X86_V3: ModuleType | None = ...
+X86_V4: ModuleType | None = ...
+
+# NOTE: these 2 are only defined on systems with an arm processor
+ASIMD: ModuleType | None = ...
+NEON: ModuleType | None = ...
+
+# NOTE: This is only defined on systems with an riscv64 processor.
+RVV: ModuleType | None = ...
 
 baseline: ModuleType | None = ...
 
 @type_check_only
-class SimdTargets(TypedDict):
+class SimdTargets(TypedDict, total=False):
+    # x86
     SSE42: ModuleType | None
     AVX2: ModuleType | None
     FMA3: ModuleType | None
     AVX512F: ModuleType | None
     AVX512_SKX: ModuleType | None
+    X86_V3: ModuleType | None
     X86_V4: ModuleType | None
 
-    baseline: ModuleType | None
+    # ARM
+    ASIMD: ModuleType | None
+    NEON: ModuleType | None
+
+    # RISC-V
+    RVV: ModuleType | None
+
+    baseline: Required[ModuleType | None]
 
 targets: SimdTargets = ...
 
