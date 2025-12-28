@@ -2381,7 +2381,11 @@ def allclose(
 #
 @overload  # scalar, scalar
 def isclose(
-    a: _nt.CoComplex_0d, b: _nt.CoComplex_0d, rtol: ArrayLike = 1e-5, atol: ArrayLike = 1e-8, equal_nan: py_bool = False
+    a: _nt.co_complex | complex,
+    b: _nt.co_complex | complex,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
 ) -> np.bool_: ...
 @overload  # known shape, same shape or scalar
 def isclose(
