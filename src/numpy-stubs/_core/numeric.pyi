@@ -2379,30 +2379,62 @@ def allclose(
 ) -> py_bool: ...
 
 #
-@overload
+@overload  # scalar, scalar
 def isclose(
-    a: np.generic | _nt._PyScalar,
-    b: np.generic | _nt._PyScalar,
+    a: _nt.CoComplex_0d, b: _nt.CoComplex_0d, rtol: ArrayLike = 1e-5, atol: ArrayLike = 1e-8, equal_nan: py_bool = False
+) -> np.bool_: ...
+@overload  # known shape, same shape or scalar
+def isclose(
+    a: np.ndarray[_ShapeT],
+    b: np.ndarray[_ShapeT] | _nt.CoComplex_0d,
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: py_bool = False,
-) -> np.bool: ...
-@overload
+) -> _nt.Array[np.bool_, _ShapeT]: ...
+@overload  # same shape or scalar, known shape
 def isclose(
-    a: _nt.ToGeneric_1nd,
-    b: _nt.ToGeneric_nd,
+    a: np.ndarray[_ShapeT] | _nt.CoComplex_0d,
+    b: np.ndarray[_ShapeT],
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: py_bool = False,
-) -> _nt.Array[np.bool]: ...
-@overload
+) -> _nt.Array[np.bool_, _ShapeT]: ...
+@overload  # 1d sequence, <=1d array-like
 def isclose(
-    a: _nt.ToGeneric_nd,
-    b: _nt.ToGeneric_1nd,
+    a: _nt.CoComplex_1ds,
+    b: _nt.CoComplex_1ds | _nt.CoComplex_0d,
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: py_bool = False,
-) -> _nt.Array[np.bool]: ...
+) -> _nt.Array1D[np.bool_]: ...
+@overload  # <=1d array-like, 1d sequence
+def isclose(
+    a: _nt.CoComplex_1ds | _nt.CoComplex_0d,
+    b: _nt.CoComplex_1ds,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
+) -> _nt.Array1D[np.bool_]: ...
+@overload  # 2d sequence, <=2d array-like
+def isclose(
+    a: _nt.CoComplex_2ds,
+    b: _nt.CoComplex_2ds | _nt.CoComplex_1ds | _nt.CoComplex_0d,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
+) -> _nt.Array1D[np.bool_]: ...
+@overload  # <=2d array-like, 2d sequence
+def isclose(
+    b: _nt.CoComplex_2ds | _nt.CoComplex_1ds | _nt.CoComplex_0d,
+    a: _nt.CoComplex_2ds,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
+) -> _nt.Array1D[np.bool_]: ...
+@overload  # unknown shape, unknown shape
+def isclose(
+    a: ArrayLike, b: ArrayLike, rtol: ArrayLike = 1e-5, atol: ArrayLike = 1e-8, equal_nan: py_bool = False
+) -> _nt.Array[np.bool_] | Any: ...
 
 #
 def array_equal(a1: ArrayLike, a2: ArrayLike, equal_nan: py_bool = False) -> py_bool: ...
