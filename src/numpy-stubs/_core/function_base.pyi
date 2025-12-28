@@ -71,7 +71,7 @@ def linspace(
     num: SupportsIndex = 50,
     endpoint: bool = True,
     retstep: L[False] = False,
-    dtype: DTypeLike = ...,
+    dtype: DTypeLike | None = None,
     axis: SupportsIndex = 0,
     *,
     device: _Device | None = None,
@@ -120,7 +120,7 @@ def linspace(
     endpoint: bool = True,
     *,
     retstep: L[True],
-    dtype: DTypeLike = ...,
+    dtype: DTypeLike | None = None,
     axis: SupportsIndex = 0,
     device: _Device | None = None,
 ) -> tuple[_nt.Array[Incomplete], Incomplete]: ...
@@ -174,7 +174,7 @@ def logspace(
     num: SupportsIndex = 50,
     endpoint: bool = True,
     base: _ArrayLikeNumber_co = 10.0,
-    dtype: DTypeLike = ...,
+    dtype: DTypeLike | None = None,
     axis: SupportsIndex = 0,
 ) -> _nt.Array[Incomplete]: ...
 

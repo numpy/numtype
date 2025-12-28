@@ -37,7 +37,7 @@ class _Kwargs2(_KwargsCommon, total=False):
 
 @type_check_only
 class _Kwargs3(_KwargsCommon, total=False):
-    signature: tuple[DTypeLike, DTypeLike, DTypeLike] | str | None
+    signature: tuple[DTypeLike | None, DTypeLike | None, DTypeLike | None] | str | None
     axes: Sequence[_Tuple2[SupportsIndex]]
     axis: SupportsIndex
 

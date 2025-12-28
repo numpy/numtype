@@ -36,7 +36,7 @@ def _types_co(chars: str, /) -> tuple[_ToScalarType, ...]:
     )
 
 
-def _promotes_to(sct: npt.DTypeLike) -> tuple[_ToScalarType, ...]:
+def _promotes_to(sct: npt.DTypeLike | None) -> tuple[_ToScalarType, ...]:
     out: list[_ToScalarType] = []
     for t in (bool, int, float, complex, str, bytes, *np.sctypeDict.values()):
         try:
@@ -48,7 +48,7 @@ def _promotes_to(sct: npt.DTypeLike) -> tuple[_ToScalarType, ...]:
     return tuple(dict.fromkeys(out))
 
 
-def _typename(sct: npt.DTypeLike) -> str:
+def _typename(sct: npt.DTypeLike | None) -> str:
     if sct is None:
         return "None"
     if sct is str and "T" in CHARS:

@@ -611,7 +611,7 @@ def empty(shape: int | tuple[int, int], dtype: None = None, order: _Order = "C")
 @overload
 def empty(shape: int | tuple[int, int], dtype: _DTypeLike[_ScalarT], order: _Order = "C") -> _nt.Matrix[_ScalarT]: ...
 @overload
-def empty(shape: int | tuple[int, int], dtype: npt.DTypeLike, order: _Order = "C") -> _nt.Matrix[Any]: ...
+def empty(shape: int | tuple[int, int], dtype: npt.DTypeLike | None, order: _Order = "C") -> _nt.Matrix[Any]: ...
 
 #
 @overload
@@ -619,7 +619,7 @@ def ones(shape: int | tuple[int, int], dtype: None = None, order: _Order = "C") 
 @overload
 def ones(shape: int | tuple[int, int], dtype: _DTypeLike[_ScalarT], order: _Order = "C") -> _nt.Matrix[_ScalarT]: ...
 @overload
-def ones(shape: int | tuple[int, int], dtype: npt.DTypeLike, order: _Order = "C") -> _nt.Matrix[Any]: ...
+def ones(shape: int | tuple[int, int], dtype: npt.DTypeLike | None, order: _Order = "C") -> _nt.Matrix[Any]: ...
 
 #
 @overload
@@ -627,7 +627,7 @@ def zeros(shape: int | tuple[int, int], dtype: None = None, order: _Order = "C")
 @overload
 def zeros(shape: int | tuple[int, int], dtype: _DTypeLike[_ScalarT], order: _Order = "C") -> _nt.Matrix[_ScalarT]: ...
 @overload
-def zeros(shape: int | tuple[int, int], dtype: npt.DTypeLike, order: _Order = "C") -> _nt.Matrix[Any]: ...
+def zeros(shape: int | tuple[int, int], dtype: npt.DTypeLike | None, order: _Order = "C") -> _nt.Matrix[Any]: ...
 
 #
 @overload
@@ -640,7 +640,11 @@ def identity(n: int, dtype: npt.DTypeLike | None = None) -> _nt.Matrix[Any]: ...
 #
 @overload
 def eye(
-    n: int, M: int | None = None, k: int = 0, dtype: type[np.float64] | None = ..., order: _Order = "C"
+    n: int,
+    M: int | None = None,
+    k: int = 0,
+    dtype: _nt.ToDTypeFloat64 = float,  # noqa: PYI011
+    order: _Order = "C",
 ) -> _nt.Matrix[np.float64]: ...
 @overload
 def eye(n: int, M: int | None, k: int, dtype: _DTypeLike[_ScalarT], order: _Order = "C") -> _nt.Matrix[_ScalarT]: ...
@@ -650,7 +654,11 @@ def eye(
 ) -> _nt.Matrix[_ScalarT]: ...
 @overload
 def eye(
-    n: int, M: int | None = None, k: int = 0, dtype: npt.DTypeLike = ..., order: _Order = "C"
+    n: int,
+    M: int | None = None,
+    k: int = 0,
+    dtype: npt.DTypeLike | None = float,  # noqa: PYI011
+    order: _Order = "C",
 ) -> _nt.Matrix[Any]: ...
 
 #

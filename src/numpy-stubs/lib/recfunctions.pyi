@@ -238,7 +238,7 @@ def structured_to_unstructured(
 @overload
 def unstructured_to_structured(
     arr: _nt.Array,
-    dtype: npt.DTypeLike,
+    dtype: npt.DTypeLike | None,
     names: None = None,
     align: bool = False,
     copy: bool = False,

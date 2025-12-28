@@ -81,7 +81,7 @@ class memmap(np.ndarray[_ShapeT_co, _DType_co], Generic[_ShapeT_co, _DType_co]):
     def __new__(
         subtype,
         filename: _ToFileName,
-        dtype: npt.DTypeLike,
+        dtype: npt.DTypeLike | None,
         mode: _ToMode = "r+",
         offset: int = 0,
         shape: int | tuple[int, ...] | None = None,
