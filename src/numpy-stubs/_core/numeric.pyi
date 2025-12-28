@@ -2075,7 +2075,7 @@ def correlate(
     a: _nt.CoComplex_1d | _nt.CoTimeDelta_1d | _nt.ToObject_1d,
     v: _nt.CoComplex_1d | _nt.CoTimeDelta_1d | _nt.ToObject_1d,
     mode: _Mode = "valid",
-) -> _nt.Array1D[Any]: ...
+) -> _nt.Array1D: ...
 
 #
 @overload
@@ -2107,7 +2107,7 @@ def convolve(
     a: _nt.CoComplex_1d | _nt.CoTimeDelta_1d | _nt.ToObject_1d,
     v: _nt.CoComplex_1d | _nt.CoTimeDelta_1d | _nt.ToObject_1d,
     mode: _Mode = "full",
-) -> _nt.Array1D[Any]: ...
+) -> _nt.Array1D: ...
 
 #
 @overload
@@ -2271,42 +2271,68 @@ def cross(
 ) -> _nt.Array[Any]: ...
 
 #
-@overload
+@overload  # 0d, dtype=int (default), sparse=False (default)
+def indices(dimensions: tuple[()], dtype: type[int] = int, sparse: L[False] = False) -> _nt.Array1D[np.intp]: ...  # noqa: PYI011
+@overload  # 0d, dtype=<irrelevant>, sparse=True
+def indices(dimensions: tuple[()], dtype: DTypeLike | None = int, *, sparse: L[True]) -> tuple[()]: ...  # noqa: PYI011
+@overload  # 0d, dtype=<known>, sparse=False (default)
+def indices(dimensions: tuple[()], dtype: _DTypeLike[_ScalarT], sparse: L[False] = False) -> _nt.Array1D[_ScalarT]: ...
+@overload  # 0d, dtype=<unknown>, sparse=False (default)
+def indices(dimensions: tuple[()], dtype: DTypeLike, sparse: L[False] = False) -> _nt.Array1D: ...
+@overload  # 1d, dtype=int (default), sparse=False (default)
+def indices(dimensions: tuple[int], dtype: type[int] = int, sparse: L[False] = False) -> _nt.Array2D[np.intp]: ...  # noqa: PYI011
+@overload  # 1d, dtype=int (default), sparse=True
+def indices(dimensions: tuple[int], dtype: type[int] = int, *, sparse: L[True]) -> tuple[_nt.Array1D[np.intp]]: ...  # noqa: PYI011
+@overload  # 1d, dtype=<known>, sparse=False (default)
+def indices(dimensions: tuple[int], dtype: _DTypeLike[_ScalarT], sparse: L[False] = False) -> _nt.Array2D[_ScalarT]: ...
+@overload  # 1d, dtype=<known>, sparse=True
+def indices(dimensions: tuple[int], dtype: _DTypeLike[_ScalarT], sparse: L[True]) -> tuple[_nt.Array1D[_ScalarT]]: ...
+@overload  # 1d, dtype=<unknown>, sparse=False (default)
+def indices(dimensions: tuple[int], dtype: DTypeLike, sparse: L[False] = False) -> _nt.Array2D: ...
+@overload  # 1d, dtype=<unknown>, sparse=True
+def indices(dimensions: tuple[int], dtype: DTypeLike, sparse: L[True]) -> tuple[_nt.Array1D]: ...
+@overload  # 2d, dtype=int (default), sparse=False (default)
+def indices(dimensions: tuple[int, int], dtype: type[int] = int, sparse: L[False] = False) -> _nt.Array3D[np.intp]: ...  # noqa: PYI011
+@overload  # 2d, dtype=int (default), sparse=True
 def indices(
-    dimensions: _nt.ToInteger_1d,
-    dtype: type[_nt.JustInt] = int,  # noqa: PYI011
-    sparse: L[False] = False,
-) -> _nt.Array[np.intp]: ...
-@overload
+    dimensions: tuple[int, int],
+    dtype: type[int] = int,  # noqa: PYI011
+    *,
+    sparse: L[True],
+) -> tuple[_nt.Array2D[np.intp], _nt.Array2D[np.intp]]: ...
+@overload  # 2d, dtype=<known>, sparse=False (default)
 def indices(
-    dimensions: _nt.ToInteger_1d, dtype: type[_nt.JustInt], sparse: L[True]
-) -> tuple[_nt.Array[np.intp], ...]: ...
-@overload
+    dimensions: tuple[int, int], dtype: _DTypeLike[_ScalarT], sparse: L[False] = False
+) -> _nt.Array3D[_ScalarT]: ...
+@overload  # 2d, dtype=<known>, sparse=True
 def indices(
-    dimensions: _nt.ToInteger_1d,
-    dtype: type[_nt.JustInt] = int,  # noqa: PYI011
+    dimensions: tuple[int, int], dtype: _DTypeLike[_ScalarT], sparse: L[True]
+) -> tuple[_nt.Array2D[_ScalarT], _nt.Array2D[_ScalarT]]: ...
+@overload  # 2d, dtype=<unknown>, sparse=False (default)
+def indices(dimensions: tuple[int, int], dtype: DTypeLike, sparse: L[False] = False) -> _nt.Array3D: ...
+@overload  # 2d, dtype=<unknown>, sparse=True
+def indices(dimensions: tuple[int, int], dtype: DTypeLike, sparse: L[True]) -> tuple[_nt.Array2D, _nt.Array2D]: ...
+@overload  # ?d, dtype=int (default), sparse=False (default)
+def indices(dimensions: Sequence[int], dtype: type[int] = int, sparse: L[False] = False) -> _nt.Array[np.intp]: ...  # noqa: PYI011
+@overload  # ?d, dtype=int (default), sparse=True
+def indices(
+    dimensions: Sequence[int],
+    dtype: type[int] = int,  # noqa: PYI011
     *,
     sparse: L[True],
 ) -> tuple[_nt.Array[np.intp], ...]: ...
-@overload
+@overload  # ?d, dtype=<known>, sparse=False (default)
 def indices(
-    dimensions: _nt.ToInteger_1d, dtype: _DTypeLike[_ScalarT], sparse: L[False] = False
+    dimensions: Sequence[int], dtype: _DTypeLike[_ScalarT], sparse: L[False] = False
 ) -> _nt.Array[_ScalarT]: ...
-@overload
+@overload  # ?d, dtype=<known>, sparse=True
 def indices(
-    dimensions: _nt.ToInteger_1d, dtype: _DTypeLike[_ScalarT], sparse: L[True]
+    dimensions: Sequence[int], dtype: _DTypeLike[_ScalarT], sparse: L[True]
 ) -> tuple[_nt.Array[_ScalarT], ...]: ...
-@overload
-def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike | None = int, sparse: L[False] = False) -> _nt.Array: ...  # noqa: PYI011
-@overload
-def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike | None, sparse: L[True]) -> tuple[_nt.Array, ...]: ...
-@overload
-def indices(
-    dimensions: _nt.ToInteger_1d,
-    dtype: DTypeLike | None = int,  # noqa: PYI011
-    *,
-    sparse: L[True],
-) -> tuple[_nt.Array, ...]: ...
+@overload  # ?d, dtype=<unknown>, sparse=False (default)
+def indices(dimensions: Sequence[int], dtype: DTypeLike, sparse: L[False] = False) -> ndarray: ...
+@overload  # ?d, dtype=<unknown>, sparse=True
+def indices(dimensions: Sequence[int], dtype: DTypeLike, sparse: L[True]) -> tuple[ndarray, ...]: ...
 
 # keep in sync with `ma.core.fromfunction`
 def fromfunction(
