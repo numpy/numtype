@@ -263,7 +263,7 @@ assert_type(np.fromfunction(func, (3, 5)), MyArray[np.float64])
 
 assert_type(np.identity(10), _nt.Array2D[np.float64])
 assert_type(np.identity(10, dtype=np.int64), _nt.Array2D[np.int64])
-assert_type(np.identity(10, dtype=int), _nt.Array2D)
+assert_type(np.identity(10, dtype=int), _nt.Array2D[np.int64])
 
 assert_type(np.atleast_1d(A), _nt.Array[np.float64])
 assert_type(np.atleast_1d(C), _nt.Array)

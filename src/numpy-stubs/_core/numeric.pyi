@@ -2030,11 +2030,15 @@ def full_like(
 @overload
 def count_nonzero(a: ArrayLike, axis: None = None, *, keepdims: L[False] = False) -> np.intp: ...
 @overload
+def count_nonzero(a: _nt.ToGeneric_0d, axis: _ShapeLike | None = None, *, keepdims: L[True]) -> np.intp: ...
+@overload
+def count_nonzero(a: _nt.ToGeneric_1nd, axis: _ShapeLike | None = None, *, keepdims: L[True]) -> _nt.Array[np.intp]: ...
+@overload
 def count_nonzero(a: ArrayLike, axis: _ShapeLike | None = None, *, keepdims: py_bool = False) -> Incomplete: ...
 
 #
 def flatnonzero(a: ArrayLike) -> _nt.Array1D[np.intp]: ...
-def argwhere(a: ArrayLike) -> _nt.Array[np.intp]: ...
+def argwhere(a: ArrayLike) -> _nt.Array2D[np.intp]: ...
 
 #
 def isfortran(a: _nt.Array | np.generic) -> py_bool: ...
@@ -2071,7 +2075,7 @@ def correlate(
     a: _nt.CoComplex_1d | _nt.CoTimeDelta_1d | _nt.ToObject_1d,
     v: _nt.CoComplex_1d | _nt.CoTimeDelta_1d | _nt.ToObject_1d,
     mode: _Mode = "valid",
-) -> _nt.Array1D[Any]: ...
+) -> _nt.Array1D: ...
 
 #
 @overload
@@ -2103,7 +2107,7 @@ def convolve(
     a: _nt.CoComplex_1d | _nt.CoTimeDelta_1d | _nt.ToObject_1d,
     v: _nt.CoComplex_1d | _nt.CoTimeDelta_1d | _nt.ToObject_1d,
     mode: _Mode = "full",
-) -> _nt.Array1D[Any]: ...
+) -> _nt.Array1D: ...
 
 #
 @overload
@@ -2267,42 +2271,68 @@ def cross(
 ) -> _nt.Array[Any]: ...
 
 #
-@overload
+@overload  # 0d, dtype=int (default), sparse=False (default)
+def indices(dimensions: tuple[()], dtype: type[int] = int, sparse: L[False] = False) -> _nt.Array1D[np.intp]: ...  # noqa: PYI011
+@overload  # 0d, dtype=<irrelevant>, sparse=True
+def indices(dimensions: tuple[()], dtype: DTypeLike | None = int, *, sparse: L[True]) -> tuple[()]: ...  # noqa: PYI011
+@overload  # 0d, dtype=<known>, sparse=False (default)
+def indices(dimensions: tuple[()], dtype: _DTypeLike[_ScalarT], sparse: L[False] = False) -> _nt.Array1D[_ScalarT]: ...
+@overload  # 0d, dtype=<unknown>, sparse=False (default)
+def indices(dimensions: tuple[()], dtype: DTypeLike, sparse: L[False] = False) -> _nt.Array1D: ...
+@overload  # 1d, dtype=int (default), sparse=False (default)
+def indices(dimensions: tuple[int], dtype: type[int] = int, sparse: L[False] = False) -> _nt.Array2D[np.intp]: ...  # noqa: PYI011
+@overload  # 1d, dtype=int (default), sparse=True
+def indices(dimensions: tuple[int], dtype: type[int] = int, *, sparse: L[True]) -> tuple[_nt.Array1D[np.intp]]: ...  # noqa: PYI011
+@overload  # 1d, dtype=<known>, sparse=False (default)
+def indices(dimensions: tuple[int], dtype: _DTypeLike[_ScalarT], sparse: L[False] = False) -> _nt.Array2D[_ScalarT]: ...
+@overload  # 1d, dtype=<known>, sparse=True
+def indices(dimensions: tuple[int], dtype: _DTypeLike[_ScalarT], sparse: L[True]) -> tuple[_nt.Array1D[_ScalarT]]: ...
+@overload  # 1d, dtype=<unknown>, sparse=False (default)
+def indices(dimensions: tuple[int], dtype: DTypeLike, sparse: L[False] = False) -> _nt.Array2D: ...
+@overload  # 1d, dtype=<unknown>, sparse=True
+def indices(dimensions: tuple[int], dtype: DTypeLike, sparse: L[True]) -> tuple[_nt.Array1D]: ...
+@overload  # 2d, dtype=int (default), sparse=False (default)
+def indices(dimensions: tuple[int, int], dtype: type[int] = int, sparse: L[False] = False) -> _nt.Array3D[np.intp]: ...  # noqa: PYI011
+@overload  # 2d, dtype=int (default), sparse=True
 def indices(
-    dimensions: _nt.ToInteger_1d,
-    dtype: type[_nt.JustInt] = int,  # noqa: PYI011
-    sparse: L[False] = False,
-) -> _nt.Array[np.intp]: ...
-@overload
+    dimensions: tuple[int, int],
+    dtype: type[int] = int,  # noqa: PYI011
+    *,
+    sparse: L[True],
+) -> tuple[_nt.Array2D[np.intp], _nt.Array2D[np.intp]]: ...
+@overload  # 2d, dtype=<known>, sparse=False (default)
 def indices(
-    dimensions: _nt.ToInteger_1d, dtype: type[_nt.JustInt], sparse: L[True]
-) -> tuple[_nt.Array[np.intp], ...]: ...
-@overload
+    dimensions: tuple[int, int], dtype: _DTypeLike[_ScalarT], sparse: L[False] = False
+) -> _nt.Array3D[_ScalarT]: ...
+@overload  # 2d, dtype=<known>, sparse=True
 def indices(
-    dimensions: _nt.ToInteger_1d,
-    dtype: type[_nt.JustInt] = int,  # noqa: PYI011
+    dimensions: tuple[int, int], dtype: _DTypeLike[_ScalarT], sparse: L[True]
+) -> tuple[_nt.Array2D[_ScalarT], _nt.Array2D[_ScalarT]]: ...
+@overload  # 2d, dtype=<unknown>, sparse=False (default)
+def indices(dimensions: tuple[int, int], dtype: DTypeLike, sparse: L[False] = False) -> _nt.Array3D: ...
+@overload  # 2d, dtype=<unknown>, sparse=True
+def indices(dimensions: tuple[int, int], dtype: DTypeLike, sparse: L[True]) -> tuple[_nt.Array2D, _nt.Array2D]: ...
+@overload  # ?d, dtype=int (default), sparse=False (default)
+def indices(dimensions: Sequence[int], dtype: type[int] = int, sparse: L[False] = False) -> _nt.Array[np.intp]: ...  # noqa: PYI011
+@overload  # ?d, dtype=int (default), sparse=True
+def indices(
+    dimensions: Sequence[int],
+    dtype: type[int] = int,  # noqa: PYI011
     *,
     sparse: L[True],
 ) -> tuple[_nt.Array[np.intp], ...]: ...
-@overload
+@overload  # ?d, dtype=<known>, sparse=False (default)
 def indices(
-    dimensions: _nt.ToInteger_1d, dtype: _DTypeLike[_ScalarT], sparse: L[False] = False
+    dimensions: Sequence[int], dtype: _DTypeLike[_ScalarT], sparse: L[False] = False
 ) -> _nt.Array[_ScalarT]: ...
-@overload
+@overload  # ?d, dtype=<known>, sparse=True
 def indices(
-    dimensions: _nt.ToInteger_1d, dtype: _DTypeLike[_ScalarT], sparse: L[True]
+    dimensions: Sequence[int], dtype: _DTypeLike[_ScalarT], sparse: L[True]
 ) -> tuple[_nt.Array[_ScalarT], ...]: ...
-@overload
-def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike | None = int, sparse: L[False] = False) -> _nt.Array: ...  # noqa: PYI011
-@overload
-def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike | None, sparse: L[True]) -> tuple[_nt.Array, ...]: ...
-@overload
-def indices(
-    dimensions: _nt.ToInteger_1d,
-    dtype: DTypeLike | None = int,  # noqa: PYI011
-    *,
-    sparse: L[True],
-) -> tuple[_nt.Array, ...]: ...
+@overload  # ?d, dtype=<unknown>, sparse=False (default)
+def indices(dimensions: Sequence[int], dtype: DTypeLike, sparse: L[False] = False) -> ndarray: ...
+@overload  # ?d, dtype=<unknown>, sparse=True
+def indices(dimensions: Sequence[int], dtype: DTypeLike, sparse: L[True]) -> tuple[ndarray, ...]: ...
 
 # keep in sync with `ma.core.fromfunction`
 def fromfunction(
@@ -2322,14 +2352,26 @@ def binary_repr(num: SupportsIndex, width: int | None = None) -> str: ...
 def base_repr(number: SupportsAbs[float], base: float = 2, padding: SupportsIndex = 0) -> str: ...
 
 #
-@overload
+@overload  # dtype: None (default)
 def identity(n: int, dtype: None = None, *, like: _SupportsArrayFunc | None = None) -> _nt.Array2D[np.float64]: ...
-@overload
+@overload  # dtype: known scalar type
 def identity(
     n: int, dtype: _DTypeLike[_ScalarT], *, like: _SupportsArrayFunc | None = None
 ) -> _nt.Array2D[_ScalarT]: ...
-@overload
-def identity(n: int, dtype: DTypeLike | None = None, *, like: _SupportsArrayFunc | None = None) -> _nt.Array2D: ...
+@overload  # dtype: like bool
+def identity(n: int, dtype: _nt.ToDTypeBool, *, like: _SupportsArrayFunc | None = None) -> _nt.Array2D[np.bool]: ...
+@overload  # dtype: like int_
+def identity(n: int, dtype: _nt.ToDTypeInt64, *, like: _SupportsArrayFunc | None = None) -> _nt.Array2D[np.int64]: ...
+@overload  # dtype: like float64
+def identity(
+    n: int, dtype: _nt.ToDTypeFloat64, *, like: _SupportsArrayFunc | None = None
+) -> _nt.Array2D[np.float64]: ...
+@overload  # dtype: like complex128
+def identity(
+    n: int, dtype: _nt.ToDTypeComplex128, *, like: _SupportsArrayFunc | None = None
+) -> _nt.Array2D[np.complex128]: ...
+@overload  # dtype: unknown
+def identity(n: int, dtype: DTypeLike, *, like: _SupportsArrayFunc | None = None) -> _nt.Array2D[Incomplete]: ...
 
 #
 def allclose(
@@ -2337,30 +2379,66 @@ def allclose(
 ) -> py_bool: ...
 
 #
-@overload
+@overload  # scalar, scalar
 def isclose(
-    a: np.generic | _nt._PyScalar,
-    b: np.generic | _nt._PyScalar,
+    a: _nt.co_complex | complex,
+    b: _nt.co_complex | complex,
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: py_bool = False,
-) -> np.bool: ...
-@overload
+) -> np.bool_: ...
+@overload  # known shape, same shape or scalar
 def isclose(
-    a: _nt.ToGeneric_1nd,
-    b: _nt.ToGeneric_nd,
+    a: np.ndarray[_ShapeT],
+    b: np.ndarray[_ShapeT] | _nt.CoComplex_0d,
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: py_bool = False,
-) -> _nt.Array[np.bool]: ...
-@overload
+) -> _nt.Array[np.bool_, _ShapeT]: ...
+@overload  # same shape or scalar, known shape
 def isclose(
-    a: _nt.ToGeneric_nd,
-    b: _nt.ToGeneric_1nd,
+    a: np.ndarray[_ShapeT] | _nt.CoComplex_0d,
+    b: np.ndarray[_ShapeT],
     rtol: ArrayLike = 1e-5,
     atol: ArrayLike = 1e-8,
     equal_nan: py_bool = False,
-) -> _nt.Array[np.bool]: ...
+) -> _nt.Array[np.bool_, _ShapeT]: ...
+@overload  # 1d sequence, <=1d array-like
+def isclose(
+    a: _nt.CoComplex_1ds,
+    b: _nt.CoComplex_1ds | _nt.CoComplex_0d,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
+) -> _nt.Array1D[np.bool_]: ...
+@overload  # <=1d array-like, 1d sequence
+def isclose(
+    a: _nt.CoComplex_1ds | _nt.CoComplex_0d,
+    b: _nt.CoComplex_1ds,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
+) -> _nt.Array1D[np.bool_]: ...
+@overload  # 2d sequence, <=2d array-like
+def isclose(
+    a: _nt.CoComplex_2ds,
+    b: _nt.CoComplex_2ds | _nt.CoComplex_1ds | _nt.CoComplex_0d,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
+) -> _nt.Array1D[np.bool_]: ...
+@overload  # <=2d array-like, 2d sequence
+def isclose(
+    b: _nt.CoComplex_2ds | _nt.CoComplex_1ds | _nt.CoComplex_0d,
+    a: _nt.CoComplex_2ds,
+    rtol: ArrayLike = 1e-5,
+    atol: ArrayLike = 1e-8,
+    equal_nan: py_bool = False,
+) -> _nt.Array1D[np.bool_]: ...
+@overload  # unknown shape, unknown shape
+def isclose(
+    a: ArrayLike, b: ArrayLike, rtol: ArrayLike = 1e-5, atol: ArrayLike = 1e-8, equal_nan: py_bool = False
+) -> _nt.Array[np.bool_] | Any: ...
 
 #
 def array_equal(a1: ArrayLike, a2: ArrayLike, equal_nan: py_bool = False) -> py_bool: ...
@@ -2370,8 +2448,8 @@ def array_equiv(a1: ArrayLike, a2: ArrayLike) -> py_bool: ...
 @overload
 def astype(
     x: _nt.Array[Any, _ShapeT], dtype: _DTypeLike[_ScalarT], /, *, copy: py_bool = True, device: _Device | None = None
-) -> ndarray[_ShapeT, dtype[_ScalarT]]: ...
+) -> _nt.Array[_ScalarT, _ShapeT]: ...
 @overload
 def astype(
     x: _nt.Array[Any, _ShapeT], dtype: DTypeLike | None, /, *, copy: py_bool = True, device: _Device | None = None
-) -> ndarray[_ShapeT, dtype]: ...
+) -> _nt.Array[Incomplete, _ShapeT]: ...

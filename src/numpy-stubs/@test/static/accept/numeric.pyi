@@ -25,14 +25,14 @@ AR_O: _nt.Array[np.object_]
 assert_type(np.count_nonzero(i8), np.intp)
 assert_type(np.count_nonzero(AR_i8), np.intp)
 assert_type(np.count_nonzero(ints), np.intp)
-assert_type(np.count_nonzero(AR_i8, keepdims=True), Any)
+assert_type(np.count_nonzero(AR_i8, keepdims=True), np.intp)
 assert_type(np.count_nonzero(AR_i8, axis=0), Any)
 
 assert_type(np.isfortran(i8), bool)
 assert_type(np.isfortran(AR_i8), bool)
 
-assert_type(np.argwhere(i8), _nt.Array[np.intp])
-assert_type(np.argwhere(AR_i8), _nt.Array[np.intp])
+assert_type(np.argwhere(i8), _nt.Array2D[np.intp])
+assert_type(np.argwhere(AR_i8), _nt.Array2D[np.intp])
 
 assert_type(np.flatnonzero(i8), _nt.Array1D[np.intp])
 assert_type(np.flatnonzero(AR_i8), _nt.Array1D[np.intp])
@@ -121,7 +121,7 @@ assert_type(np.allclose(AR_i8, AR_i8), bool)
 
 assert_type(np.isclose(i8, i8), np.bool)
 assert_type(np.isclose(i8, AR_i8), _nt.Array[np.bool])
-assert_type(np.isclose(ints, AR_i8), _nt.Array[np.bool])
+assert_type(np.isclose(ints, AR_i8), _nt.Array1D[np.bool])
 assert_type(np.isclose(AR_i8, AR_i8), _nt.Array[np.bool])
 
 assert_type(np.array_equal(i8, AR_i8), bool)
