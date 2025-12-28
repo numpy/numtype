@@ -1355,7 +1355,7 @@ def fromstring(
     *,
     sep: str,
     like: _CanArrayFunc | None = None,
-) -> _nt.Array[np.float64]: ...
+) -> _nt.Array1D[np.float64]: ...
 @overload
 def fromstring(
     string: bytes | str,
@@ -1364,7 +1364,7 @@ def fromstring(
     *,
     sep: str,
     like: _CanArrayFunc | None = None,
-) -> _nt.Array[_ScalarT]: ...
+) -> _nt.Array1D[_ScalarT]: ...
 @overload
 def fromstring(
     string: bytes | str,
@@ -1373,7 +1373,7 @@ def fromstring(
     *,
     sep: str,
     like: _nt.Array[_ScalarT],
-) -> _nt.Array[_ScalarT]: ...
+) -> _nt.Array1D[_ScalarT]: ...
 @overload
 def fromstring(
     string: bytes | str,
@@ -1382,13 +1382,13 @@ def fromstring(
     *,
     sep: str,
     like: _CanArrayFunc | None = None,
-) -> _nt.Array[Incomplete]: ...
+) -> _nt.Array1D[Incomplete]: ...
 
 #
 @overload
 def fromfile(
     file: _ToFile, *, count: CanIndex = -1, sep: str = "", offset: CanIndex = 0, like: _CanArrayFunc | None = None
-) -> _nt.Array[np.float64]: ...
+) -> _nt.Array1D[np.float64]: ...
 @overload
 def fromfile(
     file: _ToFile,
@@ -1398,7 +1398,7 @@ def fromfile(
     offset: CanIndex = 0,
     *,
     like: _CanArrayFunc | None = None,
-) -> _nt.Array[_ScalarT]: ...
+) -> _nt.Array1D[_ScalarT]: ...
 @overload
 def fromfile(
     file: _ToFile,
@@ -1408,7 +1408,7 @@ def fromfile(
     offset: CanIndex = 0,
     *,
     like: _CanArrayFunc | None = None,
-) -> _nt.Array[Incomplete]: ...
+) -> _nt.Array1D[Incomplete]: ...
 
 #
 @overload
@@ -1424,7 +1424,7 @@ def fromiter(
 @overload
 def frombuffer(
     buffer: Buffer, *, count: CanIndex = -1, offset: CanIndex = 0, like: _CanArrayFunc | None = None
-) -> _nt.Array[np.float64]: ...
+) -> _nt.Array1D[np.float64]: ...
 @overload
 def frombuffer(
     buffer: Buffer,
@@ -1433,7 +1433,7 @@ def frombuffer(
     offset: CanIndex = 0,
     *,
     like: _CanArrayFunc | None = None,
-) -> _nt.Array[_ScalarT]: ...
+) -> _nt.Array1D[_ScalarT]: ...
 @overload
 def frombuffer(
     buffer: Buffer,
@@ -1442,7 +1442,7 @@ def frombuffer(
     offset: CanIndex = 0,
     *,
     like: _CanArrayFunc | None = None,
-) -> _nt.Array[Incomplete]: ...
+) -> _nt.Array1D[Incomplete]: ...
 
 #
 def from_dlpack(x: _CanDLPack, /, *, copy: py_bool | None = None, device: _Device | None = None) -> _nt.Array: ...
@@ -1765,7 +1765,7 @@ def count_nonzero(a: npt.ArrayLike, /) -> np.intp: ...
 #
 def bincount(
     x: _nt.CoInteger_nd, /, weights: _nt.CoFloating_nd | None = None, minlength: CanIndex = 0
-) -> _nt.Array[np.intp]: ...
+) -> _nt.Array1D[np.intp]: ...
 
 #
 @overload  # 1d -> 0d

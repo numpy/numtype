@@ -89,7 +89,7 @@ assert_type(np.vdot(AR_u1, 1), np.signedinteger)
 assert_type(np.vdot(AR_LIKE_f, AR_i8), np.floating | np.signedinteger)
 assert_type(np.vdot(1.5j, 1), np.inexact | np.signedinteger)
 
-assert_type(np.bincount(AR_i8), _nt.Array[np.intp])
+assert_type(np.bincount(AR_i8), _nt.Array1D[np.intp])
 
 assert_type(np.copyto(AR_f8, [1.0, 1.5, 1.6]), None)
 
