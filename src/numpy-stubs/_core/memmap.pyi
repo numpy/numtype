@@ -12,7 +12,7 @@ from typing import (
     overload,
     type_check_only,
 )
-from typing_extensions import TypeVar
+from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np
@@ -24,9 +24,9 @@ __all__ = ["memmap"]
 
 ###
 
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=Any, covariant=True)
-_DType_co = TypeVar("_DType_co", bound=np.dtype, default=np.dtype, covariant=True)
-_ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.Shape, default=_nt.AnyShape, covariant=True)
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[Any], default=np.dtype[Any], covariant=True)
+_ScalarT = TypeVar("_ScalarT", bound=np.generic[Any])
 
 _Mode: TypeAlias = L["r", "c", "r+", "w+"]
 _ToMode: TypeAlias = L["readonly", "r", "copyonwrite", "c", "readwrite", "r+", "write", "w+"]
@@ -40,7 +40,7 @@ class _SupportsFileMethodsRW(SupportsWrite[bytes], Protocol):
 
 ###
 
-class memmap(np.ndarray[_ShapeT_co, _DType_co], Generic[_ShapeT_co, _DType_co]):
+class memmap(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTypeT_co]):
     __array_priority__: ClassVar[float] = -100.0  # pyright: ignore[reportIncompatibleMethodOverride]
 
     filename: Final[str | None]
@@ -61,12 +61,12 @@ class memmap(np.ndarray[_ShapeT_co, _DType_co], Generic[_ShapeT_co, _DType_co]):
     def __new__(
         subtype,
         filename: _ToFileName,
-        dtype: _DType_co,
+        dtype: _DTypeT_co,
         mode: _ToMode = "r+",
         offset: int = 0,
         shape: _ShapeLike | None = None,
         order: _OrderKACF = "C",
-    ) -> memmap[Incomplete, _DType_co]: ...
+    ) -> memmap[Incomplete, _DTypeT_co]: ...
     @overload
     def __new__(
         subtype,
@@ -87,6 +87,15 @@ class memmap(np.ndarray[_ShapeT_co, _DType_co], Generic[_ShapeT_co, _DType_co]):
         shape: int | tuple[int, ...] | None = None,
         order: _OrderKACF = "C",
     ) -> Self: ...
+
+    #
+    @override
+    def __array_wrap__(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        array: memmap[_ShapeT_co, _DTypeT_co],  # type: ignore[override]
+        context: tuple[np.ufunc, tuple[Any, ...], int] | None = None,
+        return_scalar: bool = False,
+    ) -> Any: ...
 
     #
     def flush(self) -> None: ...
