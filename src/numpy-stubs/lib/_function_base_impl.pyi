@@ -325,7 +325,7 @@ def asarray_chkfinite(a: object, dtype: _DTypeLike[_ScalarT], order: _Order | No
 @overload
 def asarray_chkfinite(a: object, dtype: None = None, order: _Order | None = None) -> _nt.Array[Incomplete]: ...
 @overload
-def asarray_chkfinite(a: object, dtype: DTypeLike, order: _Order | None = None) -> _nt.Array[Incomplete]: ...
+def asarray_chkfinite(a: object, dtype: DTypeLike | None, order: _Order | None = None) -> _nt.Array[Incomplete]: ...
 
 #
 @overload
@@ -626,7 +626,7 @@ def cov(
     fweights: _nt.ToInteger_1d | None = None,
     aweights: _nt.CoFloating_1d | None = None,
     *,
-    dtype: DTypeLike,
+    dtype: DTypeLike | None,
 ) -> _nt.Array[Incomplete]: ...
 
 #

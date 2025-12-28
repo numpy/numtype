@@ -518,7 +518,7 @@ def empty(
 @overload  # 1d shape, unknown dtype
 def empty(
     shape: _ShapeLike1D,
-    dtype: npt.DTypeLike = None,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -554,7 +554,7 @@ def empty(
 @overload  # known shape, unknown scalar-type
 def empty(
     shape: _AnyShapeT,
-    dtype: npt.DTypeLike = None,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -590,7 +590,7 @@ def empty(
 @overload  # unknown shape, unknown dtype
 def empty(
     shape: _ShapeLike,
-    dtype: npt.DTypeLike = ...,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -601,7 +601,7 @@ def empty(
 @overload  # 1d shape, default dtype (float64)
 def zeros(
     shape: _ShapeLike1D,
-    dtype: _nt.ToDTypeFloat64 = ...,
+    dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -628,7 +628,7 @@ def zeros(
 @overload  # 1d shape, unknown dtype
 def zeros(
     shape: _ShapeLike1D,
-    dtype: npt.DTypeLike = ...,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -664,7 +664,7 @@ def zeros(
 @overload  # known shape, unknown scalar-type
 def zeros(
     shape: _AnyShapeT,
-    dtype: npt.DTypeLike = ...,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -700,7 +700,7 @@ def zeros(
 @overload  # unknown shape, unknown dtype
 def zeros(
     shape: _ShapeLike,
-    dtype: npt.DTypeLike = ...,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -1350,7 +1350,7 @@ def asfortranarray(
 @overload
 def fromstring(
     string: bytes | str,
-    dtype: type[_nt.JustFloat] | None = ...,
+    dtype: type[_nt.JustFloat] | None = float,  # noqa: PYI011
     count: CanIndex = -1,
     *,
     sep: str,
@@ -1367,11 +1367,21 @@ def fromstring(
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromstring(
-    string: bytes | str, dtype: npt.DTypeLike = ..., count: CanIndex = -1, *, sep: str, like: _nt.Array[_ScalarT]
+    string: bytes | str,
+    dtype: npt.DTypeLike | None = float,  # noqa: PYI011
+    count: CanIndex = -1,
+    *,
+    sep: str,
+    like: _nt.Array[_ScalarT],
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromstring(
-    string: bytes | str, dtype: npt.DTypeLike, count: CanIndex = -1, *, sep: str, like: _CanArrayFunc | None = None
+    string: bytes | str,
+    dtype: npt.DTypeLike | None,
+    count: CanIndex = -1,
+    *,
+    sep: str,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.Array[Incomplete]: ...
 
 #
@@ -1392,7 +1402,7 @@ def fromfile(
 @overload
 def fromfile(
     file: _ToFile,
-    dtype: npt.DTypeLike,
+    dtype: npt.DTypeLike | None,
     count: CanIndex = -1,
     sep: str = "",
     offset: CanIndex = 0,
@@ -1407,7 +1417,7 @@ def fromiter(
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def fromiter(
-    iter: Iterable[object], dtype: npt.DTypeLike, count: CanIndex = -1, *, like: _CanArrayFunc | None = None
+    iter: Iterable[object], dtype: npt.DTypeLike | None, count: CanIndex = -1, *, like: _CanArrayFunc | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 #
@@ -1427,7 +1437,7 @@ def frombuffer(
 @overload
 def frombuffer(
     buffer: Buffer,
-    dtype: npt.DTypeLike,
+    dtype: npt.DTypeLike | None,
     count: CanIndex = -1,
     offset: CanIndex = 0,
     *,
@@ -1650,10 +1660,12 @@ def shares_memory(a: object, b: object, /, max_work: L[0, -1] = -1) -> bool: ...
 def may_share_memory(a: object, b: object, /, max_work: L[0, -1] = 0) -> bool: ...
 
 #
-def can_cast(from_: npt.ArrayLike | npt.DTypeLike, to: npt.DTypeLike, casting: _CastingKind = "safe") -> bool: ...
+def can_cast(
+    from_: npt.ArrayLike | npt.DTypeLike | None, to: npt.DTypeLike | None, casting: _CastingKind = "safe"
+) -> bool: ...
 def min_scalar_type(a: npt.ArrayLike, /) -> np.dtype[Incomplete]: ...
-def result_type(*arrays_and_dtypes: npt.ArrayLike | npt.DTypeLike) -> np.dtype[Incomplete]: ...
-def promote_types(type1: npt.DTypeLike, type2: npt.DTypeLike, /) -> np.dtype[Incomplete]: ...
+def result_type(*arrays_and_dtypes: npt.ArrayLike | npt.DTypeLike | None) -> np.dtype[Incomplete]: ...
+def promote_types(type1: npt.DTypeLike | None, type2: npt.DTypeLike | None, /) -> np.dtype[Incomplete]: ...
 
 #
 @overload
@@ -2011,4 +2023,4 @@ def _make_extobj() -> CapsuleType: ...
 def _monotonicity(x: _nt.CoFloating_nd) -> L[0, 1]: ...
 def _place(input: npt.ArrayLike, mask: _nt.ToBool_nd, vals: npt.ArrayLike) -> None: ...
 def _reconstruct(subtype: type[_nt.Array], shape: _AnyShapeT, dtype: _DTypeT) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
-def _vec_string(a: _ArrayLikeAnyString_co, dtype: npt.DTypeLike, attr: str, /) -> _nt.Array[Incomplete]: ...
+def _vec_string(a: _ArrayLikeAnyString_co, dtype: npt.DTypeLike | None, attr: str, /) -> _nt.Array[Incomplete]: ...

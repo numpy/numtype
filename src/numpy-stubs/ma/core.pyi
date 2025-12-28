@@ -826,9 +826,9 @@ def anom(a: ArrayLike, axis: CanIndex | None, dtype: _DTypeLike[_ScalarT]) -> _n
 @overload  # a: unknown array-like, dtype: dtype-like (keyword)
 def anom(a: ArrayLike, axis: CanIndex | None = None, *, dtype: _DTypeLike[_ScalarT]) -> _nt.MArray[_ScalarT]: ...
 @overload  # a: unknown array-like, dtype: unknown dtype-like (positional)
-def anom(a: ArrayLike, axis: CanIndex | None, dtype: DTypeLike) -> _nt.MArray[Incomplete]: ...
+def anom(a: ArrayLike, axis: CanIndex | None, dtype: DTypeLike | None) -> _nt.MArray[Incomplete]: ...
 @overload  # a: unknown array-like, dtype: unknown dtype-like (keyword)
-def anom(a: ArrayLike, axis: CanIndex | None = None, *, dtype: DTypeLike) -> _nt.MArray[Incomplete]: ...
+def anom(a: ArrayLike, axis: CanIndex | None = None, *, dtype: DTypeLike | None) -> _nt.MArray[Incomplete]: ...
 
 anomalies = anom
 
@@ -1662,7 +1662,7 @@ def empty(
 @overload  # 1d shape, unknown dtype
 def empty(
     shape: _ShapeLike1D,
-    dtype: DTypeLike = None,
+    dtype: DTypeLike | None = None,
     order: np._OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -1706,7 +1706,7 @@ def empty(
 @overload  # known shape, unknown scalar-type
 def empty(
     shape: _ShapeT,
-    dtype: DTypeLike = None,
+    dtype: DTypeLike | None = None,
     order: np._OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -1750,7 +1750,7 @@ def empty(
 @overload  # unknown shape, unknown dtype
 def empty(
     shape: _ShapeLike,
-    dtype: DTypeLike = ...,
+    dtype: DTypeLike | None = None,
     order: np._OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -2160,7 +2160,12 @@ def frombuffer(
 ) -> _nt.MArray[_ScalarT]: ...
 @overload
 def frombuffer(
-    buffer: Buffer, dtype: DTypeLike, count: CanIndex = -1, offset: CanIndex = 0, *, like: _CanArrayFunc | None = None
+    buffer: Buffer,
+    dtype: DTypeLike | None,
+    count: CanIndex = -1,
+    offset: CanIndex = 0,
+    *,
+    like: _CanArrayFunc | None = None,
 ) -> _nt.MArray[Incomplete]: ...
 
 # keep roughly in sync with `_core.numeric.fromfunction`
@@ -2251,7 +2256,7 @@ def indices(
 @overload
 def indices(
     dimensions: _nt.ToInteger_1d,
-    dtype: DTypeLike = ...,
+    dtype: DTypeLike | None = None,
     sparse: L[False] = False,
     *,
     fill_value: complex | None = None,
@@ -2260,7 +2265,7 @@ def indices(
 @overload
 def indices(
     dimensions: _nt.ToInteger_1d,
-    dtype: DTypeLike,
+    dtype: DTypeLike | None,
     sparse: L[True],
     *,
     fill_value: complex | None = None,
@@ -2269,7 +2274,7 @@ def indices(
 @overload
 def indices(
     dimensions: _nt.ToInteger_1d,
-    dtype: DTypeLike = ...,
+    dtype: DTypeLike | None = None,
     *,
     sparse: L[True],
     fill_value: complex | None = None,

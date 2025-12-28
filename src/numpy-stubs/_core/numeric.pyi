@@ -630,7 +630,7 @@ True_: Final[np.bool[L[True]]] = ...
 @overload  # 1d shape, default dtype (float64)
 def ones(
     shape: _ShapeLike1D,
-    dtype: _nt.ToDTypeFloat64 = ...,
+    dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -657,7 +657,7 @@ def ones(
 @overload  # 1d shape, unknown dtype
 def ones(
     shape: _ShapeLike1D,
-    dtype: npt.DTypeLike = ...,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -666,7 +666,7 @@ def ones(
 @overload  # known shape, default dtype (float64)
 def ones(
     shape: _AnyShapeT,
-    dtype: _nt.ToDTypeFloat64 = ...,
+    dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -693,7 +693,7 @@ def ones(
 @overload  # known shape, unknown scalar-type
 def ones(
     shape: _AnyShapeT,
-    dtype: npt.DTypeLike = ...,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -702,7 +702,7 @@ def ones(
 @overload  # unknown shape, default dtype
 def ones(
     shape: _ShapeLike,
-    dtype: _nt.ToDTypeFloat64 = ...,
+    dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -729,7 +729,7 @@ def ones(
 @overload  # unknown shape, unknown dtype
 def ones(
     shape: _ShapeLike,
-    dtype: npt.DTypeLike = ...,
+    dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
     device: _Device | None = None,
@@ -2176,7 +2176,7 @@ def roll(a: _ArrayLike[_ScalarT], shift: _ShapeLike, axis: _ShapeLike | None = N
 def roll(a: ArrayLike, shift: _ShapeLike, axis: _ShapeLike | None = None) -> _nt.Array: ...
 
 #
-def rollaxis(a: _nt.Array[_ScalarT], axis: int, start: int = ...) -> _nt.Array[_ScalarT]: ...
+def rollaxis(a: _nt.Array[_ScalarT], axis: int, start: int = 0) -> _nt.Array[_ScalarT]: ...
 def moveaxis(a: _nt.Array[_ScalarT], source: _ShapeLike, destination: _ShapeLike) -> _nt.Array[_ScalarT]: ...
 
 #
@@ -2269,7 +2269,9 @@ def cross(
 #
 @overload
 def indices(
-    dimensions: _nt.ToInteger_1d, dtype: type[_nt.JustInt] = ..., sparse: L[False] = False
+    dimensions: _nt.ToInteger_1d,
+    dtype: type[_nt.JustInt] = int,  # noqa: PYI011
+    sparse: L[False] = False,
 ) -> _nt.Array[np.intp]: ...
 @overload
 def indices(
@@ -2277,7 +2279,10 @@ def indices(
 ) -> tuple[_nt.Array[np.intp], ...]: ...
 @overload
 def indices(
-    dimensions: _nt.ToInteger_1d, dtype: type[_nt.JustInt] = ..., *, sparse: L[True]
+    dimensions: _nt.ToInteger_1d,
+    dtype: type[_nt.JustInt] = int,  # noqa: PYI011
+    *,
+    sparse: L[True],
 ) -> tuple[_nt.Array[np.intp], ...]: ...
 @overload
 def indices(
@@ -2288,18 +2293,23 @@ def indices(
     dimensions: _nt.ToInteger_1d, dtype: _DTypeLike[_ScalarT], sparse: L[True]
 ) -> tuple[_nt.Array[_ScalarT], ...]: ...
 @overload
-def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike = ..., sparse: L[False] = False) -> _nt.Array: ...
+def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike | None = int, sparse: L[False] = False) -> _nt.Array: ...  # noqa: PYI011
 @overload
-def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike, sparse: L[True]) -> tuple[_nt.Array, ...]: ...
+def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike | None, sparse: L[True]) -> tuple[_nt.Array, ...]: ...
 @overload
-def indices(dimensions: _nt.ToInteger_1d, dtype: DTypeLike = ..., *, sparse: L[True]) -> tuple[_nt.Array, ...]: ...
+def indices(
+    dimensions: _nt.ToInteger_1d,
+    dtype: DTypeLike | None = int,  # noqa: PYI011
+    *,
+    sparse: L[True],
+) -> tuple[_nt.Array, ...]: ...
 
 # keep in sync with `ma.core.fromfunction`
 def fromfunction(
     function: Callable[..., _T],
     shape: Sequence[int],
     *,
-    dtype: DTypeLike = ...,
+    dtype: DTypeLike | None = float,  # noqa: PYI011
     like: _SupportsArrayFunc | None = None,
     **kwargs: object,
 ) -> _T: ...
@@ -2319,11 +2329,11 @@ def identity(
     n: int, dtype: _DTypeLike[_ScalarT], *, like: _SupportsArrayFunc | None = None
 ) -> _nt.Array2D[_ScalarT]: ...
 @overload
-def identity(n: int, dtype: DTypeLike, *, like: _SupportsArrayFunc | None = None) -> _nt.Array2D: ...
+def identity(n: int, dtype: DTypeLike | None = None, *, like: _SupportsArrayFunc | None = None) -> _nt.Array2D: ...
 
 #
 def allclose(
-    a: ArrayLike, b: ArrayLike, rtol: ArrayLike = ..., atol: ArrayLike = ..., equal_nan: py_bool = ...
+    a: ArrayLike, b: ArrayLike, rtol: ArrayLike = 1e-5, atol: ArrayLike = 1e-8, equal_nan: py_bool = False
 ) -> py_bool: ...
 
 #
@@ -2363,5 +2373,5 @@ def astype(
 ) -> ndarray[_ShapeT, dtype[_ScalarT]]: ...
 @overload
 def astype(
-    x: _nt.Array[Any, _ShapeT], dtype: DTypeLike, /, *, copy: py_bool = True, device: _Device | None = None
+    x: _nt.Array[Any, _ShapeT], dtype: DTypeLike | None, /, *, copy: py_bool = True, device: _Device | None = None
 ) -> ndarray[_ShapeT, dtype]: ...
