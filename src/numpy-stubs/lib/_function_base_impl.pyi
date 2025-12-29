@@ -1,5 +1,5 @@
 import datetime as dt
-from _typeshed import Incomplete
+from _typeshed import ConvertibleToInt, Incomplete
 from collections.abc import Callable, Iterable, Iterator, Sequence
 from typing import (
     Any,
@@ -879,7 +879,7 @@ def extract(condition: ArrayLike, arr: _nt.Sequence1ND[str]) -> _nt.Array1D[np.s
 def extract(condition: ArrayLike, arr: ArrayLike) -> _nt.Array1D[Incomplete]: ...
 
 #
-def place(arr: _nt.Array[Incomplete], mask: ArrayLike, vals: Incomplete) -> None: ...
+def place(arr: np.ndarray, mask: ConvertibleToInt | Sequence[ConvertibleToInt], vals: ArrayLike) -> None: ...
 
 #
 @overload
