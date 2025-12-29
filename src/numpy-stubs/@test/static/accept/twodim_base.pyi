@@ -29,9 +29,9 @@ assert_type(np.fliplr(AR_LIKE_b), _nt.Array)
 assert_type(np.flipud(AR_b), _nt.Array[np.bool])
 assert_type(np.flipud(AR_LIKE_b), _nt.Array)
 
-assert_type(np.eye(10), _nt.Array[np.float64])
-assert_type(np.eye(10, M=20, dtype=np.int64), _nt.Array[np.int64])
-assert_type(np.eye(10, k=2, dtype=int), _nt.Array)
+assert_type(np.eye(10), _nt.Array2D[np.float64])
+assert_type(np.eye(10, M=20, dtype=np.int64), _nt.Array2D[np.int64])
+assert_type(np.eye(10, k=2, dtype=int), _nt.Array2D)
 
 assert_type(np.diag(AR_b), _nt.Array[np.bool])
 assert_type(np.diag(AR_LIKE_b, k=0), _nt.Array2D)

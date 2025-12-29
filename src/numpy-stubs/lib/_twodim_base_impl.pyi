@@ -75,7 +75,7 @@ def eye(
     *,
     device: _Device | None = None,
     like: _Like | None = None,
-) -> _nt.Array[np.float64]: ...
+) -> _nt.Array2D[np.float64]: ...
 @overload
 def eye(
     N: int,
@@ -86,7 +86,7 @@ def eye(
     *,
     device: _Device | None = None,
     like: _Like | None = None,
-) -> _nt.Array[_ScalarT]: ...
+) -> _nt.Array2D[_ScalarT]: ...
 @overload
 def eye(
     N: int,
@@ -97,7 +97,7 @@ def eye(
     order: _OrderCF = "C",
     device: _Device | None = None,
     like: _Like | None = None,
-) -> _nt.Array[_ScalarT]: ...
+) -> _nt.Array2D[_ScalarT]: ...
 @overload
 def eye(
     N: int,
@@ -108,11 +108,11 @@ def eye(
     *,
     device: _Device | None = None,
     like: _Like | None = None,
-) -> _nt.Array: ...
+) -> _nt.Array2D: ...
 
 #
 @overload
-def diag(v: _ArrayNoD[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...  # type: ignore[overload-overlap]
+def diag(v: _ArrayNoD[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...  # type: ignore[overload-overlap]  # false positive
 @overload
 def diag(v: _nt.Array2D[_ScalarT] | Sequence[Sequence[_ScalarT]], k: int = 0) -> _nt.Array1D[_ScalarT]: ...
 @overload
@@ -126,7 +126,7 @@ def diag(v: _nt._ToArray_nd[_ScalarT], k: int = 0) -> _nt.Array[_ScalarT]: ...
 @overload
 def diag(v: _nt.ToGeneric_nd, k: int = 0) -> _nt.Array: ...
 
-#
+# keep in sync with `numpy.ma.extras.diagflat`
 @overload
 def diagflat(v: _nt._ToArray_nd[_ScalarT], k: int = 0) -> _nt.Array2D[_ScalarT]: ...
 @overload
