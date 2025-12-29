@@ -671,85 +671,103 @@ def diff(
 #
 @overload  # float scalar
 def interp(
-    x: _nt.CoFloating_0d,
+    x: float | _nt.co_integer,
     xp: _nt.CoFloating_nd,
     fp: _nt.CoFloating_nd,
-    left: _nt.CoFloating_0d | None = None,
-    right: _nt.CoFloating_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
+    left: float | _nt.co_integer | None = None,
+    right: float | _nt.co_integer | None = None,
+    period: float | _nt.co_integer | None = None,
 ) -> np.float64: ...
-@overload  # float array
-def interp(
-    x: _nt.CoFloating_1nd,
-    xp: _nt.CoFloating_nd,
-    fp: _nt.CoFloating_nd,
-    left: _nt.CoFloating_0d | None = None,
-    right: _nt.CoFloating_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
-) -> _nt.Array[np.float64]: ...
-@overload  # float scalar or array
-def interp(
-    x: _nt.CoFloating_nd,
-    xp: _nt.CoFloating_nd,
-    fp: _nt.CoFloating_nd,
-    left: _nt.CoFloating_0d | None = None,
-    right: _nt.CoFloating_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
-) -> _nt.Array[np.float64] | np.float64: ...
 @overload  # complex scalar
 def interp(
-    x: _nt.CoFloating_0d,
+    x: float | _nt.co_integer,
     xp: _nt.CoFloating_nd,
-    fp: _ArrayLike[np.complexfloating],
+    fp: _nt.ToComplex128_1ds,
     left: _nt.CoComplex_0d | None = None,
     right: _nt.CoComplex_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
+    period: float | _nt.co_integer | None = None,
 ) -> np.complex128: ...
-@overload  # complex or float scalar
+@overload  # float array
 def interp(
-    x: _nt.CoFloating_0d,
+    x: _nt.Array[_nt.co_float, _ShapeT],
     xp: _nt.CoFloating_nd,
-    fp: Sequence[complex | np.complexfloating],
-    left: _nt.CoComplex_0d | None = None,
-    right: _nt.CoComplex_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
-) -> _nt.inexact64: ...
+    fp: _nt.CoFloating_nd,
+    left: float | _nt.co_integer | None = None,
+    right: float | _nt.co_integer | None = None,
+    period: float | _nt.co_integer | None = None,
+) -> _nt.Array[np.float64, _ShapeT]: ...
 @overload  # complex array
 def interp(
-    x: _nt.CoFloating_1nd,
+    x: _nt.Array[_nt.co_float, _ShapeT],
     xp: _nt.CoFloating_nd,
-    fp: _ArrayLike[np.complexfloating],
+    fp: _nt.ToComplex128_1ds,
     left: _nt.CoComplex_0d | None = None,
     right: _nt.CoComplex_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
-) -> _nt.Array[np.complex128]: ...
-@overload  # complex or float array
+    period: float | _nt.co_integer | None = None,
+) -> _nt.Array[np.complex128, _ShapeT]: ...
+@overload  # float sequence
 def interp(
-    x: _nt.CoFloating_1nd,
+    x: Sequence[float | _nt.co_integer],
     xp: _nt.CoFloating_nd,
-    fp: Sequence[complex | np.complexfloating],
+    fp: _nt.CoFloating_nd,
+    left: float | _nt.co_integer | None = None,
+    right: float | _nt.co_integer | None = None,
+    period: float | _nt.co_integer | None = None,
+) -> _nt.Array1D[np.float64]: ...
+@overload  # complex sequence
+def interp(
+    x: Sequence[float | _nt.co_integer],
+    xp: _nt.CoFloating_nd,
+    fp: _nt.ToComplex128_1ds,
     left: _nt.CoComplex_0d | None = None,
     right: _nt.CoComplex_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
-) -> _nt.Array[_nt.inexact64]: ...
-@overload  # complex scalar or array
+    period: float | _nt.co_integer | None = None,
+) -> _nt.Array1D[np.complex128]: ...
+@overload  # float array-like
+def interp(
+    x: _nt.Sequence1ND[float | _nt.co_integer],
+    xp: _nt.CoFloating_nd,
+    fp: _nt.CoFloating_nd,
+    left: float | _nt.co_integer | None = None,
+    right: float | _nt.co_integer | None = None,
+    period: float | _nt.co_integer | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload  # complex array-like
+def interp(
+    x: _nt.Sequence1ND[float | _nt.co_integer],
+    xp: _nt.CoFloating_nd,
+    fp: _nt.ToComplex128_1ds,
+    left: _nt.CoComplex_0d | None = None,
+    right: _nt.CoComplex_0d | None = None,
+    period: float | _nt.co_integer | None = None,
+) -> _nt.Array[np.complex128]: ...
+@overload  # float scalar/array-like
 def interp(
     x: _nt.CoFloating_nd,
     xp: _nt.CoFloating_nd,
-    fp: _ArrayLike[np.complexfloating],
+    fp: _nt.CoFloating_nd,
+    left: float | _nt.co_integer | None = None,
+    right: float | _nt.co_integer | None = None,
+    period: float | _nt.co_integer | None = None,
+) -> _nt.Array[np.float64] | np.float64: ...
+@overload  # complex scalar/array-like
+def interp(
+    x: _nt.CoFloating_nd,
+    xp: _nt.CoFloating_nd,
+    fp: _nt.ToComplex_1d,
     left: _nt.CoComplex_0d | None = None,
     right: _nt.CoComplex_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
+    period: float | _nt.co_integer | None = None,
 ) -> _nt.Array[np.complex128] | np.complex128: ...
-@overload  # complex or float scalar or array
+@overload  # float/complex scalar/array-like
 def interp(
     x: _nt.CoFloating_nd,
     xp: _nt.CoFloating_nd,
     fp: _nt.CoComplex_nd,
     left: _nt.CoComplex_0d | None = None,
     right: _nt.CoComplex_0d | None = None,
-    period: _nt.CoFloating_0d | None = None,
-) -> _nt.Array[_nt.inexact64] | _nt.inexact64: ...
+    period: float | _nt.co_integer | None = None,
+) -> _nt.Array[np.complex128 | np.float64] | np.complex128 | np.float64: ...
 
 #
 @overload  # 0d T: floating -> 0d T
