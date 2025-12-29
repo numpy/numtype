@@ -127,7 +127,6 @@ _PercentileMethod: TypeAlias = L[
     "nearest",
 ]
 _Indexing: TypeAlias = L["xy", "ij"]
-_Trim: TypeAlias = L["f", "b", "fb", "bf"]
 
 # The resulting value will be used as `y[cond] = func(vals, *args, **kw)`, so in can
 # return any (usually 1d) array-like or scalar-like compatible with the input.
@@ -135,13 +134,16 @@ _PiecewiseFunction: TypeAlias = Callable[Concatenate[_nt.Array[_ScalarT], _Tss],
 _PiecewiseFunctions: TypeAlias = _SizedIterable[_PiecewiseFunction[_ScalarT, _Tss] | np.generic | complex]
 
 @type_check_only
-class _CanRMulFloat(Protocol[_T_co]):
-    def __rmul__(self, other: float, /) -> _T_co: ...
+class _TrimZerosSequence(Protocol[_T_co]):
+    def __len__(self, /) -> int: ...
+    @overload
+    def __getitem__(self, key: int, /) -> object: ...
+    @overload
+    def __getitem__(self, key: slice, /) -> _T_co: ...
 
 @type_check_only
-class _CanLenAndGetSlice(Protocol[_T_co]):
-    def __len__(self) -> int: ...
-    def __getitem__(self, key: slice, /) -> _T_co: ...
+class _CanRMulFloat(Protocol[_T_co]):
+    def __rmul__(self, other: float, /) -> _T_co: ...
 
 @type_check_only
 class _SizedIterable(Protocol[_T_co]):
@@ -854,12 +856,9 @@ def sort_complex(a: _nt.Array[np.longdouble, _ShapeT]) -> _nt.Array[np.clongdoub
 def sort_complex(a: _ArrayLike[np.longdouble]) -> _nt.Array[np.clongdouble]: ...
 
 #
-@overload
-def trim_zeros(filt: _CanLenAndGetSlice[_T], trim: _Trim = "fb", axis: None = None) -> _T: ...  # type: ignore[overload-overlap]
-@overload
 def trim_zeros(
-    filt: _nt.ToGeneric_1nd, trim: _Trim = "fb", axis: _ShapeLike | None = None
-) -> _nt.Array[Incomplete]: ...
+    filt: _TrimZerosSequence[_T], trim: L["f", "b", "fb", "bf"] = "fb", axis: _ShapeLike | None = None
+) -> _T: ...
 
 # NOTE: condition is usually boolean, but anything with zero/non-zero semantics works
 @overload
