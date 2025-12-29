@@ -465,15 +465,22 @@ def piecewise(
     **kw: _Tss.kwargs,
 ) -> _nt.Array[_ScalarT]: ...
 
-#
+# NOTE: unlike `extract`, passing non-boolean conditions for `condlist` will raise an
+# error at runtime
 @overload
 def select(
-    condlist: Sequence[ArrayLike], choicelist: Sequence[_ArrayLike[_ScalarT]], default: ArrayLike = 0
+    condlist: _SizedIterable[_nt.ToBool_nd], choicelist: Sequence[_ArrayT], default: ArrayLike = 0
+) -> _ArrayT: ...
+@overload
+def select(
+    condlist: _SizedIterable[_nt.ToBool_nd],
+    choicelist: Sequence[_ArrayLike[_ScalarT]] | _nt.Array[_ScalarT],
+    default: ArrayLike = 0,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def select(
-    condlist: Sequence[ArrayLike], choicelist: Sequence[ArrayLike], default: ArrayLike = 0
-) -> _nt.Array[Incomplete]: ...
+    condlist: _SizedIterable[_nt.ToBool_nd], choicelist: Sequence[ArrayLike], default: ArrayLike = 0
+) -> np.ndarray: ...
 
 #
 @overload
