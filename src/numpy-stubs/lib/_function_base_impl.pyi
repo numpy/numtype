@@ -1,6 +1,6 @@
 import datetime as dt
 from _typeshed import Incomplete
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Iterable, Iterator, Sequence
 from typing import (
     Any,
     Concatenate,
@@ -101,6 +101,11 @@ _PercentileMethod: TypeAlias = L[
 _Indexing: TypeAlias = L["xy", "ij"]
 _Trim: TypeAlias = L["f", "b", "fb", "bf"]
 
+# The resulting value will be used as `y[cond] = func(vals, *args, **kw)`, so in can
+# return any (usually 1d) array-like or scalar-like compatible with the input.
+_PiecewiseFunction: TypeAlias = Callable[Concatenate[_nt.Array[_ScalarT], _Tss], ArrayLike]
+_PiecewiseFunctions: TypeAlias = _SizedIterable[_PiecewiseFunction[_ScalarT, _Tss] | np.generic | complex]
+
 @type_check_only
 class _CanRMulFloat(Protocol[_T_co]):
     def __rmul__(self, other: float, /) -> _T_co: ...
@@ -109,6 +114,11 @@ class _CanRMulFloat(Protocol[_T_co]):
 class _CanLenAndGetSlice(Protocol[_T_co]):
     def __len__(self) -> int: ...
     def __getitem__(self, key: slice, /) -> _T_co: ...
+
+@type_check_only
+class _SizedIterable(Protocol[_T_co]):
+    def __iter__(self) -> Iterator[_T_co]: ...
+    def __len__(self) -> int: ...
 
 ###
 
@@ -426,23 +436,34 @@ def asarray_chkfinite(a: object, dtype: None = None, order: _Order | None = None
 @overload
 def asarray_chkfinite(a: object, dtype: DTypeLike | None, order: _Order | None = None) -> _nt.Array[Incomplete]: ...
 
-#
+# NOTE: Contrary to the documentation, scalars are also accepted and treated as
+# `[condlist]`. And even though the documentation says these should be boolean, in
+# practice anything that `np.array(condlist, dtype=bool)` accepts will work, i.e. any
+# array-like.
+@overload
+def piecewise(
+    x: _nt.Array[_ScalarT, _ShapeT],
+    condlist: ArrayLike,
+    funclist: _PiecewiseFunctions[Any, _Tss],
+    *args: _Tss.args,
+    **kw: _Tss.kwargs,
+) -> _nt.Array[_ScalarT, _ShapeT]: ...
 @overload
 def piecewise(
     x: _ArrayLike[_ScalarT],
-    condlist: _nt.ToBool_nd,
-    funclist: Sequence[Callable[Concatenate[_nt.Array1D[_ScalarT], _Tss], _nt.Array] | _ScalarT | object],
+    condlist: ArrayLike,
+    funclist: _PiecewiseFunctions[Any, _Tss],
     *args: _Tss.args,
     **kw: _Tss.kwargs,
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def piecewise(
     x: ArrayLike,
-    condlist: _nt.ToBool_nd,
-    funclist: Sequence[Callable[Concatenate[_nt.Array1D, _Tss], _nt.Array] | object],
+    condlist: ArrayLike,
+    funclist: _PiecewiseFunctions[_ScalarT, _Tss],
     *args: _Tss.args,
     **kw: _Tss.kwargs,
-) -> _nt.Array[Incomplete]: ...
+) -> _nt.Array[_ScalarT]: ...
 
 #
 @overload
