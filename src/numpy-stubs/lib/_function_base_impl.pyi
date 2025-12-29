@@ -74,6 +74,7 @@ _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT1 = TypeVar("_ScalarT1", bound=np.generic)
 _ScalarT2 = TypeVar("_ScalarT2", bound=np.generic)
+_FloatingT = TypeVar("_FloatingT", bound=np.floating)
 _InexactT = TypeVar("_InexactT", bound=np.inexact)
 _InexactTimeT = TypeVar("_InexactTimeT", bound=np.inexact | np.timedelta64)
 _InexactDateTimeT = TypeVar("_InexactDateTimeT", bound=np.inexact | np.timedelta64 | np.datetime64)
@@ -81,6 +82,7 @@ _ScalarNumericT = TypeVar("_ScalarNumericT", bound=np.inexact | np.timedelta64 |
 _TrapezoidScalarT = TypeVar("_TrapezoidScalarT", bound=np.inexact | np.timedelta64)
 
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
+_ArrayFloatingT = TypeVar("_ArrayFloatingT", bound=_nt.Array[np.floating])
 _ArrayInexactT = TypeVar("_ArrayInexactT", bound=_nt.Array[np.inexact])
 _ArrayNumericT = TypeVar("_ArrayNumericT", bound=_nt.Array[np.inexact | np.timedelta64 | np.object_])
 
@@ -731,14 +733,32 @@ def interp(
 ) -> _nt.Array[_nt.inexact64] | _nt.inexact64: ...
 
 #
-@overload
-def angle(z: _nt.CoComplex_1nd, deg: bool = False) -> _nt.Array[np.floating]: ...
-@overload
-def angle(z: _nt.co_complex | complex, deg: bool = False) -> np.floating: ...
-@overload
-def angle(z: _nt.ToObject_1nd, deg: bool = False) -> _nt.Array[np.object_]: ...
-@overload
-def angle(z: _nt.ToObject_nd, deg: bool = False) -> Incomplete: ...
+@overload  # 0d T: floating -> 0d T
+def angle(z: _FloatingT, deg: bool = False) -> _FloatingT: ...
+@overload  # 0d complex | float | ~integer -> 0d float64
+def angle(z: complex | _nt.co_integer, deg: bool = False) -> np.float64: ...
+@overload  # 0d complex64 -> 0d float32
+def angle(z: np.complex64, deg: bool = False) -> np.float32: ...
+@overload  # 0d clongdouble -> 0d longdouble
+def angle(z: np.clongdouble, deg: bool = False) -> np.longdouble: ...
+@overload  # T: nd floating -> T
+def angle(z: _ArrayFloatingT, deg: bool = False) -> _ArrayFloatingT: ...
+@overload  # nd T: complex128 | ~integer -> nd float64
+def angle(
+    z: _nt.Array[np.complex128 | _nt.co_integer, _ShapeT], deg: bool = False
+) -> _nt.Array[np.float64, _ShapeT]: ...
+@overload  # nd T: complex64 -> nd float32
+def angle(z: _nt.Array[np.complex64, _ShapeT], deg: bool = False) -> _nt.Array[np.float32, _ShapeT]: ...
+@overload  # nd T: clongdouble -> nd longdouble
+def angle(z: _nt.Array[np.clongdouble, _ShapeT], deg: bool = False) -> _nt.Array[np.longdouble, _ShapeT]: ...
+@overload  # 1d complex -> 1d float64
+def angle(z: Sequence[complex], deg: bool = False) -> _nt.Array1D[np.float64]: ...
+@overload  # 2d complex -> 2d float64
+def angle(z: _nt.Sequence2D[complex], deg: bool = False) -> _nt.Array2D[np.float64]: ...
+@overload  # 3d complex -> 3d float64
+def angle(z: _nt.Sequence3D[complex], deg: bool = False) -> _nt.Array3D[np.float64]: ...
+@overload  # fallback
+def angle(z: _nt.CoComplex_nd, deg: bool = False) -> _nt.Array[np.floating] | Any: ...
 
 #
 @overload
