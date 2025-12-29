@@ -69,14 +69,17 @@ _Tss = ParamSpec("_Tss")
 _T = TypeVar("_T")
 _T_co = TypeVar("_T_co", covariant=True)
 
-_ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
 _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _ScalarT1 = TypeVar("_ScalarT1", bound=np.generic)
 _ScalarT2 = TypeVar("_ScalarT2", bound=np.generic)
 _NumberT = TypeVar("_NumberT", bound=np.number)
+_InexactT = TypeVar("_InexactT", bound=np.inexact)
 _InexactDateTimeT = TypeVar("_InexactDateTimeT", bound=np.inexact | np.timedelta64 | np.datetime64)
 _TrapezoidScalarT = TypeVar("_TrapezoidScalarT", bound=np.inexact | np.timedelta64)
+
+_ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
+_ArrayInexactT = TypeVar("_ArrayInexactT", bound=_nt.Array[np.inexact])
 
 _Tuple2: TypeAlias = tuple[_T, _T]
 _ToInt: TypeAlias = CanIndex | SupportsInt
@@ -156,151 +159,244 @@ def flip(m: ArrayLike, axis: int | tuple[int, ...] | None = None) -> _nt.Array[I
 #
 def iterable(y: object) -> TypeIs[Iterable[Any]]: ...
 
-#
-@overload
+# NOTE: This assumes that if `axis` is given the input is at least 2d, and will
+# therefore always return an array.
+# NOTE: This assumes that if `keepdims=True` the input is at least 1d, and will
+# therefore always return an array.
+@overload  # inexact array, keepdims=True
 def average(
-    a: _nt.ToFloat64_nd | _nt.CoInteger_nd,
-    axis: None = None,
-    weights: _nt.CoFloat64_nd | None = None,
+    a: _ArrayInexactT,
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoComplex_nd | None = None,
     returned: L[False] = False,
     *,
-    keepdims: _NoValueType | L[False] = ...,
+    keepdims: L[True],
+) -> _ArrayInexactT: ...
+@overload  # inexact array, returned=True keepdims=True
+def average(
+    a: _ArrayInexactT,
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoComplex_nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[True],
+) -> _Tuple2[_ArrayInexactT]: ...
+@overload  # inexact array-like, axis=None
+def average(
+    a: _ArrayLike[_InexactT],
+    axis: None = None,
+    weights: _nt.CoComplex_nd | None = None,
+    returned: L[False] = False,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> _InexactT: ...
+@overload  # inexact array-like, axis=<given>
+def average(
+    a: _ArrayLike[_InexactT],
+    axis: int | tuple[int, ...],
+    weights: _nt.CoComplex_nd | None = None,
+    returned: L[False] = False,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> _nt.Array[_InexactT]: ...
+@overload  # inexact array-like, keepdims=True
+def average(
+    a: _ArrayLike[_InexactT],
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoComplex_nd | None = None,
+    returned: L[False] = False,
+    *,
+    keepdims: L[True],
+) -> _nt.Array[_InexactT]: ...
+@overload  # inexact array-like, axis=None, returned=True
+def average(
+    a: _ArrayLike[_InexactT],
+    axis: None = None,
+    weights: _nt.CoComplex_nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[False] | _NoValueType = ...,
+) -> _Tuple2[_InexactT]: ...
+@overload  # inexact array-like, axis=<given>, returned=True
+def average(
+    a: _ArrayLike[_InexactT],
+    axis: int | tuple[int, ...],
+    weights: _nt.CoComplex_nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[False] | _NoValueType = ...,
+) -> _Tuple2[_nt.Array[_InexactT]]: ...
+@overload  # inexact array-like, returned=True, keepdims=True
+def average(
+    a: _ArrayLike[_InexactT],
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoComplex_nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[True],
+) -> _Tuple2[_nt.Array[_InexactT]]: ...
+@overload  # bool or integer array-like, axis=None
+def average(
+    a: _nt.ToFloat64_1nd | _nt.CoInteger_1nd,
+    axis: None = None,
+    weights: _nt.CoFloating_1nd | None = None,
+    returned: L[False] = False,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
 ) -> np.float64: ...
-@overload
+@overload  # bool or integer array-like, axis=<given>
 def average(
-    a: _nt.ToFloat64_nd | _nt.CoInteger_nd,
-    axis: None,
-    weights: _nt.CoFloat64_nd | None,
-    returned: L[True],
-    *,
-    keepdims: _NoValueType = ...,
-) -> _Tuple2[np.float64]: ...
-@overload
-def average(
-    a: _nt.ToFloat64_nd | _nt.CoInteger_nd,
-    axis: None = None,
-    weights: _nt.CoFloat64_nd | None = None,
-    *,
-    returned: L[True],
-    keepdims: _NoValueType | L[False] = ...,
-) -> _Tuple2[np.float64]: ...
-@overload
-def average(
-    a: _nt.CoFloating_nd,
-    axis: None = None,
-    weights: _nt.CoFloating_nd | None = None,
+    a: _nt.ToFloat64_1nd | _nt.CoInteger_1nd,
+    axis: int | tuple[int, ...],
+    weights: _nt.CoFloating_1nd | None = None,
     returned: L[False] = False,
     *,
-    keepdims: _NoValueType | L[False] = ...,
-) -> np.floating: ...
-@overload
+    keepdims: L[False] | _NoValueType = ...,
+) -> _nt.Array[np.float64]: ...
+@overload  # bool or integer array-like, keepdims=True
 def average(
-    a: _nt.CoFloating_nd,
-    axis: None,
-    weights: _nt.CoFloating_nd | None,
-    returned: L[True],
+    a: _nt.ToFloat64_1nd | _nt.CoInteger_1nd,
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
+    returned: L[False] = False,
     *,
-    keepdims: _NoValueType | L[False] = ...,
-) -> _Tuple2[np.floating]: ...
-@overload
+    keepdims: L[True],
+) -> _nt.Array[np.float64]: ...
+@overload  # bool or integer array-like, axis=None, returned=True
 def average(
-    a: _nt.CoFloating_nd,
+    a: _nt.ToFloat64_1nd | _nt.CoInteger_1nd,
     axis: None = None,
-    weights: _nt.CoFloating_nd | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
     *,
     returned: L[True],
-    keepdims: _NoValueType | L[False] = ...,
-) -> _Tuple2[np.floating]: ...
-@overload
+    keepdims: L[False] | _NoValueType = ...,
+) -> _Tuple2[np.float64]: ...
+@overload  # bool or integer array-like, axis=<given>, returned=True
 def average(
-    a: _nt.ToComplex_nd,
+    a: _nt.ToFloat64_1nd | _nt.CoInteger_1nd,
+    axis: int | tuple[int, ...],
+    weights: _nt.CoFloating_1nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[False] | _NoValueType = ...,
+) -> _Tuple2[_nt.Array[np.float64]]: ...
+@overload  # bool or integer array-like, returned=True, keepdims=True
+def average(
+    a: _nt.ToFloat64_1nd | _nt.CoInteger_1nd,
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoFloating_1nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[True],
+) -> _Tuple2[_nt.Array[np.float64]]: ...
+@overload  # complex array-like, axis=None
+def average(
+    a: _nt.ToComplex128_1nd,
+    axis: None = None,
+    weights: _nt.CoComplex_1nd | None = None,
+    returned: L[False] = False,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> np.complex128: ...
+@overload  # complex array-like, axis=<given>
+def average(
+    a: _nt.ToComplex128_1nd,
+    axis: int | tuple[int, ...],
+    weights: _nt.CoComplex_1nd | None = None,
+    returned: L[False] = False,
+    *,
+    keepdims: L[False] | _NoValueType = ...,
+) -> _nt.Array[np.complex128]: ...
+@overload  # complex array-like, keepdims=True
+def average(
+    a: _nt.ToComplex128_1nd,
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoComplex_1nd | None = None,
+    returned: L[False] = False,
+    *,
+    keepdims: L[True],
+) -> _nt.Array[np.complex128]: ...
+@overload  # complex array-like, axis=None, returned=True
+def average(
+    a: _nt.ToComplex128_1nd,
+    axis: None = None,
+    weights: _nt.CoComplex_1nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[False] | _NoValueType = ...,
+) -> _Tuple2[np.complex128]: ...
+@overload  # complex array-like, axis=<given>, returned=True
+def average(
+    a: _nt.ToComplex128_1nd,
+    axis: int | tuple[int, ...],
+    weights: _nt.CoComplex_1nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[False] | _NoValueType = ...,
+) -> _Tuple2[_nt.Array[np.complex128]]: ...
+@overload  # complex array-like, keepdims=True, returned=True
+def average(
+    a: _nt.ToComplex128_1nd,
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoComplex_1nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[True],
+) -> _Tuple2[_nt.Array[np.complex128]]: ...
+@overload  # unknown, axis=None
+def average(
+    a: _nt.CoComplex_nd | _nt.ToObject_nd,
     axis: None = None,
     weights: _nt.CoComplex_nd | None = None,
     returned: L[False] = False,
     *,
-    keepdims: _NoValueType | L[False] = ...,
-) -> np.complexfloating: ...
-@overload
+    keepdims: L[False] | _NoValueType = ...,
+) -> Any: ...
+@overload  # unknown, axis=<given>
 def average(
-    a: _nt.CoComplex_nd,
-    axis: None,
-    weights: _nt.ToComplex_nd,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd,
+    axis: int | tuple[int, ...],
+    weights: _nt.CoComplex_nd | None = None,
     returned: L[False] = False,
     *,
-    keepdims: _NoValueType | L[False] = ...,
-) -> np.complexfloating: ...
-@overload
+    keepdims: L[False] | _NoValueType = ...,
+) -> np.ndarray: ...
+@overload  # unknown, keepdims=True
 def average(
-    a: _nt.CoComplex_nd,
-    axis: None = None,
-    *,
-    weights: _nt.ToComplex_nd,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd,
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoComplex_nd | None = None,
     returned: L[False] = False,
-    keepdims: _NoValueType | L[False] = ...,
-) -> np.complexfloating: ...
-@overload
-def average(
-    a: _nt.ToComplex_nd,
-    axis: None,
-    weights: _nt.CoComplex_nd | None,
-    returned: L[True],
     *,
-    keepdims: _NoValueType | L[False] = ...,
-) -> _Tuple2[np.complexfloating]: ...
-@overload
+    keepdims: L[True],
+) -> np.ndarray: ...
+@overload  # unknown, axis=None, returned=True
 def average(
-    a: _nt.CoComplex_nd,
-    axis: None,
-    weights: _nt.ToComplex_nd,
-    returned: L[True],
-    *,
-    keepdims: _NoValueType | L[False] = ...,
-) -> _Tuple2[np.complexfloating]: ...
-@overload
-def average(
-    a: _nt.ToComplex_nd,
+    a: _nt.CoComplex_nd | _nt.ToObject_nd,
     axis: None = None,
     weights: _nt.CoComplex_nd | None = None,
     *,
     returned: L[True],
-    keepdims: _NoValueType | L[False] = ...,
-) -> _Tuple2[np.complexfloating]: ...
-@overload
-def average(
-    a: _nt.CoComplex_nd,
-    axis: None = None,
-    *,
-    weights: _nt.ToComplex_nd,
-    returned: L[True],
-    keepdims: _NoValueType | L[False] = ...,
-) -> _Tuple2[np.complexfloating]: ...
-@overload
+    keepdims: L[False] | _NoValueType = ...,
+) -> _Tuple2[Any]: ...
+@overload  # unknown, axis=<given>, returned=True
 def average(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _ShapeLike | None = None,
-    weights: _nt.CoComplex_nd | _nt.ToObject_nd | None = None,
-    returned: L[False] = False,
-    *,
-    keepdims: _NoValueType | bool = ...,
-) -> Incomplete: ...
-@overload
-def average(
-    a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _ShapeLike | None,
-    weights: _nt.CoComplex_nd | _nt.ToObject_nd | None,
-    returned: L[True],
-    *,
-    keepdims: _NoValueType | bool = ...,
-) -> _Tuple2[Incomplete]: ...
-@overload
-def average(
-    a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _ShapeLike | None = None,
-    weights: _nt.CoComplex_nd | _nt.ToObject_nd | None = None,
+    axis: int | tuple[int, ...],
+    weights: _nt.CoComplex_nd | None = None,
     *,
     returned: L[True],
-    keepdims: _NoValueType | bool = ...,
-) -> _Tuple2[Incomplete]: ...
+    keepdims: L[False] | _NoValueType = ...,
+) -> _Tuple2[np.ndarray]: ...
+@overload  # unknown, returned=True, keepdims=True
+def average(
+    a: _nt.CoComplex_nd | _nt.ToObject_nd,
+    axis: int | tuple[int, ...] | None = None,
+    weights: _nt.CoComplex_nd | None = None,
+    *,
+    returned: L[True],
+    keepdims: L[True],
+) -> _Tuple2[np.ndarray]: ...
 
 #
 @overload
