@@ -1,4 +1,3 @@
-import datetime as dt
 from _typeshed import ConvertibleToInt, Incomplete
 from collections.abc import Callable, Iterable, Iterator, Sequence
 from typing import (
@@ -79,7 +78,6 @@ _InexactT = TypeVar("_InexactT", bound=np.inexact)
 _InexactTimeT = TypeVar("_InexactTimeT", bound=np.inexact | np.timedelta64)
 _InexactDateTimeT = TypeVar("_InexactDateTimeT", bound=np.inexact | np.timedelta64 | np.datetime64)
 _ScalarNumericT = TypeVar("_ScalarNumericT", bound=np.inexact | np.timedelta64 | np.object_)
-_TrapezoidScalarT = TypeVar("_TrapezoidScalarT", bound=np.inexact | np.timedelta64)
 _AnyDoubleT = TypeVar("_AnyDoubleT", bound=np.float64 | np.longdouble | np.complex128 | np.clongdouble)
 
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
@@ -1918,147 +1916,109 @@ def quantile(
 ) -> Incomplete: ...
 
 #
-@overload  # workaround for microsoft/pyright#10232
+@overload  # ?d, known inexact/timedelta64 scalar-type
 def trapezoid(
-    y: _nt._ToArray_nnd[np.float64 | _nt.co_integer],
-    x: _nt._ToArray_nnd[np.float64 | _nt.co_integer] | None = None,
-    dx: _nt.CoFloat64_0d = 1.0,
+    y: _ArrayNoD[_InexactTimeT],
+    x: _ArrayLike[_InexactTimeT] | _nt.CoFloating_nd | None = None,
+    dx: float = 1.0,
     axis: SupportsIndex = -1,
-) -> np.float64 | _nt.Array[np.float64]: ...
-@overload  # workaround for microsoft/pyright#10232
+) -> _nt.Array[_InexactTimeT] | _InexactTimeT: ...
+@overload  # ?d, casts to float64
 def trapezoid(
-    y: _nt._ToArray_nnd[_TrapezoidScalarT],
-    x: _nt.Casts[_TrapezoidScalarT, _nt.NeitherShape] | None = None,
-    dx: _nt.CastsScalar[_TrapezoidScalarT] | float = 1.0,
+    y: _ArrayNoD[_nt.co_integer], x: _nt.CoFloating_nd | None = None, dx: float = 1.0, axis: SupportsIndex = -1
+) -> _nt.Array[np.float64] | np.float64: ...
+@overload  # strict 1d, known inexact/timedelta64 scalar-type
+def trapezoid(
+    y: _nt.Array1D[_InexactTimeT],
+    x: _nt.Array1D[_InexactTimeT] | Sequence[float] | None = None,
+    dx: float = 1.0,
     axis: SupportsIndex = -1,
-) -> _TrapezoidScalarT | _nt.Array[_TrapezoidScalarT]: ...
-@overload  # workaround for microsoft/pyright#10232
+) -> _InexactTimeT: ...
+@overload  # strict 1d, casts to float64
 def trapezoid(
-    y: _nt.Casts[_TrapezoidScalarT, _nt.NeitherShape],
-    x: _nt._ToArray_nnd[_TrapezoidScalarT],
-    dx: _nt.CastsScalar[_TrapezoidScalarT] | float = 1.0,
-    axis: SupportsIndex = -1,
-) -> _TrapezoidScalarT | _nt.Array[_TrapezoidScalarT]: ...
-@overload
-def trapezoid(
-    y: _nt._ToArray2_1ds[np.float64 | _nt.co_integer, float],
-    x: _nt._ToArray2_1ds[np.float64 | _nt.co_integer, float] | None = None,
-    dx: _nt.CoFloat64_0d = 1.0,
+    y: _nt.Array1D[np.float64 | _nt.co_integer] | Sequence[float],
+    x: _nt.Array1D[np.float64 | _nt.co_integer] | Sequence[float] | None = None,
+    dx: float = 1.0,
     axis: SupportsIndex = -1,
 ) -> np.float64: ...
-@overload
+@overload  # strict 1d, casts to complex128 (`list` prevents overlapping overloads)
 def trapezoid(
-    y: _nt.CoFloating_1ds, x: _nt.CoFloating_1ds | None = None, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> np.floating: ...
-@overload
+    y: list[complex], x: Sequence[complex] | None = None, dx: complex = 1.0, axis: SupportsIndex = -1
+) -> np.complex128: ...
+@overload  # strict 1d, casts to complex128
+def trapezoid(y: Sequence[complex], x: list[complex], dx: complex = 1.0, axis: SupportsIndex = -1) -> np.complex128: ...
+@overload  # strict 2d, known inexact/timedelta64 scalar-type
 def trapezoid(
-    y: _nt.ToComplex_1ds, x: _nt.CoComplex_1ds | None = None, dx: _nt.CoComplex_0d = 1.0, axis: SupportsIndex = -1
-) -> np.complexfloating: ...
-@overload
-def trapezoid(
-    y: _nt.CoComplex_1ds, x: _nt.ToComplex_1ds, dx: _nt.CoComplex_0d = 1.0, axis: SupportsIndex = -1
-) -> np.complexfloating: ...
-@overload
-def trapezoid(
-    y: _nt.ToTimeDelta_1ds, x: _nt.CoTimeDelta_1ds | None = None, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> np.timedelta64: ...
-@overload
-def trapezoid(
-    y: _nt.CoTimeDelta_1ds, x: _nt.ToTimeDelta_1ds, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> np.timedelta64: ...
-@overload
-def trapezoid(
-    y: Sequence[dt.timedelta],
-    x: Sequence[dt.timedelta] | _nt.CoFloating_1ds | None = None,
-    dx: _nt.CoComplex_0d = 1.0,
+    y: _nt.Array2D[_InexactTimeT],
+    x: _nt.Array2D[_InexactTimeT] | _nt.Array1D[_InexactTimeT] | _nt.Sequence2D[float] | Sequence[float] | None = None,
+    dx: float = 1.0,
     axis: SupportsIndex = -1,
-) -> dt.timedelta: ...
-@overload
+) -> _InexactTimeT: ...
+@overload  # strict 2d, casts to float64
 def trapezoid(
-    y: _nt._ToArray2_2nd[np.float64 | _nt.co_integer, float],
-    x: _nt._ToArray2_1nd[np.float64 | _nt.co_integer, float] | None = None,
-    dx: _nt.CoFloat64_0d = 1.0,
+    y: _nt.Array2D[np.float64 | _nt.co_integer] | _nt.Sequence2D[float],
+    x: (
+        _nt.Array2D[np.float64 | _nt.co_integer]
+        | _nt.Array1D[np.float64 | _nt.co_integer]
+        | _nt.Sequence2D[float]
+        | Sequence[float]
+        | None
+    ) = None,
+    dx: float = 1.0,
     axis: SupportsIndex = -1,
-) -> _nt.Array[np.float64]: ...
-@overload
+) -> np.float64: ...
+@overload  # strict 2d, casts to complex128 (`list` prevents overlapping overloads)
 def trapezoid(
-    y: _nt._ToArray2_1nd[np.float64 | _nt.co_integer, float],
-    x: _nt._ToArray2_2nd[np.float64 | _nt.co_integer, float],
-    dx: _nt.CoFloat64_0d = 1.0,
+    y: Sequence[list[complex]],
+    x: _nt.Sequence2D[complex] | Sequence[complex] | None = None,
+    dx: complex = 1.0,
     axis: SupportsIndex = -1,
-) -> _nt.Array[np.float64]: ...
+) -> np.complex128: ...
+@overload  # strict 2d, casts to complex128
+def trapezoid(
+    y: _nt.Sequence2D[complex] | Sequence[complex],
+    x: Sequence[list[complex]],
+    dx: complex = 1.0,
+    axis: SupportsIndex = -1,
+) -> np.complex128: ...
 @overload
 def trapezoid(
-    y: _nt.CoFloating_2nd, x: _nt.CoFloating_1nd | None = None, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.floating]: ...
+    y: _ArrayLike[_InexactTimeT],
+    x: _ArrayLike[_InexactTimeT] | _nt.CoInteger_nd | None = None,
+    dx: complex = 1.0,
+    axis: SupportsIndex = -1,
+) -> _nt.Array[_InexactTimeT] | _InexactTimeT: ...
 @overload
 def trapezoid(
-    y: _nt.CoFloating_1nd, x: _nt.CoFloating_2nd, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.floating]: ...
+    y: _ArrayLike[np.float64 | _nt.co_integer],
+    x: _nt.CoFloating_nd | None = None,
+    dx: float = 1.0,
+    axis: SupportsIndex = -1,
+) -> _nt.Array[np.float64] | np.float64: ...
 @overload
 def trapezoid(
-    y: _nt.ToComplex_2nd, x: _nt.CoComplex_1nd | None = None, dx: _nt.CoComplex_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.complexfloating]: ...
+    y: _ArrayLike[np.complex128], x: _nt.CoComplex_nd | None = None, dx: float = 1.0, axis: SupportsIndex = -1
+) -> _nt.Array[np.complex128] | np.complex128: ...
 @overload
 def trapezoid(
-    y: _nt.ToComplex_1nd, x: _nt.CoComplex_2nd, dx: _nt.CoComplex_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.complexfloating]: ...
+    y: _nt.CoComplex_nd, x: _ArrayLike[np.complex128], dx: float = 1.0, axis: SupportsIndex = -1
+) -> _nt.Array[np.complex128] | np.complex128: ...
 @overload
 def trapezoid(
-    y: _nt.CoComplex_2nd, x: _nt.ToComplex_1nd, dx: _nt.CoComplex_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.complexfloating]: ...
-@overload
-def trapezoid(
-    y: _nt.CoComplex_1nd, x: _nt.ToComplex_2nd, dx: _nt.CoComplex_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.complexfloating]: ...
-@overload
-def trapezoid(
-    y: _nt.ToTimeDelta_2nd, x: _nt.CoTimeDelta_1nd | None = None, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.timedelta64]: ...
-@overload
-def trapezoid(
-    y: _nt.ToTimeDelta_1nd, x: _nt.CoTimeDelta_2nd, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.timedelta64]: ...
-@overload
-def trapezoid(
-    y: _nt.CoTimeDelta_2nd, x: _nt.ToTimeDelta_1nd, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.timedelta64]: ...
-@overload
-def trapezoid(
-    y: _nt.CoTimeDelta_1nd, x: _nt.ToTimeDelta_2nd, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> _nt.Array[np.timedelta64]: ...
-@overload
-def trapezoid(
-    y: _nt.CoFloating_1nd, x: _nt.CoFloating_1nd | None = None, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> np.floating | _nt.Array[np.floating]: ...
-@overload
-def trapezoid(
-    y: _nt.ToComplex_1nd, x: _nt.CoComplex_1nd | None = None, dx: _nt.CoComplex_0d = 1.0, axis: SupportsIndex = -1
-) -> np.complexfloating | _nt.Array[np.complexfloating]: ...
-@overload
-def trapezoid(
-    y: _nt.CoComplex_1nd, x: _nt.ToComplex_1nd, dx: _nt.CoComplex_0d = 1.0, axis: SupportsIndex = -1
-) -> np.complexfloating | _nt.Array[np.complexfloating]: ...
-@overload
-def trapezoid(
-    y: _nt.ToTimeDelta_1nd, x: _nt.CoTimeDelta_1nd | None = None, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> np.timedelta64 | _nt.Array[np.timedelta64]: ...
-@overload
-def trapezoid(
-    y: _nt.CoTimeDelta_1nd, x: _nt.ToTimeDelta_1nd, dx: _nt.CoFloating_0d = 1.0, axis: SupportsIndex = -1
-) -> np.timedelta64 | _nt.Array[np.timedelta64]: ...
+    y: _nt.ToObject_nd, x: _nt.ToObject_nd | _nt.CoFloating_nd | None = None, dx: float = 1.0, axis: SupportsIndex = -1
+) -> _nt.Array[np.object_] | Any: ...
 @overload
 def trapezoid(
     y: Sequence[_CanRMulFloat[_T]],
-    x: Sequence[_CanRMulFloat[_T]] | Sequence[_T] | None = None,
-    dx: _nt.CoFloating_0d = 1.0,
+    x: Sequence[_CanRMulFloat[_T] | _T] | None = None,
+    dx: complex = 1.0,
     axis: SupportsIndex = -1,
 ) -> _T: ...
 @overload
 def trapezoid(
-    y: _nt.ToObject_1nd | _nt.CoComplex_1nd,
-    x: _nt.ToObject_1nd | _nt.CoComplex_1nd | None = None,
-    dx: _nt.CoFloating_0d = 1.0,
+    y: _nt.CoComplex_nd | _ArrayLike[np.timedelta64 | np.object_],
+    x: _nt.CoComplex_nd | _ArrayLike[np.timedelta64 | np.object_] | None = None,
+    dx: complex = 1.0,
     axis: SupportsIndex = -1,
 ) -> Incomplete: ...
 
