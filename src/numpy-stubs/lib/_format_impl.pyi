@@ -112,7 +112,7 @@ def open_memmap(
     version: _HeaderVersion | None = None,
     *,
     max_header_size: int = 10_000,
-) -> np.memmap[Any, np.dtype[_ScalarT]]: ...
+) -> np.memmap[_nt.AnyShape, np.dtype[_ScalarT]]: ...
 @overload  # known dtype, unknown shape (keyword)
 def open_memmap(
     filename: str | os.PathLike[str],
@@ -123,7 +123,7 @@ def open_memmap(
     fortran_order: bool = False,
     version: _HeaderVersion | None = None,
     max_header_size: int = 10_000,
-) -> np.memmap[Any, np.dtype[_ScalarT]]: ...
+) -> np.memmap[_nt.AnyShape, np.dtype[_ScalarT]]: ...
 @overload  # unknown dtype, unknown shape
 def open_memmap(
     filename: str | os.PathLike[str],
@@ -134,7 +134,7 @@ def open_memmap(
     version: _HeaderVersion | None = None,
     *,
     max_header_size: int = 10_000,
-) -> np.memmap[Any, np.dtype]: ...
+) -> np.memmap[_nt.AnyShape, np.dtype]: ...
 
 #
 def header_data_from_array_1_0(array: np.ndarray[Any, Any]) -> _HeaderDict_1_0: ...
@@ -151,7 +151,7 @@ def read_array(
     pickle_kwargs: Mapping[str, object] | None = None,
     *,
     max_header_size: int = 10_000,
-) -> np.ndarray[Any, np.dtype]: ...
+) -> np.ndarray: ...
 
 #
 def _write_array_header(
