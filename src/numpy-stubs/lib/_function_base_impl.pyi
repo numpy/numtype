@@ -83,6 +83,7 @@ _TrapezoidScalarT = TypeVar("_TrapezoidScalarT", bound=np.inexact | np.timedelta
 
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _ArrayFloatingT = TypeVar("_ArrayFloatingT", bound=_nt.Array[np.floating])
+_ArrayFloatObjT = TypeVar("_ArrayFloatObjT", bound=_nt.Array[np.floating | np.object_])
 _ArrayInexactT = TypeVar("_ArrayInexactT", bound=_nt.Array[np.inexact])
 _ArrayNumericT = TypeVar("_ArrayNumericT", bound=_nt.Array[np.inexact | np.timedelta64 | np.object_])
 
@@ -761,14 +762,62 @@ def angle(z: _nt.Sequence3D[complex], deg: bool = False) -> _nt.Array3D[np.float
 def angle(z: _nt.CoComplex_nd, deg: bool = False) -> _nt.Array[np.floating] | Any: ...
 
 #
-@overload
+@overload  # known array-type
 def unwrap(
-    p: _nt.CoFloating_nd, discont: float | None = None, axis: int = -1, *, period: float = ...
-) -> _nt.Array[np.floating]: ...
-@overload
+    p: _ArrayFloatObjT,
+    discont: float | None = None,
+    axis: int = -1,
+    *,
+    period: float = ...,  # = τ
+) -> _ArrayFloatObjT: ...
+@overload  # known shape, float64
 def unwrap(
-    p: _nt.ToObject_nd, discont: float | None = None, axis: int = -1, *, period: float = ...
-) -> _nt.Array[np.object_]: ...
+    p: _nt.Array[np.float64 | _nt.co_integer, _ShapeT],
+    discont: float | None = None,
+    axis: int = -1,
+    *,
+    period: float = ...,  # = τ
+) -> _nt.Array[np.float64, _ShapeT]: ...
+@overload  # 1d float64-like
+def unwrap(
+    p: Sequence[float | np.float64 | _nt.co_integer],
+    discont: float | None = None,
+    axis: int = -1,
+    *,
+    period: float = ...,  # = τ
+) -> _nt.Array1D[np.float64]: ...
+@overload  # 2d float64-like
+def unwrap(
+    p: _nt.Sequence2D[float | np.float64 | _nt.co_integer],
+    discont: float | None = None,
+    axis: int = -1,
+    *,
+    period: float = ...,  # = τ
+) -> _nt.Array2D[np.float64]: ...
+@overload  # 3d float64-like
+def unwrap(
+    p: _nt.Sequence3D[float | np.float64 | _nt.co_integer],
+    discont: float | None = None,
+    axis: int = -1,
+    *,
+    period: float = ...,  # = τ
+) -> _nt.Array3D[np.float64]: ...
+@overload  # ?d, float64
+def unwrap(
+    p: _nt.Sequence1ND[float] | _ArrayLike[np.float64 | _nt.co_integer],
+    discont: float | None = None,
+    axis: int = -1,
+    *,
+    period: float = ...,  # = τ
+) -> _nt.Array[np.float64]: ...
+@overload  # fallback
+def unwrap(
+    p: _nt.CoFloating_nd | _nt.ToObject_nd,
+    discont: float | None = None,
+    axis: int = -1,
+    *,
+    period: float = ...,  # = τ
+) -> np.ndarray: ...
 
 #
 def sort_complex(a: ArrayLike) -> _nt.Array[np.complexfloating]: ...
