@@ -1087,62 +1087,97 @@ def cov(
     dtype: DTypeLike | None = None,
 ) -> _nt.Array[Incomplete]: ...
 
-#
-@overload
+# NOTE: If only `x` is given and the resulting array has shape (1,1), a bare scalar
+# is returned instead of a 2D array. When y is given, a 2D array is always returned.
+# This differs from `cov`, which returns 0-D arrays instead of scalars in such cases.
+# NOTE: keep in sync with `cov`
+@overload  # ?d, known inexact scalar-type >=64 precision, y=<given>.
 def corrcoef(
-    x: _nt.CoFloat64_1nd,
-    y: _nt.CoFloat64_1nd | None = None,
+    m: _ArrayLike[_AnyDoubleT], y: _ArrayLike[_AnyDoubleT], rowvar: bool = True, *, dtype: None = None
+) -> _nt.Array2D[_AnyDoubleT]: ...
+@overload  # ?d, known inexact scalar-type >=64 precision, y=None -> 0d or 2d
+def corrcoef(
+    m: _ArrayNoD[_AnyDoubleT], y: None = None, rowvar: bool = True, *, dtype: _DTypeLike[_AnyDoubleT] | None = None
+) -> _nt.Array[_AnyDoubleT]: ...
+@overload  # 1d, known inexact scalar-type >=64 precision, y=None
+def corrcoef(
+    m: _nt.Array1D[_AnyDoubleT], y: None = None, rowvar: bool = True, *, dtype: _DTypeLike[_AnyDoubleT] | None = None
+) -> _nt.Array0D[_AnyDoubleT]: ...
+@overload  # nd, known inexact scalar-type >=64 precision, y=None -> 0d or 2d
+def corrcoef(
+    m: _ArrayLike[_AnyDoubleT], y: None = None, rowvar: bool = True, *, dtype: _DTypeLike[_AnyDoubleT] | None = None
+) -> _nt.Array[_AnyDoubleT]: ...
+@overload  # nd, casts to float64, y=<given>
+def corrcoef(
+    m: _nt.Array[np.float32 | np.float16 | _nt.co_integer] | Sequence[float] | _nt.Sequence2D[float],
+    y: _nt.Array[np.float32 | np.float16 | _nt.co_integer] | Sequence[float] | _nt.Sequence2D[float],
     rowvar: bool = True,
     *,
-    dtype: _nt.ToDTypeFloat64 | None = None,
+    dtype: _DTypeLike[np.float64] | None = None,
+) -> _nt.Array2D[np.float64]: ...
+@overload  # ?d or 2d, casts to float64, y=None -> 0d or 2d
+def corrcoef(
+    m: _ArrayNoD[np.float32 | np.float16 | _nt.co_integer] | _nt.Sequence2D[float],
+    y: None = None,
+    rowvar: bool = True,
+    *,
+    dtype: _DTypeLike[np.float64] | None = None,
 ) -> _nt.Array[np.float64]: ...
-@overload
+@overload  # 1d, casts to float64, y=None
 def corrcoef(
-    x: _nt.ToLongDouble_1nd,
-    y: _nt.CoFloating_1nd | None = None,
+    m: _nt.Array1D[np.float32 | np.float16 | _nt.co_integer] | Sequence[float],
+    y: None = None,
     rowvar: bool = True,
     *,
-    dtype: _nt.ToDTypeLongDouble | None = None,
-) -> _nt.Array[np.longdouble]: ...
-@overload
+    dtype: _DTypeLike[np.float64] | None = None,
+) -> _nt.Array0D[np.float64]: ...
+@overload  # nd, casts to float64, y=None -> 0d or 2d
 def corrcoef(
-    x: _nt.CoFloating_1nd, y: _nt.ToLongDouble_1nd, rowvar: bool = True, *, dtype: _nt.ToDTypeLongDouble | None = None
-) -> _nt.Array[np.longdouble]: ...
-@overload
-def corrcoef(
-    x: _nt.ToComplex128_1nd | _nt.ToComplex64_1nd,
-    y: _nt.CoComplex128_1nd | None = None,
+    m: _ArrayLike[np.float32 | np.float16 | _nt.co_integer],
+    y: None = None,
     rowvar: bool = True,
     *,
-    dtype: _nt.ToDTypeComplex128 | None = None,
+    dtype: _DTypeLike[np.float64] | None = None,
+) -> _nt.Array[np.float64]: ...
+@overload  # 1d complex, y=<given>  (`list` avoids overlap with float overloads)
+def corrcoef(
+    m: list[complex] | Sequence[list[complex]],
+    y: list[complex] | Sequence[list[complex]],
+    rowvar: bool = True,
+    *,
+    dtype: _DTypeLike[np.complex128] | None = None,
+) -> _nt.Array2D[np.complex128]: ...
+@overload  # 1d complex, y=None
+def corrcoef(
+    m: list[complex], y: None = None, rowvar: bool = True, *, dtype: _DTypeLike[np.complex128] | None = None
+) -> _nt.Array0D[np.complex128]: ...
+@overload  # 2d complex, y=None -> 0d or 2d
+def corrcoef(
+    m: Sequence[list[complex]], y: None = None, rowvar: bool = True, *, dtype: _DTypeLike[np.complex128] | None = None
 ) -> _nt.Array[np.complex128]: ...
-@overload
+@overload  # 1d complex-like, y=None, dtype=<known>
 def corrcoef(
-    x: _nt.CoComplex128_1nd,
-    y: _nt.ToComplex128_1nd | _nt.ToComplex64_1nd,
-    rowvar: bool = True,
-    *,
-    dtype: _nt.ToDTypeComplex128 | None = None,
-) -> _nt.Array[np.complex128]: ...
-@overload
+    m: Sequence[complex | _nt.co_complex], y: None = None, rowvar: bool = True, *, dtype: _DTypeLike[_ScalarT]
+) -> _nt.Array0D[_ScalarT]: ...
+@overload  # nd complex-like, y=<given>, dtype=<known>
 def corrcoef(
-    x: _nt.ToCLongDouble_1nd,
-    y: _nt.CoComplex_1nd | None = None,
-    rowvar: bool = True,
-    *,
-    dtype: _nt.ToDTypeCLongDouble | None = None,
-) -> _nt.Array[np.clongdouble]: ...
-@overload
+    m: _nt.CoComplex_nd, y: _nt.CoComplex_nd, rowvar: bool = True, *, dtype: _DTypeLike[_ScalarT]
+) -> _nt.Array2D[_ScalarT]: ...
+@overload  # nd complex-like, y=None, dtype=<known> -> 0d or 2d
 def corrcoef(
-    x: _nt.CoComplex_1nd, y: _nt.ToCLongDouble_1nd, rowvar: bool = True, *, dtype: _nt.ToDTypeCLongDouble | None = None
-) -> _nt.Array[np.clongdouble]: ...
-@overload
-def corrcoef(
-    x: _nt.CoComplex_1nd, y: _nt.CoComplex_1nd | None = None, rowvar: bool = True, *, dtype: _DTypeLike[_ScalarT]
+    m: _nt.CoComplex_nd, y: None = None, rowvar: bool = True, *, dtype: _DTypeLike[_ScalarT]
 ) -> _nt.Array[_ScalarT]: ...
-@overload
+@overload  # nd complex-like, y=<given>, dtype=?
 def corrcoef(
-    x: _nt.CoComplex_1nd, y: _nt.CoComplex_1nd | None = None, rowvar: bool = True, *, dtype: DTypeLike | None = None
+    m: _nt.CoComplex_nd, y: _nt.CoComplex_nd, rowvar: bool = True, *, dtype: DTypeLike | None = None
+) -> _nt.Array2D[Incomplete]: ...
+@overload  # 1d complex-like, y=None, dtype=?
+def corrcoef(
+    m: Sequence[complex | _nt.co_complex], y: None = None, rowvar: bool = True, *, dtype: DTypeLike | None = None
+) -> _nt.Array0D[Incomplete]: ...
+@overload  # nd complex-like, dtype=?
+def corrcoef(
+    m: _nt.CoComplex_nd, y: _nt.CoComplex_nd | None = None, rowvar: bool = True, *, dtype: DTypeLike | None = None
 ) -> _nt.Array[Incomplete]: ...
 
 #
