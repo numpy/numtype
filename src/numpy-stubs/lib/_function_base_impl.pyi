@@ -105,6 +105,7 @@ _SortsToComplex128: TypeAlias = (
     | np.object_
 )
 
+_Mesh1: TypeAlias = tuple[_nt.Array1D[_ScalarT]]
 _Mesh2: TypeAlias = tuple[_nt.Array2D[_ScalarT], _nt.Array2D[_ScalarT1]]
 _Mesh3: TypeAlias = tuple[_nt.Array3D[_ScalarT], _nt.Array3D[_ScalarT1], _nt.Array3D[_ScalarT2]]
 
@@ -2023,52 +2024,51 @@ def trapezoid(
 ) -> Incomplete: ...
 
 #
-@overload
+@overload  # 0d
 def meshgrid(*, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy") -> tuple[()]: ...
-@overload
+@overload  # 1d, known scalar-type
 def meshgrid(
-    x0: _ArrayLike[_ScalarT], /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
-) -> tuple[_nt.Array1D[_ScalarT]]: ...
-@overload
+    x1: _ArrayLike[_ScalarT], /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
+) -> _Mesh1[_ScalarT]: ...
+@overload  # 1d, unknown scalar-type
 def meshgrid(
-    x0: ArrayLike, /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
-) -> tuple[_nt.Array1D]: ...
-@overload
+    x1: ArrayLike, /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
+) -> _Mesh1[Any]: ...
+@overload  # 2d, known scalar-types
 def meshgrid(
-    x0: _ArrayLike[_ScalarT1],
-    x1: _ArrayLike[_ScalarT2],
+    x1: _ArrayLike[_ScalarT],
+    x2: _ArrayLike[_ScalarT1],
     /,
     *,
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[_nt.Array2D[_ScalarT1], _nt.Array2D[_ScalarT2]]: ...
-@overload
+) -> _Mesh2[_ScalarT, _ScalarT1]: ...
+@overload  # 2d, known/unknown scalar-types
 def meshgrid(
-    x0: ArrayLike, x1: _ArrayLike[_ScalarT], /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
-) -> tuple[_nt.Array2D[Incomplete], _nt.Array2D[_ScalarT]]: ...
-@overload
+    x1: _ArrayLike[_ScalarT], x2: ArrayLike, /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
+) -> _Mesh2[_ScalarT, Any]: ...
+@overload  # 2d, unknown/known scalar-types
 def meshgrid(
-    x0: _ArrayLike[_ScalarT], x1: ArrayLike, /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
-) -> tuple[_nt.Array2D[_ScalarT], _nt.Array2D[Incomplete]]: ...
-@overload
+    x1: ArrayLike, x2: _ArrayLike[_ScalarT], /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
+) -> _Mesh2[Any, _ScalarT]: ...
+@overload  # 2d, unknown scalar-types
 def meshgrid(
-    x0: ArrayLike, x1: ArrayLike, /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
-) -> tuple[_nt.Array2D[Incomplete], _nt.Array2D[Incomplete]]: ...
-@overload
+    x1: ArrayLike, x2: ArrayLike, /, *, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
+) -> _Mesh2[Any, Any]: ...
+@overload  # 3d, known scalar-types
 def meshgrid(
-    x0: ArrayLike,
-    x1: ArrayLike,
-    x2: ArrayLike,
+    x1: _ArrayLike[_ScalarT],
+    x2: _ArrayLike[_ScalarT1],
+    x3: _ArrayLike[_ScalarT2],
     /,
     *,
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[_nt.Array3D[Incomplete], _nt.Array3D[Incomplete], _nt.Array3D[Incomplete]]: ...
-@overload
+) -> _Mesh3[_ScalarT, _ScalarT1, _ScalarT2]: ...
+@overload  # 3d, unknown scalar-types
 def meshgrid(
-    x0: ArrayLike,
     x1: ArrayLike,
     x2: ArrayLike,
     x3: ArrayLike,
@@ -2077,11 +2077,15 @@ def meshgrid(
     copy: bool = True,
     sparse: bool = False,
     indexing: _Indexing = "xy",
-) -> tuple[_nt.Array4D[Incomplete], _nt.Array4D[Incomplete], _nt.Array4D[Incomplete], _nt.Array4D[Incomplete]]: ...
-@overload
+) -> _Mesh3[Any, Any, Any]: ...
+@overload  # ?d, known scalar-types
+def meshgrid(
+    *xi: _ArrayLike[_ScalarT], copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
+) -> tuple[_nt.Array[_ScalarT], ...]: ...
+@overload  # ?d, unknown scalar-types
 def meshgrid(
     *xi: ArrayLike, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
-) -> tuple[_nt.Array[Incomplete], ...]: ...
+) -> tuple[_nt.Array[Any], ...]: ...
 
 # keep in sync with `insert`
 @overload  # known scalar-type, axis=None (default)
