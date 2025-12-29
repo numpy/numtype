@@ -13,9 +13,9 @@ __all__ = ["Arrayterator"]
 ###
 
 # TODO: use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
-_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.Shape, covariant=True)
-_DTypeT = TypeVar("_DTypeT", bound=np.dtype)
-_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype, default=np.dtype, covariant=True)
+_ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.AnyShape, covariant=True)
+_DTypeT = TypeVar("_DTypeT", bound=np.dtype[Any])
+_DTypeT_co = TypeVar("_DTypeT_co", bound=np.dtype[Any], default=np.dtype[Any], covariant=True)
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 
 _AnyIndex: TypeAlias = EllipsisType | int | slice | tuple[EllipsisType | int | slice, ...]
