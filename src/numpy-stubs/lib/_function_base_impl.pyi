@@ -476,7 +476,7 @@ def select(
     condlist: _SizedIterable[_nt.ToBool_nd], choicelist: Sequence[ArrayLike], default: ArrayLike = 0
 ) -> np.ndarray: ...
 
-#
+# keep roughly in sync with `ma.core.copy`
 @overload
 def copy(a: _ArrayT, order: _Order, subok: L[True]) -> _ArrayT: ...
 @overload
