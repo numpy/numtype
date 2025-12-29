@@ -7,6 +7,7 @@ from typing import (
     Final,
     Literal as L,
     LiteralString,
+    Never,
     Protocol,
     SupportsIndex as CanIndex,
     SupportsInt,
@@ -75,11 +76,18 @@ _ScalarT1 = TypeVar("_ScalarT1", bound=np.generic)
 _ScalarT2 = TypeVar("_ScalarT2", bound=np.generic)
 _NumberT = TypeVar("_NumberT", bound=np.number)
 _InexactT = TypeVar("_InexactT", bound=np.inexact)
+_InexactTimeT = TypeVar("_InexactTimeT", bound=np.inexact | np.timedelta64)
 _InexactDateTimeT = TypeVar("_InexactDateTimeT", bound=np.inexact | np.timedelta64 | np.datetime64)
 _TrapezoidScalarT = TypeVar("_TrapezoidScalarT", bound=np.inexact | np.timedelta64)
 
 _ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
 _ArrayInexactT = TypeVar("_ArrayInexactT", bound=_nt.Array[np.inexact])
+
+# workaround for mypy and pyright not following the typing spec for overloads
+_ArrayNoD: TypeAlias = np.ndarray[tuple[Never, Never, Never, Never], np.dtype[_ScalarT]]
+
+_Mesh2: TypeAlias = tuple[_nt.Array2D[_ScalarT], _nt.Array2D[_ScalarT1]]
+_Mesh3: TypeAlias = tuple[_nt.Array3D[_ScalarT], _nt.Array3D[_ScalarT1], _nt.Array3D[_ScalarT2]]
 
 _Tuple2: TypeAlias = tuple[_T, _T]
 _ToInt: TypeAlias = CanIndex | SupportsInt
@@ -497,8 +505,72 @@ def copy(a: _ArrayLike[_ScalarT], order: _Order = "K", subok: L[False] = False) 
 def copy(a: ArrayLike, order: _Order = "K", subok: L[False] = False) -> _nt.Array[Incomplete]: ...
 
 #
+@overload  # ?d, known inexact scalar-type
 def gradient(
-    f: ArrayLike, *varargs: ArrayLike, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _ArrayNoD[_InexactTimeT],
+    *varargs: _nt.CoComplex_nd,
+    axis: _ShapeLike | None = None,
+    edge_order: L[1, 2] = 1,
+    # `| Any` instead of ` | tuple` is returned to avoid several mypy_primer errors
+) -> _nt.Array1D[_InexactTimeT] | Any: ...
+@overload  # 1d, known inexact scalar-type
+def gradient(
+    f: _nt.Array1D[_InexactTimeT], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _nt.Array1D[_InexactTimeT]: ...
+@overload  # 2d, known inexact scalar-type
+def gradient(
+    f: _nt.Array2D[_InexactTimeT], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _Mesh2[_InexactTimeT, _InexactTimeT]: ...
+@overload  # 3d, known inexact scalar-type
+def gradient(
+    f: _nt.Array3D[_InexactTimeT], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _Mesh3[_InexactTimeT, _InexactTimeT, _InexactTimeT]: ...
+@overload  # ?d, datetime64 scalar-type
+def gradient(
+    f: _ArrayNoD[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _nt.Array1D[np.timedelta64] | tuple[_nt.Array[np.timedelta64], ...]: ...
+@overload  # 1d, datetime64 scalar-type
+def gradient(
+    f: _nt.Array1D[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _nt.Array1D[np.timedelta64]: ...
+@overload  # 2d, datetime64 scalar-type
+def gradient(
+    f: _nt.Array2D[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _Mesh2[np.timedelta64, np.timedelta64]: ...
+@overload  # 3d, datetime64 scalar-type
+def gradient(
+    f: _nt.Array3D[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _Mesh3[np.timedelta64, np.timedelta64, np.timedelta64]: ...
+@overload  # 1d float-like
+def gradient(
+    f: Sequence[float], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _nt.Array1D[np.float64]: ...
+@overload  # 2d float-like
+def gradient(
+    f: Sequence[Sequence[float]], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _Mesh2[np.float64, np.float64]: ...
+@overload  # 3d float-like
+def gradient(
+    f: Sequence[Sequence[Sequence[float]]],
+    *varargs: _nt.CoComplex_nd,
+    axis: _ShapeLike | None = None,
+    edge_order: L[1, 2] = 1,
+) -> _Mesh3[np.float64, np.float64, np.float64]: ...
+@overload  # 1d complex-like  (the `list` avoids overlap with the float-like overload)
+def gradient(
+    f: list[complex], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _nt.Array1D[np.complex128]: ...
+@overload  # 2d float-like
+def gradient(
+    f: _nt.ToComplex128_2ds, *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _Mesh2[np.complex128, np.complex128]: ...
+@overload  # 3d float-like
+def gradient(
+    f: _nt.ToComplex128_3ds, *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+) -> _Mesh3[np.complex128, np.complex128, np.complex128]: ...
+@overload  # fallback
+def gradient(
+    f: ArrayLike, *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
 ) -> Incomplete: ...
 
 #
