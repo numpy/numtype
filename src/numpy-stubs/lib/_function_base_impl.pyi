@@ -84,11 +84,27 @@ _TrapezoidScalarT = TypeVar("_TrapezoidScalarT", bound=np.inexact | np.timedelta
 _ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
 _ArrayFloatingT = TypeVar("_ArrayFloatingT", bound=_nt.Array[np.floating])
 _ArrayFloatObjT = TypeVar("_ArrayFloatObjT", bound=_nt.Array[np.floating | np.object_])
+_ArrayComplexT = TypeVar("_ArrayComplexT", bound=_nt.Array[np.complexfloating])
 _ArrayInexactT = TypeVar("_ArrayInexactT", bound=_nt.Array[np.inexact])
 _ArrayNumericT = TypeVar("_ArrayNumericT", bound=_nt.Array[np.inexact | np.timedelta64 | np.object_])
 
 # workaround for mypy and pyright not following the typing spec for overloads
 _ArrayNoD: TypeAlias = np.ndarray[tuple[Never, Never, Never, Never], np.dtype[_ScalarT]]
+
+# non-trivial scalar-types that will become `complex128` in `sort_complex()`,
+# i.e. all numeric scalar types except for `[u]int{8,16} | longdouble`
+_SortsToComplex128: TypeAlias = (
+    np.bool
+    | np.int32
+    | np.uint32
+    | np.int64
+    | np.uint64
+    | np.float16
+    | np.float32
+    | np.float64
+    | np.timedelta64
+    | np.object_
+)
 
 _Mesh2: TypeAlias = tuple[_nt.Array2D[_ScalarT], _nt.Array2D[_ScalarT1]]
 _Mesh3: TypeAlias = tuple[_nt.Array3D[_ScalarT], _nt.Array3D[_ScalarT1], _nt.Array3D[_ScalarT2]]
@@ -820,7 +836,22 @@ def unwrap(
 ) -> np.ndarray: ...
 
 #
-def sort_complex(a: ArrayLike) -> _nt.Array[np.complexfloating]: ...
+@overload
+def sort_complex(a: _ArrayComplexT) -> _ArrayComplexT: ...
+@overload  # complex64, shape known
+def sort_complex(
+    a: _nt.Array[np.int8 | np.uint8 | np.int16 | np.uint16, _ShapeT],
+) -> _nt.Array[np.complex64, _ShapeT]: ...
+@overload  # complex64, shape unknown
+def sort_complex(a: _ArrayLike[np.int8 | np.uint8 | np.int16 | np.uint16]) -> _nt.Array[np.complex64]: ...
+@overload  # complex128, shape known
+def sort_complex(a: _nt.Array[_SortsToComplex128, _ShapeT]) -> _nt.Array[np.complex128, _ShapeT]: ...
+@overload  # complex128, shape unknown
+def sort_complex(a: _ArrayLike[_SortsToComplex128]) -> _nt.Array[np.complex128]: ...
+@overload  # clongdouble, shape known
+def sort_complex(a: _nt.Array[np.longdouble, _ShapeT]) -> _nt.Array[np.clongdouble, _ShapeT]: ...
+@overload  # clongdouble, shape unknown
+def sort_complex(a: _ArrayLike[np.longdouble]) -> _nt.Array[np.clongdouble]: ...
 
 #
 @overload
