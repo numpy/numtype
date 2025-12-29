@@ -22,7 +22,6 @@ _ToArray_u4_u8: TypeAlias = _nt._ToArray_1nd[np.uint32 | np.uint64]
 # NOTE: This module is publically re-exported as `numpy.emath`
 # NOTE: All signatures are weird: https://github.com/numpy/numpy/issues/28367
 # NOTE: The signatures of sqrt, log, log2, and log10 are identical
-# NOTE: all ignored mypy [overload-overlap] errors are false positives (meet vs join)
 
 #
 @overload
