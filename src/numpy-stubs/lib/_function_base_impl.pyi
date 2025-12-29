@@ -534,14 +534,11 @@ def gradient(
 ) -> _nt.Array1D[np.float64]: ...
 @overload  # 2d float-like
 def gradient(
-    f: Sequence[Sequence[float]], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Sequence2D[float], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
 ) -> _Mesh2[np.float64, np.float64]: ...
 @overload  # 3d float-like
 def gradient(
-    f: Sequence[Sequence[Sequence[float]]],
-    *varargs: _nt.CoComplex_nd,
-    axis: _ShapeLike | None = None,
-    edge_order: L[1, 2] = 1,
+    f: _nt.Sequence3D[float], *varargs: _nt.CoComplex_nd, axis: _ShapeLike | None = None, edge_order: L[1, 2] = 1
 ) -> _Mesh3[np.float64, np.float64, np.float64]: ...
 @overload  # 1d complex-like  (the `list` avoids overlap with the float-like overload)
 def gradient(
