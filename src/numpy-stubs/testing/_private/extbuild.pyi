@@ -13,6 +13,8 @@ def build_and_import_extension(
     include_dirs: Sequence[str] | None = None,
     more_init: str = "",
 ) -> types.ModuleType: ...
+
+#
 def compile_extension_module(
     name: str,
     builddir: pathlib.Path,
@@ -21,6 +23,8 @@ def compile_extension_module(
     libraries: Sequence[str] | None = None,
     library_dirs: Sequence[str] | None = None,
 ) -> pathlib.Path: ...
+
+#
 def build(
     cfile: pathlib.Path,
     outputfilename: pathlib.Path,
@@ -30,4 +34,6 @@ def build(
     libraries: object,  # unused
     library_dirs: Iterable[str],
 ) -> pathlib.Path: ...  # undocumented
+
+#
 def get_so_suffix() -> str: ...  # undocumented
