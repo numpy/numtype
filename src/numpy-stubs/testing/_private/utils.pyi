@@ -96,7 +96,6 @@ _Tss = ParamSpec("_Tss")
 _ET = TypeVar("_ET", bound=BaseException, default=BaseException)
 _FT = TypeVar("_FT", bound=Callable[..., object])
 _W_co = TypeVar("_W_co", bound=_WarnLog | None, default=_WarnLog | None, covariant=True)
-_T_or_bool = TypeVar("_T_or_bool", default=bool)
 
 _ExceptionSpec: TypeAlias = type[_ET] | tuple[type[_ET], ...]
 _WarningSpec: TypeAlias = type[Warning]
@@ -130,7 +129,6 @@ NOGIL_BUILD: Final[bool] = ...
 class KnownFailureException(Exception): ...
 class IgnoreException(Exception): ...
 
-# NOTE: `warnings.catch_warnings` is incorrectly defined as invariant in typeshed
 class clear_and_catch_warnings(warnings.catch_warnings[_W_co], Generic[_W_co]):
     class_modules: ClassVar[tuple[types.ModuleType, ...]] = ()
     modules: Final[set[types.ModuleType]]
@@ -371,9 +369,8 @@ def temppath(
     suffix: AnyStr, prefix: AnyStr | None = None, dir: GenericPath[AnyStr] | None = None, text: bool = False
 ) -> _GeneratorContextManager[AnyStr]: ...
 
-# NOTE: It's current impossible to annotate without it causing a stubtest error,
-# and is therefore added to the permanent allowlist (`.mypyignore`)
-def check_support_sve(__cache: list[_T_or_bool] = []) -> _T_or_bool: ...  # noqa: PYI063
+#
+def check_support_sve(__cache: list[bool] = ..., /) -> bool: ...  # stubdefaulter: ignore[missing-default]
 
 #
 def decorate_methods(
