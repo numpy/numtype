@@ -110,6 +110,8 @@ _SortsToComplex128: TypeAlias = (
 _Mesh2: TypeAlias = tuple[_nt.Array2D[_ScalarT], _nt.Array2D[_ScalarT1]]
 _Mesh3: TypeAlias = tuple[_nt.Array3D[_ScalarT], _nt.Array3D[_ScalarT1], _nt.Array3D[_ScalarT2]]
 
+_IndexLike: TypeAlias = slice | _nt.CoInteger_nd
+
 _Tuple2: TypeAlias = tuple[_T, _T]
 _PercentileMethod: TypeAlias = L[
     "inverted_cdf",
@@ -2121,25 +2123,33 @@ def meshgrid(
     *xi: ArrayLike, copy: bool = True, sparse: bool = False, indexing: _Indexing = "xy"
 ) -> tuple[_nt.Array[Incomplete], ...]: ...
 
-#
-@overload
-def delete(
-    arr: _ArrayLike[_ScalarT], obj: slice | _nt.CoInteger_nd, axis: SupportsIndex | None = None
-) -> _nt.Array[_ScalarT]: ...
-@overload
-def delete(
-    arr: ArrayLike, obj: slice | _nt.CoInteger_nd, axis: SupportsIndex | None = None
-) -> _nt.Array[Incomplete]: ...
+# keep in sync with `insert`
+@overload  # known scalar-type, axis=None (default)
+def delete(arr: _ArrayLike[_ScalarT], obj: _IndexLike, axis: None = None) -> _nt.Array1D[_ScalarT]: ...
+@overload  # known array-type, axis specified
+def delete(arr: _ArrayT, obj: _IndexLike, axis: SupportsIndex) -> _ArrayT: ...
+@overload  # known scalar-type, axis specified
+def delete(arr: _ArrayLike[_ScalarT], obj: _IndexLike, axis: SupportsIndex) -> _nt.Array[_ScalarT]: ...
+@overload  # known scalar-type, axis=None (default)
+def delete(arr: ArrayLike, obj: _IndexLike, axis: None = None) -> _nt.Array1D[Any]: ...
+@overload  # unknown scalar-type, axis specified
+def delete(arr: ArrayLike, obj: _IndexLike, axis: SupportsIndex) -> _nt.Array[Any]: ...
 
-#
-@overload
+# keep in sync with `delete`
+@overload  # known scalar-type, axis=None (default)
 def insert(
-    arr: _ArrayLike[_ScalarT], obj: slice | _nt.CoInteger_nd, values: ArrayLike, axis: SupportsIndex | None = None
+    arr: _ArrayLike[_ScalarT], obj: _IndexLike, values: ArrayLike, axis: None = None
+) -> _nt.Array1D[_ScalarT]: ...
+@overload  # known array-type, axis specified
+def insert(arr: _ArrayT, obj: _IndexLike, values: ArrayLike, axis: SupportsIndex) -> _ArrayT: ...
+@overload  # known scalar-type, axis specified
+def insert(
+    arr: _ArrayLike[_ScalarT], obj: _IndexLike, values: ArrayLike, axis: SupportsIndex
 ) -> _nt.Array[_ScalarT]: ...
-@overload
-def insert(
-    arr: ArrayLike, obj: slice | _nt.CoInteger_nd, values: ArrayLike, axis: SupportsIndex | None = None
-) -> _nt.Array[Incomplete]: ...
+@overload  # known scalar-type, axis=None (default)
+def insert(arr: ArrayLike, obj: _IndexLike, values: ArrayLike, axis: None = None) -> _nt.Array1D[Any]: ...
+@overload  # unknown scalar-type, axis specified
+def insert(arr: ArrayLike, obj: _IndexLike, values: ArrayLike, axis: SupportsIndex) -> _nt.Array[Any]: ...
 
 #
 def append(arr: ArrayLike, values: ArrayLike, axis: SupportsIndex | None = ...) -> _nt.Array[Incomplete]: ...
