@@ -111,7 +111,9 @@ class _CanLenAndGetSlice(Protocol[_T_co]):
 
 class vectorize:
     __doc__: str | None
+    __module__: L["numpy"] = "numpy"
     pyfunc: Callable[..., Incomplete]
+
     cache: Final[bool]
     signature: Final[LiteralString | None]
     otypes: Final[LiteralString | None]
