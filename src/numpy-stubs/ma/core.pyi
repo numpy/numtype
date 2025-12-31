@@ -1561,6 +1561,97 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def round(self, /, decimals: CanIndex = 0, *, out: _ArrayT) -> _ArrayT: ...
 
     #
+    @override
+    def argsort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: CanIndex | _NoValueType = ...,
+        kind: np._SortKind | None = None,
+        order: str | Sequence[str] | None = None,
+        endwith: bool = True,
+        fill_value: _ScalarLike_co | None = None,
+        *,
+        stable: bool = False,
+    ) -> _nt.MArray[np.intp]: ...
+
+    # Keep in-sync with np.ma.argmin
+    @override  # type: ignore[override]
+    @overload
+    def argmin(
+        self,
+        axis: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: L[False] | _NoValueType = ...,
+    ) -> np.intp: ...
+    @overload
+    def argmin(
+        self,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def argmin(
+        self,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def argmin(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: CanIndex | None,
+        fill_value: _ScalarLike_co | None,
+        out: _ArrayT,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
+    # Keep in-sync with np.ma.argmax
+    @override  # type: ignore[override]
+    @overload
+    def argmax(
+        self,
+        axis: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: L[False] | _NoValueType = ...,
+    ) -> np.intp: ...
+    @overload
+    def argmax(
+        self,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        out: None = None,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def argmax(
+        self,
+        axis: CanIndex | None = None,
+        fill_value: _ScalarLike_co | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def argmax(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: CanIndex | None,
+        fill_value: _ScalarLike_co | None,
+        out: _ArrayT,
+        *,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
+    #
     @property
     @override
     def mT(self) -> Self: ...
@@ -1595,37 +1686,17 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         *,
         stable: bool = False,
     ) -> Incomplete: ...
-    @override
-    def argsort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self,
-        /,
-        axis: Incomplete = ...,
-        kind: Incomplete | None = None,
-        order: Incomplete | None = None,
-        endwith: bool = True,
-        fill_value: Incomplete | None = None,
-        *,
-        stable: bool = False,
-    ) -> Incomplete: ...
 
     #
     @override
     def min(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self, axis: Incomplete = ..., out: Incomplete = ..., fill_value: Incomplete = ..., keepdims: Incomplete = ...
     ) -> Incomplete: ...
-    @override
-    def argmin(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., fill_value: Incomplete = ..., out: Incomplete = ..., *, keepdims: Incomplete = ...
-    ) -> Incomplete: ...
 
     #
     @override
     def max(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self, axis: Incomplete = ..., out: Incomplete = ..., fill_value: Incomplete = ..., keepdims: Incomplete = ...
-    ) -> Incomplete: ...
-    @override
-    def argmax(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., fill_value: Incomplete = ..., out: Incomplete = ..., *, keepdims: Incomplete = ...
     ) -> Incomplete: ...
 
     #
