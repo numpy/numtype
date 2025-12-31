@@ -62,8 +62,8 @@ _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _NumericT = TypeVar("_NumericT", bound=_nt.co_complex | np.timedelta64 | np.object_)
 _SafeScalarT = TypeVar("_SafeScalarT", bound=_nt.co_complex | np.timedelta64 | np.datetime64 | np.flexible)
 
-_ArrayT = TypeVar("_ArrayT", bound=_nt.Array)
-_ArrayT_co = TypeVar("_ArrayT_co", bound=_nt.Array, default=_nt.Array, covariant=True)
+_ArrayT = TypeVar("_ArrayT", bound=np.ndarray[Any, Any])
+_ArrayT_co = TypeVar("_ArrayT_co", bound=np.ndarray[Any, Any], default=_nt.Array, covariant=True)
 _Array1T = TypeVar("_Array1T", bound=_nt.Array[Any, _nt.Shape1N])
 _Array2T = TypeVar("_Array2T", bound=_nt.Array[Any, _nt.Shape2N])
 
