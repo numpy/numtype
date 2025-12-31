@@ -1891,6 +1891,10 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def torecords(self) -> MaskedArray[_ShapeT_co, np.dtype[np.void]]: ...
 
     #
+    @override
+    def tobytes(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
     @property
     @override
     def mT(self) -> Self: ...
@@ -1919,8 +1923,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def tolist(self, fill_value: Incomplete | None = None) -> Incomplete: ...
-    @override
-    def tobytes(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
     def tofile(self, /, fid: Incomplete, sep: str = "", format: str = "%s") -> Incomplete: ...
 
