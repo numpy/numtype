@@ -557,6 +557,15 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> _nt.MArray[Any]: ...
 
     #
+    @override
+    def __array_wrap__(
+        self,
+        obj: np.ndarray[_ShapeT, _DTypeT],
+        context: tuple[np.ufunc, tuple[Any, ...], int] | None = None,
+        return_scalar: bool = False,
+    ) -> MaskedArray[_ShapeT, _DTypeT]: ...
+
+    #
     @property
     def mask(self) -> Incomplete: ...
     @mask.setter
@@ -619,10 +628,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def __array_finalize__(self, /, obj: Incomplete) -> None: ...
-    @override
-    def __array_wrap__(
-        self, /, obj: Incomplete, context: Incomplete | None = None, return_scalar: bool = False
-    ) -> Incomplete: ...
     def __setmask__(self, /, mask: Incomplete, copy: bool = False) -> None: ...
 
     #
