@@ -1374,6 +1374,32 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def dot(self, b: ArrayLike, out: _ArrayT, strict: bool = False) -> _ArrayT: ...
 
+    # Keep in sync with `ma.core.sum`
+    @override  # type: ignore[override]
+    @overload
+    def sum(
+        self,
+        /,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        out: None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def sum(
+        self, /, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+    ) -> _ArrayT: ...
+    @overload
+    def sum(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        /,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1397,10 +1423,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
 
     #
-    @override
-    def sum(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., dtype: Incomplete = ..., out: Incomplete = ..., keepdims: Incomplete = ...
-    ) -> Incomplete: ...
     @override
     def cumsum(  # pyright: ignore[reportIncompatibleMethodOverride]
         self, axis: Incomplete = ..., dtype: Incomplete = ..., out: Incomplete = ...
