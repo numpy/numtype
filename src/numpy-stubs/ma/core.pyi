@@ -1370,7 +1370,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     # This differs from `ndarray.dot`, in that 1D dot 1D returns a 0D array.
     @override  # typoe: ignore[override]
     @overload
-    def dot(self, b: ArrayLike, out: None = None, strict: bool = False) -> _nt.MArray[Any]: ...
+    def dot(self, b: ArrayLike, out: None = None, strict: bool = False) -> _nt.MArray[Incomplete]: ...
     @overload
     def dot(self, b: ArrayLike, out: _ArrayT, strict: bool = False) -> _ArrayT: ...
 
@@ -1384,7 +1384,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         dtype: DTypeLike | None = None,
         out: None = None,
         keepdims: bool | _NoValueType = ...,
-    ) -> Any: ...
+    ) -> Incomplete: ...
     @overload
     def sum(
         self, /, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
@@ -1421,7 +1421,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         dtype: DTypeLike | None = None,
         out: None = None,
         keepdims: bool | _NoValueType = ...,
-    ) -> Any: ...
+    ) -> Incomplete: ...
     @overload
     def prod(
         self, /, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
@@ -1450,6 +1450,31 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def cumprod(self, /, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
+    # Keep in sync with `ma.core.mean`
+    @override  # type: ignore[override]
+    @overload
+    def mean(
+        self,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        out: None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Incomplete: ...
+    @overload
+    def mean(
+        self, /, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+    ) -> _ArrayT: ...
+    @overload
+    def mean(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        /,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1471,12 +1496,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def mean(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., dtype: Incomplete = ..., out: Incomplete = ..., keepdims: Incomplete = ...
-    ) -> Incomplete: ...
 
     #
     def anom(self, axis: Incomplete = ..., dtype: Incomplete = ...) -> Incomplete: ...
