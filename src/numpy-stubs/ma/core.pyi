@@ -1769,6 +1769,51 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> _ArrayT: ...
 
     #
+    @override  # type: ignore[override]
+    @overload
+    def partition(
+        self, /, kth: _nt.ToInteger_nd, axis: CanIndex = -1, kind: np._PartitionKind = "introselect", order: None = None
+    ) -> None: ...
+    @overload
+    def partition(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self: _nt.MArray[np.void],
+        /,
+        kth: _nt.ToInteger_nd,
+        axis: CanIndex = -1,
+        kind: np._PartitionKind = "introselect",
+        order: str | Sequence[str] | None = None,
+    ) -> None: ...
+
+    # keep in sync with ndarray.argpartition
+    @override  # type: ignore[override]
+    @overload  # axis: None
+    def argpartition(
+        self, kth: _nt.ToInteger_nd, /, axis: None, kind: np._PartitionKind = "introselect", order: None = None
+    ) -> MaskedArray[_nt.Rank1, np.dtype[np.intp]]: ...
+    @overload  # axis: index (default)
+    def argpartition(
+        self, kth: _nt.ToInteger_nd, /, axis: CanIndex = -1, kind: np._PartitionKind = "introselect", order: None = None
+    ) -> MaskedArray[_ShapeT_co, np.dtype[np.intp]]: ...
+    @overload  # void, axis: None
+    def argpartition(
+        self: _nt.MArray[np.void],
+        kth: _nt.ToInteger_nd,
+        /,
+        axis: None,
+        kind: np._PartitionKind = "introselect",
+        order: str | Sequence[str] | None = None,
+    ) -> MaskedArray[_nt.Rank1, np.dtype[np.intp]]: ...
+    @overload  # void, axis: index (default)
+    def argpartition(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self: _nt.MArray[np.void],
+        kth: _nt.ToInteger_nd,
+        /,
+        axis: CanIndex = -1,
+        kind: np._PartitionKind = "introselect",
+        order: str | Sequence[str] | None = None,
+    ) -> MaskedArray[_ShapeT_co, np.dtype[np.intp]]: ...
+
+    #
     @property
     @override
     def mT(self) -> Self: ...
@@ -1789,12 +1834,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def partition(self, *args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
-    @override
-    def argpartition(self, *args: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
 
     #
     @override
