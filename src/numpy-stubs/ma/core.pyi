@@ -599,6 +599,21 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         fill_value: _ScalarLike_co | None = None,
     ) -> MaskedArray[_ShapeT_co, np.dtype]: ...
 
+    # Keep in sync with `ndarray.__getitem__`
+    @override
+    @overload
+    def __getitem__(
+        self, key: _nt.Array[_nt.co_integer] | tuple[_nt.Array[_nt.co_integer], ...], /
+    ) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
+    @overload
+    def __getitem__(self, key: CanIndex | tuple[CanIndex, ...], /) -> Any: ...
+    @overload
+    def __getitem__(self, key: _ToIndices, /) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
+    @overload
+    def __getitem__(self: _nt.MArray[np.void], indx: str, /) -> MaskedArray[_ShapeT_co]: ...
+    @overload
+    def __getitem__(self: _nt.MArray[np.void], indx: list[str], /) -> MaskedArray[_ShapeT_co, np.dtype[np.void]]: ...
+
     #
     @property
     def mask(self) -> Incomplete: ...
@@ -663,12 +678,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def __array_finalize__(self, /, obj: Incomplete) -> None: ...
     def __setmask__(self, /, mask: Incomplete, copy: bool = False) -> None: ...
-
-    #
-    @override
-    def __getitem__(self, indx: Incomplete, /) -> Incomplete: ...
-    @override
-    def __setitem__(self, indx: Incomplete, value: Incomplete, /) -> None: ...
 
     #
     @override
@@ -923,10 +932,14 @@ class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
         copy: bool = False,
         subok: bool = True,
     ) -> Self: ...
+
+    #
     @override
-    def __getitem__(self, indx: _ToIndices, /) -> Incomplete: ...  # type: ignore[override]
+    def __getitem__(self, indx: _ToIndices, /) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __setitem__(self, indx: _ToIndices, value: ArrayLike, /) -> None: ...  # type: ignore[override]
+    def __setitem__(self, indx: _ToIndices, value: ArrayLike, /) -> None: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
     @override
     def __iter__(self: mvoid[Any, np.dtype[_ScalarT]], /) -> Iterator[MaskedConstant | _ScalarT]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
