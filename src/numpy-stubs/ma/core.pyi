@@ -1341,6 +1341,32 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def any(self, axis: _ShapeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
+    # Keep in sync with `ndarray.trace` and `ma.core.trace`
+    @override  # type: ignore[override]
+    @overload
+    def trace(
+        self,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+        dtype: DTypeLike | None = None,
+        out: None = None,
+    ) -> Any: ...
+    @overload
+    def trace(
+        self,
+        offset: CanIndex = 0,
+        axis1: CanIndex = 0,
+        axis2: CanIndex = 1,
+        dtype: DTypeLike | None = None,
+        *,
+        out: _ArrayT,
+    ) -> _ArrayT: ...
+    @overload
+    def trace(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, offset: CanIndex, axis1: CanIndex, axis2: CanIndex, dtype: DTypeLike | None, out: _ArrayT
+    ) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1362,15 +1388,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-    @override
-    def trace(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self,
-        offset: Incomplete = ...,
-        axis1: Incomplete = ...,
-        axis2: Incomplete = ...,
-        dtype: Incomplete = ...,
-        out: Incomplete = ...,
-    ) -> Incomplete: ...
     @override
     def dot(self, b: Incomplete, out: Incomplete = ..., strict: Incomplete = ...) -> Incomplete: ...
 
