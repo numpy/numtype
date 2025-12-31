@@ -1206,7 +1206,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @property  # type: ignore[misc]
     @override
-    def real(self: np._HasDTypeWithReal[_ScalarT], /) -> _nt.MArray[_ScalarT, _ShapeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def real(self: np._HasDTypeWithReal[_ScalarT], /) -> _nt.MArray[_ScalarT, _ShapeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def get_real(self: np._HasDTypeWithReal[_ScalarT], /) -> _nt.MArray[_ScalarT, _ShapeT_co]: ...
 
     #
