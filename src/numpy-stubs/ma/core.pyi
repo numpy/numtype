@@ -1367,6 +1367,13 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         self, offset: CanIndex, axis1: CanIndex, axis2: CanIndex, dtype: DTypeLike | None, out: _ArrayT
     ) -> _ArrayT: ...
 
+    # This differs from `ndarray.dot`, in that 1D dot 1D returns a 0D array.
+    @override  # typoe: ignore[override]
+    @overload
+    def dot(self, b: ArrayLike, out: None = None, strict: bool = False) -> _nt.MArray[Any]: ...
+    @overload
+    def dot(self, b: ArrayLike, out: _ArrayT, strict: bool = False) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1388,8 +1395,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-    @override
-    def dot(self, b: Incomplete, out: Incomplete = ..., strict: Incomplete = ...) -> Incomplete: ...
 
     #
     @override
