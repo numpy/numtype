@@ -1665,6 +1665,110 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     ) -> _ArrayT: ...
 
     #
+    @override  # type: ignore[override]
+    @overload
+    def min(
+        self: _nt.MArray[_ScalarT],
+        axis: None = None,
+        out: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: L[False] | _NoValueType = ...,
+    ) -> _ScalarT: ...
+    @overload
+    def min(
+        self,
+        axis: _ShapeLike | None = None,
+        out: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def min(
+        self,
+        axis: _ShapeLike | None,
+        out: _ArrayT,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def min(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: _ShapeLike | None = None,
+        *,
+        out: _ArrayT,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
+    #
+    @override  # type: ignore[override]
+    @overload
+    def max(
+        self: _nt.MArray[_ScalarT],
+        axis: None = None,
+        out: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: L[False] | _NoValueType = ...,
+    ) -> _ScalarT: ...
+    @overload
+    def max(
+        self,
+        axis: _ShapeLike | None = None,
+        out: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def max(
+        self,
+        axis: _ShapeLike | None,
+        out: _ArrayT,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def max(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: _ShapeLike | None = None,
+        *,
+        out: _ArrayT,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
+    #
+    @override
+    @overload
+    def ptp(
+        self: _nt.MArray[_ScalarT],
+        axis: None = None,
+        out: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: L[False] = False,
+    ) -> _ScalarT: ...
+    @overload
+    def ptp(
+        self,
+        axis: _ShapeLike | None = None,
+        out: None = None,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: bool = False,
+    ) -> Any: ...
+    @overload
+    def ptp(
+        self, axis: _ShapeLike | None, out: _ArrayT, fill_value: _ScalarLike_co | None = None, keepdims: bool = False
+    ) -> _ArrayT: ...
+    @overload
+    def ptp(  # pyright: ignore[reportIncompatibleVariableOverride]
+        self,
+        axis: _ShapeLike | None = None,
+        *,
+        out: _ArrayT,
+        fill_value: _ScalarLike_co | None = None,
+        keepdims: bool = False,
+    ) -> _ArrayT: ...
+
+    #
     @property
     @override
     def mT(self) -> Self: ...
@@ -1685,24 +1789,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def min(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., out: Incomplete = ..., fill_value: Incomplete = ..., keepdims: Incomplete = ...
-    ) -> Incomplete: ...
-
-    #
-    @override
-    def max(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., out: Incomplete = ..., fill_value: Incomplete = ..., keepdims: Incomplete = ...
-    ) -> Incomplete: ...
-
-    #
-    @override
-    def ptp(  # pyright: ignore[reportIncompatibleVariableOverride]
-        self, axis: Incomplete = ..., out: Incomplete = ..., fill_value: Incomplete = ..., keepdims: Incomplete = ...
-    ) -> Incomplete: ...
 
     #
     @override
