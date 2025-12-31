@@ -1876,6 +1876,12 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         self: MaskedArray[np._AnyShapeT, _DTypeT], repeats: _nt.CoInteger_nd, /, axis: CanIndex
     ) -> MaskedArray[np._AnyShapeT, _DTypeT]: ...
 
+    # keep in sync with `ndarray.flatten` and `ndarray.ravel`
+    @override
+    def flatten(self, /, order: _OrderKACF = "C") -> MaskedArray[_nt.Rank1, _DTypeT_co]: ...
+    @override
+    def ravel(self, /, order: _OrderKACF = "C") -> MaskedArray[_nt.Rank1, _DTypeT_co]: ...
+
     #
     @property
     @override
@@ -1896,14 +1902,9 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
-    def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
     def copy(self, /, order: _OrderKACF = "C") -> Self: ...
 
     #
-    flatten: Incomplete
     squeeze: Incomplete
     swapaxes: Incomplete
     transpose: Incomplete
