@@ -2,8 +2,9 @@ name: build and publish to PyPI
 
 on:
   workflow_dispatch:
-  release:
-    types: [prereleased, released]
+  push:
+    tags:
+    - "v*"
 
 jobs:
   pypi-publish:
@@ -20,7 +21,7 @@ jobs:
     - name: setup uv
       uses: astral-sh/setup-uv@v7.1.6
       with:
-        python-version: "3.13"
+        python-version: "3.14"
     - name: uv build
       run: uv build
     - name: publish to PyPI
