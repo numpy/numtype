@@ -644,12 +644,12 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def data(self) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
-    #
-    @property  # type: ignore[explicit-override]
+    # the `explicit-override` error is an obvious false positive from mypy
+    @property  # type: ignore[explicit-override, override]
     @override
-    def flat(self) -> Incomplete: ...
+    def flat(self) -> MaskedIterator[_ShapeT_co, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @flat.setter
-    def flat(self, value: Incomplete) -> Incomplete: ...
+    def flat(self, value: ArrayLike, /) -> None: ...
 
     #
     def get_fill_value(self) -> Incomplete: ...
