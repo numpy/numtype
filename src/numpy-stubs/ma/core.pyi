@@ -1,7 +1,7 @@
 import datetime as dt
 import types
 from _typeshed import ConvertibleToFloat, ConvertibleToInt, Incomplete
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Iterator, Sequence
 from typing import (
     Any,
     ClassVar,
@@ -240,6 +240,8 @@ _Ignored: TypeAlias = object
 _ToInt: TypeAlias = int | _nt.co_integer
 _ToTD64: TypeAlias = int | _nt.co_timedelta
 _ToFloat: TypeAlias = float | _nt.co_float
+
+_ToMask: TypeAlias = _nt.ToBool_nd
 
 _ArangeScalar: TypeAlias = np.integer | np.floating | np.datetime64 | np.timedelta64
 _ArangeScalarT = TypeVar("_ArangeScalarT", bound=_ArangeScalar)
@@ -832,28 +834,28 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
     def __new__(
         self,  # noqa: PLW0211
-        data: Incomplete,
-        mask: Incomplete = ...,
-        dtype: Incomplete = ...,
-        fill_value: Incomplete = ...,
-        hardmask: Incomplete = ...,
-        copy: bool = ...,
-        subok: bool = ...,
+        data: ArrayLike,
+        mask: _ToMask = ...,
+        dtype: DTypeLike | None = None,
+        fill_value: complex | None = None,
+        hardmask: bool = False,
+        copy: bool = False,
+        subok: bool = True,
     ) -> Self: ...
     @override
-    def __getitem__(self, indx: Incomplete, /) -> Incomplete: ...
+    def __getitem__(self, indx: _ToIndices, /) -> Incomplete: ...  # type: ignore[override]
     @override
-    def __setitem__(self, indx: Incomplete, value: Incomplete, /) -> None: ...
+    def __setitem__(self, indx: _ToIndices, value: ArrayLike, /) -> None: ...  # type: ignore[override]
     @override
-    def __iter__(self) -> Incomplete: ...
+    def __iter__(self: mvoid[Any, np.dtype[_ScalarT]], /) -> Iterator[MaskedConstant | _ScalarT]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __len__(self) -> int: ...
+    def __len__(self, /) -> int: ...
 
     #
     @override
-    def filled(self, fill_value: Incomplete = ...) -> Incomplete: ...
-    @override
-    def tolist(self) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    def filled(self, fill_value: complex | None = None) -> Self | np.void: ...
+    @override  # list or tuple
+    def tolist(self) -> Sequence[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 # 0D float64 array
 class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
