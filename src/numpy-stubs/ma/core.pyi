@@ -1840,6 +1840,33 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         self, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: np._ModeKind = "raise"
     ) -> _ArrayT: ...
 
+    # keep in sync with `ndarray.diagonal`
+    @override
+    @overload  # this overload is a workaround for microsoft/pyright#10232
+    def diagonal(  # type: ignore[overload-overlap]
+        self: MaskedArray[_nt.NeitherShape, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> MaskedArray[_nt.AnyShape, _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: MaskedArray[_nt.Shape2, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> MaskedArray[_nt.Rank1, _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: MaskedArray[_nt.Shape3, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> MaskedArray[_nt.Rank2, _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: MaskedArray[_nt.Shape4, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> MaskedArray[_nt.Rank3, _DTypeT]: ...
+    @overload
+    def diagonal(
+        self: MaskedArray[_nt.Shape4N, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> MaskedArray[_nt.Rank3N, _DTypeT]: ...
+    @overload
+    def diagonal(
+        self, /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
+    ) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
+
     #
     @property
     @override
@@ -1867,7 +1894,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def copy(self, /, order: _OrderKACF = "C") -> Self: ...
 
     #
-    diagonal: Incomplete
     flatten: Incomplete
     repeat: Incomplete
     squeeze: Incomplete
