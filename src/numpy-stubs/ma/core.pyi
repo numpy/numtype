@@ -1867,6 +1867,15 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         self, /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
     ) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
 
+    # keep in sync with `ndarray.repeat`
+    @override
+    @overload
+    def repeat(self, repeats: _nt.CoInteger_nd, /, axis: None = None) -> MaskedArray[_nt.Rank1, _DTypeT_co]: ...
+    @overload
+    def repeat(
+        self: MaskedArray[np._AnyShapeT, _DTypeT], repeats: _nt.CoInteger_nd, /, axis: CanIndex
+    ) -> MaskedArray[np._AnyShapeT, _DTypeT]: ...
+
     #
     @property
     @override
@@ -1895,7 +1904,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     flatten: Incomplete
-    repeat: Incomplete
     squeeze: Incomplete
     swapaxes: Incomplete
     transpose: Incomplete
