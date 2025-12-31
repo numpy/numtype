@@ -1,4 +1,4 @@
-"""A superset of `numpy.typing`. Will be expanded in the future."""
+"""Will become a `numpy.typing` alternative in the future."""
 
 from .version import __version__
 
