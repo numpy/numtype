@@ -1894,6 +1894,31 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @override
     def tobytes(self, /, fill_value: Incomplete | None = None, order: _OrderKACF = "C") -> bytes: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
+    # keep in sync with `ndarray.tolist`
+    @override
+    @overload
+    def tolist(
+        self: MaskedArray[tuple[Never], np.dtype[np.generic[_T]]], /, fill_value: _ScalarLike_co | None = None
+    ) -> Any: ...
+    @overload
+    def tolist(
+        self: MaskedArray[tuple[()], np.dtype[np.generic[_T]]], /, fill_value: _ScalarLike_co | None = None
+    ) -> _T: ...
+    @overload
+    def tolist(
+        self: MaskedArray[tuple[int], np.dtype[np.generic[_T]]], /, fill_value: _ScalarLike_co | None = None
+    ) -> list[_T]: ...
+    @overload
+    def tolist(
+        self: MaskedArray[tuple[int, int], np.dtype[np.generic[_T]]], /, fill_value: _ScalarLike_co | None = None
+    ) -> list[list[_T]]: ...
+    @overload
+    def tolist(
+        self: MaskedArray[tuple[int, int, int], np.dtype[np.generic[_T]]], /, fill_value: _ScalarLike_co | None = None
+    ) -> list[list[list[_T]]]: ...
+    @overload
+    def tolist(self, /, fill_value: _ScalarLike_co | None = None) -> Any: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+
     #
     @property
     @override
@@ -1915,16 +1940,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def copy(self, /, order: _OrderKACF = "C") -> Self: ...
-
-    #
-    swapaxes: Incomplete
-    transpose: Incomplete
-
-    #
-    @override
-    def tolist(self, fill_value: Incomplete | None = None) -> Incomplete: ...
-    @override
-    def tofile(self, /, fid: Incomplete, sep: str = "", format: str = "%s") -> Incomplete: ...
 
 class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
     def __new__(
