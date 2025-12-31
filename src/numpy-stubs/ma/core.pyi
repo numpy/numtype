@@ -1562,6 +1562,19 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
+    def sort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: CanIndex = -1,
+        kind: np._SortKind | None = None,
+        order: str | Sequence[str] | None = None,
+        endwith: bool | None = True,
+        fill_value: _ScalarLike_co | None = None,
+        *,
+        stable: L[False] | None = False,
+    ) -> None: ...
+
+    #
+    @override
     def argsort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         axis: CanIndex | _NoValueType = ...,
@@ -1672,20 +1685,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def sort(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self,
-        /,
-        axis: Incomplete = -1,
-        kind: Incomplete | None = None,
-        order: Incomplete | None = None,
-        endwith: bool = True,
-        fill_value: Incomplete | None = None,
-        *,
-        stable: bool = False,
-    ) -> Incomplete: ...
 
     #
     @override
