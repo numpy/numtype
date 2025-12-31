@@ -663,6 +663,9 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def filled(self, /, fill_value: _ScalarLike_co | None = None) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...
 
     #
+    def compressed(self) -> np.ndarray[_nt.Rank1, _DTypeT_co]: ...
+
+    #
     @property  # type: ignore[misc]
     @override
     def imag(self) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -743,7 +746,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __deepcopy__(self, /, memo: Incomplete = ...) -> Self: ...
 
     #
-    def compressed(self) -> Incomplete: ...
     @override
     def compress(self, /, condition: Incomplete, axis: Incomplete = None, out: Incomplete = None) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
