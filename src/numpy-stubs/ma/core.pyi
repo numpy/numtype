@@ -1813,6 +1813,33 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         order: str | Sequence[str] | None = None,
     ) -> MaskedArray[_ShapeT_co, np.dtype[np.intp]]: ...
 
+    # Keep in-sync with np.ma.take
+    @override  # type: ignore[override]
+    @overload
+    def take(
+        self: _nt.MArray[_ScalarT],
+        indices: int | np.integer,
+        axis: None = None,
+        out: None = None,
+        mode: np._ModeKind = "raise",
+    ) -> _ScalarT: ...
+    @overload
+    def take(
+        self: _nt.MArray[_ScalarT],
+        indices: _nt.CoInteger_1nd,
+        axis: CanIndex | None = None,
+        out: None = None,
+        mode: np._ModeKind = "raise",
+    ) -> _nt.MArray[_ScalarT]: ...
+    @overload
+    def take(
+        self, indices: _nt.CoInteger_nd, axis: CanIndex | None, out: _ArrayT, mode: np._ModeKind = "raise"
+    ) -> _ArrayT: ...
+    @overload
+    def take(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, indices: _nt.CoInteger_nd, axis: CanIndex | None = None, *, out: _ArrayT, mode: np._ModeKind = "raise"
+    ) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1834,12 +1861,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def take(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, /, indices: Incomplete, axis: Incomplete = ..., out: Incomplete = ..., mode: Incomplete = ...
-    ) -> Incomplete: ...
 
     #
     @override
