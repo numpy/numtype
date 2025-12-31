@@ -665,6 +665,21 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     def compressed(self) -> np.ndarray[_nt.Rank1, _DTypeT_co]: ...
 
+    # keep roughly in sync with `ma.core.compress`, but swap the first two arguments
+    @override  # type: ignore[override]
+    @overload
+    def compress(self, condition: _nt.ToBool_nd, axis: _ShapeLike | None, out: _ArrayT) -> _ArrayT: ...
+    @overload
+    def compress(self, condition: _nt.ToBool_nd, axis: _ShapeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
+    @overload
+    def compress(
+        self, condition: _nt.ToBool_nd, axis: None = None, out: None = None
+    ) -> MaskedArray[_nt.Rank1, _DTypeT_co]: ...
+    @overload
+    def compress(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, condition: _nt.ToBool_nd, axis: _ShapeLike | None = None, out: None = None
+    ) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
+
     #
     @property  # type: ignore[misc]
     @override
@@ -744,10 +759,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __reduce__(self) -> Incomplete: ...
     @override
     def __deepcopy__(self, /, memo: Incomplete = ...) -> Self: ...
-
-    #
-    @override
-    def compress(self, /, condition: Incomplete, axis: Incomplete = None, out: Incomplete = None) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def count(self, axis: Incomplete = None, keepdims: Incomplete = ...) -> Incomplete: ...
