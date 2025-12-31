@@ -40,8 +40,6 @@ class MaskedRecords(MaskedArray[_ShapeT_co, _DTypeT_co]):
 
     #
     @property
-    def _data(self) -> Incomplete: ...
-    @property
     def _fieldmask(self) -> Incomplete: ...
 
     #
