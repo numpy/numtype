@@ -9,7 +9,7 @@ source-exclude = ['\@test', ".ruff_cache", ".ruff.toml"]
 
 [project]
 name = "numtype"
-version = "2.4.0.0.dev0"
+version = "2.4.0.0a1"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
 authors = [{ name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com" }]
