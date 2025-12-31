@@ -1924,26 +1924,8 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def tofile(self, /, fid: Never, sep: str = "", format: str = "%s") -> Never: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @property
     @override
-    def mT(self) -> Self: ...
-    @property
-    @override
-    def T(self) -> Self: ...
-
-    #
-    @override
-    def __array_finalize__(self, /, obj: Incomplete) -> None: ...
-
-    #
-    @override
-    def __reduce__(self) -> Incomplete: ...
-    @override
-    def __deepcopy__(self, /, memo: Incomplete = ...) -> Self: ...
-
-    #
-    @override
-    def copy(self, /, order: _OrderKACF = "C") -> Self: ...
+    def __deepcopy__(self, memo: dict[int, Any] | None = None) -> Self: ...
 
 class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
     def __new__(
