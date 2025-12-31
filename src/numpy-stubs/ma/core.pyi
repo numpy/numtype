@@ -1483,6 +1483,74 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def anom(self, axis: CanIndex | None, dtype: DTypeLike) -> MaskedArray[_ShapeT_co]: ...
 
+    # keep in sync with `std` and `ma.core.var`
+    @override  # type: ignore[override]
+    @overload
+    def var(
+        self,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        out: None = None,
+        ddof: float = 0,
+        keepdims: bool | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def var(
+        self,
+        axis: _ShapeLike | None,
+        dtype: DTypeLike | None,
+        out: _ArrayT,
+        ddof: float = 0,
+        keepdims: bool | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def var(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        *,
+        out: _ArrayT,
+        ddof: float = 0,
+        keepdims: bool | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
+    # keep in sync with `var` and `ma.core.std`
+    @override  # type: ignore[override]
+    @overload
+    def std(
+        self,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        out: None = None,
+        ddof: float = 0,
+        keepdims: bool | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def std(
+        self,
+        axis: _ShapeLike | None,
+        dtype: DTypeLike | None,
+        out: _ArrayT,
+        ddof: float = 0,
+        keepdims: bool | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+    ) -> _ArrayT: ...
+    @overload
+    def std(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        *,
+        out: _ArrayT,
+        ddof: float = 0,
+        keepdims: bool | _NoValueType = ...,
+        mean: _nt.CoComplex_nd | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1504,30 +1572,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def var(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self,
-        /,
-        axis: Incomplete = ...,
-        dtype: Incomplete = ...,
-        out: Incomplete = ...,
-        ddof: float = 0,
-        keepdims: Incomplete = ...,
-        mean: Incomplete = ...,
-    ) -> Incomplete: ...
-    @override
-    def std(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self,
-        /,
-        axis: Incomplete = ...,
-        dtype: Incomplete = ...,
-        out: Incomplete = ...,
-        ddof: float = 0,
-        keepdims: Incomplete = ...,
-        mean: Incomplete = ...,
-    ) -> Incomplete: ...
 
     #
     @override
