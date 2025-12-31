@@ -1845,7 +1845,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # this overload is a workaround for microsoft/pyright#10232
     def diagonal(  # type: ignore[overload-overlap]
         self: MaskedArray[_nt.NeitherShape, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
-    ) -> MaskedArray[_nt.AnyShape, _DTypeT]: ...
+    ) -> MaskedArray[_nt.AnyRank, _DTypeT]: ...
     @overload
     def diagonal(
         self: MaskedArray[_nt.Shape2, _DTypeT], /, offset: CanIndex = 0, axis1: CanIndex = 0, axis2: CanIndex = 1
@@ -1881,6 +1881,10 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def flatten(self, /, order: _OrderKACF = "C") -> MaskedArray[_nt.Rank1, _DTypeT_co]: ...
     @override
     def ravel(self, /, order: _OrderKACF = "C") -> MaskedArray[_nt.Rank1, _DTypeT_co]: ...
+    @override
+    def squeeze(
+        self, /, axis: CanIndex | tuple[CanIndex, ...] | None = None
+    ) -> MaskedArray[_nt.AnyRank, _DTypeT_co]: ...
 
     #
     @property
@@ -1905,7 +1909,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def copy(self, /, order: _OrderKACF = "C") -> Self: ...
 
     #
-    squeeze: Incomplete
     swapaxes: Incomplete
     transpose: Incomplete
 
