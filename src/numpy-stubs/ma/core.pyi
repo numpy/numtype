@@ -1475,6 +1475,14 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         keepdims: bool | _NoValueType = ...,
     ) -> _ArrayT: ...
 
+    # keep roughly in sync with `ma.core.anom`
+    @overload
+    def anom(self, axis: CanIndex | None = None, dtype: None = None) -> Self: ...
+    @overload
+    def anom(self, axis: CanIndex | None = None, *, dtype: DTypeLike) -> MaskedArray[_ShapeT_co]: ...
+    @overload
+    def anom(self, axis: CanIndex | None, dtype: DTypeLike) -> MaskedArray[_ShapeT_co]: ...
+
     #
     @property
     @override
@@ -1498,7 +1506,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
 
     #
-    def anom(self, axis: Incomplete = ..., dtype: Incomplete = ...) -> Incomplete: ...
     @override
     def var(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
