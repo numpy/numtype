@@ -1300,6 +1300,10 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def resize(self, newshape: Never, refcheck: bool = True, order: bool = False) -> Never: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
+    @override
+    def put(self, indices: _nt.CoInteger_nd, values: ArrayLike, mode: np._ModeKind = "raise") -> None: ...
+
+    #
     @property
     @override
     def mT(self) -> Self: ...
@@ -1320,8 +1324,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-    @override
-    def put(self, indices: Incomplete, values: Incomplete, mode: Incomplete = ...) -> Incomplete: ...
     def ids(self) -> Incomplete: ...
     def iscontiguous(self) -> Incomplete: ...
     @override
