@@ -26,7 +26,7 @@ from typing_extensions import Buffer, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy import _OrderACF, _OrderKACF, _ToIndices, amax, amin, bool_, expand_dims  # noqa: ICN003
+from numpy import _OrderKACF, _ToIndices, amax, amin, bool_, expand_dims  # noqa: ICN003
 from numpy._globals import _NoValueType
 from numpy._typing import (
     ArrayLike,
@@ -494,6 +494,68 @@ class MaskedIterator(Generic[_ShapeT_co, _DTypeT_co]):
 class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     __array_priority__: ClassVar[float] = 15  # pyright: ignore[reportIncompatibleMethodOverride]
 
+    @overload
+    def __new__(
+        cls,
+        data: _ArrayLike[_ScalarT],
+        mask: _ToMask = ...,
+        dtype: None = None,
+        copy: bool = False,
+        subok: bool = True,
+        ndmin: int = 0,
+        fill_value: _ScalarLike_co | None = None,
+        keep_mask: bool = True,
+        hard_mask: bool | None = None,
+        shrink: bool = True,
+        order: _OrderKACF | None = None,
+    ) -> _nt.MArray[_ScalarT]: ...
+    @overload
+    def __new__(
+        cls,
+        data: object,
+        mask: _ToMask,
+        dtype: _DTypeLike[_ScalarT],
+        copy: bool = False,
+        subok: bool = True,
+        ndmin: int = 0,
+        fill_value: _ScalarLike_co | None = None,
+        keep_mask: bool = True,
+        hard_mask: bool | None = None,
+        shrink: bool = True,
+        order: _OrderKACF | None = None,
+    ) -> _nt.MArray[_ScalarT]: ...
+    @overload
+    def __new__(
+        cls,
+        data: object,
+        mask: _ToMask = ...,
+        *,
+        dtype: _DTypeLike[_ScalarT],
+        copy: bool = False,
+        subok: bool = True,
+        ndmin: int = 0,
+        fill_value: _ScalarLike_co | None = None,
+        keep_mask: bool = True,
+        hard_mask: bool | None = None,
+        shrink: bool = True,
+        order: _OrderKACF | None = None,
+    ) -> _nt.MArray[_ScalarT]: ...
+    @overload
+    def __new__(
+        cls,
+        data: object = None,
+        mask: _ToMask = ...,
+        dtype: DTypeLike | None = None,
+        copy: bool = False,
+        subok: bool = True,
+        ndmin: int = 0,
+        fill_value: _ScalarLike_co | None = None,
+        keep_mask: bool = True,
+        hard_mask: bool | None = None,
+        shrink: bool = True,
+        order: _OrderKACF | None = None,
+    ) -> _nt.MArray[Any]: ...
+
     #
     @property
     def mask(self) -> Incomplete: ...
@@ -553,22 +615,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @property
     @override
     def T(self) -> Self: ...
-
-    #
-    def __new__(
-        cls,
-        data: Incomplete | None = None,
-        mask: Incomplete = ...,
-        dtype: Incomplete = None,
-        copy: bool = False,
-        subok: bool = True,
-        ndmin: int = 0,
-        fill_value: Incomplete = None,
-        keep_mask: bool = True,
-        hard_mask: bool | None = None,
-        shrink: bool = True,
-        order: _OrderACF | None = None,
-    ) -> Self: ...
 
     #
     @override
