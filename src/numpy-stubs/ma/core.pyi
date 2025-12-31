@@ -1919,6 +1919,10 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def tolist(self, /, fill_value: _ScalarLike_co | None = None) -> Any: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
+    # NOTE: will raise `NotImplementedError`
+    @override
+    def tofile(self, /, fid: Never, sep: str = "", format: str = "%s") -> Never: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
     #
     @property
     @override
