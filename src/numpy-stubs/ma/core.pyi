@@ -235,6 +235,8 @@ _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 # TODO: use `Shape` instead of `AnyShape` once python/mypy#19110 is fixed
 _ShapeT_co = TypeVar("_ShapeT_co", bound=_nt.AnyShape, default=_nt.Shape, covariant=True)
 
+_Ignored: TypeAlias = object
+
 _ToInt: TypeAlias = int | _nt.co_integer
 _ToTD64: TypeAlias = int | _nt.co_timedelta
 _ToFloat: TypeAlias = float | _nt.co_float
@@ -854,38 +856,26 @@ class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
     def tolist(self) -> Incomplete: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
 # 0D float64 array
-class MaskedConstant(MaskedArray[_nt.Rank0, np.dtype[np.float64]]):
+class MaskedConstant(MaskedArray[tuple[()], np.dtype[np.float64]]):
     def __new__(cls) -> Self: ...
-    @override
-    def __array_wrap__(  # type: ignore[override]
-        self, /, obj: Incomplete, context: Incomplete | None = None, return_scalar: bool = False
-    ) -> _nt.MArray0D[np.float64]: ...
-    @override
-    def __format__(self, format_spec: str, /) -> str: ...
 
-    # no-ops
+    # these overrides are no-ops
     @override
-    def __iadd__(self, other: object, /) -> Self: ...  # type: ignore[override]
+    def __iadd__(self, other: _Ignored, /) -> Self: ...  # type: ignore[override]
     @override
-    def __isub__(self, other: object, /) -> Self: ...  # type: ignore[override]
+    def __isub__(self, other: _Ignored, /) -> Self: ...  # type: ignore[override]
     @override
-    def __imul__(self, other: object, /) -> Self: ...  # type: ignore[override]
+    def __imul__(self, other: _Ignored, /) -> Self: ...  # type: ignore[override]
     @override
-    def __ifloordiv__(self, other: object, /) -> Self: ...  # type: ignore[override]
+    def __ifloordiv__(self, other: _Ignored, /) -> Self: ...  # type: ignore[override]
     @override
-    def __itruediv__(self, other: object, /) -> Self: ...  # type: ignore[override]
+    def __itruediv__(self, other: _Ignored, /) -> Self: ...  # type: ignore[override]
     @override
-    def __ipow__(self, other: object, /) -> Self: ...  # type: ignore[override]
-
-    #
+    def __ipow__(self, other: _Ignored, /) -> Self: ...  # type: ignore[override]
     @override
-    def __reduce__(self) -> tuple[type[Self], tuple[()]]: ...
+    def __deepcopy__(self, /, memo: _Ignored) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override
-    def __copy__(self) -> Self: ...
-    @override
-    def __deepcopy__(self, /, memo: object) -> Self: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-    @override
-    def copy(self, /, *args: object, **kwargs: object) -> Incomplete: ...
+    def copy(self, /, *args: _Ignored, **kwargs: _Ignored) -> Self: ...
 
 # we cannot meaningfully annotate `frommethod` further, because the callable signature
 # of the return type fully depends on the *value* of `methodname` and `reversed` in
@@ -1497,6 +1487,7 @@ def isMaskedArray(x: Incomplete) -> Incomplete: ...
 #
 masked: Final[MaskedConstant] = ...
 masked_singleton: Final[MaskedConstant] = ...
+
 masked_array = MaskedArray
 
 #
