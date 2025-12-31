@@ -680,6 +680,23 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         self, condition: _nt.ToBool_nd, axis: _ShapeLike | None = None, out: None = None
     ) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
 
+    # TODO: How to deal with the non-commutative nature of `==` and `!=`?
+    # xref numpy/numpy#17368
+    @override
+    def __eq__(self, other: Incomplete, /) -> Incomplete: ...
+    @override
+    def __ne__(self, other: Incomplete, /) -> Incomplete: ...
+
+    #
+    @override
+    def __ge__(self, other: ArrayLike, /) -> _nt.MArray[np.bool_]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __gt__(self, other: ArrayLike, /) -> _nt.MArray[np.bool_]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __le__(self, other: ArrayLike, /) -> _nt.MArray[np.bool_]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+    @override
+    def __lt__(self, other: ArrayLike, /) -> _nt.MArray[np.bool_]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
     #
     @property  # type: ignore[misc]
     @override
@@ -705,18 +722,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __array_finalize__(self, /, obj: Incomplete) -> None: ...
 
     #
-    @override
-    def __eq__(self, other: Incomplete, /) -> Incomplete: ...
-    @override
-    def __ne__(self, other: Incomplete, /) -> Incomplete: ...
-    @override
-    def __ge__(self, other: Incomplete, /) -> Incomplete: ...
-    @override
-    def __gt__(self, other: Incomplete, /) -> Incomplete: ...
-    @override
-    def __le__(self, other: Incomplete, /) -> Incomplete: ...
-    @override
-    def __lt__(self, other: Incomplete, /) -> Incomplete: ...
     @override
     def __add__(self, other: Incomplete, /) -> Incomplete: ...
     @override
