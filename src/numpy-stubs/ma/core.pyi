@@ -660,6 +660,9 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def set_fill_value(self, /, value: _ScalarLike_co | None = None) -> None: ...
 
     #
+    def filled(self, /, fill_value: _ScalarLike_co | None = None) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...
+
+    #
     @property  # type: ignore[misc]
     @override
     def imag(self) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -740,7 +743,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __deepcopy__(self, /, memo: Incomplete = ...) -> Self: ...
 
     #
-    def filled(self, /, fill_value: Incomplete = None) -> Incomplete: ...
     def compressed(self) -> Incomplete: ...
     @override
     def compress(self, /, condition: Incomplete, axis: Incomplete = None, out: Incomplete = None) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
@@ -947,7 +949,7 @@ class mvoid(MaskedArray[_ShapeT_co, _DTypeT_co]):
 
     #
     @override
-    def filled(self, fill_value: complex | None = None) -> Self | np.void: ...
+    def filled(self, /, fill_value: _ScalarLike_co | None = None) -> Self | np.void: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
     @override  # list or tuple
     def tolist(self) -> Sequence[Incomplete]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
