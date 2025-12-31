@@ -1235,6 +1235,66 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def count(self, axis: _ShapeLike | None, keepdims: L[True]) -> _nt.MArray[np.int_]: ...
 
+    # Keep in sync with `ndarray.reshape`
+    @override
+    @overload  # (None)
+    def reshape(self, shape: None, /, *, order: np._OrderACF = "C", copy: bool | None = None) -> Self: ...
+    @overload  # (empty_sequence)
+    def reshape(  # type: ignore[overload-overlap]  # mypy false positive
+        self, shape: Sequence[Never] | _nt.Shape0, /, *, order: np._OrderACF = "C", copy: bool | None = None
+    ) -> MaskedArray[_nt.Rank0, _DTypeT_co]: ...
+    @overload  # (index)
+    def reshape(
+        self, size1: CanIndex | _nt.Shape1, /, *, order: np._OrderACF = "C", copy: bool | None = None
+    ) -> MaskedArray[_nt.Rank1, _DTypeT_co]: ...
+    @overload  # (index, index)
+    def reshape(
+        self, size1: _nt.Shape2, /, *, order: np._OrderACF = "C", copy: bool | None = None
+    ) -> MaskedArray[_nt.Rank2, _DTypeT_co]: ...
+    @overload  # (index, index)
+    def reshape(
+        self, size1: CanIndex, size2: CanIndex, /, *, order: np._OrderACF = "C", copy: bool | None = None
+    ) -> MaskedArray[_nt.Rank2, _DTypeT_co]: ...
+    @overload  # (index, index, index)
+    def reshape(
+        self, size1: _nt.Shape3, /, *, order: np._OrderACF = "C", copy: bool | None = None
+    ) -> MaskedArray[_nt.Rank3, _DTypeT_co]: ...
+    @overload  # (index, index, index)
+    def reshape(
+        self,
+        size1: CanIndex,
+        size2: CanIndex,
+        size3: CanIndex,
+        /,
+        *,
+        order: np._OrderACF = "C",
+        copy: bool | None = None,
+    ) -> MaskedArray[_nt.Rank3, _DTypeT_co]: ...
+    @overload  # (index, index, index, index)
+    def reshape(
+        self, size1: _nt.Shape4, /, *, order: np._OrderACF = "C", copy: bool | None = None
+    ) -> MaskedArray[_nt.Rank4, _DTypeT_co]: ...
+    @overload  # (index, index, index, index)
+    def reshape(
+        self,
+        size1: CanIndex,
+        size2: CanIndex,
+        size3: CanIndex,
+        size4: CanIndex,
+        /,
+        *,
+        order: np._OrderACF = "C",
+        copy: bool | None = None,
+    ) -> MaskedArray[_nt.Rank4, _DTypeT_co]: ...
+    @overload  # (int, *(index, ...))
+    def reshape(
+        self, size0: CanIndex, /, *shape: CanIndex, order: np._OrderACF = "C", copy: bool | None = None
+    ) -> MaskedArray[Incomplete, _DTypeT_co]: ...
+    @overload  # (sequence[index])
+    def reshape(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, shape: Sequence[CanIndex], /, *, order: np._OrderACF = "C", copy: bool | None = None
+    ) -> MaskedArray[Incomplete, _DTypeT_co]: ...
+
     #
     @property
     @override
@@ -1256,8 +1316,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-    @override
-    def reshape(self, *s: Incomplete, **kwargs: Incomplete) -> Incomplete: ...
     @override
     def resize(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
         self, newshape: Incomplete, refcheck: Incomplete = ..., order: Incomplete = ...
