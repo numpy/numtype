@@ -1551,6 +1551,15 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         mean: _nt.CoComplex_nd | _NoValueType = ...,
     ) -> _ArrayT: ...
 
+    # Keep in sync with `ndarray.round`
+    @override
+    @overload  # out=None (default)
+    def round(self, /, decimals: CanIndex = 0, out: None = None) -> Self: ...
+    @overload  # out=ndarray
+    def round(self, /, decimals: CanIndex, out: _ArrayT) -> _ArrayT: ...
+    @overload
+    def round(self, /, decimals: CanIndex = 0, *, out: _ArrayT) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1572,10 +1581,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def round(self, decimals: Incomplete = ..., out: Incomplete = ...) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     @override
