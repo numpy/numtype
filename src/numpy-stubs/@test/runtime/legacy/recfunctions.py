@@ -151,8 +151,8 @@ def test_find_duplicates() -> None:
     ndtype = np.dtype([("a", int)])
 
     a = np.ma.ones(7).view(ndtype)
-    assert_type(rfn.find_duplicates(a), "_nt.MArray[np.void, Any]")
+    assert_type(rfn.find_duplicates(a), "_nt.MArray[np.void, _nt.Rank1]")
     assert_type(
         rfn.find_duplicates(a, ignoremask=True, return_index=True),
-        "tuple[_nt.MArray[np.void, Any], _nt.Array[np.intp, Any]]",
+        "tuple[_nt.MArray[np.void, _nt.Rank1], _nt.Array[np.intp, _nt.Rank1]]",
     )
