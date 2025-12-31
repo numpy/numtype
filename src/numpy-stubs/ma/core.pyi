@@ -1212,16 +1212,18 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def __ifloordiv__(self: _nt.MArray[np.object_], x: object, /) -> MaskedArray[_ShapeT_co, _DTypeT_co]: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
-    @property  # type: ignore[misc]
+    @property  # type: ignore[explicit-override]
     @override
-    def imag(self) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    def get_imag(self) -> Incomplete: ...
+    def real(self: np._HasDTypeWithReal[_ScalarT], /) -> _nt.Array[_ScalarT, _ShapeT_co]: ...
+    @real.setter
+    def real(self, value: ArrayLike, /) -> None: ...
 
     #
-    @property  # type: ignore[misc]
+    @property  # type: ignore[explicit-override]
     @override
-    def real(self) -> Incomplete: ...  # pyright: ignore[reportIncompatibleMethodOverride]
-    def get_real(self) -> Incomplete: ...
+    def imag(self: np._HasDTypeWithImag[_ScalarT], /) -> _nt.Array[_ScalarT, _ShapeT_co]: ...
+    @imag.setter
+    def imag(self, value: ArrayLike, /) -> None: ...
 
     #
     @property
