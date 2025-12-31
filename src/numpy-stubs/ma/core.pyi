@@ -1411,6 +1411,45 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def cumsum(self, /, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
+    # Keep in sync with `ma.core.prod`
+    @override  # type: ignore[override]
+    @overload
+    def prod(
+        self,
+        /,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        out: None = None,
+        keepdims: bool | _NoValueType = ...,
+    ) -> Any: ...
+    @overload
+    def prod(
+        self, /, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+    ) -> _ArrayT: ...
+    @overload
+    def prod(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self,
+        /,
+        axis: _ShapeLike | None = None,
+        dtype: DTypeLike | None = None,
+        *,
+        out: _ArrayT,
+        keepdims: bool | _NoValueType = ...,
+    ) -> _ArrayT: ...
+
+    product = prod
+
+    # Keep in sync with `ndarray.cumprod` and `ma.core.cumprod`
+    @override
+    @overload  # out: None (default)
+    def cumprod(
+        self, /, axis: CanIndex | None = None, dtype: DTypeLike | None = None, out: None = None
+    ) -> MaskedArray: ...
+    @overload  # out: ndarray
+    def cumprod(self, /, axis: CanIndex | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
+    @overload
+    def cumprod(self, /, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1432,17 +1471,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def prod(  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., dtype: Incomplete = ..., out: Incomplete = ..., keepdims: Incomplete = ...
-    ) -> Incomplete: ...
-    product = prod
-    @override
-    def cumprod(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., dtype: Incomplete = ..., out: Incomplete = ...
-    ) -> Incomplete: ...
 
     #
     @override
