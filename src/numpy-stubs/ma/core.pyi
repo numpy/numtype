@@ -1400,6 +1400,17 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
         keepdims: bool | _NoValueType = ...,
     ) -> _ArrayT: ...
 
+    # Keep in sync with `ndarray.cumsum` and `ma.core.cumsum`
+    @override
+    @overload  # out: None (default)
+    def cumsum(
+        self, /, axis: CanIndex | None = None, dtype: DTypeLike | None = None, out: None = None
+    ) -> MaskedArray: ...
+    @overload  # out: ndarray
+    def cumsum(self, /, axis: CanIndex | None, dtype: DTypeLike | None, out: _ArrayT) -> _ArrayT: ...
+    @overload
+    def cumsum(self, /, axis: CanIndex | None = None, dtype: DTypeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
+
     #
     @property
     @override
@@ -1421,12 +1432,6 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override
     def ravel(self, order: Incomplete = ...) -> Incomplete: ...
-
-    #
-    @override
-    def cumsum(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, axis: Incomplete = ..., dtype: Incomplete = ..., out: Incomplete = ...
-    ) -> Incomplete: ...
 
     #
     @override
