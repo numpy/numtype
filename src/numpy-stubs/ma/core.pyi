@@ -1,5 +1,6 @@
+import datetime as dt
 import types
-from _typeshed import Incomplete
+from _typeshed import ConvertibleToFloat, ConvertibleToInt, Incomplete
 from collections.abc import Callable, Sequence
 from typing import (
     Any,
@@ -12,18 +13,20 @@ from typing import (
     ParamSpec,
     Protocol,
     Self,
+    SupportsComplex,
     SupportsIndex as CanIndex,
     TypeAlias,
     TypedDict,
+    Unpack,
     final,
     overload,
     type_check_only,
 )
-from typing_extensions import Buffer, TypeVar, Unpack, override
+from typing_extensions import Buffer, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy import _OrderACF, _OrderKACF, amax, amin, bool_, expand_dims  # noqa: ICN003
+from numpy import _OrderACF, _OrderKACF, _ToIndices, amax, amin, bool_, expand_dims  # noqa: ICN003
 from numpy._globals import _NoValueType
 from numpy._typing import (
     ArrayLike,
@@ -246,6 +249,10 @@ _ShapeLike3D: TypeAlias = tuple[CanIndex, CanIndex, CanIndex]
 _FillValueCallable: TypeAlias = Callable[[np.dtype | ArrayLike], complex | None]
 _DomainCallable: TypeAlias = Callable[..., _nt.Array[np.bool]]
 
+_ConvertibleToComplex: TypeAlias = SupportsComplex | ConvertibleToFloat
+_ConvertibleToTD64: TypeAlias = dt.timedelta | np.timedelta64 | int | _nt.co_complex | str | bytes | np.character
+_ConvertibleToDT64: TypeAlias = dt.date | np.datetime64 | int | _nt.co_complex | str | bytes | np.character
+
 _Device: TypeAlias = L["cpu"]
 
 @type_check_only
@@ -409,15 +416,76 @@ class _MaskedPrintOption:
     def enabled(self, /) -> bool: ...
     def enable(self, /, shrink: bool | L[0, 1] = 1) -> None: ...
 
-class MaskedIterator:
-    ma: Incomplete
-    dataiter: Incomplete
-    maskiter: Incomplete
-    def __init__(self, /, ma: Incomplete) -> None: ...
-    def __iter__(self) -> Incomplete: ...
-    def __getitem__(self, indx: Incomplete, /) -> Incomplete: ...
-    def __setitem__(self, index: Incomplete, value: Incomplete, /) -> None: ...
-    def __next__(self) -> Incomplete: ...
+# TODO: Support non-boolean mask dtypes, such as `np.void`. This will require adding an
+# additional generic type parameter to (at least) `MaskedArray` and `MaskedIterator` to
+# hold the np.dtype of the mask.
+
+class MaskedIterator(Generic[_ShapeT_co, _DTypeT_co]):
+    ma: MaskedArray[_ShapeT_co, _DTypeT_co]  # readonly
+    dataiter: np.flatiter[np.ndarray[_ShapeT_co, _DTypeT_co]]  # readonly
+    maskiter: Final[np.flatiter[_nt.Array[np.bool]]]
+
+    def __init__(self, ma: MaskedArray[_ShapeT_co, _DTypeT_co]) -> None: ...
+    def __iter__(self) -> Self: ...
+
+    # Similar to `MaskedArray.__getitem__` but without the `void` case.
+    @overload
+    def __getitem__(
+        self, indx: _nt.Array[np.integer | np.bool] | tuple[_nt.Array[np.integer | np.bool], ...], /
+    ) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
+    @overload
+    def __getitem__(self, indx: CanIndex | tuple[CanIndex, ...], /) -> Incomplete: ...
+    @overload
+    def __getitem__(self, indx: _ToIndices, /) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
+
+    # Similar to `ndarray.__setitem__` but without the `void` case.
+    @overload  # flexible | object_ | bool
+    def __setitem__(
+        self: MaskedIterator[Any, np.dtype[np.flexible | np.object_ | np.bool] | np.dtypes.StringDType],
+        index: _ToIndices,
+        value: object,
+        /,
+    ) -> None: ...
+    @overload  # integer
+    def __setitem__(
+        self: MaskedIterator[Any, np.dtype[np.integer]],
+        index: _ToIndices,
+        value: ConvertibleToInt | _nt.Sequence1ND[ConvertibleToInt] | _nt.CoInteger_nd,
+        /,
+    ) -> None: ...
+    @overload  # floating
+    def __setitem__(
+        self: MaskedIterator[Any, np.dtype[np.floating]],
+        index: _ToIndices,
+        value: ConvertibleToFloat | _nt.Sequence1ND[ConvertibleToFloat | None] | _nt.CoFloating_nd | None,
+        /,
+    ) -> None: ...
+    @overload  # complexfloating
+    def __setitem__(
+        self: MaskedIterator[Any, np.dtype[np.complexfloating]],
+        index: _ToIndices,
+        value: _ConvertibleToComplex | _nt.Sequence1ND[_ConvertibleToComplex | None] | _nt.CoComplex_nd | None,
+        /,
+    ) -> None: ...
+    @overload  # timedelta64
+    def __setitem__(
+        self: MaskedIterator[Any, np.dtype[np.timedelta64]],
+        index: _ToIndices,
+        value: _ConvertibleToTD64 | _nt.Sequence1ND[_ConvertibleToTD64 | None] | None,
+        /,
+    ) -> None: ...
+    @overload  # datetime64
+    def __setitem__(
+        self: MaskedIterator[Any, np.dtype[np.datetime64]],
+        index: _ToIndices,
+        value: _ConvertibleToDT64 | _nt.Sequence1ND[_ConvertibleToDT64 | None] | None,
+        /,
+    ) -> None: ...
+    @overload  # catch-all
+    def __setitem__(self, index: _ToIndices, value: ArrayLike, /) -> None: ...
+
+    # TODO: Returns `mvoid[(), _DTypeT_co]` for masks with `np.void` np.dtype.
+    def __next__(self: MaskedIterator[Any, np.dtype[_ScalarT]]) -> _ScalarT: ...
 
 class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     __array_priority__: ClassVar[float] = 15  # pyright: ignore[reportIncompatibleMethodOverride]
