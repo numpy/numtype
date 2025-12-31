@@ -638,16 +638,18 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def baseclass(self) -> type[np.ndarray]: ...
 
     #
+    @property
+    def _data(self) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...
+    @property
+    @override
+    def data(self) -> np.ndarray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
+
+    #
     @property  # type: ignore[explicit-override]
     @override
     def flat(self) -> Incomplete: ...
     @flat.setter
     def flat(self, value: Incomplete) -> Incomplete: ...
-
-    #
-    @property
-    @override
-    def data(self) -> MaskedArray[_ShapeT_co, _DTypeT_co]: ...  # type: ignore[override]  # pyright: ignore[reportIncompatibleMethodOverride]
 
     #
     def get_fill_value(self) -> Incomplete: ...
