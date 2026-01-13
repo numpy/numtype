@@ -9,7 +9,7 @@ source-exclude = ['\@test', ".ruff_cache", ".ruff.toml"]
 
 [project]
 name = "numtype"
-version = "2.4.0.0a1"
+version = "2.4.1.0a2.dev0"
 description = "Experimental Typing Stubs for NumPy"
 readme = "README.md"
 authors = [{ name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com" }]
@@ -34,7 +34,7 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-numpy = ["numpy>=2.4.0,<2.5.0"]
+numpy = ["numpy>=2.4.1,<2.5.0"]
 
 [project.urls]
 Homepage = "https://numpy.org/"
