@@ -583,7 +583,6 @@ __all__ = [
     "var",
     "vdot",
     "vecdot",
-    "vecdot",
     "vecmat",
     "void",
     "where",

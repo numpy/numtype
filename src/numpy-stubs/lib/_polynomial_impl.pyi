@@ -26,7 +26,6 @@ __all__ = [
     "polyfit",
     "polyint",
     "polymul",
-    "polymul",
     "polysub",
     "polyval",
     "roots",
