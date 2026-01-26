@@ -20,10 +20,10 @@ jobs:
     timeout-minutes: 1
 
     steps:
-    - uses: actions/checkout@v6.0.1
+    - uses: actions/checkout@v6.0.2
 
     - name: typos
-      uses: crate-ci/typos@v1.42.0
+      uses: crate-ci/typos@v1.42.1
 
     - uses: astral-sh/setup-uv@v7.2.0
 
@@ -52,7 +52,7 @@ jobs:
       matrix:
         py: ["3.11", "3.12", "3.13", "3.14"]
     steps:
-    - uses: actions/checkout@v6.0.1
+    - uses: actions/checkout@v6.0.2
 
     - uses: astral-sh/setup-uv@v7.2.0
       with:
@@ -69,7 +69,7 @@ jobs:
       matrix:
         py: ["3.11", "3.12", "3.13", "3.14"]
     steps:
-    - uses: actions/checkout@v6.0.1
+    - uses: actions/checkout@v6.0.2
 
     - uses: astral-sh/setup-uv@v7.2.0
       with:
@@ -89,7 +89,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         py: ["3.11", "3.12", "3.13", "3.14"]
     steps:
-    - uses: actions/checkout@v6.0.1
+    - uses: actions/checkout@v6.0.2
 
     - uses: astral-sh/setup-uv@v7.2.0
       with:
