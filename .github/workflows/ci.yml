@@ -23,9 +23,9 @@ jobs:
     - uses: actions/checkout@v6.0.2
 
     - name: typos
-      uses: crate-ci/typos@v1.42.1
+      uses: crate-ci/typos@v1.42.3
 
-    - uses: astral-sh/setup-uv@v7.2.0
+    - uses: astral-sh/setup-uv@v7.2.1
 
     - name: dprint
       run: uv run dprint check
@@ -54,7 +54,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6.0.2
 
-    - uses: astral-sh/setup-uv@v7.2.0
+    - uses: astral-sh/setup-uv@v7.2.1
       with:
         python-version: ${{ matrix.py }}
 
@@ -71,7 +71,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6.0.2
 
-    - uses: astral-sh/setup-uv@v7.2.0
+    - uses: astral-sh/setup-uv@v7.2.1
       with:
         python-version: ${{ matrix.py }}
 
@@ -91,7 +91,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6.0.2
 
-    - uses: astral-sh/setup-uv@v7.2.0
+    - uses: astral-sh/setup-uv@v7.2.1
       with:
         python-version: ${{ matrix.py }}
 
