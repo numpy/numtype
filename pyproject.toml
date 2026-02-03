@@ -34,7 +34,7 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-numpy = ["numpy>=2.4.1,<2.5.0"]
+numpy = ["numpy>=2.4.2,<2.5.0"]
 
 [project.urls]
 Homepage = "https://numpy.org/"
