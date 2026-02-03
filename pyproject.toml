@@ -46,7 +46,7 @@ Changelog = "https://github.com/numpy/numtype/releases"
 numpy = ["numtype[numpy]"]
 lint = [
   "dprint-py>=0.51.1.0",
-  "ruff>=0.14.14",
+  "ruff>=0.15.0",
 ]
 pytest = [
   { include-group = "numpy" },
