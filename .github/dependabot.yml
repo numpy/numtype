@@ -21,6 +21,8 @@ updates:
     interval: weekly
   allow:
   - dependency-type: all
+  ignore:
+  - dependency-name: numpy
   labels:
   - "topic: dependencies"
   commit-message:
