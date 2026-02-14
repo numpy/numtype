@@ -8,9 +8,7 @@ if TYPE_CHECKING:
 
 else:
     # see https://github.com/astral-sh/ruff/pull/18224
-    from ruff.__main__ import (  # type: ignore[import-untyped]
-        find_ruff_bin,  # noqa: PLC2701
-    )
+    from ruff.__main__ import find_ruff_bin  # type: ignore[import-untyped]
 
 
 def ruff_format(source: str) -> str:
