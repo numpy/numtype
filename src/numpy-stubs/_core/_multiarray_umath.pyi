@@ -1,4 +1,3 @@
-# ruff: noqa: F811
 import _contextvars
 import datetime as dt
 from _typeshed import Incomplete, StrOrBytesPath, SupportsLenAndGetItem
