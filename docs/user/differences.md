@@ -53,6 +53,7 @@ from typing import TypeVar
 
 NT = TypeVar("NT", bound=npt.NBitBase)
 
+
 def f(x: np.floating[NT]) -> np.floating[NT]: ...
 ```
 
@@ -67,6 +68,7 @@ def f(x: np.floating[NT]) -> np.floating[NT]: ...
 ```py
 import numpy as np
 import numpy.typing as npt
+
 
 def f[NT: npt.NBitBase](x: np.floating[NT]) -> np.floating[NT]: ...
 ```
@@ -87,6 +89,7 @@ from typing import TypeVar
 
 FloatT = TypeVar("FloatT", bound=np.floating)
 
+
 def f(x: FloatT) -> FloatT: ...
 ```
 
@@ -100,6 +103,7 @@ def f(x: FloatT) -> FloatT: ...
 
 ```py
 import numpy as np
+
 
 def f[FloatT: np.floating](x: FloatT) -> FloatT: ...
 ```
@@ -123,6 +127,7 @@ from typing import TypeVar
 
 NT = TypeVar("NT", bound=npt.NBitBase)
 
+
 def f(x: np.complexfloating[NT]) -> np.floating[NT]: ...
 ```
 
@@ -135,6 +140,7 @@ def f(x: np.complexfloating[NT]) -> np.floating[NT]: ...
 ```py
 import numpy as np
 import numpy.typing as npt
+
 
 def f[NT: npt.NBitBase](x: np.complexfloating[NT]) -> np.floating[NT]: ...
 ```
@@ -149,6 +155,7 @@ In that case, you can rewrite it by using
 ```py
 import numpy as np
 from typing import overload
+
 
 @overload
 def f(x: np.complex64) -> np.float32: ...
@@ -205,8 +212,10 @@ the following type-unsafe code:
 ```py
 import numpy as np
 
+
 def half(a: np.number) -> np.number:
     return a // 2
+
 
 half(np.complex128(1j))  # accepted
 ```
