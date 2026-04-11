@@ -18,7 +18,9 @@ from typing_extensions import CapsuleType, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes
+from numpy._typing import _ArrayLikeInt_co, _DTypeLike, _UInt32Codes, _UInt64Codes
+
+_ShapeLike = _nt._ShapeLike
 
 __all__ = ["BitGenerator", "SeedSequence"]
 

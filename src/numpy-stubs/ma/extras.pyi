@@ -5,9 +5,11 @@ from typing_extensions import TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike
 from numpy.lib._function_base_impl import average
 from numpy.lib._index_tricks_impl import AxisConcatenator
+
+_ShapeLike = _nt._ShapeLike
 
 from .core import dot
 

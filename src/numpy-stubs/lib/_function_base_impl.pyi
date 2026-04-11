@@ -21,7 +21,9 @@ import numpy as np
 from numpy import _OrderKACF as _Order  # noqa: ICN003
 from numpy._core.multiarray import bincount
 from numpy._globals import _NoValueType
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike
+
+_ShapeLike = _nt._ShapeLike
 
 __all__ = [
     "angle",

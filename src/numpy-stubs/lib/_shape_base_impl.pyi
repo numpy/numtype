@@ -6,7 +6,7 @@ from typing_extensions import ParamSpec, TypeVar, deprecated
 import _numtype as _nt
 import numpy as np
 from numpy import _CastingKind  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike as _ToArray, _ShapeLike as _ToShape
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike as _ToArray
 
 __all__ = [
     "apply_along_axis",
@@ -28,6 +28,7 @@ __all__ = [
 
 _Tss = ParamSpec("_Tss")
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
+_ToShape: TypeAlias = _nt._ShapeLike
 
 _ArrayList: TypeAlias = list[_nt.Array[_ScalarT]]
 

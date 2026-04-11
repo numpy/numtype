@@ -8,8 +8,9 @@ from numpy import _OrderKACF as _Order  # noqa: ICN003
 from numpy._typing import (
     _ArrayLikeAnyString_co as _ToAnyCharND,
     _ArrayLikeString_co as _ToStringND,
-    _ShapeLike as _ToShape,
 )
+
+_ToShape: TypeAlias = _nt._ShapeLike
 
 from ._multiarray_umath import compare_chararrays
 from .strings import (

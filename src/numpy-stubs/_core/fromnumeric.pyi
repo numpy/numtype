@@ -7,7 +7,9 @@ import _numtype as _nt
 import numpy as np
 from numpy import _CastingKind, _ModeKind, _OrderACF, _OrderKACF, _PartitionKind, _SortKind, _SortSide  # noqa: ICN003
 from numpy._globals import _NoValueType
-from numpy._typing import ArrayLike, DTypeLike, _DTypeLike, _ShapeLike
+from numpy._typing import ArrayLike, DTypeLike, _DTypeLike
+
+_ShapeLike = _nt._ShapeLike
 
 __all__ = [
     "all",

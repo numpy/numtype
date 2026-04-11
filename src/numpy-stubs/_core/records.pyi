@@ -6,7 +6,9 @@ from typing_extensions import Buffer, TypeVar, override
 import _numtype as _nt
 import numpy as np
 from numpy import _ByteOrder, _OrderKACF  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLikeVoid_co, _ShapeLike
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLikeVoid_co
+
+_ShapeLike = _nt._ShapeLike
 
 __all__ = [
     "array",

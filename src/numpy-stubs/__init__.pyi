@@ -346,9 +346,10 @@ from ._typing import (
     _NestedSequence,
     _NumberLike_co,
     _ScalarLike_co,
-    _ShapeLike,
     _TD64Like_co,
 )
+
+_ShapeLike = _nt._ShapeLike
 from .lib import scimath as emath
 from .lib._arraypad_impl import pad
 from .lib._arraysetops_impl import (

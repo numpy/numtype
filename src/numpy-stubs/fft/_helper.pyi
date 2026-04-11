@@ -3,7 +3,8 @@ from typing_extensions import TypeVar
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import _ShapeLike
+
+_ShapeLike = _nt._ShapeLike
 
 __all__ = ["fftfreq", "fftshift", "ifftshift", "rfftfreq"]
 

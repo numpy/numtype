@@ -6,8 +6,10 @@ from typing_extensions import TypeVar, override
 import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _ArrayLike, _BoolCodes, _DTypeLike, _ShapeLike
+from numpy._typing import _ArrayLike, _BoolCodes, _DTypeLike
 from numpy.random import BitGenerator, RandomState, SeedSequence
+
+_ShapeLike = _nt._ShapeLike
 
 ###
 

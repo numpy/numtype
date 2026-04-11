@@ -33,10 +33,11 @@ from numpy._typing import (
     _ArrayLikeNumber_co,
     _DTypeLike,
     _ScalarLike_co,
-    _ShapeLike,
     _SupportsArrayFunc as _CanArrayFunc,
     _SupportsDType as _HasDType,
 )
+
+_ShapeLike = _nt._ShapeLike
 
 # needed for stubtest
 from .umath import (

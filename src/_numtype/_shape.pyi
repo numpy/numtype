@@ -1,4 +1,5 @@
-from typing import Any, Never, TypeAlias
+from collections.abc import Sequence
+from typing import Any, Never, SupportsIndex, TypeAlias
 from typing_extensions import TypeAliasType
 
 __all__ = [
@@ -35,3 +36,5 @@ Shape1N = TypeAliasType("Shape1N", tuple[int, *tuple[int, ...]])
 Shape2N = TypeAliasType("Shape2N", tuple[int, int, *tuple[int, ...]])
 Shape3N = TypeAliasType("Shape3N", tuple[int, int, int, *tuple[int, ...]])
 Shape4N = TypeAliasType("Shape4N", tuple[int, int, int, int, *tuple[int, ...]])
+
+_ShapeLike: TypeAlias = SupportsIndex | Sequence[SupportsIndex]

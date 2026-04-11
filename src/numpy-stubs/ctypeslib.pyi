@@ -9,8 +9,10 @@ import _numtype as _nt
 import numpy as np
 from numpy._core._internal import _ctypes
 from numpy._core.multiarray import flagsobj
-from numpy._typing import _ArrayLike, _DTypeLike, _ShapeLike, _VoidDTypeLike
+from numpy._typing import _ArrayLike, _DTypeLike, _VoidDTypeLike
 from numpy._typing._char_codes import _LongCodes, _ULongCodes
+
+_ShapeLike = _nt._ShapeLike
 
 __all__ = ["as_array", "as_ctypes", "as_ctypes_type", "c_intp", "load_library", "ndpointer"]
 

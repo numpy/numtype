@@ -22,8 +22,9 @@ from numpy._typing import (
     _DTypeLike as _ToDType,
     _DTypeLikeComplex as _ToDTypeComplex,
     _DTypeLikeFloat as _ToDTypeFloat,
-    _ShapeLike,
 )
+
+_ShapeLike = _nt._ShapeLike
 
 from . import _multiarray_umath as _multiarray_umath
 from ._multiarray_umath import (

@@ -19,8 +19,10 @@ import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _ShapeLike, _SupportsArrayFunc, _SupportsDType
+from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _SupportsArrayFunc, _SupportsDType
 from numpy.lib._array_utils_impl import normalize_axis_tuple as normalize_axis_tuple
+
+_ShapeLike = _nt._ShapeLike
 
 from ._asarray import require
 from ._ufunc_config import errstate, getbufsize, geterr, geterrcall, setbufsize, seterr, seterrcall

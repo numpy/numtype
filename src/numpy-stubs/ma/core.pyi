@@ -46,11 +46,12 @@ from numpy._typing import (
     _ArrayLike,
     _DTypeLike,
     _ScalarLike_co,
-    _ShapeLike,
     _SupportsArrayFunc as _CanArrayFunc,
     _SupportsDType as _HasDType,
     _VoidDTypeLike,
 )
+
+_ShapeLike = _nt._ShapeLike
 
 __all__ = [
     "MAError",
