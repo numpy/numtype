@@ -28,7 +28,7 @@ __all__ = [
 
 _Tss = ParamSpec("_Tss")
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
-_ToShape: TypeAlias = _nt._ShapeLike
+_ToShape: TypeAlias = _nt.ShapeLike
 
 _ArrayList: TypeAlias = list[_nt.Array[_ScalarT]]
 

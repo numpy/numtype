@@ -5,12 +5,9 @@ from typing_extensions import Buffer, TypeAliasType, TypeVar, override
 import _numtype as _nt
 import numpy as np
 from numpy import _OrderKACF as _Order  # noqa: ICN003
-from numpy._typing import (
-    _ArrayLikeAnyString_co as _ToAnyCharND,
-    _ArrayLikeString_co as _ToStringND,
-)
+from numpy._typing import _ArrayLikeAnyString_co as _ToAnyCharND, _ArrayLikeString_co as _ToStringND
 
-_ToShape: TypeAlias = _nt._ShapeLike
+_ToShape: TypeAlias = _nt.ShapeLike
 
 from ._multiarray_umath import compare_chararrays
 from .strings import (

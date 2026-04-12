@@ -7,8 +7,6 @@ import _numtype as _nt
 import numpy as np
 from numpy._typing import ArrayLike, _ArrayLike
 
-_ShapeLike = _nt._ShapeLike
-
 __all__ = ["broadcast_arrays", "broadcast_shapes", "broadcast_to"]
 
 _ScalarT = TypeVar("_ScalarT", bound=np.generic)
@@ -41,7 +39,7 @@ def as_strided(
 @overload
 def sliding_window_view(
     x: _ArrayLike[_ScalarT],
-    window_shape: _ShapeLike,
+    window_shape: _nt.ShapeLike,
     axis: SupportsIndex | None = None,
     *,
     subok: bool = False,
@@ -50,7 +48,7 @@ def sliding_window_view(
 @overload
 def sliding_window_view(
     x: ArrayLike,
-    window_shape: _ShapeLike,
+    window_shape: _nt.ShapeLike,
     axis: SupportsIndex | None = None,
     *,
     subok: bool = False,
@@ -59,10 +57,10 @@ def sliding_window_view(
 
 #
 @overload
-def broadcast_to(array: _ArrayLike[_ScalarT], shape: _ShapeLike, subok: bool = False) -> _nt.Array[_ScalarT]: ...
+def broadcast_to(array: _ArrayLike[_ScalarT], shape: _nt.ShapeLike, subok: bool = False) -> _nt.Array[_ScalarT]: ...
 @overload
-def broadcast_to(array: ArrayLike, shape: _ShapeLike, subok: bool = False) -> _nt.Array[Incomplete]: ...
+def broadcast_to(array: ArrayLike, shape: _nt.ShapeLike, subok: bool = False) -> _nt.Array[Incomplete]: ...
 
 #
-def broadcast_shapes(*args: _ShapeLike) -> _nt.Shape: ...
+def broadcast_shapes(*args: _nt.ShapeLike) -> _nt.Shape: ...
 def broadcast_arrays(*args: ArrayLike, subok: bool = False) -> tuple[_nt.Array[Incomplete], ...]: ...

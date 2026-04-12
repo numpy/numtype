@@ -20,8 +20,6 @@ import _numtype as _nt
 import numpy as np
 from numpy._typing import _ArrayLikeInt_co, _DTypeLike, _UInt32Codes, _UInt64Codes
 
-_ShapeLike = _nt._ShapeLike
-
 __all__ = ["BitGenerator", "SeedSequence"]
 
 ###
@@ -95,11 +93,11 @@ class BitGenerator(_CythonMixin, abc.ABC, Generic[_StateT]):
     @overload
     def random_raw(self, /, size: None = None, output: L[True] = True) -> int: ...
     @overload
-    def random_raw(self, /, size: _ShapeLike, output: L[True] = True) -> _nt.Array[np.uint64]: ...
+    def random_raw(self, /, size: _nt.ShapeLike, output: L[True] = True) -> _nt.Array[np.uint64]: ...
     @overload
-    def random_raw(self, /, size: _ShapeLike | None, output: L[False]) -> None: ...
+    def random_raw(self, /, size: _nt.ShapeLike | None, output: L[False]) -> None: ...
     @overload
-    def random_raw(self, /, size: _ShapeLike | None = None, *, output: L[False]) -> None: ...
+    def random_raw(self, /, size: _nt.ShapeLike | None = None, *, output: L[False]) -> None: ...
 
 ###
 

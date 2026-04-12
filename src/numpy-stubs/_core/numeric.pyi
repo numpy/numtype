@@ -22,8 +22,6 @@ from numpy import _AnyShapeT, _OrderCF, _OrderKACF, ufunc  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike, _SupportsArrayFunc, _SupportsDType
 from numpy.lib._array_utils_impl import normalize_axis_tuple as normalize_axis_tuple
 
-_ShapeLike = _nt._ShapeLike
-
 from ._asarray import require
 from ._ufunc_config import errstate, getbufsize, geterr, geterrcall, setbufsize, seterr, seterrcall
 from .arrayprint import (
@@ -607,7 +605,7 @@ _ShapeLike3D: TypeAlias = tuple[SupportsIndex, SupportsIndex, SupportsIndex]
 _PyScalar: TypeAlias = complex | str | bytes
 _Device: TypeAlias = L["cpu"]
 _Mode: TypeAlias = L["valid", "same", "full"]
-_Axes: TypeAlias = int | tuple[_ShapeLike, _ShapeLike]
+_Axes: TypeAlias = int | tuple[_nt.ShapeLike, _nt.ShapeLike]
 
 @type_check_only
 class _CanArray(Protocol[_ArrayT_co]):
@@ -702,7 +700,7 @@ def ones(
 ) -> _nt.Array[Any, _AnyShapeT]: ...
 @overload  # unknown shape, default dtype
 def ones(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderCF = "C",
     *,
@@ -711,7 +709,7 @@ def ones(
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, known dtype
 def ones(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderCF = "C",
     *,
@@ -720,7 +718,7 @@ def ones(
 ) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def ones(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
     *,
@@ -729,7 +727,7 @@ def ones(
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, unknown dtype
 def ones(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
@@ -922,7 +920,7 @@ def full(
 ) -> _nt.Array[Any, _AnyShapeT]: ...
 @overload  # unknown shape, known fill scalar-type
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: _ScalarT,
     dtype: None = None,
     order: _OrderCF = "C",
@@ -932,7 +930,7 @@ def full(
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, bool fill
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: py_bool,
     dtype: None = None,
     order: _OrderCF = "C",
@@ -942,7 +940,7 @@ def full(
 ) -> _nt.Array[np.bool]: ...
 @overload  # unknown shape, int fill
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: _nt.JustInt,
     dtype: None = None,
     order: _OrderCF = "C",
@@ -952,7 +950,7 @@ def full(
 ) -> _nt.Array[np.intp]: ...
 @overload  # unknown shape, float fill
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: _nt.JustFloat,
     dtype: None = None,
     order: _OrderCF = "C",
@@ -962,7 +960,7 @@ def full(
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, complex fill
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: _nt.JustComplex,
     dtype: None = None,
     order: _OrderCF = "C",
@@ -972,7 +970,7 @@ def full(
 ) -> _nt.Array[np.complex128]: ...
 @overload  # unknown shape, known dtype
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: object,
     dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderCF = "C",
@@ -982,7 +980,7 @@ def full(
 ) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: object,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
@@ -992,7 +990,7 @@ def full(
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, float64
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: object,
     dtype: _nt.ToDTypeFloat64,
     order: _OrderCF = "C",
@@ -1002,7 +1000,7 @@ def full(
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, unknown dtype
 def full(
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     fill_value: object,
     dtype: DTypeLike | None = None,
     order: _OrderCF = "C",
@@ -1248,7 +1246,7 @@ def zeros_like(
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -1268,7 +1266,7 @@ def zeros_like(
     dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
@@ -1288,7 +1286,7 @@ def zeros_like(
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -1298,7 +1296,7 @@ def zeros_like(
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.bool_]: ...
@@ -1308,7 +1306,7 @@ def zeros_like(
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.intp]: ...
@@ -1318,7 +1316,7 @@ def zeros_like(
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.float64]: ...
@@ -1328,7 +1326,7 @@ def zeros_like(
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.complex128]: ...
@@ -1348,7 +1346,7 @@ def zeros_like(
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array: ...
@@ -1590,7 +1588,7 @@ def ones_like(
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -1610,7 +1608,7 @@ def ones_like(
     dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
@@ -1630,7 +1628,7 @@ def ones_like(
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -1640,7 +1638,7 @@ def ones_like(
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.bool_]: ...
@@ -1650,7 +1648,7 @@ def ones_like(
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.intp]: ...
@@ -1660,7 +1658,7 @@ def ones_like(
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.float64]: ...
@@ -1670,7 +1668,7 @@ def ones_like(
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.complex128]: ...
@@ -1690,7 +1688,7 @@ def ones_like(
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array: ...
@@ -1912,7 +1910,7 @@ def full_like(
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -1934,7 +1932,7 @@ def full_like(
     dtype: _DTypeT | _SupportsDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> np.ndarray[_nt.AnyShape, _DTypeT]: ...
@@ -1956,7 +1954,7 @@ def full_like(
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -1967,7 +1965,7 @@ def full_like(
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.bool_]: ...
@@ -1978,7 +1976,7 @@ def full_like(
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.intp]: ...
@@ -1989,7 +1987,7 @@ def full_like(
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.float64]: ...
@@ -2000,7 +1998,7 @@ def full_like(
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.complex128]: ...
@@ -2022,7 +2020,7 @@ def full_like(
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: py_bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array: ...
@@ -2031,11 +2029,11 @@ def full_like(
 @overload
 def count_nonzero(a: ArrayLike, axis: None = None, *, keepdims: L[False] = False) -> np.intp: ...
 @overload
-def count_nonzero(a: _nt.ToGeneric_0d, axis: _ShapeLike | None = None, *, keepdims: L[True]) -> np.intp: ...
+def count_nonzero(a: _nt.ToGeneric_0d, axis: _nt.ShapeLike | None = None, *, keepdims: L[True]) -> np.intp: ...
 @overload
-def count_nonzero(a: _nt.ToGeneric_1nd, axis: _ShapeLike | None = None, *, keepdims: L[True]) -> _nt.Array[np.intp]: ...
+def count_nonzero(a: _nt.ToGeneric_1nd, axis: _nt.ShapeLike | None = None, *, keepdims: L[True]) -> _nt.Array[np.intp]: ...
 @overload
-def count_nonzero(a: ArrayLike, axis: _ShapeLike | None = None, *, keepdims: py_bool = False) -> Incomplete: ...
+def count_nonzero(a: ArrayLike, axis: _nt.ShapeLike | None = None, *, keepdims: py_bool = False) -> Incomplete: ...
 
 #
 def flatnonzero(a: ArrayLike) -> _nt.Array1D[np.intp]: ...
@@ -2176,13 +2174,13 @@ def tensordot(
 
 #
 @overload
-def roll(a: _ArrayLike[_ScalarT], shift: _ShapeLike, axis: _ShapeLike | None = None) -> _nt.Array[_ScalarT]: ...
+def roll(a: _ArrayLike[_ScalarT], shift: _nt.ShapeLike, axis: _nt.ShapeLike | None = None) -> _nt.Array[_ScalarT]: ...
 @overload
-def roll(a: ArrayLike, shift: _ShapeLike, axis: _ShapeLike | None = None) -> _nt.Array: ...
+def roll(a: ArrayLike, shift: _nt.ShapeLike, axis: _nt.ShapeLike | None = None) -> _nt.Array: ...
 
 #
 def rollaxis(a: _nt.Array[_ScalarT], axis: int, start: int = 0) -> _nt.Array[_ScalarT]: ...
-def moveaxis(a: _nt.Array[_ScalarT], source: _ShapeLike, destination: _ShapeLike) -> _nt.Array[_ScalarT]: ...
+def moveaxis(a: _nt.Array[_ScalarT], source: _nt.ShapeLike, destination: _nt.ShapeLike) -> _nt.Array[_ScalarT]: ...
 
 #
 @overload

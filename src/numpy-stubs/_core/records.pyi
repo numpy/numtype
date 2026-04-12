@@ -8,8 +8,6 @@ import numpy as np
 from numpy import _ByteOrder, _OrderKACF  # noqa: ICN003
 from numpy._typing import ArrayLike, DTypeLike, _ArrayLikeVoid_co
 
-_ShapeLike = _nt._ShapeLike
-
 __all__ = [
     "array",
     "find_duplicate",
@@ -75,11 +73,11 @@ class recarray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def __new__(
         subtype,
-        shape: _ShapeLike,
+        shape: _nt.ShapeLike,
         dtype: None = None,
         buf: Buffer | None = None,
         offset: SupportsIndex = 0,
-        strides: _ShapeLike | None = None,
+        strides: _nt.ShapeLike | None = None,
         *,
         formats: DTypeLike | None,
         names: str | Sequence[str] | None = None,
@@ -91,11 +89,11 @@ class recarray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def __new__(
         subtype,
-        shape: _ShapeLike,
+        shape: _nt.ShapeLike,
         dtype: DTypeLike | None,
         buf: Buffer | None = None,
         offset: SupportsIndex = ...,
-        strides: _ShapeLike | None = None,
+        strides: _nt.ShapeLike | None = None,
         formats: None = None,
         names: None = None,
         titles: None = None,
@@ -124,7 +122,7 @@ def find_duplicate(list: Iterable[_T]) -> list[_T]: ...
 def fromarrays(
     arrayList: Iterable[ArrayLike],
     dtype: DTypeLike | None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     formats: None = None,
     names: None = None,
     titles: None = None,
@@ -135,7 +133,7 @@ def fromarrays(
 def fromarrays(
     arrayList: Iterable[ArrayLike],
     dtype: None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     formats: DTypeLike | None,
     names: str | Sequence[str] | None = None,
@@ -149,7 +147,7 @@ def fromarrays(
 def fromrecords(
     recList: _ArrayLikeVoid_co | _nt.SequenceND[tuple[Incomplete, ...]],
     dtype: DTypeLike | None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     formats: None = None,
     names: None = None,
     titles: None = None,
@@ -160,7 +158,7 @@ def fromrecords(
 def fromrecords(
     recList: _ArrayLikeVoid_co | _nt.SequenceND[tuple[Incomplete, ...]],
     dtype: None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     *,
     formats: DTypeLike | None,
     names: str | Sequence[str] | None = None,
@@ -174,7 +172,7 @@ def fromrecords(
 def fromstring(
     datastring: Buffer,
     dtype: DTypeLike | None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     formats: None = None,
     names: None = None,
@@ -186,7 +184,7 @@ def fromstring(
 def fromstring(
     datastring: Buffer,
     dtype: None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     *,
     formats: DTypeLike | None,
@@ -204,7 +202,7 @@ def get_remaining_size(fd: IO[Any]) -> int: ...  # undocumented
 def fromfile(
     fd: StrOrBytesPath | _SupportsReadInto,
     dtype: DTypeLike | None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     formats: None = None,
     names: None = None,
@@ -216,7 +214,7 @@ def fromfile(
 def fromfile(
     fd: StrOrBytesPath | _SupportsReadInto,
     dtype: None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     *,
     formats: DTypeLike | None,
@@ -231,7 +229,7 @@ def fromfile(
 def array(  # type: ignore[overload-overlap]
     obj: _ScalarT | _nt.Array[_ScalarT],
     dtype: None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     strides: tuple[int, ...] | None = None,
     formats: None = None,
@@ -245,7 +243,7 @@ def array(  # type: ignore[overload-overlap]
 def array(
     obj: ArrayLike,
     dtype: DTypeLike | None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     strides: tuple[int, ...] | None = None,
     formats: None = None,
@@ -259,7 +257,7 @@ def array(
 def array(
     obj: ArrayLike,
     dtype: None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     strides: tuple[int, ...] | None = None,
     *,
@@ -274,7 +272,7 @@ def array(
 def array(
     obj: None,
     dtype: DTypeLike | None,
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     offset: int = 0,
     strides: tuple[int, ...] | None = None,
     formats: None = None,
@@ -289,7 +287,7 @@ def array(
     obj: None,
     dtype: None = None,
     *,
-    shape: _ShapeLike,
+    shape: _nt.ShapeLike,
     offset: int = 0,
     strides: tuple[int, ...] | None = None,
     formats: DTypeLike | None,
@@ -303,7 +301,7 @@ def array(
 def array(
     obj: _SupportsReadInto,
     dtype: DTypeLike | None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     strides: tuple[int, ...] | None = None,
     formats: None = None,
@@ -317,7 +315,7 @@ def array(
 def array(
     obj: _SupportsReadInto,
     dtype: None = None,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ShapeLike | None = None,
     offset: int = 0,
     strides: tuple[int, ...] | None = None,
     *,

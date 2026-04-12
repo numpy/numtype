@@ -9,8 +9,6 @@ from numpy._typing import ArrayLike, DTypeLike, _ArrayLike, _DTypeLike
 from numpy.lib._function_base_impl import average
 from numpy.lib._index_tricks_impl import AxisConcatenator
 
-_ShapeLike = _nt._ShapeLike
-
 from .core import dot
 
 __all__ = [
@@ -314,9 +312,9 @@ def stack(
 
 # keep in sync with `numpy._core.shape_base_impl.hsplit`
 @overload
-def hsplit(ary: _ArrayLike[_ScalarT], indices_or_sections: _ShapeLike) -> list[_nt.MArray[_ScalarT]]: ...
+def hsplit(ary: _ArrayLike[_ScalarT], indices_or_sections: _nt.ShapeLike) -> list[_nt.MArray[_ScalarT]]: ...
 @overload
-def hsplit(ary: ArrayLike, indices_or_sections: _ShapeLike) -> list[_nt.MArray[Incomplete]]: ...
+def hsplit(ary: ArrayLike, indices_or_sections: _nt.ShapeLike) -> list[_nt.MArray[Incomplete]]: ...
 
 # keep in sync with `numpy._core.twodim_base_impl.hsplit`
 @overload

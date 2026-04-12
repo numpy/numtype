@@ -144,7 +144,6 @@ from ._shape import (
     AnyShape as AnyShape,
     NeitherShape as NeitherShape,
     Shape as Shape,
-    _ShapeLike as _ShapeLike,
     Shape0 as Shape0,
     Shape0N as Shape0N,
     Shape1 as Shape1,
@@ -155,6 +154,7 @@ from ._shape import (
     Shape3N as Shape3N,
     Shape4 as Shape4,
     Shape4N as Shape4N,
+    ShapeLike as ShapeLike,
 )
 
 ###

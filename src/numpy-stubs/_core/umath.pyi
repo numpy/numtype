@@ -18,13 +18,7 @@ from typing_extensions import TypeAliasType, TypeVar, Unpack
 import _numtype as _nt
 import numpy as np
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
-from numpy._typing import (
-    _DTypeLike as _ToDType,
-    _DTypeLikeComplex as _ToDTypeComplex,
-    _DTypeLikeFloat as _ToDTypeFloat,
-)
-
-_ShapeLike = _nt._ShapeLike
+from numpy._typing import _DTypeLike as _ToDType, _DTypeLikeComplex as _ToDTypeComplex, _DTypeLikeFloat as _ToDTypeFloat
 
 from . import _multiarray_umath as _multiarray_umath
 from ._multiarray_umath import (
@@ -1614,7 +1608,7 @@ class _Reduce2(Protocol):
         self,
         a: _nt.ToGeneric_nd,
         /,
-        axis: _ShapeLike | None = 0,
+        axis: _nt.ShapeLike | None = 0,
         dtype: _nt.ToDType | None = None,
         out: _nt.Array | EllipsisType | None = None,
         keepdims: bool = False,
