@@ -524,15 +524,24 @@ def gradient(
 ) -> _nt.Array1D[_InexactTimeT] | Any: ...
 @overload  # 1d, known inexact scalar-type
 def gradient(
-    f: _nt.Array1D[_InexactTimeT], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Array1D[_InexactTimeT],
+    *varargs: _nt.CoComplex_nd,
+    axis: _nt.ShapeLike | None = None,
+    edge_order: L[1, 2] = 1,
 ) -> _nt.Array1D[_InexactTimeT]: ...
 @overload  # 2d, known inexact scalar-type
 def gradient(
-    f: _nt.Array2D[_InexactTimeT], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Array2D[_InexactTimeT],
+    *varargs: _nt.CoComplex_nd,
+    axis: _nt.ShapeLike | None = None,
+    edge_order: L[1, 2] = 1,
 ) -> _Mesh2[_InexactTimeT, _InexactTimeT]: ...
 @overload  # 3d, known inexact scalar-type
 def gradient(
-    f: _nt.Array3D[_InexactTimeT], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Array3D[_InexactTimeT],
+    *varargs: _nt.CoComplex_nd,
+    axis: _nt.ShapeLike | None = None,
+    edge_order: L[1, 2] = 1,
 ) -> _Mesh3[_InexactTimeT, _InexactTimeT, _InexactTimeT]: ...
 @overload  # ?d, datetime64 scalar-type
 def gradient(
@@ -540,15 +549,24 @@ def gradient(
 ) -> _nt.Array1D[np.timedelta64] | tuple[_nt.Array[np.timedelta64], ...]: ...
 @overload  # 1d, datetime64 scalar-type
 def gradient(
-    f: _nt.Array1D[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Array1D[np.datetime64],
+    *varargs: _nt.CoComplex_nd,
+    axis: _nt.ShapeLike | None = None,
+    edge_order: L[1, 2] = 1,
 ) -> _nt.Array1D[np.timedelta64]: ...
 @overload  # 2d, datetime64 scalar-type
 def gradient(
-    f: _nt.Array2D[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Array2D[np.datetime64],
+    *varargs: _nt.CoComplex_nd,
+    axis: _nt.ShapeLike | None = None,
+    edge_order: L[1, 2] = 1,
 ) -> _Mesh2[np.timedelta64, np.timedelta64]: ...
 @overload  # 3d, datetime64 scalar-type
 def gradient(
-    f: _nt.Array3D[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Array3D[np.datetime64],
+    *varargs: _nt.CoComplex_nd,
+    axis: _nt.ShapeLike | None = None,
+    edge_order: L[1, 2] = 1,
 ) -> _Mesh3[np.timedelta64, np.timedelta64, np.timedelta64]: ...
 @overload  # 1d float-like
 def gradient(
@@ -1319,7 +1337,11 @@ def median(
 ) -> _nt.Array[np.float64]: ...
 @overload  # float array-like, axis=<given>
 def median(
-    a: _nt.SequenceND[float], axis: _nt.ShapeLike, out: None = None, overwrite_input: bool = False, keepdims: bool = False
+    a: _nt.SequenceND[float],
+    axis: _nt.ShapeLike,
+    out: None = None,
+    overwrite_input: bool = False,
+    keepdims: bool = False,
 ) -> _nt.Array[np.float64]: ...
 @overload  # complex array-like, keepdims=True
 def median(

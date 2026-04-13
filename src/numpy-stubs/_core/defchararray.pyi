@@ -7,8 +7,6 @@ import numpy as np
 from numpy import _OrderKACF as _Order  # noqa: ICN003
 from numpy._typing import _ArrayLikeAnyString_co as _ToAnyCharND, _ArrayLikeString_co as _ToStringND
 
-_ToShape: TypeAlias = _nt.ShapeLike
-
 from ._multiarray_umath import compare_chararrays
 from .strings import (
     capitalize,
@@ -59,6 +57,8 @@ from .umath import (
     less_equal,
     not_equal,
 )
+
+_ToShape: TypeAlias = _nt.ShapeLike
 
 __all__ = [
     "add",

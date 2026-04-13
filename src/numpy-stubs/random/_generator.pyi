@@ -142,7 +142,12 @@ class Generator:
     def random(self, /, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None) -> float: ...
     @overload
     def random(
-        self, /, size: _nt.ShapeLike | None = None, dtype: _nt.ToDTypeFloat64 = ..., *, out: _nt.Array[np.float64, _ShapeT]
+        self,
+        /,
+        size: _nt.ShapeLike | None = None,
+        dtype: _nt.ToDTypeFloat64 = ...,
+        *,
+        out: _nt.Array[np.float64, _ShapeT],
     ) -> _nt.Array[np.float64, _ShapeT]: ...
     @overload
     def random(
@@ -150,7 +155,12 @@ class Generator:
     ) -> _nt.Array[np.float64]: ...
     @overload
     def random(
-        self, /, size: _nt.ShapeLike | None = None, dtype: _nt.ToDTypeFloat32 = ..., *, out: _nt.Array[np.float32, _ShapeT]
+        self,
+        /,
+        size: _nt.ShapeLike | None = None,
+        dtype: _nt.ToDTypeFloat32 = ...,
+        *,
+        out: _nt.Array[np.float32, _ShapeT],
     ) -> _nt.Array[np.float32, _ShapeT]: ...
     @overload
     def random(
@@ -424,7 +434,9 @@ class Generator:
     @overload  # size: (int, ...)
     def chisquare(self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike) -> _nt.Array[np.float64]: ...
     @overload  # fallback
-    def chisquare(self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
+    def chisquare(
+        self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None
+    ) -> float | _nt.Array[np.float64]: ...
 
     #
     @overload  # workaround for microsoft/pyright#10232
@@ -558,7 +570,9 @@ class Generator:
     @overload  # size: (int, ...)
     def standard_t(self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike) -> _nt.Array[np.float64]: ...
     @overload  # fallback
-    def standard_t(self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
+    def standard_t(
+        self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None
+    ) -> float | _nt.Array[np.float64]: ...
 
     #
     @overload  # workaround for microsoft/pyright#10232
@@ -671,7 +685,9 @@ class Generator:
     @overload  # size: None  (default)
     def f(self, /, dfnum: _nt.CoFloating_0d, dfden: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
-    def f(self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ShapeLike) -> _nt.Array[np.float64]: ...
+    def f(
+        self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ShapeLike
+    ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def f(
         self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None
@@ -720,7 +736,9 @@ class Generator:
     @overload  # size: None  (default)
     def wald(self, /, mean: float, scale: float, size: None = None) -> float: ...
     @overload  # size: (int, ...)
-    def wald(self, /, mean: _nt.CoFloating_nd, scale: _nt.CoFloating_nd, size: _nt.ShapeLike) -> _nt.Array[np.float64]: ...
+    def wald(
+        self, /, mean: _nt.CoFloating_nd, scale: _nt.CoFloating_nd, size: _nt.ShapeLike
+    ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def wald(
         self, /, mean: _nt.CoFloating_nd, scale: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None
@@ -1237,7 +1255,9 @@ class Generator:
     @overload  # size: (int, ...)  (keyword)
     def poisson(self, /, lam: _nt.CoFloating_nd = 1.0, *, size: _nt.ShapeLike) -> _nt.Array[np.int64]: ...
     @overload  # fallback
-    def poisson(self, /, lam: _nt.CoFloating_nd = 1.0, size: _nt.ShapeLike | None = None) -> int | _nt.Array[np.int64]: ...
+    def poisson(
+        self, /, lam: _nt.CoFloating_nd = 1.0, size: _nt.ShapeLike | None = None
+    ) -> int | _nt.Array[np.int64]: ...
 
     #
     @overload  # workaround for microsoft/pyright#10232

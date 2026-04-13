@@ -306,7 +306,9 @@ class RandomState:
     @overload  # size: (int, ...)
     def chisquare(self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike) -> _nt.Array[np.float64]: ...
     @overload  # fallback
-    def chisquare(self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
+    def chisquare(
+        self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None
+    ) -> float | _nt.Array[np.float64]: ...
 
     #
     @overload  # size: None  (default)
@@ -382,7 +384,9 @@ class RandomState:
     @overload  # size: (int, ...)
     def standard_t(self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike) -> _nt.Array[np.float64]: ...
     @overload  # fallback
-    def standard_t(self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None) -> float | _nt.Array[np.float64]: ...
+    def standard_t(
+        self, /, df: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None
+    ) -> float | _nt.Array[np.float64]: ...
 
     #
     @overload  # size: None  (default)
@@ -414,7 +418,9 @@ class RandomState:
     @overload  # size: None  (default)
     def f(self, /, dfnum: float, dfden: float, size: None = None) -> float: ...
     @overload  # size: (int, ...)
-    def f(self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ShapeLike) -> _nt.Array[np.float64]: ...
+    def f(
+        self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ShapeLike
+    ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def f(
         self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None
@@ -441,7 +447,9 @@ class RandomState:
     @overload  # size: None  (default)
     def wald(self, /, mean: float, scale: float, size: None = None) -> float: ...
     @overload  # size: (int, ...)
-    def wald(self, /, mean: _nt.CoFloating_nd, scale: _nt.CoFloating_nd, size: _nt.ShapeLike) -> _nt.Array[np.float64]: ...
+    def wald(
+        self, /, mean: _nt.CoFloating_nd, scale: _nt.CoFloating_nd, size: _nt.ShapeLike
+    ) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def wald(
         self, /, mean: _nt.CoFloating_nd, scale: _nt.CoFloating_nd, size: _nt.ShapeLike | None = None
@@ -808,7 +816,9 @@ class RandomState:
     @overload  # size: (int, ...)  (keyword)
     def poisson(self, /, lam: _nt.CoFloating_nd = 1.0, *, size: _nt.ShapeLike) -> _nt.Array[np.int_]: ...
     @overload  # fallback
-    def poisson(self, /, lam: _nt.CoFloating_nd = 1.0, size: _nt.ShapeLike | None = None) -> int | _nt.Array[np.int_]: ...
+    def poisson(
+        self, /, lam: _nt.CoFloating_nd = 1.0, size: _nt.ShapeLike | None = None
+    ) -> int | _nt.Array[np.int_]: ...
 
     #
     @overload  # size: None  (default)
