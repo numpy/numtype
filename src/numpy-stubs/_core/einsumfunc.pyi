@@ -25,11 +25,7 @@ _CastingUnsafe: TypeAlias = Literal["unsafe"]
 
 _ToDTypeBool: TypeAlias = _nt.ToDTypeBool
 _ToDTypeUInt: TypeAlias = (
-    _nt.ToDTypeUInt8
-    | _nt.ToDTypeUInt16
-    | _nt.ToDTypeUInt32
-    | _nt.ToDTypeUInt64
-    | _nt.ToDTypeULong
+    _nt.ToDTypeUInt8 | _nt.ToDTypeUInt16 | _nt.ToDTypeUInt32 | _nt.ToDTypeUInt64 | _nt.ToDTypeULong
 )
 _ToDTypeInt: TypeAlias = _nt.ToDTypeInt8 | _nt.ToDTypeInt16 | _nt.ToDTypeInt32 | _nt.ToDTypeInt64 | _nt.ToDTypeLong
 _ToDTypeFloat: TypeAlias = _nt.ToDTypeFloat16 | _nt.ToDTypeFloat32 | _nt.ToDTypeFloat64 | _nt.ToDTypeLongDouble
