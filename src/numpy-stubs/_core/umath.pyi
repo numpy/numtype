@@ -186,7 +186,7 @@ _ToStringLike: TypeAlias = bytes | str | np.character
 _CoFloat: TypeAlias = float | _nt.co_float
 _CoComplex: TypeAlias = complex | _nt.co_complex
 
-_ToDType = _nt._ToDType
+_ToDType = TypeAliasType("_ToDType", _nt._ToDType[_ScalarT], type_params=(_ScalarT,))
 _ToDTypeFloat: TypeAlias = _nt.ToDTypeFloat16 | _nt.ToDTypeFloat32 | _nt.ToDTypeFloat64 | _nt.ToDTypeLongDouble
 _ToDTypeComplex: TypeAlias = _nt.ToDTypeComplex64 | _nt.ToDTypeComplex128 | _nt.ToDTypeCLongDouble
 
