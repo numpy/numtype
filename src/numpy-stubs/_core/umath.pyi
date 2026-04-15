@@ -18,7 +18,6 @@ from typing_extensions import TypeAliasType, TypeVar, Unpack
 import _numtype as _nt
 import numpy as np
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
-from numpy._typing import _DTypeLike as _ToDType, _DTypeLikeComplex as _ToDTypeComplex, _DTypeLikeFloat as _ToDTypeFloat
 
 from . import _multiarray_umath as _multiarray_umath
 from ._multiarray_umath import (
@@ -186,6 +185,10 @@ _ToStringLike: TypeAlias = bytes | str | np.character
 
 _CoFloat: TypeAlias = float | _nt.co_float
 _CoComplex: TypeAlias = complex | _nt.co_complex
+
+_ToDType = _nt._ToDType
+_ToDTypeFloat: TypeAlias = _nt.ToDTypeFloat16 | _nt.ToDTypeFloat32 | _nt.ToDTypeFloat64 | _nt.ToDTypeLongDouble
+_ToDTypeComplex: TypeAlias = _nt.ToDTypeComplex64 | _nt.ToDTypeComplex128 | _nt.ToDTypeCLongDouble
 
 _ToDTypeInexact: TypeAlias = _ToDTypeFloat | _ToDTypeComplex
 
