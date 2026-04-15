@@ -6,7 +6,7 @@ from typing_extensions import TypeVar
 import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _DTypeLike, _DTypeLikeVoid
+from numpy._typing import _DTypeLike
 from numpy.ma.mrecords import MaskedRecords
 
 __all__ = [
@@ -274,7 +274,7 @@ def assign_fields_by_name(dst: _nt.Array[np.void], src: _nt.Array[np.void], zero
 
 #
 def require_fields(
-    array: _nt.Array[np.void, _ShapeT], required_dtype: _DTypeLikeVoid
+    array: _nt.Array[np.void, _ShapeT], required_dtype: _nt.ToDTypeVoid
 ) -> _nt.Array[np.void, _ShapeT]: ...
 
 # TODO(jorenham): Attempt shape-typing

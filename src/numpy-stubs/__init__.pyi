@@ -342,7 +342,6 @@ from ._typing import (
     _ArrayLikeObject_co,
     _ArrayLikeTD64_co,
     _DTypeLike,
-    _DTypeLikeVoid,
     _NestedSequence,
     _NumberLike_co,
     _ScalarLike_co,
@@ -5026,7 +5025,7 @@ class void(flexible[bytes | tuple[Any, ...]]):  # type: ignore[misc]  # pyright:
     @overload
     def __new__(cls, length_or_data: _nt.CoInteger_0d | bytes, /, dtype: None = None) -> Self: ...
     @overload
-    def __new__(cls, length_or_data: object, /, dtype: _DTypeLikeVoid) -> Self: ...
+    def __new__(cls, length_or_data: object, /, dtype: _nt.ToDTypeVoid) -> Self: ...
 
     #
     @type_check_only

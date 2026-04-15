@@ -18,7 +18,7 @@ from typing_extensions import CapsuleType, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import _ArrayLikeInt_co, _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes
+from numpy._typing import _ArrayLikeInt_co, _ShapeLike
 
 __all__ = ["BitGenerator", "SeedSequence"]
 
@@ -26,8 +26,8 @@ __all__ = ["BitGenerator", "SeedSequence"]
 
 _StateT = TypeVar("_StateT", bound=Mapping[str, object], default=Mapping[str, Any])
 
-_ToDTypeUInt32: TypeAlias = _DTypeLike[np.uint32] | _UInt32Codes
-_ToDTypeUInt64: TypeAlias = _DTypeLike[np.uint64] | _UInt64Codes
+_ToDTypeUInt32: TypeAlias = _nt.ToDTypeUInt32
+_ToDTypeUInt64: TypeAlias = _nt.ToDTypeUInt64
 
 ###
 

@@ -79,18 +79,6 @@ from ._char_codes import (
 from ._dtype_like import (
     DTypeLike as DTypeLike,
     _DTypeLike as _DTypeLike,
-    _DTypeLikeBool as _DTypeLikeBool,
-    _DTypeLikeBytes as _DTypeLikeBytes,
-    _DTypeLikeComplex as _DTypeLikeComplex,
-    _DTypeLikeComplex_co as _DTypeLikeComplex_co,
-    _DTypeLikeDT64 as _DTypeLikeDT64,
-    _DTypeLikeFloat as _DTypeLikeFloat,
-    _DTypeLikeInt as _DTypeLikeInt,
-    _DTypeLikeObject as _DTypeLikeObject,
-    _DTypeLikeStr as _DTypeLikeStr,
-    _DTypeLikeTD64 as _DTypeLikeTD64,
-    _DTypeLikeUInt as _DTypeLikeUInt,
-    _DTypeLikeVoid as _DTypeLikeVoid,
     _SupportsDType as _SupportsDType,
     _VoidDTypeLike as _VoidDTypeLike,
 )
