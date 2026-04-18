@@ -6,7 +6,7 @@ from typing_extensions import TypeVar, override
 import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _ArrayLike, _BoolCodes, _DTypeLike, _ShapeLike
+from numpy._typing import _ArrayLike, _BoolCodes, _ShapeLike
 from numpy.random.bit_generator import BitGenerator
 
 __all__ = [
@@ -481,7 +481,7 @@ class RandomState:
     def randint(self, /, low: int, high: int | None = None, size: None = None, *, dtype: type[_nt.JustInt]) -> int: ...
     @overload
     def randint(  # type: ignore[overload-overlap]
-        self, /, low: int, high: int | None = None, size: None = None, *, dtype: _DTypeLike[_IntegerT]
+        self, /, low: int, high: int | None = None, size: None = None, *, dtype: _nt._ToDType[_IntegerT]
     ) -> _IntegerT: ...
     @overload
     def randint(self, /, low: int, high: int | None = None, size: None = None, *, dtype: _BoolCodes) -> np.bool: ...
@@ -525,7 +525,7 @@ class RandomState:
     ) -> _nt.Array[np.bool]: ...
     @overload
     def randint(  # type: ignore[overload-overlap]
-        self, /, low: _nt.CoInteger_nd, high: _nt.CoInteger_nd, size: _ShapeLike, dtype: _DTypeLike[_IntegerT]
+        self, /, low: _nt.CoInteger_nd, high: _nt.CoInteger_nd, size: _ShapeLike, dtype: _nt._ToDType[_IntegerT]
     ) -> _nt.Array[_IntegerT]: ...
     @overload
     def randint(
@@ -581,7 +581,7 @@ class RandomState:
         high: _nt.CoInteger_nd | None = None,
         *,
         size: _ShapeLike,
-        dtype: _DTypeLike[_IntegerT],
+        dtype: _nt._ToDType[_IntegerT],
     ) -> _nt.Array[_IntegerT]: ...
     @overload
     def randint(
@@ -685,7 +685,7 @@ class RandomState:
         high: _nt.CoInteger_nd | None = None,
         size: _ShapeLike | None = None,
         *,
-        dtype: _DTypeLike[_IntegerT],
+        dtype: _nt._ToDType[_IntegerT],
     ) -> _IntegerT | _nt.Array[_IntegerT]: ...
     @overload
     def randint(

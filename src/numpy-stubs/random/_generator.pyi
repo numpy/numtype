@@ -6,7 +6,7 @@ from typing_extensions import TypeVar, override
 import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _ArrayLike, _BoolCodes, _DTypeLike, _ShapeLike
+from numpy._typing import _ArrayLike, _BoolCodes, _ShapeLike
 from numpy.random import BitGenerator, RandomState, SeedSequence
 
 ###
@@ -15,7 +15,7 @@ _ScalarT = TypeVar("_ScalarT", bound=np.generic)
 _IntegerT = TypeVar("_IntegerT", bound=_nt.co_integer)
 _ShapeT = TypeVar("_ShapeT", bound=_nt.Shape)
 
-_DTypeLikeFloat: TypeAlias = _nt.ToDTypeFloat32 | _nt.ToDTypeFloat64
+_ToDTypeFloat: TypeAlias = _nt.ToDTypeFloat32 | _nt.ToDTypeFloat64
 _CoInt_nnd: TypeAlias = _nt._ToArray_nnd[_nt.co_integer]
 _CoFloat_nnd: TypeAlias = _nt._ToArray_nnd[_nt.co_float]
 
@@ -139,7 +139,7 @@ class Generator:
 
     #
     @overload
-    def random(self, /, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None) -> float: ...
+    def random(self, /, size: None = None, dtype: _ToDTypeFloat = ..., out: None = None) -> float: ...
     @overload
     def random(
         self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat64 = ..., *, out: _nt.Array[np.float64, _ShapeT]
@@ -233,7 +233,7 @@ class Generator:
     #
     @overload
     def standard_exponential(
-        self, /, size: None = None, dtype: _DTypeLikeFloat = ..., method: _ExpMethod = "zig", out: None = None
+        self, /, size: None = None, dtype: _ToDTypeFloat = ..., method: _ExpMethod = "zig", out: None = None
     ) -> float: ...
     @overload
     def standard_exponential(
@@ -448,7 +448,7 @@ class Generator:
 
     #
     @overload
-    def standard_normal(self, /, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None) -> float: ...
+    def standard_normal(self, /, size: None = None, dtype: _ToDTypeFloat = ..., out: None = None) -> float: ...
     @overload
     def standard_normal(
         self, /, size: _ShapeLike | None = None, dtype: _nt.ToDTypeFloat64 = ..., *, out: _nt.Array[np.float64]
@@ -575,7 +575,7 @@ class Generator:
     ) -> float | _nt.Array[np.float32]: ...
     @overload
     def standard_gamma(
-        self, /, shape: _nt.CoFloating_0d, size: None = None, dtype: _DTypeLikeFloat = ..., out: None = None
+        self, /, shape: _nt.CoFloating_0d, size: None = None, dtype: _ToDTypeFloat = ..., out: None = None
     ) -> float: ...
     @overload
     def standard_gamma(
@@ -737,7 +737,7 @@ class Generator:
         low: int,
         high: int | None = None,
         size: None = None,
-        dtype: _DTypeLike[np.int64] = ...,
+        dtype: _nt._ToDType[np.int64] = ...,
         endpoint: bool = False,
     ) -> np.int64: ...
     @overload
@@ -752,7 +752,7 @@ class Generator:
         high: int | None = None,
         size: None = None,
         *,
-        dtype: _DTypeLike[_IntegerT],
+        dtype: _nt._ToDType[_IntegerT],
         endpoint: bool = False,
     ) -> _IntegerT: ...
     @overload
@@ -847,7 +847,7 @@ class Generator:
         low: _nt.CoInteger_nd,
         high: _nt.CoInteger_nd,
         size: _ShapeLike,
-        dtype: _DTypeLike[np.int64] = ...,
+        dtype: _nt._ToDType[np.int64] = ...,
         endpoint: bool = False,
     ) -> _nt.Array[np.int64]: ...
     @overload
@@ -857,7 +857,7 @@ class Generator:
         low: _nt.CoInteger_nd,
         high: _nt.CoInteger_nd,
         size: _ShapeLike,
-        dtype: _DTypeLike[_IntegerT],
+        dtype: _nt._ToDType[_IntegerT],
         endpoint: bool = False,
     ) -> _nt.Array[_IntegerT]: ...
     @overload
@@ -958,7 +958,7 @@ class Generator:
         high: _nt.CoInteger_nd | None = None,
         *,
         size: _ShapeLike,
-        dtype: _DTypeLike[np.int64] = ...,
+        dtype: _nt._ToDType[np.int64] = ...,
         endpoint: bool = False,
     ) -> _nt.Array[np.int64]: ...
     @overload
@@ -969,7 +969,7 @@ class Generator:
         high: _nt.CoInteger_nd | None = None,
         *,
         size: _ShapeLike,
-        dtype: _DTypeLike[_IntegerT],
+        dtype: _nt._ToDType[_IntegerT],
         endpoint: bool = False,
     ) -> _nt.Array[_IntegerT]: ...
     @overload
@@ -1090,7 +1090,7 @@ class Generator:
         high: _nt.CoInteger_nd | None = None,
         size: _ShapeLike | None = None,
         *,
-        dtype: _DTypeLike[_IntegerT],
+        dtype: _nt._ToDType[_IntegerT],
         endpoint: bool = False,
     ) -> _IntegerT | _nt.Array[_IntegerT]: ...
     @overload
