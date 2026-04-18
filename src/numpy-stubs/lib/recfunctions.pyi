@@ -6,7 +6,6 @@ from typing_extensions import TypeVar
 import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _DTypeLike
 from numpy.ma.mrecords import MaskedRecords
 
 __all__ = [
@@ -227,7 +226,7 @@ def repack_fields(a: _ArrayT, align: bool = False, recurse: bool = False) -> _Ar
 # TODO(jorenham): Attempt shape-typing (return type has ndim == arr.ndim + 1)
 @overload
 def structured_to_unstructured(
-    arr: _nt.Array[np.void], dtype: _DTypeLike[_ScalarT], copy: bool = False, casting: np._CastingKind = "unsafe"
+    arr: _nt.Array[np.void], dtype: _nt.ToDType[_ScalarT], copy: bool = False, casting: np._CastingKind = "unsafe"
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def structured_to_unstructured(
