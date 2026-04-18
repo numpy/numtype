@@ -2,18 +2,7 @@ import abc
 from _typeshed import Incomplete
 from collections.abc import Callable, Mapping, Sequence
 from threading import Lock
-from typing import (
-    Any,
-    ClassVar,
-    Generic,
-    Literal as L,
-    NamedTuple,
-    Self,
-    TypeAlias,
-    TypedDict,
-    overload,
-    type_check_only,
-)
+from typing import Any, ClassVar, Generic, Literal as L, NamedTuple, Self, TypedDict, overload, type_check_only
 from typing_extensions import CapsuleType, TypeVar, override
 
 import _numtype as _nt
@@ -25,9 +14,6 @@ __all__ = ["BitGenerator", "SeedSequence"]
 ###
 
 _StateT = TypeVar("_StateT", bound=Mapping[str, object], default=Mapping[str, Any])
-
-_ToDTypeUInt32: TypeAlias = _nt.ToDTypeUInt32
-_ToDTypeUInt64: TypeAlias = _nt.ToDTypeUInt64
 
 ###
 
@@ -55,12 +41,12 @@ class _CythonMixin:
 @type_check_only
 class _GenerateStateMixin(_CythonMixin):
     @overload
-    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt32 = ...) -> _nt.Array[np.uint32]: ...
+    def generate_state(self, /, n_words: int, dtype: _nt.ToDTypeUInt32 = ...) -> _nt.Array[np.uint32]: ...
     @overload
-    def generate_state(self, /, n_words: int, dtype: _ToDTypeUInt64) -> _nt.Array[np.uint64]: ...
+    def generate_state(self, /, n_words: int, dtype: _nt.ToDTypeUInt64) -> _nt.Array[np.uint64]: ...
     @overload
     def generate_state(
-        self, /, n_words: int, dtype: _ToDTypeUInt32 | _ToDTypeUInt64 = ...
+        self, /, n_words: int, dtype: _nt.ToDTypeUInt32 | _nt.ToDTypeUInt64 = ...
     ) -> _nt.Array[np.uint32 | np.uint64]: ...
 
 ###
@@ -104,7 +90,7 @@ class BitGenerator(_CythonMixin, abc.ABC, Generic[_StateT]):
 class ISeedSequence(abc.ABC):
     @abc.abstractmethod
     def generate_state(
-        self, /, n_words: int, dtype: _ToDTypeUInt32 | _ToDTypeUInt64 = ...
+        self, /, n_words: int, dtype: _nt.ToDTypeUInt32 | _nt.ToDTypeUInt64 = ...
     ) -> _nt.Array[np.uint32 | np.uint64]: ...
 
 class ISpawnableSeedSequence(ISeedSequence, abc.ABC):
