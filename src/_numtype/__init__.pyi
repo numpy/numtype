@@ -154,6 +154,7 @@ from ._shape import (
     Shape3N as Shape3N,
     Shape4 as Shape4,
     Shape4N as Shape4N,
+    ToShape as ToShape,
 )
 
 ###
