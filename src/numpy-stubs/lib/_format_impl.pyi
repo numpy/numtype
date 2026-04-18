@@ -33,7 +33,7 @@ class _HeaderDict_1_0(TypedDict):
 
 EXPECTED_KEYS: Final[set[str]] = ...
 MAGIC_PREFIX: Final = b"\x93NUMPY"
-MAGIC_LEN: Final = 16
+MAGIC_LEN: Final = 8
 ARRAY_ALIGN: Final = 64
 BUFFER_SIZE: Final = 262_144  # 2**18
 GROWTH_AXIS_MAX_DIGITS: Final = 21
