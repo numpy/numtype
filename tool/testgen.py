@@ -747,12 +747,12 @@ class LiteralBoolOps(TestGen):
         "{} > {}": op.__gt__,
         "{} >= {}": op.__ge__,
     }
-    BINOPS: ClassVar = {
+    BINOPS: ClassVar = {  # pyright: ignore[reportUnknownVariableType]
         "{} + {}": op.__add__,
         "{} * {}": op.__mul__,
-        "{} & {}": op.__and__,
-        "{} ^ {}": op.__xor__,
-        "{} | {}": op.__or__,
+        "{} & {}": op.__and__,  # pyright: ignore[reportUnknownMemberType]
+        "{} ^ {}": op.__xor__,  # pyright: ignore[reportUnknownMemberType]
+        "{} | {}": op.__or__,  # pyright: ignore[reportUnknownMemberType]
     }
 
     NAMES_NP: ClassVar = [f"np{v}" for v in "01_"]
@@ -848,14 +848,14 @@ class LiteralBoolOps(TestGen):
                 yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
 
     def _gen_binary(self) -> Generator[str]:
-        for tmpl, fn in self.BINOPS.items():
+        for tmpl, fn in self.BINOPS.items():  # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
             opname = fn.__name__.removesuffix("_")
             yield from self._generate_section(f"__[r]{opname}__")
 
             # np, np (literals)
             deferred: list[str] = []
             for a, b in itertools.product(self.NAMES_NP, self.NAMES_NP):
-                line = _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+                line = _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))  # pyright: ignore[reportUnknownArgumentType]
                 if "_" in {a[-1], b[-1]}:
                     deferred.append(line)
                 else:
@@ -868,12 +868,12 @@ class LiteralBoolOps(TestGen):
             # np, py
             yield ""
             for a, b in itertools.product(self.NAMES_NP, self.NAMES_PY):
-                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))  # pyright: ignore[reportUnknownArgumentType]
 
             # py, np
             yield ""
             for a, b in itertools.product(self.NAMES_PY, self.NAMES_NP):
-                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))
+                yield _expr_assert_type(tmpl.format(a, b), self.eval2(fn, a, b))  # pyright: ignore[reportUnknownArgumentType]
 
     @override
     def get_testcases(self) -> Iterable[str | None]:
@@ -891,20 +891,20 @@ class ScalarOps(TestGen):
         "{} + {}": op.__add__,
         "{} - {}": op.__sub__,
         "{} * {}": op.__mul__,
-        "{}**{}": op.__pow__,
-        "{} / {}": op.__truediv__,
+        "{}**{}": op.__pow__,  # pyright: ignore[reportUnknownMemberType]
+        "{} / {}": op.__truediv__,  # pyright: ignore[reportUnknownMemberType]
     }
     OPS_MODULAR: ClassVar[dict[str, _BinOp]] = {
-        "{} // {}": op.__floordiv__,
+        "{} // {}": op.__floordiv__,  # pyright: ignore[reportUnknownMemberType]
         "{} % {}": op.__mod__,
         "divmod({}, {})": divmod,
     }
     OPS_BITWISE: ClassVar[dict[str, _BinOp]] = {
-        "{} << {}": op.__lshift__,
-        "{} >> {}": op.__rshift__,
-        "{} & {}": op.__and__,
-        "{} ^ {}": op.__xor__,
-        "{} | {}": op.__or__,
+        "{} << {}": op.__lshift__,  # pyright: ignore[reportUnknownMemberType]
+        "{} >> {}": op.__rshift__,  # pyright: ignore[reportUnknownMemberType]
+        "{} & {}": op.__and__,  # pyright: ignore[reportUnknownMemberType]
+        "{} ^ {}": op.__xor__,  # pyright: ignore[reportUnknownMemberType]
+        "{} | {}": op.__or__,  # pyright: ignore[reportUnknownMemberType]
     }
     OPS_COMPARISON: ClassVar[dict[str, _BinOp]] = {
         "{} < {}": op.__lt__,
