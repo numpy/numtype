@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv_build>=0.10,<0.11"]
+requires = ["uv_build>=0.11,<0.12"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
@@ -45,12 +45,12 @@ Changelog = "https://github.com/numpy/numtype/releases"
 [dependency-groups]
 numpy = ["numtype[numpy]"]
 lint = [
-  "dprint-py>=0.52.0.0",
-  "ruff>=0.15.5",
+  "dprint-py>=0.53.1.0",
+  "ruff>=0.15.11",
 ]
 pytest = [
   { include-group = "numpy" },
-  "pytest>=9.0.2",
+  "pytest>=9.0.3",
   "typing_extensions>=4.15.0",
 ]
 list_and_test = [
@@ -59,30 +59,30 @@ list_and_test = [
 ]
 types = [
   { include-group = "pytest" },
-  "types-setuptools>=82.0.0.20260210",
-  "types-tabulate>=0.10.0.20260308",
+  "types-setuptools>=82.0.0.20260408",
+  "types-tabulate>=0.10.0.20260408",
 ]
 basedpyright = [
   { include-group = "numpy" },
   { include-group = "types" },
-  "basedpyright==1.38.2",
+  "basedpyright==1.39.2",
 ]
 mypy = [
   { include-group = "types" },
-  "mypy[faster-cache]>=1.19.1",
+  "mypy[faster-cache]>=1.20.1",
 ]
 typecheck = [
   { include-group = "basedpyright" },
   { include-group = "mypy" },
 ]
 docs = [
-  "mkdocs-material>=9.7.4",
+  "mkdocs-material>=9.7.6",
   "mkdocs-awesome-nav>=3.3.0",
   "markdown-callouts>=0.4.0",
-  "mkdocs-include-markdown-plugin>=7.2.1",
+  "mkdocs-include-markdown-plugin>=7.2.2",
   "mkdocs-minify-plugin>=0.8.0",
-  "mkdocstrings[python]>=1.0.3",
-  "pygments>=2.19.2",
+  "mkdocstrings[python]>=1.0.4",
+  "pygments>=2.20.0",
 ]
 dev = [
   { include-group = "list_and_test" },
