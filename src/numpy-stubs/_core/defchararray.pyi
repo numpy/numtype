@@ -58,7 +58,6 @@ from .umath import (
     not_equal,
 )
 
-_ToShape: TypeAlias = _nt.ShapeLike
 
 __all__ = [
     "add",
@@ -140,35 +139,35 @@ class chararray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload  # unicode=False (default)
     def __new__(
         subtype,
-        shape: _ToShape,
+        shape: _nt.ToShape,
         itemsize: ConvertibleToInt = 1,
         unicode: L[False] = False,
         buffer: Buffer | None = None,
         offset: SupportsIndex = 0,
-        strides: _ToShape | None = None,
+        strides: _nt.ToShape | None = None,
         order: _Order = "C",
     ) -> _BytesArray: ...
     @overload  # unicode=True (positional)
     def __new__(
         subtype,
-        shape: _ToShape,
+        shape: _nt.ToShape,
         itemsize: ConvertibleToInt,
         unicode: L[True],
         buffer: Buffer | None = None,
         offset: SupportsIndex = 0,
-        strides: _ToShape | None = None,
+        strides: _nt.ToShape | None = None,
         order: _Order = "C",
     ) -> _StrArray: ...
     @overload  # unicode=True (keyword)
     def __new__(
         subtype,
-        shape: _ToShape,
+        shape: _nt.ToShape,
         itemsize: ConvertibleToInt = 1,
         *,
         unicode: L[True],
         buffer: Buffer | None = None,
         offset: SupportsIndex = 0,
-        strides: _ToShape | None = None,
+        strides: _nt.ToShape | None = None,
         order: _Order = "C",
     ) -> _StrArray: ...
 

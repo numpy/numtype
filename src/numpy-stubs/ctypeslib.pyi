@@ -75,7 +75,7 @@ def load_library(libname: StrOrBytesPath, loader_path: StrOrBytesPath) -> ct.CDL
 def ndpointer(
     dtype: None = None,
     ndim: int | None = None,
-    shape: _nt.ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = None,
 ) -> type[_ndptr[None]]: ...
 @overload
@@ -83,7 +83,7 @@ def ndpointer(
     dtype: _DTypeLike[_ScalarT],
     ndim: int | None = None,
     *,
-    shape: _nt.ShapeLike,
+    shape: _nt.ToShape,
     flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = None,
 ) -> type[_concrete_ndptr[np.dtype[_ScalarT]]]: ...
 @overload
@@ -91,7 +91,7 @@ def ndpointer(
     dtype: type | str,
     ndim: int | None = None,
     *,
-    shape: _nt.ShapeLike,
+    shape: _nt.ToShape,
     flags: _FlagsKind | Iterable[_FlagsKind] | int | flagsobj | None = None,
 ) -> type[_concrete_ndptr[np.dtype]]: ...
 @overload
@@ -113,9 +113,9 @@ def ndpointer(
 @overload
 def as_array(obj: ct._PointerLike, shape: Sequence[int]) -> _nt.Array[Any]: ...
 @overload
-def as_array(obj: _ArrayLike[_ScalarT], shape: _nt.ShapeLike | None = ...) -> _nt.Array[_ScalarT]: ...
+def as_array(obj: _ArrayLike[_ScalarT], shape: _nt.ToShape | None = ...) -> _nt.Array[_ScalarT]: ...
 @overload
-def as_array(obj: object, shape: _nt.ShapeLike | None = ...) -> _nt.Array[Any]: ...
+def as_array(obj: object, shape: _nt.ToShape | None = ...) -> _nt.Array[Any]: ...
 
 #
 def as_ctypes(obj: _HasCType[_CT]) -> _CT: ...

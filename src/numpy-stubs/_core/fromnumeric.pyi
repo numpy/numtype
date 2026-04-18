@@ -187,9 +187,9 @@ def repeat(a: ArrayLike, repeats: _nt.CoInteger_nd, axis: CanIndex | None = None
 
 #
 @overload
-def transpose(a: _nt._ToArray_nd[_ScalarT], axes: _nt.ShapeLike | None = ...) -> _nt.Array[_ScalarT]: ...
+def transpose(a: _nt._ToArray_nd[_ScalarT], axes: _nt.ToShape | None = ...) -> _nt.Array[_ScalarT]: ...
 @overload
-def transpose(a: ArrayLike, axes: _nt.ShapeLike | None = ...) -> _nt.Array[Incomplete]: ...
+def transpose(a: ArrayLike, axes: _nt.ToShape | None = ...) -> _nt.Array[Incomplete]: ...
 
 #
 @overload
@@ -390,13 +390,13 @@ def resize(a: ArrayLike, new_shape: Sequence[CanIndex]) -> _nt.Array[Incomplete]
 
 #
 @overload  # workaround for microsoft/pyright#10232
-def squeeze(a: _ScalarT, axis: _nt.ShapeLike | None = None) -> _nt.Array0D[_ScalarT]: ...
+def squeeze(a: _ScalarT, axis: _nt.ToShape | None = None) -> _nt.Array0D[_ScalarT]: ...
 @overload  # workaround for microsoft/pyright#10232
-def squeeze(a: _nt._ToArray_nnd[_ScalarT], axis: _nt.ShapeLike | None = None) -> _nt.Array[_ScalarT]: ...
+def squeeze(a: _nt._ToArray_nnd[_ScalarT], axis: _nt.ToShape | None = None) -> _nt.Array[_ScalarT]: ...
 @overload
-def squeeze(a: _nt._ToArray_nd[_ScalarT], axis: _nt.ShapeLike | None = None) -> _nt.Array[_ScalarT]: ...
+def squeeze(a: _nt._ToArray_nd[_ScalarT], axis: _nt.ToShape | None = None) -> _nt.Array[_ScalarT]: ...
 @overload
-def squeeze(a: ArrayLike, axis: _nt.ShapeLike | None = None) -> _nt.Array[Incomplete]: ...
+def squeeze(a: ArrayLike, axis: _nt.ToShape | None = None) -> _nt.Array[Incomplete]: ...
 
 #
 @overload
@@ -601,7 +601,7 @@ def sum(
 @overload
 def sum(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     dtype: _DTypeLike[_ScalarT],
     out: None = None,
     keepdims: _Option[bool] = ...,
@@ -611,7 +611,7 @@ def sum(
 @overload
 def sum(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     dtype: _DTypeLike[_ScalarT],
     out: None = None,
@@ -622,7 +622,7 @@ def sum(
 @overload
 def sum(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None = ...,
+    axis: _nt.ToShape | None = ...,
     dtype: DTypeLike | None = None,
     out: None = None,
     keepdims: _Option[bool] = ...,
@@ -632,7 +632,7 @@ def sum(
 @overload
 def sum(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -886,10 +886,10 @@ def ptp(
 ) -> _ScalarT: ...
 @overload
 def ptp(
-    a: ArrayLike, axis: _nt.ShapeLike | None = None, out: None = None, keepdims: _Option[bool] = ...
+    a: ArrayLike, axis: _nt.ToShape | None = None, out: None = None, keepdims: _Option[bool] = ...
 ) -> Incomplete: ...
 @overload
-def ptp(a: ArrayLike, axis: _nt.ShapeLike | None = None, *, out: _ArrayT, keepdims: _Option[bool] = ...) -> _ArrayT: ...
+def ptp(a: ArrayLike, axis: _nt.ToShape | None = None, *, out: _ArrayT, keepdims: _Option[bool] = ...) -> _ArrayT: ...
 
 #
 @overload
@@ -904,7 +904,7 @@ def amax(
 @overload
 def amax(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     keepdims: _Option[bool] = ...,
     initial: _Option[_nt.CoComplex_0d] = ...,
@@ -913,7 +913,7 @@ def amax(
 @overload
 def amax(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     out: _ArrayT,
     keepdims: _Option[bool] = ...,
     initial: _Option[_nt.CoComplex_0d] = ...,
@@ -922,7 +922,7 @@ def amax(
 @overload
 def amax(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     out: _ArrayT,
     keepdims: _Option[bool] = ...,
@@ -943,7 +943,7 @@ def amin(
 @overload
 def amin(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     keepdims: _Option[bool] = ...,
     initial: _Option[_nt.CoComplex_0d] = ...,
@@ -952,7 +952,7 @@ def amin(
 @overload
 def amin(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     out: _ArrayT,
     keepdims: _Option[bool] = ...,
     initial: _Option[_nt.CoComplex_0d] = ...,
@@ -961,7 +961,7 @@ def amin(
 @overload
 def amin(
     a: ArrayLike,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     out: _ArrayT,
     keepdims: _Option[bool] = ...,
@@ -1025,7 +1025,7 @@ def prod(
 @overload
 def prod(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = ...,
+    axis: _nt.ToShape | None = ...,
     dtype: None = None,
     out: None = None,
     keepdims: _Option[bool] = ...,
@@ -1056,7 +1056,7 @@ def prod(
 @overload
 def prod(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = ...,
+    axis: _nt.ToShape | None = ...,
     dtype: DTypeLike | None = ...,
     out: None = None,
     keepdims: _Option[bool] = ...,
@@ -1066,7 +1066,7 @@ def prod(
 @overload
 def prod(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     dtype: DTypeLike | None,
     out: _ArrayT,
     keepdims: _Option[bool] = ...,
@@ -1076,7 +1076,7 @@ def prod(
 @overload
 def prod(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = ...,
+    axis: _nt.ToShape | None = ...,
     dtype: DTypeLike | None = ...,
     *,
     out: _ArrayT,
@@ -1290,7 +1290,7 @@ def mean(
 @overload
 def mean(
     a: _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = ...,
+    axis: _nt.ToShape | None = ...,
     dtype: None = None,
     out: None = None,
     keepdims: _Option[bool] = ...,
@@ -1340,7 +1340,7 @@ def mean(
 @overload
 def mean(
     a: _nt.CoComplex_nd | _nt.ToTimeDelta_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     dtype: DTypeLike | None,
     out: _ArrayT,
     keepdims: _Option[bool] = ...,
@@ -1350,7 +1350,7 @@ def mean(
 @overload
 def mean(
     a: _nt.CoComplex_nd | _nt.ToTimeDelta_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -1360,7 +1360,7 @@ def mean(
 @overload
 def mean(
     a: _nt.CoComplex_nd | _nt.ToTimeDelta_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     out: _nt.Array | None = None,
     keepdims: _Option[bool] = ...,
@@ -1385,7 +1385,7 @@ def std(
 @overload
 def std(
     a: _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = ...,
+    axis: _nt.ToShape | None = ...,
     dtype: None = None,
     out: None = None,
     ddof: float = 0,
@@ -1424,7 +1424,7 @@ def std(
 @overload
 def std(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     dtype: DTypeLike | None,
     out: _ArrayT,
     ddof: float = 0,
@@ -1437,7 +1437,7 @@ def std(
 @overload
 def std(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -1450,7 +1450,7 @@ def std(
 @overload
 def std(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     out: _nt.Array | None = None,
     ddof: float = 0,
@@ -1478,7 +1478,7 @@ def var(
 @overload
 def var(
     a: _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = ...,
+    axis: _nt.ToShape | None = ...,
     dtype: None = None,
     out: None = None,
     ddof: float = 0,
@@ -1517,7 +1517,7 @@ def var(
 @overload
 def var(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     dtype: DTypeLike | None,
     out: _ArrayT,
     ddof: float = 0,
@@ -1530,7 +1530,7 @@ def var(
 @overload
 def var(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -1543,7 +1543,7 @@ def var(
 @overload
 def var(
     a: _nt.CoComplex_nd | _nt.ToObject_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     out: _nt.Array | None = None,
     ddof: float = 0,

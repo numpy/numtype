@@ -16,7 +16,7 @@ __all__ = [
     "Shape3N",
     "Shape4",
     "Shape4N",
-    "ShapeLike",
+    "ToShape",
     "ShapeN",
 ]
 
@@ -38,4 +38,4 @@ Shape2N = TypeAliasType("Shape2N", tuple[int, int, *tuple[int, ...]])
 Shape3N = TypeAliasType("Shape3N", tuple[int, int, int, *tuple[int, ...]])
 Shape4N = TypeAliasType("Shape4N", tuple[int, int, int, int, *tuple[int, ...]])
 
-ShapeLike: TypeAlias = SupportsIndex | Sequence[SupportsIndex]
+ToShape: TypeAlias = SupportsIndex | Sequence[SupportsIndex]

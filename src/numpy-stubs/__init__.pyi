@@ -1321,7 +1321,7 @@ class _ArrayOrScalarCommon:
     def copy(self, order: _OrderKACF = ...) -> Self: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: dict[int, Any] | None, /) -> Self: ...
-    def __setstate__(self, state: tuple[CanIndex, _nt.ShapeLike, _DTypeT_co, bool_, bytes | list[Any]], /) -> None: ...
+    def __setstate__(self, state: tuple[CanIndex, _nt.ToShape, _DTypeT_co, bool_, bytes | list[Any]], /) -> None: ...
     def __array_namespace__(self, /, *, api_version: _ArrayAPIVersion | None = None) -> ModuleType: ...
 
     #
@@ -1350,7 +1350,7 @@ class _ArrayOrScalarCommon:
     def max(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         out: None = None,
         *,
         keepdims: py_bool | _NoValueType = ...,
@@ -1361,7 +1361,7 @@ class _ArrayOrScalarCommon:
     def max(
         self,
         /,
-        axis: _nt.ShapeLike | None,
+        axis: _nt.ToShape | None,
         out: _ArrayT,
         *,
         keepdims: py_bool | _NoValueType = ...,
@@ -1372,7 +1372,7 @@ class _ArrayOrScalarCommon:
     def max(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         *,
         out: _ArrayT,
         keepdims: py_bool | _NoValueType = ...,
@@ -1395,7 +1395,7 @@ class _ArrayOrScalarCommon:
     def min(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         out: None = None,
         *,
         keepdims: py_bool | _NoValueType = ...,
@@ -1406,7 +1406,7 @@ class _ArrayOrScalarCommon:
     def min(
         self,
         /,
-        axis: _nt.ShapeLike | None,
+        axis: _nt.ToShape | None,
         out: _ArrayT,
         *,
         keepdims: py_bool | _NoValueType = ...,
@@ -1417,7 +1417,7 @@ class _ArrayOrScalarCommon:
     def min(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         *,
         out: _ArrayT,
         keepdims: py_bool | _NoValueType = ...,
@@ -1491,7 +1491,7 @@ class _ArrayOrScalarCommon:
     def sum(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         *,
@@ -1503,7 +1503,7 @@ class _ArrayOrScalarCommon:
     def sum(
         self,
         /,
-        axis: _nt.ShapeLike | None,
+        axis: _nt.ToShape | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
         *,
@@ -1515,7 +1515,7 @@ class _ArrayOrScalarCommon:
     def sum(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1539,7 +1539,7 @@ class _ArrayOrScalarCommon:
     def prod(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         *,
@@ -1551,7 +1551,7 @@ class _ArrayOrScalarCommon:
     def prod(
         self,
         /,
-        axis: _nt.ShapeLike | None,
+        axis: _nt.ToShape | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
         *,
@@ -1563,7 +1563,7 @@ class _ArrayOrScalarCommon:
     def prod(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1576,7 +1576,7 @@ class _ArrayOrScalarCommon:
     @overload
     def mean(
         self,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         *,
@@ -1587,7 +1587,7 @@ class _ArrayOrScalarCommon:
     def mean(
         self,
         /,
-        axis: _nt.ShapeLike | None,
+        axis: _nt.ToShape | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
         *,
@@ -1598,7 +1598,7 @@ class _ArrayOrScalarCommon:
     def mean(
         self,
         /,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1610,7 +1610,7 @@ class _ArrayOrScalarCommon:
     @overload
     def std(
         self,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         ddof: float = 0,
@@ -1623,7 +1623,7 @@ class _ArrayOrScalarCommon:
     @overload
     def std(
         self,
-        axis: _nt.ShapeLike | None,
+        axis: _nt.ToShape | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
         ddof: float = 0,
@@ -1636,7 +1636,7 @@ class _ArrayOrScalarCommon:
     @overload
     def std(
         self,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1651,7 +1651,7 @@ class _ArrayOrScalarCommon:
     @overload
     def var(
         self,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         ddof: float = 0,
@@ -1664,7 +1664,7 @@ class _ArrayOrScalarCommon:
     @overload
     def var(
         self,
-        axis: _nt.ShapeLike | None,
+        axis: _nt.ToShape | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
         ddof: float = 0,
@@ -1677,7 +1677,7 @@ class _ArrayOrScalarCommon:
     @overload
     def var(
         self,
-        axis: _nt.ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1750,11 +1750,11 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
     #
     def __new__(
         cls,
-        shape: _nt.ShapeLike,
+        shape: _nt.ToShape,
         dtype: DTypeLike | None = float,  # noqa: PYI011
         buffer: Buffer | None = None,
         offset: CanIndex = 0,
-        strides: _nt.ShapeLike | None = None,
+        strides: _nt.ToShape | None = None,
         order: _OrderKACF | None = None,
     ) -> Self: ...
 
@@ -2774,7 +2774,7 @@ class ndarray(_ArrayOrScalarCommon, Generic[_ShapeT_co, _DTypeT_co]):
 
     #
     @overload
-    def transpose(self, axes: _nt.ShapeLike | None, /) -> Self: ...
+    def transpose(self, axes: _nt.ToShape | None, /) -> Self: ...
     @overload
     def transpose(self, /, *axes: CanIndex) -> Self: ...
 

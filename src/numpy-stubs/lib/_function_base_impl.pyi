@@ -518,7 +518,7 @@ def copy(a: ArrayLike, order: _Order = "K", subok: L[False] = False) -> _nt.Arra
 def gradient(
     f: _ArrayNoD[_InexactTimeT],
     *varargs: _nt.CoComplex_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     edge_order: L[1, 2] = 1,
     # `| Any` instead of ` | tuple` is returned to avoid several mypy_primer errors
 ) -> _nt.Array1D[_InexactTimeT] | Any: ...
@@ -526,75 +526,75 @@ def gradient(
 def gradient(
     f: _nt.Array1D[_InexactTimeT],
     *varargs: _nt.CoComplex_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     edge_order: L[1, 2] = 1,
 ) -> _nt.Array1D[_InexactTimeT]: ...
 @overload  # 2d, known inexact scalar-type
 def gradient(
     f: _nt.Array2D[_InexactTimeT],
     *varargs: _nt.CoComplex_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     edge_order: L[1, 2] = 1,
 ) -> _Mesh2[_InexactTimeT, _InexactTimeT]: ...
 @overload  # 3d, known inexact scalar-type
 def gradient(
     f: _nt.Array3D[_InexactTimeT],
     *varargs: _nt.CoComplex_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     edge_order: L[1, 2] = 1,
 ) -> _Mesh3[_InexactTimeT, _InexactTimeT, _InexactTimeT]: ...
 @overload  # ?d, datetime64 scalar-type
 def gradient(
-    f: _ArrayNoD[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _ArrayNoD[np.datetime64], *varargs: _nt.CoComplex_nd, axis: _nt.ToShape | None = None, edge_order: L[1, 2] = 1
 ) -> _nt.Array1D[np.timedelta64] | tuple[_nt.Array[np.timedelta64], ...]: ...
 @overload  # 1d, datetime64 scalar-type
 def gradient(
     f: _nt.Array1D[np.datetime64],
     *varargs: _nt.CoComplex_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     edge_order: L[1, 2] = 1,
 ) -> _nt.Array1D[np.timedelta64]: ...
 @overload  # 2d, datetime64 scalar-type
 def gradient(
     f: _nt.Array2D[np.datetime64],
     *varargs: _nt.CoComplex_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     edge_order: L[1, 2] = 1,
 ) -> _Mesh2[np.timedelta64, np.timedelta64]: ...
 @overload  # 3d, datetime64 scalar-type
 def gradient(
     f: _nt.Array3D[np.datetime64],
     *varargs: _nt.CoComplex_nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     edge_order: L[1, 2] = 1,
 ) -> _Mesh3[np.timedelta64, np.timedelta64, np.timedelta64]: ...
 @overload  # 1d float-like
 def gradient(
-    f: Sequence[float], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: Sequence[float], *varargs: _nt.CoComplex_nd, axis: _nt.ToShape | None = None, edge_order: L[1, 2] = 1
 ) -> _nt.Array1D[np.float64]: ...
 @overload  # 2d float-like
 def gradient(
-    f: _nt.Sequence2D[float], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Sequence2D[float], *varargs: _nt.CoComplex_nd, axis: _nt.ToShape | None = None, edge_order: L[1, 2] = 1
 ) -> _Mesh2[np.float64, np.float64]: ...
 @overload  # 3d float-like
 def gradient(
-    f: _nt.Sequence3D[float], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.Sequence3D[float], *varargs: _nt.CoComplex_nd, axis: _nt.ToShape | None = None, edge_order: L[1, 2] = 1
 ) -> _Mesh3[np.float64, np.float64, np.float64]: ...
 @overload  # 1d complex-like  (the `list` avoids overlap with the float-like overload)
 def gradient(
-    f: list[complex], *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: list[complex], *varargs: _nt.CoComplex_nd, axis: _nt.ToShape | None = None, edge_order: L[1, 2] = 1
 ) -> _nt.Array1D[np.complex128]: ...
 @overload  # 2d float-like
 def gradient(
-    f: _nt.ToComplex128_2ds, *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.ToComplex128_2ds, *varargs: _nt.CoComplex_nd, axis: _nt.ToShape | None = None, edge_order: L[1, 2] = 1
 ) -> _Mesh2[np.complex128, np.complex128]: ...
 @overload  # 3d float-like
 def gradient(
-    f: _nt.ToComplex128_3ds, *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: _nt.ToComplex128_3ds, *varargs: _nt.CoComplex_nd, axis: _nt.ToShape | None = None, edge_order: L[1, 2] = 1
 ) -> _Mesh3[np.complex128, np.complex128, np.complex128]: ...
 @overload  # fallback
 def gradient(
-    f: ArrayLike, *varargs: _nt.CoComplex_nd, axis: _nt.ShapeLike | None = None, edge_order: L[1, 2] = 1
+    f: ArrayLike, *varargs: _nt.CoComplex_nd, axis: _nt.ToShape | None = None, edge_order: L[1, 2] = 1
 ) -> Incomplete: ...
 
 #
@@ -894,7 +894,7 @@ def sort_complex(a: _ArrayLike[np.longdouble]) -> _nt.Array[np.clongdouble]: ...
 
 #
 def trim_zeros(
-    filt: _TrimZerosSequence[_T], trim: L["f", "b", "fb", "bf"] = "fb", axis: _nt.ShapeLike | None = None
+    filt: _TrimZerosSequence[_T], trim: L["f", "b", "fb", "bf"] = "fb", axis: _nt.ToShape | None = None
 ) -> _T: ...
 
 # NOTE: condition is usually boolean, but anything with zero/non-zero semantics works
@@ -1303,7 +1303,7 @@ def median(
 @overload  # known array-type, keepdims=True
 def median(
     a: _ArrayNumericT,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     *,
@@ -1312,7 +1312,7 @@ def median(
 @overload  # known scalar-type, keepdims=True
 def median(
     a: _ArrayLike[_ScalarNumericT],
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     *,
@@ -1321,7 +1321,7 @@ def median(
 @overload  # known scalar-type, axis=<given>
 def median(
     a: _ArrayLike[_ScalarNumericT],
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     keepdims: bool = False,
@@ -1329,7 +1329,7 @@ def median(
 @overload  # float array-like, keepdims=True
 def median(
     a: _nt.SequenceND[float],
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     *,
@@ -1338,7 +1338,7 @@ def median(
 @overload  # float array-like, axis=<given>
 def median(
     a: _nt.SequenceND[float],
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     keepdims: bool = False,
@@ -1346,7 +1346,7 @@ def median(
 @overload  # complex array-like, keepdims=True
 def median(
     a: _nt.SequenceND[list[complex]],
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     *,
@@ -1355,7 +1355,7 @@ def median(
 @overload  # complex array-like, axis=<given>
 def median(
     a: _nt.SequenceND[list[complex]],
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     keepdims: bool = False,
@@ -1363,7 +1363,7 @@ def median(
 @overload  # out=<given> (keyword)
 def median(
     a: _nt.CoComplex_nd | _ArrayLike[np.timedelta64 | np.object_],
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     out: _ArrayT,
     overwrite_input: bool = False,
@@ -1372,7 +1372,7 @@ def median(
 @overload  # out=<given> (positional)
 def median(
     a: _nt.CoComplex_nd | _ArrayLike[np.timedelta64 | np.object_],
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     out: _ArrayT,
     overwrite_input: bool = False,
     keepdims: bool = False,
@@ -1380,7 +1380,7 @@ def median(
 @overload  # fallback
 def median(
     a: _nt.CoComplex_nd | _ArrayLike[np.timedelta64 | np.object_],
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     keepdims: bool = False,
@@ -1403,7 +1403,7 @@ def percentile(
 def percentile(
     a: _ArrayLike[_InexactDateTimeT],
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1415,7 +1415,7 @@ def percentile(
 def percentile(
     a: _ArrayLike[_InexactDateTimeT],
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1439,7 +1439,7 @@ def percentile(
 def percentile(
     a: _ArrayLike[_InexactDateTimeT],
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1463,7 +1463,7 @@ def percentile(
 def percentile(
     a: _nt.CastsArray[np.float64],
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1475,7 +1475,7 @@ def percentile(
 def percentile(
     a: _nt.CastsArray[np.float64],
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1499,7 +1499,7 @@ def percentile(
 def percentile(
     a: _nt.CastsArray[np.float64],
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1523,7 +1523,7 @@ def percentile(
 def percentile(
     a: _nt.ToComplex128_1nd,
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1535,7 +1535,7 @@ def percentile(
 def percentile(
     a: _nt.ToComplex128_1nd,
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1559,7 +1559,7 @@ def percentile(
 def percentile(
     a: _nt.ToComplex128_1nd,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1583,7 +1583,7 @@ def percentile(
 def percentile(
     a: _nt.ToObject_1nd,
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1595,7 +1595,7 @@ def percentile(
 def percentile(
     a: _nt.ToObject_1nd,
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1619,7 +1619,7 @@ def percentile(
 def percentile(
     a: _nt.ToObject_1nd,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1631,7 +1631,7 @@ def percentile(
 def percentile(
     a: ArrayLike,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     out: _ArrayT,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1643,7 +1643,7 @@ def percentile(
 def percentile(
     a: ArrayLike,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     out: _ArrayT,
     overwrite_input: bool = False,
@@ -1655,7 +1655,7 @@ def percentile(
 def percentile(
     a: _nt.CoComplex_1nd | _nt.ToObject_1nd,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1681,7 +1681,7 @@ def quantile(
 def quantile(
     a: _ArrayLike[_InexactDateTimeT],
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1693,7 +1693,7 @@ def quantile(
 def quantile(
     a: _ArrayLike[_InexactDateTimeT],
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1717,7 +1717,7 @@ def quantile(
 def quantile(
     a: _ArrayLike[_InexactDateTimeT],
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1741,7 +1741,7 @@ def quantile(
 def quantile(
     a: _nt.CastsArray[np.float64],
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1753,7 +1753,7 @@ def quantile(
 def quantile(
     a: _nt.CastsArray[np.float64],
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1777,7 +1777,7 @@ def quantile(
 def quantile(
     a: _nt.CastsArray[np.float64],
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1801,7 +1801,7 @@ def quantile(
 def quantile(
     a: _nt.ToComplex128_1nd,
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1813,7 +1813,7 @@ def quantile(
 def quantile(
     a: _nt.ToComplex128_1nd,
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1837,7 +1837,7 @@ def quantile(
 def quantile(
     a: _nt.ToComplex128_1nd,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1861,7 +1861,7 @@ def quantile(
 def quantile(
     a: _nt.ToObject_1nd,
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike,
+    axis: _nt.ToShape,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1873,7 +1873,7 @@ def quantile(
 def quantile(
     a: _nt.ToObject_1nd,
     q: _nt.CoFloating_0d,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1897,7 +1897,7 @@ def quantile(
 def quantile(
     a: _nt.ToObject_1nd,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1909,7 +1909,7 @@ def quantile(
 def quantile(
     a: ArrayLike,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None,
+    axis: _nt.ToShape | None,
     out: _ArrayT,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",
@@ -1921,7 +1921,7 @@ def quantile(
 def quantile(
     a: ArrayLike,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     out: _ArrayT,
     overwrite_input: bool = False,
@@ -1933,7 +1933,7 @@ def quantile(
 def quantile(
     a: _nt.CoComplex_1nd | _nt.ToObject_1nd,
     q: _nt.CoFloating_1nd,
-    axis: _nt.ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     overwrite_input: bool = False,
     method: _PercentileMethod = "linear",

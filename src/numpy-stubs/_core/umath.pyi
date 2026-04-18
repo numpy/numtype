@@ -1608,7 +1608,7 @@ class _Reduce2(Protocol):
         self,
         a: _nt.ToGeneric_nd,
         /,
-        axis: _nt.ShapeLike | None = 0,
+        axis: _nt.ToShape | None = 0,
         dtype: _nt.ToDType | None = None,
         out: _nt.Array | EllipsisType | None = None,
         keepdims: bool = False,

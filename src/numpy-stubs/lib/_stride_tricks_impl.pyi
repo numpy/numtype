@@ -39,7 +39,7 @@ def as_strided(
 @overload
 def sliding_window_view(
     x: _ArrayLike[_ScalarT],
-    window_shape: _nt.ShapeLike,
+    window_shape: _nt.ToShape,
     axis: SupportsIndex | None = None,
     *,
     subok: bool = False,
@@ -48,7 +48,7 @@ def sliding_window_view(
 @overload
 def sliding_window_view(
     x: ArrayLike,
-    window_shape: _nt.ShapeLike,
+    window_shape: _nt.ToShape,
     axis: SupportsIndex | None = None,
     *,
     subok: bool = False,
@@ -57,10 +57,10 @@ def sliding_window_view(
 
 #
 @overload
-def broadcast_to(array: _ArrayLike[_ScalarT], shape: _nt.ShapeLike, subok: bool = False) -> _nt.Array[_ScalarT]: ...
+def broadcast_to(array: _ArrayLike[_ScalarT], shape: _nt.ToShape, subok: bool = False) -> _nt.Array[_ScalarT]: ...
 @overload
-def broadcast_to(array: ArrayLike, shape: _nt.ShapeLike, subok: bool = False) -> _nt.Array[Incomplete]: ...
+def broadcast_to(array: ArrayLike, shape: _nt.ToShape, subok: bool = False) -> _nt.Array[Incomplete]: ...
 
 #
-def broadcast_shapes(*args: _nt.ShapeLike) -> _nt.Shape: ...
+def broadcast_shapes(*args: _nt.ToShape) -> _nt.Shape: ...
 def broadcast_arrays(*args: ArrayLike, subok: bool = False) -> tuple[_nt.Array[Incomplete], ...]: ...
