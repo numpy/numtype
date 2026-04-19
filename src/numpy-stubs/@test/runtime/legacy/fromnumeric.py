@@ -10,7 +10,7 @@ B.setflags(write=False)
 a = np.bool(True)
 b = np.float32(1.0)
 c = 1.0
-d = np.array(1.0, dtype=np.float32)  # writeable
+d = np.array(1.0, dtype=np.float32)  # writable
 
 np.take(a, 0)
 np.take(b, 0)
