@@ -33,7 +33,6 @@ from numpy._typing import (
     _ArrayLikeNumber_co,
     _DTypeLike,
     _ScalarLike_co,
-    _ShapeLike,
     _SupportsArrayFunc as _CanArrayFunc,
     _SupportsDType as _HasDType,
 )
@@ -360,7 +359,7 @@ class nditer:
         order: _OrderKACF = "K",
         casting: _CastingKind = "safe",
         op_axes: _OpAxes = None,
-        itershape: _ShapeLike | None = None,
+        itershape: _nt.ToShape | None = None,
         buffersize: CanIndex = 0,
     ) -> None: ...
     @overload
@@ -374,7 +373,7 @@ class nditer:
         order: _OrderKACF = "K",
         casting: _CastingKind = "safe",
         op_axes: Sequence[_OpAxes] | None = None,
-        itershape: _ShapeLike | None = None,
+        itershape: _nt.ToShape | None = None,
         buffersize: CanIndex = 0,
     ) -> None: ...
 
@@ -561,7 +560,7 @@ def empty(
 ) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # unknown shape, default dtype
 def empty(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderCF = "C",
     *,
@@ -570,7 +569,7 @@ def empty(
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, known dtype
 def empty(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     *,
@@ -579,7 +578,7 @@ def empty(
 ) -> np.ndarray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def empty(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
     *,
@@ -588,7 +587,7 @@ def empty(
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, unknown dtype
 def empty(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
@@ -671,7 +670,7 @@ def zeros(
 ) -> _nt.Array[Incomplete, _AnyShapeT]: ...
 @overload  # unknown shape, default dtype
 def zeros(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _nt.ToDTypeFloat64 = ...,
     order: _OrderCF = "C",
     *,
@@ -680,7 +679,7 @@ def zeros(
 ) -> _nt.Array[np.float64]: ...
 @overload  # unknown shape, known dtype
 def zeros(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
     *,
@@ -689,7 +688,7 @@ def zeros(
 ) -> np.ndarray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def zeros(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _DTypeLike[_ScalarT],
     order: _OrderCF = "C",
     *,
@@ -698,7 +697,7 @@ def zeros(
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # unknown shape, unknown dtype
 def zeros(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: npt.DTypeLike | None = None,
     order: _OrderCF = "C",
     *,
@@ -967,7 +966,7 @@ def empty_like(
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -989,7 +988,7 @@ def empty_like(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> np.ndarray[Incomplete, _DTypeT]: ...
@@ -1011,7 +1010,7 @@ def empty_like(
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
@@ -1022,7 +1021,7 @@ def empty_like(
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.bool_]: ...
@@ -1033,7 +1032,7 @@ def empty_like(
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.intp]: ...
@@ -1044,7 +1043,7 @@ def empty_like(
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.float64]: ...
@@ -1055,7 +1054,7 @@ def empty_like(
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[np.complex128]: ...
@@ -1077,7 +1076,7 @@ def empty_like(
     dtype: npt.DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.Array[Incomplete]: ...
@@ -1630,24 +1629,24 @@ def putmask(a: _nt.Array, /, mask: _nt.ToBool_nd, values: npt.ArrayLike) -> None
 
 #
 @overload
-def unravel_index(indices: _ToInt, shape: _ShapeLike, order: _OrderCF = "C") -> tuple[np.intp, ...]: ...
+def unravel_index(indices: _ToInt, shape: _nt.ToShape, order: _OrderCF = "C") -> tuple[np.intp, ...]: ...
 @overload
 def unravel_index(
-    indices: _nt.ToInteger_1nd, shape: _ShapeLike, order: _OrderCF = "C"
+    indices: _nt.ToInteger_1nd, shape: _nt.ToShape, order: _OrderCF = "C"
 ) -> tuple[_nt.Array[np.intp], ...]: ...
 
 #
 @overload
 def ravel_multi_index(
     multi_index: SupportsLenAndGetItem[_ToInt],
-    dims: _ShapeLike,
+    dims: _nt.ToShape,
     mode: _ModeKind | tuple[_ModeKind, ...] = "raise",
     order: _OrderCF = "C",
 ) -> np.intp: ...
 @overload
 def ravel_multi_index(
     multi_index: SupportsLenAndGetItem[_nt.ToInteger_1nd],
-    dims: _ShapeLike,
+    dims: _nt.ToShape,
     mode: _ModeKind | tuple[_ModeKind, ...] = "raise",
     order: _OrderCF = "C",
 ) -> _nt.Array[np.intp]: ...

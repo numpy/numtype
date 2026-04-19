@@ -46,7 +46,6 @@ from numpy._typing import (
     _ArrayLike,
     _DTypeLike,
     _ScalarLike_co,
-    _ShapeLike,
     _SupportsArrayFunc as _CanArrayFunc,
     _SupportsDType as _HasDType,
     _VoidDTypeLike,
@@ -690,16 +689,16 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     # keep roughly in sync with `ma.core.compress`, but swap the first two arguments
     @override  # type: ignore[override]
     @overload
-    def compress(self, condition: _nt.ToBool_nd, axis: _ShapeLike | None, out: _ArrayT) -> _ArrayT: ...
+    def compress(self, condition: _nt.ToBool_nd, axis: _nt.ToShape | None, out: _ArrayT) -> _ArrayT: ...
     @overload
-    def compress(self, condition: _nt.ToBool_nd, axis: _ShapeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
+    def compress(self, condition: _nt.ToBool_nd, axis: _nt.ToShape | None = None, *, out: _ArrayT) -> _ArrayT: ...
     @overload
     def compress(
         self, condition: _nt.ToBool_nd, axis: None = None, out: None = None
     ) -> MaskedArray[_nt.Rank1, _DTypeT_co]: ...
     @overload
     def compress(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, condition: _nt.ToBool_nd, axis: _ShapeLike | None = None, out: None = None
+        self, condition: _nt.ToBool_nd, axis: _nt.ToShape | None = None, out: None = None
     ) -> MaskedArray[_nt.AnyShape, _DTypeT_co]: ...
 
     # TODO: How to deal with the non-commutative nature of `==` and `!=`?
@@ -1219,11 +1218,11 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def count(self, axis: None = None, keepdims: L[False] | _NoValueType = ...) -> int: ...
     @overload
-    def count(self, axis: _ShapeLike, keepdims: bool | _NoValueType = ...) -> _nt.MArray[np.int_]: ...
+    def count(self, axis: _nt.ToShape, keepdims: bool | _NoValueType = ...) -> _nt.MArray[np.int_]: ...
     @overload
-    def count(self, axis: _ShapeLike | None = None, *, keepdims: L[True]) -> _nt.MArray[np.int_]: ...
+    def count(self, axis: _nt.ToShape | None = None, *, keepdims: L[True]) -> _nt.MArray[np.int_]: ...
     @overload
-    def count(self, axis: _ShapeLike | None, keepdims: L[True]) -> _nt.MArray[np.int_]: ...
+    def count(self, axis: _nt.ToShape | None, keepdims: L[True]) -> _nt.MArray[np.int_]: ...
 
     # Keep in sync with `ndarray.reshape`
     @override
@@ -1302,34 +1301,34 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def all(self, axis: None = None, out: None = None, keepdims: L[False] | _NoValueType = ...) -> bool_: ...
     @overload
-    def all(self, axis: _ShapeLike | None = None, out: None = None, *, keepdims: L[True]) -> _nt.MArray[bool_]: ...
+    def all(self, axis: _nt.ToShape | None = None, out: None = None, *, keepdims: L[True]) -> _nt.MArray[bool_]: ...
     @overload
-    def all(self, axis: _ShapeLike | None, out: None, keepdims: L[True]) -> _nt.MArray[bool_]: ...
+    def all(self, axis: _nt.ToShape | None, out: None, keepdims: L[True]) -> _nt.MArray[bool_]: ...
     @overload
     def all(
-        self, axis: _ShapeLike | None = None, out: None = None, keepdims: bool | _NoValueType = ...
+        self, axis: _nt.ToShape | None = None, out: None = None, keepdims: bool | _NoValueType = ...
     ) -> bool_ | _nt.MArray[bool_]: ...
     @overload
-    def all(self, axis: _ShapeLike | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
+    def all(self, axis: _nt.ToShape | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
     @overload
-    def all(self, axis: _ShapeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def all(self, axis: _nt.ToShape | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # Keep in sync with `ma.core.any`
     @override  # type: ignore[override]
     @overload
     def any(self, axis: None = None, out: None = None, keepdims: L[False] | _NoValueType = ...) -> bool_: ...
     @overload
-    def any(self, axis: _ShapeLike | None = None, out: None = None, *, keepdims: L[True]) -> _nt.MArray[bool_]: ...
+    def any(self, axis: _nt.ToShape | None = None, out: None = None, *, keepdims: L[True]) -> _nt.MArray[bool_]: ...
     @overload
-    def any(self, axis: _ShapeLike | None, out: None, keepdims: L[True]) -> _nt.MArray[bool_]: ...
+    def any(self, axis: _nt.ToShape | None, out: None, keepdims: L[True]) -> _nt.MArray[bool_]: ...
     @overload
     def any(
-        self, axis: _ShapeLike | None = None, out: None = None, keepdims: bool | _NoValueType = ...
+        self, axis: _nt.ToShape | None = None, out: None = None, keepdims: bool | _NoValueType = ...
     ) -> bool_ | _nt.MArray[bool_]: ...
     @overload
-    def any(self, axis: _ShapeLike | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
+    def any(self, axis: _nt.ToShape | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
     @overload
-    def any(self, axis: _ShapeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def any(self, axis: _nt.ToShape | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...  # pyright: ignore[reportIncompatibleMethodOverride]
 
     # Keep in sync with `ndarray.trace` and `ma.core.trace`
     @override  # type: ignore[override]
@@ -1370,20 +1369,20 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def sum(
         self,
         /,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         keepdims: bool | _NoValueType = ...,
     ) -> Incomplete: ...
     @overload
     def sum(
-        self, /, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+        self, /, axis: _nt.ToShape | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
     ) -> _ArrayT: ...
     @overload
     def sum(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1407,20 +1406,20 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     def prod(
         self,
         /,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         keepdims: bool | _NoValueType = ...,
     ) -> Incomplete: ...
     @overload
     def prod(
-        self, /, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+        self, /, axis: _nt.ToShape | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
     ) -> _ArrayT: ...
     @overload
     def prod(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1445,20 +1444,20 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def mean(
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         keepdims: bool | _NoValueType = ...,
     ) -> Incomplete: ...
     @overload
     def mean(
-        self, /, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+        self, /, axis: _nt.ToShape | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
     ) -> _ArrayT: ...
     @overload
     def mean(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         /,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1478,7 +1477,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def var(
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         ddof: float = 0,
@@ -1488,7 +1487,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def var(
         self,
-        axis: _ShapeLike | None,
+        axis: _nt.ToShape | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
         ddof: float = 0,
@@ -1498,7 +1497,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def var(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1512,7 +1511,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def std(
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         out: None = None,
         ddof: float = 0,
@@ -1522,7 +1521,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def std(
         self,
-        axis: _ShapeLike | None,
+        axis: _nt.ToShape | None,
         dtype: DTypeLike | None,
         out: _ArrayT,
         ddof: float = 0,
@@ -1532,7 +1531,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def std(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         dtype: DTypeLike | None = None,
         *,
         out: _ArrayT,
@@ -1667,7 +1666,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def min(
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         out: None = None,
         fill_value: _ScalarLike_co | None = None,
         keepdims: bool | _NoValueType = ...,
@@ -1675,7 +1674,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def min(
         self,
-        axis: _ShapeLike | None,
+        axis: _nt.ToShape | None,
         out: _ArrayT,
         fill_value: _ScalarLike_co | None = None,
         keepdims: bool | _NoValueType = ...,
@@ -1683,7 +1682,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def min(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         *,
         out: _ArrayT,
         fill_value: _ScalarLike_co | None = None,
@@ -1703,7 +1702,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def max(
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         out: None = None,
         fill_value: _ScalarLike_co | None = None,
         keepdims: bool | _NoValueType = ...,
@@ -1711,7 +1710,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def max(
         self,
-        axis: _ShapeLike | None,
+        axis: _nt.ToShape | None,
         out: _ArrayT,
         fill_value: _ScalarLike_co | None = None,
         keepdims: bool | _NoValueType = ...,
@@ -1719,7 +1718,7 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def max(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         *,
         out: _ArrayT,
         fill_value: _ScalarLike_co | None = None,
@@ -1739,19 +1738,19 @@ class MaskedArray(np.ndarray[_ShapeT_co, _DTypeT_co]):
     @overload
     def ptp(
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         out: None = None,
         fill_value: _ScalarLike_co | None = None,
         keepdims: bool = False,
     ) -> Any: ...
     @overload
     def ptp(
-        self, axis: _ShapeLike | None, out: _ArrayT, fill_value: _ScalarLike_co | None = None, keepdims: bool = False
+        self, axis: _nt.ToShape | None, out: _ArrayT, fill_value: _ScalarLike_co | None = None, keepdims: bool = False
     ) -> _ArrayT: ...
     @overload
     def ptp(  # pyright: ignore[reportIncompatibleVariableOverride]
         self,
-        axis: _ShapeLike | None = None,
+        axis: _nt.ToShape | None = None,
         *,
         out: _ArrayT,
         fill_value: _ScalarLike_co | None = None,
@@ -2048,20 +2047,20 @@ anomalies = anom
 @overload
 def all(a: ArrayLike, axis: None = None, out: None = None, keepdims: L[False] | _NoValueType = ...) -> np.bool: ...
 @overload
-def all(a: ArrayLike, axis: _ShapeLike | None, out: None, keepdims: L[True]) -> _nt.MArray[np.bool]: ...
+def all(a: ArrayLike, axis: _nt.ToShape | None, out: None, keepdims: L[True]) -> _nt.MArray[np.bool]: ...
 @overload
 def all(
-    a: ArrayLike, axis: _ShapeLike | None = None, out: None = None, *, keepdims: L[True]
+    a: ArrayLike, axis: _nt.ToShape | None = None, out: None = None, *, keepdims: L[True]
 ) -> _nt.MArray[np.bool]: ...
 @overload
 def all(
-    a: ArrayLike, axis: _ShapeLike | None = None, out: None = None, keepdims: bool | _NoValueType = ...
+    a: ArrayLike, axis: _nt.ToShape | None = None, out: None = None, keepdims: bool | _NoValueType = ...
 ) -> np.bool | _nt.MArray[np.bool]: ...
 @overload
-def all(a: ArrayLike, axis: _ShapeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
+def all(a: ArrayLike, axis: _nt.ToShape | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
 @overload
 def all(
-    a: ArrayLike, axis: _ShapeLike | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...
+    a: ArrayLike, axis: _nt.ToShape | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...
 ) -> _ArrayT: ...
 
 # TODO: sync with `MaskedArray.any`
@@ -2069,20 +2068,20 @@ def all(
 @overload
 def any(a: ArrayLike, axis: None = None, out: None = None, keepdims: L[False] | _NoValueType = ...) -> np.bool: ...
 @overload
-def any(a: ArrayLike, axis: _ShapeLike | None, out: None, keepdims: L[True]) -> _nt.MArray[np.bool]: ...
+def any(a: ArrayLike, axis: _nt.ToShape | None, out: None, keepdims: L[True]) -> _nt.MArray[np.bool]: ...
 @overload
 def any(
-    a: ArrayLike, axis: _ShapeLike | None = None, out: None = None, *, keepdims: L[True]
+    a: ArrayLike, axis: _nt.ToShape | None = None, out: None = None, *, keepdims: L[True]
 ) -> _nt.MArray[np.bool]: ...
 @overload
 def any(
-    a: ArrayLike, axis: _ShapeLike | None = None, out: None = None, keepdims: bool | _NoValueType = ...
+    a: ArrayLike, axis: _nt.ToShape | None = None, out: None = None, keepdims: bool | _NoValueType = ...
 ) -> np.bool | _nt.MArray[np.bool]: ...
 @overload
-def any(a: ArrayLike, axis: _ShapeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
+def any(a: ArrayLike, axis: _nt.ToShape | None, out: _ArrayT, keepdims: bool | _NoValueType = ...) -> _ArrayT: ...
 @overload
 def any(
-    a: ArrayLike, axis: _ShapeLike | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...
+    a: ArrayLike, axis: _nt.ToShape | None = None, *, out: _ArrayT, keepdims: bool | _NoValueType = ...
 ) -> _ArrayT: ...
 
 # TODO: sync with `MaskedArray.compress`
@@ -2094,7 +2093,7 @@ def compress(
 ) -> _nt.MArray1D[_ScalarT]: ...
 @overload
 def compress(
-    condition: _nt.ToBool_nd, a: _ArrayLike[_ScalarT], axis: _ShapeLike, out: None = None
+    condition: _nt.ToBool_nd, a: _ArrayLike[_ScalarT], axis: _nt.ToShape, out: None = None
 ) -> _nt.MArray[_ScalarT]: ...
 @overload
 def compress(
@@ -2102,12 +2101,12 @@ def compress(
 ) -> _nt.MArray1D[Incomplete]: ...
 @overload
 def compress(
-    condition: _nt.ToBool_nd, a: ArrayLike, axis: _ShapeLike | None = None, out: None = None
+    condition: _nt.ToBool_nd, a: ArrayLike, axis: _nt.ToShape | None = None, out: None = None
 ) -> _nt.MArray[Incomplete]: ...
 @overload
-def compress(condition: _nt.ToBool_nd, a: ArrayLike, axis: _ShapeLike | None, out: _ArrayT) -> _ArrayT: ...
+def compress(condition: _nt.ToBool_nd, a: ArrayLike, axis: _nt.ToShape | None, out: _ArrayT) -> _ArrayT: ...
 @overload
-def compress(condition: _nt.ToBool_nd, a: ArrayLike, axis: _ShapeLike | None = None, *, out: _ArrayT) -> _ArrayT: ...
+def compress(condition: _nt.ToBool_nd, a: ArrayLike, axis: _nt.ToShape | None = None, *, out: _ArrayT) -> _ArrayT: ...
 
 # TODO: sync with `MaskedArray.cumsum`
 # Keep in sync with `cumprod`
@@ -2136,19 +2135,19 @@ def cumprod(a: ArrayLike, axis: CanIndex | None = None, dtype: DTypeLike | None 
 @overload
 def mean(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     out: None = None,
     keepdims: bool | _NoValueType = ...,
 ) -> Incomplete: ...
 @overload
 def mean(
-    a: ArrayLike, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+    a: ArrayLike, axis: _nt.ToShape | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
 ) -> _ArrayT: ...
 @overload
 def mean(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -2160,19 +2159,19 @@ def mean(
 @overload
 def sum(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     out: None = None,
     keepdims: bool | _NoValueType = ...,
 ) -> Incomplete: ...
 @overload
 def sum(
-    a: ArrayLike, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+    a: ArrayLike, axis: _nt.ToShape | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
 ) -> _ArrayT: ...
 @overload
 def sum(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -2184,19 +2183,19 @@ def sum(
 @overload
 def prod(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     out: None = None,
     keepdims: bool | _NoValueType = ...,
 ) -> Incomplete: ...
 @overload
 def prod(
-    a: ArrayLike, axis: _ShapeLike | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
+    a: ArrayLike, axis: _nt.ToShape | None, dtype: DTypeLike | None, out: _ArrayT, keepdims: bool | _NoValueType = ...
 ) -> _ArrayT: ...
 @overload
 def prod(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -2236,7 +2235,7 @@ def trace(
 @overload
 def std(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     out: None = None,
     ddof: float = 0,
@@ -2246,7 +2245,7 @@ def std(
 @overload
 def std(
     a: ArrayLike,
-    axis: _ShapeLike | None,
+    axis: _nt.ToShape | None,
     dtype: DTypeLike | None,
     out: _ArrayT,
     ddof: float = 0,
@@ -2256,7 +2255,7 @@ def std(
 @overload
 def std(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -2270,7 +2269,7 @@ def std(
 @overload
 def var(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     out: None = None,
     ddof: float = 0,
@@ -2280,7 +2279,7 @@ def var(
 @overload
 def var(
     a: ArrayLike,
-    axis: _ShapeLike | None,
+    axis: _nt.ToShape | None,
     dtype: DTypeLike | None,
     out: _ArrayT,
     ddof: float = 0,
@@ -2290,7 +2289,7 @@ def var(
 @overload
 def var(
     a: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     dtype: DTypeLike | None = None,
     *,
     out: _ArrayT,
@@ -2303,11 +2302,11 @@ def var(
 @overload
 def count(a: ArrayLike, axis: None = None, keepdims: L[False] | _NoValueType = ...) -> int: ...
 @overload
-def count(a: ArrayLike, axis: _ShapeLike, keepdims: bool | _NoValueType = ...) -> _nt.Array[np.int_]: ...
+def count(a: ArrayLike, axis: _nt.ToShape, keepdims: bool | _NoValueType = ...) -> _nt.Array[np.int_]: ...
 @overload
-def count(a: ArrayLike, axis: _ShapeLike | None = None, *, keepdims: L[True]) -> _nt.Array[np.int_]: ...
+def count(a: ArrayLike, axis: _nt.ToShape | None = None, *, keepdims: L[True]) -> _nt.Array[np.int_]: ...
 @overload
-def count(a: ArrayLike, axis: _ShapeLike | None, keepdims: L[True]) -> _nt.Array[np.int_]: ...
+def count(a: ArrayLike, axis: _nt.ToShape | None, keepdims: L[True]) -> _nt.Array[np.int_]: ...
 
 # TODO: sync with `MaskedArray.argmin`
 # Keep in sync with `argmax`
@@ -2417,7 +2416,7 @@ def min(
 @overload
 def min(
     obj: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     out: None = None,
     fill_value: _ScalarLike_co | None = None,
     keepdims: bool | _NoValueType = ...,
@@ -2433,7 +2432,7 @@ def min(
 @overload
 def min(
     obj: ArrayLike,
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     out: _ArrayT,
     fill_value: _ScalarLike_co | None = None,
@@ -2928,7 +2927,7 @@ def empty(
 ) -> _nt.MArray[Incomplete, _ShapeT]: ...
 @overload  # unknown shape, default dtype
 def empty(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: np._OrderCF = "C",
     *,
@@ -2939,7 +2938,7 @@ def empty(
 ) -> _nt.MArray[np.float64]: ...
 @overload  # unknown shape, known dtype
 def empty(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: np._OrderCF = "C",
     *,
@@ -2950,7 +2949,7 @@ def empty(
 ) -> MaskedArray[Incomplete, _DTypeT]: ...
 @overload  # unknown shape, known scalar-type
 def empty(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: _DTypeLike[_ScalarT],
     order: np._OrderCF = "C",
     *,
@@ -2961,7 +2960,7 @@ def empty(
 ) -> _nt.MArray[_ScalarT]: ...
 @overload  # unknown shape, unknown dtype
 def empty(
-    shape: _ShapeLike,
+    shape: _nt.ToShape,
     dtype: DTypeLike | None = None,
     order: np._OrderCF = "C",
     *,
@@ -3232,7 +3231,7 @@ def empty_like(
     dtype: np.dtype[_ScalarT] | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.MArray[_ScalarT]: ...
@@ -3254,7 +3253,7 @@ def empty_like(
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> MaskedArray[Incomplete, _DTypeT]: ...
@@ -3276,7 +3275,7 @@ def empty_like(
     dtype: _DTypeLike[_ScalarT],
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.MArray[_ScalarT]: ...
@@ -3287,7 +3286,7 @@ def empty_like(
     dtype: _nt.ToDTypeBool | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.MArray[np.bool_]: ...
@@ -3298,7 +3297,7 @@ def empty_like(
     dtype: _nt.ToDTypeInt64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.MArray[np.intp]: ...
@@ -3309,7 +3308,7 @@ def empty_like(
     dtype: _nt.ToDTypeFloat64 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.MArray[np.float64]: ...
@@ -3320,7 +3319,7 @@ def empty_like(
     dtype: _nt.ToDTypeComplex128 | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.MArray[np.complex128]: ...
@@ -3342,7 +3341,7 @@ def empty_like(
     dtype: DTypeLike | None = None,
     order: _OrderKACF = "K",
     subok: bool = True,
-    shape: _ShapeLike | None = None,
+    shape: _nt.ToShape | None = None,
     *,
     device: _Device | None = None,
 ) -> _nt.MArray[Incomplete]: ...
@@ -3496,12 +3495,12 @@ def indices(
 # keep roughly in sync with `_core.fromnumeric.squeeze`
 @overload  # workaround for microsoft/pyright#10232
 def squeeze(
-    a: _ScalarT, axis: _ShapeLike | None = None, *, fill_value: complex | None = None, hardmask: bool = False
+    a: _ScalarT, axis: _nt.ToShape | None = None, *, fill_value: complex | None = None, hardmask: bool = False
 ) -> _nt.MArray0D[_ScalarT]: ...
 @overload  # workaround for microsoft/pyright#10232
 def squeeze(
     a: _nt._ToArray_nnd[_ScalarT],
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     fill_value: complex | None = None,
     hardmask: bool = False,
@@ -3509,12 +3508,12 @@ def squeeze(
 @overload
 def squeeze(
     a: _nt._ToArray_nd[_ScalarT],
-    axis: _ShapeLike | None = None,
+    axis: _nt.ToShape | None = None,
     *,
     fill_value: complex | None = None,
     hardmask: bool = False,
 ) -> _nt.MArray[_ScalarT]: ...
 @overload
 def squeeze(
-    a: ArrayLike, axis: _ShapeLike | None = None, *, fill_value: complex | None = None, hardmask: bool = False
+    a: ArrayLike, axis: _nt.ToShape | None = None, *, fill_value: complex | None = None, hardmask: bool = False
 ) -> _nt.MArray[Incomplete]: ...

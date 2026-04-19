@@ -18,7 +18,7 @@ import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
 from numpy import _OrderKACF  # noqa: ICN003
-from numpy._typing import _DTypeLike, _ShapeLike
+from numpy._typing import _DTypeLike
 
 __all__ = ["memmap"]
 
@@ -64,7 +64,7 @@ class memmap(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTypeT_co]
         dtype: _DTypeT_co,
         mode: _ToMode = "r+",
         offset: int = 0,
-        shape: _ShapeLike | None = None,
+        shape: _nt.ToShape | None = None,
         order: _OrderKACF = "C",
     ) -> memmap[Incomplete, _DTypeT_co]: ...
     @overload
@@ -74,7 +74,7 @@ class memmap(np.ndarray[_ShapeT_co, _DTypeT_co], Generic[_ShapeT_co, _DTypeT_co]
         dtype: _DTypeLike[_ScalarT],
         mode: _ToMode = "r+",
         offset: int = 0,
-        shape: _ShapeLike | None = None,
+        shape: _nt.ToShape | None = None,
         order: _OrderKACF = "C",
     ) -> memmap[Incomplete, np.dtype[_ScalarT]]: ...
     @overload
