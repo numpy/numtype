@@ -226,7 +226,7 @@ def repack_fields(a: _ArrayT, align: bool = False, recurse: bool = False) -> _Ar
 # TODO(jorenham): Attempt shape-typing (return type has ndim == arr.ndim + 1)
 @overload
 def structured_to_unstructured(
-    arr: _nt.Array[np.void], dtype: _nt.ToDType[_ScalarT], copy: bool = False, casting: np._CastingKind = "unsafe"
+    arr: _nt.Array[np.void], dtype: _nt._ToDType[_ScalarT], copy: bool = False, casting: np._CastingKind = "unsafe"
 ) -> _nt.Array[_ScalarT]: ...
 @overload
 def structured_to_unstructured(
