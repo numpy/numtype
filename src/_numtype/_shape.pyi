@@ -16,8 +16,8 @@ __all__ = [
     "Shape3N",
     "Shape4",
     "Shape4N",
-    "ToShape",
     "ShapeN",
+    "ToShape",
 ]
 
 Shape = TypeAliasType("Shape", tuple[int, ...])
