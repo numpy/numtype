@@ -434,9 +434,7 @@ class Generator:
     @overload  # size: (int, ...)
     def chisquare(self, /, df: _nt.CoFloating_nd, size: _nt.ToShape) -> _nt.Array[np.float64]: ...
     @overload  # fallback
-    def chisquare(
-        self, /, df: _nt.CoFloating_nd, size: _nt.ToShape | None = None
-    ) -> float | _nt.Array[np.float64]: ...
+    def chisquare(self, /, df: _nt.CoFloating_nd, size: _nt.ToShape | None = None) -> float | _nt.Array[np.float64]: ...
 
     #
     @overload  # workaround for microsoft/pyright#10232
@@ -685,9 +683,7 @@ class Generator:
     @overload  # size: None  (default)
     def f(self, /, dfnum: _nt.CoFloating_0d, dfden: _nt.CoFloating_0d, size: None = None) -> float: ...
     @overload  # size: (int, ...)
-    def f(
-        self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ToShape
-    ) -> _nt.Array[np.float64]: ...
+    def f(self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ToShape) -> _nt.Array[np.float64]: ...
     @overload  # fallback
     def f(
         self, /, dfnum: _nt.CoFloating_nd, dfden: _nt.CoFloating_nd, size: _nt.ToShape | None = None
