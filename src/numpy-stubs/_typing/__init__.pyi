@@ -1,4 +1,3 @@
-from . import _shape as _shape
 from ._array_like import (
     ArrayLike as ArrayLike,
     NDArray as NDArray,
