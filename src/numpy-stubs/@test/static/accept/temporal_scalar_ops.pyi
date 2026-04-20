@@ -21,32 +21,32 @@ td_timedelta: TD[dt.timedelta]
 
 assert_type(dt_default + td_default, DT)
 assert_type(dt_default + td_none, DT[None])
-assert_type(dt_none + td_default, DT[None])
+assert_type(dt_none + td_default, DT[None])  # type: ignore[assert-type]
 assert_type(dt_int + td_int, DT[int])
 assert_type(dt_datetime + td_timedelta, DT[dt.datetime])
 assert_type(dt_date + td_timedelta, DT[dt.date])
 
 assert_type(dt_default - td_default, DT)
 assert_type(dt_default - td_none, DT[None])
-assert_type(dt_none - td_default, DT[None])
+assert_type(dt_none - td_default, DT[None])  # type: ignore[assert-type]
 assert_type(dt_int - td_int, DT[int])
 assert_type(dt_datetime - td_timedelta, DT[dt.datetime])
 assert_type(dt_date - td_timedelta, DT[dt.date])
 assert_type(dt_date - td_int, DT[dt.date | int])
 
 assert_type(dt_default - dt_default, TD)
-assert_type(dt_none - dt_default, TD[None])
+assert_type(dt_none - dt_default, TD[None])  # type: ignore[assert-type]
 assert_type(dt_int - dt_int, TD[int])
 assert_type(dt_datetime - dt_datetime, TD[dt.timedelta])
 assert_type(dt_date - dt_date, TD[dt.timedelta])
 
 assert_type(td_default + td_default, TD)
-assert_type(td_none + td_default, TD[None])
+assert_type(td_none + td_default, TD[None])  # type: ignore[assert-type]
 assert_type(td_int + td_int, TD[int])
 assert_type(td_timedelta + td_timedelta, TD[dt.timedelta])
 
 assert_type(td_default - td_default, TD)
-assert_type(td_none - td_default, TD[None])
+assert_type(td_none - td_default, TD[None])  # type: ignore[assert-type]
 assert_type(td_int - td_int, TD[int])
 assert_type(td_timedelta - td_timedelta, TD[dt.timedelta])
 
@@ -54,7 +54,7 @@ assert_type(td_default / td_default, np.float64)
 assert_type(td_none / td_default, np.float64)
 
 assert_type(td_default % td_default, TD)
-assert_type(td_none % td_default, TD[None])
+assert_type(td_none % td_default, TD[None])  # type: ignore[assert-type]
 
 assert_type(td_default * 0, TD)
 assert_type(td_none * 0, TD[None])
