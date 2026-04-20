@@ -18,7 +18,6 @@ from typing_extensions import TypeAliasType, TypeVar, Unpack
 import _numtype as _nt
 import numpy as np
 from numpy import _CastingKind, _OrderKACF  # noqa: ICN003
-from numpy._typing import _DTypeLike as _ToDType, _DTypeLikeComplex as _ToDTypeComplex, _DTypeLikeFloat as _ToDTypeFloat
 
 from . import _multiarray_umath as _multiarray_umath
 from ._multiarray_umath import (
@@ -187,6 +186,9 @@ _ToStringLike: TypeAlias = bytes | str | np.character
 _CoFloat: TypeAlias = float | _nt.co_float
 _CoComplex: TypeAlias = complex | _nt.co_complex
 
+_ToDTypeFloat: TypeAlias = _nt.ToDTypeFloat16 | _nt.ToDTypeFloat32 | _nt.ToDTypeFloat64 | _nt.ToDTypeLongDouble
+_ToDTypeComplex: TypeAlias = _nt.ToDTypeComplex64 | _nt.ToDTypeComplex128 | _nt.ToDTypeCLongDouble
+
 _ToDTypeInexact: TypeAlias = _ToDTypeFloat | _ToDTypeComplex
 
 _BoolND: TypeAlias = _nt.Array[np.bool_]
@@ -250,7 +252,7 @@ class _Kwargs3_g(_KwargsCommon, total=False):
 class _Call11(Protocol):
     @overload  # 0d, dtype: T
     def __call__(
-        self, x: _ToScalar, /, out: _Out1[None] = None, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
+        self, x: _ToScalar, /, out: _Out1[None] = None, *, dtype: _nt._ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
     ) -> _ScalarT: ...
     @overload  # 0d
     def __call__(
@@ -262,7 +264,7 @@ class _Call11(Protocol):
     ) -> _ArrayT: ...
     @overload  # ?d, out=..., dtype: T
     def __call__(
-        self, x: _nt.ToGeneric_nd, /, out: EllipsisType, *, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
+        self, x: _nt.ToGeneric_nd, /, out: EllipsisType, *, dtype: _nt._ToDType[_ScalarT], **kw: Unpack[_Kwargs2]
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # nd, dtype: T
     def __call__(
@@ -271,7 +273,7 @@ class _Call11(Protocol):
         /,
         out: _Out1[_nt.Array | None] = None,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs2],
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # nd
@@ -834,7 +836,7 @@ class _Call11String(Protocol[_ScalarT_co]):
         /,
         out: _Out1[None] = None,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs2],
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?d string-like, out=..., dtype: T
@@ -844,7 +846,7 @@ class _Call11String(Protocol[_ScalarT_co]):
         /,
         out: EllipsisType,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs2],
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?
@@ -862,7 +864,7 @@ class _Call11String(Protocol[_ScalarT_co]):
 class _Call12(Protocol):
     @overload  # 0d, dtype: T
     def __call__(
-        self, x: _ToScalar, /, *, out: _Out2[None] = ..., dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
+        self, x: _ToScalar, /, *, out: _Out2[None] = ..., dtype: _nt._ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
     ) -> _Out2[_ScalarT]: ...
     @overload  # 0d
     def __call__(
@@ -886,11 +888,11 @@ class _Call12(Protocol):
     ) -> tuple[_nt.Array[Incomplete], _nt.Array[Incomplete]]: ...
     @overload  # ?d, out=..., dtype: T
     def __call__(
-        self, x: _nt.ToGeneric_nd, /, *, out: EllipsisType, dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
+        self, x: _nt.ToGeneric_nd, /, *, out: EllipsisType, dtype: _nt._ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
     ) -> tuple[_nt.Array[_ScalarT], _nt.Array[_ScalarT]]: ...
     @overload  # nd, dtype: T
     def __call__(
-        self, x: _nt.ToGeneric_1nd, /, *, out: _Out2[None] = ..., dtype: _ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
+        self, x: _nt.ToGeneric_1nd, /, *, out: _Out2[None] = ..., dtype: _nt._ToDType[_ScalarT], **kw: Unpack[_Kwargs3]
     ) -> _Out2[_nt.Array[_ScalarT]]: ...
     @overload  # nd
     def __call__(
@@ -923,7 +925,7 @@ class _Call21(Protocol):
         /,
         out: _Out1[None] = None,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
     ) -> _ScalarT: ...
     @overload  # 0d, 0d
@@ -942,7 +944,7 @@ class _Call21(Protocol):
         /,
         out: _Out1[None] = None,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # nd, ?d, dtype: T
@@ -953,7 +955,7 @@ class _Call21(Protocol):
         /,
         out: _Out1[None] = None,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?d, ?d, out=..., dtype: T
@@ -964,7 +966,7 @@ class _Call21(Protocol):
         /,
         out: EllipsisType,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?d, nd
@@ -1201,7 +1203,7 @@ class _Call21Float(Protocol):
         /,
         out: EllipsisType,
         *,
-        dtype: _ToDType[_FloatT],
+        dtype: _nt._ToDType[_FloatT],
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[_FloatT]: ...
     @overload  # ?d +floating, nd +floating, dtype: T
@@ -1212,7 +1214,7 @@ class _Call21Float(Protocol):
         /,
         out: _Out1[None] = None,
         *,
-        dtype: _ToDType[_FloatT],
+        dtype: _nt._ToDType[_FloatT],
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[_FloatT]: ...
     @overload  # nd +floating, ?d +floating, dtype: T
@@ -1223,7 +1225,7 @@ class _Call21Float(Protocol):
         /,
         out: _Out1[None] = None,
         *,
-        dtype: _ToDType[_FloatT],
+        dtype: _nt._ToDType[_FloatT],
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[_FloatT]: ...
     @overload  # ?d +floating, nd ~floating
@@ -1443,7 +1445,7 @@ class _Call22(Protocol):
         /,
         *,
         out: _Out2[None] = ...,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs4],
     ) -> _Out2[_ScalarT]: ...
     @overload  # 0d, 0d
@@ -1465,7 +1467,7 @@ class _Call22(Protocol):
         /,
         *,
         out: _Out2[_nt.Array[_ScalarT] | None] = ...,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs4],
     ) -> _Out2[_nt.Array[_ScalarT]]: ...
     @overload  # ?d, nd, dtype: T
@@ -1476,7 +1478,7 @@ class _Call22(Protocol):
         /,
         *,
         out: _Out2[_nt.Array[_ScalarT] | None] = ...,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs4],
     ) -> _Out2[_nt.Array[_ScalarT]]: ...
     @overload  # ?d, ?d, out=..., dtype: T
@@ -1487,7 +1489,7 @@ class _Call22(Protocol):
         /,
         *,
         out: EllipsisType,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs4],
     ) -> _Out2[_nt.Array[_ScalarT]]: ...
     @overload  # ?d, ?d, out: (T1, None)
@@ -1634,7 +1636,7 @@ class _Accumulate2(Protocol):
         a: _nt.ToGeneric_nd,
         /,
         axis: SupportsIndex,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         out: _nt.Array[_ScalarT] | EllipsisType | None = None,
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?d, *, dtype: T
@@ -1644,7 +1646,7 @@ class _Accumulate2(Protocol):
         /,
         axis: SupportsIndex = 0,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         out: _Out1[None] | EllipsisType = None,
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?d
@@ -1685,7 +1687,7 @@ class _ReduceAt2(Protocol):
         ixs: _nt.CoInteger_nd,
         /,
         axis: SupportsIndex,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         out: _nt.Array[_ScalarT] | EllipsisType | None = None,
     ) -> _nt.Array[_ScalarT]: ...
     @overload
@@ -1696,7 +1698,7 @@ class _ReduceAt2(Protocol):
         /,
         axis: SupportsIndex = 0,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         out: _nt.Array[_ScalarT] | EllipsisType | None = None,
     ) -> _nt.Array[_ScalarT]: ...
     @overload
@@ -1733,7 +1735,7 @@ class _Outer1(Protocol):
         /,
         *,
         out: _Out1[_nt.Array[_ScalarT] | None] | EllipsisType = None,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         **kw: Unpack[_Kwargs3],
     ) -> _nt.Array[_ScalarT]: ...
     @overload  # ?d, ?d
@@ -1790,7 +1792,7 @@ class _Outer2(Protocol):
         B: _nt.ToGeneric_nd,
         /,
         *,
-        dtype: _ToDType[_ScalarT],
+        dtype: _nt._ToDType[_ScalarT],
         out: _Out2[_nt.Array[_ScalarT] | None] | EllipsisType = ...,
         **kw: Unpack[_Kwargs4],
     ) -> _Out2[_nt.Array[_ScalarT]]: ...
