@@ -21,6 +21,7 @@ td_timedelta: TD[dt.timedelta]
 
 assert_type(dt_default + td_default, DT)
 assert_type(dt_default + td_none, DT[None])
+# mypy produces datetime64[Any] instead of datetime64[None] for datetime64[None] operands.
 assert_type(dt_none + td_default, DT[None])  # type: ignore[assert-type]
 assert_type(dt_int + td_int, DT[int])
 assert_type(dt_datetime + td_timedelta, DT[dt.datetime])
