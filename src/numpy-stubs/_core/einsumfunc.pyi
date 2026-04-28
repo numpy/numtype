@@ -6,12 +6,13 @@ from typing_extensions import TypeVar
 import _numtype as _nt
 from numpy import _OrderKACF  # noqa: ICN003
 from numpy._typing import (
-    _ArrayLikeBool_co,
-    _ArrayLikeComplex_co,
-    _ArrayLikeFloat_co,
-    _ArrayLikeInt_co,
-    _ArrayLikeObject_co,
-    _ArrayLikeUInt_co,
+    _DTypeLikeBool,
+    _DTypeLikeComplex,
+    _DTypeLikeComplex_co,
+    _DTypeLikeFloat,
+    _DTypeLikeInt,
+    _DTypeLikeObject,
+    _DTypeLikeUInt,
 )
 
 __all__ = ["einsum", "einsum_path"]
@@ -39,9 +40,9 @@ _ToDTypeComplex_co: TypeAlias = _nt.ToDTypeBool | _ToDTypeUInt | _ToDTypeInt | _
 # Something like `is_scalar = bool(__subscripts.partition("->")[-1])`
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeBool_co,
+    *operands: _nt.ToBool_nd,
     out: None = None,
     optimize: _OptimizeKind = False,
     dtype: _nt.ToDTypeBool | None = None,
@@ -50,9 +51,9 @@ def einsum(
 ) -> Incomplete: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeUInt_co,
+    *operands: _nt.CoUInt64_nd,
     out: None = None,
     dtype: _ToDTypeUInt | None = None,
     order: _OrderKACF = "K",
@@ -61,9 +62,9 @@ def einsum(
 ) -> Incomplete: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeInt_co,
+    *operands: _nt.CoInteger_nd,
     out: None = None,
     dtype: _ToDTypeInt | None = None,
     order: _OrderKACF = "K",
@@ -72,9 +73,9 @@ def einsum(
 ) -> Incomplete: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeFloat_co,
+    *operands: _nt.CoFloating_nd,
     out: None = None,
     dtype: _ToDTypeFloat | None = None,
     order: _OrderKACF = "K",
@@ -83,9 +84,9 @@ def einsum(
 ) -> Incomplete: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeComplex_co,
+    *operands: _nt.CoComplex_nd,
     out: None = None,
     dtype: _ToDTypeComplex | None = None,
     order: _OrderKACF = "K",
@@ -94,7 +95,7 @@ def einsum(
 ) -> Incomplete: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
     *operands: Any,
     casting: _CastingUnsafe,
@@ -105,9 +106,9 @@ def einsum(
 ) -> Incomplete: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeComplex_co,
+    *operands: _nt.CoComplex_nd,
     out: _ArrayT,
     dtype: _ToDTypeComplex_co | None = None,
     order: _OrderKACF = "K",
@@ -116,7 +117,7 @@ def einsum(
 ) -> _ArrayT: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
     *operands: Any,
     out: _ArrayT,
@@ -127,9 +128,9 @@ def einsum(
 ) -> _ArrayT: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeObject_co,
+    *operands: _nt.ToObject_nd,
     out: None = None,
     dtype: _nt.ToDTypeObject | None = None,
     order: _OrderKACF = "K",
@@ -138,7 +139,7 @@ def einsum(
 ) -> Incomplete: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
     *operands: Any,
     casting: _CastingUnsafe,
@@ -149,9 +150,9 @@ def einsum(
 ) -> Incomplete: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeObject_co,
+    *operands: _nt.ToObject_nd,
     out: _ArrayT,
     dtype: _nt.ToDTypeObject | None = None,
     order: _OrderKACF = "K",
@@ -160,7 +161,7 @@ def einsum(
 ) -> _ArrayT: ...
 @overload
 def einsum(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
     *operands: Any,
     out: _ArrayT,
@@ -174,9 +175,9 @@ def einsum(
 # NOTE: `einsum_call` is a hidden kwarg unavailable for public use.
 # It is therefore excluded from the signatures below.
 def einsum_path(
-    subscripts: str | _ArrayLikeInt_co,
+    subscripts: str | _nt.CoInteger_nd,
     /,
-    *operands: _ArrayLikeComplex_co | _nt.ToDTypeObject,
+    *operands: _nt.CoComplex_nd | _nt.ToDTypeObject,
     optimize: _OptimizeKind = "greedy",
     einsum_call: L[False] = False,
 ) -> tuple[list[str | tuple[int, ...]], str]: ...

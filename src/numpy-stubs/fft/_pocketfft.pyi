@@ -4,7 +4,6 @@ from typing import Literal as L, TypeAlias
 import _numtype as _nt
 import numpy as np
 import numpy.typing as npt
-from numpy._typing import _ArrayLikeNumber_co
 
 __all__ = [
     "fft",
@@ -56,7 +55,7 @@ def irfft(
 
 # Input array must be compatible with `np.conjugate`
 def hfft(
-    a: _ArrayLikeNumber_co,
+    a: _nt.CoComplex_nd,
     n: int | None = None,
     axis: int = -1,
     norm: _NormKind = None,

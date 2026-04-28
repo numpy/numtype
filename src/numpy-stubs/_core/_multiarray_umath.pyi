@@ -29,8 +29,6 @@ from numpy import _AnyShapeT, _CanSeekTellFileNo, _CastingKind, _ModeKind, _Orde
 from numpy._globals import _CopyMode
 from numpy._typing import (
     _ArrayLike,
-    _ArrayLikeAnyString_co,
-    _ArrayLikeNumber_co,
     _DTypeLike,
     _ScalarLike_co,
     _SupportsArrayFunc as _CanArrayFunc,
@@ -1673,13 +1671,13 @@ def dot(a: npt.ArrayLike, b: npt.ArrayLike, out: _ArrayT) -> _ArrayT: ...
 
 #
 @overload
-def vdot(a: _ArrayLike[_NumericT], b: _ArrayLike[_NumericT], /) -> _NumericT: ...  # type: ignore[overload-overlap]  # pyright: ignore[reportOverlappingOverload]
+def vdot(a: _ArrayLike[_NumericT], b: _ArrayLike[_NumericT], /) -> _NumericT: ...  # type: ignore[overload-overlap]
 @overload
 def vdot(a: _nt.CoInteger_nd, b: _nt.CoInteger_nd, /) -> np.signedinteger: ...
 @overload
 def vdot(a: _nt.CoFloating_nd, b: _nt.CoFloating_nd, /) -> np.floating | np.signedinteger: ...
 @overload
-def vdot(a: _ArrayLikeNumber_co, b: _ArrayLikeNumber_co, /) -> np.inexact | np.signedinteger: ...
+def vdot(a: _nt.CoComplex_nd, b: _nt.CoComplex_nd, /) -> np.inexact | np.signedinteger: ...
 
 #
 @overload
@@ -1728,7 +1726,7 @@ def interp(
 def interp_complex(
     x: _ToFloat,
     xp: _nt.CoFloating_nd,
-    fp: _ArrayLikeNumber_co,
+    fp: _nt.CoComplex_nd,
     left: _ToComplex | None = None,
     right: _ToComplex | None = None,
 ) -> np.complex128: ...
@@ -1736,7 +1734,7 @@ def interp_complex(
 def interp_complex(
     x: _nt.Array[np.floating | np.integer, _ShapeT],
     xp: _nt.CoFloating_nd,
-    fp: _ArrayLikeNumber_co,
+    fp: _nt.CoComplex_nd,
     left: _ToComplex | None = None,
     right: _ToComplex | None = None,
 ) -> _nt.Array[np.complex128, _ShapeT]: ...
@@ -1744,7 +1742,7 @@ def interp_complex(
 def interp_complex(
     x: _nt.Sequence1ND[_ToFloat],
     xp: _nt.CoFloating_nd,
-    fp: _ArrayLikeNumber_co,
+    fp: _nt.CoComplex_nd,
     left: _ToComplex | None = None,
     right: _ToComplex | None = None,
 ) -> _nt.Array[np.complex128]: ...
@@ -1752,7 +1750,7 @@ def interp_complex(
 def interp_complex(
     x: _nt.CoFloating_nd,
     xp: _nt.CoFloating_nd,
-    fp: _ArrayLikeNumber_co,
+    fp: _nt.CoComplex_nd,
     left: _ToComplex | None = None,
     right: _ToComplex | None = None,
 ) -> np.complex128 | _nt.Array[np.complex128]: ...
@@ -2021,4 +2019,4 @@ def _make_extobj() -> CapsuleType: ...
 def _monotonicity(x: _nt.CoFloating_nd) -> L[0, 1]: ...
 def _place(input: npt.ArrayLike, mask: _nt.ToBool_nd, vals: npt.ArrayLike) -> None: ...
 def _reconstruct(subtype: type[_nt.Array], shape: _AnyShapeT, dtype: _DTypeT) -> np.ndarray[_AnyShapeT, _DTypeT]: ...
-def _vec_string(a: _ArrayLikeAnyString_co, dtype: npt.DTypeLike | None, attr: str, /) -> _nt.Array[Incomplete]: ...
+def _vec_string(a: _nt.ToCharacter_nd, dtype: npt.DTypeLike | None, attr: str, /) -> _nt.Array[Incomplete]: ...

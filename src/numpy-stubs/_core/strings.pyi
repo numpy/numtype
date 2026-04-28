@@ -3,7 +3,6 @@ from typing import TypeAlias, overload
 import _numtype as _nt
 import numpy as np
 from numpy._globals import _NoValueType
-from numpy._typing import _ArrayLikeAnyString_co as ToAnyStringND, _ArrayLikeInt_co as ToIntND
 
 from .umath import (
     add,
@@ -24,6 +23,9 @@ from .umath import (
     not_equal,
     str_len,
 )
+
+ToAnyStringND = _nt.ToCharacter_nd
+ToIntND = _nt.CoInteger_nd
 
 __all__ = [
     "add",

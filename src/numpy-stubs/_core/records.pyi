@@ -6,7 +6,7 @@ from typing_extensions import Buffer, TypeVar, override
 import _numtype as _nt
 import numpy as np
 from numpy import _ByteOrder, _OrderKACF  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLikeVoid_co
+from numpy._typing import ArrayLike, DTypeLike, _ShapeLike
 
 __all__ = [
     "array",
@@ -145,7 +145,7 @@ def fromarrays(
 # exported in `numpy.rec`
 @overload
 def fromrecords(
-    recList: _ArrayLikeVoid_co | _nt.SequenceND[tuple[Incomplete, ...]],
+    recList: _nt.ToGeneric_nd | _nt.SequenceND[tuple[Incomplete, ...]],
     dtype: DTypeLike | None = None,
     shape: _nt.ToShape | None = None,
     formats: None = None,
@@ -156,7 +156,7 @@ def fromrecords(
 ) -> _RecArray[record]: ...
 @overload
 def fromrecords(
-    recList: _ArrayLikeVoid_co | _nt.SequenceND[tuple[Incomplete, ...]],
+    recList: _nt.ToGeneric_nd | _nt.SequenceND[tuple[Incomplete, ...]],
     dtype: None = None,
     shape: _nt.ToShape | None = None,
     *,
