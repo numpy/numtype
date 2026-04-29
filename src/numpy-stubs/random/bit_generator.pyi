@@ -7,7 +7,6 @@ from typing_extensions import CapsuleType, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import _DTypeLike, _ShapeLike, _UInt32Codes, _UInt64Codes
 
 __all__ = ["BitGenerator", "SeedSequence"]
 

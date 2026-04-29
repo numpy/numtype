@@ -5,15 +5,6 @@ from typing_extensions import TypeVar
 
 import _numtype as _nt
 from numpy import _OrderKACF  # noqa: ICN003
-from numpy._typing import (
-    _DTypeLikeBool,
-    _DTypeLikeComplex,
-    _DTypeLikeComplex_co,
-    _DTypeLikeFloat,
-    _DTypeLikeInt,
-    _DTypeLikeObject,
-    _DTypeLikeUInt,
-)
 
 __all__ = ["einsum", "einsum_path"]
 

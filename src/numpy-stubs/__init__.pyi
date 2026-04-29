@@ -335,15 +335,7 @@ from ._core.umath import (
 from ._expired_attrs_2_0 import __expired_attributes__ as __expired_attributes__
 from ._globals import _CopyMode as _CopyMode, _NoValue as _NoValue, _NoValueType
 from ._pytesttester import PytestTester
-from ._typing import (
-    ArrayLike,
-    DTypeLike,
-    _DTypeLike,
-    _NestedSequence,
-    _NumberLike_co,
-    _ScalarLike_co,
-    _TD64Like_co,
-)
+from ._typing import ArrayLike, DTypeLike, _DTypeLike, _NestedSequence, _NumberLike_co, _ScalarLike_co, _TD64Like_co
 from .lib import scimath as emath
 from .lib._arraypad_impl import pad
 from .lib._arraysetops_impl import (
