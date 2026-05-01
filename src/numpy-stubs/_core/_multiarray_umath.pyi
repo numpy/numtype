@@ -530,7 +530,7 @@ def empty(
     like: _CanArrayFunc | None = None,
 ) -> _nt.Array[np.float64, _AnyShapeT]: ...
 @overload  # known shape, known dtype  (mypy reports a false positive)
-def empty(
+def empty(  # type: ignore[overload-overlap]
     shape: _AnyShapeT,
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
@@ -640,7 +640,7 @@ def zeros(
     like: _CanArrayFunc | None = None,
 ) -> _nt.Array[np.float64, _AnyShapeT]: ...
 @overload  # known shape, known dtype  (mypy reports a false positive)
-def zeros(
+def zeros(  # type: ignore[overload-overlap]
     shape: _AnyShapeT,
     dtype: _DTypeT | _HasDType[_DTypeT],
     order: _OrderCF = "C",
@@ -782,7 +782,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.bool_]: ...
 @overload  # workaround for microsoft/pyright#10232
-def empty_like(  # python/mypy#19908
+def empty_like(  # type: ignore[overload-overlap] # python/mypy#19908
     prototype: _nt._ToArray_nnd[np.intp],
     /,
     dtype: _nt.ToDTypeInt64 | None = None,
@@ -837,7 +837,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.intp]: ...
 @overload  # workaround for microsoft/pyright#10232
-def empty_like(  # python/mypy#19908
+def empty_like(  # type: ignore[overload-overlap] # python/mypy#19908
     prototype: _nt._ToArray_nnd[np.float64],
     /,
     dtype: _nt.ToDTypeFloat64 | None = None,
@@ -947,7 +947,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array3D[np.complex128]: ...
 @overload  # array-like with known scalar-type, given shape
-def empty_like(
+def empty_like(  # type: ignore[overload-overlap]
     prototype: _ArrayLike[_ScalarT],
     /,
     dtype: np.dtype[_ScalarT] | None = None,
@@ -969,7 +969,7 @@ def empty_like(
     device: _Device | None = None,
 ) -> _nt.Array[_ScalarT]: ...
 @overload  # given shape, given dtype
-def empty_like(
+def empty_like(  # type: ignore[overload-overlap]
     prototype: object,
     /,
     dtype: _DTypeT | _HasDType[_DTypeT],
@@ -1671,7 +1671,7 @@ def dot(a: npt.ArrayLike, b: npt.ArrayLike, out: _ArrayT) -> _ArrayT: ...
 
 #
 @overload
-def vdot(a: _ArrayLike[_NumericT], b: _ArrayLike[_NumericT], /) -> _NumericT: ...
+def vdot(a: _ArrayLike[_NumericT], b: _ArrayLike[_NumericT], /) -> _NumericT: ...  # type: ignore[overload-overlap]
 @overload
 def vdot(a: _nt.CoInteger_nd, b: _nt.CoInteger_nd, /) -> np.signedinteger: ...
 @overload
