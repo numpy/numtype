@@ -7,7 +7,7 @@ from typing_extensions import TypeVar, override
 import _numtype as _nt
 import numpy as np
 from numpy import _CanItem, _OrderKACF  # noqa: ICN003
-from numpy._typing import ArrayLike, DTypeLike, _ArrayLikeInt_co, _DTypeLike
+from numpy._typing import ArrayLike, DTypeLike, _DTypeLike
 
 __all__ = ["asmatrix", "bmat", "matrix"]
 
@@ -35,7 +35,7 @@ class matrix(np.ndarray[_ShapeT_co, _DTypeT_co]):
     #
     @override  # type: ignore[override]
     @overload
-    def __getitem__(self, key: CanIndex | _ArrayLikeInt_co | tuple[CanIndex | _ArrayLikeInt_co, ...], /) -> Any: ...
+    def __getitem__(self, key: CanIndex | _nt.CoInteger_nd | tuple[CanIndex | _nt.CoInteger_nd, ...], /) -> Any: ...
     @overload
     def __getitem__(self, key: _ToIndex1 | _ToIndex2, /) -> matrix[_nt.Rank2, _DTypeT_co]: ...
     @overload
