@@ -1,0 +1,59 @@
+:root {
+  --md-code-font: var(--pst-font-family-monospace);
+}
+
+[data-md-color-scheme="default"] {
+  --md-default-fg-color: var(--pst-black);
+  --md-default-fg-color--light: var(--pst-gray-800);
+  --md-default-fg-color--lighter: var(--pst-gray-600);
+  --md-default-fg-color--lightest: var(--pst-gray-200);
+  --md-default-bg-color: var(--pst-white);
+  --md-default-bg-color-light: var(--pst-gray-100);
+  --md-default-bg-color-lighter: var(--pst-gray-600);
+  --md-default-bg-color-lightest: var(--pst-gray-800);
+
+  --md-primary-fg-color: var(--pst-teal-200);
+  --md-primary-fg-color--light: var(--pst-violet-500);
+  --md-primary-fg-color--dark: var(--pst-teal-500);
+  --md-primary-bg-color: var(--pst-gray-800);
+  --md-primary-bg-color--light: var(--pst-gray-600);
+
+  --md-accent-fg-color: var(--pst-violet-500);
+  --md-accent-fg-color--transparent: #8045e51a;
+
+  --md-code-fg-color: var(--pst-black);
+  --md-code-bg-color: var(--pst-gray-100);
+
+  --md-typeset-a-color: var(--pst-black);
+  --md-typeset-a-color: var(--pst-gray-600);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-fg-color: var(--pst-gray-100);
+  --md-default-fg-color--light: var(--pst-gray-400);
+  --md-default-fg-color--lighter: var(--pst-gray-600);
+  --md-default-fg-color--lightest: var(--pst-gray-800);
+  --md-default-bg-color: var(--pst-black);
+  --md-default-bg-color-light: var(--pst-gray-800);
+  --md-default-bg-color-lighter: var(--pst-gray-700);
+  --md-default-bg-color-lightest: var(--pst-gray-400);
+
+  --md-primary-fg-color: var(--pst-teal-800);
+  --md-primary-fg-color--light: var(--pst-teal-900);
+  --md-primary-fg-color--dark: var(--pst-teal-500);
+  --md-primary-bg-color: var(--pst-color-800);
+  --md-primary-bg-color--light: var(--pst-color-900);
+
+  --md-accent-fg-color: var(--pst-violet-400);
+  --md-accent-fg-color--light: #9c5ffd1a;
+
+  --md-code-fg-color: var(--pst-text-base-light);
+  --md-code-bg-color: var(--pst-gray-700);
+
+  --md-typeset-color: var(--pst-text-base-light);
+  --md-typeset-a-color: var(--pst-teal-400);
+
+  --md-footer-bg-color: var(--pst-teal-600);
+  --md-footer-bg-color--dark: var(--pst-teal-800);
+
+}
