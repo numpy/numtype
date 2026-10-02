@@ -1,0 +1,43 @@
+[dir="ltr"] .md-header__title {
+  margin-left: 0;
+}
+[dir="rtl"] .md-header__title {
+  margin-right: 0;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 52px;
+}
+
+.md-header__button.md-logo,
+.md-header__button.md-logo {
+  margin: 0;
+  padding: 0;
+}
+
+.md-header__title:not(.md-header__title--active) span {
+  font-weight: 900;
+  font-size: var(--pst-sidebar-header-font-size);
+}
+
+a {
+  text-underline-offset: 0.1578em;
+  word-wrap: break-word;
+}
+
+a:hover {
+  color: var(--pst-color-link-hover);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
+
+p a {
+  text-decoration: underline;
+}
+
+code {
+  border: 1px solid var(--pst-color-border);
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.25rem;
+}
