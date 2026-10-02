@@ -1,0 +1,27 @@
+name: links
+
+on:
+  schedule:
+  - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        persist-credentials: false
+    - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+    - run: uv run --frozen --only-group=docs mkdocs build
+    - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+      with:
+        args: --exclude-path site/404.html --no-progress --accept 200,206,429 'site/**/*.html'
+        fail: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
