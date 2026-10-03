@@ -25,7 +25,7 @@ AR_c > b""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
 AR_m > AR_f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_m > AR_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_m > AR_M  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_m > AR_M
 AR_m > ""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_m > b""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 
@@ -34,6 +34,6 @@ AR_m > b""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M > AR_i  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M > AR_f  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M > AR_c  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
-AR_M > AR_m  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
+AR_M > AR_m
 AR_M > ""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
 AR_M > b""  # type: ignore[operator]  # pyright: ignore[reportOperatorIssue]
