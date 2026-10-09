@@ -7,7 +7,6 @@ from typing_extensions import CapsuleType, TypeVar, override
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import _ArrayLikeInt_co
 
 __all__ = ["BitGenerator", "SeedSequence"]
 
@@ -69,7 +68,7 @@ class BitGenerator(_CythonMixin, abc.ABC, Generic[_StateT]):
     def capsule(self) -> CapsuleType: ...
 
     #
-    def __init__(self, /, seed: _ArrayLikeInt_co | SeedSequence | None = None) -> None: ...
+    def __init__(self, /, seed: _nt.CoInteger_nd | SeedSequence | None = None) -> None: ...
     @override
     def __reduce__(self) -> tuple[Callable[[str], Self], tuple[str], tuple[Mapping[str, Any], ISeedSequence]]: ...
     def spawn(self, /, n_children: int) -> list[Self]: ...
@@ -115,7 +114,7 @@ class SeedSequence(_GenerateStateMixin, ISpawnableSeedSequence):
     def __init__(
         self,
         /,
-        entropy: _ArrayLikeInt_co | None = None,
+        entropy: _nt.CoInteger_nd | None = None,
         *,
         spawn_key: Sequence[int] = (),
         pool_size: int = 4,

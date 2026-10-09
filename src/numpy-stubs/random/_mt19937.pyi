@@ -2,7 +2,6 @@ from typing import Self, TypedDict, type_check_only
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import _ArrayLikeInt_co
 from numpy.random.bit_generator import BitGenerator
 
 __all__ = ["MT19937"]
@@ -22,5 +21,5 @@ class _MT19937State(TypedDict):
 ###
 
 class MT19937(BitGenerator[_MT19937State]):
-    def _legacy_seeding(self, seed: _ArrayLikeInt_co) -> None: ...
+    def _legacy_seeding(self, seed: _nt.CoInteger_nd) -> None: ...
     def jumped(self, jumps: int = 1) -> Self: ...
