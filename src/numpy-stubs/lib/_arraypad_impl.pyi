@@ -5,7 +5,7 @@ from typing_extensions import TypeVar
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import ArrayLike, _ArrayLike, _ArrayLikeInt
+from numpy._typing import ArrayLike, _ArrayLike
 
 __all__ = ["pad"]
 
@@ -28,7 +28,7 @@ class _ModeFunc(Protocol):
 # TODO: In practice each keyword argument is exclusive to one or more
 # specific modes. Consider adding more overloads to express this in the future.
 
-_PadWidth: TypeAlias = _ArrayLikeInt | dict[int, int] | dict[int, tuple[int, int]] | dict[int, int | tuple[int, int]]
+_PadWidth: TypeAlias = _nt.ToInteger_nd | dict[int, int] | dict[int, tuple[int, int]] | dict[int, int | tuple[int, int]]
 
 @overload
 def pad(
@@ -36,7 +36,7 @@ def pad(
     pad_width: _PadWidth,
     mode: _ModeKind = ...,
     *,
-    stat_length: _ArrayLikeInt | None = ...,
+    stat_length: _nt.ToInteger_nd | None = ...,
     constant_values: ArrayLike = ...,
     end_values: ArrayLike = ...,
     reflect_type: L["odd", "even"] = ...,
@@ -47,7 +47,7 @@ def pad(
     pad_width: _PadWidth,
     mode: _ModeKind = ...,
     *,
-    stat_length: _ArrayLikeInt | None = ...,
+    stat_length: _nt.ToInteger_nd | None = ...,
     constant_values: ArrayLike = ...,
     end_values: ArrayLike = ...,
     reflect_type: L["odd", "even"] = ...,
