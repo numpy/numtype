@@ -28,14 +28,7 @@ from unittest.case import SkipTest
 
 import _numtype as _nt
 import numpy as np
-from numpy._typing import (
-    ArrayLike,
-    DTypeLike,
-    _ArrayLikeDT64_co,
-    _ArrayLikeNumber_co,
-    _ArrayLikeObject_co,
-    _ArrayLikeTD64_co,
-)
+from numpy._typing import ArrayLike, DTypeLike
 
 __all__ = [
     "BLAS_SUPPORTS_FPE",
@@ -108,7 +101,7 @@ _ComparisonFunc: TypeAlias = Callable[
 _StrLike: TypeAlias = str | bytes
 _RegexLike: TypeAlias = _StrLike | Pattern[Any]
 
-_NumericArrayLike: TypeAlias = _ArrayLikeNumber_co | _ArrayLikeObject_co
+_NumericArrayLike: TypeAlias = _nt.CoComplex_nd | _nt.ToObject_nd
 
 ###
 
@@ -231,11 +224,11 @@ def assert_array_almost_equal(
 #
 @overload
 def assert_array_less(
-    x: _ArrayLikeTD64_co, y: _ArrayLikeTD64_co, err_msg: str = "", verbose: bool = True, *, strict: bool = False
+    x: _nt.CoTimeDelta_nd, y: _nt.CoTimeDelta_nd, err_msg: str = "", verbose: bool = True, *, strict: bool = False
 ) -> None: ...
 @overload
 def assert_array_less(
-    x: _ArrayLikeDT64_co, y: _ArrayLikeDT64_co, err_msg: str = "", verbose: bool = True, *, strict: bool = False
+    x: _nt.CoDateTime_nd, y: _nt.CoDateTime_nd, err_msg: str = "", verbose: bool = True, *, strict: bool = False
 ) -> None: ...
 @overload
 def assert_array_less(
@@ -272,8 +265,8 @@ def assert_raises_regex(
 #
 @overload
 def assert_allclose(
-    actual: _ArrayLikeTD64_co,
-    desired: _ArrayLikeTD64_co,
+    actual: _nt.CoTimeDelta_nd,
+    desired: _nt.CoTimeDelta_nd,
     rtol: float = 1e-7,
     atol: float = 0,
     equal_nan: bool = True,
@@ -296,11 +289,11 @@ def assert_allclose(
 ) -> None: ...
 
 #
-def assert_array_almost_equal_nulp(x: _ArrayLikeNumber_co, y: _ArrayLikeNumber_co, nulp: int = 1) -> None: ...
+def assert_array_almost_equal_nulp(x: _nt.CoComplex_nd, y: _nt.CoComplex_nd, nulp: int = 1) -> None: ...
 
 #
 def assert_array_max_ulp(
-    a: _ArrayLikeNumber_co, b: _ArrayLikeNumber_co, maxulp: int = 1, dtype: DTypeLike | None = None
+    a: _nt.CoComplex_nd, b: _nt.CoComplex_nd, maxulp: int = 1, dtype: DTypeLike | None = None
 ) -> _nt.Array[np.floating]: ...
 
 #
